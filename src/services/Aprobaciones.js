@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-const  baseUrl = 'http://localhost:4000/aprobaciones/'
+const  baseUrl = 'http://3.88.220.172:4000//aprobaciones/'
 
 const lista= async  () => {
    

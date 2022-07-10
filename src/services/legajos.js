@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:4000/usuario1/'
+const baseUrl = 'http://3.88.220.172:4000/usuario1/'
 
 const subirprueba = async (formdata) => {
   console.log(formdata)

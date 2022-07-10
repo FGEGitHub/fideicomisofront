@@ -1,5 +1,5 @@
 import axios from 'axios'
-const  baseUrl = 'http://localhost:4000/cuotas/'
+const  baseUrl = 'http://3.88.220.172:4000//cuotas/'
 
 const vercuotas= async  (id) => {
     console.log('servicio')
