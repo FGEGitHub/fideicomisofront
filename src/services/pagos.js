@@ -1,5 +1,6 @@
-import axios from 'axios'
-const  baseUrl = 'http://52.203.247.51/:4000/'
+import axios from "axios"
+
+const  baseUrl = 'http://52.203.247.51:4000/'
 
 const pagar= async  (pago) => {
    console.log(pago)

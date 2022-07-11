@@ -92,10 +92,10 @@ const LegajoCliente = (props) => {
                   }}
                 />
                 <TextField
-                  label="Descarga"
+                  label="Tipo"
                   id="cuil"
                  // defaultValue="CUIL"
-                  value= {legajo.ubicacion}
+                  value= {legajo.tipo}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{

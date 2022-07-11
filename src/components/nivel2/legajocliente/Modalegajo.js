@@ -37,6 +37,8 @@ export default function FormDialog(props) {
         formdata.append('tipo', legform.tipo)
         formdata.append('cuil_cuit', props.cuil_cuit)
         formdata.append('descripcion', props.descripcion)
+        formdata.append('mes', legform.mes)
+        formdata.append('anio', legform.anio)
 
 
 
@@ -99,6 +101,54 @@ export default function FormDialog(props) {
                         <option value={'DjCalidadPerso'}>DJ Calidad Persona</option>
                         <option value={'DjOrigenFondos'}>DJ Origne de fondos</option>
 
+
+                    </NativeSelect>
+                    <NativeSelect
+                        defaultValue={30}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'mes',
+                            id: 'uncontrolled-native',
+
+                        }}
+
+                    > <option value={''}>Elegir</option>
+                        <option value={'1'}>Enero</option>
+                        <option value={'2'}>Febrero</option>
+                        <option value={'3'}>Marzo</option>
+                        <option value={'4'}>Abril</option>
+                        <option value={'5'}>Mayo</option>
+                        <option value={'6'}>Junio</option>
+                        <option value={'7'}>Julio</option>
+                        <option value={'8'}>Agosto</option>
+                        <option value={'9'}>Septiembre</option>
+                        <option value={'10'}>Octubre</option>
+                        <option value={'11'}>Noviembre</option>
+                        <option value={'12'}>Diciebre</option>
+
+
+                    </NativeSelect>
+                    <NativeSelect
+                        defaultValue={30}
+                        onChange={handleChange}
+                        inputProps={{
+                            name: 'anio',
+                            id: 'uncontrolled-native',
+
+                        }}
+
+                    > <option value={''}>Elegir</option>
+                        <option value={'2015'}>2015</option>
+                        <option value={'2016'}>2016</option>
+                        <option value={'2017'}>2017</option>
+                        <option value={'2018'}>2018</option>
+                        <option value={'2019'}>2019</option>
+                        <option value={'2020'}>2020</option>
+                        <option value={'2021'}>2021</option>
+                        <option value={'2022'}>2022</option>
+                        <option value={'2023'}>2023</option>
+                        <option value={'2024'}>2024</option>
+                      
 
                     </NativeSelect>
 

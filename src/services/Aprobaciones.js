@@ -1,6 +1,7 @@
 
-import axios from 'axios'
-const  baseUrl = 'http://52.203.247.51/:4000//aprobaciones/'
+import axios from "axios"
+
+const  baseUrl = 'http://52.203.247.51:4000/aprobaciones/'
 
 const lista= async  () => {
    

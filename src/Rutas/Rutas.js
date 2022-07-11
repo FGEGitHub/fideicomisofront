@@ -1,7 +1,6 @@
 /* import NotFound from '../Paginas/Notfound'; */
 import Login from '../Paginas/Login';
 import DetalleCliente from '../Paginas/Usuario2/DetalleCliente';
-import Lista from '../Paginas/Usuario2/Lista';
 import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
@@ -39,7 +38,6 @@ const Rutas = [
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
-	{ path: '/lista', element: <Lista /> },
 	
 	{ path: '/usuario/menu', element: < Usuario1 /> },
 	{ path: '/usuario/Legajos', element: < Legajos /> },

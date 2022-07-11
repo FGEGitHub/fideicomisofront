@@ -1,5 +1,6 @@
-import axios from 'axios'
-const  baseUrl = 'http://52.203.247.51/:4000/nivel3/'
+import axios from "axios"
+
+const  baseUrl = 'http://52.203.247.51:4000/nivel3/'
 
 const agregariccgral= async  (datos) => {
    
@@ -9,7 +10,7 @@ const agregariccgral= async  (datos) => {
 }  
 const traerhistorial= async  () => {
    
-    const {data } =await axios.get('http://52.203.247.51/:4000/nivel3/historialicc')
+    const {data } =await axios.get(baseUrl+'nivel3/historialicc')
 
     return data 
 }  

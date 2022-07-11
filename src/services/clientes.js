@@ -1,6 +1,7 @@
+import axios from "axios"
+const  baseURL = 'http://52.203.247.51:4000/links/'
 
-import axios from 'axios'
-const  baseURL = 'http://52.203.247.51/:4000/links'
+
 
 
 const crear= async  (datos) => {
@@ -12,7 +13,7 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
-    const {data } = await axios.get('http://52.203.247.51/:4000/prueba')
+    const {data } = await axios.get('http://52.203.247.51:4000/prueba')
 
     
     return data 
