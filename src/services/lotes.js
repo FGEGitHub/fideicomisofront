@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-const  baseUrl = 'http://3.88.220.172:4000/lotes/'
+const  baseUrl = 'http://52.203.247.51/:4000/lotes/'
 
 const lista= async  () => {
    

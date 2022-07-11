@@ -127,8 +127,8 @@ const Login = () => {
             </Grid>
             <form onSubmit={loginSubmit}>
               <TextField
-                variant="filled"
-                label="Cuil/cuit"
+                variant="outlined"
+                label="Cuil/Cuit"
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
@@ -141,7 +141,7 @@ const Login = () => {
               />
               <TextField
                 variant="outlined"
-                label="Password"
+                label="Contraseña"
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
@@ -162,18 +162,18 @@ const Login = () => {
                 {loading ? (
                   <CircularProgress color="inherit" size={25} />
                 ) : (
-                  "Save"
+                  "Ingresar"
                 )}
               </Button>
             </form>
             <Typography >
               <Link href="#" >
-               Olvidaste la contraseña?
+               ¿Olvidaste la contraseña?
               </Link>
             </Typography>
-            <Typography >No estas registrado ?
+            <Typography >¿No estas registrado?
               <Link href="#" >
-                Sign Up
+                Registrarse
               </Link>
             </Typography>
           </Paper>

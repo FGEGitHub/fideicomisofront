@@ -71,7 +71,7 @@ const Navbar = (props) => {
                 <Tab label="Ayuda" />
               </Tabs>
               {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
-                Logout
+                Cerrar Sesión
               </Button>  }
 
 

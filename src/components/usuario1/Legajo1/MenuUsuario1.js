@@ -32,7 +32,7 @@ export default function MenuUsuario1({children}) {
   
   const menuItems = [
     { 
-      text: 'Declariones Juradas', 
+      text: 'Declaraciones Juradas', 
       icon: <InsertDriveFileIcon color="primary" />, 
       path: '/declaraciones-juradas' 
     },

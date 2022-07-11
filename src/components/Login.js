@@ -80,7 +80,7 @@ const Login = () => {
                 }}
             >
                 <Typography variant="h5" textAlign="center" color="white">
-                    Login
+                    Ingresar
                 </Typography>
                 <CardContent>
                     <form onSubmit={loginSubmit}>
@@ -99,7 +99,7 @@ const Login = () => {
                         />
                         <TextField
                             variant="outlined"
-                            label="Password"
+                            label="Contraseña"
                             sx={{
                                 display: "block",
                                 margin: ".5rem 0",
@@ -120,7 +120,7 @@ const Login = () => {
                             {loading ? (
                                 <CircularProgress color="inherit" size={25} />
                             ) : (
-                                "Save"
+                                "Ingresar"
                             )}
                         </Button>
                     </form>
