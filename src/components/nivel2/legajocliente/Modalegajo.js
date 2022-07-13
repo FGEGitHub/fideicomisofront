@@ -36,7 +36,7 @@ export default function FormDialog(props) {
         formdata.append('image', file)
         formdata.append('tipo', legform.tipo)
         formdata.append('cuil_cuit', props.cuil_cuit)
-        formdata.append('descripcion', props.descripcion)
+        formdata.append('descripcion', legform.descripcion)
         formdata.append('mes', legform.mes)
         formdata.append('anio', legform.anio)
 
@@ -74,10 +74,10 @@ export default function FormDialog(props) {
                 Agregar Legajo
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Completar</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Seleccionar archivo y tipo de comprobante
+                        Seleccionar archivo y el tipo de comprobante
                     </DialogContentText>
                     <NativeSelect
                         defaultValue={30}
@@ -99,11 +99,11 @@ export default function FormDialog(props) {
                         <option value={'PagosPrevisionales'}>Pagos Provisionales</option>
                         <option value={'DjDatospers'}>DJ Datos Personales</option>
                         <option value={'DjCalidadPerso'}>DJ Calidad Persona</option>
-                        <option value={'DjOrigenFondos'}>DJ Origne de fondos</option>
+                        <option value={'DjOrigenFondos'}>DJ Origen de fondos</option>
 
 
                     </NativeSelect>
-                    <NativeSelect
+                    {/* <NativeSelect
                         defaultValue={30}
                         onChange={handleChange}
                         inputProps={{
@@ -124,7 +124,7 @@ export default function FormDialog(props) {
                         <option value={'9'}>Septiembre</option>
                         <option value={'10'}>Octubre</option>
                         <option value={'11'}>Noviembre</option>
-                        <option value={'12'}>Diciebre</option>
+                        <option value={'12'}>Diciembre</option>
 
 
                     </NativeSelect>
@@ -150,7 +150,7 @@ export default function FormDialog(props) {
                         <option value={'2024'}>2024</option>
                       
 
-                    </NativeSelect>
+                    </NativeSelect> */}
 
                 </DialogContent>
                 <input onChange={selecthandler} type="file" />

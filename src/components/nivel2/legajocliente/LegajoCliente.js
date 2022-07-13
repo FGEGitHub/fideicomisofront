@@ -1,14 +1,9 @@
 import React, { useEffect, useState, } from "react";
 import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-
-
 import InputAdornment from "@mui/material/InputAdornment";
-import HomeWorkIcon from '@mui/icons-material/HomeWork';
-
 
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
@@ -17,8 +12,9 @@ import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
 
 const LegajoCliente = (props) => {
-    const [legajos, setLegajos] = useState([])
-    const [file, setFile] = useState(null);
+    
+  const [legajos, setLegajos] = useState([])
+  const [file, setFile] = useState(null);
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
   const [address, setAddress] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -62,9 +58,9 @@ const LegajoCliente = (props) => {
 
      {legajos.map((legajo) =>( 
     <div className="profile">
-      <Grid >
+      <Grid>
        
-        <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
+        <Grid item xs={2}style={{justifyContent:"flex-start", display: "flex" }}>
           <form onSubmit={submitFormHandler}>
             <Container>
             <Box>
@@ -114,7 +110,7 @@ const LegajoCliente = (props) => {
               
 
               <Box>
-                <columns lg={8}>
+                <columns lg={12}>
                   {editMode ? (
                     <div className="profile-form-button">
                       <Button

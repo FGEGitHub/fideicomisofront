@@ -1,8 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom"
 import LotesCliente from '../../LotesCliente'
-import InfoCliente from '../../FichaAxios'
-
+import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
 
 
