@@ -9,37 +9,34 @@ import MenuItem from '@mui/material/MenuItem';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 
 export default function AsignarLoreACliente() {
+  
+    const navigate = useNavigate();
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
     const [lotes, setLotes] = useState({
         cuil_cuit: cuil_cuit
         /////////asignar lote 0 caso que no se seleccione
     })
-    const [pagos, setPagos] = useState({
 
-    })
+    
 
-    useEffect(() => {
-
-
-    }, [])
+    
 
     const designar = async (event) => {
     
-        
+        navigate('/usuario2/detallecliente/'+cuil_cuit)
         console.log(lotes)
-     pagos = await servicioClientes.ventaLote(lotes)
-        setPagos(pagos)
-
+     await servicioClientes.ventaLote(lotes)
+        
 
 
     }
-    /*{lotes.map((item,index) =>{
-        item['']   
-      }      }*/
+
+    
 
 
 
@@ -70,16 +67,26 @@ export default function AsignarLoreACliente() {
                             <option  value={'IC3'}>IC3</option>
                          
                         </NativeSelect> 
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Fraccion"
-                            name="fraccion"
+                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                           Fraccion
+                        </InputLabel>
+                        <NativeSelect
+                            defaultValue={30}
                             onChange={handleChange}
-                            fullWidth
-                            variant="standard"
-                        />
+                            inputProps={{
+                                name: 'fraccion',
+                                id: 'uncontrolled-native',
+                               
+                            }}
+                        >   <option  value={'IC3'}>Elegir</option>
+                            <option   value={'ID/4'}>ID/4 (parque)</option>
+                            <option  value={'A'}>A</option>
+                            <option  value={'B'}>B</option>
+                            <option  value={'C'}>C</option>
+                            <option  value={'D'}>D</option>
+                    
+                         
+                        </NativeSelect> 
                         <TextField
                             autoFocus
                             margin="dense"
