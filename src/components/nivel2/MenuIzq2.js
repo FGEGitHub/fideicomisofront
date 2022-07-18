@@ -48,11 +48,7 @@ export default function MenuIzq2 ({children}) {
           icon: <GroupIcon color="primary" />, 
           path: '/usuario2/clientes' 
         },
-        { 
-          text: 'Buscar Clientes',
-          icon: <SearchIcon color="primary" />, 
-          path: '/usuario2/clientes' 
-        },
+    
         {
           text: 'Lotes',
           icon: <NfcIcon color="primary" />,
