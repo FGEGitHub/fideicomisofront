@@ -28,7 +28,7 @@ export default function PagarCuota() {
     
 
     const designar = async (event) => {
-        event.preventDefault()
+     //   event.preventDefault()
        
        
      await servicioPagos.pagarnivel2(pago)
