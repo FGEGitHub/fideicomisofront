@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import MUIDataTable from "mui-datatables";
 import servicioClientes from '../../../services/clientes'
+import MUIDataTable from "mui-datatables";
+
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
@@ -34,7 +35,7 @@ const Lotes = () => {
         return (
           <>
             <EditIcon
-              onClick={() => onClick(data[dataIndex].id, dataIndex)}
+             onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
             <SearchIcon style={{ cursor: "pointer" }} 
