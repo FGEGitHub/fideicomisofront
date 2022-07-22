@@ -3,7 +3,12 @@ const  baseURL = 'http://52.203.247.51:4000/links/'
 //const  baseURL = 'http://localhost:4000/links/'
 
 
-
+const modificarCliente= async  (datos) => {
+   
+    const data  = await axios.post(baseURL+'modificarcli',datos)
+ 
+    return data 
+}
 const crear= async  (datos) => {
    console.log(datos)
     const {data } = await axios.post(baseURL+'add2',datos)
@@ -54,4 +59,4 @@ const traerLejagos= async  (cuil_cuit) => {
     return data 
 }
 
-export default {lista, cliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
+export default {lista, cliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear, modificarCliente};
