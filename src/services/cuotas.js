@@ -23,7 +23,14 @@ const cuotasDeUnLote = async  (id) => {
     
     return data 
 } 
-
+const borrarcuota = async  (id) => {
+    
+    console.log(id)
+     const rta  = await axios.get(baseUrl+'delete/'+id)
+     console.log(rta)
+     
+     return rta.data 
+ } 
 
 const agregarCuotas= async  (estadoCuotas) => {
   
@@ -34,4 +41,4 @@ const agregarCuotas= async  (estadoCuotas) => {
    // return data 
 }  
 
-export default {vercuotas,agregarCuotas, cuotasDeUnLote};
+export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota};
