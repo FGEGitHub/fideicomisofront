@@ -4,6 +4,7 @@ import servicioCuotas from '../services/cuotas'
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
 import TextField from '@mui/material/TextField';
@@ -19,6 +20,7 @@ const LotesCliente = (props) => {
         traer()
 
     }, [])
+
     const [lotes, setLotes] = useState([''])
     const [cuotas, setCuotas] = useState([''])
     const [open, setOpen] = React.useState(false);
@@ -54,7 +56,13 @@ const LotesCliente = (props) => {
 
 
     }
+    const borrar = async (id) => {
 
+        const rta = await servicioCuotas.borrarcuota(id)
+     
+        alert(rta)
+
+    }
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
@@ -65,6 +73,9 @@ const LotesCliente = (props) => {
             />
             <SearchIcon style={{ cursor: "pointer" }} 
             onClick={() =>  navigate('')  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+            />
+            <DeleteIcon style={{ cursor: "pointer" }} 
+            onClick={() =>  borrar(cuotas[dataIndex].id) }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>
         );

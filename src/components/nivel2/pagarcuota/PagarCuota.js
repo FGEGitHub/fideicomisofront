@@ -30,8 +30,8 @@ export default function PagarCuota() {
     const designar = async (event) => {
      //   event.preventDefault()
        
-       
-     await servicioPagos.pagarnivel2(pago)
+    
+    const rta = await servicioPagos.pagarnivel2(pago)
         
 
 
