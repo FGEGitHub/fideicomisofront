@@ -3,13 +3,19 @@ const  baseUrl = 'http://52.203.247.51:4000/'
 //const  baseUrl = 'http://localhost:4000/'
 
 const pagarnivel2= async  (pago) => {
-  console.log(pago)
+
+
+const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago))
+   return (data)
+ 
+}  
+const detallespagoscuota= async  (id_cuota) => {
+  console.log(id_cuota)
 // pago nivel 1
 // const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago))
    
  
 }  
-
 
 
 const pagar= async  (pago) => {
@@ -53,4 +59,4 @@ const pagosinusuales= async  () => {
  return data
 }  
 
-export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2};
+export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota};
