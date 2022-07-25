@@ -24,4 +24,16 @@ const usuarios = async () => {
     return dataa
      
 }
-export default { usuarios, setToken }
+
+
+const registro = async (datos) => {
+   
+ 
+     const dataa = await axios.post('http://localhost:4000/signupp', datos)
+
+ 
+     return dataa
+      
+ }
+
+export default { usuarios, setToken,registro }
