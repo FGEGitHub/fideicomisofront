@@ -3,7 +3,12 @@ const  baseURL = 'http://52.203.247.51:4000/links/'
 //const  baseURL = 'http://localhost:4000/links/'
 
 
-
+const modificarCliente= async  (datos) => {
+   
+    const data  = await axios.post(baseURL+'modificarcli',datos)
+ 
+    return data.data 
+} 
 const crear= async  (datos) => {
    console.log(datos)
     const {data } = await axios.post(baseURL+'add2',datos)
@@ -13,8 +18,8 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
-    const {data } = await axios.get('http://52.203.247.51:4000/prueba')
-
+    //const {data } = await axios.get('http://52.203.247.51:4000/prueba')
+   const {data } = await axios.get('http://localhost:4000/prueba')
     
     return data 
 }   
@@ -26,11 +31,11 @@ const crearCliente= async  (datos) => {
      return data 
  } 
  
- const ventaLote= async  (datos) => {
-   console.log(datos)
+ const ventaLote = async  (datos) => {
+   
     const data  = await axios.post(baseURL+'ventalote',datos)
     alert(data.data)
-    return data 
+   
 } 
 const cliente= async  (cuil_cuit) => {
    console.log(cuil_cuit)
@@ -54,4 +59,4 @@ const traerLejagos= async  (cuil_cuit) => {
     return data 
 }
 
-export default {lista, cliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
+export default {lista, cliente,modificarCliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
