@@ -67,8 +67,8 @@ export default function MenuUsuario2() {
     try {
 
       const respuesta = await servicioCuotas.agregarCuotas(estadoCuotas)
-      alert(respuesta)
-      navigate('/usuario2/clientes')
+     
+      navigate('/usuario2/detallecliente/'+respuesta)
 
     } catch (error) {
       console.error(error);

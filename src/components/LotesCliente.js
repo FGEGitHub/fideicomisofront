@@ -42,7 +42,12 @@ const LotesCliente = (props) => {
     };
     //////////servicioCuotas
 
+    const borarTodas = async (index) => {
+  
+        const cuotas = await servicioCuotas.borrarcuotas(index)
+     
 
+    };
 
 
 
@@ -152,6 +157,8 @@ const LotesCliente = (props) => {
                         <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + item['id']) }} >
                             Agregar cuotas al lote
                         </Button>
+                   
+                        
 
 
                     </div>

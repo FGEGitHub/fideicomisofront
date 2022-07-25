@@ -18,8 +18,8 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
-    //const {data } = await axios.get('http://52.203.247.51:4000/prueba')
-   const {data } = await axios.get('http://localhost:4000/prueba')
+    const {data } = await axios.get('http://52.203.247.51:4000/prueba')
+   //const {data } = await axios.get('http://localhost:4000/prueba')
     
     return data 
 }   
@@ -34,6 +34,7 @@ const crearCliente= async  (datos) => {
  const ventaLote = async  (datos) => {
    
     const data  = await axios.post(baseURL+'ventalote',datos)
+    console.log(data)
     alert(data.data)
    
 } 

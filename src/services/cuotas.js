@@ -38,7 +38,7 @@ const agregarCuotas= async  (estadoCuotas) => {
     const {data } = await axios.post(baseUrl+'addaut2/',estadoCuotas)
 
     
-    return data.data
+    return data
 }  
 
 export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota};
