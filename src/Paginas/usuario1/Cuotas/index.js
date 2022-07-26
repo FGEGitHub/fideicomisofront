@@ -18,9 +18,7 @@ export default function Transferencias() {
             <div className="App">
 
 
-                <Navbar />
-                <LotesCuotas
-                cuil_cuit ={usuario.cuil_cuit} />
+              
                 
 
             </div>
