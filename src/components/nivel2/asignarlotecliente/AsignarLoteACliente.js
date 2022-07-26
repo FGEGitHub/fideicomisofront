@@ -10,6 +10,8 @@ import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import Grid from '@mui/material/Grid';
+import Toolbar from '@mui/material/Toolbar';
 
 
 export default function AsignarLoreACliente() {
@@ -45,13 +47,13 @@ export default function AsignarLoreACliente() {
         setLotes({ ...lotes, [e.target.name]: e.target.value })
     }
     return (
+        
+        <Card sx={{ maxWidth: 690 }}>
 
-        <Fragment>
-            <Box sx={{ minWidth: 275 }}>
-                <Card variant="outlined">
+        <Grid container direction="column">
 
                     <form onSubmit={designar}>
-                          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                          <InputLabel  color='success' variant="standard" htmlFor="uncontrolled-native">
                            ZONA
                         </InputLabel>
                         <NativeSelect
@@ -90,12 +92,13 @@ export default function AsignarLoreACliente() {
                         <TextField
                             autoFocus
                             margin="dense"
+                            variant="filled"
+                            type={'number'}
                             id="name"
                             label="Manzana"
                             name="manzana"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
                         />
                         <TextField
                             autoFocus
@@ -105,42 +108,35 @@ export default function AsignarLoreACliente() {
                             name="lote"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
+                            variant="filled"
                         />
                         <TextField
                             autoFocus
                             margin="dense"
+                            type={'number'}
                             id="name"
                             label="Parcela"
                             name="parcela"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
+                            variant="filled"
                         />
                       
                       
 
 
-                        <Button type="submit">Enviar</Button>
 
                     </form>
+                    
+                    <Button variant='contained' type="submit">Enviar</Button>
+                    </Grid>
 
                 </Card>
-            </Box>
-
-            {/*  {
-                                lotes.map((item, index) =>
-                                    //   item['']
-                                    <div>
-                                        <MenuItem value={10}>{item['zona']}  </MenuItem>
-                                    </div>
-                                )} */}
+    
 
 
 
 
 
-
-        </Fragment>
     );
 }

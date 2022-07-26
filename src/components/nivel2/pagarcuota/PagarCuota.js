@@ -111,7 +111,8 @@ export default function PagarCuota() {
                             name="monto"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
+                            variant="filled"
+                            type={"Number"}
                         />
                         <TextField
                             autoFocus
@@ -121,7 +122,7 @@ export default function PagarCuota() {
                             name="lote"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
+                            variant="filled"
                         />
                         <TextField
                             autoFocus
@@ -131,7 +132,8 @@ export default function PagarCuota() {
                             name="parcela"
                             onChange={handleChange}
                             fullWidth
-                            variant="standard"
+                            variant="filled"
+                            type={"Number"}
                         />
                       
                       

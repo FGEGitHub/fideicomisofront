@@ -17,6 +17,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import Card  from '@mui/material/Card';
 
 /////
 const drawerWidth = 240;
@@ -94,12 +95,15 @@ export default function MenuUsuario2() {
   return (
 
     <MenuIzq2>
+    <Card sx={{ maxWidth: 345 }}> 
+
+    <Grid container spacing={3} direction="column" justifyContent="center" alignContent="center" sm="auto">
       <br /> <br /> <br />
       <form onSubmit={agregarCuotas}>
-
- <h2>Valor del lote</h2>
+      <h2 color='inherit'>  Valor del lote </h2>
+  
+      
       <TextField
-       style ={{width: '25%'}}
           autoFocus
           margin="dense"
           id="name"
@@ -108,6 +112,7 @@ export default function MenuUsuario2() {
           onChange={handleChange}
           fullWidth
           variant="standard"
+          type={"Number"}
         />
 
 <br /> <br /> 
@@ -115,7 +120,6 @@ export default function MenuUsuario2() {
       <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1} columns={16}>
           <TextField
-          style ={{width: '25%'}}
           autoFocus
           margin="dense"
           id="name"
@@ -124,6 +128,7 @@ export default function MenuUsuario2() {
           onChange={handleChange}
           fullWidth
           variant="standard"
+          type={"Number"}
         />
           </Grid>
         </Box>
@@ -137,7 +142,7 @@ export default function MenuUsuario2() {
 
                         }}
 
-                    > <option value={''}>Elegir</option>
+                    > <option value={''}>Mes</option>
                         <option value={'1'}>Enero</option>
                         <option value={'2'}>Febrero</option>
                         <option value={'3'}>Marzo</option>
@@ -162,7 +167,7 @@ export default function MenuUsuario2() {
 
                         }}
 
-                    > <option value={''}>Elegir</option>
+                    > <option value={''}>Año</option>
                         <option value={'2015'}>2015</option>
                         <option value={'2016'}>2016</option>
                         <option value={'2017'}>2017</option>
@@ -189,7 +194,7 @@ export default function MenuUsuario2() {
 
                         }}
 
-                    > <option value={''}>Elegir</option>
+                    > <option value={''}>Mes</option>
                         <option value={'1'}>Enero</option>
                         <option value={'2'}>Febrero</option>
                         <option value={'3'}>Marzo</option>
@@ -214,7 +219,7 @@ export default function MenuUsuario2() {
 
                         }}
 
-                    > <option value={''}>Elegir</option>
+                    > <option value={''}>Año</option>
                         <option value={'2015'}>2015</option>
                         <option value={'2016'}>2016</option>
                         <option value={'2017'}>2017</option>
@@ -231,7 +236,6 @@ export default function MenuUsuario2() {
                     <br /> 
        
         <TextField
-         style ={{width: '20%'}}
           autoFocus
           margin="dense"
           id="name"
@@ -240,15 +244,17 @@ export default function MenuUsuario2() {
           onChange={handleChange}
           fullWidth
           variant="standard"
+          type={"Number"}
         />
 
 
 
         <DialogActions>
-          <Button type="submit">Enviar</Button>
         </DialogActions>
       </form>
-
+      <Button variant='contained' type="submit">Enviar</Button>
+      </Grid>
+    </Card>
     </MenuIzq2>
 
 
