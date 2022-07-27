@@ -10,6 +10,7 @@ import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import { Toolbar } from '@mui/material';
 
 
 export default function PagarCuota() {
@@ -62,8 +63,9 @@ export default function PagarCuota() {
     return (
 
         <Fragment>
+            <Toolbar/>
             <Box sx={{ minWidth: 275 }}>
-                <Card variant="outlined">
+                <Card variant="outlined" >
 
                     <form onSubmit={designar}>
                           <InputLabel  variant="standard" htmlFor="uncontrolled-native">
@@ -79,28 +81,11 @@ export default function PagarCuota() {
                             }}
                         >   <option  value={'IC3'}>Elegir</option>
                             <option   value={'Transferencia'}>Transferencia</option>
-                            <option  value={'IC3'}>IC3</option>
                          
                         </NativeSelect> 
                        
-                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                           Tipo de venta 
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'estado',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                        >   <option  value={'IC3'}>Elegir</option>
-                            <option   value={'Reservado'}>Reserva</option>
-                            <option  value={'Vendido'}>Venta</option>
-   
-   
-                         
-                        </NativeSelect> 
+                       
+                
                         
                         <TextField
                          /* style ={{width: '25%'}} */
@@ -114,7 +99,7 @@ export default function PagarCuota() {
                             variant="filled"
                             type={"Number"}
                         />
-                        <TextField
+                        {/* <TextField
                             autoFocus
                             margin="dense"
                             id="name"
@@ -134,16 +119,17 @@ export default function PagarCuota() {
                             fullWidth
                             variant="filled"
                             type={"Number"}
-                        />
+                        /> */}
                       
                       
 
 
-                        <Button type="submit">Enviar</Button>
+                        <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
 
                     </form>
 
                 </Card>
+                
             </Box>
 
             {/*  {

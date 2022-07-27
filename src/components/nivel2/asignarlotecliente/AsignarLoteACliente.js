@@ -128,7 +128,7 @@ export default function AsignarLoreACliente() {
 
                     </form>
                     
-                    <Button variant='contained' type="submit">Enviar</Button>
+                    <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
                     </Grid>
 
                 </Card>

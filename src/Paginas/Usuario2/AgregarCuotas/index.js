@@ -252,7 +252,7 @@ export default function MenuUsuario2() {
         <DialogActions>
         </DialogActions>
       </form>
-      <Button variant='contained' type="submit">Enviar</Button>
+      <Button onClick={agregarCuotas} variant='contained' type="submit">Agregar</Button>
       </Grid>
     </Card>
     </MenuIzq2>
