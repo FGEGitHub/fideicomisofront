@@ -93,6 +93,7 @@ export default function MenuUsuario2() {
 
   return (
 
+
     <MenuIzq2>
       <br /> <br /> <br />
       <form onSubmit={agregarCuotas}>
@@ -235,7 +236,7 @@ export default function MenuUsuario2() {
           autoFocus
           margin="dense"
           id="name"
-          label="Cantidad de cuotas"
+          label="Cantidad de Cuotas"
           name="cantidad_cuotas"
           onChange={handleChange}
           fullWidth
@@ -245,7 +246,7 @@ export default function MenuUsuario2() {
 
 
         <DialogActions>
-          <Button type="submit">Enviar</Button>
+          <Button onClick={agregarCuotas()} type="submit">Enviar</Button>
         </DialogActions>
       </form>
 

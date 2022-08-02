@@ -23,7 +23,7 @@ const listalotes= async  () => {
 }  
 
 const lotesCliente= async  (cuil_cuit) => {
- //  console.log(cuil_cuit)
+  console.log(cuil_cuit)
     let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit)
 
     const lotes=(data[0])

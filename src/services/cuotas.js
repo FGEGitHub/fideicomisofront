@@ -15,6 +15,17 @@ const vercuotas= async  (id) => {
     
     return data 
 }  
+
+const verief= async  (id) => {
+    console.log(id)
+    const data = await axios.get(baseUrl+'ief/'+id)
+             
+console.log(data.data)
+
+   
+   
+  return data.data
+} 
 const cuotasDeUnLote = async  (id) => {
     
    console.log(id)
@@ -41,4 +52,4 @@ const agregarCuotas= async  (estadoCuotas) => {
     return data
 }  
 
-export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota};
+export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief};
