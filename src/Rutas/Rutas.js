@@ -11,6 +11,8 @@ import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
 import Navbar from "../components/Navbar";
 import Usuario1 from "../Paginas/usuario1/menuusuario1";
+import Nosotros from "../Paginas/usuario1/nosotros";
+import Contacto from "../Paginas/usuario1/contacto";
 import Cuotas from "../Paginas/usuario1/Cuotas";
 import Aprobaciones from "../Paginas/Aprobaciones"
 import Legajos from "../Paginas/usuario1/Legajos"
@@ -55,6 +57,8 @@ const Rutas = [
 	{ path: '/usuario/cuotas', element: < Cuotas /> },
 	{ path: '/usuario/notificaciones', element: < Notificaciones /> },
 	{ path: '/usuario/declaracionesjuradas', element: < DeclaracionesJuradas /> },
+	{ path: '/usuario/nosotros', element: < Nosotros /> },
+	{ path: '/usuario/contacto', element: < Contacto /> },
 	
 	{ path: '/usuario2/clientes', element: <Clientes /> },
 	{ path: '/usuario2/lotes', element: <Lotes /> },

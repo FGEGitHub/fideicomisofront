@@ -64,11 +64,13 @@ const AddDeclaraciones = () => {
           {isDragActive ? (
             <p style={{ color: 'green' }}>Suelta aqui la documentación</p>
           ) : (
-            <p>Arrastra hasta aqui las ultimas tres(3) declaraciones juradas</p>
+            <p>Arrastra hasta aqui las ultimas seis(6) declaraciones juradas</p>
           )}
           <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
         </div>
       </Paper>
+      
+      
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
