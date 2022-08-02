@@ -52,10 +52,10 @@ export default function Ingresos() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-       Registro
+       Registrarme
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Registro provisorio</DialogTitle>
+        <DialogTitle>Registro</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Ingrese el valor en pesos 
@@ -114,7 +114,7 @@ export default function Ingresos() {
           />
        
           <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <Button  type="submit">Enviar</Button>
         </DialogActions>
            </form>

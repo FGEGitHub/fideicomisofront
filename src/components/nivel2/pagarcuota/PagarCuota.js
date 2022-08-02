@@ -56,6 +56,7 @@ export default function PagarCuota() {
 
 
 
+
    const handleChange = (e) => {
        console.log(e.target.value)
        setPagos({ ...pago, [e.target.name]: e.target.value })
@@ -147,4 +148,3 @@ export default function PagarCuota() {
 
        </Fragment>
    );
-}

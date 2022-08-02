@@ -2,30 +2,55 @@ import React from 'react';
 import { Paper, Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { ThemeContext } from '@emotion/react';
+import servicioLegajo from '../../../../services/legajos'
+import BackupIcon from '@material-ui/icons/Backup';
+
 
 const AddPersonas = () => {
   const handleClick = () => {
     console.log('click');
   };
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState(null);
+
   const onDrop = useCallback((acceptedFiles) => {
-    setFiles(acceptedFiles);
+    setFile(acceptedFiles);
     console.log(acceptedFiles);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
     onDrop,
+    multiple: false,
+    accept: 'document/*',
 
   });
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  const selecthandler = e =>{
+   setFile(e.target.files[0])
+   console.log(file)
+  }
+
+  const enviar = () =>{
+   if (!file){
+    alert('No seleccionaste el archivo')
+    return
+   }
+   const formdata = new FormData()
+   formdata.append('image',file)
+   console.log(formdata)
+   servicioLegajo.subirprueba(formdata)
+
+   }
   return (
     <>
-     <Box sx={{m:1}}>
-      <Button onClick={handleClick} size="small" variant="contained">
-                Descargar modelo
-      </Button>
+      <Box sx={{ m: 1 }}>
+        <Button onClick={handleClick} size="small" variant="contained">
+          Descargar modelo
+        </Button>
       </Box>
       <Paper
         sx={{
@@ -37,7 +62,9 @@ const AddPersonas = () => {
         }}
       >
         <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
+        <input {...getInputProps({
+            onChange: selecthandler,
+          })} />
           {isDragActive ? (
             <p style={{ color: 'green' }}>Suelta aqui el documento</p>
           ) : (
@@ -46,6 +73,14 @@ const AddPersonas = () => {
           <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
         </div>
       </Paper>
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
+      </Box>
       
     </>
   );
