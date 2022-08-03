@@ -21,10 +21,11 @@ const currencies = [
 
 ];
 
-export default function SelectTextFields(props) {
+export default function ModalPago(props) {
     const [open, setOpen] = React.useState(false);
-    const usuario  = useUser().userContext
-    const cuil_cuit=usuario.cuil_cuit
+    //const usuario  = useUser().userContext
+    const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
+    const cuil_cuit=preba.cuil_cuit
     const [pago, setPago] = useState({
       cuil_cuit:cuil_cuit,
       id: props.id,

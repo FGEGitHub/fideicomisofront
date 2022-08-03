@@ -57,9 +57,6 @@ export default function Ingresos() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Registro</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Ingrese el valor en pesos 
-          </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
           <TextField
             autoFocus

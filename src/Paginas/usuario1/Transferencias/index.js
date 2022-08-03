@@ -1,10 +1,12 @@
 
 
-
-import Navbar from '../../../components/Navbar'
+import React from 'react';
+import Navbar from '../../../components/usuario1/Navbar1'
 import  useUser from '../../../hooks/useUser'
-import LotesCliente from '../../../components/usuario1/LotesTransferencia'
-
+import LotesTransferencia from '../../../components/usuario1/LotesTransferencia'
+import { Divider, Toolbar } from '@mui/material'
+import Footer from '../../../components/usuario1/Footer'
+import { Container, Box, CssBaseline } from '@mui/material'
 
 
 
@@ -14,18 +16,18 @@ export default function Transferencias() {
     console.log(usuario)
 
     return (
-        <>
-            <div className="App">
+        <React.Fragment>
+           <Navbar  />
+           
+            
+         
 
-
-                <Navbar />
-                <LotesCliente
+                <LotesTransferencia
                 cuil_cuit ={usuario.cuil_cuit} />
 
-            </div>
-
-
-        </>
+        
+           
+        </React.Fragment>
+        
     );
-
 }

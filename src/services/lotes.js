@@ -53,7 +53,8 @@ const lotesClienteUsuario1= async  (cuil_cuit) => {
 const lotesCliente2= async  (cuil_cuit) => {
     //  console.log(cuil_cuit)
        let {data}  = await axios.get(baseUrl+'lotescliente2/'+cuil_cuit)
-       console.log(cuil_cuit)
+       console.log(data[0])
+
        const lotes=(data[0])
        console.log(data)
       
