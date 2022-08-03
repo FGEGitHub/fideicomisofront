@@ -26,7 +26,7 @@ useEffect(() => {
    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
    if (loggedUserJSON) {
      const userContext = JSON.parse(loggedUserJSON)
-     
+    
      setUserContext(userContext)
    
      servicioUsuario.setToken(userContext.token) 
@@ -78,7 +78,7 @@ return (
     <InusualContext.Provider value={inusualContext}>
   <NotiContext.Provider value={notiContext}>
 
-    {element}   
+    {element}
 
 </NotiContext.Provider>
 </InusualContext.Provider>

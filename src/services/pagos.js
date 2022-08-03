@@ -21,7 +21,7 @@ const detallespagoscuota= async  (id_cuota) => {
 const pagar= async  (pago) => {
    console.log(pago)
 // pago nivel 1
- // const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago))
+  const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago))
     
   
 }  
@@ -34,7 +34,7 @@ const rechazararpago= async  (form) => {
     return data
    } 
 
-
+///////aprobar pago nivel 2
 const aprobarpago= async  (id) => {
 console.log(id)
 

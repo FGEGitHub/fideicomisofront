@@ -31,10 +31,10 @@ export default function PagarCuota() {
     const designar = async (event) => {
      //   event.preventDefault()
        
-    
+     
     const rta = await servicioPagos.pagarnivel2(pago)
-        
-
+       
+    navigate('usuario2/detallecliente/'+rta)
 
     }
 
@@ -45,106 +45,106 @@ export default function PagarCuota() {
         if (loggedUserJSON) {
           const user = JSON.parse(loggedUserJSON)
           setPagos({ cuil_cuit: user.cuil_cuit,
-             id : params.id})
+            id : params.id})
+  
    
-    
-    
-        }
-    
-      }, [])
-    
+   
+       }
+   
+     }, [])
+   
 
 
 
-    const handleChange = (e) => {
-        console.log(e.target.value)
-        setPagos({ ...pago, [e.target.name]: e.target.value })
-    }
-    return (
 
-        <Fragment>
-            <Toolbar/>
-            <Box sx={{ minWidth: 275 }}>
-                <Card variant="outlined" >
+   const handleChange = (e) => {
+       console.log(e.target.value)
+       setPagos({ ...pago, [e.target.name]: e.target.value })
+   }
+   return (
 
-                    <form onSubmit={designar}>
-                          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                          Tipo de Pago
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'tipo',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                        >   <option  value={'IC3'}>Elegir</option>
-                            <option   value={'Transferencia'}>Transferencia</option>
-                         
-                        </NativeSelect> 
-                       
-                       
-                
+       <Fragment>
+           <Toolbar/>
+           <Box sx={{ minWidth: 275 }}>
+               <Card variant="outlined" >
+
+                   <form onSubmit={designar}>
+                         <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                         Tipo de Pago
+                       </InputLabel>
+                       <NativeSelect
+                           defaultValue={30}
+                           onChange={handleChange}
+                           inputProps={{
+                               name: 'tipo',
+                               id: 'uncontrolled-native',
+                              
+                           }}
+                       >   <option  value={'IC3'}>Elegir</option>
+                           <option   value={'Transferencia'}>Transferencia</option>
                         
-                        <TextField
-                         /* style ={{width: '25%'}} */
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Monto"
-                            name="monto"
-                            onChange={handleChange}
-                            fullWidth
-                            variant="filled"
-                            type={"Number"}
-                        />
-                        {/* <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Lote"
-                            name="lote"
-                            onChange={handleChange}
-                            fullWidth
-                            variant="filled"
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Parcela"
-                            name="parcela"
-                            onChange={handleChange}
-                            fullWidth
-                            variant="filled"
-                            type={"Number"}
-                        /> */}
+                       </NativeSelect> 
                       
                       
+               
+                       
+                       <TextField
+                        /* style ={{width: '25%'}} */
+                           autoFocus
+                           margin="dense"
+                           id="name"
+                           label="Monto"
+                           name="monto"
+                           onChange={handleChange}
+                           fullWidth
+                           variant="filled"
+                           type={"Number"}
+                       />
+                       {/* <TextField
+                           autoFocus
+                           margin="dense"
+                           id="name"
+                           label="Lote"
+                           name="lote"
+                           onChange={handleChange}
+                           fullWidth
+                           variant="filled"
+                       />
+                       <TextField
+                           autoFocus
+                           margin="dense"
+                           id="name"
+                           label="Parcela"
+                           name="parcela"
+                           onChange={handleChange}
+                           fullWidth
+                           variant="filled"
+                           type={"Number"}
+                       /> */}
+                     
+                     
 
 
-                        <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
+                       <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
 
-                    </form>
+                   </form>
 
-                </Card>
-                
-            </Box>
+               </Card>
+               
+           </Box>
 
-            {/*  {
-                                lotes.map((item, index) =>
-                                    //   item['']
-                                    <div>
-                                        <MenuItem value={10}>{item['zona']}  </MenuItem>
-                                    </div>
-                                )} */}
-
-
+           {/*  {
+                               lotes.map((item, index) =>
+                                   //   item['']
+                                   <div>
+                                       <MenuItem value={10}>{item['zona']}  </MenuItem>
+                                   </div>
+                               )} */}
 
 
 
 
-        </Fragment>
-    );
-}
+
+
+       </Fragment>
+   );}
