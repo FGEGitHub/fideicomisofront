@@ -8,9 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CardDos = () => {
 const navigate=useNavigate()
-    const abrirmodal = () => {
-       
-      };
+
 
 const ir = () => {
     navigate('/usuario/transferencias')
@@ -23,7 +21,7 @@ const ir = () => {
 
             <div className="container__article">
            
-                <div  className="box__article">
+                <div onClick={ir} className="box__article">
                 
                    <i onClick={ir}> < CurrencyExchangeIcon /></i>
                       <h5 onClick={ir}>Informar Transferencia </h5>

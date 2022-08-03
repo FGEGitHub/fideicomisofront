@@ -8,7 +8,6 @@ import SubirLegajo from '../../../components/usuario1/Legajo1/SubirLegajo';
 
 
 
-
 export default function Legajos() {
 
 
@@ -16,7 +15,7 @@ export default function Legajos() {
     return (
         <MenuUsuario1>
       <SubirLegajo />
-    </MenuUsuario1>  
+    </MenuUsuario1> 
     );
 
 }

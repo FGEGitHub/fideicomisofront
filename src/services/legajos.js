@@ -13,8 +13,10 @@ const subirlegajode = async ( formdata) => {
  
 
   console.log(formdata)
+
  await axios.post('http://52.203.247.51:4000/links/subirlegajodni', formdata)
   //await axios.post('http://52.90.82.154:4000/links/subirlegajodni', formdata)
+
 
   
   
