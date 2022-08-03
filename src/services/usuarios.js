@@ -34,7 +34,7 @@ const registro = async (datos) => {
 
 
  
-     return dataa
+     //return dataa
       
  }
 
