@@ -13,7 +13,7 @@ import { Container, Box, CssBaseline } from '@mui/material'
 
 export default function Transferencias() {
     const usuario  = useUser().userContext
-    console.log(usuario)
+    console.log('usuario')
 
     return (
         <React.Fragment>
@@ -22,8 +22,15 @@ export default function Transferencias() {
             
          
 
+<<<<<<< HEAD
                 <LotesTransferencia
                 cuil_cuit ={usuario.cuil_cuit} />
+=======
+
+                <Navbar />
+                <LotesCliente
+                />
+>>>>>>> origin
 
         
            

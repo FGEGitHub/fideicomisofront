@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,9 +6,10 @@ import { Button } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import servicioPagos from '../../services/pagos'
-import  useUser from '../../hooks/useUser'
-import {  useState } from "react";
-
+import NativeSelect from '@mui/material/NativeSelect';
+import useUser from '../../hooks/useUser'
+import servicioLotes from '../../services/lotes'
+import React, { useEffect, useState, Fragment } from "react";
 const currencies = [
   {
     value: 'CBU',
@@ -21,18 +22,40 @@ const currencies = [
 
 ];
 
-export default function ModalPago(props) {
-    const [open, setOpen] = React.useState(false);
-    //const usuario  = useUser().userContext
-    const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
-    const cuil_cuit=preba.cuil_cuit
-    const [pago, setPago] = useState({
-      cuil_cuit:cuil_cuit,
-      id: props.id,
-       
-      })
-    
-     console.log(props.fraccion)
+
+export default function SelectTextFields(props) {
+  const [open, setOpen] = React.useState(false);
+  //const usuario  = useUser().userContext
+
+  const [lotes, setLotes] = useState([''])
+  useEffect(() => {
+
+    traer()
+
+  }, [])
+
+
+  const traer = async () => {
+    console.log('lotes')
+    const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+
+    const lotes = await servicioLotes.lotesCliente2(prueba.cuil_cuit)
+    console.log(lotes)
+    setLotes(lotes)
+
+
+
+
+  }
+  const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+  const cuil_cuit = preba.cuil_cuit
+  const id = props.id
+  const [pago, setPago] = useState({
+
+    cuil_cuit: cuil_cuit,
+
+
+  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,39 +66,44 @@ export default function ModalPago(props) {
   };
 
 
-  const handleChange = (e) =>{
-    console.log(e)
-  setPago({  ...pago, [e.target.name]: e.target.value })}
-////
+  const handleChange = (e) => {
+    setPago({ ...pago, ['id']: props.id })
+    setPago({ ...pago, [e.target.name]: e.target.value })
+
+
+    console.log(pago)
+  }
+  ////
   const pagar = async (event) => {
     event.preventDefault();
+
     console.log(pago)
     try {
 
       await servicioPagos.pagar(
-        pago,
-       
-        
-     )
- 
-     
-     } catch (error) {
-       console.error(error);
-       console.log('Error algo sucedio')
-    
-     }
+        pago
+
+
+      )
+
+
+    } catch (error) {
+      console.error(error);
+      console.log('Error algo sucedio')
+
+    }
 
     setOpen(false);
   };/////
   const [currency, setCurrency] = React.useState('EUR');
 
-/*   const handleChange = (event) => {
-    setCurrency(event.target.value);
-  }; */
+  /*   const handleChange = (event) => {
+      setCurrency(event.target.value);
+    }; */
 
 
   return (
-    
+
     <Box
       component="form"
       sx={{
@@ -84,21 +112,21 @@ export default function ModalPago(props) {
       noValidate
       autoComplete="off"
     >
-    <Button variant="outlined" onClick={handleClickOpen}>
-        Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Lote {props.id}
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Lote {props.lote}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-            <div>
+          <div>
             <form onSubmit={pagar}>
-            
-                <TextField component="form"
-            sx={{
-                '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-            
+
+              {/* <TextField component="form"
+                sx={{
+                  '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                
+
                 id="outlined-select-currency"
                 select
                 label="CBU"
@@ -106,83 +134,179 @@ export default function ModalPago(props) {
                 name="cbu"
                 onChange={handleChange}
                 helperText="Por favor ingrese su CBU"
-                >
+              >
                 {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                  <MenuItem key={option.value} value={option.value}>
                     {option.label}
-                    </MenuItem>
+                  </MenuItem>
                 ))}
-                </TextField>
-               
+              </TextField> */}
 
-                <Box
-                component="form"
-            sx={{
+              <NativeSelect
+                defaultValue={30}
+                onChange={handleChange}
+                inputProps={{
+                  name: 'cbu',
+                  id: 'uncontrolled-native',
+
+                }}
+
+              > <option value={''}>Elegir</option>
+                <option value={'1'}>CBU1</option>
+                <option value={'2'}>CBU2</option>
+
+
+
+              </NativeSelect>
+              <br />
+              {
+                lotes.map((item, index) =>
+                  <div>
+                    <NativeSelect
+                      defaultValue={30}
+                      onChange={handleChange}
+                      inputProps={{
+                        name: 'id',
+                        id: 'uncontrolled-native',
+
+                      }}
+
+                    >
+
+                      <Button key={index} variant="contained">      {item['zona']}F{item['fraccion']}M{item['manzana']}L{item['lote']}</Button>
+
+                      <option key={index}  value={item['id']}>Elegir</option>
+                      <option key={index}  value={item['id']}>  {item['zona']}F{item['fraccion']}M{item['manzana']}L{item['lote']}</option>
+
+                           </NativeSelect> 
+                  </div>
+                )
+              }
+
+
+
+
+
+      
+            <br />
+            <NativeSelect
+              defaultValue={30}
+              onChange={handleChange}
+              inputProps={{
+                name: 'mes',
+                id: 'uncontrolled-native',
+
+              }}
+
+            > <option value={''}>Elegir</option>
+              <option value={'1'}>Enero</option>
+              <option value={'2'}>Febrero</option>
+              <option value={'3'}>Marzo</option>
+              <option value={'4'}>Abril</option>
+              <option value={'5'}>Mayo</option>
+              <option value={'6'}>Junio</option>
+              <option value={'7'}>Julio</option>
+              <option value={'8'}>Agosto</option>
+              <option value={'9'}>Septiembre</option>
+              <option value={'10'}>Octubre</option>
+              <option value={'11'}>Noviembre</option>
+              <option value={'12'}>Diciebre</option>
+
+
+            </NativeSelect>
+            <NativeSelect
+              defaultValue={30}
+              onChange={handleChange}
+              inputProps={{
+                name: 'anio',
+                id: 'uncontrolled-native',
+
+              }}
+
+            > <option value={''}>Elegir</option>
+              <option value={'2015'}>2015</option>
+              <option value={'2016'}>2016</option>
+              <option value={'2017'}>2017</option>
+              <option value={'2018'}>2018</option>
+              <option value={'2019'}>2019</option>
+              <option value={'2020'}>2020</option>
+              <option value={'2021'}>2021</option>
+              <option value={'2022'}>2022</option>
+              <option value={'2023'}>2023</option>
+              <option value={'2024'}>2024</option>
+
+
+            </NativeSelect>
+
+
+            <Box
+              component="form"
+              sx={{
                 '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
+              }}
+              noValidate
+              autoComplete="off"
             >
-            <TextField  onChange={handleChange} id="filled-basic" label="Monto" name="monto" variant="filled" />
+              <TextField onChange={handleChange} id="filled-basic" label="Monto" name="monto" variant="filled" />
             </Box>
             <Box
-                component="form"
-            sx={{
+              component="form"
+              sx={{
                 '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
+              }}
+              noValidate
+              autoComplete="off"
             >
-       
+
             </Box>
             <TextField component="form"
-            sx={{
+              sx={{
                 '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-            
-                id="outlined-select-currency"
-                select
-                label="CBU"
-                value={currency}
-                name="cbu"
-                onChange={handleChange}
-                helperText="Por favor ingrese su CBU"
-                >
-                {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-                </TextField>
-           
+              }}
+              noValidate
+              autoComplete="off"
+
+              id="outlined-select-currency"
+              select
+              label="CBU"
+              value={currency}
+              name="cbu"
+              onChange={handleChange}
+              helperText="Por favor ingrese su CBU"
+            >
+              {currencies.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <TextField
-           
-             onChange={handleChange}
-            name= "fecha"
+              <TextField
+
+                onChange={handleChange}
+                name="fecha"
                 id="date"
                 label="Fecha de pago"
                 type="month"
                 defaultValue="2020-01"
                 sx={{ width: 220 }}
                 InputLabelProps={{
-                shrink: true,
+                  shrink: true,
                 }}
-            />
-            </Box> 
-            <Button  type="submit" size="small" variant="contained">
-                        Subir Comprobante 
+              />
+            </Box>
+            <Button type="submit" size="small" variant="contained">
+              Subir Comprobante
             </Button>
-            </form>
-                </div>
-        </DialogContent>
-        </Dialog>
-    </Box>
+          </form>
+        </div>
+      </DialogContent>
+    </Dialog>
+    </Box >
 
-    
-    
-    
+
+
+
   );
 }

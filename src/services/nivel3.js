@@ -11,7 +11,7 @@ const agregariccgral= async  (datos) => {
 }  
 const traerhistorial= async  () => {
    
-    const {data } =await axios.get(baseUrl+'nivel3/historialicc')
+    const {data } =await axios.get(baseUrl+'/historialicc')
 
     return data 
 }  

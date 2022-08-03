@@ -19,7 +19,11 @@ const LotesTransferencia = (props) => {
      
         const lotes = await servicioLotes.lotesCliente2(preba.cuil_cuit)
      //  console.log(lotes)
+<<<<<<< HEAD
       // setLotes(lotes)
+=======
+      setLotes(lotes)
+>>>>>>> origin
 
 
 
