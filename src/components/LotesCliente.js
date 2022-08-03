@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
+
+import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
+
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
@@ -126,6 +129,11 @@ const LotesCliente = (props) => {
 
         },
         {
+            name: "Ajuste_ICC",
+            label: "Ajuste ICC",
+
+        },
+        {
             name: "cuota_con_ajuste",
             label: "Cuota con ajuste",
 
@@ -135,14 +143,10 @@ const LotesCliente = (props) => {
             label: "Saldo Real",
 
         },
-        {
-            name: "Ajuste_ICC",
-            label: "Ajuste ICC",
-
-        },
+     
 
         {
-            name: "Actions",
+            name: "Acciones",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -169,17 +173,20 @@ const LotesCliente = (props) => {
             {
                 lotes.map((item, index) =>
                     <div>
-                        <Button key={index} variant="contained" onClick={() => { vercuotas(item['id']) }}>{item['zona']}F{item['fraccion']}M{item['manzana']}L{item['lote']}</Button>
+                        <Button key={index} variant="contained" onClick={() => {  vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']}F{item['fraccion']}-M{item['manzana']}-L{item['lote']}</Button>
                         {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
 
                         <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + item['id']) }} >
                             Agregar cuotas al lote
                         </Button>
                    
+                        <BorrarCuotas  
+                        id ={  item['id']}  />
+                        
+                        <br/><br/>
                         <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { verief( item['id']) }} >
                             Informe estado financiero
                         </Button>
-
 
                     </div>
                 )

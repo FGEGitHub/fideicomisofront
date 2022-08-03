@@ -3,7 +3,7 @@ import axios from "axios"
 
 
 
-const  baseUrl = 'http://52.203.247.51:4000/cuotas/'
+const  baseUrl = 'http://52.90.82.154:4000/cuotas/'
 //const  baseUrl = 'http://localhost:4000/cuotas/'
 
 
@@ -43,6 +43,15 @@ const borrarcuota = async  (id) => {
      return rta.data 
  } 
 
+ const borrarcuotas = async  (id) => {
+    
+    console.log(id)
+     const rta  = await axios.get(baseUrl+'borrartodas/'+id)
+     alert(rta.data)
+     
+     //return rta.data 
+ } 
+
 const agregarCuotas= async  (estadoCuotas) => {
   
    console.log(estadoCuotas)
@@ -52,4 +61,4 @@ const agregarCuotas= async  (estadoCuotas) => {
     return data
 }  
 
-export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief};
+export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};

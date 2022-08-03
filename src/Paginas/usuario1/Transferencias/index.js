@@ -11,7 +11,7 @@ import LotesCliente from '../../../components/usuario1/LotesTransferencia'
 
 export default function Transferencias() {
     const usuario  = useUser().userContext
-    console.log(usuario)
+    console.log('usuario')
 
     return (
         <>
@@ -20,7 +20,7 @@ export default function Transferencias() {
 
                 <Navbar />
                 <LotesCliente
-                cuil_cuit ={usuario.cuil_cuit} />
+                />
 
             </div>
 
