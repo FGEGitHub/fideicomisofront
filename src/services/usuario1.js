@@ -21,7 +21,7 @@ console.log(data.data)
 } 
 
 const lotesCliente= async  (cuil_cuit) => {
-    
+    console.log('u1')
       let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit)
   
       console.log(data)

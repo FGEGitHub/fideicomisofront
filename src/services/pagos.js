@@ -34,7 +34,7 @@ const rechazararpago= async  (form) => {
     return data
    } 
 
-
+///////aprobar pago nivel 2
 const aprobarpago= async  (id) => {
 console.log(id)
 

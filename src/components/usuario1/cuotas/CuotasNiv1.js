@@ -89,7 +89,7 @@ const CuotasNiv1 = (props) => {
 
 
     const traer = async (preba) => {
-        console.log('user')
+
         console.log(preba.cuil_cuit)
         console.log('user')
         const lotes = await servicioUsuario1.lotesCliente(preba.cuil_cuit)
