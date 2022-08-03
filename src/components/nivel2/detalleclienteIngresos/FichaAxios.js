@@ -52,7 +52,7 @@ const FichaAxios = (props) => {
     <div className="profile">
       <Grid Container style={{ direction: "column", alignItems:"center", justifyContent: "center", display: "flex"}}>
         <Grid item xs={8} style={{ direction: "column", justifyContent: "center", display: "flex" }}>
-          <Avatar sx={{ width: 170, height: 140 }}>H</Avatar>
+        <Avatar sx={{ width: 170, height: 140 }}> <AccountCircle fontSize="large"/> </Avatar>
         </Grid>
         <Grid item xs={8}style={{ }}>
   

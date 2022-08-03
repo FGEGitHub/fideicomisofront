@@ -173,9 +173,7 @@ const Login = () => {
               </Link>
             </Typography>
             <Typography >¿No estas registrado?
-              <Link href="#" >
-                Registrarse
-              </Link>
+                <Registro />
             </Typography>
           </Paper>
         </Grid>
@@ -206,9 +204,6 @@ const Login = () => {
 
 
 
-        {  <Registro
-      
-      /> }
         
 
     </>

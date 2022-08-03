@@ -66,15 +66,16 @@ export default function Ingresos() {
           <TextField
             autoFocus
             margin="dense"
+            type={'number'}
             id="name"
             label=""
             name="ingreso"
             onChange={handleChange}
             fullWidth
-            variant="standard"
+            variant="filled"
           />
           <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <Button  type="submit">Enviar</Button>
         </DialogActions>
            </form>

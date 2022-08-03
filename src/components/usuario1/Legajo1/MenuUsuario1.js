@@ -34,17 +34,17 @@ export default function MenuUsuario1({children}) {
     { 
       text: 'Declaraciones Juradas', 
       icon: <InsertDriveFileIcon color="primary" />, 
-      path: '/declaraciones-juradas' 
+      path: '/declaracionesjuradas' 
     },
     { 
       text: 'Ingresos Declarados',
       icon: <PriceCheckIcon color="primary" />, 
-      path: '/ingresos-declarados' 
+      path: '/ingresosdeclarados' 
     },
     {
       text: 'Datos de la Sociedad',
       icon: <FilePresentIcon color="primary" />,
-      path: '/datos-sociedad'
+      path: '/legajo'
     },
     {
       text: 'CBU Declarado',

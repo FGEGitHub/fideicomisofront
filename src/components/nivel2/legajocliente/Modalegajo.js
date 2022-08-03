@@ -98,7 +98,7 @@ export default function FormDialog(props) {
                         <option value={'DjIva'}>DJ IVA</option>
                         <option value={'PagosPrevisionales'}>Pagos Provisionales</option>
                         <option value={'DjDatospers'}>DJ Datos Personales</option>
-                        <option value={'DjCalidadPerso'}>DJ Calidad Persona</option>
+                        <option value={'DjCalidadPerso'}>DJ Calidad de Persona</option>
                         <option value={'DjOrigenFondos'}>DJ Origen de fondos</option>
 
 
@@ -165,7 +165,7 @@ export default function FormDialog(props) {
                         fullWidth
                         variant="standard"
                     />
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Cancelar</Button>
                     <Button onClick={enviar}>Enviar</Button>
                 </DialogActions>
             </Dialog>

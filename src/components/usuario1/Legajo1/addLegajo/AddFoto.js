@@ -1,20 +1,50 @@
 import React from 'react';
-import { Paper } from '@mui/material';
+import { Paper, Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import ListaDeProgreso from './listaDeProgreso/ListaDeProgreso';
-import ImageList from './ImagenList';
+import servicioLegajo from '../../../../services/legajos'
+import BackupIcon from '@material-ui/icons/Backup';
+import Box from '@mui/material/Box';
 
 const AddFoto = () => {
-  const [files, setFiles] = useState([]);
+  const handleClick = () => {
+    console.log('click');
+  };                             
+  const [file, setFile] = useState(null);
+
   const onDrop = useCallback((acceptedFiles) => {
-    setFiles(acceptedFiles);
+    setFile(acceptedFiles);
     console.log(acceptedFiles);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
     onDrop,
-    accept: { 'image/*': [] },
+    multiple: true,
+    accept: 'document/*',
+    maxFiles: 3,
+
   });
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  const selecthandler = e =>{
+   setFile(e.target.files[0])
+   console.log(file)
+  }
+
+  const enviar = () =>{
+   if (!file){
+    alert('No seleccionaste el archivo')
+    return
+   }
+   const formdata = new FormData()
+   formdata.append('image',file)
+   console.log(formdata)
+   servicioLegajo.subirprueba(formdata)
+
+   }
   return (
     <>
       <Paper
@@ -36,9 +66,16 @@ const AddFoto = () => {
           <em>(images with *.jpeg, *.png, *.jpg extenciones aceptadas)</em>
         </div>
       </Paper>
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
+      </Box>
+
       
-      <ListaDeProgreso {...{files}} />
-      <ImageList />
     </>
   );
 };

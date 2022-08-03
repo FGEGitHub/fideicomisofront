@@ -9,13 +9,14 @@ import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
-import NAvBar from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Usuario1 from "../Paginas/usuario1/menuusuario1";
 import Cuotas from "../Paginas/usuario1/Cuotas";
 import Aprobaciones from "../Paginas/Aprobaciones"
 import Legajos from "../Paginas/usuario1/Legajos"
-import ingresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
+import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
+import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
 
 import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
 import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
@@ -40,18 +41,20 @@ import Icc from "../Paginas/Nivel3/Icc"
 
 
 const Rutas = [
-	 <NAvBar/> ,
+	
+	 <Navbar/> ,
 
-	 {path: '/',element: (<Login />)},
+	{path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
 
-	
+	<Navbar/> ,
 	{ path: '/usuario/menu', element: < Usuario1 /> },
 	{ path: '/usuario/Legajos', element: < Legajos /> },
 	{ path: '/usuario/transferencias', element: < Transferencias /> },
-	{ path: '/usuario/ingresosdeclarados', element: < ingresosDeclarados /> },
+	{ path: '/usuario/ingresosdeclarados', element: < IngresosDeclarados /> },
 	{ path: '/usuario/cuotas', element: < Cuotas /> },
 	{ path: '/usuario/notificaciones', element: < Notificaciones /> },
+	{ path: '/usuario/declaracionesjuradas', element: < DeclaracionesJuradas /> },
 	
 	{ path: '/usuario2/clientes', element: <Clientes /> },
 	{ path: '/usuario2/lotes', element: <Lotes /> },
@@ -68,8 +71,8 @@ const Rutas = [
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
-	{ path: '/nivel3/', element: <Principal /> },
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusualesMensuales /> },
+	{ path: '/nivel3/', element: <Principal /> },
 	{ path: '/nivel3/icc', element: <Icc /> },
 
 

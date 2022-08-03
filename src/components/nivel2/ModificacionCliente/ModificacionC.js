@@ -15,6 +15,10 @@ import "../detalleclienteIngresos/profile.css";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
+import Card from "@mui/material/Card";
+import CssBaseline from '@mui/material/CssBaseline';
+
+
 
 const ModificacionC = (props) => {
   const navigate = useNavigate();
@@ -82,15 +86,16 @@ const ModificacionC = (props) => {
   return (<>    
      <form  onSubmit={handleDeterminar}>
    {cliente.map((client) =>( 
+    <Card>
     <div className="profile">
-      <Grid Container>
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-          <Avatar sx={{ width: 170, height: 140 }}>H</Avatar>
-        </Grid>
-        <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
-  
+    <CssBaseline />
+
+    <Grid Container style={{direction: "column", alignItems:"center", justifyContent: "center", display: "flex"}}>
+        <Avatar sx={{ width: 170, height: 140,  mr: 1}}> <AccountCircle fontSize="large"/> </Avatar>
+
+      
             <Container>
-            <Box>
+            <Box display="flex">
             <h5>
             Datos Personales del Cliente
             </h5>
@@ -102,6 +107,7 @@ const ModificacionC = (props) => {
                   label="CUIL"
                   id="cuil"
                   name="cuit_cuil"
+                  type={"Number"}
                  // defaultValue="CUIL"
                  defaultValue= {client.cuil_cuit}
                  onChange={handleChange}
@@ -285,14 +291,14 @@ const ModificacionC = (props) => {
               </Box>
             </Container>
           
-        </Grid>
+          
 
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
          
-         
-        </Grid>
-      </Grid>
+         </Grid>
+
     </div>
+
+    </Card>
     ))}</form> </>);
 }
 

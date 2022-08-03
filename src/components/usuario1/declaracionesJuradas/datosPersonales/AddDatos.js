@@ -2,11 +2,11 @@ import React from 'react';
 import { Paper, Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { ThemeContext } from '@emotion/react';
 import servicioLegajo from '../../../../services/legajos'
+import BackupIcon from '@material-ui/icons/Backup';
+
+
 const AddDatos = () => {
   const handleClick = () => {
     console.log('click');
@@ -17,13 +17,21 @@ const AddDatos = () => {
     setFile(acceptedFiles);
     console.log(acceptedFiles);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
     onDrop,
+    multiple: false,
+    accept: 'document/*',
 
   });
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
 
   const selecthandler = e =>{
    setFile(e.target.files[0])
+   console.log(file)
   }
 
   const enviar = () =>{
@@ -53,13 +61,27 @@ const AddDatos = () => {
           '&:hover': { border: '1px solid #ccc' },
         }}
       >
-        <input onChange={selecthandler}  type="file" />
- 
-
-          <Button onClick={enviar}>Enviar</Button>
-
+        <div style={{ padding: '16px' }} {...getRootProps()}>
+          <input {...getInputProps({
+            onChange: selecthandler,
+          })} />
+          {isDragActive ? (
+            <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+          ) : (
+            <p>Arrastra hasta aqui el archivo descargado con tus datos personales</p>
+          )}
+          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+        </div>
       </Paper>
-
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
+      </Box>
+      
     </>
   );
 };
