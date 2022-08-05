@@ -29,12 +29,12 @@ export default function PagarCuota() {
     
 
     const designar = async (event) => {
-     //   event.preventDefault()
+      event.preventDefault()
        
      
     const rta = await servicioPagos.pagarnivel2(pago)
-       
-    navigate('usuario2/detallecliente/'+rta)
+       alert(rta[1])
+    navigate('/usuario2/detallecliente/'+rta[0])
 
     }
 

@@ -26,7 +26,7 @@ export default function Transferencias() {
               <Cuotas 
               user = {1}
               user2 = {usuarioo}
-             // user3 = {usuarioo}
+         
               
               /> 
 
