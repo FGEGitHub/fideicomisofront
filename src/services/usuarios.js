@@ -27,13 +27,13 @@ const usuarios = async () => {
 
 
 const registro = async (datos) => {
+   console.log(datos)
+ 
+    // const data = await axios.post('http://localhost:4000/signupp', datos)
+     const dataa = await axios.post('http://52.90.82.154:4000/signupp', datos)
    
  
-    // const dataa = await axios.post('http://localhost:4000/signupp', datos)
-     const dataa = await axios.post('http://52.90.82.154:4000/signupp', datos)
-
- 
-     return dataa
+     return data.data
       
  }
 

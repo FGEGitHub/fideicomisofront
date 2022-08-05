@@ -1,5 +1,5 @@
 import axios from "axios"
-const  baseUrl = 'http://52.203.247.51:4000/'
+const  baseUrl = 'http://52.90.82.154:4000/'
 //const  baseUrl = 'http://localhost:4000/'
 
 const pagarnivel2= async  (pago) => {
@@ -52,7 +52,7 @@ const aprobaciones= async  () => {
 }  
 
 const pagosinusuales= async  () => {
-  
+  console.log('i')
 
  const {data } = await axios.get(baseUrl+'pagos/listainusual')
    

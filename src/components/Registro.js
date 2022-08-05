@@ -16,33 +16,28 @@ export default function Ingresos() {
     let cuil_cuit = params.cuil_cuit
    
   const [open, setOpen] = React.useState(false);
-  const [ingreso, setIngreso] = useState({
-    ingreso: "", 
-  })
+  const [usuario, setUsuario] = useState({
+    cuil_cuit: "",
+    password: "",
+});
   const handleChange = (e) =>{
-    console.log(ingreso)
-  setIngreso({  ...ingreso, [e.target.name]: e.target.value })}
+    console.log(usuario)
+    setUsuario({  ...usuario, [e.target.name]: e.target.value })}
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleDeterminar = async (event) => {
     event.preventDefault();
-    try {
 
-      await servicioUsuario.registro({
-        ingreso
-     })
+    const rta=  await servicioUsuario.registro(
+      usuario
+     )
+     alert(rta)
  
-     
-     } catch (error) {
-       console.error(error);
-       console.log('Error algo sucedio')
-   
-     
-     }
+    
 
-    setOpen(false);
+   setOpen(false);
   };
   
   const handleClose = () => {
@@ -58,14 +53,14 @@ export default function Ingresos() {
         <DialogTitle>Registro</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Ingrese el valor en pesos 
+          Complete todos los datos 
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="cuil_cuit "
+            label="cuil_cuit"
             name="cuil_cuit"
             onChange={handleChange}
             fullWidth
@@ -76,12 +71,13 @@ export default function Ingresos() {
             margin="dense"
             id="name"
             type= "password"
-            label="password "
-            name="password "
+            label="password"
+            name="password"
             onChange={handleChange}
             fullWidth
             variant="standard"
           />
+          
           <TextField
             autoFocus
             margin="dense"
@@ -92,6 +88,17 @@ export default function Ingresos() {
             fullWidth
             variant="standard"
           />
+             <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Numero de cliente"
+            name="nro_cliente"
+            onChange={handleChange}
+            fullWidth
+            variant="standard"
+          />
+          
           <TextField
             autoFocus
             margin="dense"
