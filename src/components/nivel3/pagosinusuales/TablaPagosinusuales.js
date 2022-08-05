@@ -29,7 +29,7 @@ const PagosInusuales = () => {
     
 
 const getPagosi = async () => {
-
+        console.log('getPagosi')
         const pagos = await servicioPagos.pagosinusuales({
 
         })
@@ -68,18 +68,14 @@ const getPagosi = async () => {
     });
     // definimos las columnas
     const columns = [
-        {
-            name: "id",
-            label: "ID",
-
-        },
+     
         {
             name: "cuil_cuit",
             label: "Cuil/cuit",
         },
         {
-            name: "tipo",
-            label: "Tipo",
+            name: "Nombre",
+            label: "nombre",
 
         },
         {

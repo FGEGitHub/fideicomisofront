@@ -35,6 +35,7 @@ const LotesTransferencia = (props) => {
 
         <Fragment>
             <br></br><br></br><br></br><br></br>
+
             {
                 lotes.map((item, index) =>
                     <div>

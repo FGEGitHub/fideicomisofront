@@ -52,7 +52,7 @@ const aprobaciones= async  () => {
 }  
 
 const pagosinusuales= async  () => {
-  
+  console.log('i')
 
  const {data } = await axios.get(baseUrl+'pagos/listainusual')
    

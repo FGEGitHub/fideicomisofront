@@ -10,8 +10,8 @@ const agregariccgral= async  (datos) => {
    
 }  
 const traerhistorial= async  () => {
-   
-    const {data } =await axios.get(baseUrl+'/historialicc')
+   console.log(1)
+    const {data } =await axios.get(baseUrl+'historialicc')
 
     return data 
 }  
