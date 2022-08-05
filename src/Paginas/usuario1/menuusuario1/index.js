@@ -8,12 +8,13 @@ import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
 import Notificaciones from '../../../components/usuario1/Notificaciones'
 import  useUser from '../../../hooks/useUser'
+import { Divider, Toolbar } from '@mui/material';
 
 
 
 
 
-export default function MenuUsuario2() {
+export default function MenuUsuario1() {
 
     const usuario  = useUser().userContext
 
@@ -24,12 +25,18 @@ export default function MenuUsuario2() {
 
 
                 <Navbar /> 
-                <br/><br/><br/><br/>
                 <Notificaciones 
                     />  
                 <Banner />
+                <Divider variant="middle" />
+
                 <Cards />
+                <Divider variant="middle" />
+
                 <Faq />
+                <Toolbar />
+                <Divider variant="middle" />
+
                 <Footer />
 
             </div>

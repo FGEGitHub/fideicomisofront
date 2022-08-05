@@ -109,9 +109,7 @@ export default function BoxSx() {
                 <IconButton aria-label="delete">
                   <TwitterIcon />
                 </IconButton>
-                <IconButton aria-label="delete">
-                  <GitHubIcon />
-                </IconButton>
+                
               </Grid>
               <Grid item xs={12} spacing={2}>
                 <img src={logo} alt="logo" style={islogo} />

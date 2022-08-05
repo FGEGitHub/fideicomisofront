@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import servicioPagos from '../../../services/pagos'
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
@@ -24,6 +25,8 @@ const PagosInusuales = () => {
     }, [])
 
     ///
+
+    
 
 const getPagosi = async () => {
         console.log('getPagosi')
@@ -52,6 +55,17 @@ const getPagosi = async () => {
           </>
         );
       }
+      //Styles de la tabla
+      const StyledTable = () =>
+    createTheme({
+      overrides: {
+        MUIDataTableBodyRow: {
+          root: {
+            backgroundColor: "#f5f5f5",
+          }
+        }
+      }
+    });
     // definimos las columnas
     const columns = [
      
@@ -100,8 +114,11 @@ const options = {
 };
 // renderiza la data table
 return (
+    
+
     <div>
-        <MUIDataTable
+        <ThemeProvider theme={StyledTable()}>
+        <MUIDataTable 
             title={"Lista de pagos inusuales"}
             data={pagos}
             columns={columns}
@@ -114,8 +131,8 @@ return (
             ]}
             options={options}
 
-
         />
+        </ThemeProvider>
     </div>
 )
 }
