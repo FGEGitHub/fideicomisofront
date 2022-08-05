@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 const  baseUrl ='http://52.90.82.154:4000/lotes/'
-afc6005aecd233da70dbe9f4abe147a127379d
+
 
 
 const lista= async  () => {

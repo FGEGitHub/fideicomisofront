@@ -335,7 +335,8 @@ export default function MenuUsuario2() {
       console.log('entra')
       const respuesta = await servicioCuotas.agregarCuotas(estadoCuotas)
      alert(respuesta[1])
-      navigate('/usuario2/detallecliente/'+respuesta[0])
+      navigate('/usuario2/detallecliente/'+respuesta[0]) 
+      
 
     } catch (error) {
       console.error(error);
