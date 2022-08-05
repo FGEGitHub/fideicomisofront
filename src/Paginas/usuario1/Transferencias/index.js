@@ -1,10 +1,11 @@
 
-
-
-import Navbar from '../../../components/Navbar'
+import React from 'react';
+import Navbar from '../../../components/usuario1/Navbar1'
 import  useUser from '../../../hooks/useUser'
 import LotesCliente from '../../../components/usuario1/LotesTransferencia'
-
+import { Divider, Toolbar } from '@mui/material'
+import Footer from '../../../components/usuario1/Footer'
+import { Container, Box, CssBaseline } from '@mui/material'
 
 
 

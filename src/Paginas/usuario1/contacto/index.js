@@ -18,11 +18,9 @@ export default function Contact() {
             <Toolbar />
             
             <Container maxWidth="lg">
-                <Box component="span" sx={{ p: 4}}>
-
                 <Contacto />
-
-                </Box>
+                <Divider variant="middle" />
+                
         
             </Container>
             <Toolbar />

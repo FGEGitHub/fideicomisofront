@@ -52,9 +52,11 @@ export default function Ingresos() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Registro</DialogTitle>
         <DialogContent>
+
           <DialogContentText>
           Complete todos los datos 
           </DialogContentText>
+
           <form  onSubmit={handleDeterminar}> 
           <TextField
             autoFocus
