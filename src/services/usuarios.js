@@ -35,7 +35,9 @@ const registro = async (datos) => {
    
 
  
+
      return data.data
+
       
  }
 

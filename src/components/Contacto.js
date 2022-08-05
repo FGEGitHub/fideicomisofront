@@ -6,6 +6,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 // Packages
 import React, { useState } from "react";
+import { Divider, Toolbar, Typography } from "@mui/material";
+
 import axios from "axios";
 // Constants
 const HOOK_ID = "cb662cd3-488f-49af-a544-78cc110fffc4";
@@ -84,13 +86,21 @@ function Contacto() {
 
   return (
     <div className="App">
-      <h2>
-        <a href={"https://" + SERVER} target="_blank" rel="noreferrer">
-          Fideicomiso de Administración Santa Catalina
-        </a>{" "}
-      </h2>
-      <h2>Formulario de Contacto</h2>
+    <Box component="span" sx={{ p: 4}}>
+                    <Grid container spacing={2} justifyContent="center">
+                    <Typography color="primary" alingContent="center" variant="h4" component="h1" gutterBottom>
+                        Fideicomiso de Administración Santa Catalina
+                    </Typography>
+
+                    </Grid>
+                </Box>
+                <Divider variant="middle" />
+                <Toolbar />
+                
       <Box sx={{ flexGrow: 1, mx: "2%" }}>
+      <Typography alingContent="center" variant="h5" component="h1" gutterBottom>
+                    Formulario de Contacto
+                    </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
