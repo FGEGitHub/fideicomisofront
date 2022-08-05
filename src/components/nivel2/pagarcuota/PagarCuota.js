@@ -24,6 +24,8 @@ export default function PagarCuota() {
         /////////asignar lote 0 caso que no se seleccione
     })
 
+
+    
     
 
     
