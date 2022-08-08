@@ -55,4 +55,13 @@ const noticliente= async  (cuil_cuit) => {
     return(data)
    
 }
-export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief};
+
+
+///legajo
+const subirprueba = async (formdata) => {
+    console.log(formdata)
+    const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata)
+    console.log(data)
+  
+  }
+export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba};

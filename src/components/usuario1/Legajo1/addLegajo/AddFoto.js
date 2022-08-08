@@ -6,15 +6,17 @@ import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
 import Box from '@mui/material/Box';
 
-const AddFoto = () => {
+const AddFoto = (props) => {
   const handleClick = () => {
     console.log('click');
   };                             
   const [file, setFile] = useState(null);
 
+
   const onDrop = useCallback((acceptedFiles) => {
     setFile(acceptedFiles);
-    console.log(acceptedFiles);
+   
+  
   }, []);
   const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
     onDrop,
@@ -28,7 +30,10 @@ const AddFoto = () => {
       {file.path} - {file.size} bytes
     </li>
   ));
-
+  const handleChange = (e) => {
+    setFile({ ...file, [e.target.name]: e.target.value })
+    
+}
   const selecthandler = e =>{
    setFile(e.target.files[0])
    console.log(file)
@@ -39,8 +44,12 @@ const AddFoto = () => {
     alert('No seleccionaste el archivo')
     return
    }
-   const formdata = new FormData()
-   formdata.append('image',file)
+   let formdata = new FormData()
+   console.log(file)
+   formdata.append('image', file)
+   formdata.append('tipo','dni')
+   formdata.append('cuil_cuit', props.cuil_cuit)
+ 
    console.log(formdata)
    servicioLegajo.subirprueba(formdata)
 
@@ -57,7 +66,7 @@ const AddFoto = () => {
         }}
       >
         <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
+          <input {...getInputProps()} onChange={handleChange}/>
           {isDragActive ? (
             <p style={{ color: 'green' }}>Suelta aqui la foto</p>
           ) : (

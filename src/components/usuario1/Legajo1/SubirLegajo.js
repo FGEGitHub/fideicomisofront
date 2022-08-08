@@ -1,7 +1,7 @@
 import { StepButton, Stepper, Step, Stack, Button, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import AddFoto from "./addLegajo/AddFoto";
 import AddAfip from "./addAfip/AddAfip";
 import AddDomicilio from "./addDomicilio/AddDomicilio";
@@ -17,6 +17,17 @@ const SubirLegajo = () => {
         {label: 'Acta del organo decisorio designado', completed:false},
         {label: 'Acreditacion de Domicilio', completed:false},
     ]);
+
+    const [user, setUser] = useState([''])
+
+    
+    useEffect(() => {
+        
+        const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
+        
+        setUser(preba)
+    
+    }, [])
     const checkDisabled = () =>{
         if (activeStep < steps.leght -1) return false
         
@@ -42,7 +53,8 @@ const SubirLegajo = () => {
             </Stepper>
             <Box>
                 {{
-                    0: <AddFoto />,
+                    0: <AddFoto 
+                    cuil_cuit = {user.cuil_cuit }/>,
                     1: <AddAfip />,
                     2: <AddEstatuto />,
                     3: <AddActa />,
