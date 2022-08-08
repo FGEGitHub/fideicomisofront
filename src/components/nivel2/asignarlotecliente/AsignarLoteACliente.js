@@ -43,7 +43,7 @@ export default function AsignarLoreACliente() {
 
 
     const handleChange = (e) => {
-        console.log(e.target.value)
+        console.log(lotes)
         setLotes({ ...lotes, [e.target.name]: e.target.value })
     }
     return (
@@ -86,6 +86,24 @@ export default function AsignarLoreACliente() {
                             <option  value={'B'}>B</option>
                             <option  value={'C'}>C</option>
                             <option  value={'D'}>D</option>
+                    
+                         
+                        </NativeSelect> 
+                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                           Tipo de asignacion
+                        </InputLabel>
+                        <NativeSelect
+                            defaultValue={30}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'estado',
+                                id: 'uncontrolled-native',
+                               
+                            }}
+                        >   <option  value={'IC3'}>Elegir</option>
+                            <option   value={'VENDIDO'}>Venta</option>
+                            <option  value={'RESERVADO'}>Reservar</option>
+                         
                     
                          
                         </NativeSelect> 

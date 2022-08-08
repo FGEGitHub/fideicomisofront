@@ -70,6 +70,10 @@ const Lotes = () => {
             name: "cuil_cuit",
             label: "Cuil/Cuit",
         },
+          {
+            name: "estado",
+            label: "Estado",
+        },
         {
             name: "Actions",
             options: {

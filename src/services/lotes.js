@@ -1,7 +1,9 @@
 import axios from "axios"
 
 
-const  baseUrl ='http://44.209.171.118:4000/lotes/'
+
+const  baseUrl ='http://52.90.82.154:4000/lotes/'
+//const  baseUrl ='http://localhost:4000/lotes/'
 
 
 

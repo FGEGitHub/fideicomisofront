@@ -4,6 +4,7 @@ import servicioCuotas from '../services/cuotas'
 
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 
+
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
@@ -97,9 +98,11 @@ const LotesCliente = (props) => {
              onClick={() =>  navigate('/usuario2/pagarcuota/'+cuotas[dataIndex].id)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
-            <SearchIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('')  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+       <SearchIcon style={{ cursor: "pointer" }} 
+            onClick={() =>  navigate('/usuario2/pagoscuotas/'+cuotas[dataIndex].id) }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
+        
+     
             <DeleteIcon style={{ cursor: "pointer" }} 
             onClick={() =>  borrar(cuotas[dataIndex].id) }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
@@ -168,7 +171,7 @@ const LotesCliente = (props) => {
 
         <Fragment>
             <Button  onClick={() => { navigate('/usuario2/asignarloteausuario/' +cuil_cuit)}} variant="contained" color="success">
-              Vender un lote 
+           Lista de pagos
             </Button>
             {
                 lotes.map((item, index) =>

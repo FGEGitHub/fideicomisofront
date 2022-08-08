@@ -4,54 +4,63 @@ import MUIDataTable from "mui-datatables";
 import {  useState, useEffect } from "react";
 import servicioPagos from '../../../services/pagos'
 import Dialog from '@mui/material/Dialog';
+import { useNavigate } from "react-router-dom";
+
 
 export default function DetallesPagos(props) {
-   
-  const [open, setOpen] = React.useState(false);
+    let params = useParams()
+    let id = params.id
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        console.log(id)
+        traer()
+
+    }, [])
+
 
   const [pagos, setPagos] = useState([]);
 
-        
-
-
-  const handleDeterminar = async (event) => {
+  const traer = async () => {
+    const aux={
+        id:id
+    }
+    const pag = await servicioPagos.detallesPago(aux)
     
-    const  pagos = await servicioPagos.detallespagoscuota(props.id_cuota)
-     setPagos(pagos)
+    setPagos(pag)
 
-    setOpen(false);
-  };
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+
+
+} 
+
   const columns = [
     {
-        name: "zona",
-        label: "Zona",
+        name: "id",
+        label: "id",
     },
     {
-        name: "fraccion",
-        label: "Fraccion",
+        name: "mes",
+        label: "mes",
         
         
     },
     {
-        name: "manzana",
-        label: "Manzana",
+        name: "anio",
+        label: "año",
         
     },
     {
-        name: "lote",
-        label: "Lote",
+        name: "monto",
+        label: "monto",
     },
     {
-        name: "parcela",
-        label: "Parcela",
+        name: "tipo",
+        label: "tipo",
     },
      {
-        name: "nombre_razon",
-        label: "Nombre/Razon",
+        name: "cuil_cuit_administradir",
+        label: "Cuil administrador",
     },
     {
         name: "cuil_cuit",
@@ -61,7 +70,7 @@ export default function DetallesPagos(props) {
    
 ];
 return (
-    <Dialog open={open} onClose={handleClose}>
+
     <MUIDataTable
         title={"Lista de Clientes"}
         data={pagos}
@@ -74,6 +83,6 @@ return (
             }
         ]}
         />
-        </Dialog>
+      
 )
 }

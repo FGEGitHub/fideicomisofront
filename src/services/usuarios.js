@@ -30,8 +30,10 @@ const registro = async (datos) => {
    console.log(datos)
  
 
-    // const data = await axios.post('http://localhost:4000/signupp', datos)
-     const data = await axios.post('http://44.209.171.118:4000/signupp', datos)
+
+     //const data = await axios.post('http://localhost:4000/signupp', datos)
+     const data = await axios.post('http://52.90.82.154:4000/signupp', datos)
+
    
 
  

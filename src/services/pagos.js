@@ -51,6 +51,14 @@ const aprobaciones= async  () => {
  return data
 }  
 
+const detallesPago= async  (id) => {
+////detalles de los pagos de una cuota(nivel2)
+console.log(id)
+  const {data } = await axios.post(baseUrl+'pagos/detallespagos',id)
+    console.log(data)
+  return data
+ }  
+
 const pagosinusuales= async  () => {
   console.log('i')
 
@@ -59,4 +67,4 @@ const pagosinusuales= async  () => {
  return data
 }  
 
-export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota};
+export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,detallesPago};

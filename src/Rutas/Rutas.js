@@ -6,6 +6,8 @@ import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
+import PagosCuotas from '../Paginas/Usuario2/PagosCuota';
+
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
@@ -72,7 +74,7 @@ const Rutas = [
 	{ path: '/usuario2/legajoscliente/:cuil_cuit', element: <LegajosCliente /> },
 	{ path: '/usuario2/modificarcliente/:cuil_cuit', element: <EditarCliente /> },
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
-
+	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
 	
 	
 
