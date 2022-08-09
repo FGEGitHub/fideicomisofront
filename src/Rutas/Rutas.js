@@ -1,13 +1,11 @@
 /* import NotFound from '../Paginas/Notfound'; */
 import Login from '../Paginas/Login';
 import DetalleCliente from '../Paginas/Usuario2/DetalleCliente';
-<<<<<<< HEAD
 import Lista from '../Paginas/Usuario2/lista';
 import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/modificarCliente';
-=======
 
 import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
@@ -15,7 +13,6 @@ import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
 import PagosCuotas from '../Paginas/Usuario2/PagosCuota';
 
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
@@ -27,11 +24,8 @@ import Cuotas from "../Paginas/usuario1/Cuotas";
 import Aprobaciones from "../Paginas/Aprobaciones"
 import Legajos from "../Paginas/usuario1/Legajos"
 import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
-<<<<<<< HEAD
-=======
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
 import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
@@ -58,14 +52,11 @@ import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 
 
 const Rutas = [
-<<<<<<< HEAD
-	 <NAvBar/> ,
+	 <NavBar/> ,
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
 	{ path: '/lista', element: <Lista /> },
-=======
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 	
 	 <Navbar/> ,
 
@@ -92,12 +83,9 @@ const Rutas = [
 	{ path: '/usuario2/aprobacionesdepagos', element: <AprobacionesPagos /> },
 	{ path: '/usuario2/legajoscliente/:cuil_cuit', element: <LegajosCliente /> },
 	{ path: '/usuario2/modificarcliente/:cuil_cuit', element: <EditarCliente /> },
-<<<<<<< HEAD
-=======
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
 	
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },

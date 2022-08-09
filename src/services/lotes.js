@@ -1,15 +1,9 @@
 import axios from "axios"
 
-<<<<<<< HEAD
 const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
-=======
 
 
-const  baseUrl ='http://52.90.82.154:4000/lotes/'
 //const  baseUrl ='http://localhost:4000/lotes/'
-
-
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 const lista= async  () => {
    

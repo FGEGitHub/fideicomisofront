@@ -25,14 +25,9 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
-<<<<<<< HEAD
     const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
-=======
-
- const {data } = await axios.get('http://44.209.171.118:4000/prueba')
 
  //  const {data } = await axios.get('http://localhost:4000/prueba')
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
     
     return data 

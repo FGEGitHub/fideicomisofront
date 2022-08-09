@@ -1,5 +1,6 @@
 import axios from "axios"
-const  baseUrl = 'http://44.209.171.118:4000/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
+
 //const  baseUrl = 'http://localhost:4000/'
 
 const pagarnivel2= async  (pago) => {
@@ -16,12 +17,6 @@ const detallespagoscuota= async  (id_cuota) => {
    
  
 }  
-
-<<<<<<< HEAD
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
-=======
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
-
 const pagar= async  (pago) => {
    console.log(pago)
 // pago nivel 1
