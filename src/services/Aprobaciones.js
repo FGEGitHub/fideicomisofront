@@ -1,7 +1,7 @@
 
 import axios from "axios"
 
-const  baseUrl = 'http://52.203.247.51:4000/aprobaciones/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/aprobaciones/'
 
 const lista= async  () => {
    

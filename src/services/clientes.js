@@ -1,5 +1,5 @@
 import axios from "axios"
-const  baseURL = 'http://52.203.247.51:4000/links/'
+const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
 
 
 
@@ -13,7 +13,7 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
-    const {data } = await axios.get('http://52.203.247.51:4000/prueba')
+    const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
 
     
     return data 

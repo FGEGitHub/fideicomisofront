@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = 'http://52.203.247.51:4000/prueba'
+const baseUrl = 'https://api.santacatalinafideicomiso.com/prueba'
 let token = null
 
 const setToken = newToken =>{

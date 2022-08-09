@@ -3,7 +3,7 @@ import axios from "axios"
 
 
 
-const  baseUrl = 'http://52.203.247.51:4000/cuotas/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
 
 const vercuotas= async  (id) => {
     console.log('servicio')

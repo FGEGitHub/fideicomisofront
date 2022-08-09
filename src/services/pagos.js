@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const  baseUrl = 'http://52.203.247.51:4000/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
 
 const pagar= async  (pago) => {
    console.log(pago)

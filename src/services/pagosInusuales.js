@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const  baseUrl = 'http://52.203.247.51:4000/pagos/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/pagos/'
 
 const buscar= async  (form) => {
    console.log(form)
