@@ -17,7 +17,7 @@ import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import SubirLegajo from './SubirLegajo';
-//import NavBar from '../../NavBar1';
+import Navbar from '../../../components/usuario1/Navbar1';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
@@ -34,32 +34,32 @@ export default function MenuUsuario1({children}) {
     { 
       text: 'Declaraciones Juradas', 
       icon: <InsertDriveFileIcon color="primary" />, 
-      path: '/declaraciones-juradas' 
+      path: '/usuario/declaracionesjuradas' 
     },
     { 
       text: 'Ingresos Declarados',
       icon: <PriceCheckIcon color="primary" />, 
-      path: '/ingresos-declarados' 
+      path: '/usuario/ingresosdeclarados' 
     },
     {
       text: 'Datos de la Sociedad',
       icon: <FilePresentIcon color="primary" />,
-      path: '/datos-sociedad'
+      path: '/usuario/legajos'
     },
     {
       text: 'CBU Declarado',
       icon: <AccountBalanceIcon color="primary" />,
-      path: '/cbu-declarado'
+      path: '/usuario/cbu-declarado'
     },
     {
       text: 'Mensajes',
       icon: <LocalPostOfficeIcon color="primary" />,
-      path: '/mensajes'
+      path: '/usuario/mensajes'
     },
     {
       text: 'Contacto',
       icon: <ContactsIcon color="primary" />,
-      path: '/contacto'
+      path: '/usuario/contacto'
     },
   ];
 
@@ -83,7 +83,7 @@ export default function MenuUsuario1({children}) {
         variant="permanent"
         anchor="left"
       >
-      {/*   <NavBar /> */}
+      <Navbar />
         <Toolbar />
         <Toolbar />
         <Divider />

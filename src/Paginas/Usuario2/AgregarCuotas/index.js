@@ -1,3 +1,5 @@
+
+
 import * as React from 'react';
 import { useParams } from "react-router-dom"
 import Button from '@mui/material/Button';
@@ -65,10 +67,11 @@ export default function MenuUsuario2() {
   const agregarCuotas = async (event) => {
     event.preventDefault();
     try {
-
+      console.log('entra')
       const respuesta = await servicioCuotas.agregarCuotas(estadoCuotas)
-      alert(respuesta)
-      navigate('/usuario2/clientes')
+     alert(respuesta[1])
+      navigate('/usuario2/detallecliente/'+respuesta[0]) 
+      
 
     } catch (error) {
       console.error(error);
@@ -92,6 +95,7 @@ export default function MenuUsuario2() {
 
 
   return (
+
 
     <MenuIzq2>
       <br /> <br /> <br />
@@ -235,7 +239,7 @@ export default function MenuUsuario2() {
           autoFocus
           margin="dense"
           id="name"
-          label="Cantidad de cuotas"
+          label="Cantidad de Cuotas"
           name="cantidad_cuotas"
           onChange={handleChange}
           fullWidth
@@ -245,7 +249,7 @@ export default function MenuUsuario2() {
 
 
         <DialogActions>
-          <Button type="submit">Enviar</Button>
+          <Button onClick={agregarCuotas()} type="submit">Enviar</Button>
         </DialogActions>
       </form>
 

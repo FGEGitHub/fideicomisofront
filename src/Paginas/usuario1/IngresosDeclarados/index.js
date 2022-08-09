@@ -12,7 +12,7 @@ import IngresosDeclarados from '../../../components/usuario1/ingresosDeclarados/
 
 
 
-export default function Legajos() {
+export default function Ingresos() {
 
 
 

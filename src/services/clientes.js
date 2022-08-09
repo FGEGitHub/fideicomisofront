@@ -1,7 +1,19 @@
 import axios from "axios"
+<<<<<<< HEAD
 const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
+=======
+const  baseURL = 'http://44.209.171.118:4000/links/'
+//const  baseURL = 'http://localhost:4000/links/'
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 
+const modificarCliente= async  (datos) => {
+   
+    const data  = await axios.post(baseURL+'modificarcli',datos)
+ 
+
+    return data.data 
+} 
 
 
 const crear= async  (datos) => {
@@ -13,7 +25,14 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
    
+<<<<<<< HEAD
     const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
+=======
+
+ const {data } = await axios.get('http://44.209.171.118:4000/prueba')
+
+ //  const {data } = await axios.get('http://localhost:4000/prueba')
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
     
     return data 
@@ -26,11 +45,12 @@ const crearCliente= async  (datos) => {
      return data 
  } 
  
- const ventaLote= async  (datos) => {
-   console.log(datos)
+ const ventaLote = async  (datos) => {
+   
     const data  = await axios.post(baseURL+'ventalote',datos)
+    console.log(data)
     alert(data.data)
-    return data 
+   
 } 
 const cliente= async  (cuil_cuit) => {
    console.log(cuil_cuit)
@@ -54,4 +74,7 @@ const traerLejagos= async  (cuil_cuit) => {
     return data 
 }
 
-export default {lista, cliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
+
+export default {lista, cliente,modificarCliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
+
+

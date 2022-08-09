@@ -11,7 +11,7 @@ const CardUno = () => {
         <div className="body__Page">
             <div className="container__article">
     
-                <div className="box__article">
+                <div onClick={ir} className="box__article">
                    <i onClick={ir}> < CurrencyExchangeIcon /></i>
                     <h5 onClick={ir}>Consulta tus Cuotas</h5>
                 </div>

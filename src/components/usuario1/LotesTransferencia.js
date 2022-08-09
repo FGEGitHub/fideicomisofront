@@ -14,10 +14,12 @@ const LotesTransferencia = (props) => {
 
 
     const traer = async () => {
-
-        const lotes = await servicioLotes.lotesCliente2(props.cuil_cuit)
-        console.log(lotes)
-        setLotes(lotes)
+        console.log('lotes')
+        const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
+     
+        const lotes = await servicioLotes.lotesCliente2(preba.cuil_cuit)
+     //  console.log(lotes)
+      setLotes(lotes)
 
 
 
@@ -33,6 +35,7 @@ const LotesTransferencia = (props) => {
 
         <Fragment>
             <br></br><br></br><br></br><br></br>
+
             {
                 lotes.map((item, index) =>
                     <div>

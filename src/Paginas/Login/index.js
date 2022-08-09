@@ -21,6 +21,7 @@ import 'antd/dist/antd.css'
 import servicioUsuario from '../../services/usuarios'
 import Checkbox from '@mui/material/Checkbox';
 import Menu from "../../components/Navbar";
+import Registro from "../../components/Registro"
 
 
 
@@ -172,9 +173,7 @@ const Login = () => {
               </Link>
             </Typography>
             <Typography >¿No estas registrado?
-              <Link href="#" >
-                Registrarse
-              </Link>
+                <Registro />
             </Typography>
           </Paper>
         </Grid>
@@ -205,8 +204,7 @@ const Login = () => {
 
 
 
-
-
+        
 
     </>
   )

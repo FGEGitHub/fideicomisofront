@@ -30,6 +30,7 @@ const Lotes = () => {
      const  clients = await servicioClientes.lista({
       
       })
+      
       setClients(clients)}
 
     useEffect(() => {
@@ -66,6 +67,10 @@ const Lotes = () => {
             label: "Nombre/Razon",
         },
         {
+            name: "estado",
+            label: "Estado",
+        },
+          {
             name: "estado",
             label: "Estado",
         },

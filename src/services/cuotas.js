@@ -3,7 +3,13 @@ import axios from "axios"
 
 
 
+<<<<<<< HEAD
 const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
+=======
+const  baseUrl = 'http://44.209.171.118:4000/cuotas/'
+//const  baseUrl = 'http://localhost:4000/cuotas/'
+
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 const vercuotas= async  (id) => {
     console.log('servicio')
@@ -13,6 +19,17 @@ const vercuotas= async  (id) => {
     
     return data 
 }  
+
+const verief= async  (id) => {
+    console.log(id)
+    const data = await axios.get(baseUrl+'ief/'+id)
+             
+console.log(data.data)
+
+   
+   
+  return data.data
+} 
 const cuotasDeUnLote = async  (id) => {
     
    console.log(id)
@@ -21,15 +38,31 @@ const cuotasDeUnLote = async  (id) => {
     
     return data 
 } 
+const borrarcuota = async  (id) => {
+    
+    console.log(id)
+     const rta  = await axios.get(baseUrl+'delete/'+id)
+     console.log(rta)
+     
+     return rta.data 
+ } 
 
+ const borrarcuotas = async  (id) => {
+    
+    console.log(id)
+     const rta  = await axios.get(baseUrl+'borrartodas/'+id)
+     alert(rta.data)
+     
+     //return rta.data 
+ } 
 
 const agregarCuotas= async  (estadoCuotas) => {
   
    console.log(estadoCuotas)
     const {data } = await axios.post(baseUrl+'addaut2/',estadoCuotas)
-    console.log(data)
+
     
-   // return data 
+    return data
 }  
 
-export default {vercuotas,agregarCuotas, cuotasDeUnLote};
+export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};

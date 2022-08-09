@@ -35,8 +35,10 @@ export default function FormDialog(props) {
 
   // window.location.reload(true)
   }
-  const handleChange = (e) =>
+  const handleChange = (e) =>{
+  console.log(form)
   setForm({  ...form, [e.target.name]: e.target.value })
+}
   return (
     <div>
       <ThumbDownAltIcon variant="outlined" onClick={handleClickOpen}>

@@ -56,10 +56,10 @@ export default function Ingresos() {
        CARGAR CLIENTE NUEVO
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Cliente nuevo</DialogTitle>
+        <DialogTitle>Cliente Nuevo</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Ingrese Datos del nuevo Cliente
+            Ingrese Datos del Nuevo Cliente
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
           <TextField
@@ -73,7 +73,7 @@ export default function Ingresos() {
             variant="standard"
           />
             <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                          Tipo Dni
+                          Tipo DNI
                         </InputLabel>
                         <NativeSelect
                             defaultValue={30}
@@ -146,7 +146,7 @@ export default function Ingresos() {
           />
       
           <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
           <Button  type="submit">Enviar</Button>
         </DialogActions>
            </form>

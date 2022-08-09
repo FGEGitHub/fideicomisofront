@@ -1,32 +1,37 @@
 
 
-
+import React, { useEffect, useState, Fragment } from "react";
 import Navbar from '../../../components/usuario1/Navbar1'
-import  useUser from '../../../hooks/useUser'
-import LotesCuotas from '../../../components/usuario1/LotesCuotas '
+
+import useUser from '../../../hooks/useUser'
+import Cuotas from '../../../components/usuario1/cuotas/CuotasNiv1'
 
 
 
 
 
 export default function Transferencias() {
-    const usuario  = useUser().userContext
-    console.log(usuario)
+  const [usuarioo, setUsuarioo] = useState([''])
+    const usuario = useUser().userContext
+   //setUsuarioo(usuario)
+
+   
 
     return (
         <>
-            <div className="App">
+
+              <Navbar /> 
 
 
-                <Navbar />
-                <LotesCuotas
-                cuil_cuit ={usuario.cuil_cuit} />
-                
+              <Cuotas 
+              user = {1}
+              user2 = {usuarioo}
+         
+              
+              /> 
 
-            </div>
-
-
-        </>
-    );
+               
+            </>
+            );
 
 }

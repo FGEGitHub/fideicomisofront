@@ -11,10 +11,21 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import Avatar from "@mui/material/Avatar";
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
+<<<<<<< HEAD
 import "../../profile.css";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
+=======
+import "../detalleclienteIngresos/profile.css";
+import { Box } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom"
+import Card from "@mui/material/Card";
+import CssBaseline from '@mui/material/CssBaseline';
+
+
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
 
 const ModificacionC = (props) => {
   const navigate = useNavigate();
@@ -82,6 +93,7 @@ const ModificacionC = (props) => {
   return (<>    
      <form  onSubmit={handleDeterminar}>
    {cliente.map((client) =>( 
+<<<<<<< HEAD
     <div className="profile">
       <Grid Container>
         <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
@@ -91,6 +103,18 @@ const ModificacionC = (props) => {
   
             <Container>
             <Box>
+=======
+    <Card>
+    <div className="profile">
+    <CssBaseline />
+
+    <Grid Container style={{direction: "column", alignItems:"center", justifyContent: "center", display: "flex"}}>
+        <Avatar sx={{ width: 170, height: 140,  mr: 1}}> <AccountCircle fontSize="large"/> </Avatar>
+
+      
+            <Container>
+            <Box display="flex">
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
             <h5>
             Datos Personales del Cliente
             </h5>
@@ -102,6 +126,10 @@ const ModificacionC = (props) => {
                   label="CUIL"
                   id="cuil"
                   name="cuit_cuil"
+<<<<<<< HEAD
+=======
+                  type={"Number"}
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
                  // defaultValue="CUIL"
                  defaultValue= {client.cuil_cuit}
                  onChange={handleChange}
@@ -285,6 +313,7 @@ const ModificacionC = (props) => {
               </Box>
             </Container>
           
+<<<<<<< HEAD
         </Grid>
 
         <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
@@ -293,6 +322,16 @@ const ModificacionC = (props) => {
         </Grid>
       </Grid>
     </div>
+=======
+          
+
+         
+         </Grid>
+
+    </div>
+
+    </Card>
+>>>>>>> 9794559194801f88740c0da415c0474cf0662a34
     ))}</form> </>);
 }
 

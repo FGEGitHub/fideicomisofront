@@ -30,6 +30,16 @@ const Navbar = (props) => {
   const handleClick = () => {
     navigate("/login");
   };
+  const irNosotros = () => {
+    navigate("/usuario/nosotros");
+  }
+  const irContacto = () => {
+    navigate("/usuario/contacto");
+  }
+  const irAyuda = () => {
+    navigate("/usuario/menu");
+  }
+
   const hanleLogout = () => {
     /* console.log('click')
      setUser(null)
@@ -63,24 +73,29 @@ const Navbar = (props) => {
                 value={value}
                 onChange={(e, value) => setValue(value)}
               >
-               {usuario &&  <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="contained">
+               {usuario &&  <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="Outlined">
                <Tab label="Inicio" />
               </Button>  }
 
-             
+              <Button onClick={irNosotros} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Nosotros" />
+              </Button>
+              <Button onClick={irContacto} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Contacto" />
+                </Button>
+              <Button onClick={irAyuda} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Ayuda" />
+              </Button>
               </Tabs>
-              {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
-                Logout
+              {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="Outlined">
+                Cerrar Sesión
               </Button>  }
 
 
-              {!usuario && <div>    <Button sx={{ marginLeft: "10px" }} variant="contained">
+              {!usuario && <div>    <Button sx={{ marginLeft: "10px" }} variant="Outlined">
                 Registrarse
               </Button>
-              <Button onClick={handleClick} sx={{ marginLeft: "auto" }} variant="contained">
+              <Button onClick={handleClick} sx={{ marginLeft: "auto" }} variant="Outlined">
                 Ingresar
               </Button></div>}
              
@@ -89,6 +104,7 @@ const Navbar = (props) => {
           )}
         </Toolbar>
       </AppBar>
+  
     </React.Fragment>
   );
 };
