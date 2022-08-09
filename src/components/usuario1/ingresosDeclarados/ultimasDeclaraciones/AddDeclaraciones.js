@@ -10,11 +10,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 const AddDeclaraciones = () => {
   const handleClick = () => {
     console.log('click');
-<<<<<<< HEAD
   };
-=======
-  };                             
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
   const [file, setFile] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {

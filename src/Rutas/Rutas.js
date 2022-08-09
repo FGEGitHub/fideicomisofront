@@ -5,11 +5,6 @@ import Lista from '../Paginas/Usuario2/lista';
 import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
-import EditarCliente from '../Paginas/Usuario2/modificarCliente';
-
-import Clientes from '../Paginas/Usuario2/MenuUsuario2';
-import Lotes from '../Paginas/Usuario2/Lotes';
-import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
 import PagosCuotas from '../Paginas/Usuario2/PagosCuota';
 
@@ -52,7 +47,7 @@ import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 
 
 const Rutas = [
-	 <NavBar/> ,
+	 <Navbar/> ,
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},

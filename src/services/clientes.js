@@ -1,10 +1,8 @@
 import axios from "axios"
-<<<<<<< HEAD
 const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
-=======
-const  baseURL = 'http://44.209.171.118:4000/links/'
+
 //const  baseURL = 'http://localhost:4000/links/'
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
+
 
 
 const modificarCliente= async  (datos) => {

@@ -34,18 +34,6 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
-<<<<<<< HEAD
-            <EditIcon
-             onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            />
-            <SearchIcon style={{ cursor: "pointer" }} 
-=======
-          
-               <  SearchIcon style={{ cursor: "pointer" }} 
->>>>>>> 9794559194801f88740c0da415c0474cf0662a34
-            onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
             <EditIcon
              onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
