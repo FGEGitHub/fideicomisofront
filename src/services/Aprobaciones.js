@@ -1,8 +1,10 @@
 
 import axios from "axios"
 
-//const  baseUrl = '44.209.171.118:4000/aprobaciones/'
-const  baseUrl = 'http://localhost:4000/aprobaciones/'
+
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/aprobaciones/'
+//const  baseUrl = 'http://localhost:4000/aprobaciones/'
+
 
 const lista= async  () => {
    

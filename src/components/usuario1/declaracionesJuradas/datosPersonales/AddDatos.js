@@ -5,10 +5,6 @@ import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Info from '../../../../components/Info';
 
 const AddDatos = () => {
   const handleClick = () => {
@@ -76,13 +72,7 @@ const AddDatos = () => {
           <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
         </div>
       </Paper>
-      <Box sx={{ m: 2 }}>
-      <FormGroup>
-      <FormControlLabel control={<Checkbox />} label= {<Info />}     />
-      
-      </FormGroup>
-      
-      </Box>
+
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}

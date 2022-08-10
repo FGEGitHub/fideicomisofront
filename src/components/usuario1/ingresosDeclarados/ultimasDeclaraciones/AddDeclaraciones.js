@@ -10,7 +10,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 const AddDeclaraciones = () => {
   const handleClick = () => {
     console.log('click');
-  };                             
+  };
   const [file, setFile] = useState(null);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -69,6 +69,14 @@ const AddDeclaraciones = () => {
           <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
         </div>
       </Paper>
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
+      </Box>
       
       
       <Box sx={{ m: 1, 

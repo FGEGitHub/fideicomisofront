@@ -1,8 +1,8 @@
-/* import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 import reducer from './reducer';
 
 const initialState = {
-  currentUser: null,
+  currentUser: true,
   openLogin: false,
   loading: false,
   alert: {open: false, severity: 'info', message: ''},
@@ -23,4 +23,4 @@ const ContextProvider = ({ children }) => {
   );
 };
 
-export default ContextProvider; */
+export default ContextProvider;

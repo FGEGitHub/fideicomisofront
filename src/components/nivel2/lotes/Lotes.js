@@ -67,8 +67,8 @@ const Lotes = () => {
             label: "Nombre/Razon",
         },
         {
-            name: "cuil_cuit",
-            label: "Cuil/Cuit",
+            name: "estado",
+            label: "Estado",
         },
           {
             name: "estado",

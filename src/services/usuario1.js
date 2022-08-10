@@ -1,6 +1,8 @@
 import axios from "axios"
-//const  baseUrl = 'http://44.209.171.118:4000/usuario1/'
-const  baseUrl ='http://localhost:4000/usuario1/'
+
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
+//const  baseUrl ='http://localhost:4000/usuario1/'
+
 
 const cantidadd= async  (cuil_cuit) => {
     console.log('cuil_cuit')
