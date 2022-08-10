@@ -8,6 +8,8 @@ import servicioPagos from '../../services/pagos'
 import NativeSelect from '@mui/material/NativeSelect';
 import useUser from '../../hooks/useUser'
 import servicioLotes from '../../services/lotes'
+import servicioUsuario1 from '../../services/usuario1'
+
 import React, { useEffect, useState, Fragment } from "react";
 const currencies = [
   {
@@ -26,6 +28,8 @@ export default function SelectTextFields(props) {
   //const usuario  = useUser().userContext
 
   const [lotes, setLotes] = useState([''])
+  const [cuotas, setCuotas] = useState([''])
+
   useEffect(() => {
 
     traer()
@@ -35,11 +39,12 @@ export default function SelectTextFields(props) {
 
   const traer = async () => {
     console.log('lotes')
-    const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+    const prueba= JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
-    const lotes = await servicioLotes.lotesCliente2(prueba.cuil_cuit)
-    console.log(lotes)
-    setLotes(lotes)
+    const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
+    setLotes(lotes[0])
+    setCuotas(lotes[1])
+   
 
 
 
@@ -47,14 +52,13 @@ export default function SelectTextFields(props) {
   }
   const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
   const cuil_cuit = preba.cuil_cuit
-  const id = props.id
+
   const [pago, setPago] = useState({
 
     cuil_cuit: cuil_cuit,
 
 
   })
-
 
 
   const handleClickOpen = () => {
@@ -152,7 +156,7 @@ export default function SelectTextFields(props) {
                 }}
 
               > <option value={''}>Elegir</option>
-                <option value={'1'}>CBU1</option>
+                <option value={'1'}>{props.id}</option>
                 <option value={'2'}>CBU2</option>
 
 
@@ -189,6 +193,7 @@ export default function SelectTextFields(props) {
 
       
             <br />
+            <label>Fecha</label>
             <NativeSelect
               defaultValue={30}
               onChange={handleChange}
@@ -214,7 +219,9 @@ export default function SelectTextFields(props) {
 
 
             </NativeSelect>
+            
             <NativeSelect
+              label="Año"
               defaultValue={30}
               onChange={handleChange}
               inputProps={{
@@ -237,7 +244,8 @@ export default function SelectTextFields(props) {
 
 
             </NativeSelect>
-
+          
+          
 
             <Box
               component="form"

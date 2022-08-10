@@ -1,6 +1,8 @@
 import axios from "axios"
+
 const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
 //const  baseUrl ='http://localhost:4000/usuario1/'
+
 
 const cantidadd= async  (cuil_cuit) => {
     console.log('cuil_cuit')
@@ -33,7 +35,7 @@ const lotesCliente= async  (cuil_cuit) => {
 
   const vercuotas= async  (id) => {
     console.log('servicio')
-   console.log(id)
+   console.log(id+'id')
     const {data } = await axios.get(baseUrl+'lote2/'+id)
     console.log(data)
     
@@ -64,4 +66,5 @@ const subirprueba = async (formdata) => {
     console.log(data)
   
   }
+
 export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba};

@@ -3,8 +3,10 @@ import axios from "axios"
 
 
 
+
 const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
 //const  baseUrl = 'http://localhost:4000/cuotas/'
+
 
 
 const vercuotas= async  (id) => {
