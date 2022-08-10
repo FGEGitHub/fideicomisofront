@@ -27,7 +27,8 @@ export default function ModalIcc() {
     };
     const borrar = async (event) => {
     
-        await servicionivel3.borrarhistorial()
+        const rta = await servicionivel3.borrarhistorial()  
+        alert(rta)
         window.location.reload()
 
         setOpen(false);

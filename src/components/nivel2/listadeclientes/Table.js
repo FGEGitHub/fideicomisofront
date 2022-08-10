@@ -38,6 +38,10 @@ const Lotes = () => {
              onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
+             <SearchIcon
+             onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)}
+              style={{ marginRight: "10px", cursor: "pointer" }}
+            />
            
           </>
         );

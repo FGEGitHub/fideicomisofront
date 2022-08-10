@@ -17,4 +17,11 @@ const traerhistorial= async  () => {
     return data 
 }  
 
-export default {agregariccgral,traerhistorial};
+const borrarhistorial= async  () => {
+    
+    const data =await axios.get(baseUrl+'borrarhistorial')
+ 
+     return data 
+ }  
+
+export default {agregariccgral,traerhistorial,borrarhistorial};
