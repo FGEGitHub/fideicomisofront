@@ -1,7 +1,7 @@
 import axios from "axios"
 
-//const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
-const  baseUrl ='http://localhost:4000/nivel3/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
+//const  baseUrl ='http://localhost:4000/nivel3/'
 
 
 const agregariccgral= async  (datos) => {
