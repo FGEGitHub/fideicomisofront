@@ -3,7 +3,7 @@
 import Historialicc  from "../../../components/nivel3/HistorialIcc";
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import AgregarIcc from '../../../components/nivel3/ModalIcc'
-
+import BorrarIcc from '../../../components/nivel3/borrarhistorialicc/BorrarHistorialICC'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -23,7 +23,9 @@ export default function Legajos() {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
        <BarraLAteral>
+       
        <AgregarIcc/>
+       < BorrarIcc/>
   <Historialicc/>
      
       </BarraLAteral>

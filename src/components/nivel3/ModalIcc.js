@@ -48,7 +48,7 @@ export default function ModalIcc() {
                 AGREGAR NUEVO ICC
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Cliente nuevo</DialogTitle>
+                <DialogTitle>   AGREGAR NUEVO ICC</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Ingrese Datos del nuevo Cliente
