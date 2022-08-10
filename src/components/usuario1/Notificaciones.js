@@ -4,12 +4,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import{ useEffect, useState, } from "react";
 import servicioUsuario1 from '../../services/usuario1'
 import  useUser from '../../hooks/useUser'
-
+import { useNavigate } from "react-router-dom";
 
 const Notificaciones = (props) =>   {
     const [cantidad, setCantidad] = useState(null);
     const usuario  = useUser().userContext
-    console.log(usuario)
+    const navigate = useNavigate();
     useEffect(() => {
    
         traer()
@@ -24,7 +24,7 @@ const Notificaciones = (props) =>   {
     
       }; 
   return (
-    <Badge badgeContent={4} color="primary">
+    <Badge badgeContent={4} color="primary" onClick={() =>  navigate('/usuario2/respuesta/')}>
       <MailIcon color="action" />
     </Badge>
   );

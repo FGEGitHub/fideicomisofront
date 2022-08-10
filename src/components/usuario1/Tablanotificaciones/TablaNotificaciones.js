@@ -48,7 +48,7 @@ const TablaNotificaciones = (props) => {
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
             <SearchIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('/usuario2/respuesta/'+noti[dataIndex].cuil_cuit)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+            onClick={() =>  navigate('/usuario2/respuesta/'+noti[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>
         );

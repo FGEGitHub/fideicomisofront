@@ -25,6 +25,7 @@ export default function MenuUsuario1() {
 
 
                 <Navbar /> 
+                <br/><br/><br/><br/><br/>
                 <Notificaciones 
                     />  
                 <Banner />

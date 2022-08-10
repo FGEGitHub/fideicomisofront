@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
-//const  baseUrl ='http://localhost:4000/nivel3/'
+//const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
+const  baseUrl ='http://localhost:4000/nivel3/'
 
 
 const agregariccgral= async  (datos) => {
@@ -17,4 +17,11 @@ const traerhistorial= async  () => {
     return data 
 }  
 
-export default {agregariccgral,traerhistorial};
+const borrarhistorial= async  () => {
+    
+    const data =await axios.get(baseUrl+'borrarhistorial')
+ 
+     return data 
+ }  
+
+export default {agregariccgral,traerhistorial,borrarhistorial};

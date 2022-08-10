@@ -1,8 +1,8 @@
 import axios from "axios"
 
 
-const baseUrl = 'https://api.santacatalinafideicomiso.com/prueba'
-//const  baseUrl ='http://localhost:4000/prueba'
+//const baseUrl = 'https://api.santacatalinafideicomiso.com/prueba'
+const  baseUrl ='http://localhost:4000/prueba'
 
 
 let token = null
@@ -34,8 +34,8 @@ const registro = async (datos) => {
 
 
 
-     //const data = await axios.post('http://localhost:4000/signupp', datos)
-     const data = await axios.post('https://api.santacatalinafideicomiso.com/signupp', datos)
+     const data = await axios.post('http://localhost:4000/signupp', datos)
+     //const data = await axios.post('https://api.santacatalinafideicomiso.com/signupp', datos)
 
 
    
