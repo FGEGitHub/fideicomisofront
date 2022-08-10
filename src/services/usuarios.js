@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const baseUrl = 'http://52.90.82.154:4000/prueba'
-//const  baseUrl ='http://localhost:4000/prueba'
+//const baseUrl = 'http://52.90.82.154:4000/prueba'
+const  baseUrl ='http://localhost:4000/prueba'
 
 let token = null
 
@@ -30,8 +30,8 @@ const registro = async (datos) => {
    console.log(datos)
  
 
-     //const data = await axios.post('http://localhost:4000/signupp', datos)
-     const data = await axios.post('http://52.90.82.154:4000/signupp', datos)
+     const data = await axios.post('http://localhost:4000/signupp', datos)
+     //const data = await axios.post('http://52.90.82.154:4000/signupp', datos)
    
 
  
