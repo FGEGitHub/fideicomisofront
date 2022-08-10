@@ -34,7 +34,9 @@ import PagosInusuales from "../Paginas/Nivel3/PagosInusuales"
 import PagosInusualesMensuales from "../Paginas/Nivel3/PagosInusualesMensuales"
 import Principal from "../Paginas/Nivel3/Principal"
 import Icc from "../Paginas/Nivel3/Icc"
-
+import VerCliente from '../Paginas/Nivel3/verClientes';
+import Lotes3 from '../Paginas/Nivel3/lotes';
+import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 
 
 /////////// Probando usecontxt
@@ -80,7 +82,9 @@ const Rutas = [
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusualesMensuales /> },
 	{ path: '/nivel3/', element: <Principal /> },
 	{ path: '/nivel3/icc', element: <Icc /> },
-
+	{ path: '/nivel3/clientes', element: <VerCliente /> },
+	{ path: '/nivel3/lotes', element: <Lotes3 /> },
+	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
 
 	/*{	path: '/',	element: <NotFound />
 		}, */

@@ -21,7 +21,7 @@ import AlertaAprobaciones from '../AlertaAprobaciones'
 import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
 import AlertaInusual from '../AlertaInusual'
-import Navbar from './Navbar3'
+import Navbar from './Navbar3';
 import Looks3Icon from '@mui/icons-material/Looks3';
 
 const drawerWidth = 240;
@@ -46,22 +46,22 @@ export default function MenuIzq2 ({children}) {
         { 
           text: 'Ver Clientes', 
           icon: <GroupIcon color="primary" />, 
-          path: '/usuario2/clientes' 
+          path: '/nivel3/clientes' 
         },
         { 
           text: 'Buscar Clientes',
           icon: <SearchIcon color="primary" />, 
-          path: '/usuario2/clientes' 
+          path: '/nivel3/clientes' 
         },
         {
           text: 'Lotes',
           icon: <NfcIcon color="primary" />,
-          path:  '/usuario2/lotes',
+          path:  '/nivel3/lotes',
         },
         {
           text: 'Aprobación de Pagos',
           icon: <PriceCheckIcon color="primary" />,
-          path: '/usuario2/aprobacionesdepagos'
+          path: '/nivel3/aprobacionesdepagos'
         },
         {
           text: 'Pagos Inusuales',
@@ -71,7 +71,7 @@ export default function MenuIzq2 ({children}) {
         {
           text: 'Aprobación de Legajos',
           icon: <AssignmentTurnedInIcon color="primary" />,
-          path: '/usuario2/aprobaciones'
+          path: '/nivel3/aprobaciones'
         },
         {
             text: 'Agregar ICC',
@@ -81,12 +81,12 @@ export default function MenuIzq2 ({children}) {
           {
             text: 'Agregar un Usuario',
             icon: <Looks3Icon color="primary" />,
-            path: '/usuario2/aprobaciones'
+            path: '/nivel3/aprobaciones'
           },
           {
             text: 'Informes',
             icon: <Looks3Icon color="primary" />,
-            path: '/usuario2/aprobaciones'
+            path: '/nivel3/aprobaciones'
           },
           {
             text: 'Pagos Inusuales Mensuales',

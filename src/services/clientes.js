@@ -1,6 +1,6 @@
 import axios from "axios"
-//const  baseURL = 'http://52.90.82.154:4000/links/'
-const  baseURL = 'http://localhost:4000/links/'
+const  baseURL = 'http://44.209.171.118:4000/links/'
+//const  baseURL = 'http://localhost:4000/links/'
 
 
 const modificarCliente= async  (datos) => {
@@ -22,7 +22,7 @@ const crear= async  (datos) => {
 const lista= async  () => {
    
 
- //const {data } = await axios.get('http://52.90.82.154:4000/prueba')
+ const {data } = await axios.get('http://44.209.171.118:4000/prueba')
 
    const {data } = await axios.get('http://localhost:4000/prueba')
 
