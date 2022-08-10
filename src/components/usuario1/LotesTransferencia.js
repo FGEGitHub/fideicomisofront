@@ -1,4 +1,4 @@
-import servicioLotes from '../../services/lotes'
+import servicioUsuario1 from '../../services/usuario1'
 import React, { useEffect, useState, Fragment } from "react";
 import { Button } from '@mui/material';
 import ModalPago from '../../components/usuario1/ModalTransferencia'
@@ -17,9 +17,8 @@ const LotesTransferencia = (props) => {
         console.log('lotes')
         const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
      
-        const lotes = await servicioLotes.lotesCliente2(preba.cuil_cuit)
-     //  console.log(lotes)
-      setLotes(lotes)
+        const lotes = await servicioUsuario1.lotesCliente(preba.cuil_cuit)
+        setLotes(lotes[0])
 
 
 

@@ -1,8 +1,6 @@
-import servicioNotif from '../../../services/usuario1'
+import servicioUsuario1 from '../../../services/usuario1'
 import React, { useEffect, useState, Fragment } from "react";
-import { Button } from '@mui/material';
-import ModalPago from '../../../components/usuario1/ModalTransferencia'
-import servicioUsuario from "../../../services/usuarios"
+
 import MUIDataTable from "mui-datatables";
 
 import { useNavigate } from "react-router-dom";
@@ -13,17 +11,8 @@ const TablaNotificaciones = (props) => {
     const [usuario, setUsuario] = useState([''])
     const navigate = useNavigate();
     useEffect(() => {
-  
-        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-        if (loggedUserJSON) {
-          const usuario = JSON.parse(loggedUserJSON)
-          console.log(usuario)
-          setUsuario(usuario)
-        
-          traer()
-      
-     
-        }
+        traer()
+       
      
      
       }, [])
@@ -31,13 +20,20 @@ const TablaNotificaciones = (props) => {
 
     const traer = async () => {
         try {
-            const lotes = await servicioNotif.noticliente(usuario.cuil_cuit)
-            console.log(lotes)
+            const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+            if (loggedUserJSON) {
+              const usuario = JSON.parse(loggedUserJSON)
+              console.log(usuario)
+              setUsuario(usuario)
+        
+            }
+            const lotes  = await servicioUsuario1.noticliente(usuario.cuil_cuit)
+            setNoti(lotes)
         } catch (error) {
             
         }
       
-        setNoti(noti)
+      
 
 
 
@@ -52,7 +48,7 @@ const TablaNotificaciones = (props) => {
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
             <SearchIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('/usuario2/detallecliente/'+noti[dataIndex].cuil_cuit)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+            onClick={() =>  navigate('/usuario2/respuesta/'+noti[dataIndex].cuil_cuit)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>
         );
@@ -68,19 +64,10 @@ const TablaNotificaciones = (props) => {
             name: "cuil_cuit",
             label: "Cuil/cuit",
         },
+       
         {
-            name: "Nombre",
-            label: "Nombre",
-
-        },
-        {
-            name: "razon",
-            label: "Razon",
-           
-        },
-        {
-            name: "observaciones",
-            label:"Observaciones",
+            name: "descripcion",
+            label:"descripcion",
            
         },
         {

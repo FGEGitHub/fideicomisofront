@@ -1,6 +1,6 @@
 import axios from "axios"
-const  baseUrl = 'http://44.209.171.118:4000/'
-//const  baseUrl = 'http://localhost:4000/'
+//const  baseUrl = 'http://44.209.171.118:4000/'
+const  baseUrl = 'http://localhost:4000/'
 
 const pagarnivel2= async  (pago) => {
 
