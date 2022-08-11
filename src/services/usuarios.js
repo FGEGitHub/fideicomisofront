@@ -34,8 +34,8 @@ const registro = async (datos) => {
 
 
 
-    // const data = await axios.post('http://localhost:4000/signupp', datos)
-     const data = await axios.post('https://api.santacatalinafideicomiso.com/signupp', datos)
+     const data = await axios.post('http://localhost:4000/signupp', datos)
+     //const data = await axios.post('https://api.santacatalinafideicomiso.com/signupp', datos)
 
 
    
