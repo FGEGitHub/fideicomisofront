@@ -39,6 +39,10 @@ import Lotes3 from '../Paginas/Nivel3/lotes';
 import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 
 
+
+import Menu4 from '../Paginas/Nivel4/Menu';
+import DetalleExp from '../Paginas/Nivel4/DetalleExp';
+
 /////////// Probando usecontxt
 
 
@@ -90,6 +94,11 @@ const Rutas = [
 	{ path: '/nivel3/clientes', element: <VerCliente /> },
 	{ path: '/nivel3/lotes', element: <Lotes3 /> },
 	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
+
+	{ path: '/legales/menu', element: <Menu4 /> },
+	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
+
+	
 
 	/*{	path: '/',	element: <NotFound />
 		}, */
