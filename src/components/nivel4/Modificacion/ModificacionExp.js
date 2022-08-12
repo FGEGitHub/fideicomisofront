@@ -19,27 +19,34 @@ import { useParams } from "react-router-dom"
 const ModificacionC = (props) => {
   const navigate = useNavigate();
     const [expediente, setExpediente] = useState([])
-    const [modificaciones, setModificaciones] = useState([])
+    const [modificaciones, setModificaciones] = useState({})
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
   let params = useParams()
-    let id= params.id
+   
    
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-      
+
+  
     traer()
-    
+   
 }, []) 
 
 
   const traer = async() => {
        
-   
+    let id= params.id
+ 
       const  exp = await servicioExp.expediente(id)
-      
+ 
       setExpediente(exp)
    
+      
+
+
+
+    
 
       setModificaciones({
         id: exp[0].id,
@@ -56,12 +63,12 @@ const ModificacionC = (props) => {
         Caratula: exp[0].Caratula} )
       
 
-      
+      console.log(modificaciones)
      
      
   
-      ;
-    };  
+      
+    }
  
 
     const handleChange = (e) =>{
@@ -69,7 +76,7 @@ const ModificacionC = (props) => {
       console.log(modificaciones)
     }
     const handleDeterminar = async (event) => {
-      event.preventDefault();
+
       try {
   
         const rta =await servicioExp.expedientemodif(
@@ -85,6 +92,8 @@ const ModificacionC = (props) => {
 
     };
 
+
+    
   return (<>    
      <form  onSubmit={handleDeterminar}>
    {expediente.map((expe) =>( 
@@ -225,7 +234,7 @@ const ModificacionC = (props) => {
                   name="Observacion"
                   multiline
                   rows={8}
-                  maxRows={4}
+                
                   defaultValue={expe.Observacion}
                   onChange={handleChange}
                   variant="filled"
