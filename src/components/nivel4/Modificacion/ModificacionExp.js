@@ -69,7 +69,7 @@ const ModificacionC = (props) => {
       console.log(modificaciones)
     }
     const handleDeterminar = async (event) => {
-      event.preventDefault();
+
       try {
   
         const rta =await servicioExp.expedientemodif(
