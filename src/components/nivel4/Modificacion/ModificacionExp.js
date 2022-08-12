@@ -42,18 +42,18 @@ const ModificacionC = (props) => {
    
 
       setModificaciones({
-        id: expediente[0].id,
-        Expediente: expediente[0].Expediente,
-        Iniciador: expediente[0].Iniciador,
-        Extracto: expediente[0].Extracto,
-        Cpos: expediente[0].Cpos,
-        Fjs: expediente[0].Fjs,
-        Barrio: expediente[0].Barrio,
-        Observacion: expediente[0].Observacion,
-        Rev: expediente[0].Rev,
-        Resp: expediente[0].Resp,
-        Ubic: expediente[0].Ubic,
-        Caratula: expediente[0].Caratula} )
+        id: exp[0].id,
+        Expediente: exp[0].Expediente,
+        Iniciador: exp[0].Iniciador,
+        Extracto: exp[0].Extracto,
+        Cpos: exp[0].Cpos,
+        Fjs: exp[0].Fjs,
+        Barrio: exp[0].Barrio,
+        Observacion: exp[0].Observacion,
+        Rev: exp[0].Rev,
+        Resp: exp[0].Resp,
+        Ubic: exp[0].Ubic,
+        Caratula: exp[0].Caratula} )
       
 
       
