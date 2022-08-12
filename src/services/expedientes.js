@@ -12,6 +12,7 @@ console.log('etc')
 
 }
 
+
 const expediente = async (id) => {
  
     const { data } = await axios.get(baseUrl +'expediente/'+ id)

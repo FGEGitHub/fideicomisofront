@@ -45,6 +45,7 @@ const TablaExp = () => {
            
           </>
         );
+        
       }
     // definimos las columnas
     const columns = [
