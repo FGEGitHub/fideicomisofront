@@ -67,8 +67,8 @@ const ModificacionC = (props) => {
      
      
   
-      ;
-    };  
+      
+    }
  
 
     const handleChange = (e) =>{
@@ -92,6 +92,8 @@ const ModificacionC = (props) => {
 
     };
 
+
+    
   return (<>    
      <form  onSubmit={handleDeterminar}>
    {expediente.map((expe) =>( 
