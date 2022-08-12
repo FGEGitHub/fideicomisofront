@@ -42,6 +42,11 @@ const ModificacionC = (props) => {
  
       setExpediente(exp)
    
+      
+
+
+
+    
 
       setModificaciones({
         id: exp[0].id,
