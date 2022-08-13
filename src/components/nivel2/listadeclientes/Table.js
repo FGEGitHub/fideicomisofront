@@ -1,26 +1,29 @@
 import { useState, useEffect } from "react";
 import servicioClientes from '../../../services/clientes'
 import MUIDataTable from "mui-datatables";
-
+import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
+
 //import overbookingData from "./overbooking";
 
 const Lotes = () => {
     //configuracion de Hooks
     const [clients, setClients] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
 
     
 
     const getClients = async () => {
-
+        
         const clients = await servicioClientes.lista({
 
         })
         setClients(clients)
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -98,6 +101,9 @@ const options = {
 };
 // renderiza la data table
 return (
+    <>
+    {loading ? (<CargaDeTabla/>)
+        :(
     <div>
         <MUIDataTable
         
@@ -116,6 +122,10 @@ return (
 
         />
     </div>
+    )}
+    </>
+
+
 )
 }
 

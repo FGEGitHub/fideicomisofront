@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import servicioExp from '../../../services/expedientes'
 import MUIDataTable from "mui-datatables";
-
+import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,8 +10,9 @@ import SearchIcon from '@mui/icons-material/Search';
 const TablaExp = () => {
     //configuracion de Hooks
     const [expedientes, setExpedientes] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-
+   
 
     
 
@@ -21,6 +22,7 @@ const TablaExp = () => {
 
         })
         setExpedientes(exp)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -51,7 +53,7 @@ const TablaExp = () => {
     const columns = [
         {
             name: "Barrio",
-            label:"Barrio",
+            label:"Carpeta",
            
         },
         {
@@ -104,10 +106,13 @@ const options = {
 };
 // renderiza la data table
 return (
+    <>
+    {loading ? (<CargaDeTabla/>)
+        :(
     <div>
         <MUIDataTable
         
-            title={"Lista de Clientes"}
+            title={"Lista de Expedientes"}
             data={expedientes}
             columns={columns}
             actions={[
@@ -117,11 +122,15 @@ return (
                     onClick: (event, rowData) => alert("You saved " + rowData.name)
                 }
             ]}
-            options={options}
+          
 
 
         />
     </div>
+    )}
+    </>
+
+
 )
 }
 
