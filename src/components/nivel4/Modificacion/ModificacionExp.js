@@ -42,10 +42,6 @@ const ModificacionC = (props) => {
  
       setExpediente(exp)
    
-      
-
-
-
     
 
       setModificaciones({

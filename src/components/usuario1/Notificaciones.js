@@ -24,7 +24,7 @@ const Notificaciones = (props) =>   {
     
       }; 
   return (
-    <Badge badgeContent={4} color="primary" onClick={() =>  navigate('/usuario2/respuesta/')}>
+    <Badge badgeContent={4} color="primary" onClick={() =>  navigate('/usuario/notificaciones')}>
       <MailIcon color="action" />
     </Badge>
   );

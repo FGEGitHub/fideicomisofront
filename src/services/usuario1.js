@@ -42,7 +42,7 @@ const lotesCliente= async  (cuil_cuit) => {
     return data 
 }  
 const vertodascuotas= async  (id) => {
-    console.log('servicio')
+    
    console.log(id)
     const {data } = await axios.get(baseUrl+'lote2/'+id)
     console.log(data)
@@ -51,12 +51,28 @@ const vertodascuotas= async  (id) => {
 }  
 
 const noticliente= async  (cuil_cuit) => {
-    console.log('cuil_cuit')
+ 
     const {data } = await axios.get(baseUrl+'noticliente/'+cuil_cuit)
-    console.log(cuil_cuit)
+
     return(data)
    
 }
+
+const notiId= async  (id) => {
+
+  const data = await axios.get(baseUrl+'notiid/'+id)
+
+  return(data.data)
+ 
+}
+
+const responderNoti= async  (rta) => {
+  console.log(rta)
+
+ 
+}
+
+
 
 
 ///legajo
@@ -67,4 +83,4 @@ const subirprueba = async (formdata) => {
   
   }
 
-export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba};
+export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti};

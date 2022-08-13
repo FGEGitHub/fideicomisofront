@@ -23,12 +23,12 @@ const TablaNotificaciones = (props) => {
             const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
             if (loggedUserJSON) {
               const usuario = JSON.parse(loggedUserJSON)
-              console.log(usuario)
+              console.log(usuario.cuil_cuit)
               setUsuario(usuario)
-        
+              const lotes  = await servicioUsuario1.noticliente(usuario.cuil_cuit)
+              setNoti(lotes)
             }
-            const lotes  = await servicioUsuario1.noticliente(usuario.cuil_cuit)
-            setNoti(lotes)
+           
         } catch (error) {
             
         }
@@ -48,7 +48,7 @@ const TablaNotificaciones = (props) => {
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
             <SearchIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('/usuario2/respuesta/'+noti[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+            onClick={() =>  navigate('/usuario/respuesta/'+noti[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>
         );

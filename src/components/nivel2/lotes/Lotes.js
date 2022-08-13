@@ -4,11 +4,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import MUIDataTable from "mui-datatables";
 import servicioClientes from '../../../services/lotes'
 import { useNavigate } from "react-router-dom";
-
+import CargaDeTabla from "../../CargaDeTabla"
 
 const Lotes = () => {
     //configuracion de Hooks
     const [clients, setClients] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
  
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
@@ -31,7 +32,8 @@ const Lotes = () => {
       
       })
       
-      setClients(clients)}
+      setClients(clients)
+      setLoading(false);}
 
     useEffect(() => {
         getClients()
@@ -90,20 +92,33 @@ const Lotes = () => {
        
     ];
     // renderiza la data table
-            return (
-                <MUIDataTable
-                    title={"Lista de Clientes"}
-                    data={clients}
-                    columns={columns}
-                    actions={[
-                        {
-                            icon: 'save',
-                            tooltip: 'Save User',
-                            onClick: (event, rowData) => alert("You saved " + rowData.name)
-                        }
-                    ]}
-                    />
-            )
+    return (
+        <>
+        {loading ? (<CargaDeTabla/>)
+            :(
+        <div>
+            <MUIDataTable
+            
+                title={"Lista de Clientes"}
+                data={clients}
+                columns={columns}
+                actions={[
+                    {
+                        icon: 'save',
+                        tooltip: 'Save User',
+                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                    }
+                ]}
+              
+    
+    
+            />
+        </div>
+        )}
+        </>
+    
+    
+    )
     }
 
     export default Lotes;

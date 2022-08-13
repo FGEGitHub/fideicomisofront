@@ -28,7 +28,7 @@ const lista= async  () => {
 
     const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
 
-   // const {data } = await axios.get('http://localhost:4000/prueba')
+   //const {data } = await axios.get('http://localhost:4000/prueba')
 
     
     return data 

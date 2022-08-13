@@ -1,8 +1,7 @@
 import axios from "axios"
 
 const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
-//const  baseUrl ='http://localhost:4000/signinn/lotes/'
-
+//const  baseUrl ='http://localhost:4000/lotes/'
 
 
 

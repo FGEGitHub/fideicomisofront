@@ -17,7 +17,6 @@ import NfcIcon from '@mui/icons-material/Nfc';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AlertaAprobaciones from '../AlertaAprobaciones'
 import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
 import AlertaInusual from '../AlertaInusual'
@@ -48,6 +47,11 @@ export default function MenuIzq2 ({children}) {
           text: 'Expedientes', 
           icon: <GroupIcon color="primary" />, 
           path: '/legales/menu' 
+        },
+        { 
+          text: 'Relevamiento', 
+          icon: <GroupIcon color="primary" />, 
+          path: '/legales/estadisticas1' 
         },
     
        

@@ -28,6 +28,7 @@ import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
 
 
 import Transferencias from '../Paginas/usuario1/Transferencias';
+import RespuestaNoti from '../Paginas/usuario1/Respuesta';
 
 
 import PagosInusuales from "../Paginas/Nivel3/PagosInusuales"
@@ -42,7 +43,7 @@ import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
-
+import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 /////////// Probando usecontxt
 
 
@@ -72,6 +73,9 @@ const Rutas = [
 	{ path: '/usuario/declaracionesjuradas', element: < DeclaracionesJuradas /> },
 	{ path: '/usuario/nosotros', element: < Nosotros /> },
 	{ path: '/usuario/contacto', element: < Contacto /> },
+	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
+
+
 	
 	{ path: '/usuario2/clientes', element: <Clientes /> },
 	{ path: '/usuario2/lotes', element: <Lotes /> },
@@ -97,6 +101,7 @@ const Rutas = [
 
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
+	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
 
 	
 
