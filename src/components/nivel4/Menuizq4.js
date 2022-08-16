@@ -53,7 +53,11 @@ export default function MenuIzq2 ({children}) {
           icon: <GroupIcon color="primary" />, 
           path: '/legales/estadisticas1' 
         },
-    
+        { 
+          text: 'Carga Relevamiento', 
+          icon: <GroupIcon color="primary" />, 
+          path: '/legales/cargarelev' 
+        },
        
      
       ];

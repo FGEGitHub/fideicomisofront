@@ -10,15 +10,32 @@ const buscar= async  (barrio) => {
  
 
     const  data  = await axios.post(baseUrl + 'datos', barrio)
-
-    console.log(data.data)
+   
+  
     return data.data
 
     }  
 
 
+    const cargar= async  (carga) => {
+ 
+
+        const  data  = await axios.post(baseUrl + 'cargar', carga)
+       
+      
+        return data.data
+    
+        }  
+        const borrar= async  (zona) => {
+ 
+
+            const  data  = await axios.post(baseUrl + 'borrardatoszona', zona)
+           
+          
+            return data.data
+        
+            } 
 
 
 
-
-export default {buscar}
+export default {buscar,cargar,borrar}

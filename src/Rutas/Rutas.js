@@ -44,6 +44,7 @@ import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
+import CargaRelev from '../Paginas/Nivel4/CargaRelev';
 /////////// Probando usecontxt
 
 
@@ -102,6 +103,7 @@ const Rutas = [
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
 	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
+	{ path: '/legales/cargarelev', element: <CargaRelev /> },
 
 	
 
