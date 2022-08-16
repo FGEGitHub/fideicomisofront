@@ -6,12 +6,12 @@ import Widget from '../../../components/nivel4/EstadistivasRelev/Widget/Widget';
 import Featured from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
 import Chart from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
 import Tabla from '../../../components/nivel4/EstadistivasRelev/Tabla/Tabla'
+import ModalBorrar from '../../../components/nivel4/ModalBorrar/ModalBorrar'
 import "./Home.scss";
 
-import * as React from 'react';
+import React, { useEffect, useState, } from "react";
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+
 import NativeSelect from '@mui/material/NativeSelect';
 import { Button } from '@mui/material';
 import servicioRelevamiento from '../../../services/relevamiento'
@@ -24,9 +24,14 @@ import servicioRelevamiento from '../../../services/relevamiento'
 
 export default function Legajos() {
 
-  const [barrio, setBarrio] = React.useState([]);
-  const [datos, setDatos] = React.useState([]);
+  const [barrio, setBarrio] = useState(
+    { barrio: "La Tosquera" });
+  const [datos, setDatos] = useState(null);
+  useEffect(() => {
 
+    buscar()
+
+  }, [])
 
   const handleChange = (e) => {
 
@@ -41,13 +46,16 @@ export default function Legajos() {
 
     const datoss = await servicioRelevamiento.buscar(barrio)
     setDatos(datoss)
-    console.log(datos)
+    console.log(datos[0].cdenuncia)
 
   };
   return (
     <MenuUsuario4>
-
+  
       <div>
+ 
+      <h4>Elegir barrio</h4>
+  
         <Box sx={{ minWidth: 120 }}>
           <NativeSelect
             defaultValue={30}
@@ -62,46 +70,100 @@ export default function Legajos() {
 
           </NativeSelect>
         </Box>
-
+      
         <Button onClick={buscar}>Buscar</Button>
-      </div>
+      </div> 
+       < ModalBorrar/>
 
 
 
 
 
-        {datos?   
-      <div>
-      <div className="home">
+      {datos ?
+        <div>
+          <div className="home">
 
-        <div className="container">
+            <div className="container">
 
-          <div className="widgets">
-            
-          <div>
-          <Widget type="familias" />
+              <div className="widgets">
+              {datos ?
+                  <div>
+                    <Widget type="familias"
+                       cantidad={datos[0].familias} 
+                      />
+                  </div> : <div> <Widget type="familias"
+                  /></div>
+                }
+               
+                {datos ?
+                  <div>
+                    <Widget type="condenuncia"
+                       cantidad={datos[0].cdenuncia } 
+                       porcentaje={datos[0].porcDenuncia}
+                      />
+                  </div> : <div> <Widget type="condenuncia"
+                  /></div>
+                }
+                  {datos ?
+                  <div>
+                    <Widget type="sindenuncua"
+                       cantidad={datos[0].SinDenuncia} 
+                       porcentaje={datos[0].porcSDenuncia}
+                      />
+                  </div> : <div> <Widget type="SinDenuncia"
+                  /></div>
+                }
+                {datos ?
+                  <div>
+                    <Widget type="enproceso"
+                       cantidad={datos[0].EnProceso} 
+                       porcentaje={datos[0].porcEnProceso}
+                       
+                      />
+                  </div> : <div> <Widget type="EnProceso"
+                  /></div>
+                }
+               
+              
+              </div>
+              <div className="charts">
+              {datos ?
+                  <div>
+                    <Featured 
+                     porcentaje={datos[0].porcDenuncia}
+                     titulo="Con Denuncia"
+                    />
+                    </div> : <div><Featured /> </div> }
+                
+                    {datos ?
+                  <div>
+                    <Featured 
+                     porcentaje={datos[0].porcSDenuncia}
+                     titulo="Sin denuncia"
+                    />
+                    </div> : <div><Featured /> </div> }
+                    {datos ?
+                  <div>
+                    <Featured 
+                     porcentaje={datos[0].porcEnProceso}
+                     titulo="En proceso"
+                    />
+                    </div> : <div><Featured /> </div> }
+
+       
+              </div>
+              <div className="listContainer">
+                <div className="listTitle">Latest Transactions</div>
+                <Tabla
+                datos= {datos[1]} />
+              </div>
+            </div>
           </div>
-            
-            <Widget type="condenuncia" 
-            cantidad ={datos} />
-            <Widget type="sindenuncua" />
-            <Widget type="enproceso" />
-          </div>
-          <div className="charts">
-            <Featured />
-            <Chart />
-          </div>
-          <div className="listContainer">
-            <div className="listTitle">Latest Transactions</div>
-            <Tabla />
-          </div>
+
+
         </div>
-      </div>
 
-
-      </div>
-
-         : <div></div>}
+        : <div></div>}
     </MenuUsuario4>
   );
 

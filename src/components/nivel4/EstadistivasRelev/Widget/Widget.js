@@ -5,10 +5,14 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import "./Widget.scss";
 
-const Widget = ({ type },props) => {
+const Widget = (props) => {
+  console.log(props.type)
+  console.log(props.cantidad)
+
   let data;
-  let amount = 1000;
-  switch (type) {
+  let amount = props.cantidad;
+  
+/*   switch (props.type) {
     case "condenuncia":
        amount = 5;
        console.log(props.cantidad)
@@ -22,16 +26,16 @@ const Widget = ({ type },props) => {
     default:
        amount = 0;
         break;
-}
+} */
 //  const amount = 1000;
-  const difference = 20;
+  const porcentaje = props.porcentaje;
 
-  switch (type) {
+  switch (props.type) {
     case "familias":
       data = {
         title: "Familias",
         isMoney: false,
-        link: "See all users",
+        link: "Ver Detalles",
         icon: (
           <PersonOutlineIcon
             className="icon"
@@ -47,7 +51,7 @@ const Widget = ({ type },props) => {
       data = {
         title: "Con Denuncia",
         isMoney: false,
-        link: "View all orders",
+        link: "Ver Detalles",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -63,7 +67,7 @@ const Widget = ({ type },props) => {
       data = {
         title: "Sin Denuncia",
         isMoney: false,
-        link: "View net earnings",
+        link: "Ver Detalles",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -79,7 +83,7 @@ const Widget = ({ type },props) => {
       data = {
         title: "En Proceso",
         isMoney: false,
-        link: "See details",
+        link: "Ver Detalles",
         icon: (
           <AccountBalanceWalletIcon
             className="icon"
@@ -107,7 +111,7 @@ const Widget = ({ type },props) => {
       <div className="right">
         <div className="percentage positive">
           <KeyboardArrowUpIcon />
-          {difference}%
+          {porcentaje}%
         </div>
         {data.icon}
       </div>
