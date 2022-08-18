@@ -45,7 +45,8 @@ import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 import CargaRelev from '../Paginas/Nivel4/CargaRelev';
-/////////// Probando usecontxt
+
+/////////// 
 
 
 //////////
@@ -59,12 +60,12 @@ const Rutas = [
 	{path: '/login',element: (<Login />)},
 	{ path: '/lista', element: <Lista /> },
 	
-	 <Navbar/> ,
+
 
 	{path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
 
-	<Navbar/> ,
+
 	{ path: '/usuario/menu', element: < Usuario1 /> },
 	{ path: '/usuario/Legajos', element: < Legajos /> },
 	{ path: '/usuario/transferencias', element: < Transferencias /> },
@@ -76,8 +77,10 @@ const Rutas = [
 	{ path: '/usuario/contacto', element: < Contacto /> },
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
 
-
 	
+/* 	{ path: '/usuario2/clientess', render={()=>{ return user?  <Clientes /> : <Clientes />}}  }, */
+
+
 	{ path: '/usuario2/clientes', element: <Clientes /> },
 	{ path: '/usuario2/lotes', element: <Lotes /> },
 	{ path: '/usuario2/detallecliente/:cuil_cuit', element: <DetalleCliente /> },

@@ -10,7 +10,7 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
 
 
 const vercuotas= async  (id) => {
-    console.log('servicio')
+    
    console.log(id)
     const {data } = await axios.get(baseUrl+'lote2/'+id)
     console.log(data)

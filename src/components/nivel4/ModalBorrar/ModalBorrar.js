@@ -98,6 +98,7 @@ export default function SelectTextFields(props) {
 
             > <option value={''}>Elegir</option>
               <option value={'La Tosquera'}>La Tosquera</option>
+              <option value={'Otra'}>Otra</option>
       
 
 

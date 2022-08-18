@@ -2,13 +2,15 @@ import Rutas from './Rutas/Rutas'
 import NotiContext from './context/NotiContext';
 import UserContext from './context/UserContext';
 import InusualContext from './context/inusualesContext';
-import {BrowserRouter, useRoutes} from 'react-router-dom'
+import {BrowserRouter, useRoutes, Route, Switch} from 'react-router-dom'
 import {useEffect,useState} from 'react'
 import Login from './Paginas/Login';
 import servicioUsuario from './services/usuarios'
 import servicioAprobaciones from './services/Aprobaciones'
 import servicioPagos from './services/pagos'
 import { useNavigate } from "react-router-dom";
+
+
 function App () {
 
   const element = useRoutes(Rutas)
@@ -61,23 +63,16 @@ useEffect(() => {
 ///
   
 
-    const usuario ={
-    nombre: 'nombre',
-   } 
 
 
 
-/* if (userContext == null){
-  return(<Login/>)
-  
-}else {
-return (
-    } */
     return(
   <UserContext.Provider value={{userContext}}>
     <InusualContext.Provider value={inusualContext}>
   <NotiContext.Provider value={notiContext}>
+ 
 
+  
     {element}
 
 </NotiContext.Provider>

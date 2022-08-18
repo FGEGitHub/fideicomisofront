@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
-import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
+import { useNavigate } from "react-router-dom";
+
 
 import servicionivel3 from '../../services/nivel3'
 

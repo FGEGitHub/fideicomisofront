@@ -58,6 +58,18 @@ export default function PagarCuota() {
                <Card variant="outlined" >
 
                    <form onSubmit={designar}>
+                   <TextField
+                        /* style ={{width: '25%'}} */
+                           autoFocus
+                           margin="dense"
+                           id="name"
+                           label="Familia"
+                           name="Familia"
+                           onChange={handleChange}
+                           fullWidth
+                           variant="filled"
+                           
+                       />
                          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                          Zona
                        </InputLabel>
@@ -71,6 +83,7 @@ export default function PagarCuota() {
                            }}
                        >   <option  value={'otra'}>Elegir</option>
                            <option   value={'La Tosquera'}>La Tosquera</option>
+                           <option  value={'Otra'}>Otra</option>
                         
                        </NativeSelect> 
                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
@@ -138,29 +151,8 @@ export default function PagarCuota() {
                            onChange={handleChange}
                            fullWidth
                            variant="filled"
-                           type={"Number"}
+                           
                        />
-                       {/* <TextField
-                           autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Lote"
-                           name="lote"
-                           onChange={handleChange}
-                           fullWidth
-                           variant="filled"
-                       />
-                       <TextField
-                           autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Parcela"
-                           name="parcela"
-                           onChange={handleChange}
-                           fullWidth
-                           variant="filled"
-                           type={"Number"}
-                       /> */}
                      
                      
 

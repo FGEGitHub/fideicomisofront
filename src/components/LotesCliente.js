@@ -48,7 +48,7 @@ const LotesCliente = (props) => {
 
 
     const vercuotas = async (index) => {
-        console.log('ver cuotas')
+     
         const cuotas = await servicioCuotas.vercuotas(index)
         if (cuotas !== '') { setCuotas(cuotas) }
 
@@ -171,12 +171,12 @@ const LotesCliente = (props) => {
 
         <Fragment>
             <Button  onClick={() => { navigate('/usuario2/asignarloteausuario/' +cuil_cuit)}} variant="contained" color="success">
-           Lista de pagos
+           Asignar lote a usuario
             </Button>
             {
                 lotes.map((item, index) =>
                     <div>
-                        <Button key={index} variant="contained" onClick={() => {  vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']}F{item['fraccion']}-M{item['manzana']}-L{item['lote']}</Button>
+                        <Button key={index} variant="contained" onClick={() => {  vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</Button>
                         {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
 
                         <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + item['id']) }} >
