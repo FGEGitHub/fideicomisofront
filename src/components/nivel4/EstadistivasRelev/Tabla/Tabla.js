@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import "./Table.scss";
 
 const List = (props) => {
-  console.log(props.datos)
+  
   const rows = [
     {
       rango: "0-4",
@@ -18,7 +18,7 @@ const List = (props) => {
       date: "1 March",
       amount: 785,
       method: "Cash on Delivery",
-      status: "Approved",
+      status: "Menores",
     },
     {
       rango: "4-8",
@@ -28,7 +28,7 @@ const List = (props) => {
       date: "1 March",
       amount: 900,
       method: "Online Payment",
-      status: "Pending",
+      status: "Media",
     },
     {
       rango: "8-12",
@@ -38,7 +38,7 @@ const List = (props) => {
       date: "1 March",
       amount: 35,
       method: "Cash on Delivery",
-      status: "Pending",
+      status: "Mayores",
     },
 
   ];

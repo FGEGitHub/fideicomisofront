@@ -30,7 +30,9 @@ export default function MenuUsuario2() {
       servicioUsuario.setToken(user.token) 
 
       
-    } 
+    } else{
+      navigate('/login')
+    }
 
 
   }, [])

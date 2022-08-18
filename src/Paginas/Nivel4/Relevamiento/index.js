@@ -16,8 +16,10 @@ import NativeSelect from '@mui/material/NativeSelect';
 import { Button } from '@mui/material';
 import servicioRelevamiento from '../../../services/relevamiento'
 
-
-
+import { useNavigate } from "react-router-dom";
+import MUIDataTable from "mui-datatables";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -27,6 +29,8 @@ export default function Legajos() {
   const [barrio, setBarrio] = useState(
     { barrio: "La Tosquera" });
   const [datos, setDatos] = useState(null);
+  const [historial, setHistorial] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
 
     buscar()
@@ -40,15 +44,74 @@ export default function Legajos() {
 
 
 
+  const borrar = (e) => {
 
+  console.log(e)
+  }
 
   const buscar = async () => {
 
     const datoss = await servicioRelevamiento.buscar(barrio)
     setDatos(datoss)
-    console.log(datos[0].cdenuncia)
+    setHistorial(datos[2])
 
   };
+
+  const columns = [
+    {
+      name: "Familia",
+      label: "Familia",
+
+  },
+    {
+        name: "Zona",
+        label: "Zona",
+
+    },
+    {
+        name: "Status",
+        label: "Status",
+    },
+    {
+        name: "Material_Construccion",
+        label: "Material",
+
+    },
+   
+    
+    {
+        name: "Actions",
+        options: {
+            customBodyRenderLite: (dataIndex, rowIndex) =>
+                CutomButtonsRenderer(
+                    dataIndex,
+                    rowIndex,
+                   // overbookingData,
+                   // handleEditOpen
+                )
+        }
+    
+    },   
+
+
+];
+
+
+
+function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
+  return (
+    <>
+      <EditIcon
+        onClick={() => onClick(data[dataIndex].id, dataIndex)}
+        style={{ marginRight: "10px", cursor: "pointer" }}
+      />
+      <DeleteIcon style={{ cursor: "pointer" }} 
+       onClick={() => {  borrar() } }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+      />
+    </>
+  );
+}
+
   return (
     <MenuUsuario4>
   
@@ -65,7 +128,7 @@ export default function Legajos() {
               id: 'uncontrolled-native',
 
             }}
-          >   <option value={'Otro'}>Otro</option>
+          >   <option value={'Otra'}>Otro</option>
             <option value={'La Tosquera'}>La Tosquera</option>
 
           </NativeSelect>
@@ -153,7 +216,7 @@ export default function Legajos() {
        
               </div>
               <div className="listContainer">
-                <div className="listTitle">Latest Transactions</div>
+                <div className="listTitle">Edades </div>
                 <Tabla
                 datos= {datos[1]} />
               </div>
@@ -164,6 +227,25 @@ export default function Legajos() {
         </div>
 
         : <div></div>}
+
+<div>
+        <MUIDataTable
+        
+            title={"Relevamiento completo detallado"}
+            data={historial}
+            columns={columns}
+            actions={[
+                {
+                    icon: 'save',
+                    tooltip: 'Save User',
+                    onClick: (event, rowData) => alert("You saved " + rowData.name)
+                }
+            ]}
+          
+
+
+        />
+    </div>
     </MenuUsuario4>
   );
 
