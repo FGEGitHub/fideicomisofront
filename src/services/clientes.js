@@ -42,7 +42,7 @@ const crearCliente= async  (datos) => {
  } 
  
  const ventaLote = async  (datos) => {
-   
+    console.log(datos)
     const data  = await axios.post(baseURL+'ventalote',datos)
     console.log(data)
     alert(data.data)

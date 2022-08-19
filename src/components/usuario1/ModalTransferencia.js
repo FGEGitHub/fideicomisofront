@@ -71,7 +71,7 @@ export default function SelectTextFields(props) {
 
 
   const handleChange = (e) => {
-    setPago({ ...pago, ['id']: props.id })
+   // setPago({ ...pago, ['id']: props.id })
     setPago({ ...pago, [e.target.name]: e.target.value })
 
 
@@ -79,7 +79,7 @@ export default function SelectTextFields(props) {
   }
   ////
   const pagar = async (event) => {
-    event.preventDefault();
+   // event.preventDefault();
 
     console.log(pago)
     try {
@@ -146,22 +146,7 @@ export default function SelectTextFields(props) {
                 ))}
               </TextField> */}
 
-              <NativeSelect
-                defaultValue={30}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'cbu',
-                  id: 'uncontrolled-native',
-
-                }}
-
-              > <option value={''}>Elegir</option>
-                <option value={'1'}>{props.id}</option>
-                <option value={'2'}>CBU2</option>
-
-
-
-              </NativeSelect>
+             
               <br />
               {
                 lotes.map((item, index) =>
@@ -177,12 +162,15 @@ export default function SelectTextFields(props) {
 
                     >
 
-                      <Button key={index} variant="contained">      {item['zona']}F{item['fraccion']}M{item['manzana']}L{item['lote']}</Button>
+                     
 
                       <option key={index}  value={item['id']}>Elegir</option>
                       <option key={index}  value={item['id']}>  {item['zona']}F{item['fraccion']}M{item['manzana']}L{item['lote']}</option>
 
+
                            </NativeSelect> 
+
+
                   </div>
                 )
               }

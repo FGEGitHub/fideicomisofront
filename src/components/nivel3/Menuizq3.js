@@ -91,7 +91,7 @@ export default function MenuIzq2 ({children}) {
           {
             text: 'Pagos Inusuales Mensuales',
             icon: <Looks3Icon color="primary" />,
-            path: '/nivel3/pagosinusuales'
+            path: '/nivel3/pagosmensualesinusuales'
           },
         
      

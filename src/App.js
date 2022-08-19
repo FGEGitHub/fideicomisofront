@@ -19,7 +19,7 @@ function App () {
   const [inusualContext, setUsInusualContext] = useState(0)
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(null)
+  
 
 ///
 
@@ -28,18 +28,32 @@ useEffect(() => {
    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
    if (loggedUserJSON) {
      const userContext = JSON.parse(loggedUserJSON)
-    
+    console.log(userContext)
      setUserContext(userContext)
    
      servicioUsuario.setToken(userContext.token) 
-     declarar()
-     inusuales()
+    
 
-   }/*  else{
+     /* switch (userContext.nivel) {
+      case 1:navigate('/usuario/menu')
+        
+        break;
+        case 2:navigate('/usuario2/clientes')
+     
+          break;
+          case 3:navigate('/nivel3/')
+     
+        break;
+        case 4: navigate('/legales/menu')
+        
+        break;
+
+     }*/
+   }  else{
 
       navigate('/login')
      
-   } */
+   }  
   
 
 
@@ -67,6 +81,8 @@ useEffect(() => {
 
 
     return(
+
+      
   <UserContext.Provider value={{userContext}}>
     <InusualContext.Provider value={inusualContext}>
   <NotiContext.Provider value={notiContext}>
@@ -95,7 +111,6 @@ useEffect(() => {
 
 export default () =>
  <BrowserRouter>
- 
- <App />
+  <App />
 
  </BrowserRouter>

@@ -68,6 +68,7 @@ const notiId= async  (id) => {
 
 const responderNoti= async  (rta) => {
   console.log(rta)
+  const data = await axios.post(baseUrl+'justificacionp/',rta)
 
  
 }

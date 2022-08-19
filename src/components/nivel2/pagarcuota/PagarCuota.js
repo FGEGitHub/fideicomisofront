@@ -127,7 +127,7 @@ export default function PagarCuota() {
                      
 
 
-                       <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
+                       <Button onClick={designar} variant='contained'>Enviar</Button>
 
                    </form>
 

@@ -96,7 +96,7 @@ const Rutas = [
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
-	{ path: '/nivel3/pagosinusuales', element: <PagosInusualesMensuales /> },
+	{ path: '/nivel3/pagosmensualesinusuales', element: <PagosInusualesMensuales /> },
 	{ path: '/nivel3/', element: <Principal /> },
 	{ path: '/nivel3/icc', element: <Icc /> },
 	{ path: '/nivel3/clientes', element: <VerCliente /> },

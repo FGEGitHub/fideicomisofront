@@ -84,7 +84,7 @@ const MensualInusuales = (props) => {
     ];
 
     const handleChange = (e) => {
-        buscar()
+        console.log(FormFecha)
         setFormFecha({ ...FormFecha, [e.target.name]: e.target.value })
     }
 
@@ -93,7 +93,8 @@ const MensualInusuales = (props) => {
     return (
 
         <Fragment>
-             <form onSubmit={buscar}>
+            <br/> <br/> <br/> <br/>
+             
                           <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                            Mes
                         </InputLabel>
@@ -143,9 +144,9 @@ const MensualInusuales = (props) => {
                         </NativeSelect> 
                         
 
-                        <Button type="submit">Enviar</Button>
+                        <Button onClick={buscar} >Enviar</Button>
 
-                    </form>
+                   
 
 
             <div>
