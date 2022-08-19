@@ -37,7 +37,7 @@ const CuotasNiv1 = (props) => {
     useEffect(() => {
         
         const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
-        
+       
         setUser(preba)
       //console.log(loggedUserJSON)
 
@@ -91,10 +91,10 @@ const CuotasNiv1 = (props) => {
     const traer = async (preba) => {
 
         console.log(preba.cuil_cuit)
-        console.log('user')
+        
         const lotes = await servicioUsuario1.lotesCliente(preba.cuil_cuit)
-       
-        setLotes(lotes)
+       console.log(lotes[0])
+        setLotes(lotes[0])
 
 
 

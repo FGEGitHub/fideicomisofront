@@ -17,8 +17,8 @@ export default function PagarCuota() {
   
     const navigate = useNavigate();
     let params = useParams()
-
-    const [rta, setRta] = useState([])
+    const id=params.id
+    const [rta, setRta] = useState([''])
     const [pago, setPagos] = useState({
    
         /////////asignar lote 0 caso que no se seleccione
@@ -45,8 +45,8 @@ export default function PagarCuota() {
       
           const user = JSON.parse(loggedUserJSON)
           const noti = await servicioUsuario1.notiId(params.id)
-          setRta({ cuil_cuit: "user.cuil_cuit",
-            id :"noti[0].id"})
+          setRta( {'cuil_cuit': user.cuil_cuit,
+            'id':id} )
 
             console.log(rta)
    
@@ -69,7 +69,7 @@ traer()
 
    const handleChange = (e) => {
        setRta({ ...rta, [e.target.name]: e.target.value })
-       console.log(e.target.value)
+       console.log(rta)
        }
 
 
@@ -105,8 +105,8 @@ traer()
                            autoFocus
                            margin="dense"
                            id="name"
-                           label="Descripcion"
-                           name="monto"
+                           label="Observaciones"
+                           name="observaciones"
                            onChange={handleChange}
                            fullWidth
                            variant="filled"
@@ -137,7 +137,7 @@ traer()
                      
 
 
-                       <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
+                       <Button onClick={designar} variant='contained'>Enviar</Button>
 
                    </form>
 

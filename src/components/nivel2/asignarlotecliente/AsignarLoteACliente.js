@@ -30,10 +30,10 @@ export default function AsignarLoreACliente() {
 
     const designar = async (event) => {
     
-        navigate('/usuario2/detallecliente/'+cuil_cuit)
+       
         console.log(lotes)
      await servicioClientes.ventaLote(lotes)
-        
+         navigate('/usuario2/detallecliente/'+cuil_cuit)
 
 
     }
@@ -146,7 +146,7 @@ export default function AsignarLoreACliente() {
 
                     </form>
                     
-                    <Button onClick={designar} variant='contained' type="submit">Enviar</Button>
+                    <Button onClick={designar} variant='contained' >Enviar</Button>
                     </Grid>
 
                 </Card>

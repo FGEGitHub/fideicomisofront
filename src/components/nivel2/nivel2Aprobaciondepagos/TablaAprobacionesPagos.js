@@ -58,7 +58,7 @@ const TablaAprobaciones = () => {
     const columns = [
         {
             name: "id",
-            label: "ID",
+            label: "Id",
 
         },
     
