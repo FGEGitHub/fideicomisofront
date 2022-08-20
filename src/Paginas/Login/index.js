@@ -89,6 +89,9 @@ const Login = () => {
           case 3:navigate('/nivel3')
           window.location.reload(true);
           break;
+          case 4:navigate('/legales/estadisticas1')
+          window.location.reload(true);
+          break;
 
       }
     } catch (error) {
