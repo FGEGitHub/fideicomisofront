@@ -128,8 +128,9 @@ function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
               id: 'uncontrolled-native',
 
             }}
-          >   <option value={'Otra'}>Otro</option>
+          >  
             <option value={'La Tosquera'}>La Tosquera</option>
+            <option value={'Otra'}>Otro</option>
 
           </NativeSelect>
         </Box>
