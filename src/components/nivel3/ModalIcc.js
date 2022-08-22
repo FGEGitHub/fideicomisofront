@@ -51,9 +51,11 @@ export default function ModalIcc() {
                 <DialogTitle>   AGREGAR NUEVO ICC</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Ingrese Datos del nuevo Cliente
+                        Ingrese ICC. 
+                        Ejemplo (4.5 = 0.045%)
                     </DialogContentText>
-                    <form onSubmit={handleDeterminar}>
+                  
+                    <br/>
                      
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                            Mes
@@ -114,13 +116,14 @@ export default function ModalIcc() {
                             onChange={handleChange}
                             fullWidth
                             variant="standard"
+                            type="number"
                         />
 
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button type="submit">Enviar</Button>
+                            <Button onClick={handleDeterminar}>Enviar</Button>
                         </DialogActions>
-                    </form>
+                   
                 </DialogContent>
 
 

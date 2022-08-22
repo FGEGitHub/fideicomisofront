@@ -25,7 +25,7 @@ const LotesCliente = (props) => {
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
     const navigate = useNavigate();
-    
+
     useEffect(() => {
 
         traer()
@@ -44,23 +44,19 @@ const LotesCliente = (props) => {
 
 
     })
-
-
+    const [act, setAct] = useState(false)
+    const [act2, setAct2] = useState(false)
 
     const vercuotas = async (index) => {
-     
+
         const cuotas = await servicioCuotas.vercuotas(index)
         if (cuotas !== '') { setCuotas(cuotas) }
-
+        setAct(true)
     };
     //////////servicioCuotas
 
-    const borarTodas = async (index) => {
-  
-        const cuotas = await servicioCuotas.borrarcuotas(index)
-     
 
-    };
+
 
     const verief = async (index) => {
         console.log('ver ief')
@@ -68,8 +64,9 @@ const LotesCliente = (props) => {
         const dde = await servicioCuotas.verief(index)
         setDeudaExigible(dde[0])
         setDetallePendiente(dde[1])
-        
-     
+        setAct2(true)
+
+
 
     };
 
@@ -86,29 +83,29 @@ const LotesCliente = (props) => {
     const borrar = async (id) => {
 
         const rta = await servicioCuotas.borrarcuota(id)
-     
+
         alert(rta)
 
     }
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
-          <>
-            <CurrencyExchangeIcon 
-             onClick={() =>  navigate('/usuario2/pagarcuota/'+cuotas[dataIndex].id)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            />
-       <SearchIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('/usuario2/pagoscuotas/'+cuotas[dataIndex].id) }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
-        
-     
-            <DeleteIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  borrar(cuotas[dataIndex].id) }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
-          </>
+            <>
+                <CurrencyExchangeIcon
+                    onClick={() => navigate('/usuario2/pagarcuota/' + cuotas[dataIndex].id)}
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                />
+                <SearchIcon style={{ cursor: "pointer" }}
+                    onClick={() => navigate('/usuario2/pagoscuotas/' + cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                />
+
+
+                <DeleteIcon style={{ cursor: "pointer" }}
+                    onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                />
+            </>
         );
-      }
+    }
 
     const columns = [
         {
@@ -142,11 +139,16 @@ const LotesCliente = (props) => {
 
         },
         {
+            name: "pago",
+            label: "Pago",
+
+        },
+        {
             name: "Saldo_real",
             label: "Saldo Real",
 
         },
-     
+
 
         {
             name: "Acciones",
@@ -155,12 +157,12 @@ const LotesCliente = (props) => {
                     CutomButtonsRenderer(
                         dataIndex,
                         rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
+                        // overbookingData,
+                        // handleEditOpen
                     )
             }
-        
-        },   
+
+        },
 
 
 
@@ -170,24 +172,26 @@ const LotesCliente = (props) => {
     return (
 
         <Fragment>
-            <Button  onClick={() => { navigate('/usuario2/asignarloteausuario/' +cuil_cuit)}} variant="contained" color="success">
-           Asignar lote a usuario
+            <Button onClick={() => { navigate('/usuario2/asignarloteausuario/' + cuil_cuit) }} variant="contained" color="success">
+                Asignar lote a usuario
             </Button>
+
+
             {
                 lotes.map((item, index) =>
                     <div>
-                        <Button key={index} variant="contained" onClick={() => {  vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</Button>
+                        <Button key={index} variant="contained" onClick={() => { vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</Button>
                         {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
 
                         <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + item['id']) }} >
                             Agregar cuotas al lote
                         </Button>
-                   
-                        <BorrarCuotas  
-                        id ={  item['id']}  />
-                        
-                        <br/><br/>
-                        <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { verief( item['id']) }} >
+
+                        <BorrarCuotas
+                            id={item['id']} />
+
+                        <br /><br />
+                        <Button /* variant="outlined"  */ key={index} variant="contained" onClick={() => { verief(item['id']) }} >
                             Informe estado financiero
                         </Button>
 
@@ -195,10 +199,9 @@ const LotesCliente = (props) => {
                 )
             }
 
-
             <div>
-                <div>
 
+                {act ? <div>
                     <MUIDataTable
                         title={"Lista de Clientes"}
                         data={cuotas}
@@ -214,64 +217,70 @@ const LotesCliente = (props) => {
 
 
                     />
-                </div>
+                </div> : <div></div>}
+
+
+
             </div>
 
-            <br/><br/><br/><br/>
+            <br /><br /><br /><br />
 
-<TableContainer  style ={{width: '70%'}}  component={Paper}>
-<Table sx={{ minWidth: 650 }} aria-label="simple table">
-<TableHead>
-<TableRow>
-<TableCell>Detalles de Deuda Exigible </TableCell>
-
-
-</TableRow>
-</TableHead>
-<TableBody>
-{deudaExigible.map((row) => (
-<TableRow
-  key={row.name}
-  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
->
-
-  <TableCell align="left">{row.datoa}</TableCell>
-  <TableCell align="left">{row.datob}</TableCell>
-
-</TableRow>
-))}
-</TableBody>
-</Table>
-</TableContainer>
-
-<br/><br/>
+            {act2 ? 
+            <div>
+                <TableContainer style={{ width: '70%' }} component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Detalles de Deuda Exigible </TableCell>
 
 
-<TableContainer  style ={{width: '70%'}}  component={Paper}>
-<Table sx={{ minWidth: 650 }} aria-label="simple table">
-<TableHead>
-<TableRow>
-<TableCell>Detalle de Cuotas Pendientes </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {deudaExigible.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+
+                                    <TableCell align="left">{row.datoa}</TableCell>
+                                    <TableCell align="left">{row.datob}</TableCell>
+
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
+                <br /><br />
 
 
-</TableRow>
-</TableHead>
-<TableBody>
-{detallePendiente.map((row) => (
-<TableRow
-  key={row.name}
-  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
->
+                <TableContainer style={{ width: '70%' }} component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
 
-  <TableCell align="left">{row.datoa}</TableCell>
-  <TableCell align="left">{row.datob}</TableCell>
 
-</TableRow>
-))}
-</TableBody>
-</Table>
-</TableContainer>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {detallePendiente.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
 
+                                    <TableCell align="left">{row.datoa}</TableCell>
+                                    <TableCell align="left">{row.datob}</TableCell>
+
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
+            : <div></div>}
 
         </Fragment>
 

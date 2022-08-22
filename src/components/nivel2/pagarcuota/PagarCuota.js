@@ -60,7 +60,9 @@ export default function PagarCuota() {
 
 
    const handleChange = (e) => {
-       console.log(e.target.value)
+
+    
+       console.log(pago)
        setPagos({ ...pago, [e.target.name]: e.target.value })
    }
    return (
