@@ -56,11 +56,7 @@ const TablaAprobaciones = () => {
       }
     // definimos las columnas
     const columns = [
-        {
-            name: "id",
-            label: "Id",
-
-        },
+     
     
         {
             name: "mes",
@@ -95,6 +91,10 @@ const TablaAprobaciones = () => {
         {
             name: "monto_inusual",
             label: "Monto Inusual",
+        },
+        {
+            name: "observaciones",
+            label: "observaciones",
         },
         {
             name: "Actions",
