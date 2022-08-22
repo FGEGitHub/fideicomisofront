@@ -7,6 +7,10 @@ import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
 import PagosCuotas from '../Paginas/Usuario2/PagosCuota';
+import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
+import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
+import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
+import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
 
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
@@ -22,9 +26,7 @@ import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
 
-import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
-import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
-import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
+
 
 
 import Transferencias from '../Paginas/usuario1/Transferencias';
@@ -90,8 +92,10 @@ const Rutas = [
 	{ path: '/usuario2/aprobacionesdepagos', element: <AprobacionesPagos /> },
 	{ path: '/usuario2/legajoscliente/:cuil_cuit', element: <LegajosCliente /> },
 	{ path: '/usuario2/modificarcliente/:cuil_cuit', element: <EditarCliente /> },
+	{ path: '/usuario2/agregarlegajo/:cuil_cut', element: <AgregarLegajo /> },
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
+	
 	
 	
 

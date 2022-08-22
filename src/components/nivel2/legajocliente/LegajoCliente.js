@@ -10,9 +10,10 @@ import servicioCliente from '../../../services/clientes'
 import "../../profile.css";
 import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
+import { useNavigate } from "react-router-dom";
 
 const LegajoCliente = (props) => {
-    
+  const navigate = useNavigate();
   const [legajos, setLegajos] = useState([])
   const [file, setFile] = useState(null);
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
@@ -54,8 +55,8 @@ const LegajoCliente = (props) => {
  <ModalLegajo
  cuil_cuit = {props.cuil_cuit}
  />
+    <Button onClick={() => navigate('agregarlegajo/')}variant="contained">Subir Legajo2</Button>
    
-
      {legajos.map((legajo) =>( 
     <div className="profile">
       <Grid>
