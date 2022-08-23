@@ -157,9 +157,11 @@ export default function AsignarLoreACliente() {
 
 
                     </form>
+                    <br/>
                     < ModalLote
                     datos ={lotes}
                     />
+                    <br/><br/><br/>
                     <Button onClick={designar} variant='contained' >Enviar</Button>
                     </Grid>
 
