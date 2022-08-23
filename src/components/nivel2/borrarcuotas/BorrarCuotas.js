@@ -12,7 +12,7 @@ export default function Borrarcuotas(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+  console.log(props.id)
   const handleClickOpen = () => {
     setOpen(true);
   };
