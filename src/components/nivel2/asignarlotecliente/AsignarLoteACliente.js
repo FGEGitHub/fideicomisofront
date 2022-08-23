@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
-
+import ModalLote from './ModalSeguro'
 
 export default function AsignarLoreACliente() {
   
@@ -139,13 +139,27 @@ export default function AsignarLoreACliente() {
                             fullWidth
                             variant="filled"
                         />
+
+                            <TextField
+                            autoFocus
+                            margin="dense"
+                            type={'number'}
+                            id="name"
+                            label="Valor del metro cuadrado"
+                            name="valor"
+                            onChange={handleChange}
+                            fullWidth
+                            variant="filled"
+                        />
                       
                       
 
 
 
                     </form>
-                    
+                    < ModalLote
+                    datos ={lotes}
+                    />
                     <Button onClick={designar} variant='contained' >Enviar</Button>
                     </Grid>
 
