@@ -9,7 +9,31 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 
 
+/////
+import Badge from '@mui/material/Badge';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import MailIcon from '@mui/icons-material/Mail';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+
+
+////
+
+
 const LotesCuotas = (props) => {
+
+    ///
+    const [invisible, setInvisible] = React.useState(false);
+
+    const handleBadgeVisibility = () => {
+      setInvisible(!invisible);
+    };
+
+    ///
   
     let cuil_cuit = props.cuil_cuit
     const navigate = useNavigate();
@@ -32,7 +56,7 @@ const LotesCuotas = (props) => {
 
 
     const vercuotas = async (index) => {
-        console.log('ver cuotas')
+      
         const cuotas = await servicioCuotas.vercuotas(index)
         if (cuotas !== '') { setCuotas(cuotas) }
 

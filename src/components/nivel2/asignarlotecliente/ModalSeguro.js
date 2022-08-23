@@ -57,10 +57,7 @@ export default function SelectTextFields(props) {
     setOpen(false);
   };
 
-  const Ver = async () => {
-    const valor = await servicioLotes.calcular(props.datos)
-    console.log(valor)
-  };
+  
 
   ////
   const pagar = async (event) => {
@@ -96,14 +93,22 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
       <Button variant="outlined" onClick={handleClickOpen}>
-       Asignar 
+      Comprobar
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
+      {rta? <div> 
+        <h2>  Lote: {rta.nombre} </h2>   <br/>
+        Superficie: {rta.superficie} <br/>
+        Precio: ${rta.precio}<br/>
+        Valor de cuotas en 60(Sin anticipo): ${rta.cuotas60}<br/>
+
+      </div>  : <div> <h2> No existe Lote</h2></div> }
+
           <div>
 
-          <Button onClick={Ver} size="small" variant="contained">
-              Subir Comprobante
+          <Button onClick={handleClose} size="small" variant="contained">
+              Cerrar
             </Button>
         </div>
       </DialogContent>
