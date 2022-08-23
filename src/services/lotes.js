@@ -64,4 +64,11 @@ const lotesCliente2= async  (cuil_cuit) => {
       
        return data
    }  
-export default {lista, lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1};
+
+   const calcular= async  (datos) => {
+   console.log(datos)
+    const {data } = await axios.post(baseUrl+'calcularvalor',datos)
+    console.log(data)
+    return data 
+}  
+export default {lista, lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
