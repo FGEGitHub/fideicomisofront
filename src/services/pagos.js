@@ -61,11 +61,16 @@ console.log(id)
  }  
 
 const pagosinusuales= async  () => {
-  console.log('i')
 
  const {data } = await axios.get(baseUrl+'pagos/listainusual')
    
  return data
 }  
+const cantidadpendientes= async  () => {
 
-export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,detallesPago};
+  const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes')
+    console.log(data)
+  return data
+ } 
+
+export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

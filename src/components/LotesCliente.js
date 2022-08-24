@@ -48,6 +48,7 @@ const LotesCliente = (props) => {
     const [open, setOpen] = React.useState(false);
     const [deudaExigible, setDeudaExigible] = useState([''])
     const [detallePendiente, setDetallePendiente] = useState([''])
+    const [idlote, setIdlote] = useState(null)
 
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
@@ -56,7 +57,7 @@ const LotesCliente = (props) => {
 
         const cuotas = await servicioCuotas.vercuotas(index)
         if (cuotas !== '') { setCuotas(cuotas) }
-        
+        setIdlote(index)
         setAct(true)
         verief(index)
         setOpen(false)
@@ -233,6 +234,11 @@ const LotesCliente = (props) => {
             <div>
 
                 {act ? <div>
+                    <Button  variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
+                Agregar cuotas al lote
+            </Button>
+            <BorrarCuotas
+                id={idlote} />
                     <MUIDataTable
                         title={"Lista de Clientes"}
                         data={cuotas}
@@ -258,6 +264,7 @@ const LotesCliente = (props) => {
 
             {act2 ?
                 <div>
+                
                     <TableContainer style={{ width: '70%' }} component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
