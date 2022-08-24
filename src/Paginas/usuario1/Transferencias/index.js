@@ -6,6 +6,7 @@ import LotesCliente from '../../../components/usuario1/LotesTransferencia'
 import { Divider, Toolbar } from '@mui/material'
 import Footer from '../../../components/usuario1/Footer'
 import { Container, Box, CssBaseline } from '@mui/material'
+import Transferencias2 from '../../../components/usuario1/transferencias/Transferencias'
 
 
 
@@ -21,6 +22,8 @@ export default function Transferencias() {
 
                 <Navbar />
                 <LotesCliente
+                />
+                <Transferencias2
                 />
 
             </div>
