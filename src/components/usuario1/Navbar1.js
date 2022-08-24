@@ -54,6 +54,10 @@ const Navbar = (props) => {
     navigate("/usuario/menu");
   
    } 
+
+   const notificaciones= () => {
+    navigate("/usuario/notificaciones");
+  }
   
   return (
     <React.Fragment>
@@ -85,6 +89,9 @@ const Navbar = (props) => {
                 </Button>
               <Button onClick={irAyuda} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Ayuda" />
+              </Button>
+              <Button onClick={notificaciones} sx={{ marginLeft: "10px" }} variant="Outlined">
+                <Tab label="Notificaciones" />
               </Button>
               </Tabs>
               {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="Outlined">

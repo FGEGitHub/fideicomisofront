@@ -98,7 +98,7 @@ export default function SelectTextFields(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
       {rta? <div> 
-        <h2>  Lote: {rta.nombre} </h2>   <br/>
+        <h2>  Lote: {rta.nombre} </h2>  
         Superficie: {rta.superficie} <br/>
         Precio: ${rta.precio}<br/>
         Valor de cuotas en 60(Sin anticipo): ${rta.cuotas60}<br/>

@@ -3,32 +3,41 @@ import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import GroupIcon from '@mui/icons-material/Group';
-import SearchIcon from '@mui/icons-material/Search';
 import NfcIcon from '@mui/icons-material/Nfc';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { useState, useEffect } from "react";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AlertaAprobaciones from '../AlertaAprobaciones'
-import  useNoti from '../../hooks/useNoti'
-import  useInusual from '../../hooks/useInusual'
-import AlertaInusual from '../AlertaInusual'
+import servicioPagos from '../../services/pagos'
 import Navbar from '../Navbar'
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+
+
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
-    const {cantidad } = useNoti()
+  
+    const [notificaciones, setNotificaciones] = useState();
+ 
+
+    useEffect(() => {
+      cantidadnoti()
+  }, [])
+  const cantidadnoti = async () => {
+        
+    const notis = await servicioPagos.cantidadpendientes()
+
+    setNotificaciones(notis)
    
-    const {cantidadInusual } = useInusual()
+}
+
     const handleClick = (path) => {
         
         navigate(path);
@@ -56,7 +65,9 @@ export default function MenuIzq2 ({children}) {
         },
         {
           text: 'Aprobación de Pagos',
-          icon: <PriceCheckIcon color="primary" />,
+          icon:<div><Badge badgeContent={notificaciones} color="error">
+          <MailIcon color="primary" />
+        </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
    
