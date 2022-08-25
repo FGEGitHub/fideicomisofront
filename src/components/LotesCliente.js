@@ -199,7 +199,7 @@ const LotesCliente = (props) => {
             </Button>
             <br/> <br/>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-controlled-open-select-label">ELEGIR LOTE</InputLabel>
+                <InputLabel id="demo-controlled-open-select-label"> LOTE</InputLabel>
                 <Select
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
@@ -207,7 +207,7 @@ const LotesCliente = (props) => {
                     onClose={handleClose}
                     onOpen={handleOpen}
                     value={age}
-                    label="Elegir Lote"
+                    label="Lote "
                 
                 >
                      {
@@ -240,7 +240,7 @@ const LotesCliente = (props) => {
             <BorrarCuotas
                 id={idlote} />
                     <MUIDataTable
-                        title={"Lista de Clientes"}
+                        title={"Lista de cuotas"}
                         data={cuotas}
                         columns={columns}
                         actions={[

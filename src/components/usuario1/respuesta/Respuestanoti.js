@@ -36,7 +36,7 @@ export default function PagarCuota() {
      
     const reta = await servicioUsuario1.responderNoti(rta)
        
- 
+    navigate('usuario/menu')
 
     }
     const traer = async () => { 

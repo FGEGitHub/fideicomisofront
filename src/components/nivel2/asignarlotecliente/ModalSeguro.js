@@ -101,9 +101,11 @@ export default function SelectTextFields(props) {
         <h2>  Lote: {rta.nombre} </h2>  
         Superficie: {rta.superficie} <br/>
         Precio: ${rta.precio}<br/>
-        Valor de cuotas en 60(Sin anticipo): ${rta.cuotas60}<br/>
+        Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
 
-      </div>  : <div> <h2> No existe Lote</h2></div> }
+      </div>  : <div> 
+        
+      </div> }
 
           <div>
 
