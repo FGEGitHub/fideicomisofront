@@ -6,6 +6,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoPago'
+import Tooltip from '@material-ui/core/Tooltip';
 //import overbookingData from "./overbooking";
 
 const TablaAprobaciones = () => {

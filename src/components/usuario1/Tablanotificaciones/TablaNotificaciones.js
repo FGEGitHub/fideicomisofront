@@ -2,10 +2,13 @@ import servicioUsuario1 from '../../../services/usuario1'
 import React, { useEffect, useState, Fragment } from "react";
 
 import MUIDataTable from "mui-datatables";
-
+import ForwardToInboxTwoToneIcon from '@mui/icons-material/ForwardToInboxTwoTone';
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from '@mui/icons-material/Search';
+import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
+import Tooltip from '@material-ui/core/Tooltip';
+import ModalVer from "./ModalVer";
+
 const TablaNotificaciones = (props) => {
     const [noti, setNoti] = useState([''])
     const [usuario, setUsuario] = useState([''])
@@ -43,13 +46,15 @@ const TablaNotificaciones = (props) => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
-            <EditIcon
-              onClick={() => onClick(data[dataIndex].id, dataIndex)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            />
-            <SearchIcon style={{ cursor: "pointer" }} 
+    <div>
+            < ModalVer
+            id = {noti[dataIndex].id}/>
+            <Tooltip title="Responder">
+            <ForwardToInboxTwoToneIcon style={{ cursor: "pointer" }} 
             onClick={() =>  navigate('/usuario/respuesta/'+noti[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
+            </Tooltip>
+            </div>
           </>
         );
       }
@@ -71,7 +76,12 @@ const TablaNotificaciones = (props) => {
            
         },
         {
-            name: "Actions",
+            name: "leida",
+            label:"leida",
+           
+        },
+        {
+            name: "Ver/Contestar",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -99,7 +109,7 @@ return (
     <div>
         <MUIDataTable
         
-            title={"Lista de Clientes"}
+            title={"Notificaciones"}
             data={noti}
             columns={columns}
             actions={[

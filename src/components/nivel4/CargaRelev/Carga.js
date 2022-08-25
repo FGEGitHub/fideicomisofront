@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import NativeSelect from '@mui/material/NativeSelect';
-import MenuItem from '@mui/material/MenuItem';
+import ModalNuevaZona from "./ModalNuevaZona"
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
@@ -27,7 +27,6 @@ export default function PagarCuota() {
 
 
     
-    
 
     
 
@@ -44,8 +43,6 @@ export default function PagarCuota() {
    
 
 
-
-
    const handleChange = (e) => {
        setDatos({ ...datos, [e.target.name]: e.target.value })
        console.log(datos)
@@ -54,6 +51,7 @@ export default function PagarCuota() {
 
        <Fragment>
            <Toolbar/>
+           <ModalNuevaZona/>
            <Box sx={{ minWidth: 275 }}>
                <Card variant="outlined" >
 
