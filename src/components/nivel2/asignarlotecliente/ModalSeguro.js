@@ -36,7 +36,8 @@ export default function SelectTextFields(props) {
     const valor = await servicioLotes.calcular(props.datos)
     console.log(valor)
     setRta(valor)
-   
+    
+    //{if(rta.puede=''){ props.setpuede()}}
 
 
 
@@ -102,6 +103,9 @@ export default function SelectTextFields(props) {
         Superficie: {rta.superficie} <br/>
         Precio: ${rta.precio}<br/>
         Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
+        Ingresos: ${rta.ingresos}<br/>
+        <h3>{rta.puede}</h3> 
+        {props.puedee}
 
       </div>  : <div> 
         
