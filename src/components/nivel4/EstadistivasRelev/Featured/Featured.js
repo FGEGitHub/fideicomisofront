@@ -17,7 +17,7 @@ const Featured = (props) => {
                 <CircularProgressbar value={props.porcentaje} text={props.porcentaje+"%"} strokeWidth={5}/>
             </div>
             <p className="title">Porcentaje</p>
-            <p className="amount">Dato 2</p>
+            <p className="amount">{props.titulo}</p>
             <p className="description">Descripcion</p>
             <div className="summary">
                 <div className="item">

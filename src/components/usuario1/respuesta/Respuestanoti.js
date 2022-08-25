@@ -107,6 +107,7 @@ traer()
                            id="name"
                            label="Observaciones"
                            name="observaciones"
+                           inputProps={{ maxLength: 100 }}
                            onChange={handleChange}
                            fullWidth
                            variant="filled"

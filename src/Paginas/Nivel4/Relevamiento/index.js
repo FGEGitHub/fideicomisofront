@@ -196,6 +196,7 @@ function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
                     <Featured 
                      porcentaje={datos[0].porcDenuncia}
                      titulo="Con Denuncia"
+                     
                     />
                     </div> : <div><Featured /> </div> }
                 
