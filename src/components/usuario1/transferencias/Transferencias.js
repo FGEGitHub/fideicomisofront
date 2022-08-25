@@ -73,6 +73,7 @@ return (
           fraccion={lote.fraccion}
           id={lote.id}
           image={'https://www.diarioellibertador.com.ar/wp-content/uploads/2021/12/santa-catalina.jpg'}
+         // image={'/Assets/IMG_7194.JPG'}
         />
       ))}
     </Grid>
