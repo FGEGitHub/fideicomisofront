@@ -72,7 +72,7 @@ export default function DetallesPagos(props) {
 return (
 
     <MUIDataTable
-        title={"Lista de Clientes"}
+        title={"Lista de Pagos"}
         data={pagos}
         columns={columns}
         actions={[
