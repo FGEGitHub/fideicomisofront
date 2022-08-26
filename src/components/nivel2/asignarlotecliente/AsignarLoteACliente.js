@@ -23,7 +23,7 @@ export default function AsignarLoreACliente() {
         cuil_cuit: cuil_cuit
         /////////asignar lote 0 caso que no se seleccione
     })
-
+    const [puede, setPuede] = useState(true)
     
 
     
@@ -39,7 +39,10 @@ export default function AsignarLoreACliente() {
     }
 
     
-
+    const puedee = (e) => {
+       this.setPuede(true)
+      
+    }
 
 
     const handleChange = (e) => {
@@ -160,9 +163,12 @@ export default function AsignarLoreACliente() {
                     <br/>
                     < ModalLote
                     datos ={lotes}
+                    puede = {puedee}
                     />
                     <br/><br/><br/>
-                    <Button onClick={designar} variant='contained' >Enviar</Button>
+
+                    {puede ?  <div> <Button onClick={designar} variant='contained' >Enviar</Button> </div>: <div> </div>}
+                    
                     </Grid>
 
                 </Card>
