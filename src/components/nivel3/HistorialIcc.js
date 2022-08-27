@@ -3,7 +3,7 @@ import MUIDataTable from "mui-datatables";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
-
+import Button from '@mui/material/Button';
 
 import servicionivel3 from '../../services/nivel3'
 
@@ -90,8 +90,9 @@ const options = {
        onTableChange: this.handleTableChange, */
 };
 // renderiza la data table
-return (
-    <div>
+return (<>
+
+<Button  onClick={() =>  navigate('/nivel3/agregaricc')}>Nuevo</Button>
         <MUIDataTable
         
             title={"Historial de ICC"}
@@ -108,7 +109,8 @@ return (
 
 
         />
-    </div>
+        </>
+  
 )
 }
 

@@ -164,11 +164,11 @@ export default function AsignarLoreACliente() {
                     < ModalLote
                     datos ={lotes}
                     puede = {puedee}
+                    cuil_cuit= {cuil_cuit}
                     />
-                    <br/><br/><br/>
+                 
 
-                    {puede ?  <div> <Button onClick={designar} variant='contained' >Enviar</Button> </div>: <div> </div>}
-                    
+                   
                     </Grid>
 
                 </Card>

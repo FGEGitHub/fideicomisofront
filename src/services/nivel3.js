@@ -17,6 +17,14 @@ const traerhistorial= async  () => {
     return data 
 }  
 
+const nuevoicc= async  (datos) => {
+    console.log(datos)
+     const {data } =await axios.post(baseUrl+'consultaricc',datos)
+    console.log(data)
+     return data 
+ } 
+
+
 const borrarhistorial= async  () => {
     
     const data =await axios.get(baseUrl+'borrarhistorial')
@@ -24,4 +32,4 @@ const borrarhistorial= async  () => {
      return data 
  }  
 
-export default {agregariccgral,traerhistorial,borrarhistorial};
+export default {agregariccgral,traerhistorial,borrarhistorial,nuevoicc};

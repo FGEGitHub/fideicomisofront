@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Assets/marcas.png";
 import  useUser from '../../hooks/useUser'
@@ -12,12 +12,15 @@ import {
   useTheme,
 } from "@mui/material";
 import DrawerNav from "../DrawerNav";
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+
 
 
 const Navbar = (props) => {
   const usuario  = useUser().userContext
 
-  
+  const [notificacioness, setNotificacioness] = useState(null);
   const [user, setUser] = useState(null)
   const [value, setValue] = useState();
   const theme = useTheme();
@@ -26,7 +29,20 @@ const Navbar = (props) => {
   const islogo = {
                   width: "100px",                  
                   };
+                  
+                  
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    cantidadnoti()
+}, [])
+const cantidadnoti = async () => {
+        
+  //const notis = await servicioPagos.cantidadpendientes()
+
+  setNotificacioness(2)
+}
   const handleClick = () => {
     navigate("/login");
   };
@@ -92,7 +108,11 @@ const Navbar = (props) => {
               </Button>
               <Button onClick={notificaciones} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Notificaciones" />
+                <Badge badgeContent={notificaciones} color="error">
+          <MailIcon color="primary" />
+        </Badge>
               </Button>
+            
               </Tabs>
               {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="Outlined">
                 Cerrar Sesión

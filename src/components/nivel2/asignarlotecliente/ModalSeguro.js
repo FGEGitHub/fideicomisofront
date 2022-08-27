@@ -4,12 +4,13 @@ import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-
+import servicioClientes from '../../../services/clientes'
 import NativeSelect from '@mui/material/NativeSelect';
 import servicioCliente from '../../../services/clientes'
 import servicioLotes from '../../../services/lotes'
-
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, Fragment } from "react";
+
 const currencies = [
   {
     value: 'CBU',
@@ -23,6 +24,7 @@ const currencies = [
 ];
 
 export default function SelectTextFields(props) {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
 
@@ -58,7 +60,14 @@ export default function SelectTextFields(props) {
     setOpen(false);
   };
 
+  const designar = async (event) => {
+    
   
+ await servicioClientes.ventaLote(props.datos)
+     navigate('/usuario2/detallecliente/'+cuil_cuit)
+
+
+}
 
   ////
   const pagar = async (event) => {
@@ -101,9 +110,10 @@ export default function SelectTextFields(props) {
       {rta? <div> 
         <h2>  Lote: {rta.nombre} </h2>  
         Superficie: {rta.superficie} <br/>
-        Precio: ${rta.precio}<br/>
+        Valor del terreno: ${rta.precio}<br/>
         Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
         Ingresos: ${rta.ingresos}<br/>
+       Estado: {rta.estado}
         <h3>{rta.puede}</h3> 
         {props.puedee}
 
@@ -113,9 +123,10 @@ export default function SelectTextFields(props) {
 
           <div>
 
-          <Button onClick={handleClose} size="small" variant="contained">
+          <Button onClick={handleClose} size="small" variant="contained" >
               Cerrar
             </Button>
+            <Button onClick={designar} position="right"variant='contained' size="small" >Asignar</Button>
         </div>
       </DialogContent>
     </Dialog>
