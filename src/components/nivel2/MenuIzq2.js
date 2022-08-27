@@ -35,7 +35,10 @@ export default function MenuIzq2 ({children}) {
     const notis = await servicioPagos.cantidadpendientes()
 
     setNotificaciones(notis)
+    /* if (notificaciones>0) {
+      document.title= 'Santa Catalina ('+notificaciones+')'
    
+    }   */
 }
 
     const handleClick = (path) => {

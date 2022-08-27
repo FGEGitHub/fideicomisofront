@@ -9,7 +9,7 @@ import Navbar from '../../../components/usuario1/Navbar1'
 import Notificaciones from '../../../components/usuario1/Notificaciones'
 import  useUser from '../../../hooks/useUser'
 import { Divider, Toolbar } from '@mui/material';
-
+import NotificacionesFlotantes from '../../..//components/usuario1/NotificacionesFlotantes'
 
 
 
@@ -21,13 +21,14 @@ export default function MenuUsuario1() {
 
     return (
         <>
-            <div className="App">
+            <div disableSticky={false} className="App">
 
 
                 <Navbar /> 
                 <br/><br/><br/><br/><br/>
                 <Notificaciones 
                     />  
+                     <NotificacionesFlotantes position="relative"/>
                 <Banner />
                 <Divider variant="middle" />
 
