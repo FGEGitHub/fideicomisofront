@@ -28,7 +28,7 @@ export default function Legajos() {
             <CssBaseline />
        <BarraLAteral>
        
-       <AgregarIcc/>
+  
        < BorrarIcc/>
   <Historialicc/>
      

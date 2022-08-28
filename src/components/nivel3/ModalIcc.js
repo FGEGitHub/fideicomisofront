@@ -9,23 +9,19 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState, useEffect } from "react";
 import servicionivel3 from '../../services/nivel3'
-import NativeSelect from '@mui/material/NativeSelect';
-import InputLabel from '@mui/material/InputLabel';
+import { useNavigate } from "react-router-dom";
 
 
 export default function ModalIcc(props) {
-
+    const navigate = useNavigate();
+    let params = useParams()
     const [open, setOpen] = React.useState(false);
     const [form, setForm] = useState({
     })
     const [cargado, setCargado] = useState(null)
     const [respuesta, setRespuesta] = useState()
     
-    const handleChange = (e) => {
-        console.log('una')
-        setForm({ ...form, [e.target.name]: e.target.value })
-     
-    }
+   
  
     const traer = async() => {
       
@@ -41,7 +37,8 @@ export default function ModalIcc(props) {
     };
     const handleDeterminar = async (event) => {
         event.preventDefault();
-       await servicionivel3.agregariccgral(form)
+       await servicionivel3.agregariccgral(props.datos)
+       navigate('/nivel3/icc')
      
 
         setOpen(false);
