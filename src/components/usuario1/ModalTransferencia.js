@@ -29,12 +29,12 @@ export default function SelectTextFields(props) {
 
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
+   const [ultima, setUltima] = useState([''])
+   const [pago, setPago] = useState({
 
-  useEffect(() => {
+    id:props.id,    })
 
-    traer()
-
-  }, [])
+  
 
 
   const traer = async () => {
@@ -42,10 +42,13 @@ export default function SelectTextFields(props) {
     const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
     const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
+    setPago({ ...pago, cuil_cuit: cuil_cuit,  })
+   
     setLotes(lotes[0])
     setCuotas(lotes[1])
-
-
+    //setear
+    setUltima(lotes[2])
+   
 
 
 
@@ -53,16 +56,10 @@ export default function SelectTextFields(props) {
   const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
   const cuil_cuit = preba.cuil_cuit
 
-  const [pago, setPago] = useState({
-
-    cuil_cuit: cuil_cuit,
-    id:props.id
-
-
-  })
 
 
   const handleClickOpen = () => {
+    traer()
     setOpen(true);
   };
 
@@ -72,17 +69,17 @@ export default function SelectTextFields(props) {
 
 
   const handleChange = (e) => {
+    console.log('pago')
     console.log(pago)
+  
     // setPago({ ...pago, ['id']: props.id })
     setPago({ ...pago, [e.target.name]: e.target.value })
 
 
-    console.log(pago)
   }
   ////
   const pagar = async (event) => {
-    // event.preventDefault();
-
+  //   event.preventDefault();
     console.log(pago)
     try {
 
@@ -125,7 +122,8 @@ export default function SelectTextFields(props) {
         <DialogContent>
           <div>
           <h3>Subir comprobante  Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}</h3>
-          
+         {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div>:<div></div>}
+          <h4></h4>
             <form onSubmit={pagar}>
 
               {/* <TextField component="form"
@@ -183,7 +181,7 @@ export default function SelectTextFields(props) {
               <label>Fecha</label>
               <NativeSelect
                 defaultValue={30}
-                onChange={handleChange}
+               // onChange={handleChange}
                 inputProps={{
                   name: 'mes',
                   id: 'uncontrolled-native',
@@ -210,7 +208,7 @@ export default function SelectTextFields(props) {
               <NativeSelect
                 label="Año"
                 defaultValue={30}
-                onChange={handleChange}
+              //  onChange={handleChange}
                 inputProps={{
                   name: 'anio',
                   id: 'uncontrolled-native',
@@ -242,7 +240,12 @@ export default function SelectTextFields(props) {
                 noValidate
                 autoComplete="off"
               >
-                <TextField onChange={handleChange} id="filled-basic" label="Monto" name="monto" variant="filled" />
+                <TextField onChange={handleChange}
+                 id="filled-basic" 
+                 label="Monto"
+                  name="monto"
+                   variant="filled" 
+                   type="number"/>
               </Box>
               <Box
                 component="form"
