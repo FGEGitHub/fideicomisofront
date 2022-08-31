@@ -181,7 +181,7 @@ export default function SelectTextFields(props) {
               <label>Fecha</label>
               <NativeSelect
                 defaultValue={30}
-               // onChange={handleChange}
+                onChange={handleChange}
                 inputProps={{
                   name: 'mes',
                   id: 'uncontrolled-native',
@@ -208,7 +208,7 @@ export default function SelectTextFields(props) {
               <NativeSelect
                 label="Año"
                 defaultValue={30}
-              //  onChange={handleChange}
+                onChange={handleChange}
                 inputProps={{
                   name: 'anio',
                   id: 'uncontrolled-native',
