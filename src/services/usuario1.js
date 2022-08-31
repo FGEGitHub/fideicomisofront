@@ -72,7 +72,12 @@ const responderNoti= async  (rta) => {
 alert(data.data)
  
 }
-
+const obtenerurl = async (key) => {
+ 
+  const  data = await axios.get(baseUrl+`get-object-url/` + (key))
+ 
+return data
+}
 
 
 
@@ -84,4 +89,4 @@ const subirprueba = async (formdata) => {
   
   }
 
-export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti};
+export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl};

@@ -10,15 +10,15 @@ const subirprueba = async (formdata) => {
   console.log(data)
 
 }
-
-const subirlegajode = async ( formdata) => {
+//nivel2
+const subirlegajode = async ( formData) => {
  
 
-  console.log(formdata)
 
-await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajodni', formdata)
-//await axios.post('http://localhost:4000/links/subirlegajodni', formdata)
-
+//await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajodni', formdata)
+await axios.post('http://localhost:4000/usuario1/subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+}})
+       
 
 }
 
