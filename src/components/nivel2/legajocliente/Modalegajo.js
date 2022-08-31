@@ -1,21 +1,28 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import { Paper, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState,  } from "react";
+import {useCallback,useState,  } from "react";
 import servicioLegajo from '../../../services/legajos'
 import NativeSelect from '@mui/material/NativeSelect';
-
+import BackupIcon from '@material-ui/icons/Backup';
+import { useDropzone } from 'react-dropzone'
+import Box from '@mui/material/Box';
+import { useParams } from "react-router-dom"
 
 
 export default function FormDialog(props) {
+    let params = useParams()
+    let cuil_cuit = params.cuil_cuit
     const [open, setOpen] = React.useState(false);
     const [file, setFile] = useState();
+    const [fileUpload, setFileUpload] = useState(null);
     const [legform, setLegform] = useState({
+        cuil_cuit:cuil_cuit
     })
 
     const selecthandler = e => {
@@ -23,6 +30,53 @@ export default function FormDialog(props) {
         console.log(file)
 
     }
+//////////
+
+const onDrop = useCallback((files, acceptedFiles) => {
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', files[0]);
+  
+    formData.append('cuil_cuit', cuil_cuit);
+   
+      servicioLegajo.subirlegajode(formData)
+        window.location.reload(true);
+     
+
+/*axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'
+}})
+        .then((res) => {
+            
+            setFileUpload({fileName: files[0].name});
+            console.log(res)
+            if (res.status === 200)
+                return (this.setState({sucessmessage: "File uploaded successfullyS3"}))
+        })
+        .catch((error) => {
+            console.error(error.response);
+            this.setState({errormessage:error.response.status+" Please select the file"})
+        })*/
+
+    });
+
+
+const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept: 'document/*',
+
+  });
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  )); 
+/////////////////
+
+
+
+
+
 
 
     const enviar = () => {
@@ -76,7 +130,7 @@ export default function FormDialog(props) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Completar</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
+                  {/*   <DialogContentText>
                         Seleccionar archivo y el tipo de comprobante
                     </DialogContentText>
                     <NativeSelect
@@ -103,13 +157,43 @@ export default function FormDialog(props) {
 
 
                     </NativeSelect>
-              
+               */}
+
+                    <Box sx={{ m: 1 }}>
+          <Button size="small" variant="contained">
+            Descargar modelo
+          </Button>
+        </Box>
+        <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo descargado con tus datos personales</p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
+  
+    
+
+
+
               
 
                 </DialogContent>
-                <input onChange={handleChange} type="file" />
+            
                 <DialogActions>
-                    <TextField
+                     {/*    <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -118,7 +202,7 @@ export default function FormDialog(props) {
                         onChange={handleChange}
                         fullWidth
                         variant="standard"
-                    />
+                    /> */}
                     <Button onClick={handleClose}>Cancelar</Button>
                     <Button onClick={enviar}>Enviar</Button>
                 </DialogActions>

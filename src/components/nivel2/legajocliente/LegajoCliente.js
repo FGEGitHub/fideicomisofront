@@ -1,16 +1,18 @@
 import React, { useEffect, useState, } from "react";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import InputAdornment from "@mui/material/InputAdornment";
 
+import Button from "@mui/material/Button";
+
+import MUIDataTable from "mui-datatables";
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
+import serviciousuario1 from '../../../services/usuario1'
 import "../../profile.css";
 import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom"
+
+
 
 const LegajoCliente = (props) => {
   const navigate = useNavigate();
@@ -19,130 +21,115 @@ const LegajoCliente = (props) => {
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
   const [address, setAddress] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  function submitFormHandler(event) {
-    event.preventDefault();
-  }
-  useEffect(() => {
-      
-    traer()
-    
-}, []) 
-
-
-
-  const traer = async() => {
-       
-   
-      const  legajos = await servicioCliente.traerLejagos(props.cuil_cuit)
-      console.log(legajos)
-      setLegajos(legajos)
+  let params = useParams()
+  let cuil_cuit = params.cuil_cuit
+      const [products, setProducts] = useState([])
+      const [act, setAct] = useState(false)
   
-     
   
-      ;
-    };  
- 
-
-
-    const selecthandler = e =>{
-      setFile(e.target.files[0])
-     }
-
-
-
-  return (<>  
- 
- <ModalLegajo
- cuil_cuit = {props.cuil_cuit}
- />
-    <Button onClick={() => navigate('agregarlegajo/')}variant="contained">Subir Legajo2</Button>
-   
-     {legajos.map((legajo) =>( 
-    <div className="profile">
-      <Grid>
-       
-        <Grid item xs={2}style={{justifyContent:"flex-start", display: "flex" }}>
-          <form onSubmit={submitFormHandler}>
-            <Container>
-            <Box>
-            <h5>
-           Legajo: {legajo.tipo}
-            </h5>
-                
-            </Box>
-       
-              <Box>
-              <TextField
-                  label="CUIL"
-                  id="cuil"
-                 // defaultValue="CUIL"
-                  value= {legajo.cuil_cuit}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  label="Tipo"
-                  id="cuil"
-                 // defaultValue="CUIL"
-                  value= {legajo.tipo}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-              </Box>
+  
+      //2 - fcion para mostrar los datos con axios
+      const endpoint = "http://localhost:4000/usuario1/all-files"
+  
+  
+      const getData = async () => {
+        const  data = await servicioCliente.traerLejagos(cuil_cuit)
              
-
+              setProducts(data)
+          
+      }
+  
+  
+  
+      useEffect(() => {
+          getData()
+      }, [])
+  
+  
+      /* const downloadFile = async (index) => {
+          const filename = (products[index].key)
+      
+          const link = await axios.get(`http://localhost:8080/get-object-url/`+filename).then(res => {
               
-
-              <Box>
-                <columns lg={12}>
-                  {editMode ? (
-                    <div className="profile-form-button">
-                      <Button
-                        variant="outlined"
-                        sx={{ marginRight: "10px" }}
-                        onClick={() => setEditMode(false)}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button variant="contained">Enviar</Button>
-                    </div>
-                  ) : (
-                    <div className="profile-edit-button">
-                      <Button
-                        variant="outlined"
-                        onClick={() => setEditMode(true)}
-                      >
-                        editar
-                      </Button>
-                    </div>
-                  )}
-                </columns>
-              </Box>
-            </Container>
-          </form>
-        </Grid>
-
+          } */
+  
+          async function download(index, rowIndex, data) {
+              const filename = (products[index].ubicacion)
+            
+             
+             const link = await serviciousuario1.obtenerurl(filename)
+             console.log(link)
+              console.log(link.data)            
+              window.open(link.data)
         
-      </Grid>
-    </div>
-    ))} </>);
+              setAct(true)
+  
+          }
+  
+  
+       function downloadFile(index, rowIndex, data) {
+  
+          /* const filename = (products[index].key)
+          console.log(filename)
+          const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+          console.log(link.data)
+          setAct(true) */
+          return (
+              <>
+                  
+                    <Button
+                          onClick={() => download(index)}
+                      >Boton</Button> 
+  
+  
+              </>
+          );
+      }
+  
+  
+  
+  
+  
+  
+      //3 - Definimos las columns
+      const columns = [
+          {
+              name: "ubicacion",
+              label: "ubicacion"
+  
+          },
+          {
+              name: "cuil_cuit",
+              label: "cuil_cuit"
+          },
+          {
+              name: "descargar",
+              options: {
+                  customBodyRenderLite: (index, getData, rowindex) =>
+                      downloadFile(
+                          index,
+                          rowindex,
+                          getData,
+                          // overbookingData,
+                          // handleEditOpen
+                      )
+              },
+          }
+      ]
+      //4 - renderizamos la datatable
+      return (
+          <div>
+             <  ModalLegajo />
+              <MUIDataTable
+                  title={"Documentacion del Cliente"}
+                  data={products}
+                  columns={columns}
+              />
+  
+  
+  
+          </div>
+      )
 }
 
 export default LegajoCliente;
