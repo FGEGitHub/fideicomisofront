@@ -18,9 +18,10 @@ const AddFoto = (props) => {
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
   
-    formData.append('cuil_cuit', props.cuil_cuit);
+    formData.append('datos', [props.cuil_cuit,'Dni']);
    
      servicioLegajo.subirlegajo1(formData)
+   
        // window.location.reload(true);
      
 
@@ -48,11 +49,7 @@ const AddFoto = (props) => {
   }
 
   const enviar = () => {
-    if (!file) {
-        alert('No seleccionaste el archivo')
-        return
-
-    }
+   window.location.reload(true);
     let formdata = new FormData()
     console.log(file)
     formdata.append('image', file)

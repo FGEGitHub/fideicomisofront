@@ -3,6 +3,7 @@ import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 const ListaAws = () => {
     //1 - configuramos Los hooks
     const navigate = useNavigate();

@@ -7,6 +7,7 @@ import AddAfip from "./addAfip/AddAfip";
 import AddDomicilio from "./addDomicilio/AddDomicilio";
 import AddEstatuto from "./addEstatuto/AddEstatuto";
 import AddActa from "./addActa/AddActa";
+import ModeloCarga from "./TogableCarga/ModeloCarga"
 
 const SubirLegajo = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -55,10 +56,15 @@ const SubirLegajo = () => {
                 {{
                     0: <AddFoto 
                     cuil_cuit = {user.cuil_cuit }/>,
-                    1: <AddAfip />,
-                    2: <AddEstatuto />,
-                    3: <AddActa />,
-                    4: <AddDomicilio />,
+                    1: <AddAfip
+                    cuil_cuit = {user.cuil_cuit }
+                  />,
+                    2: <AddEstatuto 
+                    cuil_cuit = {user.cuil_cuit }/>,
+                    3: <AddActa
+                    cuil_cuit = {user.cuil_cuit } />,
+                    4: <AddDomicilio 
+                    cuil_cuit = {user.cuil_cuit }/>,
 
                 }[activeStep]}
             </Box>
