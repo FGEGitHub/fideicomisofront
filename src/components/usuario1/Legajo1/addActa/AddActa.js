@@ -8,91 +8,93 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
               
 
-const AddActa = () => {
+const AddActa = (props) => {
   const handleClick = () => {
     console.log('click');
   };                             
   const [file, setFile] = useState(null);
+  const [fileUpload, setFileUpload] = useState(null);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFile(acceptedFiles);
-    console.log(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
-    onDrop,
-    multiple: true,
-    accept: 'document/*',
-    maxFiles: 3,
+  const onDrop = useCallback  ((files, acceptedFiles) => {
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', files[0]);
+  
+    formData.append('datos', [props.cuil_cuit,'Acta del organo decisorio']);
+   
+     servicioLegajo.subirlegajo1(formData)
+   
+       // window.location.reload(true);
+     
 
-  });
-  const acceptedFileItems = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
+    });
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+      onDrop,
+      multiple: false,
+      accept: 'document/*',
+  
+    });
+
+    const acceptedFileItems = acceptedFiles.map(file => (
+      <li key={file.path}>
+        {file.path} - {file.size} bytes
+      </li>
+    )); 
+  const handleChange = (e) => {
+    setFile({ ...file, [e.target.name]: e.target.value })
+    
+}
   const selecthandler = e =>{
    setFile(e.target.files[0])
    console.log(file)
   }
 
-  const enviar = () =>{
-   if (!file){
-    alert('No seleccionaste el archivo')
-    return
-   }
-   const formdata = new FormData()
-   formdata.append('image',file)
-   console.log(formdata)
-   servicioLegajo.subirprueba(formdata)
+  const enviar = () => {
+   window.location.reload(true);
+    let formdata = new FormData()
+    console.log(file)
+    formdata.append('image', file)
 
-   }
+
+
+
+
+
+    servicioLegajo.subirlegajode(formdata)
+    window.location.reload(true);
+}
   return (
     <>
-      <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-          ) : (
-            <p>Arrastra hasta aqui el Acta del Organo Decisorio Designado</p>
-          )}
-          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-        </div>
-      </Paper>
+       <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo descargado con Acta del organo decisorio</p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
       </Box>
+
       
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <TextField
-        id="date"
-        label="Fecha de vencimiento"
-        type="date"
-        defaultValue="2020-01-01"
-        sx={{ width: 220 }}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      </Box> 
-      <Box sx={{m:1}}>
-      <Button onClick={enviar} size="small" variant="contained">
-                Enviar
-      </Button>
-      </Box>
     </>
   );
 };

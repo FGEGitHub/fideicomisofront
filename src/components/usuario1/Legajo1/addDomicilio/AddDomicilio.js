@@ -12,102 +12,93 @@ import HomeIcon from '@mui/icons-material/Home';
 import BackupIcon from '@material-ui/icons/Backup';
 
 
-const AddDocimicilio = () => {
+const AddDocimicilio = (props) => {
   const handleClick = () => {
     console.log('click');
   };                             
   const [file, setFile] = useState(null);
+  const [fileUpload, setFileUpload] = useState(null);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFile(acceptedFiles);
-    console.log(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
-    onDrop,
-    multiple: true,
-    accept: 'document/*',
-    maxFiles: 3,
+  const onDrop = useCallback  ((files, acceptedFiles) => {
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', files[0]);
+  
+    formData.append('datos', [props.cuil_cuit,'Acreditacion Domicilio']);
+   
+     servicioLegajo.subirlegajo1(formData)
+   
+       // window.location.reload(true);
+     
 
-  });
-  const acceptedFileItems = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
+    });
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+      onDrop,
+      multiple: false,
+      accept: 'document/*',
+  
+    });
+
+    const acceptedFileItems = acceptedFiles.map(file => (
+      <li key={file.path}>
+        {file.path} - {file.size} bytes
+      </li>
+    )); 
+  const handleChange = (e) => {
+    setFile({ ...file, [e.target.name]: e.target.value })
+    
+}
   const selecthandler = e =>{
    setFile(e.target.files[0])
    console.log(file)
   }
 
-  const enviar = () =>{
-   if (!file){
-    alert('No seleccionaste el archivo')
-    return
-   }
-   const formdata = new FormData()
-   formdata.append('image',file)
-   console.log(formdata)
-   servicioLegajo.subirprueba(formdata)
+  const enviar = () => {
+   window.location.reload(true);
+    let formdata = new FormData()
+    console.log(file)
+    formdata.append('image', file)
 
-   }
+
+
+
+
+
+    servicioLegajo.subirlegajode(formdata)
+    window.location.reload(true);
+}
   return (
-  
     <>
-      <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p style={{ color: 'green' }}>Suelta aqui la foto</p>
-          ) : (
-            <p>Arrastra hasta aqui la Acreditacion de Domicilio</p>
-          )}
-          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-        </div>
-      </Paper>
+       <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo descargado con La Acreditaqcion Domicilio</p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
       </Box>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-      <FormControl variant="standard">
-        <InputLabel htmlFor="input-with-icon-adornment">
-          Ingresar Domicilio
-        </InputLabel>
-        <Input
-          id="input-with-icon-adornment"
-          startAdornment={
-            <InputAdornment position="start">
-              <HomeIcon />
-            </InputAdornment>
-          }
-
-        />
-      <Box sx={{m:1}}>
-      <Button onClick={enviar} size="small" variant="contained">
-                Enviar
-      </Button>
-
-      </Box>
-      
 
       
-
-      
-
-      </FormControl>
-    </Box>
     </>
   );
 };

@@ -126,17 +126,17 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         }}
 
                     > <option value={''}>Elegir</option>
-                        <option value={'dni'}>dni</option>
-                        <option value={'constafip'}>Constancia de Afip</option>
-                        <option value={'estatutosocial'}>Estatuto Social</option>
-                        <option value={'Actaorgano'}>Acta de organo Sucesorio Asignado</option>
-                        <option value={'Acredtaciondom'}>Acreditacion Domicilio</option>
-                        <option value={'Ultimobalances'}>Ultimos Balances</option>
+                        <option value={'Dni'}>dni</option>
+                        <option value={'Constancia de Afip'}>Constancia de Afip</option>
+                        <option value={'Estatuto Social'}>Estatuto Social</option>
+                        <option value={'Acta del organo decisorio'}>Acta de organo Sucesorio Asignado</option>
+                        <option value={'Acreditaqcion Domicilio'}>Acreditacion Domicilio</option>
+                        <option value={'Ultimos balances'}>Ultimos Balances</option>
                         <option value={'DjIva'}>DJ IVA</option>
-                        <option value={'PagosPrevisionales'}>Pagos Provisionales</option>
-                        <option value={'DjDatospers'}>DJ Datos Personales</option>
-                        <option value={'DjCalidadPerso'}>DJ Calidad de Persona</option>
-                        <option value={'DjOrigenFondos'}>DJ Origen de fondos</option>
+                        <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
+                        <option value={'Dj Datospers'}>DJ Datos Personales</option>
+                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona</option>
+                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos</option>
 
 
                     </NativeSelect>
