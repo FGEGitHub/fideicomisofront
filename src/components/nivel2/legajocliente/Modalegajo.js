@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
+import NativeSelect from '@mui/material/NativeSelect';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useCallback,useState,  } from "react";
 import servicioLegajo from '../../../services/legajos'
@@ -36,7 +36,8 @@ const onDrop = useCallback((files, acceptedFiles) => {
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
   
-    formData.append('cuil_cuit', cuil_cuit);
+    formData.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
+       
    
       servicioLegajo.subirlegajode(formData)
         window.location.reload(true);
@@ -79,26 +80,9 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
     const enviar = () => {
-        if (!file) {
-            alert('No seleccionaste el archivo')
-            return
-
-        }
-        let formdata = new FormData()
-        console.log(file)
-        formdata.append('image', file)
-        formdata.append('tipo', legform.tipo)
-        formdata.append('cuil_cuit', props.cuil_cuit)
-        formdata.append('descripcion', legform.descripcion)
-        formdata.append('mes', legform.mes)
-        formdata.append('anio', legform.anio)
+        
 
 
-
-
-
-        servicioLegajo.subirlegajode(formdata)
-        window.location.reload(true);
     }
 
     const handleChange = (e) => {
@@ -129,9 +113,9 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Completar</DialogTitle>
                 <DialogContent>
-                  {/*   <DialogContentText>
+                    <>
                         Seleccionar archivo y el tipo de comprobante
-                    </DialogContentText>
+                    </>
                     <NativeSelect
                         defaultValue={30}
                         onChange={handleChange}
@@ -156,7 +140,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
                     </NativeSelect>
-               */}
+               
 
                     <Box sx={{ m: 1 }}>
           <Button size="small" variant="contained">
@@ -192,7 +176,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                 </DialogContent>
             
                 <DialogActions>
-                     {/*    <TextField
+                        <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -201,7 +185,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         onChange={handleChange}
                         fullWidth
                         variant="standard"
-                    /> */}
+                    /> 
                     <Button onClick={handleClose}>Cancelar</Button>
                     <Button onClick={enviar}>Enviar</Button>
                 </DialogActions>

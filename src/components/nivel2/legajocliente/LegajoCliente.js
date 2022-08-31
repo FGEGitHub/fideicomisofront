@@ -94,14 +94,18 @@ const LegajoCliente = (props) => {
       //3 - Definimos las columns
       const columns = [
           {
-              name: "ubicacion",
-              label: "ubicacion"
+              name: "tipo",
+              label: "tipo"
   
           },
           {
               name: "cuil_cuit",
               label: "cuil_cuit"
           },
+          {
+            name: "descripcion",
+            label: "descripcion"
+        },
           {
               name: "descargar",
               options: {
