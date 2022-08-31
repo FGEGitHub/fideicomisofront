@@ -4,12 +4,11 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+
 import DialogTitle from '@mui/material/DialogTitle';
 import {useCallback,useState,  } from "react";
 import servicioLegajo from '../../../services/legajos'
-import NativeSelect from '@mui/material/NativeSelect';
-import BackupIcon from '@material-ui/icons/Backup';
+
 import { useDropzone } from 'react-dropzone'
 import Box from '@mui/material/Box';
 import { useParams } from "react-router-dom"
