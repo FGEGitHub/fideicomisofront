@@ -6,68 +6,81 @@ import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
 
-const AddPrevisionales = () => {
-  const handleClick = () => {
-    console.log('click');
-  };
+const AddPrevisionales = (props) => {
+                            
   const [file, setFile] = useState(null);
+  const [fileUpload, setFileUpload] = useState(null);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setFile(acceptedFiles);
-    console.log(acceptedFiles);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
-    onDrop,
-    multiple: true,
-    accept: 'document/*',
-    maxFiles: 3,
+  const onDrop = useCallback  ((files, acceptedFiles) => {
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', files[0]);
+  
+    formData.append('datos', [props.cuil_cuit,'Pagos Previsionales']);
+   
+     servicioLegajo.subirlegajo1(formData)
+   
+       // window.location.reload(true);
+     
 
-  });
-  const acceptedFileItems = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
+    });
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+      onDrop,
+      multiple: false,
+      accept: 'document/*',
+  
+    });
+
+    const acceptedFileItems = acceptedFiles.map(file => (
+      <li key={file.path}>
+        {file.path} - {file.size} bytes
+      </li>
+    )); 
+  const handleChange = (e) => {
+    setFile({ ...file, [e.target.name]: e.target.value })
+    
+}
   const selecthandler = e =>{
    setFile(e.target.files[0])
    console.log(file)
   }
 
-  const enviar = () =>{
-   if (!file){
-    alert('No seleccionaste el archivo')
-    return
-   }
-   const formdata = new FormData()
-   formdata.append('image',file)
-   console.log(formdata)
-   servicioLegajo.subirprueba(formdata)
+  const enviar = () => {
+   window.location.reload(true);
+    let formdata = new FormData()
+    console.log(file)
+    formdata.append('image', file)
 
-   }
+
+
+
+
+
+    servicioLegajo.subirlegajode(formdata)
+    window.location.reload(true);
+}
   return (
     <>
-      <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        <div style={{ padding: '16px' }} {...getRootProps()}>
-        <input {...getInputProps({
-            onChange: selecthandler,
-          })} />
-          {isDragActive ? (
-            <p style={{ color: 'green' }}>Suelta aqui el archivo</p>
-          ) : (
-            <p>Arrastra hasta aqui la constancia de los ultimos tres(3) pagos previsionales</p>
-          )}
-          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-        </div>
-      </Paper>
+       <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo descargado con los Pagos Previsionales</p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
@@ -76,7 +89,7 @@ const AddPrevisionales = () => {
         <ul>{acceptedFileItems}</ul>
         <Button onClick={enviar}>Enviar</Button>
       </Box>
-      
+
       
     </>
   );
