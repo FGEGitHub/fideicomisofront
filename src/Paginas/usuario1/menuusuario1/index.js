@@ -28,7 +28,7 @@ export default function MenuUsuario1() {
                 <br/><br/><br/><br/><br/>
                 <Notificaciones 
                     />  
-                     <NotificacionesFlotantes position="relative"/>
+                   
                 <Banner />
                 <Divider variant="middle" />
 

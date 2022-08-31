@@ -16,19 +16,24 @@ const subirlegajode = async ( formData) => {
 
 
 //await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajodni', formdata)
-await axios.post('http://localhost:4000/usuario1/subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
 }})
        
 
 }
 
-const subirlegajo = async ( formdata) => {
-  console.log(formdata)
-  return true
+
+const subirlegajo1 = async ( formData) => {
  
- // axios.post("http://localhost:4000/upload", formdata, { headers: {'Content-Type': 'multipart/form-data'}})
-
-
-
-}
-export default { subirprueba, subirlegajode,subirlegajo };
+  console.log(formData)
+  
+  await axios.post(baseUrl +'subirlegajo1', formData, { headers: {'Content-Type': 'multipart/form-data'
+}})
+    
+    //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+  
+  
+  //  }})
+  }
+  
+export default { subirprueba, subirlegajode,subirlegajo1 };

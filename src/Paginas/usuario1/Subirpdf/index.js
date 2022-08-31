@@ -17,11 +17,15 @@ const AddDatos = () => {
         const formData = new FormData();
         setFileUpload(acceptedFiles);
         formData.append('file', files[0]);
+      
+   
+          formData.append('ingreso', dato.ingreso);
+          
+         
+
         console.log(formData)
-        formData.append('ingreso', dato.ingreso);
-       
-        console.log(formData)
-    axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'
+  }})
             .then((res) => {
                 
                 setFileUpload({fileName: files[0].name});

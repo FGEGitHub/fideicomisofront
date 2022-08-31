@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import servicioAprobaciones from '../../../services/Aprobaciones'
+import serviciousuario1 from '../../../services/usuario1'
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoConstancia'
 //import overbookingData from "./overbooking";
+import Button from "@mui/material/Button";
 
 const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
-    
+    const [act, setAct] = useState(false)
     const navigate = useNavigate();
 
 
@@ -37,6 +39,38 @@ const TablaAprobaciones = () => {
 
     ///
 
+    async function download(index, rowIndex, data) {
+        const filename = (pendientes[index].ubicacion)
+      
+       
+       const link = await serviciousuario1.obtenerurl(filename)
+       console.log(link)
+        console.log(link.data)            
+        window.open(link.data)
+  
+        setAct(true)
+
+    }
+
+
+ function downloadFile(index, rowIndex, data) {
+
+    /* const filename = (products[index].key)
+    console.log(filename)
+    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+    console.log(link.data)
+    setAct(true) */
+    return (
+        <>
+            
+              <Button
+                    onClick={() => download(index)}
+                >Boton</Button> 
+
+
+        </>
+    );
+}
 
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
@@ -66,7 +100,7 @@ const TablaAprobaciones = () => {
             label: "Cuil/cuit",
         },
         {
-            name: "descripcion",
+            name: "ubicacion",
             label: "Descripcion",
 
         },
@@ -79,7 +113,7 @@ const TablaAprobaciones = () => {
             name: "Actions",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderer(
+                downloadFile(
                         dataIndex,
                         rowIndex,
                        // overbookingData,
