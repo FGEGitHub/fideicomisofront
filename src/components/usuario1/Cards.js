@@ -22,7 +22,7 @@ export default function Cards() {
       <Grid container spacing={1}>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Item>
-            <CardUno />
+            <CardTres />
           </Item>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -32,7 +32,7 @@ export default function Cards() {
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Item>
-            <CardTres />
+            <CardUno />
           </Item>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
