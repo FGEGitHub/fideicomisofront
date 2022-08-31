@@ -27,7 +27,8 @@ const subirlegajo1 = async ( formData) => {
  
   console.log(formData)
   
-    //await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajo1', formdata)
+  await axios.post(baseUrl +'subirlegajo1', formData, { headers: {'Content-Type': 'multipart/form-data'
+}})
     
     //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
   
