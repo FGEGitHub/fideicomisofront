@@ -79,6 +79,12 @@ const obtenerurl = async (key) => {
 return data
 }
 
+const pagarnivel1 = async (formdata) => {
+  console.log(formdata)
+  const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata)
+  console.log(data)
+
+}
 
 
 ///legajo
@@ -89,4 +95,4 @@ const subirprueba = async (formdata) => {
   
   }
 
-export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl};
+export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};

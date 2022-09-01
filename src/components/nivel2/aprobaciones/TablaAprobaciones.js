@@ -9,6 +9,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoConstancia'
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
+import ModalVer from "./ModalVer"
+
 
 const TablaAprobaciones = () => {
     //configuracion de Hooks
@@ -65,7 +67,7 @@ const TablaAprobaciones = () => {
             
               <Button
                     onClick={() => download(index)}
-                >Boton</Button> 
+                >Descargar</Button> 
 
 
         </>
@@ -110,7 +112,7 @@ const TablaAprobaciones = () => {
             actions: { onClick: (event, rowData) => alert(rowData) }
         },
         {
-            name: "Actions",
+            name: "Descarga",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                 downloadFile(
@@ -122,6 +124,20 @@ const TablaAprobaciones = () => {
             }
         
         },   
+        {
+            name: "Acciones",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRenderer(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
+        
  
 
     ];

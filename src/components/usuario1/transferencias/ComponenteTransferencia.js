@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ModalPago from '../ModalTransferencia'
+import imagen from '../../../Assets/IMG_7194.JPG'
 
 const cardWidth = 320;
 const borderRadius = 8;
@@ -11,7 +12,7 @@ const Screenshot = styled.figure`
   position: relative;
   margin: 0;
   padding: 0;
-  width: ${cardWidth}px;
+  width: ${cardWidth}*0.8px;
   height: 200px;
   background: url(${(props) => props.image}) 0 0 no-repeat;
   background-size: cover;
@@ -99,7 +100,7 @@ const Style = styled.button`
     }
 
     ${Screenshot} {
-      transform: translateY(4px) scale(0.92);
+      transform: translateY(4px) scale(0.90);
       border-radius: ${borderRadius - 2}px;
 
       &::before {

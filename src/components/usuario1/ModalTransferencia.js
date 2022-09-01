@@ -2,16 +2,16 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
+import { Paper} from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import NativeSelect from '@mui/material/NativeSelect';
 import servicioPagos from '../../services/pagos'
-
-import useUser from '../../hooks/useUser'
-import servicioLotes from '../../services/lotes'
+import { useDropzone } from 'react-dropzone';
+import BackupIcon from '@material-ui/icons/Backup';
 import servicioUsuario1 from '../../services/usuario1'
 
-import React, { useEffect, useState, Fragment } from "react";
+import React, {useCallback, useEffect, useState, Fragment } from "react";
 const currencies = [
   {
     value: 'CBU',
@@ -27,7 +27,8 @@ const currencies = [
 export default function SelectTextFields(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
-
+  const [file, setFile] = useState(null);
+  const [fileUpload, setFileUpload] = useState(null);
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
    const [ultima, setUltima] = useState([''])
@@ -79,33 +80,56 @@ export default function SelectTextFields(props) {
 
   }
   ////
-  const pagar = async (event) => {
-  //   event.preventDefault();
-    console.log(pago)
-    try {
-
-      await servicioPagos.pagar(
-        pago
-
-
-      )
-
-
-    } catch (error) {
-      console.error(error);
-      console.log('Error algo sucedio')
-
-    }
-
-    setOpen(false);
-  };/////
+  
   const [currency, setCurrency] = React.useState('EUR');
 
-  /*   const handleChange = (event) => {
-      setCurrency(event.target.value);
-    }; */
 
 
+
+    const onDrop = useCallback  ((files, acceptedFiles) => {
+      const formData = new FormData();
+      setFileUpload(acceptedFiles);
+      formData.append('file', files[0]);
+    
+      formData.append('datos', [props.cuil_cuit,'Dato2']);///// aca en forma de array se envian datos del dormulario
+     
+      servicioUsuario1.pagarnivel1(formData)
+     
+         // window.location.reload(true);
+       
+  
+  
+      });
+      const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+        onDrop,
+        multiple: false,
+        accept: 'document/*',
+    
+      });
+  
+      const acceptedFileItems = acceptedFiles.map(file => (
+        <li key={file.path}>
+          {file.path} - {file.size} bytes
+        </li>
+      )); 
+
+  
+    const enviar = () => {
+     window.location.reload(true);
+      let formdata = new FormData()
+      console.log(file)
+      formdata.append('image', file)
+  
+  
+  
+  
+  
+  
+      
+
+      servicioUsuario1.subirlegajode(formdata)
+      window.location.reload(true);
+  }
   return (
 
     <Box
@@ -125,7 +149,7 @@ export default function SelectTextFields(props) {
           <h3>Subir comprobante  Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}</h3>
          {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div>:<div></div>}
           <h4></h4>
-            <form onSubmit={pagar}>
+          
 
               {/* <TextField component="form"
                 sx={{
@@ -179,60 +203,7 @@ export default function SelectTextFields(props) {
 
 
               <br />
-              <label>Fecha</label>
-              <NativeSelect
-                defaultValue={30}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'mes',
-                  id: 'uncontrolled-native',
-
-                }}
-
-              > <option value={''}>Elegir</option>
-                <option value={'1'}>Enero</option>
-                <option value={'2'}>Febrero</option>
-                <option value={'3'}>Marzo</option>
-                <option value={'4'}>Abril</option>
-                <option value={'5'}>Mayo</option>
-                <option value={'6'}>Junio</option>
-                <option value={'7'}>Julio</option>
-                <option value={'8'}>Agosto</option>
-                <option value={'9'}>Septiembre</option>
-                <option value={'10'}>Octubre</option>
-                <option value={'11'}>Noviembre</option>
-                <option value={'12'}>Diciebre</option>
-
-
-              </NativeSelect>
-
-              <NativeSelect
-                label="Año"
-                defaultValue={30}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'anio',
-                  id: 'uncontrolled-native',
-
-                }}
-
-              > <option value={''}>Elegir</option>
-                <option value={'2015'}>2015</option>
-                <option value={'2016'}>2016</option>
-                <option value={'2017'}>2017</option>
-                <option value={'2018'}>2018</option>
-                <option value={'2019'}>2019</option>
-                <option value={'2020'}>2020</option>
-                <option value={'2021'}>2021</option>
-                <option value={'2022'}>2022</option>
-                <option value={'2023'}>2023</option>
-                <option value={'2024'}>2024</option>
-
-
-              </NativeSelect>
-
-
-
+              
               <Box
                 component="form"
                 sx={{
@@ -295,10 +266,39 @@ export default function SelectTextFields(props) {
                   }}
                 />
               </Box>
-              <Button type="submit" size="small" variant="contained">
-                Subir Comprobante
-              </Button>
-            </form>
+
+              <>
+       <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo </p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button onClick={enviar}>Enviar</Button>
+      </Box>
+
+      
+    </>
+         
           </div>
         </DialogContent>
       </Dialog>
