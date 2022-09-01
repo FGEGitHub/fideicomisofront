@@ -72,10 +72,7 @@ const Lotes = () => {
             name: "estado",
             label: "Estado",
         },
-          {
-            name: "estado",
-            label: "Estado",
-        },
+    
         {
             name: "Actions",
             options: {

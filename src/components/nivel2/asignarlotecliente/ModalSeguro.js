@@ -29,6 +29,7 @@ export default function SelectTextFields(props) {
   //const usuario  = useUser().userContext
 
   const [rta, setRta] = useState()
+  const [habilitado, setHabilitado] = useState(false)
 
 
 
@@ -38,6 +39,10 @@ export default function SelectTextFields(props) {
     const valor = await servicioLotes.calcular(props.datos)
     console.log(valor)
     setRta(valor)
+    if (valor.puede){
+      setHabilitado(true)
+    }
+    
     
     //{if(rta.puede=''){ props.setpuede()}}
 
@@ -57,7 +62,8 @@ export default function SelectTextFields(props) {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    window.location.reload()
+   
   };
 
   const designar = async (event) => {
@@ -117,17 +123,28 @@ export default function SelectTextFields(props) {
         <h3>{rta.puede}</h3> 
         {props.puedee}
 
+
+          
+
+         
+
+          {habilitado ? <div> 
+            <Button onClick={designar} position="right"variant='contained' size="small" >Asignar</Button>
+        </div> : <div> 
+        <h3>   No puede asignarse el lote</h3>
+            Motivo/s: <br/>
+            {rta.lotetieneasignado} <br/>
+            {rta.cuotamuygrande}
+
+        </div>}
       </div>  : <div> 
         
       </div> }
+           
 
-          <div>
-
-          <Button onClick={handleClose} size="small" variant="contained" >
+      <Button onClick={handleClose} size="small" variant="contained" >
               Cerrar
             </Button>
-            <Button onClick={designar} position="right"variant='contained' size="small" >Asignar</Button>
-        </div>
       </DialogContent>
     </Dialog>
     </Box >
