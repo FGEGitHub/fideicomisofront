@@ -7,7 +7,7 @@ import AddAfip from "./addAfip/AddAfip";
 import AddDomicilio from "./addDomicilio/AddDomicilio";
 import AddEstatuto from "./addEstatuto/AddEstatuto";
 import AddActa from "./addActa/AddActa";
-import ModeloCarga from "./TogableCarga/ModeloCarga"
+
 
 const SubirLegajo = () => {
     const [activeStep, setActiveStep] = useState(0);

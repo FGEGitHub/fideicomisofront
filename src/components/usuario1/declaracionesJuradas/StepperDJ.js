@@ -1,7 +1,7 @@
 import { StepButton, Stepper, Step, Stack, Button, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import AddDatos from "./datosPersonales/AddDatos";
 import AddPersonas from "./calidadDePersonas/AddPersonas";
 import AddOrigen from "./origen/AddOrigen";
@@ -13,6 +13,15 @@ const StepperDJ = () => {
         {label: 'Origen', completed:false},
       
     ]);
+     const [user, setUser] = useState([''])
+       
+    useEffect(() => {
+        
+        const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
+        
+        setUser(preba)
+    
+    }, [])
     const checkDisabled = () =>{
         if (activeStep < steps.leght -1) return false
         
@@ -38,9 +47,12 @@ const StepperDJ = () => {
             </Stepper>
             <Box>
                 {{
-                    0: <AddDatos />,
-                    1: <AddPersonas />,
-                    2: <AddOrigen />,
+                    0: <AddDatos
+                    cuil_cuit = {user.cuil_cuit} />,
+                    1: <AddPersonas 
+                    cuil_cuit = {user.cuil_cuit}/>,
+                    2: <AddOrigen 
+                    cuil_cuit = {user.cuil_cuit}/>,
 
                 }[activeStep]}
             </Box>
