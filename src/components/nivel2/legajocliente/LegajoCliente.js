@@ -119,6 +119,7 @@ const LegajoCliente = (props) => {
                       )
               },
           }
+          
       ]
       //4 - renderizamos la datatable
       return (

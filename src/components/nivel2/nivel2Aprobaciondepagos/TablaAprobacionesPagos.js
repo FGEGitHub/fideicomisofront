@@ -98,7 +98,7 @@ const TablaAprobaciones = () => {
             label: "observaciones",
         },
         {
-            name: "Actions",
+            name: "Acciones",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(

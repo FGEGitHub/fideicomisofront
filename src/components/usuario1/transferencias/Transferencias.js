@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ComponenteTransferencia from './ComponenteTransferencia';
 import { useState, useEffect } from "react";
 import servicioUsuario1 from '../../../services/usuario1'
+import imagen from '../../../Assets/IMG_7194.JPG'
 const Transferencias = () => {
     const [lotes, setLotes] = useState([''])
 
@@ -63,6 +64,7 @@ const Transferencias = () => {
   
 return (
     <Page>
+      <br/><br/><br/><br/><br/>
 
     <Grid>
       {lotes.map((lote, index) => (
@@ -72,7 +74,7 @@ return (
           parcela={lote.parcela}
           fraccion={lote.fraccion}
           id={lote.id}
-          image={'https://www.diarioellibertador.com.ar/wp-content/uploads/2021/12/santa-catalina.jpg'}
+          image={imagen}
          // image={'/Assets/IMG_7194.JPG'}
         />
       ))}

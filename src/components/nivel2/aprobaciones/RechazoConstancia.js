@@ -24,12 +24,12 @@ export default function FormDialog(props) {
 
 
   const rechazar =async (event)  => {
-    event.preventDefault();
+   
     console.log(form)
    const respuesta = await servicioAprobaciones.rechazo(form)
    console.log(respuesta)
 
-  //window.location.reload(true)
+  window.location.reload(true)
  }
  const handleChange = (e) =>
  setForm({  ...form, [e.target.name]: e.target.value })
