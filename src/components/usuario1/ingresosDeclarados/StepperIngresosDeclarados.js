@@ -1,7 +1,7 @@
 import { StepButton, Stepper, Step, Stack, Button, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import AddDeclaraciones from "./ultimasDeclaraciones/AddDeclaraciones";
 import AddBalances from "./ultimosBalances/AddBalances";
 import AddPrevisionales from "./pagosPrevisionales/AddPrevisionales";
@@ -14,6 +14,15 @@ const StepperIngresosDeclarados = () => {
         {label: 'Pagos Previsionales', completed:false},
       
     ]);
+    const [user, setUser] = useState([''])
+       
+    useEffect(() => {
+        
+        const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
+        
+        setUser(preba)
+    
+    }, [])
     const checkDisabled = () =>{
         if (activeStep < steps.leght -1) return false
         
@@ -39,9 +48,12 @@ const StepperIngresosDeclarados = () => {
             </Stepper>
             <Box>
                 {{
-                    0: <AddBalances />,
-                    1: <AddDeclaraciones />,
-                    2: <AddPrevisionales />,
+                    0: <AddBalances 
+                    cuil_cuit = {user.cuil_cuit}/>,
+                    1: <AddDeclaraciones
+                    cuil_cuit = {user.cuil_cuit }/>,
+                    2: <AddPrevisionales 
+                    cuil_cuit = {user.cuil_cuit}/>,
 
                 }[activeStep]}
             </Box>
