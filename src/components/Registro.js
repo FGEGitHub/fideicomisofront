@@ -9,9 +9,38 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {  useState } from "react";
 import servicioUsuario from '../services/usuarios'
+import { Box, Typography, Avatar } from '@mui/material';
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import RegIcon from "@mui/icons-material/HowToRegRounded";
+import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		marginTop: 100,
+		maxHeight: 500,
+		width: 600,
+		maxWidth: 900,
+		borderRadius: 20,
+		"-webkit-box-shadow":
+			"0 24px 38px 3px rgba(0, 0, 0, 0.14),0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2)",
+		"box-shadow":
+			"0 24px 38px 3px rgba(0, 0, 0, 0.14),0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2)",
+		"--softUIEffect-3": "inset 3px 3px 5px #b8b9be, inset -3px -3px 6px #fff"
+	},
+	field: {
+		"box-shadow":
+			"inset 3px 3px 6px #b8b9be, inset -3px -3px 6px rgb(253, 253, 253)"
+	}
+}));
+const theme = createTheme();
 
 export default function Ingresos() {
+  const cardStyles = useStyles(theme);
+
+
   let params = useParams()
     let cuil_cuit = params.cuil_cuit
    
@@ -49,83 +78,158 @@ export default function Ingresos() {
       <Button variant="outlined" onClick={handleClickOpen}>
        Registrarme
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Registro</DialogTitle>
+      <Dialog maxWidth="xl" open={open} onClose={handleClose}>
+      <Box
+							sx={{
+								px: 80,
+								display: "flex",
+								flexDirection: "row",
+								alignItems: "center",
+                alignContent: "center"
+							}}
+						>
+							<Avatar
+								sx={{
+									m: 1,
+									bgcolor: "darkblue",
+									marginRight: 3
+								}}
+							>
+								<AccountCircleRoundedIcon fontSize="large" />
+							</Avatar>
+							<Typography  component="h1" variant="h4">
+								Registro
+							</Typography>
+						</Box>
+        <Typography align='center' component="h1" variant="h6">Complete con todos sus Datos</Typography>
         <DialogContent>
 
-          <DialogContentText>
-          Complete todos los datos 
-          </DialogContentText>
-
           <form  onSubmit={handleDeterminar}> 
-          <TextField
+          <TextField className={cardStyles.field}
+								sx={{
+                  mx: 3, width: 700
+								}}
             autoFocus
+            required
             margin="dense"
             id="name"
-            label="cuil_cuit"
+            label="CUIT/CUIL"
             name="cuil_cuit"
             onChange={handleChange}
-            fullWidth
+            size="small"
             variant="standard"
           />
-          <TextField
+          <TextField 								
+            className={cardStyles.field}
+            sx={{
+              mx: 3, width: 700
+								}}
             autoFocus
-            margin="dense"
+            required
+            margin="normal"
+            size="small"
             id="name"
             type= "password"
-            label="password"
+            label="Contraseña"
             name="password"
-            onChange={handleChange}
-            fullWidth
             variant="standard"
           />
-          
           <TextField
+          className={cardStyles.field}
+								sx={{
+                  mx: 3, width: 700
+								}}
             autoFocus
+            required
             margin="dense"
             id="name"
-            label="nombre"
+            label="Nombre Completo"
             name="nombre"
             onChange={handleChange}
-            fullWidth
+            size="small"
             variant="standard"
           />
              <TextField
+             className={cardStyles.field}
+								sx={{
+                  mx: 3, width: 700
+								}}
             autoFocus
+            required
             margin="dense"
             id="name"
-            label="Numero de cliente"
+            label="Numero de Cliente"
             name="nro_cliente"
             onChange={handleChange}
-            fullWidth
+            size="small"
             variant="standard"
           />
           
           <TextField
+          className={cardStyles.field}
+								sx={{
+                  mx: 3, width: 700
+								}}
             autoFocus
+            required
             margin="dense"
             id="name"
-            label="mail"
-            name="mail"
+            label="Email"
+            name="email"
             onChange={handleChange}
-            fullWidth
+            size="small"
             variant="standard"
           />
           <TextField
+          className={cardStyles.field}
+								sx={{
+                  mx: 3, width: 700
+								}}
             autoFocus
+            required
             margin="dense"
             id="name"
-            label="telefono"
+            label="Numero de Telefono"
             name="telefono"
             onChange={handleChange}
-            fullWidth
+            size="small"
             variant="standard"
           />
-       
+        
           <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button  type="submit">Enviar</Button>
+          <Button 
+          onClick={handleClose}
+          variant="contained"
+								sx={{
+									mt: 3,
+									maxWidth: 130,
+									borderRadius: 2,
+									height: 30,
+									fontWeight: 850,
+									fontSize: 12
+								}}
+							>
+								<span style={{ padding: 10 }}>Cancelar{"     "}</span> 
+                
+                </Button>
+          <Button
+								type="submit"
+								variant="contained"
+								sx={{
+									mt: 3,
+									maxWidth: 130,
+									borderRadius: 2,
+									height: 30,
+									fontWeight: 850,
+									fontSize: 12
+								}}
+							>
+								<span style={{ padding: 10 }}>Registrar{"     "}</span>
+								<RegIcon fontSize="small" />
+							</Button>
+              
         </DialogActions>
+        
            </form>
         </DialogContent>
       

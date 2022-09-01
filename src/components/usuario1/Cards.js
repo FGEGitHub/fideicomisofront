@@ -27,17 +27,17 @@ export default function Cards() {
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Item>
+            <CardCuatro />
+          </Item>
+        </Grid>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Item>
             <CardDos />
           </Item>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Item>
-            <CardUno />
-          </Item>
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <Item>
-            <CardCuatro />
+            <CardTres />
           </Item>
         </Grid>
       </Grid>
