@@ -91,11 +91,11 @@ export default function SelectTextFields(props) {
       setFileUpload(acceptedFiles);
       formData.append('file', files[0]);
     
-      formData.append('datos', [props.cuil_cuit,'Dato2']);///// aca en forma de array se envian datos del dormulario
+      formData.append('datos', [pago.cuil_cuit,pago.id,pago.monto]);///// aca en forma de array se envian datos del dormulario
      
       servicioUsuario1.pagarnivel1(formData)
      
-         // window.location.reload(true);
+          window.location.reload(true);
        
   
   

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import servicioAprobacionesPagos from '../../../services/pagos'
+import serviciousuario1 from '../../../services/usuario1'
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
@@ -8,7 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoPago'
 import Tooltip from '@material-ui/core/Tooltip';
 //import overbookingData from "./overbooking";
-
+import Button from "@mui/material/Button";
 const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
@@ -36,7 +37,39 @@ const TablaAprobaciones = () => {
     }, [])
   
     
+//// Descarga
+async function download(index, rowIndex, data) {
+    const filename = (pendientes[index].ubicacion)
+  
+   
+   const link = await serviciousuario1.obtenerurl(filename)
+   console.log(link)
+    console.log(link.data)            
+    window.open(link.data)
 
+}
+
+
+function downloadFile(index, rowIndex, data) {
+
+/* const filename = (products[index].key)
+console.log(filename)
+const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+console.log(link.data)
+setAct(true) */
+return (
+    <>
+        
+          <Button
+                onClick={() => download(index)}
+            >Descargar</Button> 
+
+
+    </>
+);
+}
+
+///Descarga
 
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
@@ -93,10 +126,20 @@ const TablaAprobaciones = () => {
             name: "monto_inusual",
             label: "Monto Inusual",
         },
+    
         {
-            name: "observaciones",
-            label: "observaciones",
-        },
+            name: "Descarga",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                downloadFile(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        }, 
         {
             name: "Acciones",
             options: {

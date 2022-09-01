@@ -81,7 +81,7 @@ return data
 
 const pagarnivel1 = async (formdata) => {
   console.log(formdata)
-  const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata)
+  const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata)
   console.log(data)
 
 }

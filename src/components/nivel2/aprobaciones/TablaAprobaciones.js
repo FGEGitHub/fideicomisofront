@@ -50,8 +50,7 @@ const TablaAprobaciones = () => {
         console.log(link.data)            
         window.open(link.data)
   
-        setAct(true)
-
+     
     }
 
 
