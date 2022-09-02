@@ -10,7 +10,7 @@ const DetalleCliente = () => {
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
     const [cliente, setCliente] = useState([])
-
+    const [habilitado, sethabilitado] = useState(false)
     useEffect(() => {
 
         traer()
@@ -21,7 +21,10 @@ const DetalleCliente = () => {
         const cliente = await servicioCliente.cliente(cuil_cuit)
 
         setCliente(cliente)
-
+    
+        if (cliente[0].habilitado =='Si'){
+            sethabilitado(true)
+        }
 
 
             ;
@@ -34,11 +37,13 @@ const DetalleCliente = () => {
             
             <InfoCliente
                 cuil_cuit={cuil_cuit} />
-             </div> 
-             <div>
+             </div>
+
+            {habilitado ? <div>
             {<LotesCliente
                 cuil_cuit={cuil_cuit} />}
-</div> 
+            </div> : <div> Cliente no habilitado, no se puede asignar el lote </div> }
+             
         </div>
     )
 }
