@@ -79,9 +79,9 @@ export default function MenuIzq2 ({children}) {
             path: '/nivel3/icc'
           },
           {
-            text: 'Agregar un Usuario',
+            text: 'Declaraciones',
             icon: <Looks3Icon color="primary" />,
-            path: '/nivel3/aprobaciones'
+            path: '/nivel3/declaraciones'
           },
           {
             text: 'Informes',

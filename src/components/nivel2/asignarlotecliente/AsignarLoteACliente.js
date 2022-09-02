@@ -143,17 +143,7 @@ export default function AsignarLoreACliente() {
                             variant="filled"
                         />
 
-                            <TextField
-                            autoFocus
-                            margin="dense"
-                            type={'number'}
-                            id="name"
-                            label="Valor del metro cuadrado"
-                            name="valor"
-                            onChange={handleChange}
-                            fullWidth
-                            variant="filled"
-                        />
+                         
                       
                       
 

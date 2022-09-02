@@ -116,6 +116,7 @@ export default function SelectTextFields(props) {
       {rta? <div> 
         <h2>  Lote: {rta.nombre} </h2>  
         Superficie: {rta.superficie} <br/>
+        Actual valor metro cuadrado: {rta.valor} <br/>
         Valor del terreno: ${rta.precio}<br/>
         Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
         Ingresos: ${rta.ingresos}<br/>

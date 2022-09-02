@@ -42,7 +42,7 @@ import VerCliente from '../Paginas/Nivel3/verClientes';
 import Lotes3 from '../Paginas/Nivel3/lotes';
 import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 import AgregarICC from '../Paginas/Nivel3/AgregarIcc';
-
+import Declaraciones from '../Paginas/Nivel3/Declaraciones';
 
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
@@ -108,6 +108,7 @@ const Rutas = [
 	{ path: '/nivel3/clientes', element: <VerCliente /> },
 	{ path: '/nivel3/lotes', element: <Lotes3 /> },
 	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
+	{ path: '/nivel3/declaraciones', element: <Declaraciones /> },
 
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
