@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import Habilitar from './ModalHabiulitar'
 import Deshabilitar from './ModalDeshabilitar'
+import Estadisticas from './Estadisticas'
 
 
 
@@ -110,8 +111,8 @@ const LegajoCliente = (props) => {
               label: "cuil_cuit"
           },
           {
-            name: "descripcion",
-            label: "descripcion"
+            name: "estado",
+            label: "estado"
         },
           {
               name: "descargar",
@@ -131,18 +132,24 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
+           
+            < Estadisticas
+             cuil_cuit = {cuil_cuit}/>
              < ModalLegajo />
              <Habilitar />
              <Deshabilitar />
-             
+         
              <Button onClick={volver} > Volver</Button>
+             <div    >
+            
               <MUIDataTable
                   title={"Documentacion del Cliente"}
                   data={products}
                   columns={columns}
               />
+              
   
-  
+                 </div>
   
           </div>
       )

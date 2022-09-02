@@ -5,8 +5,14 @@ const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
 //const  baseURL = 'http://localhost:4000/links/'
 
 
+  
+  const datoslegajo= async  (datos) => {
+   
+    const data  = await axios.post(baseURL+'estadisticaslegajos',datos)
+ 
 
-
+    return data.data 
+} 
 const modificarCliente= async  (datos) => {
    
     const data  = await axios.post(baseURL+'modificarcli',datos)
@@ -26,9 +32,9 @@ const crear= async  (datos) => {
 const lista= async  () => {
    
 
-  //  const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
+   const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
 
-    const {data } = await axios.get('http://localhost:4000/prueba')
+   // const {data } = await axios.get('http://localhost:4000/prueba')
 
     
     return data 
@@ -84,6 +90,6 @@ const traerLejagos= async  (cuil_cuit) => {
       return data 
   }
 
-export default {lista, cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
+export default {lista,datoslegajo, cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
 
 
