@@ -19,6 +19,7 @@ export default function FormDialog(props) {
     let cuil_cuit = params.cuil_cuit
     const [open, setOpen] = React.useState(false);
     const [file, setFile] = useState();
+    const [completado, setCompletado] = useState(false);
     const [fileUpload, setFileUpload] = useState(null);
     const [legform, setLegform] = useState({
         cuil_cuit:cuil_cuit
@@ -87,6 +88,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
     const handleChange = (e) => {
         setLegform({ ...legform, [e.target.name]: e.target.value })
+        setCompletado(true)
         console.log(legform)
     }
 
@@ -99,6 +101,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
     const handleClickOpen = () => {
         setOpen(true);
+        setCompletado(false)
     };
 
     const handleClose = () => {
@@ -141,7 +144,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
                     </NativeSelect>
                
-
+                {completado? <div>
                     <Box sx={{ m: 1 }}>
           <Button size="small" variant="contained">
             Descargar modelo
@@ -166,17 +169,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
-  
-    
-
-
-
-              
-
-                </DialogContent>
-            
-                <DialogActions>
-                        <TextField
+        <TextField
                         autoFocus
                         margin="dense"
                         id="name"
@@ -186,6 +179,16 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         fullWidth
                         variant="standard"
                     /> 
+        </div>:<div></div>}
+
+
+
+              
+
+                </DialogContent>
+            
+                <DialogActions>
+                       
                     <Button onClick={handleClose}>Cancelar</Button>
                     <Button onClick={enviar}>Enviar</Button>
                 </DialogActions>
