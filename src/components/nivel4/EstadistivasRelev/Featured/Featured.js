@@ -18,16 +18,16 @@ const Featured = (props) => {
             </div>
             <p className="title">Porcentaje</p>
             <p className="amount">{props.titulo}</p>
-            <p className="description">Descripcion</p>
+        {/*      <p className="description">Descripcion</p>
             <div className="summary">
-                <div className="item">
+                 <div className="item">
                     <div className="itemTitle">titulo</div>
                     <div className="itemResult negative">
                         <KeyboardArrowDownIcon fontSize="small" />
                         <div className="resultAmount">Dato</div>
                     </div>
                 </div>
-                <div className="item">
+              <div className="item">
                     <div className="itemTitle">titulo</div>
                     <div className="itemResult positive">
                         <KeyboardArrowUpIcon fontSize="small" />
@@ -40,8 +40,8 @@ const Featured = (props) => {
                         <KeyboardArrowUpIcon fontSize="small" />
                         <div className="resultAmount">Dato</div>
                     </div>
-                </div>
-            </div>
+                </div> 
+            </div>*/}
         </div>
     </div>
   )
