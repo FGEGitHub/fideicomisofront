@@ -5,7 +5,7 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
 
 
 const agregariccgral= async  (datos) => {
-   
+   console.log(datos)
     const {data } = await axios.post(baseUrl+'agregariccgral2',datos)
     alert(data)
    
@@ -23,7 +23,12 @@ const nuevoicc= async  (datos) => {
     console.log(data)
      return data 
  } 
-
+ const valormetrocuadrado= async  (datos) => {
+    console.log(datos)
+     const {data } =await axios.post(baseUrl+'asignarvalormetroc',datos)
+    console.log(data)
+     return data 
+ } 
 
 const borrarhistorial= async  () => {
     
@@ -32,4 +37,4 @@ const borrarhistorial= async  () => {
      return data 
  }  
 
-export default {agregariccgral,traerhistorial,borrarhistorial,nuevoicc};
+export default {agregariccgral,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado};
