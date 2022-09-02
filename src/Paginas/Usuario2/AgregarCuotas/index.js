@@ -101,7 +101,7 @@ export default function MenuUsuario2() {
       <br /> <br /> <br />
       <form onSubmit={agregarCuotas}>
 
- <h2>Valor del lote</h2>
+{/*  <h2>Valor del lote</h2>
       <TextField
        style ={{width: '25%'}}
           autoFocus
@@ -115,7 +115,7 @@ export default function MenuUsuario2() {
         />
 
 <br /> <br /> 
-<h2>Anticipo</h2>
+
       <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1} columns={16}>
           <TextField
@@ -130,8 +130,8 @@ export default function MenuUsuario2() {
           variant="standard"
         />
           </Grid>
-        </Box>
-
+        </Box> */}
+<h2>Fecha Anticipo</h2>
         <NativeSelect
                         defaultValue={30}
                         onChange={handleChange}
