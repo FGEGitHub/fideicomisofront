@@ -1,7 +1,4 @@
 
-
-
-import MenuUsuario4 from '../../../components/nivel4/Menuizq4'
 import Widget from '../../../components/nivel4/EstadistivasRelev/Widget/Widget';
 import Widgett from '../../../components/nivel4/EstadistivasRelev/Widget/Widget';
 import Featured from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
@@ -68,7 +65,8 @@ export default function Legajos(props) {
   
   
     return (
-      <MenuUsuario4>
+        <div>
+   
 
   
   
@@ -143,8 +141,7 @@ export default function Legajos(props) {
   
           : <div></div>}
   
-
-      </MenuUsuario4>
+  </div>
     );
   
   }

@@ -19,7 +19,7 @@ const DetalleCliente = () => {
      const traer = async () => {
 
         const cliente = await servicioCliente.cliente(cuil_cuit)
-
+        console.log(cliente)
          setCliente(cliente)
     
          if (cliente[0].habilitado =='Si'){
