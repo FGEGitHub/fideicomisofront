@@ -95,6 +95,71 @@ const Widget = (props) => {
         )
       };
       break;
+      case "Pendientes":
+      data = {
+        title: "Pendiente",
+        isMoney: false,
+        link: "Ver Detalles",
+        icon: (
+          <ShoppingCartOutlinedIcon
+            className="icon"
+            style={{
+              color: "goldenrod",
+              backgroundColor: "rgba(0, 128, 0, 0.2)"
+            }}
+          />
+        )
+      };
+      break;
+      case "total":
+      data = {
+        title: "Total",
+        isMoney: false,
+        link: "Ver Detalles",
+        icon: (
+          <ShoppingCartOutlinedIcon
+            className="icon"
+            style={{
+              color: "green",
+              backgroundColor: "rgba(0, 128, 0, 0.2)"
+            }}
+          />
+        )
+      };
+      break;
+      case "Aprobadas":
+      data = {
+        title: "Aprobadas",
+        isMoney: false,
+        link: "Ver Detalles",
+        icon: (
+          <ShoppingCartOutlinedIcon
+            className="icon"
+            style={{
+              color: "green",
+              backgroundColor: "rgba(0, 128, 0, 0.2)"
+            }}
+          />
+        )
+      };
+      break;
+      case "Rechazadas":
+      data = {
+        title: "Rechazadas",
+        isMoney: false,
+        link: "Ver Detalles",
+        icon: (
+          <ShoppingCartOutlinedIcon
+            className="icon"
+            style={{
+              color: "crimson",
+              backgroundColor: "rgba(0, 128, 0, 0.2)"
+            }}
+          />
+        )
+      };
+      break;
+
     default:
       break;
   }
