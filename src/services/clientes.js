@@ -26,9 +26,9 @@ const crear= async  (datos) => {
 const lista= async  () => {
    
 
-    const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
+  //  const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
 
-   //const {data } = await axios.get('http://localhost:4000/prueba')
+    const {data } = await axios.get('http://localhost:4000/prueba')
 
     
     return data 
@@ -70,7 +70,20 @@ const traerLejagos= async  (cuil_cuit) => {
     return data 
 }
 
+ 
+  const habilitar= async  (etc) => {
+     console.log(etc)
+      const {data } = await axios.post(baseURL+'habilitar/',etc)
+     
+      return data 
+  }
+  const deshabilitar= async  (etc) => {
+     console.log(etc)
+      const {data } = await axios.post(baseURL+'deshabilitar/',etc)
+     
+      return data 
+  }
 
-export default {lista, cliente,modificarCliente, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear};
+export default {lista, cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
 
 

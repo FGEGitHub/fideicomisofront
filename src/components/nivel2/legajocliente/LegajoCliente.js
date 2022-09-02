@@ -11,6 +11,8 @@ import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
+import Habilitar from './ModalHabiulitar'
+import Deshabilitar from './ModalDeshabilitar'
 
 
 
@@ -38,8 +40,13 @@ const LegajoCliente = (props) => {
               setProducts(data)
           
       }
-  
-  
+      
+      const volver =  () => {
+        navigate('/usuario2/detallecliente/'+cuil_cuit)
+             
+              
+          
+      }
   
       useEffect(() => {
           getData()
@@ -124,7 +131,11 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
-             <  ModalLegajo />
+             < ModalLegajo />
+             <Habilitar />
+             <Deshabilitar />
+             
+             <Button onClick={volver} > Volver</Button>
               <MUIDataTable
                   title={"Documentacion del Cliente"}
                   data={products}
