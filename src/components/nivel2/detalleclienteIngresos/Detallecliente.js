@@ -10,38 +10,41 @@ const DetalleCliente = () => {
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
     const [cliente, setCliente] = useState([])
-    const [habilitado, sethabilitado] = useState(false)
-    useEffect(() => {
+     const [habilitado, sethabilitado] = useState(false)
+     useEffect(() => {
 
         traer()
 
     }, [])
-    const traer = async () => {
+     const traer = async () => {
 
         const cliente = await servicioCliente.cliente(cuil_cuit)
 
-        setCliente(cliente)
+         setCliente(cliente)
     
-        if (cliente[0].habilitado =='Si'){
-            sethabilitado(true)
-        }
+         if (cliente[0].habilitado =='Si'){
+             sethabilitado(true)
+         }
 
 
             ;
     };
   
+
     return (
+
+
         <div> 
             
-              <div>
+               <div>
             
-            <InfoCliente
-                cuil_cuit={cuil_cuit} />
+             <InfoCliente
+                 cuil_cuit={cuil_cuit} />
              </div>
 
-            {habilitado ? <div>
+             {habilitado ? <div>
             {<LotesCliente
-                cuil_cuit={cuil_cuit} />}
+                  cuil_cuit={cuil_cuit} />}
             </div> : <div> Cliente no habilitado, no se puede asignar el lote </div> }
              
         </div>

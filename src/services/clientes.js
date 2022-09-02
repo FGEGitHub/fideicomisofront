@@ -69,18 +69,20 @@ const traerLejagos= async  (cuil_cuit) => {
     
     return data 
 }
-const habilitar= async  (etc) => {
-    console.log(etc)
-     const {data } = await axios.post(baseURL+'habilitar/',etc)
+
+ 
+  const habilitar= async  (etc) => {
+     console.log(etc)
+      const {data } = await axios.post(baseURL+'habilitar/',etc)
      
-     return data 
- }
- const deshabilitar= async  (etc) => {
-    console.log(etc)
-     const {data } = await axios.post(baseURL+'deshabilitar/',etc)
+      return data 
+  }
+  const deshabilitar= async  (etc) => {
+     console.log(etc)
+      const {data } = await axios.post(baseURL+'deshabilitar/',etc)
      
-     return data 
- }
+      return data 
+  }
 
 export default {lista, cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
 
