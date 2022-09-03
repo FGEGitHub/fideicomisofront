@@ -73,7 +73,7 @@ const Lotes = () => {
             label: "Estado",
         },
     
-        {
+      /*   {
             name: "Actions",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
@@ -85,7 +85,7 @@ const Lotes = () => {
                     )
             }
         
-        },   
+        },   */ 
        
     ];
     // renderiza la data table
