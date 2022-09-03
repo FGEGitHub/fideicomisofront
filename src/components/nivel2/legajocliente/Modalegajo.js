@@ -72,11 +72,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
       {file.path} - {file.size} bytes
     </li>
   )); 
-/////////////////
-
-
-
-
+/////////////////cargar  no actualizo 
 
 
 

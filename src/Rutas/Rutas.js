@@ -13,6 +13,7 @@ import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
 import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
 
 
+
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
 import Navbar from "../components/Navbar";
@@ -26,7 +27,7 @@ import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
 import SubirPdf from "../Paginas/usuario1/Subirpdf"
-
+import CBU from "../Paginas/usuario1/SubirCbu"
 
 
 
@@ -81,6 +82,8 @@ const Rutas = [
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
 	{ path: '/usuario/vertodos', element: < PruebaSubir /> },
 	{ path: '/usuario/subirpdf', element: < SubirPdf /> },
+	{ path: '/usuario/cbu-declarado', element: < CBU /> },
+	
 /* 	{ path: '/usuario2/clientess', render={()=>{ return user?  <Clientes /> : <Clientes />}}  }, */
 
 
