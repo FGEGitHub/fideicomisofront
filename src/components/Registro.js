@@ -124,6 +124,7 @@ export default function Ingresos() {
             sx={{
               mx: 3, width: 700
 								}}
+                error
             autoFocus
             required
             margin="normal"

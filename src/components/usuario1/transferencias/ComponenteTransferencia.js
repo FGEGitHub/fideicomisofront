@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import ModalPago from '../ModalTransferencia'
 import imagen from '../../../Assets/IMG_7194.JPG'
-
 const cardWidth = 320;
 const borderRadius = 8;
 const transition = 'all 0.45s ease';
@@ -124,7 +123,9 @@ const ComponenteTransferencia = ({ zona, manzana, parcela, image, hexa, fraccion
       parcela={parcela}
       id={id}/>
     </Content>
-  </Style>
+
+    </Style>
+
 );
 
 export default ComponenteTransferencia;

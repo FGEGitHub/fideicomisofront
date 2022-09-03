@@ -4,6 +4,7 @@ import ComponenteTransferencia from './ComponenteTransferencia';
 import { useState, useEffect } from "react";
 import servicioUsuario1 from '../../../services/usuario1'
 import imagen from '../../../Assets/IMG_7194.JPG'
+import { Toolbar } from '@mui/material';
 const Transferencias = () => {
     const [lotes, setLotes] = useState([''])
 
@@ -79,6 +80,7 @@ return (
         />
       ))}
     </Grid>
+    <Toolbar />
   </Page>
 /* key={lote.zona}
 hexa={lote.manzana}
