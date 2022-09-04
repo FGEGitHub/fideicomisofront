@@ -96,11 +96,11 @@ export default function SelectTextFields(props) {
     const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-
+console.log('before')
     formData.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo]);///// aca en forma de array se envian datos del dormulario
 
     servicioUsuario1.cargarcbu(formData)
-
+    console.log('after')
     window.location.reload(true);
 
 

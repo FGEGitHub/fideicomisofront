@@ -80,6 +80,11 @@ export default function MenuIzq2 ({children}) {
           icon: <AssignmentTurnedInIcon color="primary" />,
           path: '/usuario2/aprobaciones'
         },
+        {
+          text: 'Aprobación de CBU',
+          icon: <AssignmentTurnedInIcon color="primary" />,
+          path: '/usuario2/aprobacioncbu'
+        },
         
      
       ];
