@@ -34,7 +34,7 @@ const lista= async  () => {
 
    const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
 
-   // const {data } = await axios.get('http://localhost:4000/prueba')
+   //  const {data } = await axios.get('http://localhost:4000/prueba')
 
     
     return data 
@@ -89,7 +89,13 @@ const traerLejagos= async  (cuil_cuit) => {
      
       return data 
   }
-
-export default {lista,datoslegajo, cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
+  const listacbupendientes= async  () => {
+    
+     const {data } = await axios.get(baseURL+'cbuspendientes/')
+    
+     return data 
+ }
+  
+export default {lista,datoslegajo, listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
 
 
