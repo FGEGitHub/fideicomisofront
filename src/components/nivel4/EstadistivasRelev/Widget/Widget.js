@@ -3,6 +3,10 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import GppBadOutlinedIcon from '@mui/icons-material/GppBadOutlined';
+import AppsSharpIcon from '@mui/icons-material/AppsSharp';
 import "./Widget.scss";
 
 const Widget = (props) => {
@@ -53,7 +57,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <AppsSharpIcon
             className="icon"
             style={{
               color: "crimson",
@@ -69,7 +73,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <AppsSharpIcon
             className="icon"
             style={{
               color: "green",
@@ -85,7 +89,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <AccountBalanceWalletIcon
+          <ErrorOutlineIcon
             className="icon"
             style={{
               color: "goldenrod",
@@ -101,7 +105,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <ErrorOutlineIcon
             className="icon"
             style={{
               color: "goldenrod",
@@ -117,7 +121,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <AppsSharpIcon
             className="icon"
             style={{
               color: "green",
@@ -133,7 +137,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <DoneOutlineIcon
             className="icon"
             style={{
               color: "green",
@@ -149,7 +153,7 @@ const Widget = (props) => {
         isMoney: false,
         link: "Ver Detalles",
         icon: (
-          <ShoppingCartOutlinedIcon
+          <GppBadOutlinedIcon
             className="icon"
             style={{
               color: "crimson",

@@ -28,12 +28,12 @@ export default function Ingresos() {
     setOpen(true);
   };
   const handleDeterminar = async (event) => {
-   
+    event.preventDefault()
 
     const rta=  await servicioUsuario.registro(
       usuario
      )
-     alert(rta)
+    
  
     
 
