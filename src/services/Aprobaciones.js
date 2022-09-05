@@ -35,4 +35,18 @@ const rechazo= async  (form) => {
  
 } 
 
-export default {lista, aprobacion,rechazo};
+const rechazocbu= async  (form) => {
+
+  console.log(form)
+  const data  = await axios.post(baseUrl+'rechazarcbu/',form)
+  console.log(data)
+ 
+} 
+const aprobacioncbu= async  (id) => {
+  console.log(id)
+ const {data } = await axios.get(baseUrl+'aprobarcbu/'+id)
+   console.log(data)
+
+}  
+
+export default {lista,aprobacioncbu, aprobacion,rechazo,rechazocbu};
