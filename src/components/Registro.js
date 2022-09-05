@@ -44,10 +44,10 @@ export default function Ingresos() {
   let params = useParams()
     let cuil_cuit = params.cuil_cuit
    
-  const [open, setOpen] = React.useState(false);
-  const [usuario, setUsuario] = useState({
-    cuil_cuit: "",
-    password: "",
+    const [open, setOpen] = React.useState(false);
+    const [usuario, setUsuario] = useState({
+      cuil_cuit: "",
+      password: "",
 });
   const handleChange = (e) =>{
     console.log(usuario)
@@ -214,8 +214,8 @@ export default function Ingresos() {
                 
                 </Button>
           <Button
-								type="submit"
-								variant="contained"
+                  onClick={handleDeterminar}
+  								variant="contained"
 								sx={{
 									mt: 3,
 									maxWidth: 130,
