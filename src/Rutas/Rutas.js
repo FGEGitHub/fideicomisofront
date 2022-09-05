@@ -11,6 +11,7 @@ import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
 import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
 import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
 import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
+import AprobacionCbu from "../Paginas/Usuario2/AprobacionCbus"
 
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
@@ -26,8 +27,8 @@ import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
 import SubirPdf from "../Paginas/usuario1/Subirpdf"
-
-
+import CBU from "../Paginas/usuario1/SubirCbu"
+import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 
 
 import Transferencias from '../Paginas/usuario1/Transferencias';
@@ -81,6 +82,9 @@ const Rutas = [
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
 	{ path: '/usuario/vertodos', element: < PruebaSubir /> },
 	{ path: '/usuario/subirpdf', element: < SubirPdf /> },
+	{ path: '/usuario/cbu-declarado', element: < CBU /> },
+	{ path: '/usuario/asociarcbu', element: < AsociarCBU /> },
+	
 /* 	{ path: '/usuario2/clientess', render={()=>{ return user?  <Clientes /> : <Clientes />}}  }, */
 
 
@@ -91,6 +95,7 @@ const Rutas = [
 	{ path: '/usuario2/asignarloteausuario/:cuil_cuit', element: <AsignarLoteAUsuario /> },
 	{ path: '/usuario2/aprobaciones', element: <Aprobaciones /> },
 	{ path: '/usuario2/aprobacionesdepagos', element: <AprobacionesPagos /> },
+	{ path: '/usuario2/aprobacioncbu', element: <AprobacionCbu /> },
 	{ path: '/usuario2/legajoscliente/:cuil_cuit', element: <LegajosCliente /> },
 	{ path: '/usuario2/modificarcliente/:cuil_cuit', element: <EditarCliente /> },
 	{ path: '/usuario2/agregarlegajo/:cuil_cut', element: <AgregarLegajo /> },

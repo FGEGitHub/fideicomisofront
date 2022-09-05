@@ -91,8 +91,25 @@ const pagarnivel1 = async (formdata) => {
 const subirprueba = async (formdata) => {
     console.log(formdata)
     const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata)
-    console.log(data)
+   
   
   }
 
-export default {cantidadd,noticliente,lotesCliente,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+
+  const cbuscliente = async (formdata) => {
+  
+   const { data } = await axios.get(baseUrl + 'cbus/'+ formdata)
+   return (data)
+  
+  }
+
+///legajo
+const cargarcbu = async (formdata) => {
+  console.log(formdata)
+  const { data } = await axios.post(baseUrl + 'cargarcbu', formdata)
+ 
+
+}
+
+
+export default {cantidadd,noticliente,cbuscliente,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
