@@ -12,6 +12,9 @@ import BackupIcon from '@material-ui/icons/Backup';
 import servicioUsuario1 from '../../services/usuario1'
 
 import React, {useCallback, useEffect, useState, Fragment } from "react";
+
+
+
 const currencies = [
   {
     value: 'CBU',
@@ -35,6 +38,7 @@ export default function SelectTextFields(props) {
    const [pago, setPago] = useState({
 
     id:props.id,    })
+    const [cbus, setCbus] = useState([''])
 
   
 
@@ -50,6 +54,9 @@ export default function SelectTextFields(props) {
     setCuotas(lotes[1])
     //setear
     setUltima(lotes[2])
+     const cbuss = await servicioUsuario1.listacbus(prueba.cuil_cuit)
+     console.log(cbuss)
+     setCbus(cbuss)
    
 
 
@@ -151,7 +158,7 @@ export default function SelectTextFields(props) {
           <h4></h4>
           
 
-              {/* <TextField component="form"
+               <TextField component="form"
                 sx={{
                   '& > :not(style)': { m: 1, width: '25ch' },
                 }}
@@ -160,18 +167,19 @@ export default function SelectTextFields(props) {
 
                 id="outlined-select-currency"
                 select
-                label="CBU"
+                label="Elegir CBU"
                 value={currency}
                 name="cbu"
                 onChange={handleChange}
                 helperText="Por favor ingrese su CBU"
               >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {
+                cbus.map((option) => (
+                  <MenuItem key={option.id} value={option.lazo}>
+                    {option.numero}
                   </MenuItem>
                 ))}
-              </TextField> */}
+              </TextField> 
 
 
               <br />
