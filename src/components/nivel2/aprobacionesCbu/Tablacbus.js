@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
 import servicioClientes from '../../../services/clientes'
 import serviciousuario1 from '../../../services/usuario1'
+import servicioaprobaciones from '../../../services/Aprobaciones'
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import CheckIcon from '@mui/icons-material/Check';
-//import BotonRechazo from './RechazoConstancia'
+import BotonRechazo from './Rechazocbu'
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
 //import ModalVer from "./ModalVer"
@@ -29,11 +30,11 @@ const TablaAprobaciones = () => {
         setPendientes(pendientes)
     }
 
- /*    const aprobar = async (id) => {
-
-    await servicioAprobaciones.aprobacion(id)
-    window.location.reload(true)
-    } */
+    const aprobar = async (id) => {
+        console.log(id)
+    await servicioaprobaciones.aprobacioncbu(id)
+    getPendientes()
+    } 
 
     useEffect(() => {
         getPendientes()
@@ -46,7 +47,7 @@ const TablaAprobaciones = () => {
       
        
        const link = await serviciousuario1.obtenerurl(filename)
-       console.log(link)
+
         console.log(link.data)            
         window.open(link.data)
   
@@ -54,29 +55,29 @@ const TablaAprobaciones = () => {
     }
 
 
- function downloadFile(index, rowIndex, data) {
+    function downloadFile(index, rowIndex, data) {
 
-    /* const filename = (products[index].key)
-    console.log(filename)
-    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-    console.log(link.data)
-    setAct(true) */
-    return (
-        <>
-            
-              <Button
-                    onClick={() => download(index)}
-                >Descargar</Button> 
-
-
-        </>
-    );
-}
+        /* const filename = (products[index].key)
+        console.log(filename)
+        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+        console.log(link.data)
+        setAct(true) */
+        return (
+            <>
+                
+                  <Button
+                        onClick={() => download(index)}
+                    >Descargar</Button> 
+    
+    
+            </>
+        );
+    }
 
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
      
-     /*    return (
+     return (
           <>
            
             <BotonRechazo 
@@ -84,10 +85,10 @@ const TablaAprobaciones = () => {
             />
             <CheckIcon style={{ cursor: "pointer" }} 
             onClick={() =>  {aprobar(pendientes[dataIndex].id) 
-         navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) }  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+          }  }
             />
           </>
-        ); */
+        )
       }
     // definimos las columnas
     const columns = [
@@ -152,7 +153,7 @@ const options = {
 return (
     <div>
         <MUIDataTable
-            title={"Lista de aprobaciones pendientes"}
+            title={"Lista de aprobaciones de CBU"}
             data={pendientes}
             columns={columns}
             actions={[
