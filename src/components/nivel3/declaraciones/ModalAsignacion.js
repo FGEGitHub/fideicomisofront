@@ -17,6 +17,10 @@ import EditIcon from "@material-ui/icons/Edit";
 
 
 
+
+
+
+
 export default function ModalIcc(props) {
     const navigate = useNavigate();
     let params = useParams()
