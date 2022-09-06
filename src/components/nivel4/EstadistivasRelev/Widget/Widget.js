@@ -10,9 +10,7 @@ import AppsSharpIcon from '@mui/icons-material/AppsSharp';
 import "./Widget.scss";
 
 const Widget = (props) => {
-  console.log(props.type)
-  console.log(props.cantidad)
-
+ 
   let data;
   let amount = props.cantidad;
   

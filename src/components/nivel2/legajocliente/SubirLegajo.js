@@ -8,6 +8,7 @@ import servicioLegajos from '../../../services/legajos'
 
 
 const SubirLegajo = () => {
+  
     const [fileUpload, setFileUpload] = useState(null);
 
     const onDrop = useCallback((files, acceptedFiles) => {
@@ -15,18 +16,8 @@ const SubirLegajo = () => {
         setFileUpload(acceptedFiles);
         formData.append('file', files[0]);
 
-        servicioLegajos.subirlegajo(formData)
-            .then((res) => {
-                
-                setFileUpload({fileName: files[0].name});
-                console.log(res)
-                if (res.status === 200)
-                    return (this.setState({sucessmessage: "File uploaded successfullyS3"}))
-            })
-            .catch((error) => {
-                console.error(error.response);
-                this.setState({errormessage:error.response.status+" Please select the file"})
-            })
+        servicioLegajos.subirlegajode(formData)
+          
    
         });
     
