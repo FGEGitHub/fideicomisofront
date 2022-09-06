@@ -9,7 +9,12 @@ const leer= async  (id) => {
     console.log(data.asunto)
      return data 
  }  
+ const cantidadpendientes= async  (cuil_cuit) => {
+    
+    const {data} = await axios.get(baseUrl+'cantidad/'+cuil_cuit)
+    console.log(data.asunto)
+     return data 
+ }  
 
-
-
-export default {leer};
+ 
+export default {leer,cantidadpendientes};

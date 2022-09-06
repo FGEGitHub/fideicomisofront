@@ -12,19 +12,21 @@ import ListItemText from '@mui/material/ListItemText';
 import GroupIcon from '@mui/icons-material/Group';
 import NfcIcon from '@mui/icons-material/Nfc';
 import { useState, useEffect } from "react";
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import servicioPagos from '../../services/pagos'
 import Navbar from '../Navbar'
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
-
-
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
   
     const [notificaciones, setNotificaciones] = useState();
+    const [notificacioneslegajos, setNotificacioneslegajos] = useState();
+    const [notificacionescbus, setNotificacionescbus] = useState();
  
 
     useEffect(() => {
@@ -34,7 +36,9 @@ export default function MenuIzq2 ({children}) {
         
     const notis = await servicioPagos.cantidadpendientes()
 
-    setNotificaciones(notis)
+    setNotificaciones(notis[0])
+    setNotificacioneslegajos(notis[1])
+    setNotificacionescbus(notis[2])
     /* if (notificaciones>0) {
       document.title= 'Santa Catalina ('+notificaciones+')'
    
@@ -69,7 +73,7 @@ export default function MenuIzq2 ({children}) {
         {
           text: 'Aprobación de Pagos',
           icon:<div><Badge badgeContent={notificaciones} color="error">
-          <MailIcon color="primary" />
+          <PaidIcon color="primary" />
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
@@ -77,12 +81,16 @@ export default function MenuIzq2 ({children}) {
         
         {
           text: 'Aprobación de Legajos',
-          icon: <AssignmentTurnedInIcon color="primary" />,
+          icon:<div><Badge badgeContent={notificacioneslegajos} color="error">
+          <AccountBoxIcon color="primary" />
+        </Badge></div>,
           path: '/usuario2/aprobaciones'
         },
         {
           text: 'Aprobación de CBU',
-          icon: <AssignmentTurnedInIcon color="primary" />,
+          icon:<div><Badge badgeContent={notificacionescbus} color="error">
+          <AccountBalanceIcon color="primary" />
+        </Badge></div>,
           path: '/usuario2/aprobacioncbu'
         },
         
