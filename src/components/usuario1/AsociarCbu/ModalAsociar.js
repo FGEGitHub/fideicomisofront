@@ -20,6 +20,10 @@ const currencies = [
     value: 'Familiar',
     label: 'Familiar',
   },
+  {
+    value: 'Socio/Gerente/Apoderado',
+    label: 'Socio/Gerente/Apoderado',
+  },
 
 ];
 

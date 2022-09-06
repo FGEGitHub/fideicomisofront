@@ -7,6 +7,7 @@ import BorrarIcc from '../../../components/nivel3/borrarhistorialicc/BorrarHisto
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
+import Tabla from "../../../components/nivel3/declaraciones/ModalAsignacion"; 
 import { useNavigate } from "react-router-dom";
 
 
@@ -28,7 +29,9 @@ export default function Legajos() {
             <CssBaseline />
        <BarraLAteral>
        < ValorMetro/>
-
+       <br/>  <br/>  <br/>
+      
+       < Tabla/>
       </BarraLAteral>
         </ThemeProvider>
         

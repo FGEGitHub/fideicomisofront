@@ -11,6 +11,7 @@ import servicioAprobaciones from '../../../services/Aprobaciones'
 import {  useState } from "react";
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [completo, setCompleto] = React.useState(false);
   const [form, setForm] = useState ({
     id:props.id
    })
@@ -31,8 +32,9 @@ export default function FormDialog(props) {
 
   window.location.reload(true)
  }
- const handleChange = (e) =>
+ const handleChange = (e) =>{
  setForm({  ...form, [e.target.name]: e.target.value })
+ setCompleto(true)}
 
   return (
     <div>
@@ -57,7 +59,8 @@ export default function FormDialog(props) {
             fullWidth
             variant="standard"
           />
-           <Button type="submit">Rechazar</Button>
+          {completo ? <div><Button type="submit">Rechazar</Button> </div>  :<div> </div>}
+          
           </form>
         </DialogContent>
         <DialogActions>

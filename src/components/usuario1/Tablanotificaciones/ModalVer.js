@@ -21,6 +21,8 @@ const currencies = [
     label: 'CBU N°2',
   },
 
+
+  
 ];
 
 export default function SelectTextFields(props) {
