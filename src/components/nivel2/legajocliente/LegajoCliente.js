@@ -87,7 +87,7 @@ const LegajoCliente = (props) => {
                   
                     <Button
                           onClick={() => download(index)}
-                      >Boton</Button> 
+                      >   Descargar</Button> 
   
   
               </>

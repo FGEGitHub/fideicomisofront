@@ -34,7 +34,8 @@ export default function FormDialog(props) {
  }
  const handleChange = (e) =>{
  setForm({  ...form, [e.target.name]: e.target.value })
- setCompleto(true)}
+ setCompleto(true)
+ console.log(form)}
 
   return (
     <div>
@@ -59,7 +60,7 @@ export default function FormDialog(props) {
             fullWidth
             variant="standard"
           />
-          {completo ? <div><Button type="submit">Rechazar</Button> </div>  :<div> </div>}
+          {completo ? <div><Button onClick={rechazar}>Rechazar</Button> </div>  :<div> </div>}
           
           </form>
         </DialogContent>
