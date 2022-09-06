@@ -103,13 +103,22 @@ const subirprueba = async (formdata) => {
   
   }
 
+  const listacbus = async (formdata) => {
+  
+    const { data } = await axios.get(baseUrl + 'cbuscliente/'+ formdata)
+    return (data)
+   
+   }
+
+  
+
 ///legajo
 const cargarcbu = async (formdata) => {
-  console.log(formdata)
-  const { data } = await axios.post(baseUrl + 'cargarcbu', formdata)
+  console.log('formdata')
+  const { data } = await axios.post(baseUrl + 'cargarcbu/', formdata)
  
 
 }
 
 
-export default {cantidadd,noticliente,cbuscliente,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+export default {cantidadd,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};

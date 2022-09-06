@@ -37,4 +37,11 @@ const borrarhistorial= async  () => {
      return data 
  }  
 
-export default {agregariccgral,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado};
+ const asignarclave= async  (datos) => {
+    console.log(datos)
+     const {data } =await axios.post(baseUrl+'asignarclave',datos)
+        alert(data)
+     return data 
+ } 
+
+export default {agregariccgral,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado};

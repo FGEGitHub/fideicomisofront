@@ -176,7 +176,7 @@ export default function SelectTextFields(props) {
                 {
                 cbus.map((option) => (
                   <MenuItem key={option.id} value={option.lazo}>
-                    {option.numero}
+                   {option.lazo}-  {option.numero}
                   </MenuItem>
                 ))}
               </TextField> 
@@ -237,27 +237,7 @@ export default function SelectTextFields(props) {
               >
 
               </Box>
-              <TextField component="form"
-                sx={{
-                  '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
-
-                id="outlined-select-currency"
-                select
-                label="CBU"
-                value={currency}
-                name="cbu"
-                onChange={handleChange}
-                helperText="Por favor ingrese su CBU"
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+             
 
               <Box sx={{ '& > :not(style)': { m: 1 } }}>
                 <TextField

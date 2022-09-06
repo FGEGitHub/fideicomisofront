@@ -35,14 +35,13 @@ const registro = async (datos) => {
 
 
    // const data = await axios.post('http://localhost:4000/signupp', datos)
-     const data = await axios.post(baseUrl+'signupp', datos)
+     const {data} = await axios.post(baseUrl+'signupp', datos)
 
-
+        alert(data)
    
 
  
 
-     return data.data
 
       
  }
