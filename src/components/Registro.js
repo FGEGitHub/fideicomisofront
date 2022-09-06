@@ -124,12 +124,12 @@ export default function Ingresos() {
             sx={{
               mx: 3, width: 700
 								}}
-                error
             autoFocus
             required
             margin="normal"
             size="small"
             id="name"
+            onChange={handleChange}
             type= "password"
             label="Contraseña"
             name="password"
