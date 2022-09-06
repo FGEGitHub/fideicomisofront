@@ -41,7 +41,7 @@ const onDrop = useCallback((files, acceptedFiles) => {
        
    
       servicioLegajo.subirlegajode(formData)
-        window.location.reload(true);
+   
      
 
 /*axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'
@@ -64,7 +64,7 @@ const onDrop = useCallback((files, acceptedFiles) => {
 const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'document/*',
+    accept: 'image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf',
 
   });
   const acceptedFileItems = acceptedFiles.map(file => (
