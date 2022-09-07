@@ -15,7 +15,7 @@ const AddDatos = (props) => {
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
   
-    formData.append('datos', [props.cuil_cuit,'DJ Datos Personales']);
+    formData.append('datos', [props.cuil_cuit,'Dj Datospers']);
    
      servicioLegajo.subirlegajo1(formData)
    
