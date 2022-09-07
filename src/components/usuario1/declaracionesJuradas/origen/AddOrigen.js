@@ -16,7 +16,7 @@ const AddOrigen = (props) => {
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
   
-    formData.append('datos', [props.cuil_cuit,'DJ Origen de fondos']);
+    formData.append('datos', [props.cuil_cuit,'Dj OrigenFondos']);
    
      servicioLegajo.subirlegajo1(formData)
    
