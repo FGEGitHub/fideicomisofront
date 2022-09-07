@@ -29,14 +29,21 @@ export default function Legajos() {
   const [barrio, setBarrio] = useState(
     { barrio: "La Tosquera" });
   const [datos, setDatos] = useState(null);
+  const [zonas, setZonass] = useState(null);
   const [historial, setHistorial] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
 
     buscar()
-
+    TraerZonas()
   }, [])
 
+  const TraerZonas = async () => {
+
+    const datoss = await servicioRelevamiento.zonas()
+    setZonass()
+
+  };
   const handleChange = (e) => {
 
     setBarrio({ ...barrio, [e.target.name]: e.target.value })

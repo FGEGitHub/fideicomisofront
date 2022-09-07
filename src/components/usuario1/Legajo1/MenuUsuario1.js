@@ -52,9 +52,9 @@ export default function MenuUsuario1({children}) {
       path: '/usuario/cbu-declarado'
     },
     {
-      text: 'Mensajes',
+      text: 'constancias',
       icon: <LocalPostOfficeIcon color="primary" />,
-      path: '/usuario/mensajes'
+      path: '/usuario/constancias'
     },
     {
       text: 'Contacto',

@@ -120,5 +120,14 @@ const cargarcbu = async (formdata) => {
 
 }
 
+const constancias= async  (cuil_cuit) => {
+  console.log(cuil_cuit)
+  const data = await axios.get(baseUrl+'constancias/'+cuil_cuit)
+           
+console.log(data.data)
 
-export default {cantidadd,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+ 
+ 
+return data.data
+} 
+export default {cantidadd,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
