@@ -11,7 +11,7 @@ const buscar = async (barrio) => {
 
     const data = await axios.post(baseUrl + 'datos', barrio)
 
-    console.log(data)
+ 
     return data.data
 
 }
@@ -26,7 +26,15 @@ const cargar = async (carga) => {
     return data.data
 
 }
+const zonas = async () => {
 
+
+    const {data} = await axios.get(baseUrl + 'zonas')
+console.log(data)
+
+    return data.data
+
+}
 const nuevazona = async (zona) => {
 
 
@@ -48,4 +56,4 @@ const borrar = async (zona) => {
 
 
 
-export default { buscar, cargar, borrar,nuevazona }
+export default { buscar, cargar,zonas,borrar,nuevazona }

@@ -104,8 +104,7 @@ console.log('before')
     formData.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo]);///// aca en forma de array se envian datos del dormulario
 
     servicioUsuario1.cargarcbu(formData)
-    console.log('after')
-    window.location.reload(true);
+   
 
 
 
@@ -126,19 +125,8 @@ console.log('before')
 
   const enviar = () => {
     window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
+ 
 
-
-
-
-
-
-
-
-    servicioUsuario1.subirlegajode(formdata)
-    window.location.reload(true);
   }
   return (
 
