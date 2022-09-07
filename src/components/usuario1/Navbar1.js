@@ -14,13 +14,13 @@ import {
 import DrawerNav from "../DrawerNav";
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
-
+import  servicionotificaciones from '../../services/notificaciones'
 
 
 const Navbar = (props) => {
   const usuario  = useUser().userContext
 
-  const [notificacioness, setNotificacioness] = useState(null);
+  const [notificacioness, setNotificacioness] = useState();
   const [user, setUser] = useState(null)
   const [value, setValue] = useState();
   const theme = useTheme();
@@ -38,10 +38,21 @@ const Navbar = (props) => {
     cantidadnoti()
 }, [])
 const cantidadnoti = async () => {
-        
-  //const notis = await servicioPagos.cantidadpendientes()
-
-  setNotificacioness(2)
+  try {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const usuario = JSON.parse(loggedUserJSON)
+    //  console.log(usuario.cuil_cuit)
+      const notis = await servicionotificaciones.cantidadpendientes(usuario.cuil_cuit)
+      console.log(notis)
+      setNotificacioness(notis)
+   
+    }
+   
+} catch (error) {
+    
+}
+  //
 }
   const handleClick = () => {
     navigate("/login");
@@ -108,7 +119,7 @@ const cantidadnoti = async () => {
               </Button>
               <Button onClick={notificaciones} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Notificaciones" />
-                <Badge badgeContent={notificaciones} color="error">
+                <Badge badgeContent={notificacioness} color="error">
           <MailIcon color="primary" />
         </Badge>
               </Button>

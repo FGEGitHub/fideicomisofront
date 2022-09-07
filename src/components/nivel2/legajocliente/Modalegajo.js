@@ -79,6 +79,9 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
     const enviar = () => {
         
 
+   //  
+   window.location.reload(true)
+
 
     }
 

@@ -7,7 +7,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 import servicioLegajos from '../../../services/legajos'
 
 
-const SubirLegajo = () => {
+const SubirLegajo = (props) => {
   
     const [fileUpload, setFileUpload] = useState(null);
 
@@ -15,7 +15,7 @@ const SubirLegajo = () => {
         const formData = new FormData();
         setFileUpload(acceptedFiles);
         formData.append('file', files[0]);
-
+        formData.append('datos', [props.cuil_cuit,'Dni']);
         servicioLegajos.subirlegajode(formData)
           
    
@@ -25,7 +25,7 @@ const SubirLegajo = () => {
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
         onDrop,
         multiple: false,
-        accept: 'document/*',
+        accept: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
     
       });
       const acceptedFileItems = acceptedFiles.map(file => (

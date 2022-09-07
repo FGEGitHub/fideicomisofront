@@ -81,6 +81,11 @@ const TablaNotificaciones = (props) => {
            
         },
         {
+            name: "asunto",
+            label:"asunto",
+           
+        },
+        {
             name: "Ver/Contestar",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
