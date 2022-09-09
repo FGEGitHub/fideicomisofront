@@ -62,6 +62,9 @@ export default function Ingresos() {
             Ingrese Datos del Nuevo Cliente
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
+          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                         Nombre
+                        </InputLabel>
           <TextField
             autoFocus
             margin="dense"
@@ -72,6 +75,22 @@ export default function Ingresos() {
             fullWidth
             variant="standard"
           />
+            <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                         Razon
+                        </InputLabel>
+                        <NativeSelect
+                            defaultValue={30}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'zona',
+                                id: 'uncontrolled-native',
+                               
+                            }}
+                        >   <option  value={'Empresa'}>Elegir</option>
+                            <option   value={'Empresa'}>Empresa</option>
+                            <option  value={'Persona'}>Persona</option>
+                         
+                        </NativeSelect>    
             <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                           Tipo DNI
                         </InputLabel>
@@ -88,6 +107,9 @@ export default function Ingresos() {
                             <option  value={'C.U.I.T.'}>CUIT</option>
                          
                         </NativeSelect> 
+                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                         Numero
+                        </InputLabel>
                         <TextField
             autoFocus
             margin="dense"
@@ -97,23 +119,9 @@ export default function Ingresos() {
             onChange={handleChange}
             fullWidth
             variant="standard"
+            maxRows="13"
           />
-                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                         Razon
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'zona',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                        >   <option  value={'Empresa'}>Elegir</option>
-                            <option   value={'Empresa'}>Empresa</option>
-                            <option  value={'Persona'}>Persona</option>
-                         
-                        </NativeSelect>                 
+                                   
               <TextField
             autoFocus
             margin="dense"

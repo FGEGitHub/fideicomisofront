@@ -7,16 +7,23 @@ import AddAfip from "./addAfip/AddAfip";
 import AddDomicilio from "./addDomicilio/AddDomicilio";
 import AddEstatuto from "./addEstatuto/AddEstatuto";
 import AddActa from "./addActa/AddActa";
+import DjjDatosPerso from "../declaracionesJuradas/datosPersonales/AddDatos";
+import DjjCalidadPep from "../declaracionesJuradas/calidadDePersonas/AddPersonas";
+import DjjOrigen from "../declaracionesJuradas/origen/AddOrigen";
 
 
 const SubirLegajo = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [steps, setSteps] = useState([
-        {label: 'Foto de perfil', completed:false},
+        {label: 'Fotocopia Dni', completed:false},
         {label: 'Constancia de AFIP', completed:false},
-        {label: 'Estatuto Social', completed:false},
-        {label: 'Acta del organo decisorio designado', completed:false},
         {label: 'Acreditacion de Domicilio', completed:false},
+        {label: 'DJJ Datos Personales', completed:false},
+        {label: 'DJJ Calidad de Persona(pep)', completed:false},
+        {label: 'DJJ Origen de fondos', completed:false},
+ 
+     
+   
     ]);
 
     const [user, setUser] = useState([''])
@@ -61,10 +68,18 @@ const SubirLegajo = () => {
                   />,
                     2: <AddEstatuto 
                     cuil_cuit = {user.cuil_cuit }/>,
-                    3: <AddActa
-                    cuil_cuit = {user.cuil_cuit } />,
-                    4: <AddDomicilio 
+                    3: <AddDomicilio 
                     cuil_cuit = {user.cuil_cuit }/>,
+                    4: <DjjDatosPerso
+                    cuil_cuit = {user.cuil_cuit } />,
+                   
+                    5: <DjjCalidadPep 
+                    cuil_cuit = {user.cuil_cuit }/>,
+                    6: <   DjjOrigen 
+                    cuil_cuit = {user.cuil_cuit }/>,
+
+                 
+               
 
                 }[activeStep]}
             </Box>
