@@ -24,13 +24,73 @@ import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import ContactsIcon from '@mui/icons-material/Contacts';
 //import StepperIngresosDeclarados from '../ingresosDeclarados/StepperIngresosDeclarados';
 import { useNavigate } from 'react-router-dom';
-
+import { useState, useEffect} from "react";
 const drawerWidth = 240;
 
 export default function MenuUsuario1({children}) {
-  
-  
-  const menuItems = [
+  const [empresa, setEmpresa] = useState(false);
+  const [persona, setPersona] = useState(false);
+  const [cargado, setCargado] = useState(false);
+  useEffect(() => {
+
+    ver()
+
+}, [])
+
+
+const ver = async (index) => {
+      
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+ 
+    const userContext = JSON.parse(loggedUserJSON)
+   console.log(userContext)
+   if (userContext.razon == 'Empresa') {
+    setEmpresa(true)
+   
+  } else {setPersona(true)}
+  setCargado(true)
+
+};
+  const menuItemsE = [
+    {
+      text: 'Legajo',
+      icon: <FilePresentIcon color="primary" />,
+      path: '/usuario/legajos'
+    },
+    { 
+      text: 'Declaraciones Juradas', 
+      icon: <InsertDriveFileIcon color="primary" />, 
+      path: '/usuario/declaracionesjuradas' 
+    },
+    { 
+      text: 'Ingresos Declarados',
+      icon: <PriceCheckIcon color="primary" />, 
+      path: '/usuario/ingresosdeclarados' 
+    },
+
+       {
+      text: 'Datos de Empresa ',
+      icon: <AccountBalanceIcon color="primary" />,
+      path: '/usuario/cbu-declarado'
+    },
+   
+    {
+      text: 'CBU Declarado',
+      icon: <AccountBalanceIcon color="primary" />,
+      path: '/usuario/cbu-declarado'
+    },
+    {
+      text: 'constancias',
+      icon: <LocalPostOfficeIcon color="primary" />,
+      path: '/usuario/constancias'
+    },
+    {
+      text: 'Contacto',
+      icon: <ContactsIcon color="primary" />,
+      path: '/usuario/contacto'
+    },
+  ];
+  const menuItemsP = [
     { 
       text: 'Declaraciones Juradas', 
       icon: <InsertDriveFileIcon color="primary" />, 
@@ -46,6 +106,12 @@ export default function MenuUsuario1({children}) {
       icon: <FilePresentIcon color="primary" />,
       path: '/usuario/legajos'
     },
+       {
+      text: 'Datos de Persona ',
+      icon: <AccountBalanceIcon color="primary" />,
+      path: '/usuario/cbu-declarado'
+    },
+   
     {
       text: 'CBU Declarado',
       icon: <AccountBalanceIcon color="primary" />,
@@ -87,8 +153,10 @@ export default function MenuUsuario1({children}) {
         <Toolbar />
         <Toolbar />
         <Divider />
-        <List>
-        {menuItems.map((item) => (
+        <List>¨
+        {cargado ?<div>
+        {empresa ? <div>
+          {menuItemsE.map((item) => (
             <ListItem
               button 
               key={item.text}
@@ -98,6 +166,24 @@ export default function MenuUsuario1({children}) {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
+        </div> :
+         <div>
+          {menuItemsP.map((item) => (
+            <ListItem
+              button 
+              key={item.text}
+              onClick={() => navigate(item.path)}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+
+
+        </div> }</div> :<div></div> }
+
+
+ 
         </List>
         
         <Divider />
