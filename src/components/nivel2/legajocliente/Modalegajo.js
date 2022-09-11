@@ -139,6 +139,11 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         <option value={'Dj Datospers'}>DJ Datos Personales</option>
                         <option value={'Dj CalidadPerso'}>DJ Calidad de Persona</option>
                         <option value={'Dj OrigenFondos'}>DJ Origen de fondos</option>
+                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
+                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
+                        
+
+                        
 
 
                     </NativeSelect>

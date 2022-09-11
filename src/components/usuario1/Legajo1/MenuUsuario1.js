@@ -10,10 +10,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import GroupIcon from '@mui/icons-material/Group';
-import SearchIcon from '@mui/icons-material/Search';
-import NfcIcon from '@mui/icons-material/Nfc';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
+import BusinessIcon from '@mui/icons-material/Business';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import SubirLegajo from './SubirLegajo';
@@ -57,21 +54,11 @@ const ver = async (index) => {
       icon: <FilePresentIcon color="primary" />,
       path: '/usuario/legajos'
     },
-    { 
-      text: 'Declaraciones Juradas', 
-      icon: <InsertDriveFileIcon color="primary" />, 
-      path: '/usuario/declaracionesjuradas' 
-    },
-    { 
-      text: 'Ingresos Declarados',
-      icon: <PriceCheckIcon color="primary" />, 
-      path: '/usuario/ingresosdeclarados' 
-    },
 
        {
       text: 'Datos de Empresa ',
-      icon: <AccountBalanceIcon color="primary" />,
-      path: '/usuario/cbu-declarado'
+      icon: <BusinessIcon color="primary" />,
+      path: '/usuario/datosadicionales'
     },
    
     {
@@ -91,26 +78,12 @@ const ver = async (index) => {
     },
   ];
   const menuItemsP = [
-    { 
-      text: 'Declaraciones Juradas', 
-      icon: <InsertDriveFileIcon color="primary" />, 
-      path: '/usuario/declaracionesjuradas' 
-    },
-    { 
-      text: 'Ingresos Declarados',
-      icon: <PriceCheckIcon color="primary" />, 
-      path: '/usuario/ingresosdeclarados' 
-    },
     {
-      text: 'Datos de la Sociedad',
+      text: 'Legajo',
       icon: <FilePresentIcon color="primary" />,
       path: '/usuario/legajos'
     },
-       {
-      text: 'Datos de Persona ',
-      icon: <AccountBalanceIcon color="primary" />,
-      path: '/usuario/cbu-declarado'
-    },
+ 
    
     {
       text: 'CBU Declarado',

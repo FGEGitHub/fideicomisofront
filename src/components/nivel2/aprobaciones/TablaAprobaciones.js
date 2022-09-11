@@ -111,6 +111,16 @@ const TablaAprobaciones = () => {
             actions: { onClick: (event, rowData) => alert(rowData) }
         },
         {
+            name: "fecha",
+            label: "fecha",
+
+        },
+        {
+            name: "fecha2",
+            label: "fecha2",
+
+        },
+        {
             name: "Descarga",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
