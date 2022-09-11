@@ -6,7 +6,7 @@ import Banner from '../../../components/usuario1/Banner'
 import Cards from '../../../components/usuario1/Cards'
 import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
-import Notificaciones from '../../../components/usuario1/Notificaciones'
+
 import  useUser from '../../../hooks/useUser'
 import { Divider, Toolbar } from '@mui/material';
 import NotificacionesFlotantes from '../../..//components/usuario1/NotificacionesFlotantes'
@@ -26,8 +26,7 @@ export default function MenuUsuario1() {
 
                 <Navbar /> 
                 <br/><br/><br/><br/><br/>
-                <Notificaciones 
-                    />  
+           
                    
                 <Banner />
                 <Divider variant="middle" />

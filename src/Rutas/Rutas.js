@@ -30,6 +30,7 @@ import SubirPdf from "../Paginas/usuario1/Subirpdf"
 import CBU from "../Paginas/usuario1/SubirCbu"
 import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 import Constancias from "../Paginas/usuario1/Constancias"
+import DatosEmpresa from '../Paginas/usuario1/DatosEmpresa'
 
 
 import Transferencias from '../Paginas/usuario1/Transferencias';
@@ -86,6 +87,10 @@ const Rutas = [
 	{ path: '/usuario/cbu-declarado', element: < CBU /> },
 	{ path: '/usuario/asociarcbu', element: < AsociarCBU /> },
 	{ path: '/usuario/constancias', element: < Constancias /> },
+	{ path: '/usuario/datosadicionales', element: < DatosEmpresa /> },
+
+
+	
 	
 /* 	{ : '/usuario2/clientess', render={()=>{ return user?  <Clientes /> : <Clientes />}}  }, */
 

@@ -2,25 +2,25 @@ import { StepButton, Stepper, Step, Stack, Button, Box } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import { useState, useEffect} from "react";
-import AddFoto from "./addLegajo/AddFoto";
-import AddAfip from "./addAfip/AddAfip";
-import AddDomicilio from "./addDomicilio/AddDomicilio";
-
-import DjjDatosPerso from "../declaracionesJuradas/datosPersonales/AddDatos";
-import DjjCalidadPep from "../declaracionesJuradas/calidadDePersonas/AddPersonas";
-import DjjOrigen from "../declaracionesJuradas/origen/AddOrigen";
-import AcreditacionIngresos from "./acreditacionIngresos/AcreditacionIngresos";
+import UltimosBal from "../../ingresosDeclarados/ultimosBalances/AddBalances";
+import DjIva from "../../ingresosDeclarados/ultimasDeclaraciones/AddDeclaraciones";
+import PagosPrev from "../../ingresosDeclarados/pagosPrevisionales/AddPrevisionales";
+import AddEstatuto from "../addEstatuto/AddEstatuto";
+import AddActa from "../addActa/AddActa";
+import ReferenciasComerciales from "../referenciascomerciales/ReferenciasComerciale";
 
 
-const SubirLegajo = () => {
+
+const MenuDatosEmpresa = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [steps, setSteps] = useState([
-        {label: 'Fotocopia Dni', completed:false},
-        {label: 'Constancia de AFIP', completed:false},
-        {label: 'Acreditacion de Domicilio', completed:false},
-        {label: 'DJJ Datos Personales', completed:false},
-        {label: 'DJJ Calidad de Persona(pep)', completed:false},
-        {label: 'DJJ Origen de fondos', completed:false},
+        {label: 'Ultimos Balances', completed:false},
+        {label: 'DJ IVA', completed:false},
+        {label: 'Pagos Previsionales', completed:false},
+        {label: 'Estatuto Social', completed:false},
+        {label: 'Acta del organo decisorio', completed:false},
+        {label: 'Referencias comerciales', completed:false},
+       
  
      
    
@@ -34,24 +34,8 @@ const SubirLegajo = () => {
         const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
         
         setUser(preba)
-        if (preba.razon == 'Persona'){
-            setSteps([
-                {label: 'Fotocopia Dni', completed:false},
-                {label: 'Constancia de AFIP', completed:false},
-                {label: 'Acreditacion de Domicilio', completed:false},
-                {label: 'DJJ Datos Personales', completed:false},
-                {label: 'DJJ Calidad de Persona(pep)', completed:false},
-                {label: 'DJJ Origen de fondos', completed:false},
-                {label: 'Acreditacion de ingresos', completed:false},
-             
-           
-            ])
-        }
+    
     }, [])
-    
-    
-    
-
     const checkDisabled = () =>{
         if (activeStep < steps.leght -1) return false
         
@@ -77,25 +61,21 @@ const SubirLegajo = () => {
             </Stepper>
             <Box>
                 {{
-                    0: <AddFoto 
+                    0: <UltimosBal 
                     cuil_cuit = {user.cuil_cuit }/>,
-                    1: <AddAfip
+                    1: <DjIva
+                    cuil_cuit = {user.cuil_cuit }
+                  />,
+                    2: <PagosPrev 
                     cuil_cuit = {user.cuil_cuit }/>,
-                
-                    2: <AddDomicilio 
+                    3: <AddEstatuto 
                     cuil_cuit = {user.cuil_cuit }/>,
-                    3: <DjjDatosPerso
+                    4: <AddActa
+                    cuil_cuit = {user.cuil_cuit } />,
+                    5: <ReferenciasComerciales
                     cuil_cuit = {user.cuil_cuit } />,
                    
-                    4: <DjjCalidadPep 
-                    cuil_cuit = {user.cuil_cuit }/>,
-                   5: <   DjjOrigen 
-                    cuil_cuit = {user.cuil_cuit }/>,
-                   6: <   AcreditacionIngresos 
-                    cuil_cuit = {user.cuil_cuit }/>,
-
-
-                 
+                    
                
 
                 }[activeStep]}
@@ -125,4 +105,4 @@ const SubirLegajo = () => {
     );
 };
 
-export default SubirLegajo;
+export default MenuDatosEmpresa;
