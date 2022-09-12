@@ -130,4 +130,21 @@ console.log(data.data)
  
 return data.data
 } 
-export default {cantidadd,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+
+const traercompleto= async  (cuil_cuit) => {
+  console.log(cuil_cuit)
+  const pos = {
+    cuil_cuit
+  }
+  const {data} = await axios.post(baseUrl+'completolegajos',pos)
+           
+console.log(data)
+
+ 
+ 
+return data
+} 
+
+
+
+export default {cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};

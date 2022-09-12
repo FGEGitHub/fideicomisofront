@@ -115,11 +115,7 @@ const TablaAprobaciones = () => {
             label: "fecha",
 
         },
-        {
-            name: "fecha2",
-            label: "fecha2",
-
-        },
+      
         {
             name: "Descarga",
             options: {
