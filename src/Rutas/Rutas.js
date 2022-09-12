@@ -46,6 +46,11 @@ import Lotes3 from '../Paginas/Nivel3/lotes';
 import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 import AgregarICC from '../Paginas/Nivel3/AgregarIcc';
 import Declaraciones from '../Paginas/Nivel3/Declaraciones';
+import Agregarusuario from '../Paginas/Nivel3/AgregarUsuario';
+
+
+
+
 
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
@@ -121,6 +126,7 @@ const Rutas = [
 	{ path: '/nivel3/lotes', element: <Lotes3 /> },
 	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
 	{ path: '/nivel3/declaraciones', element: <Declaraciones /> },
+	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
 
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },

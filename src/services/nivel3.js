@@ -43,5 +43,15 @@ const borrarhistorial= async  () => {
         alert(data)
      return data 
  } 
-
-export default {agregariccgral,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado};
+ const registronivel3 = async (datos) => {
+    console.log(datos)
+  
+ 
+      const {data} = await axios.post(baseUrl+'signupp', datos)
+ 
+         alert(data)
+    
+ 
+       
+  }
+export default {agregariccgral,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

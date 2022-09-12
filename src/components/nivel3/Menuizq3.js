@@ -84,9 +84,9 @@ export default function MenuIzq2 ({children}) {
             path: '/nivel3/declaraciones'
           },
           {
-            text: 'Informes',
+            text: 'Agregar usuario',
             icon: <Looks3Icon color="primary" />,
-            path: '/nivel3/aprobaciones'
+            path: '/nivel3/agregarusuario'
           },
           {
             text: 'Pagos Inusuales Mensuales',
