@@ -24,6 +24,7 @@ export default function AsignarLoreACliente() {
         /////////asignar lote 0 caso que no se seleccione
     })
     const [puede, setPuede] = useState(true)
+    const [parque, setParque] = useState(false)
     
 
     
@@ -46,8 +47,13 @@ export default function AsignarLoreACliente() {
 
 
     const handleChange = (e) => {
-        console.log(lotes)
         setLotes({ ...lotes, [e.target.name]: e.target.value })
+        if(lotes.zona==='PIT'){
+            setParque(true)
+        }else{ 
+            setParque(false)
+        }
+        console.log(lotes)
     }
     return (
         
@@ -121,17 +127,9 @@ export default function AsignarLoreACliente() {
                             onChange={handleChange}
                             fullWidth
                         />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Lote"
-                            name="lote"
-                            onChange={handleChange}
-                            fullWidth
-                            variant="filled"
-                        />
-                        <TextField
+                       
+                        {parque ? <div>
+                            <TextField
                             autoFocus
                             margin="dense"
                             type={'number'}
@@ -143,6 +141,17 @@ export default function AsignarLoreACliente() {
                             variant="filled"
                         />
 
+                        </div> :<div> <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Lote"
+                            name="lote"
+                            onChange={handleChange}
+                            fullWidth
+                            variant="filled"
+                        /></div> }
+                       
                          
                       
                       

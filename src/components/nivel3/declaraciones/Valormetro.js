@@ -8,7 +8,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import CheckIcon from '@mui/icons-material/Check';
 import TextField from '@mui/material/TextField'
-
+import NativeSelect from '@mui/material/NativeSelect';
+import InputLabel from '@mui/material/InputLabel';
 
 
 
@@ -16,11 +17,12 @@ import TextField from '@mui/material/TextField'
 
 const Valormetro = () => {
     const [valor, setValor] = useState({
-   
+      zona:'PIT'
       })
    
-      const handleChange = (e) =>
+      const handleChange = (e) =>{
       setValor({  ...valor, [e.target.name]: e.target.value })
+        console.log(valor)}
 
 
 
@@ -49,7 +51,24 @@ return (
 
     <div>
        
-        <br/>   <br/>   <br/>   <br/>   <br/>
+        <br/>   <br/>   
+        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                           Mes
+                        </InputLabel>
+                        <NativeSelect
+                            defaultValue={30}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'zona',
+                                id: 'uncontrolled-native',
+                               
+                            }}
+                        >   <option  value={'PIT'}>PIT</option>
+                            <option   value={'IC3'}>Resto</option>
+                          
+                      
+                         
+                        </NativeSelect>    <br/>
       Valor Metro cuadrado
         <TextField
             autoFocus

@@ -154,6 +154,43 @@ const FichaAxios = (props) => {
                 />
 
                 <TextField
+                  label="ID para registro"
+                  id="ID para registro"
+                  defaultValue=""
+                  value={client.id}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: !editMode,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <HomeIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                >
+                  
+                </TextField>
+              </Box>
+              <Box>
+                <TextField
+                  label="Razon"
+                  id="Razon"
+                  defaultValue=""
+                  value={client.razon}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: !editMode,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LocalPhoneIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+
+                <TextField
                   label="Ingresos Declarados"
                   id="dirección"
                   defaultValue=""
@@ -172,7 +209,6 @@ const FichaAxios = (props) => {
                   
                 </TextField>
               </Box>
-
               
 
               <Box>

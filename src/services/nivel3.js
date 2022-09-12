@@ -54,4 +54,21 @@ const borrarhistorial= async  () => {
  
        
   }
-export default {agregariccgral,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+  const traerUsuarios = async () => {
+    
+  
+ 
+      const {data} = await axios.get(baseUrl+'traerusuarios')
+      console.log(data)
+
+      return data
+ 
+       
+      
+
+    
+ 
+       
+  }
+  
+export default {agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
