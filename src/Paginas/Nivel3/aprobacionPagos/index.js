@@ -16,14 +16,31 @@ const darkTheme = createTheme({
 const drawerWidth = 240;
 
 export default function Aprobacion() {
+
   const navigate = useNavigate();
+  const [logueado, setLogueado] = useState(false) 
 
 
+useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+  
+  if (loggedUserJSON) {
+    const user = JSON.parse(loggedUserJSON)
+    if (user.nivel != 3){
+      window.localStorage.removeItem('loggedNoteAppUser')
+   navigate('/login')
 
-  useEffect(() => {
+    }else{
 
-
-  }, [])
+      setLogueado(true)
+    }
+  
+    //servicioUsuario.setToken(user.token)  
+   
+    
+  }
+ 
+}, [])
 
   
 
@@ -33,11 +50,13 @@ export default function Aprobacion() {
   
   
   return (
+    <div> 
+  { logueado ? <div>
     <ThemeProvider theme={darkTheme}>
  <BarraLAteral>
 <TablaAprobacionesPagos/>
  </BarraLAteral>
     </ThemeProvider>
-
+ </div>   :<div></div> } </div>
   );
 }

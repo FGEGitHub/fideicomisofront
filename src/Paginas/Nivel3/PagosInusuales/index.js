@@ -29,29 +29,37 @@ export default function MenuUsuario2() {
 
   const nombre  = useUser()
 
-  useEffect(() => {
+  const [logueado, setLogueado] = useState(false) 
 
 
-//console.log(cantidad)
+useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+  
+  if (loggedUserJSON) {
+    const user = JSON.parse(loggedUserJSON)
+    if (user.nivel != 3){
+      window.localStorage.removeItem('loggedNoteAppUser')
+   navigate('/login')
 
+    }else{
 
-
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token) 
-
-      
-    } 
-
-
-  }, [])
+      setLogueado(true)
+    }
+  
+    //servicioUsuario.setToken(user.token)  
+   
+    
+  }
+ 
+}, [])
 
   
 
 
   return (
+
+    <div> 
+  { logueado ? <div> 
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
    
@@ -60,5 +68,7 @@ export default function MenuUsuario2() {
 
  </BarraLAteral>
   </ThemeProvider>
+  
+  </div>   :<div></div> } </div>
   );
 }

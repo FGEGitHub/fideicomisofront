@@ -33,21 +33,26 @@ export default function MenuUsuario2() {
 
 
   })
+  const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
-
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token)
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
 
+      }else{
 
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
+      
     }
-    /*  if (user){
-       navigate('/login')
-     } */
-
-    //
+   
   }, [])
 
   ///
@@ -95,8 +100,8 @@ export default function MenuUsuario2() {
 
 
   return (
-
-
+<div>
+    { logueado ?<div>
     <MenuIzq2>
       <br /> <br /> <br />
       <form onSubmit={agregarCuotas}>
@@ -255,7 +260,8 @@ export default function MenuUsuario2() {
 
     </MenuIzq2>
 
-
+    </div>  : <div></div> }
+    </div> 
   )
 
 

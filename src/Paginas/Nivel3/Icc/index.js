@@ -8,7 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
-
+import { useEffect, useState } from "react";
 
 
 const darkTheme = createTheme({
@@ -21,9 +21,35 @@ const darkTheme = createTheme({
 
 export default function Legajos() {
   const navigate = useNavigate();
+  const [logueado, setLogueado] = useState(false) 
+
+
+useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+  
+  if (loggedUserJSON) {
+    const user = JSON.parse(loggedUserJSON)
+    if (user.nivel != 3){
+      window.localStorage.removeItem('loggedNoteAppUser')
+   navigate('/login')
+
+    }else{
+
+      setLogueado(true)
+    }
+  
+    //servicioUsuario.setToken(user.token)  
+   
+    
+  }
+ 
+}, [])
   
 
     return (
+
+      <div> 
+  { logueado ? <div> 
         <ThemeProvider /* theme={darkTheme} */>
             <CssBaseline />
        <BarraLAteral>
@@ -35,7 +61,7 @@ export default function Legajos() {
       </BarraLAteral>
         </ThemeProvider>
         
-    
+    </div>   :<div></div> } </div>
     );
 
 }
