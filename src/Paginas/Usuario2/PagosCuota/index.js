@@ -23,20 +23,27 @@ export default function DetalleCliente() {
     ingreso: "",
    
   });
-
+  const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
-
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token)
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
 
+      }else{
 
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
+      
     }
-
+   
   }, [])
-
 
   
 
@@ -44,10 +51,14 @@ export default function DetalleCliente() {
   ////////
 
   return (
+
+    <div> 
+  { logueado ? <div> 
     <BarraLAteral>
 
       {<DetallesPagos
        />}
  </BarraLAteral>
+ </div>   :<div></div> } </div>
   );
 }

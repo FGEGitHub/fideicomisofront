@@ -73,17 +73,11 @@ const Navbar = (props) => {
                 value={value}
                 onChange={(e, value) => setValue(value)}
               >
-               {usuario &&  <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="Outlined">
+               {usuario &&  <Button  sx={{ marginLeft: "10px" }} variant="Outlined">
                <Tab label="Inicio" />
               </Button>  }
 
-              <Button onClick={irNosotros} sx={{ marginLeft: "10px" }} variant="Outlined">
-                <Tab label="Nosotros" />
-              </Button>
-              <Button onClick={irContacto} sx={{ marginLeft: "10px" }} variant="Outlined">
-                <Tab label="Contacto" />
-                </Button>
-              <Button onClick={irAyuda} sx={{ marginLeft: "10px" }} variant="Outlined">
+              <Button  sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Ayuda" />
               </Button>
               </Tabs>

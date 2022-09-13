@@ -26,29 +26,37 @@ export default function VerCliente() {
 
   const nombre  = useUser()
 
+  const [logueado, setLogueado] = useState(false) 
+
+
   useEffect(() => {
-
-
-//console.log(cantidad)
-
-
-
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token) 
-
+      if (user.nivel != 3){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
+  
+      }else{
+  
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
       
-    } 
-
-
+    }
+   
   }, [])
 
   
 
 
   return (
+<div> 
+  { logueado ? <div>
+
     <ThemeProvider theme={darkTheme}>
    
     <BarraLAteral>
@@ -56,5 +64,7 @@ export default function VerCliente() {
     <TableAxios/>
  </BarraLAteral>
     </ThemeProvider>
+ </div>   :<div></div> } </div>
+
   );
 }

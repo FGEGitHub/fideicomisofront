@@ -18,29 +18,41 @@ export default function Lotes3() {
   const navigate = useNavigate();
   const [nivel, setNivel] = useState(null)
   const [user, setUser] = useState(null)
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-    
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token)  
-      const nivel= user.nivel
-      setNivel(nivel)
-   
-      
-    }
-    if (user){
-      navigate('/login')
-    }
-  }, [])
+  
+  const [logueado, setLogueado] = useState(false) 
 
+
+useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+  
+  if (loggedUserJSON) {
+    const user = JSON.parse(loggedUserJSON)
+    if (user.nivel != 3){
+      window.localStorage.removeItem('loggedNoteAppUser')
+   navigate('/login')
+
+    }else{
+
+      setLogueado(true)
+    }
+  
+    //servicioUsuario.setToken(user.token)  
+   
+    
+  }
+ 
+}, [])
  
   return (
+
+    <div> 
+  { logueado ? <div> 
     <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
     <TableAxios />
  </BarraLAteral>
     </ThemeProvider>
+    
+    </div>   :<div></div> } </div>
   );
 }

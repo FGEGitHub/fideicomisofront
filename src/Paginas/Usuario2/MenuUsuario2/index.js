@@ -14,37 +14,38 @@ export default function MenuUsuario2() {
   const [user, setUser] = useState(null)
   const [] = useState('')
 
-  const nombre  = useUser()
-
+  const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
-
-
-//console.log(cantidad)
-
-
-
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token) 
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
 
+      }else{
+
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
       
-    } else{
-      navigate('/login')
     }
-
-
+   
   }, [])
 
   
 
 
   return (
-   
+    <div> 
+    { logueado ? <div> 
     <BarraLAteral>
        <Nuevo/>
     <TableAxios/>
  </BarraLAteral>
+ </div>   :<div></div> } </div>
   );
 }

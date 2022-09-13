@@ -10,13 +10,26 @@ const drawerWidth = 240;
 
 export default function DetalleCliente() {
   const navigate = useNavigate();
-
-
+  const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
-
-
- 
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
+
+      }else{
+
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
+      
+    }
+   
   }, [])
 
 
@@ -29,9 +42,15 @@ export default function DetalleCliente() {
   ////////
 
   return (
+
+<div> 
+  { logueado ? <div> 
+
     <BarraLAteral>
 <AsignarLoteACliente/>
      
  </BarraLAteral>
+
+ </div>   :<div></div> } </div>
   );
 }

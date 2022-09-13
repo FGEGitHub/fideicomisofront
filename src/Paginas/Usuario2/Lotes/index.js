@@ -10,27 +10,42 @@ export default function Lotes() {
   const navigate = useNavigate();
   const [nivel, setNivel] = useState(null)
   const [user, setUser] = useState(null)
+  const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token)  
-      const nivel= user.nivel
-      setNivel(nivel)
-   
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+     navigate('/login')
+
+      }else{
+
+        setLogueado(true)
+      }
+    
+      //servicioUsuario.setToken(user.token)  
+     
       
     }
-    if (user){
-      navigate('/login')
-    }
+   
   }, [])
 
  
   return (
-    <BarraLAteral>
+    <div>
+    { logueado ? <div>
+
+
+      <BarraLAteral>
     <TableAxios />
  </BarraLAteral>
+    </div> 
+    
+    :<div></div> }
+
+
+ </div>
   );
 }

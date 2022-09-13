@@ -33,10 +33,14 @@ const Navbar = (props) => {
   const hanleLogout = () => {
     /* console.log('click')
      setUser(null)
-     servicioUsuario.setToken(user.token) */
-         navigate('/login')
+     servicioUsuario.setToken(user.token) 
+        //  navigate('/login')
+     */
+   
+      window.location.reload();
      window.localStorage.removeItem('loggedNoteAppUser')
-  //window.location.reload(true);
+   
+
    } 
 
   const inicio = () => {
@@ -70,9 +74,9 @@ const Navbar = (props) => {
                 <Tab label="Contacto" />
                 <Tab label="Ayuda" />
               </Tabs>
-              {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
+              {usuario ?  <div> <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
                 Cerrar Sesión
-              </Button>  }
+              </Button> </div>:<div></div>}
 
 
               {!usuario && <div>    <Button sx={{ marginLeft: "10px" }} variant="contained">
