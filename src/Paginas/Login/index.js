@@ -46,8 +46,24 @@ const Login = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      servicioUsuario.setToken(user.token)
+      switch (user.nivel) {
+        case 1:
+          navigate('/usuario/menu')
+          break;
+        case 2:
+          navigate('/usuario2/clientes')
+          break;
+      
+        case 3:
+          navigate('/nivel3/')
+          break;
+          case 4:
+            navigate('/legales/menu')
+          break;
+        default:
+          
+          break;
+      }
     }
   }, [])
 

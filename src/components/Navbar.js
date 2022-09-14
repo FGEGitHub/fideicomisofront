@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../Assets/marcas.png";
 import  useUser from '../hooks/useUser'
@@ -12,13 +12,15 @@ import {
   useTheme,
 } from "@mui/material";
 import DrawerNav from "./DrawerNav";
-
+import serviciousuarios from "../services/usuarios"
 
 const Navbar = (props) => {
   const usuario  = useUser().userContext
 
   
   const [user, setUser] = useState(null)
+  const [cargado, setCargado] = useState(false)
+
   const [value, setValue] = useState();
   const theme = useTheme();
 
@@ -27,6 +29,29 @@ const Navbar = (props) => {
                   width: "100px",                  
                   };
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    traer()
+}, [])
+const traer = async () => {
+
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+
+    const user = JSON.parse(loggedUserJSON)
+   
+  const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
+ console.log(notis[0])
+  setUser(notis[0])
+  setCargado(true)
+
+
+  /* if (notificaciones>0) {
+    document.title= 'Santa Catalina ('+notificaciones+')'
+ 
+  }   */
+}
+
   const handleClick = () => {
     navigate("/login");
   };
@@ -70,9 +95,10 @@ const Navbar = (props) => {
                   <Tab label="inicio" />
               </Button>  }
             
-                <Tab label="Nosotros" />
-                <Tab label="Contacto" />
-                <Tab label="Ayuda" />
+                {cargado ? <div> <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="contained">
+                  <Tab label= {`hola ${user.nombre}!`}/>
+              </Button> </div>:<div></div>}
+              
               </Tabs>
               {usuario ?  <div> <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
                 Cerrar Sesión
