@@ -11,17 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import PEP from './DeterminarPep'
 
-const GreenSwitch = styled(Switch)(({ theme }) => ({
-  '& .MuiSwitch-switchBase.Mui-checked': {
-    color: pink[600],
-    '&:hover': {
-      backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
-    },
-  },
-  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-    backgroundColor: pink[600],
-  },
-}));
+
 const DetalleCliente = () => {
    
     let params = useParams()
@@ -63,11 +53,12 @@ const DetalleCliente = () => {
                 /> 
              
                 {expuesta ? <div>
-                  <FormControlLabel disabled control={<Checkbox checked name="checkedE" />} label="Pep" />
+                  <Checkbox label="Es PEP" defaultChecked />
+
                    </div> : 
                    <div>
                    
-                    <FormControlLabel disabled control={<Checkbox name="checkedD" />} label="PEP (No)" />
+                    <FormControlLabel disabled control={<Checkbox name="checkedD" />} label="No es PEP" />
                      </div>}
                 
                </div>

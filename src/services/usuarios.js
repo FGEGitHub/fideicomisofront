@@ -45,5 +45,13 @@ const registro = async (datos) => {
 
       
  }
+ const traerusuario = async (cuil_cuit) => {
+  
+ 
+    // const data = await axios.post('http://localhost:4000/signupp', datos)
+      const {data} = await axios.get(baseUrl+'traerusuario/'+ cuil_cuit)
+return data
+       
+  }
 
-export default { usuarios, setToken,registro }
+export default { usuarios, setToken,registro, traerusuario}
