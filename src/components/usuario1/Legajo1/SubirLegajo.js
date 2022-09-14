@@ -11,6 +11,7 @@ import DjjCalidadPep from "../declaracionesJuradas/calidadDePersonas/AddPersonas
 import DjjOrigen from "../declaracionesJuradas/origen/AddOrigen";
 import AcreditacionIngresos from "./acreditacionIngresos/AcreditacionIngresos";
 import ServicioUsuario1 from "../../../services/usuario1"
+import OtrasConstancias from "./otrasCosntancias/OtrasConstancias";
 
 const SubirLegajo = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -46,7 +47,7 @@ const SubirLegajo = () => {
                 { label: 'DJJ Calidad de Persona(pep)', completed: completoo[4] },
                 { label: 'DJJ Origen de fondos', completed: completoo[5] },
                 { label: 'Acreditacion de ingresos', completed: completoo[6] },
-
+                { label: 'Acreditacion de ingresos', completed: false},
 
             ])
         } else {
@@ -117,6 +118,8 @@ const SubirLegajo = () => {
                     5: <   DjjOrigen
                         cuil_cuit={user.cuil_cuit} />,
                     6: <   AcreditacionIngresos
+                        cuil_cuit={user.cuil_cuit} />,
+                     7: <   OtrasConstancias
                         cuil_cuit={user.cuil_cuit} />,
 
 

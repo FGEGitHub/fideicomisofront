@@ -13,7 +13,14 @@ import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
+
+const drawerWidth = 240;
 
 export default function MenuUsuario2() {
   const navigate = useNavigate();
@@ -48,12 +55,13 @@ useEffect(() => {
    
 <div> 
   { logueado ? <div> 
-   
+    <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
     < Agregar />
     < TablaUsuarios />
-    
- </BarraLAteral>
+   
+ </BarraLAteral> 
+ </ThemeProvider>
  </div>   :<div></div> } </div>
   );
 }

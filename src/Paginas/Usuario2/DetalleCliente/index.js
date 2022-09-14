@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 
 
 import DetalleC from '../../../components/nivel2/detalleclienteIngresos/Detallecliente';
+
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 import servicioUsuario from '../../../services/usuarios'
-import Ingresos from '../../../components/nivel2/detalleclienteIngresos/Ingresos'
+
 
 
 //import {makeStyles} from "@material-ui/core/styles"
@@ -55,7 +56,7 @@ export default function DetalleCliente() {
     <div> 
   { logueado ? <div> 
     <BarraLAteral>
-{<Ingresos/>}
+    
       {<DetalleC />}
  </BarraLAteral>
  </div>   :<div></div> } </div>

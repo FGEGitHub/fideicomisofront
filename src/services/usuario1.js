@@ -145,6 +145,10 @@ console.log(data)
 return data
 } 
 
+const determinarPep = async (formdata) => {
+  console.log(formdata)
+  const { data } = await axios.post(baseUrl + 'determinarPep', formdata)
 
+}
 
-export default {cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+export default {determinarPep,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
