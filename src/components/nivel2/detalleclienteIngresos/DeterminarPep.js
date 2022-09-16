@@ -37,6 +37,8 @@ export default function SelectTextFields(props) {
    const [ultima, setUltima] = useState([''])
    const [establecer, setEstablecer] = useState({
     cuil_cuit:props.cuil_cuit,
+    expuesta:'SI'
+
     })
 
 

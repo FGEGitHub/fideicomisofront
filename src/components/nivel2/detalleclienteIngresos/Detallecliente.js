@@ -4,11 +4,7 @@ import LotesCliente from '../../LotesCliente'
 import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
-import { alpha, styled } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+
 import PEP from './DeterminarPep'
 
 
@@ -53,12 +49,12 @@ const DetalleCliente = () => {
                 /> 
              
                 {expuesta ? <div>
-                  <Checkbox label="Es PEP" defaultChecked />
+                 Persona PEP
 
                    </div> : 
                    <div>
                    
-                    <FormControlLabel disabled control={<Checkbox name="checkedD" />} label="No es PEP" />
+                   No es PEP
                      </div>}
                 
                </div>

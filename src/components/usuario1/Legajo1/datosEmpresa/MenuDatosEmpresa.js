@@ -7,6 +7,7 @@ import DjIva from "../../ingresosDeclarados/ultimasDeclaraciones/AddDeclaracione
 import PagosPrev from "../../ingresosDeclarados/pagosPrevisionales/AddPrevisionales";
 import AddEstatuto from "../addEstatuto/AddEstatuto";
 import AddActa from "../addActa/AddActa";
+import IIBB from "../iibb/IIBB";
 import ReferenciasComerciales from "../referenciascomerciales/ReferenciasComerciale";
 import ServicioUsuario1 from "../../../../services/usuario1"
 
@@ -20,7 +21,7 @@ const MenuDatosEmpresa = () => {
         { label: 'Estatuto Social', completed: false },
         { label: 'Acta del organo decisorio', completed: false },
         { label: 'Referencias comerciales', completed: false },
-
+        { label: 'IIBB', completed: false },
 
 
 
@@ -48,7 +49,7 @@ const MenuDatosEmpresa = () => {
         setUser(preba)
         if (preba.razon == 'Persona') {
             setSteps([
-               
+
 
 
             ])
@@ -60,6 +61,7 @@ const MenuDatosEmpresa = () => {
                 { label: 'Estatuto Social', completed: completoo[9] },
                 { label: 'Acta del organo decisorio', completed: completoo[10] },
                 { label: 'Referencias comerciales', completed: completoo[11] },
+                { label: 'IIBBs', completed: false },
 
 
 
@@ -105,6 +107,8 @@ const MenuDatosEmpresa = () => {
                     4: <AddActa
                         cuil_cuit={user.cuil_cuit} />,
                     5: <ReferenciasComerciales
+                        cuil_cuit={user.cuil_cuit} />,
+                   6: <ReferenciasComerciales
                         cuil_cuit={user.cuil_cuit} />,
 
 

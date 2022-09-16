@@ -19,6 +19,7 @@ export default function FormDialog(props) {
     let cuil_cuit = params.cuil_cuit
     const [open, setOpen] = React.useState(false);
     const [file, setFile] = useState();
+    const [enviarr,setEnviarr] = useState()
     const [completado, setCompletado] = useState(false);
     const [fileUpload, setFileUpload] = useState(null);
     const [legform, setLegform] = useState({
@@ -37,10 +38,10 @@ const onDrop = useCallback((files, acceptedFiles) => {
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
   
-    formData.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
-       
+    
+    setEnviarr(formData)
    
-      servicioLegajo.subirlegajode(formData)
+      
    
      
 
@@ -77,10 +78,12 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
     const enviar = () => {
-        
+      enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
 
+      servicioLegajo.subirlegajode(enviarr)
    //  
-   window.location.reload(true)
+    props.reload()
+    handleClose()
 
 
     }
