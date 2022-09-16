@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom"
 import Habilitar from './ModalHabiulitar'
 import Deshabilitar from './ModalDeshabilitar'
 import Estadisticas from './Estadisticas'
-
+import ModalSeguro from './Modalseguroborrar'
 
 
 const LegajoCliente = (props) => {
@@ -130,16 +130,46 @@ const LegajoCliente = (props) => {
                           // handleEditOpen
                       )
               },
-          }
+          },
+          {
+            name: "Borrar",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRenderer(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
+ 
           
       ]
+
+      function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+    <div>
+            < ModalSeguro
+            id = {products[dataIndex].id}
+            reload={getData}/>
+            
+          
+            </div>
+          </>
+        );
+      }
       //4 - renderizamos la datatable
       return (
           <div>
            
             < Estadisticas
              cuil_cuit = {cuil_cuit}/>
-             < ModalLegajo />
+             < ModalLegajo
+              reload={getData}
+              />
              <Habilitar />
              <Deshabilitar />
          

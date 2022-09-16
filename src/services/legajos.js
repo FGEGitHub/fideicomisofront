@@ -35,5 +35,8 @@ const subirlegajo1 = async ( formData) => {
   
   //  }})
   }
-  
-export default { subirprueba, subirlegajode,subirlegajo1 };
+  const borrar = async ( id ) => {
+    await axios.get(baseUrl +'borrarunlegajo/'+id )
+      
+    }
+export default { subirprueba,borrar, subirlegajode,subirlegajo1 };

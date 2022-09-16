@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { Button } from '@mui/material';
+import { Button,CircularProgress } from '@mui/material';
 import { Paper} from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -30,7 +30,7 @@ const currencies = [
 export default function SelectTextFields(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
-  const [file, setFile] = useState(null);
+  const [enviarr, setEnviarr] = useState();
   const [fileUpload, setFileUpload] = useState(null);
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
@@ -38,6 +38,7 @@ export default function SelectTextFields(props) {
    const [pago, setPago] = useState({
 
     id:props.id,    })
+    const [loading, setLoading] = useState(false)
     const [cbus, setCbus] = useState([''])
 
   
@@ -94,16 +95,13 @@ export default function SelectTextFields(props) {
 
 
     const onDrop = useCallback  ((files, acceptedFiles) => {
+      setLoading(true)
       const formData = new FormData();
       setFileUpload(acceptedFiles);
       formData.append('file', files[0]);
-    
-      formData.append('datos', [pago.cuil_cuit,pago.id,pago.monto]);///// aca en forma de array se envian datos del dormulario
-     
-      servicioUsuario1.pagarnivel1(formData)
-     
-          window.location.reload(true);
-       
+      setEnviarr(formData)
+      setLoading(false)
+      
   
   
       });
@@ -122,20 +120,16 @@ export default function SelectTextFields(props) {
 
   
     const enviar = () => {
-     window.location.reload(true);
-      let formdata = new FormData()
-      console.log(file)
-      formdata.append('image', file)
-  
-  
-  
-  
-  
-  
-      
 
-      servicioUsuario1.subirlegajode(formdata)
-      window.location.reload(true);
+      
+      enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto]);///// aca en forma de array se envian datos del dormulario
+     
+      servicioUsuario1.pagarnivel1(enviarr)
+     
+      
+      
+    
+      //window.location.reload(true);
   }
   return (
 
@@ -281,7 +275,13 @@ export default function SelectTextFields(props) {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        <Button onClick={enviar}>
+        {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : (
+                                "Enviar"
+                            )}
+          </Button>
       </Box>
 
       
