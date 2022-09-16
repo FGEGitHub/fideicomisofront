@@ -3,8 +3,7 @@ import  { useEffect, useState } from "react";
 import TableAxios from '../../../components/nivel2/listadeclientes/Table';
 import Nuevo from '../../../components/nivel2/listadeclientes/ClienteNuevo';
 import { useNavigate } from "react-router-dom";
-import servicioUsuario from '../../../services/usuarios'
-import  useUser from '../../../hooks/useUser'
+
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 
 const drawerWidth = 240;
@@ -14,7 +13,7 @@ export default function MenuUsuario2() {
   const [user, setUser] = useState(null)
   const [] = useState('')
 
-  const [logueado, setLogueado] = useState(false) 
+  const [logueado, setLogueado] = useState(true) 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     
@@ -34,7 +33,7 @@ export default function MenuUsuario2() {
       
     }
    
-  }, [])
+  }, []) 
 
   
 
