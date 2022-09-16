@@ -3,12 +3,12 @@ import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import servicioPagos from '../../../services/pagos'
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from '@mui/icons-material/Search';
 //import overbookingData from "./overbooking";
 import BotonRechazo from './RechazoPagoInusual'
 import BotonAprobado from './AprobacionPagoInusual'
 import CheckIcon from '@mui/icons-material/Check';
+import serviciousuario1 from '../../../services/usuario1'
+import Button from "@mui/material/Button";
 
 const PagosInusuales = () => {
     //configuracion de Hooks
@@ -100,11 +100,52 @@ const getPagosi = async () => {
                     )
             }
         
-        },   
+        },  
+        {
+            name: "Descarga",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                downloadFile(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },    
  
 
     ];
+    async function download(index, rowIndex, data) {
+        const filename = (pagos[index].ubicacion)
+      
+       
+       const link = await serviciousuario1.obtenerurl(filename)
 
+        console.log(link.data)            
+        window.open(link.data)
+  
+     
+    }
+    function downloadFile(index, rowIndex, data) {
+
+        /* const filename = (products[index].key)
+        console.log(filename)
+        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+        console.log(link.data)
+        setAct(true) */
+        return (
+            <>
+                
+                  <Button
+                        onClick={() => download(index)}
+                    >Descargar</Button> 
+    
+    
+            </>
+        );
+    }
 const options = {
 
     /*    rowsPerPage: 10,

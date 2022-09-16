@@ -2,7 +2,7 @@ import * as React from 'react';
 import  { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import servicioUsuario from '../../../services/usuarios'
+
 
 import  useNoti from '../../../hooks/useNoti'
 import  useUser from '../../../hooks/useUser'

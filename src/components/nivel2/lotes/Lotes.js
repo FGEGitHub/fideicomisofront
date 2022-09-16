@@ -65,12 +65,16 @@ const Lotes = () => {
             label: "Parcela",
         },
          {
-            name: "nombre_razon",
-            label: "Nombre/Razon",
+            name: "superficie",
+            label: "superficie",
         },
         {
             name: "estado",
             label: "Estado",
+        },
+        {
+            name: "cuil_cuit",
+            label: "cuil_cuit",
         },
     
       /*   {
@@ -96,7 +100,7 @@ const Lotes = () => {
         <div>
             <MUIDataTable
             
-                title={"Lista de Clientes"}
+                title={"Lista de lotes"}
                 data={clients}
                 columns={columns}
                 actions={[

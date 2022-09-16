@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 
 import AsignarLoteACliente from '../../../components/nivel2/asignarlotecliente/AsignarLoteACliente';
+import Lotes from '../../../components/nivel2/lotes/Lotes';
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 
@@ -48,7 +49,7 @@ export default function DetalleCliente() {
 
     <BarraLAteral>
 <AsignarLoteACliente/>
-     
+<Lotes/>
  </BarraLAteral>
 
  </div>   :<div></div> } </div>
