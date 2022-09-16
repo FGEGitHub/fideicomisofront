@@ -4,7 +4,27 @@ const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
 
 //const  baseURL = 'http://localhost:4000/links/'
 
+const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 
+let config = ''
+if (loggedUserJSON) {
+    const userContext = JSON.parse(loggedUserJSON)
+ 
+
+     config = {
+        headers:{
+            Authorization:`Bearer ${userContext.token}`
+        }
+    }
+
+    
+}else{
+     config = {
+        headers:{
+            Authorization:`Bearer `
+        }
+    }
+}
   
   const datoslegajo= async  (datos) => {
    
@@ -30,11 +50,11 @@ const crear= async  (datos) => {
 }  
 
 const lista= async  () => {
-   
+  
+    
+  const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
 
-   const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba')
-
-   //  const {data } = await axios.get('http://localhost:4000/prueba')
+  //  const {data } = await axios.get('http://localhost:4000/prueba',config)
 
     
     return data 
