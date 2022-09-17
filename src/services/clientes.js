@@ -27,15 +27,15 @@ if (loggedUserJSON) {
 }
   
   const datoslegajo= async  (datos) => {
-   
-    const data  = await axios.post(baseURL+'estadisticaslegajos',datos)
+ 
+    const data  = await axios.post(baseURL+'estadisticaslegajos',datos,config)
  
 
     return data.data 
 } 
 const modificarCliente= async  (datos) => {
    
-    const data  = await axios.post(baseURL+'modificarcli',datos)
+    const data  = await axios.post(baseURL+'modificarcli',datos,config)
  
 
     return data.data 
@@ -44,7 +44,7 @@ const modificarCliente= async  (datos) => {
 
 const crear= async  (datos) => {
    console.log(datos)
-    const {data } = await axios.post(baseURL+'add2',datos)
+    const {data } = await axios.post(baseURL+'add2',datos,config)
     
     alert(data)  
 }  
@@ -59,31 +59,25 @@ const lista= async  () => {
     
     return data 
 }   
-//crear
-const crearCliente= async  (datos) => {
-   
-     const data  = await axios.post(baseURL,datos)
-  
-     return data 
- } 
- 
+
+
  const ventaLote = async  (datos) => {
     console.log('datos')
-    const data  = await axios.post(baseURL+'ventalotee',datos)
+    const data  = await axios.post(baseURL+'ventalotee',datos,config)
     console.log(data)
     alert(data.data)
    
 } 
 const cliente= async  (cuil_cuit) => {
-   console.log(cuil_cuit)
-    const {data } = await axios.get(baseURL+'detalle/'+cuil_cuit)
+ 
+    const {data } = await axios.get(baseURL+'detalle/'+cuil_cuit,config)
     
     return data 
 } 
 
 const determinarIngreso= async  (datos) => {
    console.log(datos)
-  const {data } = await axios.post(baseURL+'agregaringreso2/',datos)
+  const {data } = await axios.post(baseURL+'agregaringreso2/',datos,config)
     console.log(data)
     alert('Guardado con exito')
     return data 
@@ -91,7 +85,7 @@ const determinarIngreso= async  (datos) => {
 
 const traerLejagos= async  (cuil_cuit) => {
    console.log(cuil_cuit)
-    const {data } = await axios.get(baseURL+'legajos/'+cuil_cuit)
+    const {data } = await axios.get(baseURL+'legajos/'+cuil_cuit,config)
     
     return data 
 }
@@ -99,23 +93,30 @@ const traerLejagos= async  (cuil_cuit) => {
  
   const habilitar= async  (etc) => {
      console.log(etc)
-      const {data } = await axios.post(baseURL+'habilitar/',etc)
+      const {data } = await axios.post(baseURL+'habilitar/',etc,config)
      
       return data 
   }
   const deshabilitar= async  (etc) => {
      console.log(etc)
-      const {data } = await axios.post(baseURL+'deshabilitar/',etc)
+      const {data } = await axios.post(baseURL+'deshabilitar/',etc,config)
      
       return data 
   }
   const listacbupendientes= async  () => {
     
-     const {data } = await axios.get(baseURL+'cbuspendientes/')
+     const {data } = await axios.get(baseURL+'cbuspendientes/',config)
     
      return data 
  }
+
+ const clientehabilitado= async  (cuil_cuit) => {
+ 
+    const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
   
-export default {lista,datoslegajo, listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,crearCliente,ventaLote,traerLejagos,crear,habilitar};
+    return data 
+} 
+
+export default {lista,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

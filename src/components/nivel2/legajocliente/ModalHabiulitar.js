@@ -11,13 +11,14 @@ import { useState } from "react";
 import servicioCliente from '../../../services/clientes'
 
 
-export default function Ingresos() {
+export default function Ingresos(props) {
   let params = useParams()
   let cuil_cuit = params.cuil_cuit
 
   const [open, setOpen] = React.useState(false);
   const [ingreso, setIngreso] = useState({
     cuil_cuit: cuil_cuit,
+    cuil_cuit_admin: props.cuil_cuit_user
 
   })
 
@@ -28,6 +29,7 @@ export default function Ingresos() {
   const handleDeterminar = async (event) => {
     event.preventDefault();
     try {
+ 
 
       await servicioCliente.habilitar(ingreso)
 

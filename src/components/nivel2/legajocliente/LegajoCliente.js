@@ -170,8 +170,10 @@ const LegajoCliente = (props) => {
              < ModalLegajo
               reload={getData}
               />
-             <Habilitar />
-             <Deshabilitar />
+             <Habilitar 
+              cuil_cuit_user= {props.cuil_cuit_user} />
+             <Deshabilitar
+             cuil_cuit_user= {props.cuil_cuit_user} />
          
              <Button onClick={volver} > Volver</Button>
              <div    >
