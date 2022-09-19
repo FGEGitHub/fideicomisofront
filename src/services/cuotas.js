@@ -9,10 +9,32 @@ import axios from "axios"
 
 
 
+const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+
+let config = ''
+if (loggedUserJSON) {
+    const userContext = JSON.parse(loggedUserJSON)
+ 
+
+     config = {
+        headers:{
+            Authorization:`Bearer ${userContext.token}`
+        }
+    }
+
+    
+}else{
+     config = {
+        headers:{
+            Authorization:`Bearer `
+        }
+    }
+}
+
 const vercuotas= async  (id) => {
     
    console.log(id)
-    const {data } = await axios.get(baseUrl+'lote2/'+id)
+    const {data } = await axios.get(baseUrl+'lote2/'+id,config)
     console.log(data)
     
     return data 
@@ -20,7 +42,7 @@ const vercuotas= async  (id) => {
 
 const verief= async  (id) => {
     console.log(id)
-    const data = await axios.get(baseUrl+'ief/'+id)
+    const data = await axios.get(baseUrl+'ief/'+id,config)
              
 console.log(data.data)
 
@@ -31,7 +53,7 @@ console.log(data.data)
 const cuotasDeUnLote = async  (id) => {
     
    console.log(id)
-    const data  = await axios.get(baseUrl+'cuotasdeunlote/'+id)
+    const data  = await axios.get(baseUrl+'cuotasdeunlote/'+id,config)
     console.log(data)
     
     return data 
@@ -39,7 +61,7 @@ const cuotasDeUnLote = async  (id) => {
 const borrarcuota = async  (id) => {
     
     console.log(id)
-     const rta  = await axios.get(baseUrl+'delete/'+id)
+     const rta  = await axios.get(baseUrl+'delete/'+id,config)
      console.log(rta)
      
      return rta.data 
@@ -48,7 +70,7 @@ const borrarcuota = async  (id) => {
  const borrarcuotas = async  (id) => {
     
     console.log(id)
-     const rta  = await axios.get(baseUrl+'borrartodas/'+id)
+     const rta  = await axios.get(baseUrl+'borrartodas/'+id,config)
      alert(rta.data)
      
      //return rta.data 
@@ -57,7 +79,7 @@ const borrarcuota = async  (id) => {
 const agregarCuotas= async  (estadoCuotas) => {
   
    console.log(estadoCuotas)
-    const {data } = await axios.post(baseUrl+'addaut2/',estadoCuotas)
+    const {data } = await axios.post(baseUrl+'addaut2/',estadoCuotas,config)
 
     
     return data
