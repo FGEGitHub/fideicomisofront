@@ -3,8 +3,7 @@ import MUIDataTable from "mui-datatables";
 import servicioAprobacionesPagos from '../../../services/pagos'
 import serviciousuario1 from '../../../services/usuario1'
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import VerConstancias from './VerConstancias'
 import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoPago'
 import Tooltip from '@material-ui/core/Tooltip';
@@ -50,7 +49,7 @@ async function download(index, rowIndex, data) {
 }
 
 
-function downloadFile(index, rowIndex, data) {
+function downloadFile(dataIndex, rowIndex, data) {
 
 /* const filename = (products[index].key)
 console.log(filename)
@@ -59,10 +58,9 @@ console.log(link.data)
 setAct(true) */
 return (
     <>
-        
-          <Button
-                onClick={() => download(index)}
-            >Descargar</Button> 
+         <  VerConstancias 
+         id={pendientes[dataIndex].id} /> 
+       
 
 
     </>
@@ -128,7 +126,7 @@ return (
         },
     
         {
-            name: "Descarga",
+            name: "Ver Constancias",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                 downloadFile(

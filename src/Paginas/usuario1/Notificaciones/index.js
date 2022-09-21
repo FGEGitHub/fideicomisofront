@@ -9,6 +9,7 @@ import Tablanoti from '../../../components/usuario1/Tablanotificaciones/TablaNot
 
 
 
+
 export default function Notificaciones() {
   
 
@@ -16,8 +17,10 @@ export default function Notificaciones() {
         <>
             <div className="App">
 
-
+      
                 <Navbar />
+
+                <br /> <br />
                 <Tablanoti
               />
                 

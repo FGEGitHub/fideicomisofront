@@ -32,11 +32,7 @@ export default function SelectTextFields(props) {
   const [notificacion, setNotidicaciones] = useState()
   const [activo, setActivo] = useState(false)
 
-  useEffect(() => {
 
-    traer()
-
-  }, [])
 
 
   const traer = async () => {
