@@ -8,7 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import Tooltip from '@material-ui/core/Tooltip';
 import ModalVer from "./ModalVer";
-
+import ModalResponder from "./Respuesta";
 const TablaNotificaciones = (props) => {
     const [noti, setNoti] = useState([''])
     const [usuario, setUsuario] = useState([''])
@@ -49,11 +49,9 @@ const TablaNotificaciones = (props) => {
     <div>
             < ModalVer
             id = {noti[dataIndex].id}/>
-            <Tooltip title="Responder">
-            <ForwardToInboxTwoToneIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  navigate('/usuario/respuesta/'+noti[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
-            </Tooltip>
+             {  noti[dataIndex].asunto=='Solicitud de documentacion' ?   <  ModalResponder  id = {noti[dataIndex].id}   cuil_cuit = {noti[dataIndex].cuil_cuit}/> : <div> </div> }
+           
+         
             </div>
           </>
         );

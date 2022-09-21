@@ -66,7 +66,7 @@ const notiId= async  (id) => {
  
 }
 
-const responderNoti= async  (rta) => {
+const respuestanoti= async  (rta) => {
   console.log(rta)
   const data = await axios.post(baseUrl+'justificacion/',rta)
 alert(data.data)
@@ -80,7 +80,7 @@ return data
 }
 
 const pagarnivel1 = async (formdata) => {
-  console.log(formdata)
+
   const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata)
   return data
 
@@ -151,4 +151,16 @@ const determinarPep = async (formdata) => {
 
 }
 
-export default {determinarPep,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,responderNoti, obtenerurl,pagarnivel1};
+const constanciasdelpago = async (id) => {
+ console.log(id)
+ 
+
+ const { data } = await axios.get(baseUrl + 'constanciasdelpago/'+id)
+  console.log(data)
+  return data
+
+}
+
+
+
+export default {determinarPep,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

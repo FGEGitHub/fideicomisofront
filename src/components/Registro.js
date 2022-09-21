@@ -126,7 +126,7 @@ export default function Ingresos() {
           <TextField 								
             className={cardStyles.field}
             sx={{
-              mx: 3, width: 700
+              mx: 3, width: '50%'
 								}}
             autoFocus
             required
@@ -142,7 +142,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: 700
+                  mx: 3, width: '50%'
 								}}
             autoFocus
             required
@@ -157,7 +157,7 @@ export default function Ingresos() {
              <TextField
              className={cardStyles.field}
 								sx={{
-                  mx: 3, width: 700
+                  mx: 3, width: '50%'
 								}}
             autoFocus
             required
@@ -173,7 +173,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: 700
+                  mx: 3, width: '50%'
 								}}
             autoFocus
             required
@@ -188,7 +188,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: 700
+                  mx: 3, width: '50%'
 								}}
             autoFocus
             required
@@ -203,6 +203,7 @@ export default function Ingresos() {
         
           <DialogActions>
           <Button 
+          
           onClick={handleClose}
           variant="contained"
 								sx={{
