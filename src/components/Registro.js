@@ -9,11 +9,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {  useState } from "react";
 import servicioUsuario from '../services/usuarios'
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, Grid, Paper } from '@mui/material';
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import RegIcon from "@mui/icons-material/HowToRegRounded";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 
@@ -78,10 +79,10 @@ export default function Ingresos() {
       <Button variant="outlined" onClick={handleClickOpen}>
        Registrarme
       </Button>
-      <Dialog maxWidth="xl" open={open} onClose={handleClose}>
-      <Box
+      <Dialog maxWidth="md" open={open} onClose={handleClose}>
+      <Paper
 							sx={{
-								px: 80,
+                px: 40,
 								display: "flex",
 								flexDirection: "row",
 								alignItems: "center",
@@ -100,14 +101,17 @@ export default function Ingresos() {
 							<Typography  component="h1" variant="h4">
 								Registro
 							</Typography>
-						</Box>
-        <Typography align='center' component="h1" variant="h6">Complete con todos sus Datos</Typography>
+						</Paper>
+            <Paper>
+            <Typography align='center' component="h1" variant="h6">Complete con todos sus Datos</Typography>
+
+            </Paper>
         <DialogContent>
 
           <form  onSubmit={handleDeterminar}> 
           <TextField className={cardStyles.field}
 								sx={{
-                  mx: 3, width: 700
+                  mx: 3, width: '75%'
 								}}
             autoFocus
             required
@@ -122,7 +126,7 @@ export default function Ingresos() {
           <TextField 								
             className={cardStyles.field}
             sx={{
-              mx: 3, width: '50%'
+              mx: 3, width: '75%'
 								}}
             autoFocus
             required
@@ -138,7 +142,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: '50%'
+                  mx: 3, width: '75%'
 								}}
             autoFocus
             required
@@ -153,7 +157,7 @@ export default function Ingresos() {
              <TextField
              className={cardStyles.field}
 								sx={{
-                  mx: 3, width: '50%'
+                  mx: 3, width: '75%'
 								}}
             autoFocus
             required
@@ -169,7 +173,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: '50%'
+                  mx: 3, width: '75%'
 								}}
             autoFocus
             required
@@ -184,7 +188,7 @@ export default function Ingresos() {
           <TextField
           className={cardStyles.field}
 								sx={{
-                  mx: 3, width: '50%'
+                  mx: 3, width: '75%'
 								}}
             autoFocus
             required
