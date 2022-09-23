@@ -18,17 +18,17 @@ export default function VerConstancias(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
 
-  const [constancias, setConstancias] = useState()
+  const [constancias, setConstancias] = useState(null)
   const [activo, setActivo] = useState(false)
 
 
 
 
   const traer = async () => {
-
+console.lof('constancias')
    const not = await serviciousuario1.constanciasdelpago(props.id)
    setConstancias(not)
-
+   console.lof(constancias)
    setActivo(true)
 
 
@@ -120,7 +120,9 @@ const columns = [
   return (
 
 
-    
+   
+   
+      <div>
     
     <Box
 
@@ -158,11 +160,12 @@ const columns = [
     </div>
 
 
+    
          
         </DialogContent>
       </Dialog>
     </Box >
 
-   
+    </div>
   );
 }

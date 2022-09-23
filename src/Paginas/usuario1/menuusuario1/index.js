@@ -10,6 +10,8 @@ import Navbar from '../../../components/usuario1/Navbar1'
 import  useUser from '../../../hooks/useUser'
 import { Divider, Toolbar } from '@mui/material';
 import NotificacionesFlotantes from '../../..//components/usuario1/NotificacionesFlotantes'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -19,8 +21,32 @@ export default function MenuUsuario1() {
     const usuario  = useUser().userContext
 
 
+    const navigate = useNavigate();
+    const [logueado, setLogueado] = useState(false) 
+    useEffect(() => {
+      const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
+      if (loggedUserJSON) {
+        const user = JSON.parse(loggedUserJSON)
+        if (!user){
+          window.localStorage.removeItem('loggedNoteAppUser')
+       navigate('/login')
+  
+        }else{
+  
+          setLogueado(true)
+        }
+      
+        //servicioUsuario.setToken(user.token)  
+       
+        
+      }
+     
+    }, [])
+
+
     return (
-        <>
+        <><div>  { logueado ? <div> 
             <div disableSticky={false} className="App">
 
 
@@ -42,7 +68,7 @@ export default function MenuUsuario1() {
 
             </div>
 
-
+            </div>   :<div></div> } </div>
         </>
     );
 

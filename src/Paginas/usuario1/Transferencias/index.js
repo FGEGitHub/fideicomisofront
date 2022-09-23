@@ -2,10 +2,9 @@
 import React from 'react';
 import Navbar from '../../../components/usuario1/Navbar1'
 import  useUser from '../../../hooks/useUser'
-//import LotesCliente from '../../../components/usuario1/LotesTransferencia'
-import { Divider, Toolbar } from '@mui/material'
-import Footer from '../../../components/usuario1/Footer'
-import { Container, Box, CssBaseline } from '@mui/material'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Transferencias2 from '../../../components/usuario1/transferencias/Transferencias'
 
 
@@ -13,10 +12,32 @@ import Transferencias2 from '../../../components/usuario1/transferencias/Transfe
 
 export default function Transferencias() {
     const usuario  = useUser().userContext
-    console.log('usuario')
+   
+ const navigate = useNavigate();
+ const [logueado, setLogueado] = useState(false) 
+ useEffect(() => {
+   const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+   
+   if (loggedUserJSON) {
+     const user = JSON.parse(loggedUserJSON)
+     if (!user){
+       window.localStorage.removeItem('loggedNoteAppUser')
+    navigate('/login')
+
+     }else{
+
+       setLogueado(true)
+     }
+   
+     //servicioUsuario.setToken(user.token)  
+    
+     
+   }
+  
+ }, [])
 
     return (
-        <>
+        <><div>  { logueado ? <div> 
             <div className="App">
 
 
@@ -27,7 +48,7 @@ export default function Transferencias() {
                 />
 
             </div>
-
+            </div>   :<div></div> } </div>
 
         </>
     );

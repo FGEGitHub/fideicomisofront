@@ -26,7 +26,7 @@ import Legajos from "../Paginas/usuario1/Legajos"
 import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
-import SubirPdf from "../Paginas/usuario1/Subirpdf"
+
 import CBU from "../Paginas/usuario1/SubirCbu"
 import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 import Constancias from "../Paginas/usuario1/Constancias"
@@ -56,7 +56,7 @@ import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 import CargaRelev from '../Paginas/Nivel4/CargaRelev';
-import PruebaSubir from '../Paginas/usuario1/SubirPrueba'
+
 /////////// 
 
 
@@ -87,8 +87,8 @@ const Rutas = [
 	{ path: '/usuario/nosotros', element: < Nosotros /> },
 	{ path: '/usuario/contacto', element: < Contacto /> },
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
-	{ path: '/usuario/vertodos', element: < PruebaSubir /> },
-	{ path: '/usuario/subirpdf', element: < SubirPdf /> },
+	
+	
 	{ path: '/usuario/cbu-declarado', element: < CBU /> },
 	{ path: '/usuario/asociarcbu', element: < AsociarCBU /> },
 	{ path: '/usuario/constancias', element: < Constancias /> },
