@@ -12,10 +12,11 @@ import Button from "@mui/material/Button";
 const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
-    const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = useState(null);
+        const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+   
 
-
-    
 
     const getPendientes = async () => {
 
@@ -79,10 +80,13 @@ return (
              id= {pendientes[dataIndex].id} 
             
             />
-            <CheckIcon style={{ cursor: "pointer" }} 
+           
+            <Tooltip title="Aprobar" arrow>
+            <CheckIcon aria-describedby={id}   style={{ cursor: "pointer" }} 
             onClick={() =>  {aprobar(pendientes[dataIndex].id) 
-           /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+           /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }
             />
+            </Tooltip>
           </>
         );
       }

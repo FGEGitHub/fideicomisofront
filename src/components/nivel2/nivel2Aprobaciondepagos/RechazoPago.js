@@ -9,17 +9,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import servicioPagos from '../../../services/pagos'
 import {  useState } from "react";
-
+import Tooltip from '@material-ui/core/Tooltip';
 import InputLabel from '@mui/material/InputLabel';
 import NativeSelect from '@mui/material/NativeSelect';
-
+import IconButton from '@mui/material/IconButton';
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
    const [form, setForm] = useState ({
     id:props.id
    })
-
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -40,10 +40,13 @@ export default function FormDialog(props) {
   setForm({  ...form, [e.target.name]: e.target.value })
 }
   return (
-    <div>
-      <ThumbDownAltIcon variant="outlined" onClick={handleClickOpen}>
+    <div><Tooltip title="Pedir documentacion/Rechazar"arrow>
+      <IconButton>
+      <ThumbDownAltIcon  onClick={handleClickOpen}>
         Open form dialog
       </ThumbDownAltIcon>
+      </IconButton>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Rechazar</DialogTitle>
         <DialogContent>
