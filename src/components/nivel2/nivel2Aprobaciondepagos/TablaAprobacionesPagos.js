@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import VerConstancias from './VerConstancias'
 import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoPago'
+import BotonAprobacion from './AprobacionPago'
 import Tooltip from '@material-ui/core/Tooltip';
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
@@ -78,13 +79,13 @@ return (
            
             <BotonRechazo 
              id= {pendientes[dataIndex].id} 
-            
+           
             />
            
             <Tooltip title="Aprobar" arrow>
-            <CheckIcon aria-describedby={id}   style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pendientes[dataIndex].id) 
-           /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }
+            <BotonAprobacion
+             id= {pendientes[dataIndex].id} 
+             monto= {pendientes[dataIndex].monto}
             />
             </Tooltip>
           </>

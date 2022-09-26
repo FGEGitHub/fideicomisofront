@@ -109,10 +109,18 @@ const LotesCliente = (props) => {
         alert(rta)
 
     }
-
+    function saldoReal(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+            {cuotas[dataIndex].parcialidad == 'Final'? cuotas[dataIndex].Saldo_real:<div> No Calculado </div> }
+               
+            </>
+        );
+    }
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
+            
                 <CurrencyExchangeIcon
                     onClick={() => navigate('/usuario2/pagarcuota/' + cuotas[dataIndex].id)}
                     style={{ marginRight: "10px", cursor: "pointer" }}
@@ -165,9 +173,18 @@ const LotesCliente = (props) => {
             label: "Pago",
 
         },
+     
         {
-            name: "Saldo_real",
-            label: "Saldo Real",
+            name: "Saldo Real",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    saldoReal(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
 

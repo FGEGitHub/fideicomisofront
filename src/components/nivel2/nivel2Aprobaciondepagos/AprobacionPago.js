@@ -6,32 +6,42 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+
 import servicioPagos from '../../../services/pagos'
 import {  useState } from "react";
 import Tooltip from '@material-ui/core/Tooltip';
 import InputLabel from '@mui/material/InputLabel';
-import NativeSelect from '@mui/material/NativeSelect';
+import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 
-export default function FormDialog(props) {
+
+export default function AprobacionPago(props) {
   const [open, setOpen] = React.useState(false);
+  const [cambiarmonto, setCambiarmonto] = React.useState(false);
+  
    const [form, setForm] = useState ({
     id:props.id
    })
   
   const handleClickOpen = () => {
     setOpen(true);
+  
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const rechazar =async (id)  => {
-     await servicioPagos.rechazararpago(form)
-     setOpen(false)
-     window.location.reload(true);
+  const handlemonto = () =>{
+    setForm({  ...form, ['cambiarmonto']:!cambiarmonto})
+  setCambiarmonto(!cambiarmonto)
+  
+  }
+
+  const aprobar =async ()  => {
+     await servicioPagos.aprobarpago(form)
+   //  setOpen(false)
+   window.location.reload(true);
 
   // window.location.reload(true)
   }
@@ -43,50 +53,48 @@ export default function FormDialog(props) {
     <div><Tooltip title="Pedir documentacion/Rechazar"arrow>
       <IconButton>
       <Button  onClick={handleClickOpen}>
-       Rechazar
+       Aprobar
       </Button>
       </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Rechazar</DialogTitle>
+        <DialogTitle>Aprobar Pago</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Elegir accion a realizar
+            El monto a Aprobar es de <b>${props.monto}</b>
           </DialogContentText>
-          <form  onSubmit={rechazar}>
-          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                           Accion
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'accion',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                        >   <option  value={'IC3'}>Elegir</option>
-                            <option   value={'rechazar'}>Rechazar</option>
-                            <option  value={'solicitar_doc'}>Solicitar documentación</option>
-                         
-                        </NativeSelect> 
+          
+    <label><Checkbox label="Cambiar el monto" onChange={handlemonto} /> Cambiar el monto 
+      </label>
+    {cambiarmonto ?<div> 
+          
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="detalle"
-            name= "detalle"
-            multiline
-             rows={4}
+            label="Determinar Monto"
+            name= "montonuevo"
+            type={'number'}
             onChange={handleChange}
-            
             fullWidth
             variant="standard"
+            min="0" 
           />
-           <Button onClick={() => {rechazar(props.id)}}>Enviar </Button>
-          </form>
+      
+          </div>:<div> 
+            
+        
+            
+            
+            </div>}
+
+
+          
+       
         </DialogContent>
         <DialogActions>
+        {cambiarmonto ? <div>  </div>:<div> </div>}
+        <Button onClick={() => {aprobar(props.id)}}>Aprobar </Button>
           <Button onClick={handleClose}>Cancel</Button>
          
         </DialogActions>

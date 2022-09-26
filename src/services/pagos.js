@@ -36,11 +36,11 @@ const rechazararpago= async  (form) => {
    } 
 
 ///////aprobar pago nivel 2
-const aprobarpago= async  (id) => {
-console.log(id)
+const aprobarpago= async  (form) => {
 
-  const {data } = await axios.get(baseUrl+'pagos/aprobarr/'+id)
-    console.log(data)
+console.log(form)
+  const {data } = await axios.post(baseUrl+'pagos/aprobarr/',form)
+    //console.log(data)
   return data
  }  
 
@@ -72,5 +72,7 @@ const cantidadpendientes= async  () => {
     console.log(data)
   return data
  } 
+
+
 
 export default { pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

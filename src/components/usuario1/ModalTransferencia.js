@@ -129,7 +129,7 @@ export default function SelectTextFields(props) {
       
       
     
-      //window.location.reload(true);
+      window.location.reload(true);
   }
   return (
 

@@ -162,6 +162,7 @@ const Login = () => {
               <TextField
                 variant="outlined"
                 label="Contraseña"
+                type="password"
                 sx={{
                   display: "block",
                   margin: ".5rem 0",
