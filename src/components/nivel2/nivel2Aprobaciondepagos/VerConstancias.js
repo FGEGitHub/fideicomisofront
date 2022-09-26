@@ -107,6 +107,7 @@ export default function VerConstancias(props) {
           <DialogContent>
 
             <div>
+              <h3>Lista de constancias</h3>
               <TableContainer component={Paper}>
                 <Table  size="small" aria-label="a dense table">
                   <TableHead>
