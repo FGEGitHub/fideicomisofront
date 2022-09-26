@@ -50,7 +50,7 @@ export default function AprobacionPago(props) {
   setForm({  ...form, [e.target.name]: e.target.value })
 }
   return (
-    <div><Tooltip title="Pedir documentacion/Rechazar"arrow>
+    <div><Tooltip title="Aprobar pago/cambiar monto"arrow>
       <IconButton>
       <Button  onClick={handleClickOpen}>
        Aprobar
