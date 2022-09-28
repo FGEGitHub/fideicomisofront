@@ -48,7 +48,7 @@ useEffect(() => {
 
       <div> 
   { logueado ? <div> 
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider >
             <CssBaseline />
        <BarraLAteral>
        

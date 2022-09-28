@@ -187,6 +187,11 @@ const LotesCliente = (props) => {
             }
 
         },
+        {
+            name: "diferencia",
+            label: "diferencia",
+
+        },
 
 
         {

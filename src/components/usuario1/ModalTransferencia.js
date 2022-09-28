@@ -79,7 +79,7 @@ export default function SelectTextFields(props) {
 
 
   const handleChange = (e) => {
-    console.log('pago')
+  
     console.log(pago)
   
     // setPago({ ...pago, ['id']: props.id })
@@ -122,14 +122,14 @@ export default function SelectTextFields(props) {
     const enviar = () => {
 
       
-      enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto]);///// aca en forma de array se envian datos del dormulario
+      enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto,pago.fecha]);///// aca en forma de array se envian datos del dormulario
      
       servicioUsuario1.pagarnivel1(enviarr)
      
       
       
     
-      window.location.reload(true);
+      //window.location.reload(true);
   }
   return (
 

@@ -106,7 +106,7 @@ export default function Respuesta(props) {
       
       
     
-      //window.location.reload(true);
+      window.location.reload(true);
   }
   return (
 
