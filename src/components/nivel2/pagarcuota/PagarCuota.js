@@ -1,16 +1,20 @@
-import Button from '@mui/material/Button';
-import { useEffect, useState, Fragment } from "react";
+import { Button,CircularProgress } from '@mui/material';
+import {useCallback, useEffect, useState, Fragment } from "react";
 import servicioPagos from '../../../services/pagos'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import NativeSelect from '@mui/material/NativeSelect';
-import MenuItem from '@mui/material/MenuItem';
+import BackupIcon from '@material-ui/icons/Backup';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { Toolbar } from '@mui/material';
+import { Paper} from '@mui/material';
+import servicioUsuario1 from '../../../services/usuario1'
+import { useDropzone } from 'react-dropzone';
+
 
 ////
 import Select from '@mui/material/Select';
@@ -25,9 +29,34 @@ export default function PagarCuota() {
    
         /////////asignar lote 0 caso que no se seleccione
     })
+    const [enviarr, setEnviarr] = useState();
+    const [fileUpload, setFileUpload] = useState(null);
+    const [loading, setLoading] = useState(false)
 
-
+    const onDrop = useCallback  ((files, acceptedFiles) => {
+        setLoading(true)
+        const formData = new FormData();
+        setFileUpload(acceptedFiles);
+        formData.append('file', files[0]);
+        setEnviarr(formData)
+        setLoading(false)
+        
     
+    
+        });
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+        onDrop,
+        multiple: false,
+        accept: 'document/*',
+    
+      });
+  
+      const acceptedFileItems = acceptedFiles.map(file => (
+        <li key={file.path}>
+          {file.path} - {file.size} bytes
+        </li>
+      )); 
+ 
     
 
     
@@ -58,12 +87,22 @@ export default function PagarCuota() {
      }, [])
    
 
+     const enviar = () => {
 
+      
+        enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto,pago.fecha]);///// aca en forma de array se envian datos del dormulario
+       
+        servicioUsuario1.pagarnivel2(enviarr)  
+       
+
+        
+        
+      
+        //window.location.reload(true);
+    }
 
 
    const handleChange = (e) => {
-
-    
        console.log(pago)
        setPagos({ ...pago, [e.target.name]: e.target.value })
    }
@@ -74,11 +113,12 @@ export default function PagarCuota() {
            <Box sx={{ minWidth: 275 }}>
                <Card variant="outlined" >
 
-                   <form onSubmit={designar}>
+                   <form >
                          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                          Tipo de Pago
                        </InputLabel>
                        <NativeSelect
+                       sx={{ '& > :not(style)': { m: 1 } }}
                            defaultValue={30}
                            onChange={handleChange}
                            inputProps={{
@@ -91,7 +131,21 @@ export default function PagarCuota() {
                         
                        </NativeSelect> 
                       
-                      
+                       <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                <TextField
+
+                  onChange={handleChange}
+                  name="fecha"
+                  id="date"
+                  label="Fecha de pago"
+                  type="month"
+                  defaultValue="2020-01"
+                  sx={{ width: 220 }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Box>
                
                        
                        <TextField
@@ -106,32 +160,48 @@ export default function PagarCuota() {
                            variant="filled"
                            type={"Number"}
                        />
-                       {/* <TextField
-                           autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Lote"
-                           name="lote"
-                           onChange={handleChange}
-                           fullWidth
-                           variant="filled"
-                       />
-                       <TextField
-                           autoFocus
-                           margin="dense"
-                           id="name"
-                           label="Parcela"
-                           name="parcela"
-                           onChange={handleChange}
-                           fullWidth
-                           variant="filled"
-                           type={"Number"}
-                       /> */}
+                        <Paper
+          sx={{
+            cursor: 'pointer',
+            background: '#fafafa',
+            color: '#bdbdbd',
+            border: '1px dashed #ccc',
+            '&:hover': { border: '1px solid #ccc' },
+          }}
+        >
+          <div style={{ padding: '16px' }} {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+            ) : (
+              <p>Arrastra hasta aqui el archivo </p>
+            )}
+            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+          </div>
+        </Paper>
                      
-                     
+        {pago.monto >0 ?   
+        <div>
+      <Box sx={{ m: 1, 
+      color: 'green',
+      fontSize: '1rem',      }}
+       >
+        Archivos Aceptados <BackupIcon fontSize="small" />
+        <ul>{acceptedFileItems}</ul>
+        <Button variant='contained' onClick={enviar}>
+        {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : (
+                                "Enviar"
+                            )}
+          </Button>
+      </Box>
+
+      </div>
+                : <div> </div>}
 
 
-                       <Button onClick={designar} variant='contained'>Enviar</Button>
+                      
 
                    </form>
 

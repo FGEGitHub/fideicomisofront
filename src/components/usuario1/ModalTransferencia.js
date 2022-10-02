@@ -32,14 +32,16 @@ export default function SelectTextFields(props) {
   //const usuario  = useUser().userContext
   const [enviarr, setEnviarr] = useState();
   const [fileUpload, setFileUpload] = useState(null);
+  const [loading, setLoading] = useState(false)
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
    const [ultima, setUltima] = useState([''])
    const [pago, setPago] = useState({
 
     id:props.id,    })
-    const [loading, setLoading] = useState(false)
+    
     const [cbus, setCbus] = useState([''])
+    const [completo, setCompleto] = useState(false);
 
   
 
@@ -124,9 +126,9 @@ export default function SelectTextFields(props) {
       
       enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto,pago.fecha]);///// aca en forma de array se envian datos del dormulario
      
-      servicioUsuario1.pagarnivel1(enviarr)
+      servicioUsuario1.pagarnivel1(enviarr)  
      
-      
+      handleClose()
       
     
       //window.location.reload(true);
@@ -269,6 +271,11 @@ export default function SelectTextFields(props) {
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
+
+
+
+        {pago.monto >0 ?   
+        <div>
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
@@ -284,7 +291,10 @@ export default function SelectTextFields(props) {
           </Button>
       </Box>
 
-      
+      </div>
+                : <div> </div>}
+
+
     </>
          
           </div>

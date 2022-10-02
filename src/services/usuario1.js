@@ -82,7 +82,7 @@ return data
 const pagarnivel1 = async (formdata) => {
 
   const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata)
-  return data
+  alert(data)
 
 }
 
@@ -152,15 +152,20 @@ const determinarPep = async (formdata) => {
 }
 
 const constanciasdelpago = async (id) => {
- console.log(id)
- 
+ console.log(id) 
 
  const { data } = await axios.get(baseUrl + 'constanciasdelpago/'+id)
-  console.log(data)
+ 
   return data
 
 }
 
+const pagarnivel2= async  (pago) => {////pago desde el usuario 2
 
+console.log(pago)
+  const {data } = await axios.post(baseUrl+'pagonivel2',(pago))
+     alert(data)
+   
+  } 
 
-export default {determinarPep,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {determinarPep,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
