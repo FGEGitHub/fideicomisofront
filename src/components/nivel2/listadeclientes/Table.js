@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import servicioClientes from '../../../services/clientes'
 import MUIDataTable from "mui-datatables";
+import Nuevo from './ClienteNuevo'
 import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
@@ -8,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
+
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -111,8 +113,16 @@ return (
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
  
- <Alert severity="info">Cantidad de clientes:{clients.length}</Alert>
+ <Alert severity="info">Cantidad de clientes: {clients.length}</Alert>
     </Stack>
+    <br/>
+    <Nuevo
+    getClients =  { async () => {
+        const clients = await servicioClientes.lista({
+        })
+        setClients(clients)
+    }}
+    />
         <MUIDataTable
         
             title={"Lista de Clientes"}

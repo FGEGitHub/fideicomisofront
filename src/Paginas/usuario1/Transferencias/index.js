@@ -4,7 +4,7 @@ import Navbar from '../../../components/usuario1/Navbar1'
 import  useUser from '../../../hooks/useUser'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Cuotas from '../../../components/usuario1/cuotas/CuotasNiv1'
 import Transferencias2 from '../../../components/usuario1/transferencias/Transferencias'
 
 
@@ -46,7 +46,7 @@ export default function Transferencias() {
                 /> */}
                 < Transferencias2 
                 />
-
+         
             </div>
             </div>   :<div></div> } </div>
 

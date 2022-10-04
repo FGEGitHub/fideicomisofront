@@ -11,17 +11,14 @@ import {  useState } from "react";
 import servicioCliente from '../../../services/clientes'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
-
-export default function Ingresos() {
+export default function ClienteNuevo(props) {
   let params = useParams()
     let cuil_cuit = params.cuil_cuit
    
   const [open, setOpen] = React.useState(false);
-  const [form, setForm] = useState({
-
-   
-  })
+  const [form, setForm] = useState({})
   const handleChange = (e) =>{
     setForm({  ...form, [e.target.name]: e.target.value }) 
   console.log(form)}
@@ -42,21 +39,23 @@ export default function Ingresos() {
    
      
      }
-
+     props.getClients()
+   
     setOpen(false);
   };
   
   const handleClose = () => {
     setOpen(false);
+   
   };
 
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-       CARGAR CLIENTE NUEVO
+       CARGAR CLIENTE NUEVO <PersonAddAlt1Icon/>
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Cliente Nuevo</DialogTitle>
+        <DialogTitle>Cliente Nuevo  </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Ingrese Datos del Nuevo Cliente
@@ -154,8 +153,10 @@ export default function Ingresos() {
           />
       
           <DialogActions>
+          {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio  && form.tipo_dni  && form.Nombre ? <><Button  type="submit">Enviar</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button  type="submit">Enviar</Button>
+         
+         
         </DialogActions>
            </form>
         </DialogContent>
