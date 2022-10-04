@@ -5,9 +5,13 @@ import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
-
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import MuiAlert from '@mui/material/Alert';
 //import overbookingData from "./overbooking";
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 const Lotes = () => {
     //configuracion de Hooks
     const [clients, setClients] = useState([]);
@@ -105,6 +109,10 @@ return (
     {loading ? (<CargaDeTabla/>)
         :(
     <div>
+            <Stack spacing={2} sx={{ width: '100%' }}>
+ 
+ <Alert severity="info">Cantidad de clientes:{clients.length}</Alert>
+    </Stack>
         <MUIDataTable
         
             title={"Lista de Clientes"}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import  { useEffect, useState } from "react";
 import TableAxios from '../../../components/nivel2/listadeclientes/Table';
 import Nuevo from '../../../components/nivel2/listadeclientes/ClienteNuevo';
+import Cantidad from '../../../components/nivel2/listadeclientes/CantidadClientes';
 import { useNavigate } from "react-router-dom";
 
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
@@ -41,7 +42,9 @@ export default function MenuUsuario2() {
   return (
     <div> 
     { logueado ? <div> 
+      
     <BarraLAteral>
+
        <Nuevo/>
     <TableAxios/>
  </BarraLAteral>
