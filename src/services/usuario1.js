@@ -5,7 +5,7 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
 
 
 const cantidadd= async  (cuil_cuit) => {
-    console.log('cuil_cuit')
+   
     const {data } = await axios.get(baseUrl+'cantidadnotificaciones/'+cuil_cuit)
     console.log(cuil_cuit)
     return(data)
@@ -18,7 +18,7 @@ const verief= async  (id) => {
 console.log(data.data)
 
    
-   
+
   return data.data
 } 
 
@@ -167,5 +167,20 @@ console.log(pago)
      alert(data)
    
   } 
+  const modificarCliente= async  (datosNuevos) => {////
 
-export default {determinarPep,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+      const {data } = await axios.post(baseUrl+'modificarcli',(datosNuevos))
+         alert(data)
+       
+      } 
+  
+  const cliente = async (cuil) => {
+   
+   console.log(cuil)
+    const { data } = await axios.get(baseUrl + 'cliente/'+cuil)
+    
+     return data
+   
+   }
+
+export default {determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

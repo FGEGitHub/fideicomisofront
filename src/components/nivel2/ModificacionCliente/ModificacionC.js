@@ -85,7 +85,7 @@ const ModificacionC = (props) => {
     <div className="profile">
       <Grid Container>
         <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-          <Avatar sx={{ width: 170, height: 140 }}>H</Avatar>
+          <Avatar sx={{ width: 170, height: 140 }}>{(client.Nombre).substring(0,1)}</Avatar>
         </Grid>
         <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
   

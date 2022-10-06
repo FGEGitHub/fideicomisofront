@@ -51,10 +51,10 @@ const crear= async  (datos) => {
 
 const lista= async  () => {
   
-    
-  const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
+    const {data } = await axios.get(baseURL+'infocantidad',config)
+  //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
 
-  //  const {data } = await axios.get('http://localhost:4000/prueba',config)
+   // const {data } = await axios.get('http://localhost:4000/prueba',config)
 
     
     return data 
@@ -117,6 +117,14 @@ const traerLejagos= async  (cuil_cuit) => {
     return data 
 } 
 
-export default {lista,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+const infocantidad= async  (cuil_cuit) => {
+ 
+    const {data } = await axios.get(baseURL+'infocantidad/',config)
+  
+    return data 
+} 
+
+
+export default {lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

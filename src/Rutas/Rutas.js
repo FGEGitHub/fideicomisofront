@@ -31,6 +31,7 @@ import CBU from "../Paginas/usuario1/SubirCbu"
 import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 import Constancias from "../Paginas/usuario1/Constancias"
 import DatosEmpresa from '../Paginas/usuario1/DatosEmpresa'
+import DatosPer from '../Paginas/usuario1/ModificarDatosPers'
 
 
 import Transferencias from '../Paginas/usuario1/Transferencias';
@@ -57,8 +58,8 @@ import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 import CargaRelev from '../Paginas/Nivel4/CargaRelev';
 
-/////////// 
-
+/////////// Administracion
+import Usuarios from '../Paginas/Administracion/Menu';
 
 //////////
 
@@ -87,6 +88,7 @@ const Rutas = [
 	{ path: '/usuario/nosotros', element: < Nosotros /> },
 	{ path: '/usuario/contacto', element: < Contacto /> },
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
+	{ path: '/usuario/datosPers', element: < DatosPer /> },
 	
 	
 	{ path: '/usuario/cbu-declarado', element: < CBU /> },
@@ -133,6 +135,8 @@ const Rutas = [
 	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
 	{ path: '/legales/cargarelev', element: <CargaRelev /> },
 
+	
+	{ path: '/admin/usuarios', element: <Usuarios /> },
 	
 
 	/*{	path: '/',	element: <NotFound />

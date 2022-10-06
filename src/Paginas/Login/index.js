@@ -108,6 +108,9 @@ const Login = () => {
           case 4:navigate('/legales/estadisticas1')
           window.location.reload(true);
           break;
+          case 10:navigate('/admin/usuarios')
+          window.location.reload(true);
+          break;
 
       }
     } catch (error) {

@@ -3,13 +3,33 @@ import axios from "axios"
 const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
 // const  baseUrl ='http://localhost:4000/lotes/'
 
-
+ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+/////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
+ let config = ''
+ if (loggedUserJSON) {
+     const userContext = JSON.parse(loggedUserJSON)
+  
+ 
+      config = {
+         headers:{
+             Authorization:`Bearer ${userContext.token}`
+         }
+     }
+ 
+     
+ }else{
+      config = {
+         headers:{
+             Authorization:`Bearer `
+         }
+     }
+ }
 
 
 const lista= async  () => {
    
-    const {data } = await axios.get(baseUrl+'listadetodos')
-    
+    const {data } = await axios.get(baseUrl+'listadetodos',config)
+    console.log(data)
     return data 
 }  
 const prueba= async  (s) => {
@@ -20,14 +40,14 @@ const prueba= async  (s) => {
 }  
 const listalotes= async  () => {
    
-    const {data } = await axios.get(baseUrl+'listadelotes')
+    const {data } = await axios.get(baseUrl+'listadelotes',config)
     
     return data 
 }  
 
 const lotesCliente= async  (cuil_cuit) => {
   console.log(cuil_cuit)
-    let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit)
+    let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit,config)
 
     const lotes=(data[0])
 
@@ -38,13 +58,9 @@ const lotesCliente= async  (cuil_cuit) => {
 
 const lotesClienteUsuario1= async  (cuil_cuit) => {
     //  console.log(cuil_cuit) hacer la separacion
-    cuil_cuit =  (cuil_cuit).slice(0, 2) + "-" + (cuil_cuit).slice(2);
-    
-     
-    cuil_cuit =  (cuil_cuit).slice(0, 11) + "-" + (cuil_cuit).slice(11);
    
-
-       let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit)
+   
+       let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit,config)
    
        const lotes=(data[0])
    
@@ -55,7 +71,7 @@ const lotesClienteUsuario1= async  (cuil_cuit) => {
 
 const lotesCliente2= async  (cuil_cuit) => {
       console.log(cuil_cuit)
-       let {data}  = await axios.get(baseUrl+'lotescliente2/'+cuil_cuit)
+       let {data}  = await axios.get(baseUrl+'lotescliente2/'+cuil_cuit,config)
        console.log(data[0])
 
        const lotes=(data[0])
@@ -67,7 +83,7 @@ const lotesCliente2= async  (cuil_cuit) => {
 
    const calcular= async  (datos) => {
    console.log(datos)
-    const {data } = await axios.post(baseUrl+'calcularvalor',datos)
+    const {data } = await axios.post(baseUrl+'calcularvalor',datos,config)
     console.log(data)
     return data 
 }  
