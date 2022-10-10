@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import servicioClientes from '../../../services/clientes'
+import servicioAdmin from '../../../services/Administracion'
 import MUIDataTable from "mui-datatables";
-import Nuevo from './ClienteNuevo'
+import Nuevo from '../../nivel2/listadeclientes/ClienteNuevo'
 import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
@@ -9,12 +10,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
-
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-const Lotes = () => {
+const Clientes = () => {
     //configuracion de Hooks
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -31,24 +32,19 @@ const Lotes = () => {
         setClients(clients)
         setLoading(false);
     }
-
+    const borrar = async (cuil_cuit) => {
+        
+        const rta = await servicioAdmin.borrar(cuil_cuit)
+        alert(rta)
+        getClients()
+    }
     useEffect(() => {
         getClients()
     }, [])
 
     ///
-//opcionde click en el nombre
-    function CutomButtonsRenderere(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-          
-       
-           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} >{clients[dataIndex].Nombre}</p>
-          
-          </>
-        );
-      }
-      //
+
+
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
@@ -61,6 +57,11 @@ const Lotes = () => {
              onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
+
+            <DeleteForeverIcon   onClick={() =>  borrar(clients[dataIndex].cuil_cuit)}
+            
+            />
+
            
           </>
         );
@@ -76,20 +77,11 @@ const Lotes = () => {
             name: "cuil_cuit",
             label: "Cuil/cuit",
         },
-       
-         {
-            name: "Nombree",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderere(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
+        {
+            name: "Nombre",
+            label: "Nombre",
+
+        },
         {
             name: "razon",
             label: "Razon",
@@ -166,4 +158,4 @@ return (
 )
 }
 
-export default Lotes;
+export default Clientes;

@@ -67,7 +67,7 @@ export default function MenuIzq2 ({children}) {
         { 
           text: 'Clientes', 
           icon: <GroupIcon color="primary" />, 
-          path: '/admin/usuarios' 
+          path: '/admin/clientes' 
         },
         { 
           text: 'Lotes', 

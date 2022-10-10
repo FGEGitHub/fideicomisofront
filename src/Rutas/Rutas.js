@@ -60,6 +60,7 @@ import CargaRelev from '../Paginas/Nivel4/CargaRelev';
 
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
+import AdminClientes from '../Paginas/Administracion/Clientes';
 
 //////////
 
@@ -137,6 +138,7 @@ const Rutas = [
 
 	
 	{ path: '/admin/usuarios', element: <Usuarios /> },
+	{ path: '/admin/clientes', element: <AdminClientes /> },
 	
 
 	/*{	path: '/',	element: <NotFound />
