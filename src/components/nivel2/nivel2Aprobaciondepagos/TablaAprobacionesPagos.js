@@ -4,7 +4,7 @@ import servicioAprobacionesPagos from '../../../services/pagos'
 import serviciousuario1 from '../../../services/usuario1'
 import { useNavigate } from "react-router-dom";
 import VerConstancias from './VerConstancias'
-import CheckIcon from '@mui/icons-material/Check';
+import CargaDeTabla from "../../CargaDeTabla"
 import BotonRechazo from './RechazoPago'
 import BotonAprobacion from './AprobacionPago'
 import Tooltip from '@material-ui/core/Tooltip';
@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
         const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -25,6 +26,7 @@ const TablaAprobaciones = () => {
 
         })
         setPendientes(pendientes)
+        setLoading(false);
     }
 
     const aprobar = async (id) => {
@@ -170,6 +172,8 @@ const options = {
 // renderiza la data table
 return (
     <div>
+
+        {loading ? <CargaDeTabla/> : <>
         <MUIDataTable
             title={"Lista de aprobaciones pendientes"}
             data={pendientes}
@@ -185,6 +189,7 @@ return (
 
 
         />
+            </>}
     </div>
 )
 }

@@ -4,9 +4,8 @@ import  { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import servicioUsuario from '../../../services/usuarios'
 
-import  Agregar from '../../../components/Administracion/Usuarios/AgregarUsuario'
-import  TablaUsuarios from '../../../components/Administracion/Usuarios/TodosUsuarios'
-import  useUser from '../../../hooks/useUser'
+import  ModificarCli from '../../../components/Administracion/Clientes/ModificarCli'
+
 import BarraLAteral from '../../../components/Administracion/MenuizqAdmin'
 
 
@@ -57,8 +56,8 @@ useEffect(() => {
   { logueado ? <div> 
     <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
-    < Agregar />
-    < TablaUsuarios />
+    < ModificarCli />
+    
    
  </BarraLAteral> 
  </ThemeProvider>

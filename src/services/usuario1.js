@@ -4,16 +4,38 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
 //const  baseUrl ='http://localhost:4000/usuario1/'
 
 
-const cantidadd= async  (cuil_cuit) => {
+const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+
+let config = ''
+if (loggedUserJSON) {
+    const userContext = JSON.parse(loggedUserJSON)
+ 
+
+     config = {
+        headers:{
+            Authorization:`Bearer ${userContext.token}`
+        }
+    }
+
+    
+}else{
+     config = {
+        headers:{
+            Authorization:`Bearer `
+        }
+    }
+}
+
+const cantidadd= async  (cuil_cuit) => {///////////////ver no esta conctado
    
-    const {data } = await axios.get(baseUrl+'cantidadnotificaciones/'+cuil_cuit)
+    const {data } = await axios.get(baseUrl+'cantidadnotificaciones/'+cuil_cuit,config)
     console.log(cuil_cuit)
     return(data)
    
 }
 const verief= async  (id) => {
     console.log(id)
-    const data = await axios.get(baseUrl+'ief/'+id)
+    const data = await axios.get(baseUrl+'ief/'+id,config)
              
 console.log(data.data)
 
@@ -23,8 +45,8 @@ console.log(data.data)
 } 
 
 const lotesCliente= async  (cuil_cuit) => {
-    console.log('u1')
-      let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit)
+   
+      let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit,config)
   
       console.log(data)
   
@@ -36,7 +58,7 @@ const lotesCliente= async  (cuil_cuit) => {
   const vercuotas= async  (id) => {
     console.log('servicio')
    console.log(id+'id')
-    const {data } = await axios.get(baseUrl+'lote2/'+id)
+    const {data } = await axios.get(baseUrl+'lote2/'+id,config)
     console.log(data)
     
     return data 
@@ -44,7 +66,7 @@ const lotesCliente= async  (cuil_cuit) => {
 const vertodascuotas= async  (id) => {
     
    console.log(id)
-    const {data } = await axios.get(baseUrl+'lote2/'+id)
+    const {data } = await axios.get(baseUrl+'lote2/'+id,config)
     console.log(data)
     
     return data 
@@ -52,7 +74,7 @@ const vertodascuotas= async  (id) => {
 
 const noticliente= async  (cuil_cuit) => {
  
-    const {data } = await axios.get(baseUrl+'noticliente/'+cuil_cuit)
+    const {data } = await axios.get(baseUrl+'noticliente/'+cuil_cuit,config)
 
     return(data)
    
@@ -60,7 +82,7 @@ const noticliente= async  (cuil_cuit) => {
 
 const notiId= async  (id) => {
 
-  const data = await axios.get(baseUrl+'notiid/'+id)
+  const data = await axios.get(baseUrl+'notiid/'+id,config)
 
   return(data.data)
  
@@ -68,20 +90,23 @@ const notiId= async  (id) => {
 
 const respuestanoti= async  (rta) => {
   console.log(rta)
-  const data = await axios.post(baseUrl+'justificacion/',rta)
+  const data = await axios.post(baseUrl+'justificacion/',rta,config)
 alert(data.data)
  
 }
+
+//////////Api para obtener Url de descarga
+/////////////////Ver si es necesario la config. y si afecta
 const obtenerurl = async (key) => {
  
-  const  data = await axios.get(baseUrl+`get-object-url/` + (key))
+  const  data = await axios.get(baseUrl+`get-object-url/` + (key),config)
  
 return data
 }
 
 const pagarnivel1 = async (formdata) => {
 
-  const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata)
+  const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata,config)
   alert(data)
 
 }
@@ -90,7 +115,7 @@ const pagarnivel1 = async (formdata) => {
 ///legajo
 const subirprueba = async (formdata) => {
     console.log(formdata)
-    const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata)
+    const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata,config)
    
   
   }
@@ -98,14 +123,14 @@ const subirprueba = async (formdata) => {
 
   const cbuscliente = async (formdata) => {
   
-   const { data } = await axios.get(baseUrl + 'cbus/'+ formdata)
+   const { data } = await axios.get(baseUrl + 'cbus/'+ formdata,config)
    return (data)
   
   }
 
   const listacbus = async (formdata) => {
   
-    const { data } = await axios.get(baseUrl + 'cbuscliente/'+ formdata)
+    const { data } = await axios.get(baseUrl + 'cbuscliente/'+ formdata,config)
     return (data)
    
    }
@@ -115,14 +140,14 @@ const subirprueba = async (formdata) => {
 ///legajo
 const cargarcbu = async (formdata) => {
   console.log('formdata')
-  const { data } = await axios.post(baseUrl + 'cargarcbu/', formdata)
+  const { data } = await axios.post(baseUrl + 'cargarcbu/', formdata,config)
  
 
 }
 
 const constancias= async  (cuil_cuit) => {
   console.log(cuil_cuit)
-  const data = await axios.get(baseUrl+'constancias/'+cuil_cuit)
+  const data = await axios.get(baseUrl+'constancias/'+cuil_cuit,config)
            
 console.log(data.data)
 
@@ -136,7 +161,7 @@ const traercompleto= async  (cuil_cuit) => {
   const pos = {
     cuil_cuit
   }
-  const {data} = await axios.post(baseUrl+'completolegajos',pos)
+  const {data} = await axios.post(baseUrl+'completolegajos',pos,config)
            
 console.log(data)
 
@@ -147,14 +172,14 @@ return data
 
 const determinarPep = async (formdata) => {
   console.log(formdata)
-  const { data } = await axios.post(baseUrl + 'determinarPep', formdata)
+  const { data } = await axios.post(baseUrl + 'determinarPep', formdata,config)
 
 }
 
 const constanciasdelpago = async (id) => {
  console.log(id) 
 
- const { data } = await axios.get(baseUrl + 'constanciasdelpago/'+id)
+ const { data } = await axios.get(baseUrl + 'constanciasdelpago/'+id,config)
  
   return data
 
@@ -163,21 +188,21 @@ const constanciasdelpago = async (id) => {
 const pagarnivel2= async  (pago) => {////pago desde el usuario 2
 
 console.log(pago)
-  const {data } = await axios.post(baseUrl+'pagonivel2',(pago))
+  const {data } = await axios.post(baseUrl+'pagonivel2',(pago),config)
      alert(data)
    
   } 
   const modificarCliente= async  (datosNuevos) => {////
 
-      const {data } = await axios.post(baseUrl+'modificarcli',(datosNuevos))
+      const {data } = await axios.post(baseUrl+'modificarcli',(datosNuevos),config)
          alert(data)
        
       } 
   
   const cliente = async (cuil) => {
    
-   console.log(cuil)
-    const { data } = await axios.get(baseUrl + 'cliente/'+cuil)
+  
+    const { data } = await axios.get(baseUrl + 'cliente/'+cuil,config)
     
      return data
    

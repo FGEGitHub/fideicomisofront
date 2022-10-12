@@ -5,10 +5,34 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/pagos/'
 //const  baseUrl ='http://localhost:4000/pagos/'
 
 
+const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+/////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
+ let config = ''
+ if (loggedUserJSON) {
+     const userContext = JSON.parse(loggedUserJSON)
+  
+ 
+      config = {
+         headers:{
+             Authorization:`Bearer ${userContext.token}`
+         }
+     }
+ 
+     
+ }else{
+      config = {
+         headers:{
+             Authorization:`Bearer `
+         }
+     }
+ }
+
+
+
 const buscar= async  (form) => {
    console.log(form)
 
- const {data} = await axios.post(baseUrl+'mensualesinusuales',form)
+ const {data} = await axios.post(baseUrl+'mensualesinusuales',form,config)
  console.log(data)
 
   return data
@@ -17,7 +41,7 @@ const buscar= async  (form) => {
 const cantidad= async  () => {
  
 
-const cantidad = await axios.get(baseUrl+'cantidadinusuales')
+const cantidad = await axios.get(baseUrl+'cantidadinusuales',config)
 console.log(cantidad)
 
  return cantidad

@@ -56,7 +56,7 @@ const LotesCliente = (props) => {
     const vercuotas = async (index) => {
 
         const cuotas = await servicioCuotas.vercuotas(index)
-        if (cuotas !== '') { setCuotas(cuotas) }
+        setCuotas(cuotas) 
         setIdlote(index)
         setAct(true)
         verief(index)
@@ -261,6 +261,7 @@ const LotesCliente = (props) => {
             </Button>
             <BorrarCuotas
                 id={idlote} />
+                    {cuotas != '' ? <>
                     <MUIDataTable
                         title={"Lista de cuotas"}
                         data={cuotas}
@@ -272,11 +273,11 @@ const LotesCliente = (props) => {
                                 onClick: (event, rowData) => alert("You saved " + rowData.name)
                             }
                         ]}
-
-
-
                     />
-                </div> : <div></div>}
+                    </> :<> Lote sin cuotas</> }    
+
+
+                </div> : <div> Seleccione un Lote </div>}
 
 
 
@@ -286,7 +287,8 @@ const LotesCliente = (props) => {
 
             {act2 ?
                 <div>
-                
+
+                 {cuotas != '' ? <>
                     <TableContainer style={{ width: '70%' }} component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -339,6 +341,7 @@ const LotesCliente = (props) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    </> : <></>}
                 </div>
                 : <div></div>}
 

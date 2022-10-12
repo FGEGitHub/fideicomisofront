@@ -61,6 +61,7 @@ import CargaRelev from '../Paginas/Nivel4/CargaRelev';
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
 import AdminClientes from '../Paginas/Administracion/Clientes';
+import ModificarCli from '../Paginas/Administracion/ModificarCliente';
 
 //////////
 
@@ -139,7 +140,7 @@ const Rutas = [
 	
 	{ path: '/admin/usuarios', element: <Usuarios /> },
 	{ path: '/admin/clientes', element: <AdminClientes /> },
-	
+	{ path: '/admin/modificarcli/:cuil_cuit', element: <ModificarCli /> },
 
 	/*{	path: '/',	element: <NotFound />
 		}, */

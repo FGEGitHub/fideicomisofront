@@ -105,6 +105,11 @@ const ver = async (index) => {
       icon: <ContactsIcon color="primary" />,
       path: '/usuario/contacto'
     },
+    {
+      text: 'Datos personales',
+      icon: <ContactsIcon color="primary" />,
+      path: '/usuario/datosPers'
+    },
   ];
 
   const navigate = useNavigate();

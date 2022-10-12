@@ -4,11 +4,34 @@ const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
 
 //const  baseUrl = 'http://localhost:4000/'
 
+const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+/////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
+ let config = ''
+ if (loggedUserJSON) {
+     const userContext = JSON.parse(loggedUserJSON)
+  
+ 
+      config = {
+         headers:{
+             Authorization:`Bearer ${userContext.token}`
+         }
+     }
+ 
+     
+ }else{
+      config = {
+         headers:{
+             Authorization:`Bearer `
+         }
+     }
+ }
+
+
 
 const pagarnivel2= async  (pago) => {
 
 
-const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago))
+const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago),config)
    return (data)
  
 }  
@@ -22,7 +45,7 @@ const detallespagoscuota= async  (id_cuota) => {
 const pagar= async  (pago) => {
    
 // pago nivel 1
-  const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago))
+  const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago),config)
     
   
 }  
@@ -30,7 +53,7 @@ const pagar= async  (pago) => {
 const rechazararpago= async  (form) => {
  
   
-   const {data } = await axios.post(baseUrl+'pagos/rechazarr',form)
+   const {data } = await axios.post(baseUrl+'pagos/rechazarr',form,config)
      console.log(data)
     return data
    } 
@@ -39,7 +62,7 @@ const rechazararpago= async  (form) => {
 const aprobarpago= async  (form) => {
 
 console.log(form)
-  const {data } = await axios.post(baseUrl+'pagos/aprobarr/',form)
+  const {data } = await axios.post(baseUrl+'pagos/aprobarr/',form,config)
     //console.log(data)
   return data
  }  
@@ -47,7 +70,7 @@ console.log(form)
 const aprobaciones= async  () => {
 
 
- const {data } = await axios.get(baseUrl+'pagos/pendientess')
+ const {data } = await axios.get(baseUrl+'pagos/pendientess',config)
    console.log(data)
  return data
 }  
@@ -55,20 +78,20 @@ const aprobaciones= async  () => {
 const detallesPago= async  (id) => {
 ////detalles de los pagos de una cuota(nivel2)
 console.log(id)
-  const {data } = await axios.post(baseUrl+'pagos/detallespagos',id)
+  const {data } = await axios.post(baseUrl+'pagos/detallespagos',id,config)
     console.log(data)
   return data
  }  
 
 const pagosinusuales= async  () => {
 
- const {data } = await axios.get(baseUrl+'pagos/listainusual')
+ const {data } = await axios.get(baseUrl+'pagos/listainusual',config)
    
  return data
 }  
 const cantidadpendientes= async  () => {
 
-  const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes')
+  const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes',config)
     console.log(data)
   return data
  } 

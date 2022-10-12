@@ -58,7 +58,7 @@ useEffect(() => {
     <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
     < Clientes />
-    < TablaUsuarios />
+
    
  </BarraLAteral> 
  </ThemeProvider>

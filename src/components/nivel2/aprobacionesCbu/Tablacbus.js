@@ -8,6 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './Rechazocbu'
+import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
 //import ModalVer from "./ModalVer"
@@ -17,6 +18,7 @@ const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
     const [act, setAct] = useState(false)
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
 
@@ -28,6 +30,7 @@ const TablaAprobaciones = () => {
 
         })
         setPendientes(pendientes)
+        setLoading(false);
     }
 
     const aprobar = async (id) => {
@@ -152,6 +155,9 @@ const options = {
 // renderiza la data table
 return (
     <div>
+
+        {loading ?<CargaDeTabla/>  : <>
+
         <MUIDataTable
             title={"Lista de aprobaciones de CBU"}
             data={pendientes}
@@ -167,6 +173,7 @@ return (
 
 
         />
+        </>}
     </div>
 )
 }
