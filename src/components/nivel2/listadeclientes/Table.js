@@ -78,7 +78,7 @@ const Lotes = () => {
         },
        
          {
-            name: "Nombree",
+            name: "Nombre",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderere(
