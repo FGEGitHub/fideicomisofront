@@ -149,7 +149,7 @@ const LotesCuotas = (props) => {
                 <div>
 
                     <MUIDataTable
-                        title={"Lista de Clientes"}
+                        title={"Lista "}
                         data={cuotas}
                         columns={columns}
                         actions={[

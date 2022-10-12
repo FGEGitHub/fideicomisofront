@@ -36,6 +36,7 @@ export default function SelectTextFields(props) {
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
    const [ultima, setUltima] = useState([''])
+   const [habilitado, setHabilitado] = useState(false)
    const [pago, setPago] = useState({
 
     id:props.id,    })
@@ -51,12 +52,20 @@ export default function SelectTextFields(props) {
     const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
     const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
+    console.log('Si')
+    console.log(lotes[3][0].habilitado ==='Si')
     setPago({ ...pago, cuil_cuit: cuil_cuit,  })
    
     setLotes(lotes[0])
     setCuotas(lotes[1])
     //setear
     setUltima(lotes[2])
+    console.log('Si')
+    console.log(lotes[3][0].habilitado ==='Si')
+    if (lotes[3][0].habilitado =='Si'){
+      setHabilitado(true)
+      
+    }
      const cbuss = await servicioUsuario1.listacbus(prueba.cuil_cuit)
      console.log(cbuss)
      setCbus(cbuss)
@@ -143,7 +152,9 @@ export default function SelectTextFields(props) {
       noValidate
       autoComplete="off"
     >
+        
       <Button variant="outlined" onClick={handleClickOpen}>
+    
         Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}
       </Button>
       <Dialog open={open} onClose={handleClose}>

@@ -20,7 +20,7 @@ const LotesTransferencia = (props) => {
         const lotes = await servicioUsuario1.lotesCliente(preba.cuil_cuit)
         setLotes(lotes[0])
 
-
+      
 
 
     }

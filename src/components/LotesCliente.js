@@ -229,7 +229,7 @@ const LotesCliente = (props) => {
                     onClose={handleClose}
                     onOpen={handleOpen}
                     value={age}
-                    label="Lote "
+                    label="Lote"
                 
                 >
                      {
@@ -243,7 +243,7 @@ const LotesCliente = (props) => {
                 }
                 </Select>
 
-
+                
             </FormControl>
            {/*  {act ?
             <div> 

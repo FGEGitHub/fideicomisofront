@@ -43,7 +43,7 @@ const Lotes = () => {
           <>
           
        
-           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} >{clients[dataIndex].Nombre}</p>
+           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
           
           </>
         );

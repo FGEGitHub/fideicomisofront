@@ -7,6 +7,7 @@ import imagen from '../../../Assets/IMG_7194.JPG'
 import { Toolbar } from '@mui/material';
 const Transferencias = () => {
     const [lotes, setLotes] = useState([''])
+    const [habilitado, setHabilitado] = useState(false)
 
     useEffect(() => {
 
@@ -21,6 +22,11 @@ const Transferencias = () => {
      
         const lotes = await servicioUsuario1.lotesCliente(preba.cuil_cuit)
         setLotes(lotes[0])
+      
+        if (lotes[3][0].habilitado =='Si'){
+          setHabilitado(true)
+          
+        }
 
 
 
@@ -69,6 +75,8 @@ return (
 
     <Grid>
       {lotes.map((lote, index) => (
+
+        habilitado ? <>
         <ComponenteTransferencia
           zona={lote.zona}
           manzana={lote.manzana}
@@ -77,7 +85,7 @@ return (
           id={lote.id}
           image={imagen}
          // image={'/Assets/IMG_7194.JPG'}
-        />
+        /></> :<>Aun no estas habilitado para avisar el pago</>
       ))}
     </Grid>
     <Toolbar />
