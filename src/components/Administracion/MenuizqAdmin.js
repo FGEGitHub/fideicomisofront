@@ -70,9 +70,9 @@ export default function MenuIzq2 ({children}) {
           path: '/admin/clientes' 
         },
         { 
-          text: 'Lotes', 
+          text: 'Estracto', 
           icon: <GroupIcon color="primary" />, 
-          path: '/admin/usuarios' 
+          path: '/admin/estracto' 
         },
         { 
           text: 'Constancias', 

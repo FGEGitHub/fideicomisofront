@@ -50,6 +50,16 @@ const rechazocbu= async  (form) => {
  
 } 
 
-
-
-export default {lista,rechazocbu,borrar};
+const estracto= async  () => {
+   
+    const {data } = await axios.get(baseUrl+'estracto')
+    console.log(data)
+    return data 
+}  
+const subirprueba = async (formdata) => {
+    console.log(formdata)
+    const { data } = await axios.post(baseUrl + 'subirprueba', formdata,config)
+    console.log(data)
+  
+  }
+export default {lista,rechazocbu,borrar,estracto,subirprueba};
