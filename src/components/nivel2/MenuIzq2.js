@@ -78,9 +78,9 @@ export default function MenuIzq2 ({children}) {
           path: '/usuario2/aprobacionesdepagos'
         },
         { 
-          text: 'Estracto', 
+          text: 'Extracto', 
           icon: <GroupIcon color="primary" />, 
-          path: '/usuario2/estracto' 
+          path: '/usuario2/extracto' 
         },
    
         

@@ -12,7 +12,7 @@ import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
 import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
 import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
 import AprobacionCbu from "../Paginas/Usuario2/AprobacionCbus"
-import Estracto from "../Paginas/Usuario2/Estracto"
+import Extracto from "../Paginas/Usuario2/Extracto"
 
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
@@ -63,7 +63,7 @@ import CargaRelev from '../Paginas/Nivel4/CargaRelev';
 import Usuarios from '../Paginas/Administracion/Menu';
 import AdminClientes from '../Paginas/Administracion/Clientes';
 import ModificarCli from '../Paginas/Administracion/ModificarCliente';
-import EstractoAdmin from '../Paginas/Administracion/Estracto';
+import EstractoAdmin from '../Paginas/Administracion/Extracto';
 
 //////////
 
@@ -119,7 +119,7 @@ const Rutas = [
 	{ path: '/usuario2/agregarlegajo/:cuil_cut', element: <AgregarLegajo /> },
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
-	{ path: '/usuario2/estracto', element: <Estracto /> },
+	{ path: '/usuario2/extracto', element: <Extracto /> },
 	
 	
 	

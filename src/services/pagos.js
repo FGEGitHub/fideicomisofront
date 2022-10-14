@@ -75,10 +75,10 @@ const aprobaciones= async  () => {
  return data
 }  
 
-const listaEstractos= async  () => {
+const listaExtractos= async  () => {
 
 
-  const {data } = await axios.get(baseUrl+'pagos/todoslosestractos',config)
+  const {data } = await axios.get(baseUrl+'pagos/todoslosextractos',config)
     console.log(data)
   return data
  }  
@@ -93,10 +93,10 @@ console.log(id)
   return data
  }  
 
- const VerEstracto= async  (id) => {
+ const VerExtracto= async  (id) => {
   ////
   console.log(id)
-  const {data } = await axios.post(baseUrl+'pagos/estractoid',id,config)
+  const {data } = await axios.post(baseUrl+'pagos/extractoid',id,config)
     console.log(data)
    return data
    } 
@@ -116,4 +116,4 @@ const cantidadpendientes= async  () => {
 
 
 
-export default {listaEstractos,VerEstracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
