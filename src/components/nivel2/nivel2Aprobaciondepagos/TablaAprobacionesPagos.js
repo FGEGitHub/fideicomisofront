@@ -70,7 +70,16 @@ return (
     </>
 );
 }
-
+function CutomButtonsRendererr(dataIndex, rowIndex, data, onClick) {
+     
+    return (
+      <>
+       <p> ${pendientes[dataIndex].monto}  </p>
+      
+       
+      </>
+    );
+  }
 ///Descarga
 
 
@@ -131,6 +140,19 @@ return (
             name: "monto_inusual",
             label: "Monto Inusual",
         },
+        {
+            name: "Monto",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRendererr(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
     
         {
             name: "Ver Constancias",

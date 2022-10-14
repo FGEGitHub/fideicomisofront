@@ -112,7 +112,31 @@ const LotesCliente = (props) => {
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-            {cuotas[dataIndex].parcialidad == 'Final'? cuotas[dataIndex].Saldo_real:<div> No Calculado </div> }
+            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].Saldo_real:<div> No Calculado </div> }
+               
+            </>
+        );
+    }
+    function pago(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].pago:<div> No Calculado </div> }
+               
+            </>
+        );
+    }
+    function saldoInicial(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].saldo_inicial:<div> No Calculado </div> }
+               
+            </>
+        );
+    }
+    function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].cuota_con_ajuste:<div> No Calculado </div> }
                
             </>
         );
@@ -150,8 +174,17 @@ const LotesCliente = (props) => {
         },
 
         {
-            name: "saldo_inicial",
-            label: "Saldo Inicial",
+            name: "Saldo Inicial",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    saldoInicial(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
         },
         {
             name: "ICC",
@@ -164,13 +197,29 @@ const LotesCliente = (props) => {
 
         },
         {
-            name: "cuota_con_ajuste",
-            label: "Cuota con ajuste",
+            name: "Cuota con ajuste",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    cuotaConAjuste(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
         {
-            name: "pago",
-            label: "Pago",
+            name: "Pago",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    pago(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
      
