@@ -62,25 +62,26 @@ const Estracto = () => {
     const columns = [
         {
             name: "descripcion",
-            label: "descripcion",
+            label: "Cuil",
+
+        },
+        {
+            name: "nombre",
+            label: "Nombre",
 
         },
         {
             name: "referencia",
-            label: "referencia",
+            label: "Referencia",
         },
 
 
-        {
-            name: "debitos",
-            label: "debitos",
-
-        },
         {
             name: "creditos",
             label: "creditos",
 
         },
+      
 
 
 
