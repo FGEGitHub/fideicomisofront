@@ -5,12 +5,13 @@ import {useCallback, useState} from 'react';
 import axios from 'axios';
 import BackupIcon from '@material-ui/icons/Backup';
 import servicioAdministracion from '../../../services/Administracion'
-
+import TextField from '@mui/material/TextField';
 
 const SubirLegajo = (props) => {
   
     const [fileUpload, setFileUpload] = useState(null);
     const [file, setFile] = useState();
+    const [pago, setPago] = useState()
     const onDrop = useCallback((files, acceptedFiles) => {
         const formData = new FormData();
         setFileUpload(acceptedFiles);
@@ -39,6 +40,16 @@ const SubirLegajo = (props) => {
         console.log(file)
 
     }
+
+    const handleChange = (e) => {
+  
+      console.log(pago)
+    
+      // setPago({ ...pago, ['id']: props.id })
+      setPago({ ...pago, [e.target.name]: e.target.value })
+  
+  
+    }
     const enviar = () => {
         if (!file) {
             alert('No seleccionaste el archivo')
@@ -47,6 +58,8 @@ const SubirLegajo = (props) => {
         }
         let formdata = new FormData()
         formdata.append('image', file)
+        formdata.append('datos', [pago.fecha])
+
         servicioAdministracion.subirprueba(formdata)
   
     }
@@ -86,6 +99,21 @@ const SubirLegajo = (props) => {
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
       </Box>
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                <TextField
+
+                  onChange={handleChange}
+                  name="fecha"
+                  id="date"
+                  label="Fecha de pago"
+                  type="month"
+                  defaultValue="2020-01"
+                  sx={{ width: 220 }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Box>
       <input onChange={selecthandler} type="file" />
       <Button onClick={enviar}>Enviar</Button>
       </>

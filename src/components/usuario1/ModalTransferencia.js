@@ -1,17 +1,18 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { Button,CircularProgress } from '@mui/material';
-import { Paper} from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
+import { Paper } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import NativeSelect from '@mui/material/NativeSelect';
-import servicioPagos from '../../services/pagos'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useDropzone } from 'react-dropzone';
 import BackupIcon from '@material-ui/icons/Backup';
 import servicioUsuario1 from '../../services/usuario1'
 
-import React, {useCallback, useEffect, useState, Fragment } from "react";
+import React, { useCallback, useEffect, useState, Fragment } from "react";
 
 
 
@@ -35,16 +36,17 @@ export default function SelectTextFields(props) {
   const [loading, setLoading] = useState(false)
   const [lotes, setLotes] = useState([''])
   const [cuotas, setCuotas] = useState([''])
-   const [ultima, setUltima] = useState([''])
-   const [habilitado, setHabilitado] = useState(false)
-   const [pago, setPago] = useState({
+  const [ultima, setUltima] = useState([''])
+  const [habilitado, setHabilitado] = useState(false)
+  const [pago, setPago] = useState({
 
-    id:props.id,    })
-    
-    const [cbus, setCbus] = useState([''])
-    const [completo, setCompleto] = useState(false);
+    id: props.id,
+  })
 
-  
+  const [cbus, setCbus] = useState([''])
+  const [completo, setCompleto] = useState(false);
+
+
 
 
   const traer = async () => {
@@ -53,23 +55,23 @@ export default function SelectTextFields(props) {
 
     const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
     console.log('Si')
-    console.log(lotes[3][0].habilitado ==='Si')
-    setPago({ ...pago, cuil_cuit: cuil_cuit,  })
-   
+    console.log(lotes[3][0].habilitado === 'Si')
+    setPago({ ...pago, cuil_cuit: cuil_cuit, })
+
     setLotes(lotes[0])
     setCuotas(lotes[1])
     //setear
     setUltima(lotes[2])
     console.log('Si')
-    console.log(lotes[3][0].habilitado ==='Si')
-    if (lotes[3][0].habilitado =='Si'){
+    console.log(lotes[3][0].habilitado === 'Si')
+    if (lotes[3][0].habilitado == 'Si') {
       setHabilitado(true)
-      
+
     }
-     const cbuss = await servicioUsuario1.listacbus(prueba.cuil_cuit)
-     console.log(cbuss)
-     setCbus(cbuss)
-   
+    const cbuss = await servicioUsuario1.listacbus(prueba.cuil_cuit)
+    console.log(cbuss)
+    setCbus(cbuss)
+
 
 
 
@@ -90,57 +92,57 @@ export default function SelectTextFields(props) {
 
 
   const handleChange = (e) => {
-  
+
     console.log(pago)
-  
+
     // setPago({ ...pago, ['id']: props.id })
     setPago({ ...pago, [e.target.name]: e.target.value })
 
 
   }
   ////
-  
+
   const [currency, setCurrency] = React.useState('EUR');
 
 
 
 
-    const onDrop = useCallback  ((files, acceptedFiles) => {
-      setLoading(true)
-      const formData = new FormData();
-      setFileUpload(acceptedFiles);
-      formData.append('file', files[0]);
-      setEnviarr(formData)
-      setLoading(false)
-      
-  
-  
-      });
-      const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
-        onDrop,
-        multiple: false,
-        accept: 'document/*',
-    
-      });
-  
-      const acceptedFileItems = acceptedFiles.map(file => (
-        <li key={file.path}>
-          {file.path} - {file.size} bytes
-        </li>
-      )); 
+  const onDrop = useCallback((files, acceptedFiles) => {
+    setLoading(true)
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', files[0]);
+    setEnviarr(formData)
+    setLoading(false)
 
-  
-    const enviar = () => {
 
-      
-      enviarr.append('datos', [pago.cuil_cuit,pago.id,pago.monto,pago.fecha]);///// aca en forma de array se envian datos del dormulario
-     
-      servicioUsuario1.pagarnivel1(enviarr)  
-     
-      handleClose()
-      
-    
-      //window.location.reload(true);
+
+  });
+  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept: 'document/*',
+
+  });
+
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+
+  const enviar = () => {
+
+
+    enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago]);///// aca en forma de array se envian datos del dormulario
+
+    servicioUsuario1.pagarnivel1(enviarr)
+
+    handleClose()
+
+
+    //window.location.reload(true);
   }
   return (
 
@@ -152,47 +154,47 @@ export default function SelectTextFields(props) {
       noValidate
       autoComplete="off"
     >
-        
+
       <Button variant="outlined" onClick={handleClickOpen}>
-    
+
         Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <div>
-          <h3>Subir comprobante  Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}</h3>
-         {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div>:<div></div>}
-          <h4></h4>
-          
+            <h3>Subir comprobante  Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}</h3>
+            {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div> : <div></div>}
+            <h4></h4>
 
-               <TextField component="form"
-                sx={{
-                  '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                
 
-                id="outlined-select-currency"
-                select
-                label="Elegir CBU"
-                value={currency}
-                name="cbu"
-                onChange={handleChange}
-                helperText="Por favor ingrese su CBU"
-              >
-                {
+            <TextField component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+
+
+              id="outlined-select-currency"
+              select
+              label="Elegir CBU"
+              value={currency}
+              name="cbu"
+              onChange={handleChange}
+              helperText="Por favor ingrese su CBU"
+            >
+              {
                 cbus.map((option) => (
                   <MenuItem key={option.id} value={option.lazo}>
-                   {option.lazo}-  {option.numero}
+                    {option.lazo}-  {option.numero}
                   </MenuItem>
                 ))}
-              </TextField> 
+            </TextField>
 
 
-              <br />
+            <br />
 
-              <div>
-               {/*  <NativeSelect
+            <div>
+              {/*  <NativeSelect
                   defaultValue={30}
                   onChange={handleChange}
                   inputProps={{
@@ -209,7 +211,7 @@ export default function SelectTextFields(props) {
                 </NativeSelect>
  */}
 
-              </div>
+            </div>
 
 
 
@@ -217,97 +219,115 @@ export default function SelectTextFields(props) {
 
 
 
-              <br />
-              
-              <Box
-                component="form"
-                sx={{
-                  '& > :not(style)': { m: 1, width: '25ch' },
+            <br />
+
+            <Box
+              component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField onChange={handleChange}
+                id="filled-basic"
+                label="Monto"
+                name="monto"
+                variant="filled"
+                type="number" />
+            </Box>
+            <Box
+              component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+
+            </Box>
+
+
+            <Box sx={{ '& > :not(style)': { m: 1 } }}>
+              <TextField
+
+                onChange={handleChange}
+                name="fecha"
+                id="date"
+                label="Mes/Año de la cuota"
+                type="month"
+                defaultValue="2020-01"
+                sx={{ width: 220 }}
+                InputLabelProps={{
+                  shrink: true,
                 }}
-                noValidate
-                autoComplete="off"
-              >
-                <TextField onChange={handleChange}
-                 id="filled-basic" 
-                 label="Monto"
-                  name="monto"
-                   variant="filled" 
-                   type="number"/>
-              </Box>
-              <Box
-                component="form"
-                sx={{
-                  '& > :not(style)': { m: 1, width: '25ch' },
+              />
+            </Box>
+
+            <Box sx={{ '& > :not(style)': { m: 1 } }}>
+              <TextField
+
+                onChange={handleChange}
+                name="fechapago"
+                id="date"
+                label="Fecha del pago"
+                type="date"
+                defaultValue="2020-01-01"
+                sx={{ width: 220 }}
+                InputLabelProps={{
+                  shrink: true,
                 }}
-                noValidate
-                autoComplete="off"
+              />
+            </Box>
+
+            <>
+              <Paper
+                sx={{
+                  cursor: 'pointer',
+                  background: '#fafafa',
+                  color: '#bdbdbd',
+                  border: '1px dashed #ccc',
+                  '&:hover': { border: '1px solid #ccc' },
+                }}
               >
+                <div style={{ padding: '16px' }} {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {isDragActive ? (
+                    <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+                  ) : (
+                    <p>Arrastra hasta aqui el archivo </p>
+                  )}
+                  <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+                </div>
+              </Paper>
 
-              </Box>
-             
 
-              <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                <TextField
 
-                  onChange={handleChange}
-                  name="fecha"
-                  id="date"
-                  label="Fecha de pago"
-                  type="month"
-                  defaultValue="2020-01"
-                  sx={{ width: 220 }}
-                  InputLabelProps={{
-                    shrink: true,
+              {pago.monto > 0 ?
+                <div>
+                  <Box sx={{
+                    m: 1,
+                    color: 'green',
+                    fontSize: '1rem',
                   }}
-                />
-              </Box>
+                  >
+                    Archivos Aceptados <BackupIcon fontSize="small" />
+                    <ul>{acceptedFileItems}</ul>
+                    <Button onClick={enviar}>
+                      {loading ? (
+                        <CircularProgress color="inherit" size={25} />
+                      ) : (
+                        "Enviar"
+                      )}
+                    </Button>
+                  </Box>
 
-              <>
-       <Paper
-          sx={{
-            cursor: 'pointer',
-            background: '#fafafa',
-            color: '#bdbdbd',
-            border: '1px dashed #ccc',
-            '&:hover': { border: '1px solid #ccc' },
-          }}
-        >
-          <div style={{ padding: '16px' }} {...getRootProps()}>
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-            ) : (
-              <p>Arrastra hasta aqui el archivo </p>
-            )}
-            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-          </div>
-        </Paper>
-
-
-
-        {pago.monto >0 ?   
-        <div>
-      <Box sx={{ m: 1, 
-      color: 'green',
-      fontSize: '1rem',      }}
-       >
-        Archivos Aceptados <BackupIcon fontSize="small" />
-        <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>
-        {loading ? (
-                                <CircularProgress color="inherit" size={25} />
-                            ) : (
-                                "Enviar"
-                            )}
-          </Button>
-      </Box>
-
-      </div>
+                </div>
                 : <div> </div>}
 
 
-    </>
-         
+            </>
+
           </div>
         </DialogContent>
       </Dialog>
