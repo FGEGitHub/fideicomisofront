@@ -8,15 +8,8 @@ import  useNoti from '../../../hooks/useNoti'
 import  useUser from '../../../hooks/useUser'
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import Tabla from '../../../components/nivel3/pagosinusuales/TablaPagosinusuales'
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 
 
@@ -60,14 +53,12 @@ useEffect(() => {
 
     <div> 
   { logueado ? <div> 
-    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
    
     <BarraLAteral>
        <Tabla/>
 
  </BarraLAteral>
-  </ThemeProvider>
   
   </div>   :<div></div> } </div>
   );

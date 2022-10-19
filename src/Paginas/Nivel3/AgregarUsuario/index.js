@@ -1,23 +1,13 @@
 import * as React from 'react';
 import  { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import servicioUsuario from '../../../services/usuarios'
-
 import  Agregar from '../../../components/nivel3/agregarUsuario/AgregarUsuario'
 import  TablaUsuarios from '../../../components/nivel3/agregarUsuario/TodosUsuarios'
 import  useUser from '../../../hooks/useUser'
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
-
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 
 const drawerWidth = 240;
@@ -55,13 +45,11 @@ useEffect(() => {
    
 <div> 
   { logueado ? <div> 
-    <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
     < Agregar />
     < TablaUsuarios />
    
  </BarraLAteral> 
- </ThemeProvider>
  </div>   :<div></div> } </div>
   );
 }

@@ -3,16 +3,10 @@ import Historialicc  from "../../../components/nivel3/HistorialIcc";
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import AgregarIcc from '../../../components/nivel3/NuevoIcc'
 import BorrarIcc from '../../../components/nivel3/borrarhistorialicc/BorrarHistorialICC'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
  
 
@@ -48,7 +42,6 @@ useEffect(() => {
 
       <div> 
   { logueado ? <div> 
-        <ThemeProvider >
             <CssBaseline />
        <BarraLAteral>
        
@@ -56,7 +49,6 @@ useEffect(() => {
        < AgregarIcc />
      
       </BarraLAteral>
-        </ThemeProvider>
         </div>   :<div></div> } </div>
     
     );

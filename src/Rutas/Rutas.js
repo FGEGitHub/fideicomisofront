@@ -131,7 +131,7 @@ const Rutas = [
 	{ path: '/nivel3/agregaricc', element: <AgregarICC /> },
 	{ path: '/nivel3/clientes', element: <VerCliente /> },
 	{ path: '/nivel3/lotes', element: <Lotes3 /> },
-	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
+	{ path: '/nivel3/aprobaciones', element: <Aprobacion /> },
 	{ path: '/nivel3/declaraciones', element: <Declaraciones /> },
 	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
 
