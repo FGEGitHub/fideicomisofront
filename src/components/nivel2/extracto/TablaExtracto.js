@@ -58,6 +58,11 @@ const Estracto = () => {
     //
 
 
+
+
+
+    
+
     // definimos las columnas
     const columns = [
         {
