@@ -3,10 +3,8 @@ import servicioAdmin from '../../../services/Administracion'
 import MUIDataTable from "mui-datatables";
 import CargaDeTabla from "../../CargaDeTabla"
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from '@mui/icons-material/Search';
+
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 
 //import overbookingData from "./overbooking";
