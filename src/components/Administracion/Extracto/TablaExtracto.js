@@ -42,6 +42,11 @@ const Lotes = () => {
     // definimos las columnas
     const columns = [
         {
+            name: "fecha",
+            label: "fecha",
+
+        },
+        {
             name: "descripcion",
             label: "descripcion",
 

@@ -102,7 +102,11 @@ const TablaAprobaciones = () => {
         },
         {
             name: "cuil_cuit",
-            label: "Cuil/cuit",
+            label: "Cuil/cuit Cliente",
+        },
+        {
+            name: "cuil_cuit_lazo",
+            label: "Cuil/cuit titular CBU",
         },
         {
             name: "ubicacion",

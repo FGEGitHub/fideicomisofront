@@ -129,12 +129,13 @@ export default function SelectTextFields(props) {
 
   const enviar = () => {
 
-    enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo]);///// aca en forma de array se envian datos del dormulario
+    enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo]);///// aca en forma de array se envian datos del dormulario
 
     servicioUsuario1.cargarcbu(enviarr)
 
     handleClose()
 
+    
 
   }
   return (
@@ -321,7 +322,7 @@ export default function SelectTextFields(props) {
 
                   {pago.cuil_cuit_lazo && pago.numero ? <>
                     {
-                      pago.cuil_cuit_lazo.length === 13 && pago.numero.length === 22 ? <>
+                      pago.cuil_cuit_lazo.length === 11 && pago.numero.length === 22 ? <>
                         <Button onClick={enviar}>Enviar</Button>
                       </> : <>  </>}
                   </> : <></>}
@@ -335,7 +336,7 @@ export default function SelectTextFields(props) {
 
 
 
-                    {pago.cuil_cuit_lazo.length === 13 ? <>
+                    {pago.cuil_cuit_lazo.length === 11 ? <>
 
                     </> : <>
                       <Box sx={{
@@ -372,7 +373,7 @@ export default function SelectTextFields(props) {
                       fontSize: '1rem',
                     }}
                     >
-                      *Formato no aceptado de  Cuil/cuit  ninguno
+                      *Formato no aceptado de  Cuil/cuit  
 
                     </Box>
 

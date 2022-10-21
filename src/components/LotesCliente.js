@@ -141,6 +141,14 @@ const LotesCliente = (props) => {
             </>
         );
     }
+    function fecha(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+           {cuotas[dataIndex].mes + '/'+cuotas[dataIndex].anio}
+               
+            </>
+        );
+    }
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -162,14 +170,18 @@ const LotesCliente = (props) => {
     }
 
     const columns = [
+       
         {
-            name: "mes",
-            label: "Mes",
-
-        },
-        {
-            name: "anio",
-            label: "Año",
+            name: "Fecha",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                fecha(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
 
@@ -184,6 +196,11 @@ const LotesCliente = (props) => {
                         // handleEditOpen
                     )
             }
+
+        },
+        {
+            name: "Amortizacion",
+            label: "Amortizacion",
 
         },
         {
@@ -269,15 +286,14 @@ const LotesCliente = (props) => {
                 Asignar lote a usuario
             </Button>
             <br/> <br/>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-controlled-open-select-label"> LOTE</InputLabel>
+            <FormControl sx={{ m: 1, minWidth:140 }}>
+                <InputLabel > LOTE</InputLabel>
                 <Select
-                    labelId="demo-controlled-open-select-label"
-                    id="demo-controlled-open-select"
+                   
+                
                     open={open}
                     onClose={handleClose}
                     onOpen={handleOpen}
-                    value={age}
                     label="Lote"
                 
                 >
@@ -294,6 +310,31 @@ const LotesCliente = (props) => {
 
                 
             </FormControl>
+
+            {/* <TextField component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+
+
+              id="outlined-select-currency"
+              select
+              label="Lote"
+            
+              name="lote"
+              onChange={handleChange}
+              helperText="Seleccione Lote"
+            >
+              {
+                lotes.map((option, index) => (
+                    <MenuItem  key={index}  onClick={() => { vercuotas(option['id']) }}>
+                        {option['zona']} Fraccion {option['fraccion']} - Manzana {option['manzana']} -Parcela {option['parcela']}</MenuItem>
+                ))}
+            </TextField> */}
+
+
+
            {/*  {act ?
             <div> 
                <h2> Lote {lotes[0]['zona']} Fraccion {lotes[0]['fraccion']} - Manzana {lotes[0]['manzana']} -Parcela {lotes[0]['parcela']} </h2>

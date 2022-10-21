@@ -135,7 +135,7 @@ export default function SelectTextFields(props) {
   const enviar = () => {
 
 
-    enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago]);///// aca en forma de array se envian datos del dormulario
+    enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
 
     servicioUsuario1.pagarnivel1(enviarr)
 
@@ -157,7 +157,7 @@ export default function SelectTextFields(props) {
 
       <Button variant="outlined" onClick={handleClickOpen}>
 
-        Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}
+        Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} {props.zona === 'PIT' ? <>Parcela {props.parcela} </> : <>Lote {props.lote} </> } 
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
@@ -177,15 +177,15 @@ export default function SelectTextFields(props) {
               id="outlined-select-currency"
               select
               label="Elegir CBU"
-              value={currency}
+            
               name="cbu"
               onChange={handleChange}
               helperText="Por favor ingrese su CBU"
             >
               {
                 cbus.map((option) => (
-                  <MenuItem key={option.id} value={option.lazo}>
-                    {option.lazo}-  {option.numero}
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.lazo}-  {option.cuil_cuit_lazo}
                   </MenuItem>
                 ))}
             </TextField>

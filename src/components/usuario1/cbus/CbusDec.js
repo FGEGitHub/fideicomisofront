@@ -62,8 +62,8 @@ const TablaNotificaciones = (props) => {
     // definimos las columnas
     const columns = [
         {
-            name: "id",
-            label: "ID",
+            name: "cuil_cuit_lazo",
+            label: "Cuil/cuit titular",
 
         },
         {
