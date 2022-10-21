@@ -34,11 +34,12 @@ export default function SelectTextFields(props) {
   const [fileUpload, setFileUpload] = useState(null);
   const [comp1, setComp1] = useState(false)
   const [comp2, setComp2] = useState(false)
-
+  const [loading, setLoading] = useState(false)
   const [ultima, setUltima] = useState(false)
+  const [enviarr, setEnviarr] = useState();
   const [pago, setPago] = useState({
 
-    
+
   })
 
 
@@ -49,7 +50,7 @@ export default function SelectTextFields(props) {
     const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
 
-    
+
     setPago({ ...pago, cuil_cuit: cuil_cuit, })
 
 
@@ -97,14 +98,17 @@ export default function SelectTextFields(props) {
 
 
   const onDrop = useCallback((files, acceptedFiles) => {
+    setLoading(true)
     const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-console.log('before')
-    formData.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo]);///// aca en forma de array se envian datos del dormulario
+    console.log('before')
+    setEnviarr(formData)
+    setLoading(false)
 
-    servicioUsuario1.cargarcbu(formData)
-   
+    
+    
+
 
 
 
@@ -124,8 +128,13 @@ console.log('before')
 
 
   const enviar = () => {
-    window.location.reload(true);
- 
+
+    enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo]);///// aca en forma de array se envian datos del dormulario
+
+    servicioUsuario1.cargarcbu(enviarr)
+
+    handleClose()
+
 
   }
   return (
@@ -200,7 +209,33 @@ console.log('before')
 
 
             <br />
+            <Box
+              component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField onChange={handleChange1}
+                id="filled-basic"
+                label="Cuil_cuit Titular CBU"
+                name="cuil_cuit_lazo"
+                variant="filled"
+                type="number"
+                minlength="5"
+              />
+            </Box>
+            <Box
+              component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
 
+            </Box>
             <Box
               component="form"
               sx={{
@@ -248,40 +283,100 @@ console.log('before')
               ))}
             </TextField>
 
+
+            <Paper
+              sx={{
+                cursor: 'pointer',
+                background: '#fafafa',
+                color: '#bdbdbd',
+                border: '1px dashed #ccc',
+                '&:hover': { border: '1px solid #ccc' },
+              }}
+            >
+              <div style={{ padding: '16px' }} {...getRootProps()}>
+                <input {...getInputProps()} />
+                {isDragActive ? (
+                  <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+                ) : (
+                  <p>Arrastra hasta aqui el archivo </p>
+                )}
+                <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+              </div>
+            </Paper>
+            <Box sx={{
+              m: 1,
+              color: 'green',
+              fontSize: '1rem',
+            }}
+            >
+              Archivos Aceptados <BackupIcon fontSize="small" />
+              <ul>{acceptedFileItems}</ul>
+
+            </Box>
+
             {comp1 ? <>
               {comp2 ? <>
 
                 <>
-                  <Paper
-                    sx={{
-                      cursor: 'pointer',
-                      background: '#fafafa',
-                      color: '#bdbdbd',
-                      border: '1px dashed #ccc',
-                      '&:hover': { border: '1px solid #ccc' },
-                    }}
-                  >
-                    <div style={{ padding: '16px' }} {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      {isDragActive ? (
-                        <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-                      ) : (
-                        <p>Arrastra hasta aqui el archivo </p>
-                      )}
-                      <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-                    </div>
-                  </Paper>
-                  <Box sx={{
-                    m: 1,
-                    color: 'green',
-                    fontSize: '1rem',
-                  }}
-                  >
-                    Archivos Aceptados <BackupIcon fontSize="small" />
-                    <ul>{acceptedFileItems}</ul>
-                    <Button onClick={enviar}>Enviar</Button>
-                  </Box>
 
+                  {pago.cuil_cuit_lazo && pago.numero ? <>
+                    {
+                      pago.cuil_cuit_lazo.length === 13 && pago.numero.length === 22 ? <>
+                        <Button onClick={enviar}>Enviar</Button>
+                      </> : <>  </>}
+                  </> : <></>}
+
+
+
+
+
+
+                  {pago.cuil_cuit_lazo && pago.numero ? <>
+
+
+
+                    {pago.cuil_cuit_lazo.length === 13 ? <>
+
+                    </> : <>
+                      <Box sx={{
+                        m: 1,
+                        color: 'crimson',
+                        fontSize: '1rem',
+                      }}
+                      >
+                        *Formato no aceptado de  Cuil/cuit
+                      </Box>
+
+
+                    </>}
+
+                    {pago.numero.length === 22 ? <>
+
+                    </> : <>
+                      <Box sx={{
+                        m: 1,
+                        color: 'crimson',
+                        fontSize: '1rem',
+                      }}
+                      >
+                        *Cantidad de digitos CBU no corresponde
+                      </Box>
+
+
+                    </>}
+
+                  </> : <>
+                    <Box sx={{
+                      m: 1,
+                      color: 'crimson',
+                      fontSize: '1rem',
+                    }}
+                    >
+                      *Formato no aceptado de  Cuil/cuit  ninguno
+
+                    </Box>
+
+                  </>}
 
                 </>
 
