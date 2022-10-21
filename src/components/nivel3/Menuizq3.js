@@ -22,7 +22,10 @@ import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
 import AlertaInusual from '../AlertaInusual'
 import Navbar from './Navbar3';
-import Looks3Icon from '@mui/icons-material/Looks3';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import PlagiarismIcon from '@mui/icons-material/Plagiarism';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
@@ -75,22 +78,22 @@ export default function MenuIzq2 ({children}) {
         },
         {
             text: 'Agregar ICC',
-            icon: <Looks3Icon color="primary" />,
+            icon: <QueryStatsIcon color="primary" />,
             path: '/nivel3/icc'
           },
           {
-            text: 'Declaraciones',
-            icon: <Looks3Icon color="primary" />,
+            text: 'Declaraciones J.',
+            icon: <PlagiarismIcon color="primary" />,
             path: '/nivel3/declaraciones'
           },
           {
             text: 'Agregar usuario',
-            icon: <Looks3Icon color="primary" />,
+            icon: <GroupAddIcon color="primary" />,
             path: '/nivel3/agregarusuario'
           },
           {
             text: 'Pagos Inusuales Mensuales',
-            icon: <Looks3Icon color="primary" />,
+            icon: <MoneyOffIcon color="primary" />,
             path: '/nivel3/pagosmensualesinusuales'
           },
         

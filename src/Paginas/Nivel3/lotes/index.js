@@ -4,12 +4,7 @@ import TableAxios from '../../../components/nivel2/lotes/Lotes';
 import { useNavigate } from "react-router-dom";
 import servicioUsuario from '../../../services/usuarios'
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
+
   
 
 const drawerWidth = 240;
@@ -47,11 +42,9 @@ useEffect(() => {
 
     <div> 
   { logueado ? <div> 
-    <ThemeProvider theme={darkTheme}>
     <BarraLAteral>
     <TableAxios />
  </BarraLAteral>
-    </ThemeProvider>
     
     </div>   :<div></div> } </div>
   );

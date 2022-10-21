@@ -3,14 +3,9 @@
 import PagosInusuales  from "../../../components/nivel3/MensualesInusuales";
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import { useEffect, useState } from "react";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from "react-router-dom";
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+
 
 
 
@@ -47,13 +42,11 @@ useEffect(() => {
     return (
       <div> 
   { logueado ? <div>
-        <ThemeProvider theme={darkTheme}>
             <CssBaseline />
        <BarraLAteral>
   <PagosInusuales/>
      
       </BarraLAteral>
-        </ThemeProvider>
      </div>   :<div></div> } </div>
     );
 

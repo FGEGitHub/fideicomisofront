@@ -4,14 +4,8 @@ import { useNavigate } from "react-router-dom";
 import TablaAprobacionesPagos from '../../../components/nivel2/nivel2Aprobaciondepagos/TablaAprobacionesPagos';
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 const drawerWidth = 240;
 
@@ -52,11 +46,9 @@ useEffect(() => {
   return (
     <div> 
   { logueado ? <div>
-    <ThemeProvider theme={darkTheme}>
  <BarraLAteral>
 <TablaAprobacionesPagos/>
  </BarraLAteral>
-    </ThemeProvider>
  </div>   :<div></div> } </div>
   );
 }
