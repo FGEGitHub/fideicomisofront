@@ -91,24 +91,24 @@ const traer = async () => {
                 value={value}
                 onChange={(e, value) => setValue(value)}
               >
-                  {usuario &&  <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="contained">
+                  {usuario &&  <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="Outlined">
                   <Tab label="inicio" />
               </Button>  }
             
-                {cargado ? <div> <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="contained">
+                {cargado ? <div> <Button onClick={inicio} sx={{ marginLeft: "10px" }} variant="Outlined">
                   <Tab label= {`hola ${user.nombre}!`}/>
               </Button> </div>:<div></div>}
               
               </Tabs>
-              {usuario ?  <div> <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="contained">
+              {usuario ?  <div> <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="Outlined">
                 Cerrar Sesión
               </Button> </div>:<div></div>}
 
 
-              {!usuario && <div>    <Button sx={{ marginLeft: "10px" }} variant="contained">
+              {!usuario && <div>    <Button sx={{ marginLeft: "10px" }} variant="Outlined">
                 Registrarse
               </Button>
-              <Button onClick={handleClick} sx={{ marginLeft: "auto" }} variant="contained">
+              <Button onClick={handleClick} sx={{ marginLeft: "auto" }} variant="Outlined">
                 Ingresar
               </Button></div>}
              
