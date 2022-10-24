@@ -64,6 +64,8 @@ import Usuarios from '../Paginas/Administracion/Menu';
 import AdminClientes from '../Paginas/Administracion/Clientes';
 import ModificarCli from '../Paginas/Administracion/ModificarCliente';
 import EstractoAdmin from '../Paginas/Administracion/Extracto';
+import PagosAdmin from '../Paginas/Administracion/Pagos';
+
 
 //////////
 
@@ -145,6 +147,7 @@ const Rutas = [
 	{ path: '/admin/clientes', element: <AdminClientes /> },
 	{ path: '/admin/modificarcli/:cuil_cuit', element: <ModificarCli /> },
 	{ path: '/admin/estracto', element: <EstractoAdmin /> },
+	{ path: '/admin/pagos', element: <PagosAdmin /> },
 
 	/*{	path: '/',	element: <NotFound />
 		}, */

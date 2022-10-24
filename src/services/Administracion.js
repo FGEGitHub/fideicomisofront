@@ -62,4 +62,22 @@ const subirprueba = async (formdata) => {
     console.log(data)
   
   }
-export default {lista,rechazocbu,borrar,extracto,subirprueba};
+
+
+
+  const traerPagos = async () => {
+    
+    const { data } = await axios.get(baseUrl + 'pagos',config)
+    console.log(data)
+    return data
+  
+  }
+//borrar pago
+  const borrarPago = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'borrarpago/'+id,config)
+    console.log(data)
+    return data
+  
+  }
+export default {borrarPago,lista,rechazocbu,borrar,extracto,subirprueba,traerPagos};

@@ -79,7 +79,11 @@ export default function MenuIzq2 ({children}) {
           icon: <GroupIcon color="primary" />, 
           path: '/admin/usuarios' 
         },
-    
+        { 
+          text: 'Pagos', 
+          icon: <GroupIcon color="primary" />, 
+          path: '/admin/pagos' 
+        },
         
         
      
