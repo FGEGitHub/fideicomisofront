@@ -4,6 +4,7 @@ import servicioAprobacionesPagos from '../../../services/pagos'
 import serviciousuario1 from '../../../services/usuario1'
 import { useNavigate } from "react-router-dom";
 import VerConstancias from './VerConstancias'
+import Inconscistencia from './Inconscistencia'
 import CargaDeTabla from "../../CargaDeTabla"
 import BotonRechazo from './RechazoPago'
 import BotonAprobacion from './AprobacionPago'
@@ -80,8 +81,23 @@ function CutomButtonsRendererr(dataIndex, rowIndex, data, onClick) {
       </>
     );
   }
+///inconsistencia
+function Inconsistencia(dataIndex, rowIndex, data, onClick) {
+     
+    return (
+      <>
+        <Inconscistencia 
+         monto_distinto= {pendientes[dataIndex].monto_distinto} 
+         cuil_cuit_distinto= {pendientes[dataIndex].cuil_cuit_distinto}
+         monto_inusual= {pendientes[dataIndex].monto_inusual}
+         id= {pendientes[dataIndex].id}
+        /> 
+      
+       
+      </>
+    );
+  }
 ///Descarga
-
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
      
@@ -120,26 +136,30 @@ function CutomButtonsRendererr(dataIndex, rowIndex, data, onClick) {
             name: "cuil_cuit",
             label: "Cuil/cuit",
         },
-        {
-            name: "monto",
-            label: "Monto",
-        },
+      
         {
             name: "descripcion",
             label: "Estado",
         },
-        {
-            name: "cuil_cuit_distinto",
-            label: "Cuil/Cuit Distinto",
-        },
-        {
-            name: "monto_distinto",
-            label: "Monto Distinto",
-        },
+     
+    
         {
             name: "monto_inusual",
             label: "Monto Inusual",
         },
+        {
+            name: "Inconscistencia",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    Inconsistencia(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },  
         {
             name: "Monto",
             options: {

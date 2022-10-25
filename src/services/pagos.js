@@ -110,10 +110,15 @@ const pagosinusuales= async  () => {
 const cantidadpendientes= async  () => {
 
   const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes',config)
-    console.log(data)
+
   return data
  } 
+ const verCoinc= async  (id) => {
 
+  const {data}  = await axios.get(baseUrl+'pagos/vercoincidencias/'+id,config)
+    
+  return data
+ } 
+ 
 
-
-export default {listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {verCoinc,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
