@@ -5,15 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import ServicioPagos from '../../../services/pagos'
 import Tooltip from '@material-ui/core/Tooltip';
 import React, { useEffect, useState, Fragment } from "react";
-import DownloadIcon from '@mui/icons-material/Download';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
+import MUIDataTable from "mui-datatables";
 
 export default function Inconscistencia(props) {
   const [open, setOpen] = React.useState(false);
@@ -26,7 +18,7 @@ export default function Inconscistencia(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
-   
+
   };
 
   const handleClose = () => {
@@ -39,12 +31,12 @@ export default function Inconscistencia(props) {
 
   ///Ver coincidencias
   async function verCoinc(index, rowIndex, data) {
-   
+
 
 
     const constanciass = await ServicioPagos.verCoincidencias(props.id)
 
-  setConstancias(constanciass)
+    setConstancias(constanciass)
 
 
   }
@@ -53,7 +45,7 @@ export default function Inconscistencia(props) {
 
     return (
       <>
-      <Tooltip title="Ver coincidencia" arrow>
+        <Tooltip title="Ver coincidencia" arrow>
           <Button
             onClick={() => verCoinc()}
           >Ver Coincidencias</Button>
@@ -67,7 +59,35 @@ export default function Inconscistencia(props) {
 
 
   // definimos las columnas
+  const columns = [
 
+
+    {
+      name: "nombre",
+      label: "nombre",
+
+    },
+    {
+      name: "fecha",
+      label: "fecha",
+
+    },
+    {
+      name: "creditos",
+      label: "monto",
+    },
+
+    {
+      name: "descripcion",
+      label: "descripcion",
+    },
+
+
+
+
+
+
+  ];
 
 
   return (
@@ -96,42 +116,31 @@ export default function Inconscistencia(props) {
 
             <div>
               <h3>Inconscistencia</h3>
-              {props.monto_distinto ==='Si' ? <><p >Monto Distinto  </p> </> : <> </>}
-             
-              {props.cuil_cuit_distinto ==='Si' ? <> Cuil/Cuit no encontrado o CBU distinto  </> : <> </>}
-              <br/>
-              {props.monto_inusual ==='Si' ? <>Monto Inusual</> : <> </>}
+              {props.monto_distinto === 'Si' ? <><p >Monto Distinto  </p> </> : <> </>}
 
-              {montoDistint()} 
-              <TableContainer component={Paper}>
-                <Table  size="small" aria-label="a dense table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Tipo</TableCell>
-                      <TableCell align="right">Cuil/Cuit</TableCell>
-                      <TableCell align="right">Fecha</TableCell>
-                      <TableCell align="right">Descarga</TableCell>
+              {props.cuil_cuit_distinto === 'Si' ? <> Cuil/Cuit no encontrado o CBU distinto  </> : <> </>}
+              <br />
+              {props.monto_inusual === 'Si' ? <>Monto Inusual</> : <> </>}
 
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {constancias.map((row, index) => (
-                      <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {row.tipo == undefined ? 'Pago' : row.tipo}
-                        </TableCell>
-                        <TableCell align="right">{row.cuil_cuit}</TableCell>
-                        <TableCell align="right">{row.fecha === undefined ? row.mes + '/' + row.anio : row.fecha}</TableCell>
-                       {/*  <TableCell align="right">  {downloadFile(index)} </TableCell> */}
+              {montoDistint()}
 
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+
+              {constancias === [] || constancias === null ? <>No se encontraron coincidencias</> : <>
+                <MUIDataTable
+                  title={"Lista de aprobaciones pendientes"}
+                  data={constancias}
+                  columns={columns}
+                  actions={[
+                    {
+                      icon: 'save',
+                      tooltip: 'Save User',
+                      onClick: (event, rowData) => alert("You saved " + rowData.name)
+                    }
+                  ]}
+
+
+                />
+              </>}
             </div>
 
 
