@@ -12,7 +12,7 @@ const CardCuatro = () => {
             <div className="container__article">
     
                 <div className="box__article">
-                <i onClick={ir}>< AccountBalanceIcon /> </i>
+                <i onClick={ir}>< AccountBalanceIcon fontSize="large"/> </i>
                     <h5>Asocia tu CBU</h5>
                 </div>
                
