@@ -79,7 +79,7 @@ export default function Inconscistencia(props) {
 
     {
       name: "descripcion",
-      label: "descripcion",
+      label: "Cuil/Cuit CBU",
     },
 
 
