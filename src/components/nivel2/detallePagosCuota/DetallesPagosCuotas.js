@@ -59,7 +59,7 @@ export default function DetallesPagos(props) {
         label: "tipo",
     },
      {
-        name: "cuil_cuit_administradir",
+        name: "cuil_cuit_administrador",
         label: "Cuil administrador",
     },
     {
