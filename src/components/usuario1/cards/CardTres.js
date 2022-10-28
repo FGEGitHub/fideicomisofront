@@ -17,7 +17,7 @@ const ir = () => {
             <div className="container__article">
     
                 <div onClick={ir} className="box__article">
-                   <i onClick={ir}> < FileCopyIcon /></i>
+                   <i onClick={ir}> < FileCopyIcon fontSize="large"/></i>
                     <h5 onClick={ir}>Ir a legajos</h5>
                 </div>
                

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 import "./CardStyle.css";
 import { Button } from '@mui/material';
 import ModalForm from '../../../components/usuario1/ModalTransferencia'
@@ -23,7 +23,7 @@ const ir = () => {
            
                 <div onClick={ir} className="box__article">
                 
-                   <i onClick={ir}> < CurrencyExchangeIcon /></i>
+                   <i onClick={ir}> < CreditScoreIcon fontSize="large"/></i>
                       <h5 onClick={ir}>Informar Transferencia </h5>
                       
                   

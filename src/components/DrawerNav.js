@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-const pages = ["Inicio", "Nosotros", "Contacto", "Ayuda"];
+const pages = ["Inicio", "Nosotros", "Contacto", "Ayuda", "Notificaciones", "Cerrar Sesión"];
 const DrawerNav = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
