@@ -85,4 +85,12 @@ const agregarCuotas= async  (estadoCuotas) => {
     return data
 }  
 
-export default {vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};
+const asignarICC= async  (nuevoicc) => {
+  console.log(nuevoicc)
+    
+     const {data } = await axios.post(baseUrl+'agregaricc/',nuevoicc,config)
+ 
+     
+     return data
+ }  
+export default {asignarICC,vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};

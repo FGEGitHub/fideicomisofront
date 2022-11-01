@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
-
+import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 
 
@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
-import TextField from '@mui/material/TextField';
+
 import { useNavigate } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,8 +20,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-
 
 ////
 import InputLabel from '@mui/material/InputLabel';
@@ -64,10 +62,7 @@ const LotesCliente = (props) => {
    
     };
     //////////servicioCuotas
-    const [age, setAge] = React.useState('');
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+ 
 
     const handleClose = () => {
         setOpen(false);
@@ -112,7 +107,7 @@ const LotesCliente = (props) => {
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].Saldo_real:<div> No Calculado </div> }
+            {cuotas[dataIndex].parcialidad === 'Final'? '$ '+cuotas[dataIndex].Saldo_real:<div> No Calculado </div> }
                
             </>
         );
@@ -120,7 +115,7 @@ const LotesCliente = (props) => {
     function pago(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].pago:<div> No Calculado </div> }
+            {cuotas[dataIndex].parcialidad === 'Final'? '$ '+cuotas[dataIndex].pago:<div> No Calculado </div> }
                
             </>
         );
@@ -128,7 +123,7 @@ const LotesCliente = (props) => {
     function saldoInicial(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].saldo_inicial:<div> No Calculado </div> }
+            {cuotas[dataIndex].parcialidad === 'Final'? '$ '+cuotas[dataIndex].saldo_inicial:<div> No Calculado </div> }
                
             </>
         );
@@ -136,7 +131,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-            {cuotas[dataIndex].parcialidad == 'Final'? '$ '+cuotas[dataIndex].cuota_con_ajuste:<div> No Calculado </div> }
+            {cuotas[dataIndex].parcialidad === 'Final'? '$ '+cuotas[dataIndex].cuota_con_ajuste:<div> No Calculado </div> }
                
             </>
         );
@@ -165,6 +160,18 @@ const LotesCliente = (props) => {
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
+                <AgregarIcc
+                id = {cuotas[dataIndex].id}
+                traer = { async () => {
+
+                    const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
+                    console.log(lotes)
+                    setLotes(lotes)}}
+
+                />
+
+
+
             </>
         );
     }
@@ -351,7 +358,7 @@ const LotesCliente = (props) => {
             </Button>
             <BorrarCuotas
                 id={idlote} />
-                    {cuotas != '' ? <>
+                    {cuotas !== '' ? <>
                     <MUIDataTable
                         title={"Lista de cuotas"}
                         data={cuotas}
@@ -378,7 +385,7 @@ const LotesCliente = (props) => {
             {act2 ?
                 <div>
 
-                 {cuotas != '' ? <>
+                 {cuotas !== '' ? <>
                     <TableContainer style={{ width: '70%' }} component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
