@@ -12,38 +12,15 @@ import ListItemText from '@mui/material/ListItemText';
 import GroupIcon from '@mui/icons-material/Group';
 import NfcIcon from '@mui/icons-material/Nfc';
 import { useState, useEffect } from "react";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import servicioPagos from '../../services/pagos'
+
 import Navbar from '../Navbar'
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import PaidIcon from '@mui/icons-material/Paid';
+
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
   
-    const [notificaciones, setNotificaciones] = useState();
-    const [notificacioneslegajos, setNotificacioneslegajos] = useState();
-    const [notificacionescbus, setNotificacionescbus] = useState();
- 
 
-    useEffect(() => {
-      cantidadnoti()
-  }, [])
-  const cantidadnoti = async () => {
-        
-    const notis = await servicioPagos.cantidadpendientes()
-
-    setNotificaciones(notis[0])
-    setNotificacioneslegajos(notis[1])
-    setNotificacionescbus(notis[2])
-    /* if (notificaciones>0) {
-      document.title= 'Santa Catalina ('+notificaciones+')'
-   
-    }   */
-}
 
     const handleClick = (path) => {
         
@@ -60,31 +37,17 @@ export default function MenuIzq2 ({children}) {
       } 
     const menuItems = [
         { 
-          text: 'Usuarios', 
+          text: 'Cursos', 
           icon: <GroupIcon color="primary" />, 
-          path: '/admin/usuarios' 
+          path: '/esme/cursos' 
         },
-        { 
-          text: 'Clientes', 
-          icon: <GroupIcon color="primary" />, 
-          path: '/admin/clientes' 
+    
+        {
+          text: 'Lotes',
+          icon: <NfcIcon color="primary" />,
+          path:  '/esme/cursos',
         },
-        { 
-          text: 'Extracto', 
-          icon: <GroupIcon color="primary" />, 
-          path: '/admin/extracto' 
-        },
-        { 
-          text: 'Lotes', 
-          icon: <GroupIcon color="primary" />, 
-          path: '/admin/lotes' 
-        },
-        { 
-          text: 'Pagos', 
-          icon: <GroupIcon color="primary" />, 
-          path: '/admin/pagos' 
-        },
-        
+      
         
      
       ];

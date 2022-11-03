@@ -43,8 +43,18 @@ const FichaAxios = (props) => {
       ;
     };  
  
-
-
+    const enviarMail = async() => {
+       
+   
+       await servicioCliente.enviarmailprueba(props.cuil_cuit)
+      
+      setCliente(cliente)
+  
+     
+  
+      ;
+    }; 
+    
 
   return (<>    
     
@@ -231,6 +241,12 @@ const FichaAxios = (props) => {
                         onClick={() => navigate('/usuario2/legajoscliente/'+props.cuil_cuit)}
                       >
                       Ir a legajos
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        onClick={() => enviarMail()}
+                      >
+                     Enviar  mail de prueba 
                       </Button>
                     </div>
                   )}

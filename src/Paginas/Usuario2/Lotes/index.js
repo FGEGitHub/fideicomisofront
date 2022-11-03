@@ -8,8 +8,7 @@ const drawerWidth = 240;
 
 export default function Lotes() {
   const navigate = useNavigate();
-  const [nivel, setNivel] = useState(null)
-  const [user, setUser] = useState(null)
+ 
   const [logueado, setLogueado] = useState(false) 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
