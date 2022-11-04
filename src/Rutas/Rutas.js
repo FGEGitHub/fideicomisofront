@@ -70,6 +70,8 @@ import LotesAdmin from '../Paginas/Administracion/Lotes';
 
 //////////esme
 import CursosEsme from '../Paginas/Esme/Cursos';
+import Curso from '../Paginas/Esme/Curso'
+
 
 
 const Rutas = [
@@ -156,6 +158,7 @@ const Rutas = [
 	/*{	path: '/',	element: <NotFound />
 		}, */
 		{ path: '/esme/cursos', element: <CursosEsme /> },
+		{ path: '/esme/curso/:id', element: <Curso /> },
 ];
 
 export default Rutas;

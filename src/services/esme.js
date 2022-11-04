@@ -16,6 +16,14 @@ const listaCursos = async () => {
     return data
   
   }
+  const clases = async (id) => {
+ 
+    const { data } = await axios.get(baseUrl +'clases/'+id)
+    console.log(data)
+    return data
+  
+  }
+  
 
   const nuevoCurso = async (form) => {
 
@@ -23,7 +31,12 @@ const listaCursos = async () => {
     return data
   
   }
+  const nuevaClase = async (form) => {
 
+    const { data } = await axios.post(baseUrl +'nuevaclase/', form)
+    return data
+  
+  }
+  
 
-
-export default {  listaCursos,nuevoCurso};
+export default {  listaCursos,nuevoCurso,clases,nuevaClase};

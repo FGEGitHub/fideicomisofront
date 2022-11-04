@@ -12,10 +12,11 @@ import servicioEsme from '../../../services/esme'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import Box from '@mui/material/Box';
 
-export default function ClienteNuevo(props) {
+export default function ClaseNueva (props) {
   let params = useParams()
-    let cuil_cuit = params.cuil_cuit
+   
    
   const [open, setOpen] = React.useState(false);
   const [form, setForm] = useState({})
@@ -24,13 +25,14 @@ export default function ClienteNuevo(props) {
   console.log(form)}
 
   const handleClickOpen = () => {
+    setForm({'id':props.clase.id})
     setOpen(true);
   };
   const handleDeterminar = async (event) => {
     event.preventDefault();
     try {
 
-      await servicioEsme.nuevoCurso(form)
+      await servicioEsme.nuevaClase(form)
  
      
      } catch (error) {
@@ -39,7 +41,7 @@ export default function ClienteNuevo(props) {
    
      
      }
-     props.getClients()
+     props.traer()
    
     setOpen(false);
   };
@@ -52,10 +54,10 @@ export default function ClienteNuevo(props) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-       Nuevo Curso<PersonAddAlt1Icon/>
+       Nueva clase {props.clase.nombre}<PersonAddAlt1Icon/>
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Nuevo Curso </DialogTitle>
+        <DialogTitle>Nuevo clase </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Ingrese Datos del Nuevo Cliente
@@ -68,24 +70,15 @@ export default function ClienteNuevo(props) {
             autoFocus
             margin="dense"
             id="name"
-            label="Nombre"
-            name="nombre"
+            label="Tema"
+            name="tema"
             onChange={handleChange}
             fullWidth
             variant="standard"
           />
           
                                    
-              <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Domicilio"
-            name="profesor"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
+            
               <TextField
             autoFocus
             margin="dense"
@@ -96,10 +89,24 @@ export default function ClienteNuevo(props) {
             fullWidth
             variant="standard"
           />
-             
+              <Box sx={{ '& > :not(style)': { m: 1 } }}>
+              <TextField
+
+                onChange={handleChange}
+                name="fecha"
+                id="date"
+                label="Fecha del pago"
+                type="date"
+                defaultValue="2020-01-01"
+                sx={{ width: 220 }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Box>
       
           <DialogActions>
-          {form.nombre && form.profesor  ? <><Button  type="submit">Enviar</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6><Button  type="submit" disabled>Enviar</Button></> } 
+          {form.otro && form.tema  && form.fecha ? <><Button  type="submit">Enviar</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6><Button  type="submit" disabled>Enviar</Button></> } 
           <Button onClick={handleClose}>Cancelar</Button>
          
          

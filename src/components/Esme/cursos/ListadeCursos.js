@@ -13,7 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Nuevo from './NuevoCurso'
-
+import PageviewIcon from '@mui/icons-material/Pageview';
 const TablaCursos = () => {
     //configuracion de Hooks
     const navigate = useNavigate();
@@ -46,9 +46,9 @@ const TablaCursos = () => {
 
         return (
           <>
-            <Tooltip title="Descargar" arrow>
-              <DownloadIcon
-                onClick={() => navigate('')}
+            <Tooltip title="Ir al curso" arrow>
+              <PageviewIcon
+                onClick={() => navigate('/esme/curso/'+cursos[index].id)}
               />
     
             </Tooltip>
@@ -75,11 +75,12 @@ return (
     <div>
             <>
             <Nuevo
-    getClients =  { async () => {
+     getClients =  { async () => {
         const clients = await servicioEsme.listaCursos({
         })
         setCursos(clients)
     }}
+    
     />
             </>
         {loading ? <CargaDeTabla/> : <>
@@ -88,10 +89,11 @@ return (
                 <Table  size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Tipo</TableCell>
-                      <TableCell align="right">id</TableCell>
-                      <TableCell align="right">nombre</TableCell>
-                      <TableCell align="right">otro</TableCell>
+                    <TableCell align="left">id</TableCell>
+                      <TableCell align="left">Nombre</TableCell>
+                      <TableCell align="left">Otro</TableCell>
+                      <TableCell align="left">Ver</TableCell>
+
 
                     </TableRow>
                   </TableHead>
@@ -102,11 +104,11 @@ return (
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
                         <TableCell component="th" scope="row">
-                          {row.id == undefined ? 'Pago' : row.id}
+                          {row.id}
                         </TableCell>
-                        <TableCell align="right">{row.nombre}</TableCell>
-                        <TableCell align="right">{row.fecha === undefined ? row.otro : row.otro}</TableCell>
-                        <TableCell align="right">  {downloadFile(index)} </TableCell>
+                        <TableCell align="left">{row.nombre}</TableCell>
+                        <TableCell align="left">{row.otro === undefined ? row.otro : row.otro}</TableCell>
+                        <TableCell align="left">  {downloadFile(index)} </TableCell>
 
                       </TableRow>
                     ))}
