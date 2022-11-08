@@ -35,9 +35,9 @@ const lista= async  () => {
     return data 
 }   
 
-const borrar= async  (cuil_cuit) => {
+const borrarusuario= async  (cuil_cuit) => {
    
-  const rta  = await axios.get(baseUrl+'borrar/'+cuil_cuit,config)
+  const {rta}  = await axios.get(baseUrl+'borrarusuario/'+cuil_cuit,config)
     console.log(rta)
     return rta 
 } 
@@ -80,4 +80,4 @@ const subirprueba = async (formdata) => {
     return data
   
   }
-export default {borrarPago,lista,rechazocbu,borrar,extracto,subirprueba,traerPagos};
+export default {borrarPago,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};

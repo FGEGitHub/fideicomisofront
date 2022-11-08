@@ -43,9 +43,9 @@ export default function MenuIzq2 ({children}) {
         },
     
         {
-          text: 'Lotes',
+          text: 'Alumnos',
           icon: <NfcIcon color="primary" />,
-          path:  '/esme/cursos',
+          path:  '/esme/alumnos',
         },
       
         

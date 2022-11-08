@@ -113,12 +113,12 @@ const cantidadpendientes= async  () => {
 
   return data
  } 
- const verCoinc= async  (id) => {
+ const verCoincidencias= async  (id) => {
 
   const {data}  = await axios.get(baseUrl+'pagos/vercoincidencias/'+id,config)
-    
+    console.log(data)
   return data
  } 
  
 
-export default {verCoinc,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

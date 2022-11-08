@@ -9,7 +9,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import useUser from '../../../hooks/useUser'
 import servicioNotificaciones from '../../../services/notificaciones'
 import Tooltip from '@material-ui/core/Tooltip';
-import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import React, { useEffect, useState, Fragment } from "react";
 const currencies = [
   {
@@ -120,7 +120,7 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
        < Tooltip title="Leer">
-      <FindInPageTwoToneIcon variant="outlined" onClick={handleClickOpen}/>
+      <DeleteForeverIcon variant="outlined" onClick={handleClickOpen}/>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>

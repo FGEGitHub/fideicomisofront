@@ -69,33 +69,15 @@ export default function SelectTextFields(props) {
   const designar = async (event) => {
     
   
- await servicioClientes.ventaLote(props.datos)
-     navigate('/usuario2/detallecliente/'+cuil_cuit)
+ const rta = await servicioClientes.ventaLote(props.datos)
+console.log(rta)
+     navigate('/usuario2/detallecliente/'+rta[1])
 
 
 }
 
-  ////
-  const pagar = async (event) => {
-   // event.preventDefault();
-    try {
 
-      await servicioCliente.pagar()
-
-
-    } catch (error) {
-      console.error(error);
-      console.log('Error algo sucedio')
-
-    }
-
-    setOpen(false);
-  };/////
-  const [currency, setCurrency] = React.useState('EUR');
-
-  /*   const handleChange = (event) => {
-      setCurrency(event.target.value);
-    }; */
+////
 
 
   return (
@@ -118,6 +100,8 @@ export default function SelectTextFields(props) {
         Superficie: {rta.superficie} <br/>
         Actual valor metro cuadrado: {rta.valor} <br/>
         Valor del terreno: ${rta.precio}<br/>
+        Valor del anticipo: %{rta.anticipo}<br/>
+        Saldo a Financiar: %{rta.finalSant}<br/>
         Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
         Ingresos: ${rta.ingresos}<br/>
        Estado: {rta.estado}

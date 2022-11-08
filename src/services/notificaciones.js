@@ -35,7 +35,7 @@ const leer= async  (id) => {
  const cantidadpendientes= async  (cuil_cuit) => {
     
     const {data} = await axios.get(baseUrl+'cantidad/'+cuil_cuit,config)
-    console.log(data.asunto)
+
      return data 
  }  
 

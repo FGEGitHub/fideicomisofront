@@ -129,13 +129,13 @@ export default function SelectTextFields(props) {
 
   const enviar = () => {
 
-    enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo]);///// aca en forma de array se envian datos del dormulario
+    enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo,pago.alias]);///// aca en forma de array se envian datos del dormulario
 
     servicioUsuario1.cargarcbu(enviarr)
-
+ 
     handleClose()
 
-    
+    props.traer()
 
   }
   return (
@@ -225,6 +225,23 @@ export default function SelectTextFields(props) {
                 variant="filled"
                 type="number"
                 minlength="5"
+              />
+            </Box>
+            <Box
+              component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField onChange={handleChange1}
+                id="filled-basic"
+                label="Alias"
+                name="alias"
+                variant="filled"
+                
+               
               />
             </Box>
             <Box

@@ -189,7 +189,9 @@ const pagarnivel2= async  (pago) => {////pago desde el usuario 2
 
 console.log(pago)
   const {data } = await axios.post(baseUrl+'pagonivel2',(pago),config)
-     alert(data)
+
+    
+     return data
    
   } 
   const modificarCliente= async  (datosNuevos) => {////

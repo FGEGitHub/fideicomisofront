@@ -48,7 +48,7 @@ export default function AsociarCbu() {
 
                 <Navbar />
                 <br />  <br />  <br />  <br />
-                < Modalasociar/>
+              
                 <  Tabla/>
                 
 

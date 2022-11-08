@@ -93,7 +93,9 @@ useEffect(() => {
 
 </NotiContext.Provider>
 </InusualContext.Provider>
-   </UserContext.Provider>)
+   </UserContext.Provider>
+   
+   )
 
  
 

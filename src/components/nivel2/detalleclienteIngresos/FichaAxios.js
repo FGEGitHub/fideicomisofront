@@ -45,8 +45,10 @@ const FichaAxios = (props) => {
  
     const enviarMail = async() => {
        
-   
-       await servicioCliente.enviarmailprueba(props.cuil_cuit)
+     const etc = {
+        cuil_cuit:props.cuil_cuit
+      }
+       await servicioCliente.enviarmailprueba(etc)
       
       setCliente(cliente)
   

@@ -4,9 +4,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import MUIDataTable from "mui-datatables";
 import ForwardToInboxTwoToneIcon from '@mui/icons-material/ForwardToInboxTwoTone';
 import { useNavigate } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
-import Tooltip from '@material-ui/core/Tooltip';
+import Nuevo from '../AsociarCbu/ModalAsociar'
 import ModalVer from "./ModalVer";
 
 const TablaNotificaciones = (props) => {
@@ -15,29 +13,29 @@ const TablaNotificaciones = (props) => {
     const navigate = useNavigate();
     useEffect(() => {
         traer()
-       
-     
-     
-      }, [])
+
+
+
+    }, [])
 
 
     const traer = async () => {
         try {
             const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
             if (loggedUserJSON) {
-              const usuario = JSON.parse(loggedUserJSON)
-              console.log(usuario.cuil_cuit)
-              setUsuario(usuario)
-              const cant  = await servicioUsuario1.cbuscliente(usuario.cuil_cuit)
-              console.log(cant)
-              setCbus(cant)
+                const usuario = JSON.parse(loggedUserJSON)
+
+                setUsuario(usuario)
+                const cant = await servicioUsuario1.cbuscliente(usuario.cuil_cuit)
+
+                setCbus(cant)
             }
-           
+
         } catch (error) {
-            
+
         }
-      
-      
+
+
 
 
 
@@ -45,20 +43,16 @@ const TablaNotificaciones = (props) => {
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
-          <>
-    <div>
-            < ModalVer
-           // id = {cbus[dataIndex].id}
-           />
-            <Tooltip title="Responder">
-            <ForwardToInboxTwoToneIcon style={{ cursor: "pointer" }} 
-          //  onClick={() =>  navigate('/usuario/respuesta/'+cbus[dataIndex].id)  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
-            </Tooltip>
-            </div>
-          </>
+            <>
+                <div>
+                    < ModalVer
+                    // id = {cbus[dataIndex].id}
+                    />
+
+                </div>
+            </>
         );
-      }
+    }
     // definimos las columnas
     const columns = [
         {
@@ -67,64 +61,96 @@ const TablaNotificaciones = (props) => {
 
         },
         {
+            name: "alias",
+            label: "Alias",
+
+        },
+        {
             name: "numero",
             label: "numero",
         },
-       
+
         {
             name: "estado",
-            label:"estado",
-           
+            label: "estado",
+
         },
         {
             name: "lazo",
-            label:"lazo",
-           
+            label: "lazo",
+
         },
         {
-            name: "Ver/Contestar",
+            name: "Desasociar",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
                         dataIndex,
                         rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
+                        // overbookingData,
+                        // handleEditOpen
                     )
             }
-        
-        },   
- 
+
+        },
+
 
     ];
 
-const options = {
+    const options = {
 
-    /*    rowsPerPage: 10,
-       download: false, // hide csv download option
-       onTableInit: this.handleTableInit,
-       onTableChange: this.handleTableChange, */
-};
-// renderiza la data table
-return (
-    <div>
-        <MUIDataTable
-        
-            title={"Notificaciones"}
-            data={cbus}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
+        /*    rowsPerPage: 10,
+           download: false, // hide csv download option
+           onTableInit: this.handleTableInit,
+           onTableChange: this.handleTableChange, */
+    };
+    // renderiza la data table
+    return (
+        <div>
+            <>
+                <Nuevo
+                    traer={async () => {
+                        try {
+                            const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+                            if (loggedUserJSON) {
+                                const usuario = JSON.parse(loggedUserJSON)
+
+                                setUsuario(usuario)
+                                const cant = await servicioUsuario1.cbuscliente(usuario.cuil_cuit)
+
+                                setCbus(cant)
+                            }
+
+                        } catch (error) {
+
+                        }
+                    }
 
 
-        />
-    </div>
-)
+
+
+                    }
+
+
+                />
+            </>
+            <MUIDataTable
+
+                title={"Notificaciones"}
+                data={cbus}
+                columns={columns}
+                actions={[
+                    {
+                        icon: 'save',
+                        tooltip: 'Save User',
+                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                    }
+                ]}
+                options={options}
+
+
+            />
+        </div>
+    )
 }
 export default TablaNotificaciones

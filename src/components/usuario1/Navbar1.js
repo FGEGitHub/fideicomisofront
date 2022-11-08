@@ -21,7 +21,7 @@ const Navbar = (props) => {
   const usuario  = useUser().userContext
 
   const [notificacioness, setNotificacioness] = useState();
-  const [user, setUser] = useState(null)
+  const [nombre, setNombre] = useState(null)
   const [value, setValue] = useState();
   const theme = useTheme();
   console.log(theme);
@@ -45,7 +45,9 @@ const cantidadnoti = async () => {
     //  console.log(usuario.cuil_cuit)
       const notis = await servicionotificaciones.cantidadpendientes(usuario.cuil_cuit)
       console.log(notis)
-      setNotificacioness(notis)
+      setNotificacioness(notis[0])
+      setNombre(notis[1])
+
    
     }
    
@@ -66,7 +68,9 @@ const cantidadnoti = async () => {
   const irAyuda = () => {
     navigate("/usuario/menu");
   }
-
+  const nomb = () => {
+    navigate("/usuario/datosPers");
+  };
   const hanleLogout = () => {
     /* console.log('click')
      setUser(null)
@@ -114,9 +118,10 @@ const cantidadnoti = async () => {
               <Button onClick={irContacto} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Contacto" />
                 </Button>
-              <Button onClick={irAyuda} sx={{ marginLeft: "10px" }} variant="Outlined">
-                <Tab label="Ayuda" />
-              </Button>
+              
+              {usuario &&  <Button onClick={nomb} sx={{ marginLeft: "10px" }} variant="Outlined">
+               <Tab label={nombre}/>
+              </Button>  }
               <Button onClick={notificaciones} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Notificaciones" />
                 <Badge badgeContent={notificacioness} color="error">
