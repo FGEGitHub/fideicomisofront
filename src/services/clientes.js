@@ -62,10 +62,12 @@ const lista= async  () => {
 
 
  const ventaLote = async  (datos) => {
-    console.log('datos')
-    const data  = await axios.post(baseURL+'ventalotee',datos,config)
-    console.log(data)
-    alert(data.data)
+   
+    const {data}  = await axios.post(baseURL+'ventalotee',datos,config)
+    
+    
+    alert(data[0])
+    return data
    
 } 
 const cliente= async  (cuil_cuit) => {
@@ -123,8 +125,13 @@ const infocantidad= async  (cuil_cuit) => {
   
     return data 
 } 
+const enviarmailprueba= async  (etc) => {
+ console.log(etc)
+    const {data } = await axios.post(baseURL+'enviarmailprueba/',etc,config)
+  
+    return data 
+} 
 
-
-export default {lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 
