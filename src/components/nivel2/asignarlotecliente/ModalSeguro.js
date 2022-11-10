@@ -100,8 +100,8 @@ console.log(rta)
         Superficie: {rta.superficie} <br/>
         Actual valor metro cuadrado: {rta.valor} <br/>
         Valor del terreno: ${rta.precio}<br/>
-        Valor del anticipo: %{rta.anticipo}<br/>
-        Saldo a Financiar: %{rta.finalSant}<br/>
+        Valor del anticipo: ${rta.anticipo}<br/>
+        Saldo a Financiar: ${rta.finalSant}<br/>
         Valor de cuotas en 60(20% anticipo): ${rta.cuotas60}<br/>
         Ingresos: ${rta.ingresos}<br/>
        Estado: {rta.estado}
