@@ -19,6 +19,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Alert } from '@mui/material';
 
 /////
 const drawerWidth = 240;
@@ -66,8 +67,10 @@ export default function MenuUsuario2() {
   }));
   ///
 
-
-
+  const agregarFalso = async (event) => {
+ 
+    alert('Completar todos los datos')
+  }
 
   const agregarCuotas = async (event) => {
     event.preventDefault();
@@ -254,7 +257,7 @@ export default function MenuUsuario2() {
 
 
         <DialogActions>
-          <Button onClick={agregarCuotas()} type="submit">Enviar</Button>
+        {estadoCuotas.mesanticipo && estadoCuotas.mes && estadoCuotas.anio && estadoCuotas.anioanticipo ? <> <Button onClick={agregarCuotas()} >Enviar</Button> </>  :  <> <p>Completar todos los datos</p></> } 
         </DialogActions>
       </form>
 
