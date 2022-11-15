@@ -73,7 +73,7 @@ export default function MenuUsuario2() {
   }
 
   const agregarCuotas = async (event) => {
-    event.preventDefault();
+
     try {
       console.log('entra')
       const respuesta = await servicioCuotas.agregarCuotas(estadoCuotas)
@@ -257,7 +257,7 @@ export default function MenuUsuario2() {
 
 
         <DialogActions>
-        {estadoCuotas.mesanticipo && estadoCuotas.mes && estadoCuotas.anio && estadoCuotas.anioanticipo ? <> <Button onClick={agregarCuotas()} >Enviar</Button> </>  :  <> <p>Completar todos los datos</p></> } 
+        {estadoCuotas.mesanticipo && estadoCuotas.mes && estadoCuotas.anio && estadoCuotas.anioanticipo ? <> <Button onClick={() => {agregarCuotas()}} >Enviar</Button> </>  :  <> <p>Completar todos los datos</p></> } 
         </DialogActions>
       </form>
 
