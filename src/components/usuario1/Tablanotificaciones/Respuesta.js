@@ -96,17 +96,17 @@ export default function Respuesta(props) {
       )); 
 
   
-    const enviar = () => {
+    const enviar = async () => {
 
       
       enviarr.append('datos', [pago.id,pago.cuil_cuit,pago.descripcion]);///// aca en forma de array se envian datos del dormulario
      
-      servicioUsuario1.respuestanoti(enviarr)
+     const  rta = await servicioUsuario1.respuestanoti(enviarr)
      
       
-      
-    
-      window.location.reload(true);
+     alert(rta) 
+     setOpen(false);
+     
   }
   return (
 
@@ -163,12 +163,16 @@ export default function Respuesta(props) {
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
+        { fileUpload ? <>
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
+
+
+      
         <Button onClick={enviar}>
         {loading ? (
                                 <CircularProgress color="inherit" size={25} />
@@ -176,7 +180,7 @@ export default function Respuesta(props) {
                                 "Enviar"
                             )}
           </Button>
-      </Box>
+      </Box>  </>:<></>}
 
       
     </>

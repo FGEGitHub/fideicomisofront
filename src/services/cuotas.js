@@ -93,4 +93,15 @@ const asignarICC= async  (nuevoicc) => {
      
      return data
  }  
-export default {asignarICC,vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};
+
+
+ 
+ const traercuotasdisponibles = async  (id) => {
+    console.log(id)
+     const {data}  = await axios.get(baseUrl+'traercuotasfinales/'+id,config)
+     console.log(data)
+     
+     return data 
+ } 
+
+export default {asignarICC,traercuotasdisponibles,vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};

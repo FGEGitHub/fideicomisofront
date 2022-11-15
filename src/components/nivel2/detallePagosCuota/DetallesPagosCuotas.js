@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom"
 import MUIDataTable from "mui-datatables";
 import {  useState, useEffect } from "react";
 import servicioPagos from '../../../services/pagos'
+import serviciousuario1 from '../../../services/usuario1'
 import Dialog from '@mui/material/Dialog';
 import { useNavigate } from "react-router-dom";
-
+import Button from "@mui/material/Button";
 
 export default function DetallesPagos(props) {
     let params = useParams()
@@ -66,9 +67,52 @@ export default function DetallesPagos(props) {
         name: "cuil_cuit",
         label: "Cuil/Cuit",
     },
-   
+    {
+        name: "Descarga",
+        options: {
+            customBodyRenderLite: (dataIndex, rowIndex) =>
+            downloadFile(
+                    dataIndex,
+                    rowIndex,
+                   // overbookingData,
+                   // handleEditOpen
+                )
+        }
+    
+    },   
    
 ];
+
+async function download(index, rowIndex, data) {
+    const filename = (pagos[index].ubicacion)
+  
+   
+   const link = await serviciousuario1.obtenerurl(filename)
+
+    console.log(link.data)            
+    window.open(link.data)
+
+ 
+}
+
+function downloadFile(index, rowIndex, data) {
+
+    /* const filename = (products[index].key)
+    console.log(filename)
+    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+    console.log(link.data)
+    setAct(true) */
+    return (
+        <>
+            
+              <Button
+                    onClick={() => download(index)}
+                >Descargar</Button> 
+
+
+        </>
+    );
+}
 return (
 
     <MUIDataTable

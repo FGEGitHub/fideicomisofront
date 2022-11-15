@@ -34,7 +34,11 @@ const pagarnivel2= async  (pago) => {
 const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago),config)
    return (data)
  
-}  
+} 
+
+
+
+
 const detallespagoscuota= async  (id_cuota) => {
   console.log(id_cuota)
 // pago nivel 1
