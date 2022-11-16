@@ -167,7 +167,6 @@ export default function SelectTextFields(props) {
             {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div> : <div></div>}
             <h4></h4>
 
-
             <TextField component="form"
               sx={{
                 '& > :not(style)': { m: 1, width: '25ch' },
