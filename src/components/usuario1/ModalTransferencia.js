@@ -155,6 +155,7 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
 
+
       <Button variant="outlined" onClick={handleClickOpen}>
 
         Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} {props.zona === 'PIT' ? <>Parcela {props.parcela} </> : <>Lote {props.lote} </> } 
