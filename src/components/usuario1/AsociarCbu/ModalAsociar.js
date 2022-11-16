@@ -127,11 +127,11 @@ export default function SelectTextFields(props) {
   ));
 
 
-  const enviar = () => {
+  const enviar = async () => {
 
     enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo,pago.alias]);///// aca en forma de array se envian datos del dormulario
 
-    servicioUsuario1.cargarcbu(enviarr)
+   await servicioUsuario1.cargarcbu(enviarr)
  
     handleClose()
 
@@ -279,6 +279,7 @@ export default function SelectTextFields(props) {
             >
 
             </Box>
+            {pago.lazo ? <> <h4>{pago.lazo} </h4></>:<></>}
             <TextField component="form"
               sx={{
                 '& > :not(style)': { m: 1, width: '25ch' },
@@ -300,7 +301,7 @@ export default function SelectTextFields(props) {
                 </MenuItem>
               ))}
             </TextField>
-
+              
 
             <Paper
               sx={{

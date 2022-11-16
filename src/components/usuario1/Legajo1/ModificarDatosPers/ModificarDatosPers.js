@@ -191,26 +191,8 @@ const ModificacionC = (props) => {
                   }}
                 />
 
-                <TextField
-                  label="Ingresos Declarados"
-                  id="dirección"
-                  name="ingresos"
-                  defaultValue={client.ingresos}
-                  onChange={handleChange}
-                 /*  value={client.ingresos} */
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
+               
+                
               </Box>
               <Box>
                 <TextField

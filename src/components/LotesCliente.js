@@ -305,6 +305,7 @@ const LotesCliente = (props) => {
             <br /> <br />
             <FormControl sx={{ m: 1, minWidth: 140 }}>
                 <InputLabel > LOTE</InputLabel>
+               
                 <Select
 
 
@@ -324,6 +325,7 @@ const LotesCliente = (props) => {
                         )
                     }
                 </Select>
+              <h3>  {cuotas ? <>{cuotas[0].zona } Fraccion {cuotas[0].fraccion } Manzana {cuotas[0].manzana } {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela }</> : <>Lote {cuotas[0].lote }</> }  </>:<></>}</h3>
                 <FormControlLabel
                     control={
                         <Switch checked={act} onChange={handleChange}  />
