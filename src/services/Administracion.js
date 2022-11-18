@@ -1,8 +1,8 @@
 
 import axios from "axios"
 
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/administracion/'
-//const  baseUrl = 'http://localhost:4000/administracion/'
+//const  baseUrl = 'https://api.santacatalinafideicomiso.com/administracion/'
+const  baseUrl = 'http://localhost:4000/administracion/'
 
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -80,4 +80,12 @@ const subirprueba = async (formdata) => {
     return data
   
   }
-export default {borrarPago,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+
+  const cambiarestado= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'cambiarestado',datos,config)
+     console.log(data)
+     return data 
+ } 
+
+export default {cambiarestado,borrarPago,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};

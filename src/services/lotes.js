@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
-// const  baseUrl ='http://localhost:4000/lotes/'
+//const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
+ const  baseUrl ='http://localhost:4000/lotes/'
 
  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 /////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
@@ -87,4 +87,7 @@ const lotesCliente2= async  (cuil_cuit) => {
     console.log(data)
     return data 
 }  
+
+
+
 export default {lista, lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};

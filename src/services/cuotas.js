@@ -104,4 +104,22 @@ const asignarICC= async  (nuevoicc) => {
      return data 
  } 
 
-export default {asignarICC,traercuotasdisponibles,vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};
+
+ const listavarios = async  (cuil_cuit) => {
+    console.log(cuil_cuit)
+     const {data}  = await axios.get(baseUrl+'listavarios/'+cuil_cuit,config)
+     console.log(data)
+     
+     return data 
+ }
+ 
+ 
+ const agregarCuotasVarios= async  (estadoCuotas) => {
+  
+    console.log(estadoCuotas)
+   const {data } = await axios.post(baseUrl+'addautvarias/',estadoCuotas,config)
+ 
+     
+    // return data
+ }  
+export default {agregarCuotasVarios,listavarios,asignarICC,traercuotasdisponibles,vercuotas,agregarCuotas, cuotasDeUnLote,borrarcuota,verief,borrarcuotas};
