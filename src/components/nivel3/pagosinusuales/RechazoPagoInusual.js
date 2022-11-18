@@ -25,8 +25,8 @@ export default function FormDialog(props) {
     setOpen(false);
   };
 
-  const rechazar =async (id)  => {
-     await servicioPagos.rechazararpago(form)
+  const rechazar =async ()  => {
+     await servicioPagos.rechazararpagoniv3(form)
      setOpen(false);
 
   // window.location.reload(true)
@@ -57,7 +57,7 @@ export default function FormDialog(props) {
                                 id: 'uncontrolled-native',
                                
                             }}
-                        >   <option  value={'NN'}>Elegir</option>
+                        >   <option  value={'Inusual'}>Elegir</option>
                             <option   value={'Inusual'}>Inusual</option>
                             <option  value={'Sospechoso'}>Sospechoso</option>
                          

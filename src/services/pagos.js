@@ -1,8 +1,8 @@
 import axios from "axios"
 
-//const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/'
 
-const  baseUrl = 'http://localhost:4000/'
+//const  baseUrl = 'http://localhost:4000/'
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 /////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
@@ -123,6 +123,12 @@ const cantidadpendientes= async  () => {
     console.log(data)
   return data
  } 
- 
+ const rechazararpagoniv3= async  (form) => {
+ console.log(form)
+  
+  const {data } = await axios.post(baseUrl+'pagos/rechazararpagoniv3',form,config)
+    console.log(data)
+   return data
+  } 
 
-export default {verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

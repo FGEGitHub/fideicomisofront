@@ -1,7 +1,7 @@
 import axios from "axios"
 
-//const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
-const  baseUrl ='http://localhost:4000/usuario1/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
+//const  baseUrl ='http://localhost:4000/usuario1/'
 
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')

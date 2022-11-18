@@ -29,7 +29,7 @@ const PagosInusuales = () => {
     
 
 const getPagosi = async () => {
-        console.log('getPagosi')
+        
         const pagos = await servicioPagos.pagosinusuales({
 
         })
@@ -49,7 +49,7 @@ const getPagosi = async () => {
              id= {pagos[dataIndex].id} 
             />
             <CheckIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pagos[dataIndex].id) 
+            onClick={() =>  {aprobar(pagos[dataIndex].pagos.id) 
            /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>

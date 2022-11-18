@@ -1,7 +1,7 @@
 import axios from "axios"
 
-//const  baseUrl = 'https://api.santacatalinafideicomiso.com/notificaciones/'
-const  baseUrl ='http://localhost:4000/notificaciones/'
+const  baseUrl = 'https://api.santacatalinafideicomiso.com/notificaciones/'
+//const  baseUrl ='http://localhost:4000/notificaciones/'
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 /////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 

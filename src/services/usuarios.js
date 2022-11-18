@@ -1,8 +1,8 @@
 import axios from "axios"
 
 
-//const baseUrl = 'https://api.santacatalinafideicomiso.com/'
-const baseUrl = 'http://localhost:4000/'
+const baseUrl = 'https://api.santacatalinafideicomiso.com/'
+//const baseUrl = 'http://localhost:4000/'
 
 
 let token = null

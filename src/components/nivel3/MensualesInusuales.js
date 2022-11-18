@@ -99,7 +99,7 @@ const MensualInusuales = (props) => {
                            Mes
                         </InputLabel>
                         <NativeSelect
-                            defaultValue={30}
+                            defaultValue={'1'}
                             onChange={handleChange}
                             inputProps={{
                                 name: 'mes',
@@ -125,7 +125,7 @@ const MensualInusuales = (props) => {
                            Año
                         </InputLabel>
                         <NativeSelect
-                            defaultValue={30}
+                            defaultValue={'2015'}
                             onChange={handleChange}
                             inputProps={{
                                 name: 'anio',
