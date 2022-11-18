@@ -13,6 +13,7 @@ import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
 import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
 import AprobacionCbu from "../Paginas/Usuario2/AprobacionCbus"
 import Extracto from "../Paginas/Usuario2/Extracto"
+import AgregarVariascuotasL from "../Paginas/Usuario2/AgregarcuotasvariosL"
 
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
@@ -126,6 +127,7 @@ const Rutas = [
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
 	{ path: '/usuario2/extracto', element: <Extracto /> },
+	{ path: '/usuario2/agregarviarias/:cuil_cuit', element: <AgregarVariascuotasL /> },
 	
 	
 	

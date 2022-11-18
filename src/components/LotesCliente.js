@@ -303,6 +303,7 @@ const LotesCliente = (props) => {
                 Asignar lote a usuario
             </Button>
             <br /> <br />
+            <Button onClick={() => { navigate('/usuario2/agregarviarias/' + cuil_cuit) }}  variant="contained" color="success" >Agregar cuotas a varios lotes</Button><br />
             <FormControl sx={{ m: 1, minWidth: 140 }}>
                 <InputLabel > LOTE</InputLabel>
                

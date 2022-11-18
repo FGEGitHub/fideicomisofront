@@ -253,7 +253,18 @@ export default function MenuUsuario2() {
           fullWidth
           variant="standard"
         />
-
+          <br /> 
+   <TextField
+         style ={{width: '20%'}}
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Cambiar el porcentaje de anticipo"
+          name="porcentaje"
+          onChange={handleChange}
+          fullWidth
+          variant="standard"
+        />
 
 
         <DialogActions>

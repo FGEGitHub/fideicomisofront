@@ -61,7 +61,7 @@ const DetalleCliente = () => {
              <InfoCliente
                  cuil_cuit={cuil_cuit} />
              </div>
-
+             
              {habilitado ? <div>
                 Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}
                 <div> <Ingreso/> </div>

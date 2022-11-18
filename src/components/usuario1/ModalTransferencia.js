@@ -132,17 +132,17 @@ export default function SelectTextFields(props) {
   ));
 
 
-  const enviar = () => {
+  const enviar = async () => {
 
 
     enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
 
-    servicioUsuario1.pagarnivel1(enviarr)
+    await servicioUsuario1.pagarnivel1(enviarr)
 
     handleClose()
 
 
-    //window.location.reload(true);
+   window.location.reload(true);
   }
   return (
 

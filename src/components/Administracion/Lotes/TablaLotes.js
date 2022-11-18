@@ -8,6 +8,7 @@ import CargaDeTabla from "../../CargaDeTabla"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
+import ModalCambio from './ModalCambioEstado'
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -25,12 +26,10 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                <EditIcon
-                    onClick={() => onClick(data[dataIndex].id, dataIndex)}
-                    style={{ marginRight: "10px", cursor: "pointer" }}
-                />
+                <ModalCambio 
+                id = {clients[0][dataIndex].id}/>
                 <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/cuotas/' + clients[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                    onClick={() => navigate('/cuotas/' + clients[0][dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
             </>
         );
