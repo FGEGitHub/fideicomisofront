@@ -135,7 +135,7 @@ export default function SelectTextFields(props) {
   const enviar = async () => {
 
 
-    enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
+    await enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
 
     await servicioUsuario1.pagarnivel1(enviarr)
 

@@ -107,7 +107,7 @@ export default function PagarCuota() {
   const enviar = async () => {
 
 
-    enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]);///// aca en forma de array se envian datos del dormulario
+await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]);///// aca en forma de array se envian datos del dormulario
 
     const rta = await servicioUsuario1.pagarnivel2(enviarr)
     console.log(rta)

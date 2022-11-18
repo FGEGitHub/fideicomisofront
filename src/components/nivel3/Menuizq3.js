@@ -51,11 +51,7 @@ export default function MenuIzq2 ({children}) {
           icon: <GroupIcon color="primary" />, 
           path: '/nivel3/clientes' 
         },
-        { 
-          text: 'Buscar Clientes',
-          icon: <SearchIcon color="primary" />, 
-          path: '/nivel3/clientes' 
-        },
+       
         {
           text: 'Lotes',
           icon: <NfcIcon color="primary" />,
@@ -71,18 +67,14 @@ export default function MenuIzq2 ({children}) {
           icon: <AccountBalanceIcon color="primary" />,
           path: '/nivel3/pagosinusuales'
         },
-        {
-          text: 'Aprobación de Legajos',
-          icon: <AssignmentTurnedInIcon color="primary" />,
-          path: '/nivel3/aprobaciones'
-        },
+     
         {
             text: 'Agregar ICC',
             icon: <QueryStatsIcon color="primary" />,
             path: '/nivel3/icc'
           },
           {
-            text: 'Declaraciones J.',
+            text: 'Declaraciones ',
             icon: <PlagiarismIcon color="primary" />,
             path: '/nivel3/declaraciones'
           },
