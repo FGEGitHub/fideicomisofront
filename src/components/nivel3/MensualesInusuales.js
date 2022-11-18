@@ -66,8 +66,8 @@ const MensualInusuales = (props) => {
 
         },
         {
-            name: "id_pago",
-            label: "Codigo de pago",
+            name: "observaciones",
+            label: "tipo",
 
         },
         {

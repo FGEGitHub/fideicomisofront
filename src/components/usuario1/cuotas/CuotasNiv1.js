@@ -33,7 +33,7 @@ const CuotasNiv1 = (props) => {
   const [act2, setAct2] = useState(false)
 
   const [cuotas, setCuotas] = useState([''])
-
+  const [pagos, setPagos] = useState([''])
 
 
   const navigate = useNavigate();
@@ -78,7 +78,8 @@ const CuotasNiv1 = (props) => {
   const vercuotas = async (index) => {
     console.log('ver cuotas')
     const cuotas = await servicioUsuario1.vercuotas(index)
-    if (cuotas !== '') { setCuotas(cuotas) }
+    console.log(cuotas)
+    if (cuotas[0] !== '') { setCuotas(cuotas[0]) }
     setAct(true)
 
   };
@@ -187,6 +188,24 @@ const CuotasNiv1 = (props) => {
             <MUIDataTable
               title={"Lista de Cuotas"}
               data={cuotas}
+              columns={columns}
+              actions={[
+                {
+                  icon: 'save',
+                  tooltip: 'Save User',
+                  onClick: (event, rowData) => alert("You saved " + rowData.name)
+                }
+              ]}
+
+
+
+            />
+          </div>
+          <div>
+
+            <MUIDataTable
+              title={"Lista de Pagos"}
+              data={pagos}
               columns={columns}
               actions={[
                 {

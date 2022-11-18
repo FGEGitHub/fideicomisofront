@@ -132,11 +132,11 @@ export default function SelectTextFields(props) {
     enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo,pago.alias]);///// aca en forma de array se envian datos del dormulario
 
    await servicioUsuario1.cargarcbu(enviarr)
- 
+    console.log('listo')
     handleClose()
-
+    console.log('listo')
     props.traer()
-
+    window.location.reload() 
   }
   return (
 
