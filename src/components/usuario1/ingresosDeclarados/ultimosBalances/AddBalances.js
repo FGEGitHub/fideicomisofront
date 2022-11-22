@@ -11,17 +11,15 @@ const AddBalances = (props) => {
                              
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
-
+  const [enviarr, setEnviarr] = useState(null);    
+  const [loading, setLoading] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
+       // window.location.reload(true);
+       const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,'Ultimos balances']);
-   
-     servicioLegajo.subirlegajo1(formData)
-   
-       // window.location.reload(true);
+    setEnviarr(formData)
+    
      
 
 
@@ -47,22 +45,20 @@ const AddBalances = (props) => {
    console.log(file)
   }
 
-  const enviar = () => {
-   window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
-
-
-
-
-
-
-    servicioLegajo.subirlegajode(formdata)
-    window.location.reload(true);
+  const enviar = async () => {
+    setLoading(true);
+    console.log(enviarr)
+     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+    console.log(enviarr)
+    const rta = await servicioLegajo.subirlegajo1(enviarr)
+    setLoading(false);
+   alert(rta)
+   
+    props.enviado()
 }
   return (
     <>
+    <h2> Constancia de Ultimos balances</h2>
        <Paper
           sx={{
             cursor: 'pointer',

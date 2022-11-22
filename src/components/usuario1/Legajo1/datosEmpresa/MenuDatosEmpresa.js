@@ -96,20 +96,35 @@ const MenuDatosEmpresa = () => {
             <Box>
                 {{
                     0: <UltimosBal
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
                     1: <DjIva
                         cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}
                     />,
                     2: <PagosPrev
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}  
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}
+                        />,
                     3: <AddEstatuto
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
                     4: <AddActa
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
                     5: <ReferenciasComerciales
-                        cuil_cuit={user.cuil_cuit} />,
-                   6: <ReferenciasComerciales
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
+                   6: <IIBB
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
 
 
 

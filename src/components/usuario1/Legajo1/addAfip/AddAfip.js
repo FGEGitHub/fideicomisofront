@@ -13,19 +13,14 @@ const AddAfip = (props) => {
   };                             
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
-
+  const [enviarr, setEnviarr] = useState(null);    
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
+    
+       // window.location.reload(true);
+       const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,'Constancia de Afip']);
-   
-     servicioLegajo.subirlegajo1(formData)
-   
-       // window.location.reload(true);
-     
-
+    setEnviarr(formData)
 
     });
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
@@ -49,22 +44,21 @@ const AddAfip = (props) => {
    console.log(file)
   }
 
-  const enviar = () => {
-   window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
-
-
-
-
-
-
-    servicioLegajo.subirlegajode(formdata)
-    window.location.reload(true);
+  const enviar = async () => {
+ 
+    console.log(enviarr)
+     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+    console.log(enviarr)
+    const rta = await servicioLegajo.subirlegajo1(enviarr)
+   
+   alert(rta)
+   
+    props.enviado()
+ 
 }
   return (
     <>
+    <h2>Constancia de AFIP</h2>
        <Paper
           sx={{
             cursor: 'pointer',
@@ -90,7 +84,7 @@ const AddAfip = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
       </Box>
 
       

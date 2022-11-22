@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import servicioLegajo from '../../../../services/legajos'
@@ -7,24 +7,22 @@ import BackupIcon from '@material-ui/icons/Backup';
 import Box from '@mui/material/Box';
 
 const AddFoto = (props) => {
-  const handleClick = () => {
-    console.log('click');
-  };                             
+  const [enviarr, setEnviarr] = useState(null);    
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
 
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
+
+    
+
+       // window.location.reload(true);
+       const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,'Dni']);
+    setEnviarr(formData)
+    
    
-     servicioLegajo.subirlegajo1(formData)
-   
-       // window.location.reload(true);
-     
-
 
     });
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
@@ -39,31 +37,23 @@ const AddFoto = (props) => {
         {file.path} - {file.size} bytes
       </li>
     )); 
-  const handleChange = (e) => {
-    setFile({ ...file, [e.target.name]: e.target.value })
-    
-}
-  const selecthandler = e =>{
-   setFile(e.target.files[0])
-   console.log(file)
-  }
-
-  const enviar = () => {
-   window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
 
 
-
-
-
-
-    servicioLegajo.subirlegajode(formdata)
-    window.location.reload(true);
+  const enviar = async () => {
+    setLoading(true);
+    console.log(enviarr)
+     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+    console.log(enviarr)
+    const rta = await servicioLegajo.subirlegajo1(enviarr)
+    setLoading(false);
+   alert(rta)
+   
+    props.enviado()
+ 
 }
   return (
     <>
+    <h2>Fotocopia de documento</h2>
        <Paper
           sx={{
             cursor: 'pointer',
@@ -88,8 +78,16 @@ const AddFoto = (props) => {
       fontSize: '1rem',      }}
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
+       
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
+        </> : <></>}
+        {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : (
+                                "Ingresar"
+                            )}
       </Box>
 
       

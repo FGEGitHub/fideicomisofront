@@ -18,19 +18,14 @@ const AddDocimicilio = (props) => {
   };                             
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
+  const [enviarr, setEnviarr] = useState(null);   
 
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
+         // window.location.reload(true);
+       const formData = new FormData();
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,'Acreditacion Domicilio']);
-   
-     servicioLegajo.subirlegajo1(formData)
-   
-       // window.location.reload(true);
-     
-
+    setEnviarr(formData)
 
     });
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
@@ -54,22 +49,22 @@ const AddDocimicilio = (props) => {
    console.log(file)
   }
 
-  const enviar = () => {
-   window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
-
-
-
-
-
-
-    servicioLegajo.subirlegajode(formdata)
-    window.location.reload(true);
+  const enviar = async () => {
+   
+   
+    console.log(enviarr)
+     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+    console.log(enviarr)
+    const rta = await servicioLegajo.subirlegajo1(enviarr)
+ 
+   alert(rta)
+   
+    props.enviado()
+ 
 }
   return (
     <>
+     <h2>Acreditacion de domicilio</h2>
        <Paper
           sx={{
             cursor: 'pointer',
@@ -84,7 +79,7 @@ const AddDocimicilio = (props) => {
             {isDragActive ? (
               <p style={{ color: 'green' }}>Suelta aqui el documento</p>
             ) : (
-              <p>Arrastra hasta aqui el archivo descargado con La Acreditaqcion Domicilio</p>
+              <p>Arrastra hasta aqui el archivo descargado con La Acreditacion Domicilio</p>
             )}
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
@@ -95,7 +90,7 @@ const AddDocimicilio = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
       </Box>
 
       

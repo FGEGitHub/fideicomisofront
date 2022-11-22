@@ -104,21 +104,37 @@ const SubirLegajo = () => {
             <Box>
                 {{
                     0: <AddFoto
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}
+                        
+                        />,
                     1: <AddAfip
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
 
                     2: <AddDomicilio
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
                     3: <DjjDatosPerso
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
 
                     4: <DjjCalidadPep
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
                     5: <   DjjOrigen
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
                     6: <   AcreditacionIngresos
-                        cuil_cuit={user.cuil_cuit} />,
+                        cuil_cuit={user.cuil_cuit}
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }} />,
                      7: <   OtrasConstancias
                         cuil_cuit={user.cuil_cuit} />,
 
