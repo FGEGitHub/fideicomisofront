@@ -51,7 +51,7 @@ const AddActa = (props) => {
   const enviar = async () => {
     setLoading(true);
     console.log(enviarr)
-     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+     enviarr.append('datos', [props.cuil_cuit,'Acta del organo decisorio']);
     console.log(enviarr)
     const rta = await servicioLegajo.subirlegajo1(enviarr)
     setLoading(false);

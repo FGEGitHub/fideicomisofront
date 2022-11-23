@@ -48,7 +48,7 @@ const AddAfip = (props) => {
   const enviar = async () => {
  
     console.log(enviarr)
-     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+     enviarr.append('datos', [props.cuil_cuit,'Constancia de Afip']);
     console.log(enviarr)
     const rta = await servicioLegajo.subirlegajo1(enviarr)
    

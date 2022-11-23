@@ -52,7 +52,7 @@ const AddDocimicilio = (props) => {
    
    
     console.log(enviarr)
-     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+     enviarr.append('datos', [props.cuil_cuit,'Acreditacion Domicilio']);
     console.log(enviarr)
     const rta = await servicioLegajo.subirlegajo1(enviarr)
  

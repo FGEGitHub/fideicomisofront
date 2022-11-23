@@ -50,7 +50,7 @@ const AcreditacionIngresos = (props) => {
     const enviar = async () => {
       setLoading(true);
       console.log(enviarr)
-       enviarr.append('datos', [props.cuil_cuit,'Dni']);
+       enviarr.append('datos', [props.cuil_cuit,'Acreditacion de ingresos']);
       console.log(enviarr)
       const rta = await servicioLegajo.subirlegajo1(enviarr)
       setLoading(false);

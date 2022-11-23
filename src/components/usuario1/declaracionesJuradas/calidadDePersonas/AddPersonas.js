@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
@@ -48,7 +48,7 @@ const AddPersonas = (props) => {
   const enviar = async () => {
     setLoading(true);
     console.log(enviarr)
-     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+     enviarr.append('datos', [props.cuil_cuit,'Dj CalidadPerso']);
     console.log(enviarr)
     const rta = await servicioLegajo.subirlegajo1(enviarr)
     setLoading(false);
@@ -84,7 +84,12 @@ const AddPersonas = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
       </Box>
 
       
