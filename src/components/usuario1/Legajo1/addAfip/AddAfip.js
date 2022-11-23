@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import servicioLegajo from '../../../../services/legajos'
@@ -13,7 +13,8 @@ const AddAfip = (props) => {
   };                             
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
-  const [enviarr, setEnviarr] = useState(null);    
+  const [enviarr, setEnviarr] = useState(null);   
+  const [loading, setLoading] = useState(false); 
   const onDrop = useCallback  ((files, acceptedFiles) => {
     
        // window.location.reload(true);
@@ -84,7 +85,12 @@ const AddAfip = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
       </Box>
 
       

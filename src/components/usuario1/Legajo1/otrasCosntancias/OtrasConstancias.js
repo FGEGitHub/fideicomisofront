@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button ,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
@@ -20,18 +20,15 @@ const OtrasConstancias = (props) => {
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
   const [adicional, setAdicional] = useState({});
+  const [enviarr, setEnviarr] = useState(null);    
+  const [loading, setLoading] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
-    setFileUpload(acceptedFiles);
-
-
-    formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,adicional.tipo]);
-   
-     servicioLegajo.subirlegajo1(formData)
-   
-       // window.location.reload(true);
+     // window.location.reload(true);
+     const formData = new FormData();
+     setFileUpload(acceptedFiles);
+     formData.append('file', files[0]);
+     setEnviarr(formData)
+ 
      
 
 
@@ -62,14 +59,20 @@ const handleChangee = (e) => {
    console.log(file)
   }
 
-  const enviar = () => {
-
-
-    window.location.reload(true);
+  const enviar = async () => {
+    setLoading(true);
+    console.log(enviarr)
+     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+    console.log(enviarr)
+    const rta = await servicioLegajo.subirlegajo1(enviarr)
+    setLoading(false);
+   alert(rta)
+   
+    props.enviado()
 }
   return (
     <>
-      
+      <h2> Otras constancias</h2>
         <NativeSelect
                             defaultValue={30}
                             onChange={handleChangee}
@@ -116,7 +119,12 @@ const handleChangee = (e) => {
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
-        <Button onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
         </div>: <div></div>}
       </Box>
 

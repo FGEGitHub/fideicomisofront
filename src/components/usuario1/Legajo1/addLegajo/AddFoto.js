@@ -81,13 +81,12 @@ const AddFoto = (props) => {
        
         <ul>{acceptedFileItems}</ul>
         { enviarr ? <>  
-        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
-        </> : <></>}
-        {loading ? (
+          {loading ? (
                                 <CircularProgress color="inherit" size={25} />
-                            ) : (
-                                "Ingresar"
-                            )}
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
+      
       </Box>
 
       

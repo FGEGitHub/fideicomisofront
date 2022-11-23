@@ -1,12 +1,12 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-              
+      
 
 const AcreditacionIngresos = (props) => {
   const handleClick = () => {
@@ -14,18 +14,14 @@ const AcreditacionIngresos = (props) => {
   };                             
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
-
+  const [enviarr, setEnviarr] = useState(null);    
+  const [loading, setLoading] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
-    const formData = new FormData();
-    setFileUpload(acceptedFiles);
-    formData.append('file', files[0]);
-  
-    formData.append('datos', [props.cuil_cuit,'Acreditacion de ingresos']);
-   
-     servicioLegajo.subirlegajo1(formData)
-   
        // window.location.reload(true);
-     
+       const formData = new FormData();
+       setFileUpload(acceptedFiles);
+       formData.append('file', files[0]);
+       setEnviarr(formData)
 
 
     });
@@ -51,18 +47,17 @@ const AcreditacionIngresos = (props) => {
   }
 
   const enviar = () => {
-   window.location.reload(true);
-    let formdata = new FormData()
-    console.log(file)
-    formdata.append('image', file)
-
-
-
-
-
-
-    servicioLegajo.subirlegajode(formdata)
-    window.location.reload(true);
+    const enviar = async () => {
+      setLoading(true);
+      console.log(enviarr)
+       enviarr.append('datos', [props.cuil_cuit,'Dni']);
+      console.log(enviarr)
+      const rta = await servicioLegajo.subirlegajo1(enviarr)
+      setLoading(false);
+     alert(rta)
+     
+      props.enviado()
+  }
 }
   return (
     <>
@@ -91,7 +86,12 @@ const AcreditacionIngresos = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
       </Box>
 
       

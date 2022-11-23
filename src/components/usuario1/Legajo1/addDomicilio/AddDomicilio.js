@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
@@ -12,14 +12,13 @@ import HomeIcon from '@mui/icons-material/Home';
 import BackupIcon from '@material-ui/icons/Backup';
 
 
+
 const AddDocimicilio = (props) => {
-  const handleClick = () => {
-    console.log('click');
-  };                             
+                          
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
   const [enviarr, setEnviarr] = useState(null);   
-
+  const [loading, setLoading] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
          // window.location.reload(true);
        const formData = new FormData();
@@ -90,7 +89,12 @@ const AddDocimicilio = (props) => {
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
         <ul>{acceptedFileItems}</ul>
-        <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+        
+        </> : <></>}
       </Box>
 
       

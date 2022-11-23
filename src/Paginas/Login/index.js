@@ -22,6 +22,7 @@ import servicioUsuario from '../../services/usuarios'
 import Checkbox from '@mui/material/Checkbox';
 import Menu from "../../components/Navbar";
 import Registro from "../../components/Registro"
+import RecuperoC from "../../components/RecuperoC"
 
 
 
@@ -192,7 +193,7 @@ const Login = () => {
             </form>
             <Typography >
               <Link href="#" >
-               ¿Olvidaste la contraseña?
+              <RecuperoC/>
               </Link>
             </Typography>
             <Typography >¿No estas registrado?
