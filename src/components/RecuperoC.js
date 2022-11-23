@@ -7,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 import {  useState } from "react";
 import servicioUsuario from '../services/usuarios'
 import { Box, Typography, Avatar, Grid, Paper } from '@mui/material';
@@ -17,6 +18,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -79,10 +83,14 @@ export default function Ingresos() {
       <p variant="outlined" onClick={handleClickOpen}>
       ¿Olvidaste la contraseña?
       </p>
-      <Dialog maxWidth="md" open={open} onClose={handleClose}>
+      <Dialog fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+        >
       <Paper
 							sx={{
-                px: 40,
+                px: 85,
 								display: "flex",
 								flexDirection: "row",
 								alignItems: "center",
@@ -98,12 +106,12 @@ export default function Ingresos() {
 							>
 								<AccountCircleRoundedIcon fontSize="large" />
 							</Avatar>
-							<Typography  component="h1" variant="h4">
-								Recupero de contraseña
+							<Typography  align="center" component="h1" variant="h4">
+								Recuperar mi contraseña
 							</Typography>
 						</Paper>
             <Paper>
-            <Typography align='center' component="h1" variant="h6">Complete con todos sus Datos</Typography>
+            <Typography align='center' component="h1" variant="h6">Completar con tus Datos</Typography>
 
             </Paper>
         <DialogContent>
@@ -167,7 +175,7 @@ export default function Ingresos() {
 									fontSize: 12
 								}}
 							>
-								<span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
+								<span style={{ padding: 10 }}>Recuperar{"     "}</span>
 								<RegIcon fontSize="small" />
 							</Button>
               
