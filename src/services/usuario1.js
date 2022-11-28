@@ -140,8 +140,8 @@ const subirprueba = async (formdata) => {
 ///legajo
 const cargarcbu = async (formdata) => {
   console.log('formdata')
-  const { data } = await axios.post(baseUrl + 'cargarcbu/', formdata,config)
- 
+ const data = await axios.post(baseUrl + 'cargarcbu/', formdata,config)
+ console.log({data})
 
 }
 

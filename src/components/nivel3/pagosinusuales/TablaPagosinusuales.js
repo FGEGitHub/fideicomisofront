@@ -36,10 +36,18 @@ const getPagosi = async () => {
         console.log(pagos)
         setpagos(pagos)
     }
-    const aprobar = async () => {
+  
 
-      console.log('definir')
-    }
+    const aprobar =async (id)  => {
+        const auxiliarr = {id}
+        await servicioPagos.aprobarpago(auxiliarr)
+      //  setOpen(false)
+      window.location.reload(true);
+   
+     // window.location.reload(true)
+     }
+
+
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
      
         return (
@@ -49,7 +57,7 @@ const getPagosi = async () => {
              id= {pagos[dataIndex].id} 
             />
             <CheckIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pagos[dataIndex].pagos.id) 
+            onClick={() =>  {aprobar(pagos[dataIndex].id) 
            /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
             />
           </>

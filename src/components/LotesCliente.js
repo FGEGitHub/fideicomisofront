@@ -169,7 +169,7 @@ const LotesCliente = (props) => {
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
-       {/*          <AgregarIcc
+               <AgregarIcc
                     id={cuotas[dataIndex].id}
                     traer={async () => {
 
@@ -178,7 +178,7 @@ const LotesCliente = (props) => {
                         setLotes(lotes)
                     }}
 
-                /> */}
+                /> 
 
 
 

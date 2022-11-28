@@ -44,7 +44,15 @@ export default function ModalIcc(props) {
         setOpen(false);
        
     };
+    const handleDeterminar2 = async (event) => {
+        event.preventDefault();
+       await servicionivel3.agregariccgral2(props.datos)
+       navigate('/nivel3/icc')
+     
 
+        setOpen(false);
+       
+    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -76,7 +84,8 @@ export default function ModalIcc(props) {
 
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={handleDeterminar}>Continuar</Button>
+                            <Button onClick={handleDeterminar}>Agregar a todos</Button>
+                            <Button onClick={handleDeterminar2}>Agregar a quienes no tienen calculado</Button>
                         </DialogActions>
                    
                 </DialogContent>

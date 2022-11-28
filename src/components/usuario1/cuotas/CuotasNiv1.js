@@ -79,7 +79,9 @@ const CuotasNiv1 = (props) => {
     console.log('ver cuotas')
     const cuotas = await servicioUsuario1.vercuotas(index)
     console.log(cuotas)
-    if (cuotas[0] !== '') { setCuotas(cuotas[0]) }
+    if (cuotas[0] !== '') {
+       setCuotas(cuotas[0]) 
+       setPagos(cuotas[1])}
     setAct(true)
 
   };
@@ -159,6 +161,79 @@ const CuotasNiv1 = (props) => {
 
   ];
 
+  function fecha(dataIndex, rowIndex, data, onClick) {
+    return (
+        <>
+            { pagos[dataIndex].mes + "/"+ pagos[dataIndex].anio }
+
+        </>
+    );
+}
+
+function monnto(dataIndex, rowIndex, data, onClick) {
+  return (
+      <>
+          { "$ "+ pagos[dataIndex].monto }
+
+      </>
+  );
+}
+
+function estadoo(dataIndex, rowIndex, data, onClick) {
+  return (
+      <>
+          {  pagos[dataIndex].estado === "A" ? <>Aprobado</>: <> Pendiente/No Aprobado</> }
+
+      </>
+  );
+}
+  const columnaspagos = [
+    {
+      name: "fecha",
+      options: {
+          customBodyRenderLite: (dataIndex, rowIndex) =>
+          fecha(
+                  dataIndex,
+                  rowIndex,
+                  // overbookingData,
+                  // handleEditOpen
+              )
+      }
+
+  },
+
+    {
+      name: "Estado",
+      options: {
+          customBodyRenderLite: (dataIndex, rowIndex) =>
+          estadoo(
+                  dataIndex,
+                  rowIndex,
+                  // overbookingData,
+                  // handleEditOpen
+              )
+      }
+
+  },
+  {
+    name: "Monto",
+    options: {
+        customBodyRenderLite: (dataIndex, rowIndex) =>
+        monnto(
+                dataIndex,
+                rowIndex,
+                // overbookingData,
+                // handleEditOpen
+            )
+    }
+
+},
+
+    
+
+
+
+  ];
 
   return (
 
@@ -206,7 +281,7 @@ const CuotasNiv1 = (props) => {
             <MUIDataTable
               title={"Lista de Pagos"}
               data={pagos}
-              columns={columns}
+              columns={columnaspagos}
               actions={[
                 {
                   icon: 'save',
