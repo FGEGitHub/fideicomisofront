@@ -40,7 +40,7 @@ const subirlegajode = async (formData) => {
 
 
 
-  await axios.post(baseUrl + 'subirlegajo', formData, config)
+  await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajodni', formdata)
   //await axios.post(baseUrl + 'subirlegajo', formData, config)
 
 
