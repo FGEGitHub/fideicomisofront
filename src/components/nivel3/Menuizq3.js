@@ -88,6 +88,11 @@ export default function MenuIzq2 ({children}) {
             icon: <MoneyOffIcon color="primary" />,
             path: '/nivel3/pagosmensualesinusuales'
           },
+          {
+            text: 'Todos los pagos',
+            icon: <MoneyOffIcon color="primary" />,
+            path: '/nivel3/pagos'
+          },
         
      
       ];

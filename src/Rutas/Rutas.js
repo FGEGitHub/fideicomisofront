@@ -50,7 +50,7 @@ import Aprobacion from '../Paginas/Nivel3/aprobacionPagos';
 import AgregarICC from '../Paginas/Nivel3/AgregarIcc';
 import Declaraciones from '../Paginas/Nivel3/Declaraciones';
 import Agregarusuario from '../Paginas/Nivel3/AgregarUsuario';
-
+import Pagos3 from '../Paginas/Nivel3/Pagos';
 
 
 
@@ -142,6 +142,7 @@ const Rutas = [
 	{ path: '/nivel3/aprobacionesdepagos', element: <Aprobacion /> },
 	{ path: '/nivel3/declaraciones', element: <Declaraciones /> },
 	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
+	{ path: '/nivel3/pagos', element: <Pagos3 /> },
 
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },

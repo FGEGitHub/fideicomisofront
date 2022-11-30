@@ -71,6 +71,11 @@ const MensualInusuales = (props) => {
 
         },
         {
+            name: "estado",
+            label: "estado",
+
+        },
+        {
             name: "domicilio",
             label: "Direccion",
 

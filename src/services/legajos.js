@@ -1,8 +1,8 @@
 import axios from "axios"
 
-//const baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
+const baseUrl = 'https://api.santacatalinafideicomiso.com/usuario1/'
 
-const baseUrl = 'http://localhost:4000/usuario1/'
+//const baseUrl = 'http://localhost:4000/usuario1/'
 
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -40,7 +40,7 @@ const subirlegajode = async (formData) => {
 
 
 
-  await axios.post('https://api.santacatalinafideicomiso.com/links/subirlegajodni', formdata)
+  await axios.post(baseUrl + 'subirlegajo', formData, config)
   //await axios.post(baseUrl + 'subirlegajo', formData, config)
 
 

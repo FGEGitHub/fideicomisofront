@@ -131,4 +131,15 @@ const cantidadpendientes= async  () => {
    return data
   } 
 
-export default {rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+
+  
+  const todoslospagos= async  () => {
+  
+     
+     const {data } = await axios.get(baseUrl+'pagos/todoslospagos',config)
+       
+      return data
+     }
+
+
+export default {todoslospagos,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

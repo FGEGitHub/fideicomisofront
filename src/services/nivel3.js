@@ -32,7 +32,12 @@ const agregariccgral= async  (datos) => {
     alert(data)
    
 }  
-
+const agregariccgral2= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'agregariccgral22',datos,config)
+     alert(data)
+    
+ }  
 const traerhistorial= async  () => {
    console.log(1)
     const {data } =await axios.get(baseUrl+'historialicc',config)
@@ -94,4 +99,4 @@ const borrarhistorial= async  () => {
        
   }
   
-export default {agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+export default {agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
