@@ -20,7 +20,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 const AgregarVarias = () => {
     const [seleccion, setSeleccion] = useState({}) /// ES UN DICCIONARIO DE DICCIONARIOS
-    const [seleccion2, setSeleccion2] = useState([]) 
+    const [cant, setCant] = useState(0) 
     let params = useParams()
     const navigate = useNavigate();
     let cuil_cuit = params.cuil_cuit
@@ -54,7 +54,7 @@ const AgregarVarias = () => {
     const agregarCuotas = async (event) => {
        
         try {
-            console.log(seleccion2)
+          
             
             
             const respuesta = await servicioCuotas.agregarCuotasVarios(estadoCuotas)
@@ -96,38 +96,21 @@ const AgregarVarias = () => {
         }else {
              valor = (valores['valorotro'])
         }
-
-
-      
-       if (seleccion[e.id] === undefined || seleccion=== {}){
-       console.log('no esta')
-        setSeleccion({ ...seleccion, [e.id]: lote })
-
-        
-        console.log(e.id)
-        const etc = (seleccion2+','+e.id)
-        console.log(etc)
-        setSeleccion2(etc)
-   
-        console.log('llega1')
-        const moment =total + (parseFloat(e.superficie)*(valor))
-        console.log(moment)
-        setTotal( moment)
-        console.log('etc')
        
-       }else{
-        console.log('esta')
-        delete seleccion[e.id] ;
-        const aa = ','+e.id
-        console.log(aa)
-        const au=  seleccion2.replace(aa,'')
-        setSeleccion2(au)
-        const moment =total - (parseFloat(e.superficie)*(valor))
+        setSeleccion({ ...seleccion, [cant]: e.id })
+       
+
+   
+     
+
+        const moment =total + (parseFloat(e.superficie)*(valor))
+        console.log(seleccion)
+    
         
        setTotal(moment)
-      
-       }
-      
+       setCant(cant+1)
+   
+       
        
     } catch (error) {
     console.log(error)
@@ -140,8 +123,9 @@ const AgregarVarias = () => {
     }
 
     const probar = async (event) => {
-        setestadoCuotas({ ...estadoCuotas, ['seleccion']: [seleccion2] })
-        console.log(seleccion2)
+        setestadoCuotas({ ...estadoCuotas, ['seleccion']: [seleccion] })
+
+      
         setParte1(false)
     }
 

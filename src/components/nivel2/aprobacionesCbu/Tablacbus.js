@@ -96,8 +96,8 @@ const TablaAprobaciones = () => {
     // definimos las columnas
     const columns = [
         {
-            name: "tipo",
-            label: "Tipo",
+            name: "numero",
+            label: "CBU",
 
         },
         {
