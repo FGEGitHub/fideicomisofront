@@ -56,8 +56,7 @@ const lotesCliente= async  (cuil_cuit) => {
   } 
 
   const vercuotas= async  (id) => {
-    console.log('servicio')
-   console.log(id+'id')
+ 
     const {data } = await axios.get(baseUrl+'lote2/'+id,config)
     console.log(data)
     
