@@ -11,7 +11,6 @@ import servicioAdmin from '../../../services/Administracion'
 import Tooltip from '@material-ui/core/Tooltip';
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import React, { useEffect, useState, Fragment } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
 const currencies = [
   {
     value: 'CBU',
@@ -31,9 +30,8 @@ const currencies = [
 export default function SelectTextFields(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
-
-  const [notificacion, setNotidicaciones] = useState()
-  const [activo, setActivo] = useState(false)
+  const [cambiarmonto, setCambiarmonto] = React.useState(false);
+ 
 
 
 
@@ -59,7 +57,10 @@ export default function SelectTextFields(props) {
     setOpen(false);
   };
 
-  
+  const handlemonto = () =>{
+    setForm({  ...form, ['cambiarmonto']:!cambiarmonto})
+
+  }
 
   
   ////
@@ -69,7 +70,7 @@ export default function SelectTextFields(props) {
     console.log(pago)
     try {
 
-      await servicioAdmin.borrarPago(
+      await servicioAdmin.modificararPago(
       props.id
       )
       props.traer()
@@ -102,12 +103,24 @@ export default function SelectTextFields(props) {
       noValidate
       autoComplete="off"
     >
-       < Tooltip title="Borrar pago">
-      <DeleteIcon variant="outlined" onClick={handleClickOpen}/>
+       < Tooltip title="Leer">
+      <FindInPageTwoToneIcon variant="outlined" onClick={handleClickOpen}/>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-            Seguro? {props.id}
+        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Determinar Monto"
+            name= "montonuevo"
+            type={'number'}
+            onChange={handleChange}
+            fullWidth
+            variant="standard"
+            min="0" 
+          />
+      
          <Button  onClick={() => borrar()} >Aceptar</Button>
         </DialogContent>
       </Dialog>

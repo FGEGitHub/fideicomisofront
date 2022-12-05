@@ -4,7 +4,7 @@ import ServicioAdmin from '../../../services/Administracion'
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
 import TextField from '@mui/material/TextField';
@@ -64,7 +64,7 @@ const LotesCliente = (props) => {
     }
     const borrar = async (id) => {
 
-        const rta = await ServicioAdmin.borrarcuota(id)
+        const rta = await ServicioAdmin.borrarPago(id)
 
         alert(rta)
     }
@@ -99,13 +99,11 @@ const LotesCliente = (props) => {
          
             </div>
                 <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/usuario2/pagoscuotas/' + cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                    onClick={() => navigate('' + cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
 
 
-                <DeleteIcon style={{ cursor: "pointer" }}
-                    onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
+              
             </>
         );
     }

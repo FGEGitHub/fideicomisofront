@@ -84,8 +84,7 @@ const LotesCliente = (props) => {
         setAct2(!act2);
       };
     const verief = async (index) => {
-        console.log('ver ief')
-        console.log(index)
+       
         const dde = await servicioCuotas.verief(index)
         setDeudaExigible(dde[0])
         setDetallePendiente(dde[1])

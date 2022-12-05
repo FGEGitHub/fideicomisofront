@@ -106,7 +106,7 @@ const AgregarVarias = () => {
         const moment =total + (parseFloat(e.superficie)*(valor))
         console.log(seleccion)
     
-        
+        setestadoCuotas({ ...estadoCuotas, ['cant']: cant+1 })
        setTotal(moment)
        setCant(cant+1)
    
@@ -123,8 +123,10 @@ const AgregarVarias = () => {
     }
 
     const probar = async (event) => {
+       
         setestadoCuotas({ ...estadoCuotas, ['seleccion']: [seleccion] })
-
+     
+        
       
         setParte1(false)
     }
