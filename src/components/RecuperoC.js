@@ -52,28 +52,52 @@ export default function Ingresos() {
     const [open, setOpen] = React.useState(false);
     const [usuario, setUsuario] = useState({
       cuil_cuit: "",
-      password: "",
+      
 });
+const [recupero, setRecupero] = useState({});
+
+const [ver, setVer] = useState(false);
   const handleChange = (e) =>{
     console.log(usuario)
     setUsuario({  ...usuario, [e.target.name]: e.target.value })}
 
+    const handleChangee = (e) =>{
+      console.log(recupero)
+      setRecupero({  ...recupero, [e.target.name]: e.target.value })}
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleDeterminar = async (event) => {
     event.preventDefault()
-
-    const rta=  await servicioUsuario.registro(
-      usuario
+    setRecupero( {cuil_cuit:usuario.cuil_cuit})
+    const rta=  await servicioUsuario.recupero(
+     usuario
      )
-    
+     if (rta === 'Se envio un codigo a tu correo'){
+      setVer(true)
+     }
+    alert(rta)
  
     
 
-   setOpen(false);
+
   };
-  
+  const handleDeterminarr = async (event) => {
+    event.preventDefault()
+
+    const rta=  await servicioUsuario.recupero(
+      usuario
+     )
+     if (rta === 'Se envio un codigo a tu correo'){
+      setVer(true)
+     }
+    alert(rta)
+ 
+    
+
+
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -117,6 +141,9 @@ export default function Ingresos() {
         <DialogContent>
 
           <form  onSubmit={handleDeterminar}> 
+
+          {!ver ? <> 
+
           <TextField className={cardStyles.field}
 								sx={{
                   mx: 3, width: '75%'
@@ -131,7 +158,12 @@ export default function Ingresos() {
             size="small"
             variant="standard"
           />
-              <TextField className={cardStyles.field}
+
+       
+              
+          </>: <>
+          
+          <TextField className={cardStyles.field}
 								sx={{
                   mx: 3, width: '75%'
 								}}
@@ -139,12 +171,12 @@ export default function Ingresos() {
             required
             margin="dense"
             id="name"
-            label="Email"
-            name="mail"
-            onChange={handleChange}
+            label="Codigo recibido"
+            name="codigo"
+            onChange={handleChangee}
             size="small"
             variant="standard"
-          />
+          /> </>}
         
           <DialogActions>
           <Button 
@@ -163,6 +195,7 @@ export default function Ingresos() {
 								<span style={{ padding: 10 }}>Cancelar{"     "}</span> 
                 
                 </Button>
+                {!ver ? <>
           <Button
                   onClick={handleDeterminar}
   								variant="contained"
@@ -178,7 +211,24 @@ export default function Ingresos() {
 								<span style={{ padding: 10 }}>Recuperar{"     "}</span>
 								<RegIcon fontSize="small" />
 							</Button>
+              </>: <>
+              <Button
+                  onClick={handleDeterminarr}
+  								variant="contained"
+								sx={{
+									mt: 3,
+									maxWidth: 130,
+									borderRadius: 2,
+									height: 30,
+									fontWeight: 850,
+									fontSize: 12
+								}}
+							>
+								<span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
+								<RegIcon fontSize="small" />
+							</Button>
               
+              </>}
         </DialogActions>
         
            </form>
