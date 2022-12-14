@@ -8,7 +8,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useCallback,useState,  } from "react";
 import servicioLegajo from '../../../services/legajos'
-
+import BackupIcon from '@material-ui/icons/Backup';
 import { useDropzone } from 'react-dropzone'
 import Box from '@mui/material/Box';
 import { useParams } from "react-router-dom"
@@ -175,7 +175,19 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
             )}
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
+          
+ <Box sx={{
+                      m: 1,
+                      color: 'green',
+                      fontSize: '1rem',
+                    }}
+                    >
+                      Archivos Aceptados <BackupIcon fontSize="small" />
+                      <ul>{acceptedFileItems}</ul>
+                      </Box>
+              
         </Paper>
+
         <TextField
                         autoFocus
                         margin="dense"
@@ -189,8 +201,6 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
         </div>:<div></div>}
 
 
-
-              
 
                 </DialogContent>
             

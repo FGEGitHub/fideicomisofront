@@ -106,7 +106,7 @@ export default function PagarCuota() {
 
   const enviar = async () => {
 
-
+setLoading(true)
 await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]);///// aca en forma de array se envian datos del dormulario
 
     const rta = await servicioUsuario1.pagarnivel2(enviarr)
@@ -114,7 +114,7 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
     alert(rta[0])
     navigate('/usuario2/detallecliente/' + rta[1])
 
-
+   
 
 
 
@@ -123,7 +123,7 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
 
   const enviar2 = async () => {
 
-
+    setLoading(true)
     enviarr.append('datos', [pago.cuil_cuit, pago.fecha,pago.id, JSON.stringify(pagosVarios)]);///// aca en forma de array se envian datos del dormulario
 
     const rta = await servicioUsuario1.pagarnivel2varios(enviarr)

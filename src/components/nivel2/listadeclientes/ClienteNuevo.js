@@ -12,6 +12,8 @@ import servicioCliente from '../../../services/clientes'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { Paper } from '@mui/material';
+
 
 export default function ClienteNuevo(props) {
   let params = useParams()
@@ -21,7 +23,7 @@ export default function ClienteNuevo(props) {
   const [form, setForm] = useState({})
   const handleChange = (e) =>{
     setForm({  ...form, [e.target.name]: e.target.value }) 
-  console.log(form)}
+ }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,19 +53,29 @@ export default function ClienteNuevo(props) {
 
   return (
     <div>
+
+
       <Button variant="outlined" onClick={handleClickOpen}>
        CARGAR CLIENTE NUEVO <PersonAddAlt1Icon/>
       </Button>
       <Dialog open={open} onClose={handleClose}>
+     
         <DialogTitle>Cliente Nuevo  </DialogTitle>
+        <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
         <DialogContent>
           <DialogContentText>
-            Ingrese Datos del Nuevo Cliente
+        Datos del Nuevo Cliente
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
-          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                         Nombre
-                        </InputLabel>
+      
           <TextField
             autoFocus
             margin="dense"
@@ -106,9 +118,7 @@ export default function ClienteNuevo(props) {
                             <option  value={'C.U.I.T.'}>CUIT</option>
                          
                         </NativeSelect> 
-                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                         Numero
-                        </InputLabel>
+                  
                         <TextField
             autoFocus
             margin="dense"
@@ -153,17 +163,19 @@ export default function ClienteNuevo(props) {
           />
       
           <DialogActions>
-          {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio  && form.tipo_dni  && form.Nombre ? <><Button  type="submit">Enviar</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
-          <Button onClick={handleClose}>Cancelar</Button>
-         
+          {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio  && form.tipo_dni  && form.Nombre ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
+          <Button  variant="outlined" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}>Cancelar</Button>
          
         </DialogActions>
            </form>
+         
+
         </DialogContent>
       
-        
+        </Paper>
         
       </Dialog>
+      
     </div>
   );
 }

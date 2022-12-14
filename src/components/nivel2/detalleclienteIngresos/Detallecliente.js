@@ -4,7 +4,7 @@ import LotesCliente from '../../LotesCliente'
 import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
-
+import { Paper } from '@mui/material';
 import PEP from './DeterminarPep'
 
 
@@ -58,8 +58,18 @@ const DetalleCliente = () => {
                      </div>}
                 
                </div>
+               <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
              <InfoCliente
                  cuil_cuit={cuil_cuit} />
+                 </Paper>
              </div>
              
              {habilitado ? <div>

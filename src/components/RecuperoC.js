@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import {  useState } from "react";
 import servicioUsuario from '../services/usuarios'
-import { Box, Typography, Avatar, Grid, Paper } from '@mui/material';
+import { Box, Typography, Avatar, Grid, Paper, CircularProgress} from '@mui/material';
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import RegIcon from "@mui/icons-material/HowToRegRounded";
 import Card from "@material-ui/core/Card";
@@ -55,8 +55,9 @@ export default function Ingresos() {
       
 });
 const [recupero, setRecupero] = useState({});
-
+const [loading, setLoading] = useState(false);
 const [ver, setVer] = useState(false);
+
   const handleChange = (e) =>{
     console.log(usuario)
     setUsuario({  ...usuario, [e.target.name]: e.target.value })}
@@ -70,6 +71,7 @@ const [ver, setVer] = useState(false);
 
   const handleDeterminar = async (event) => {
     event.preventDefault()
+    setLoading(true);
     setRecupero( {cuil_cuit:usuario.cuil_cuit})
     const rta=  await servicioUsuario.recupero(
      usuario
@@ -78,22 +80,23 @@ const [ver, setVer] = useState(false);
       setVer(true)
      }
     alert(rta)
- 
+    setLoading(false);
     
 
 
   };
   const handleDeterminarr = async (event) => {
     event.preventDefault()
+  
 
-    const rta=  await servicioUsuario.recupero(
-      usuario
+    const rta=  await servicioUsuario.recuperar(
+      recupero
      )
      if (rta === 'Se envio un codigo a tu correo'){
       setVer(true)
      }
     alert(rta)
- 
+
     
 
 
@@ -172,7 +175,7 @@ const [ver, setVer] = useState(false);
             margin="dense"
             id="name"
             label="Codigo recibido"
-            name="codigo"
+            name="password"
             onChange={handleChangee}
             size="small"
             variant="standard"
@@ -196,6 +199,7 @@ const [ver, setVer] = useState(false);
                 
                 </Button>
                 {!ver ? <>
+                 
           <Button
                   onClick={handleDeterminar}
   								variant="contained"
@@ -208,9 +212,12 @@ const [ver, setVer] = useState(false);
 									fontSize: 12
 								}}
 							>
-								<span style={{ padding: 10 }}>Recuperar{"     "}</span>
+								<span style={{ padding: 10 }}>     {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ):<>   Recuperar{"     "}  </>}</span>
 								<RegIcon fontSize="small" />
 							</Button>
+            
               </>: <>
               <Button
                   onClick={handleDeterminarr}

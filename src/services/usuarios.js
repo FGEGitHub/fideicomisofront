@@ -43,11 +43,26 @@ const registro = async (datos) => {
 }
 const traerusuario = async (cuil_cuit) => {
 
-
   // const data = await axios.post('http://localhost:4000/signupp', datos)
   const { data } = await axios.get(baseUrl + 'traerusuario/' + cuil_cuit)
   return data
 
 }
 
-export default { usuarios, setToken, registro, traerusuario }
+const recupero = async (datos) => {
+
+
+  // const data = await axios.post('http://localhost:4000/signupp', datos)
+  const { data } = await axios.post(baseUrl + 'recupero', datos)
+  return data
+
+}
+const recuperar = async (datos) => {
+
+console.log(datos)
+  // const data = await axios.post('http://localhost:4000/signupp', datos)
+  const { data } = await axios.post(baseUrl + 'recuperoo', datos)
+  return data
+
+}
+export default {recupero,recuperar, usuarios, setToken, registro, traerusuario }

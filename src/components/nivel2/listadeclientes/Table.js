@@ -50,6 +50,17 @@ const Lotes = () => {
       }
       //
 
+      function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+       
+           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+          
+          </>
+        );
+      }
+
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
@@ -72,10 +83,20 @@ const Lotes = () => {
             label: "ID",
 
         },
-        {
+       
+           {
             name: "cuil_cuit",
-            label: "Cuil/cuit",
-        },
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                  CutomButtonsRendercuil(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
        
          {
             name: "Nombre",
