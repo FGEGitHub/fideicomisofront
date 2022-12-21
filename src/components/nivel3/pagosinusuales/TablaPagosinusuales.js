@@ -9,6 +9,7 @@ import BotonAprobado from './AprobacionPagoInusual'
 import CheckIcon from '@mui/icons-material/Check';
 import serviciousuario1 from '../../../services/usuario1'
 import Button from "@mui/material/Button";
+import VerConstancias from "../../nivel2/nivel2Aprobaciondepagos/VerConstancias";
 
 const PagosInusuales = () => {
     //configuracion de Hooks
@@ -56,9 +57,8 @@ const getPagosi = async () => {
             <BotonRechazo 
              id= {pagos[dataIndex].id} 
             />
-            <CheckIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pagos[dataIndex].id) 
-           /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+            <BotonAprobado  id= {pagos[dataIndex].id} 
+           
             />
           </>
         );

@@ -26,7 +26,7 @@ export default function VerConstancias(props) {
 
 
   const traer = async () => {
-
+      console.log(props.id)
     const not = await serviciousuario1.constanciasdelpago(props.id)
 
     setConstancias(not)

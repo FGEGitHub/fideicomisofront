@@ -46,11 +46,11 @@ export default function MenuIzq2 ({children}) {
         window.location.reload(true);
       } 
     const menuItems = [
-        { 
+       /*  { 
           text: 'Ver Clientes', 
           icon: <GroupIcon color="primary" />, 
           path: '/nivel3/clientes' 
-        },
+        }, */
        
         {
           text: 'Lotes',

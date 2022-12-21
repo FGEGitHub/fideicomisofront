@@ -7,11 +7,12 @@ import MUIDataTable from "mui-datatables";
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import InputLabel from '@mui/material/InputLabel';
-
+import VerConstancias from "../nivel2/nivel2Aprobaciondepagos/VerConstancias";
 const MensualInusuales = (props) => {
     let params = useParams()
     const [FormFecha, setFormFecha] = useState({
- 
+        mes:1,
+        anio:2015
         
     })
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ const MensualInusuales = (props) => {
     const buscar = async (e) => {
         e.preventDefault()
         const pagos  = await servicioPagosInusuales.buscar(FormFecha)
-      
+      console.log(pagos)
         setPagos(pagos)
 
 
@@ -39,15 +40,51 @@ const MensualInusuales = (props) => {
 
     }
 
-    const columns = [
-        {
-            name: "mes",
-            label: "Mes",
 
-        },
+    function fecha(dataIndex, rowIndex, data, onClick) {
+
+        return (
+            <>
+            {pagos[dataIndex].mes}/ {pagos[dataIndex].anio}
+
+
+            </>
+        );
+    }
+    function estadoo(dataIndex, rowIndex, data, onClick) {
+
+        return (
+            <>
+            {pagos[dataIndex].estado ==='declaradosospechoso' ? <>Declarado Sospechoso</>:<>  {pagos[dataIndex].estado ==='P'? <>Pendiente</>:<> {pagos[dataIndex].estado ==='A'? <>Aprobado</>:<>{pagos[dataIndex].estado ==='averificarnivel3'? <>Pendiente clasificacion Nivel 3</>:<></>}</>}</>}     </>}
+
+
+            </>
+        );
+    }
+    function verconstancias(dataIndex, rowIndex, data, onClick) {
+
+        return (
+            <>
+        <VerConstancias
+        id={pagos[dataIndex].id}
+        />
+
+            </>
+        );
+    }
+    const columns = [
+      
         {
-            name: "anio",
-            label: "Año",
+            name: "Fecha",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    fecha(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
 
@@ -65,16 +102,34 @@ const MensualInusuales = (props) => {
             label: "Nombre/Razon",
 
         },
-        {
-            name: "observaciones",
-            label: "tipo",
-
-        },
+      
         {
             name: "estado",
-            label: "estado",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    estadoo(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
+       /*  {
+            name: "Ver constancias",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                verconstancias(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
+        }, */
+        
         {
             name: "domicilio",
             label: "Direccion",

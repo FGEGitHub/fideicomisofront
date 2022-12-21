@@ -11,6 +11,9 @@ import servicioPagos from '../../../services/pagos'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import {  useState } from "react";
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@mui/material/IconButton';
+
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
    const [form, setForm] = useState ({
@@ -35,9 +38,13 @@ export default function FormDialog(props) {
   setForm({  ...form, [e.target.name]: e.target.value })
   return (
     <div>
-      <ThumbDownAltIcon variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </ThumbDownAltIcon>
+      <Tooltip title="Aprobar pago/cambiar monto"arrow>
+      <IconButton>
+      <Button  onClick={handleClickOpen}>
+       Rechazar
+      </Button>
+      </IconButton>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Rechazar</DialogTitle>
         <DialogContent>

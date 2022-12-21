@@ -94,9 +94,12 @@ const borrarhistorial= async  () => {
        
       
 
-    
- 
        
   }
+  const traerhistorialvalor= async  () => {
   
-export default {agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+     const {data } =await axios.get(baseUrl+'historialvalormetro',config)
+ 
+     return data 
+ }  
+export default {traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

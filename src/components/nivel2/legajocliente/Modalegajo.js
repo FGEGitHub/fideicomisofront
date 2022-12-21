@@ -77,13 +77,13 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
 
-    const enviar = () => {
-      enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
+    const enviar = async () => {
+     await enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
 
-      servicioLegajo.subirlegajode(enviarr)
+     await servicioLegajo.subirlegajode(enviarr)
    //  
-    props.reload()
-    handleClose()
+       window.location.reload()
+   
 
 
     }

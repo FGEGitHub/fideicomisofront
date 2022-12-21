@@ -64,20 +64,7 @@ const traer = async() => {
 
         },
        
-        
-        {
-            name: "Actions",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderer(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
+      
  
 
     ];
