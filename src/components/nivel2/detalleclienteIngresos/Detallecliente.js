@@ -71,15 +71,26 @@ const DetalleCliente = () => {
                  cuil_cuit={cuil_cuit} />
                  </Paper>
              </div>
-             
+             <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
              {habilitado ? <div>
                 Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}
                 <div> <Ingreso/> </div>
+      
             {<LotesCliente
                   cuil_cuit={cuil_cuit} />}
+
+
                  
             </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }
-             
+            </Paper>
         </div>
     )
 }

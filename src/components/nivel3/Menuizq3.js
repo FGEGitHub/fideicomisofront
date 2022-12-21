@@ -74,7 +74,7 @@ export default function MenuIzq2 ({children}) {
             path: '/nivel3/icc'
           },
           {
-            text: 'Declaraciones ',
+            text: 'Valor Metro Cuadrado ',
             icon: <PlagiarismIcon color="primary" />,
             path: '/nivel3/declaraciones'
           },

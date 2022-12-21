@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
-import CheckIcon from '@mui/icons-material/Check';
+import {  CircularProgress } from '@mui/material';
 import TextField from '@mui/material/TextField'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
@@ -19,6 +19,7 @@ const Valormetro = () => {
     const [valor, setValor] = useState({
       zona:'PIT'
       })
+      const [loading, setLoading] = useState(false)
    
       const handleChange = (e) =>{
       setValor({  ...valor, [e.target.name]: e.target.value })
@@ -27,6 +28,7 @@ const Valormetro = () => {
 
 
       const handleDeterminar = async (event) => {
+        setLoading(true)
         event.preventDefault();
         try {
     
@@ -69,19 +71,26 @@ return (
                       
                          
                         </NativeSelect>    <br/>
-      Valor Metro cuadrado
+
+      <br/>
         <TextField
             autoFocus
-            margin="dense"
+           // margin="dense"
             type={'number'}
             id="name"
-            label=""
+            label="Valor Metro cuadrado"
             name="valor"
             onChange={handleChange}
-            fullWidth
-            variant="filled"
+          //  fullWidth
+            //variant="filled"
+         //   width= '50%'
           />
-           <Button onClick={handleDeterminar} >Enviar</Button>
+            <br/>
+           <Button variant="contained" onClick={handleDeterminar} > {loading ? (
+                          <CircularProgress color="inherit" size={25} />
+                        ) : (
+                          "Enviar"
+                        )}</Button>
         
     </div>
 )

@@ -66,7 +66,8 @@ export default function FormDialog(props) {
                                
                             }}
                         >   <option  value={'IC3'}>Elegir</option>
-                            <option   value={'rechazar'}>Rechazar</option>
+                            <option   value={'rechazar'}>A verificar</option>
+                            <option   value={'rechazardefinitivo'}>Rechazar</option>
                             <option  value={'solicitar_doc'}>Solicitar documentación</option>
                          
                         </NativeSelect> 

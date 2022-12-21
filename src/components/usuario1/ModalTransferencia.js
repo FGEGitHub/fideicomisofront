@@ -50,7 +50,7 @@ export default function SelectTextFields(props) {
 
 
   const traer = async () => {
-    console.log('lotes')
+    
     const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
     const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
@@ -133,7 +133,7 @@ export default function SelectTextFields(props) {
 
 
   const enviar = async () => {
-
+    setLoading(true)
 
     await enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
 
@@ -158,11 +158,21 @@ export default function SelectTextFields(props) {
 
       <Button variant="outlined" onClick={handleClickOpen}>
 
-        Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} {props.zona === 'PIT' ? <>Parcela {props.parcela} </> : <>Lote {props.lote} </> } 
+       Subir comprobante Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} {props.zona === 'PIT' ? <>Parcela {props.parcela} </> : <>Lote {props.lote} </> } 
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
+          
           <div>
+          <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
             <h3>Subir comprobante  Zona {props.zona} Fraccion {props.fraccion} Manzana{props.manzana} Parcela {props.parcela}</h3>
             {ultima ? <div> Cuota: {ultima.mes} Año: {ultima.anio}</div> : <div></div>}
             <h4></h4>
@@ -279,8 +289,9 @@ export default function SelectTextFields(props) {
                 }}
               />
             </Box>
-
+            </Paper>
             <>
+            <h5> Subir el archivo</h5>
               <Paper
                 sx={{
                   cursor: 'pointer',
@@ -296,9 +307,22 @@ export default function SelectTextFields(props) {
                     <p style={{ color: 'green' }}>Suelta aqui el documento</p>
                   ) : (
                     <p>Arrastra hasta aqui el archivo </p>
-                  )}
-                  <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+                  )} 
+                  {loading ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) :
+                  <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>}
                 </div>
+
+                <Box sx={{
+                    m: 1,
+                    color: 'green',
+                    fontSize: '1rem',
+                  }}
+                  >
+                    Archivos Aceptados <BackupIcon fontSize="small" />
+                    <ul>{acceptedFileItems}</ul>
+                    </Box>
               </Paper>
 
 
@@ -311,8 +335,8 @@ export default function SelectTextFields(props) {
                     fontSize: '1rem',
                   }}
                   >
-                    Archivos Aceptados <BackupIcon fontSize="small" />
-                    <ul>{acceptedFileItems}</ul>
+                  
+                  
                     <Button onClick={enviar}>
                       {loading ? (
                         <CircularProgress color="inherit" size={25} />
@@ -323,11 +347,13 @@ export default function SelectTextFields(props) {
                   </Box>
 
                 </div>
-                : <div> </div>}
+                : <div> <p style={{ color: 'crimson' }} >Completar los campos</p>  <br/>
+                         <Button disabled > Enviar</Button>
+                   </div>}
 
 
             </>
-
+         
           </div>
         </DialogContent>
       </Dialog>

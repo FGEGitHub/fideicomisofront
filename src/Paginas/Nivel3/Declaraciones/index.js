@@ -7,9 +7,10 @@ import BorrarIcc from '../../../components/nivel3/borrarhistorialicc/BorrarHisto
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import Tabla from "../../../components/nivel3/declaraciones/ModalAsignacion"; 
+import Historial from "../../../components/nivel3/declaraciones/HistorialValorMetro"; 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { Paper } from '@mui/material';
 
 
 
@@ -46,10 +47,19 @@ useEffect(() => {
   { logueado ? <div>
             <CssBaseline />
        <BarraLAteral>
+       <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
        < ValorMetro/>
-       <br/>  <br/>  <br/>
-      
-       < Tabla/>
+       </Paper>
+       <br/> 
+       <Historial/>
       </BarraLAteral>
          </div>   :<div></div> } </div>
     

@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { Button } from '@mui/material';
+import { Button,CircularProgress } from '@mui/material';
 import { Paper } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -37,10 +37,7 @@ export default function SelectTextFields(props) {
   const [loading, setLoading] = useState(false)
   const [ultima, setUltima] = useState(false)
   const [enviarr, setEnviarr] = useState();
-  const [pago, setPago] = useState({
-
-
-  })
+  const [pago, setPago] = useState({})
 
 
 
@@ -128,14 +125,15 @@ export default function SelectTextFields(props) {
 
 
   const enviar = async () => {
-
+    setLoading(true)
     enviarr.append('datos', [pago.cuil_cuit, pago.numero, pago.lazo, pago.cuil_cuit_lazo,pago.alias]);///// aca en forma de array se envian datos del dormulario
 
    await servicioUsuario1.cargarcbu(enviarr)
-    console.log('listo')
+   
     handleClose()
     console.log('listo')
     props.traer()
+   
     window.location.reload() 
   }
   return (
@@ -341,7 +339,15 @@ export default function SelectTextFields(props) {
                   {pago.cuil_cuit_lazo && pago.numero ? <>
                     {
                       pago.cuil_cuit_lazo.length === 11 && pago.numero.length === 22 ? <>
-                        <Button onClick={enviar}>Enviar</Button>
+                        <Button onClick={enviar}>
+                          
+                        {loading ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) :<>
+                          Enviar
+                          </>
+                          }
+                          </Button>
                       </> : <>  </>}
                   </> : <></>}
 
