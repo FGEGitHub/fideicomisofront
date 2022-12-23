@@ -76,8 +76,20 @@ import Alumnos from '../Paginas/Esme/Alumnos'
 
 
 
+import Home from '../Paginas/Home/Home'
+import HomeCalculo from '../Paginas/Home/Calculo'
+
+
+
 const Rutas = [
 	 <Navbar/> ,
+	 
+
+	 {path: '/home',element: (<Home />)},
+	 {path: '/home/calcular',element: (<HomeCalculo />)},
+	 
+
+
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
