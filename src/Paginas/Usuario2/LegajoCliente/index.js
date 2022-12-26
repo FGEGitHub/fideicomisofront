@@ -22,14 +22,15 @@ export default function DetalleCliente() {
   const [logueado, setLogueado] = useState(false) 
   const [user, setUser] = useState({}) 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
     if (loggedUserJSON) {
+      
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
       if (user.nivel != 2){
         window.localStorage.removeItem('loggedNoteAppUser')
-     navigate('/login')
+   
 
       }else{
 
@@ -39,9 +40,12 @@ export default function DetalleCliente() {
       //servicioUsuario.setToken(user.token)  
      
       
+    }else{
+      navigate('/login')
+     
     }
    
-  }, [])
+  }, []) 
 
 
   

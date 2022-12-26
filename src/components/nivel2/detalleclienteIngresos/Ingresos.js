@@ -119,7 +119,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                 <DialogTitle>Completar</DialogTitle>
                 <DialogContent>
                     <>
-                        Determinar Ingresos
+                        Determinar Ingresos Mensuales
                     </>
                  
                

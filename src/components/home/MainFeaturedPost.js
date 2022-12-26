@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(0,0,0,.3)',
   },
   mainFeaturedPostContent: {
-    position: 'relative',
+    position: 'sticky',
     padding: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(6),
@@ -42,7 +42,7 @@ export default function MainFeaturedPost(props) {
   return (
     <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${post.image})` }}>
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+      {<img style={{ display: 'none', attachment: 'sticky'}} src={post.image} alt={post.imageText} />}
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>

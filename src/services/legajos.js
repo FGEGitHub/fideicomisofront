@@ -51,7 +51,7 @@ const determinarIngreso = async (formData) => {
   console.log(formData)
 
  const {data} = await axios.post(baseUrl + 'determinaringreso', formData, config)
- console.log(data)
+ alert(data)
  return (data)
 
   //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'

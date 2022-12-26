@@ -16,7 +16,7 @@ import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import InputLabel from '@mui/material/InputLabel';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -109,6 +109,9 @@ export default function Ingresos() {
         <DialogContent>
 
           <form  onSubmit={handleDeterminar}> 
+          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                          Cuil/Cuit con guiones
+                        </InputLabel>
           <TextField className={cardStyles.field}
 								sx={{
                   mx: 3, width: '75%'

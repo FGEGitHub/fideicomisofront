@@ -123,7 +123,7 @@ const LotesCliente = (props) => {
     function pago(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + cuotas[dataIndex].pago : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + (cuotas[dataIndex].pago).toFixed(2) : <div> No Calculado </div>}
 
             </>
         );
@@ -148,6 +148,15 @@ const LotesCliente = (props) => {
         return (
             <>
                 {cuotas[dataIndex].mes + '/' + cuotas[dataIndex].anio}
+
+            </>
+        );
+    }
+    function diferencia(dataIndex, rowIndex, data, onClick) {
+        return (
+            <> 
+            {(cuotas[dataIndex].diferencia>=0) ? <> <p style={{ color: 'green' }} >{cuotas[dataIndex].diferencia} </p> </> : <><p style={{ color: 'red' }} >{cuotas[dataIndex].diferencia}</p></>}
+             
 
             </>
         );
@@ -269,11 +278,20 @@ const LotesCliente = (props) => {
             }
 
         },
-        {
-            name: "diferencia",
-            label: "diferencia",
+          {
+            name: "Diferencia",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    diferencia(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
         },
+      
 
 
         {
@@ -407,7 +425,7 @@ const LotesCliente = (props) => {
                                         >
 
                                             <TableCell align="left">{row.datoa}</TableCell>
-                                            <TableCell align="left">{row.datob}</TableCell>
+                                            <TableCell align="left">{(row.datob)}</TableCell>
 
                                         </TableRow>
                                     ))}

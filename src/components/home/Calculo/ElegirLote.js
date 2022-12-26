@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { useEffect, useState, Fragment } from "react";
 import servicioClientes from '../../../services/clientes'
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
+import { Paper } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import NativeSelect from '@mui/material/NativeSelect';
 import MenuItem from '@mui/material/MenuItem';
@@ -60,7 +60,15 @@ export default function AsignarLoreACliente() {
         <Card sx={{ maxWidth: 690 }}>
 
         <Grid container direction="column">
-
+        <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
                     <form onSubmit={designar}>
                           <InputLabel  color='success' variant="standard" htmlFor="uncontrolled-native">
                            ZONA
@@ -98,24 +106,8 @@ export default function AsignarLoreACliente() {
                     
                          
                         </NativeSelect> 
-                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                           Tipo de asignacion
-                        </InputLabel>
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'estado',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                        >   <option  value={'IC3'}>Elegir</option>
-                            <option   value={'VENDIDO'}>Venta</option>
-                            <option  value={'RESERVADO'}>Reservar</option>
-                         
-                    
-                         
-                        </NativeSelect> 
+                  
+                        
                         <TextField
                             autoFocus
                             margin="dense"
@@ -166,7 +158,7 @@ export default function AsignarLoreACliente() {
                     cuil_cuit= {cuil_cuit}
                     />
                  
-
+                 </Paper>
                    
                     </Grid>
 

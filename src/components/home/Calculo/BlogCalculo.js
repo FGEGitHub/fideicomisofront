@@ -16,7 +16,10 @@ import post1 from '../blog-post.1.md';
 import post2 from '../blog-post.2.md';
 import post3 from '../blog-post.3.md';
 import imagen from '../../../Assets/IMG_7194.JPG'
+import imagen2 from '../../../Assets/BOSQUE.jpg'
+import imagen3 from '../../../Assets/fondocalculo.jpg'
 import FichaLotes from './ElegirLote';
+import Nav  from '../Nav'
 //import bosqueImagen from '../../Assets/BOSQUE.JPG'
 
 
@@ -38,6 +41,7 @@ const mainFeaturedPost = {
   description:
     "ingresar descipcion ",
   image: imagen,
+ 
   imgText: 'main image description',
   linkText: 'Ingresar',
 };
@@ -90,11 +94,25 @@ const sidebar = {
 export default function Blog() {
   const classes = useStyles();
 
+
+  const style={
+    backgroundImage:  `url(${imagen2})`,
+   
+    size: 'cover',
+    backgroundRepeat: 'no-repeat',
+   
+};
+
   return (
     <React.Fragment>
+      <div  style={style} >
+       
+     
       <CssBaseline />
       <Container maxWidth="lg">
+      <Nav/>
         <Header title="santacatalinafideicomiso.com " sections={sections} />
+        
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>
@@ -108,6 +126,8 @@ export default function Blog() {
         </main>
       </Container>
       <Footer title="Footer" description="Something here to give the footer a purpose!" />
+
+      </div>
     </React.Fragment>
   );
 }

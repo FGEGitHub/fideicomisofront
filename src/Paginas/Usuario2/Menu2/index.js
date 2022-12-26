@@ -2,22 +2,31 @@ import Tabla from '../../components/Table'
 import Menu2 from '../Paginas/nivel2/MenuUsuario2'
 import NotificacionLegajo from '../../../components/Ingresos'
 const Login = () => {
-    useEffect(() => {
+  useEffect(() => {
+    
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
+    if (loggedUserJSON) {
+      
+      const user = JSON.parse(loggedUserJSON)
+      if (user.nivel != 2){
+        window.localStorage.removeItem('loggedNoteAppUser')
+   
 
-        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-        if (loggedUserJSON) {
-          const user = JSON.parse(loggedUserJSON)
-          setUser(user)
-          servicioUsuario.setToken(user.token)
+      }else{
+
+        setLogueado(true)
+      }
     
-    
-        }
-        /*  if (user){
-           navigate('/login')
-         } */
-    
-        //
-      }, [])
+      //servicioUsuario.setToken(user.token)  
+     
+      
+    }else{
+      navigate('/login')
+     
+    }
+   
+  }, []) 
     return (
         <br/>
 

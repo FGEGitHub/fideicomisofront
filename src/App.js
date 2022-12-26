@@ -49,11 +49,7 @@ useEffect(() => {
         break;
 
      }*/
-   }  else{
-
-      navigate('/login')
-     
-   }  
+   }
   
 
 

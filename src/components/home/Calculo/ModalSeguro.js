@@ -52,7 +52,7 @@ export default function SelectTextFields(props) {
   }
 
   const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
-  const cuil_cuit = preba.cuil_cuit
+
 
 
 
