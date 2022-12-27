@@ -6,6 +6,14 @@ import ServicioPagos from '../../../services/pagos'
 import Tooltip from '@material-ui/core/Tooltip';
 import React, { useEffect, useState, Fragment } from "react";
 import MUIDataTable from "mui-datatables";
+///
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export default function Inconscistencia(props) {
   const [open, setOpen] = React.useState(false);
@@ -121,26 +129,53 @@ export default function Inconscistencia(props) {
               {props.cuil_cuit_distinto === 'Si' ? <> Cuil/Cuit no encontrado o CBU distinto  </> : <> </>}
               <br />
               {props.monto_inusual === 'Si' ? <>Monto Inusual</> : <> </>}
+              <br />
+              {props.yarealizado === 'SI' ? <>Monto ya realizado</> : <> </>}
 
               {montoDistint()}
 
 
               {constancias === [] || constancias === null ? <>No se encontraron coincidencias</> : <>
-                <MUIDataTable
-                  title={"Lista de aprobaciones pendientes"}
-                  data={constancias}
-                  columns={columns}
-                  actions={[
-                    {
-                      icon: 'save',
-                      tooltip: 'Save User',
-                      onClick: (event, rowData) => alert("You saved " + rowData.name)
-                    }
-                  ]}
+                <div>
 
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Nombre</TableCell>
+                          <TableCell align="right">Fecha</TableCell>
+                          <TableCell align="right">Cuil/cuit</TableCell>
+                          <TableCell align="right">Monto</TableCell>
+                          <TableCell align="right">Descripcion</TableCell>
 
-                />
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {constancias.map((row) => (
+                          <TableRow
+                            key={row.name}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {row.nombre}
+                            </TableCell>
+                            <TableCell align="right">{row.descripcion}</TableCell>
+                            <TableCell align="right">{row.fecha}</TableCell>
+                            <TableCell align="right">{row.creditos}</TableCell>
+                            <TableCell align="right">{row.descripcion}</TableCell>
+
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+
+                </div>
+
               </>}
+
+
+
             </div>
 
 

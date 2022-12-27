@@ -100,6 +100,7 @@ const TablaAprobaciones = () => {
                     cuil_cuit_distinto={pendientes[dataIndex].cuil_cuit_distinto}
                     monto_inusual={pendientes[dataIndex].monto_inusual}
                     id={pendientes[dataIndex].id}
+                    yarealizado={pendientes[dataIndex].yarealizado}
                 />
 
 

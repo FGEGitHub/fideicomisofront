@@ -63,17 +63,18 @@ export default function AsignarLoreACliente() {
         <Paper
         sx={{
           cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
+          background: '#263238',
+          color: '#e8f5e9',
           border: '1px dashed #ccc',
           '&:hover': { border: '1px solid #ccc' },
         }}
       >
                     <form onSubmit={designar}>
-                          <InputLabel  color='success' variant="standard" htmlFor="uncontrolled-native">
+                          <InputLabel  sx={{  color: '#e8f5e9'}} variant="standard" htmlFor="uncontrolled-native">
                            ZONA
                         </InputLabel>
                         <NativeSelect
+                        sx={{  color: '#e8f5e9'}}
                             defaultValue={30}
                             onChange={handleChange}
                             inputProps={{
@@ -86,10 +87,11 @@ export default function AsignarLoreACliente() {
                             <option  value={'IC3'}>IC3</option>
                          
                         </NativeSelect> 
-                        <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                        <InputLabel sx={{  color: '#e8f5e9'}} variant="standard" htmlFor="uncontrolled-native">
                            Fraccion
                         </InputLabel>
                         <NativeSelect
+                        sx={{  color: '#e8f5e9'}}
                             defaultValue={30}
                             onChange={handleChange}
                             inputProps={{
@@ -109,6 +111,7 @@ export default function AsignarLoreACliente() {
                   
                         
                         <TextField
+                        sx={{  color: '#e8f5e9'}}
                             autoFocus
                             margin="dense"
                             variant="filled"
@@ -122,6 +125,7 @@ export default function AsignarLoreACliente() {
                        
                         {parque ? <div>
                             <TextField
+                            
                             autoFocus
                             margin="dense"
                             type={'number'}
