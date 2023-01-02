@@ -11,8 +11,8 @@ import Slide from '@mui/material/Slide';
 import { useState } from "react";
 import servicioUsuario from '../services/usuarios'
 import { Box, Typography, Avatar, Grid, Paper, CircularProgress } from '@mui/material';
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import RegIcon from "@mui/icons-material/HowToRegRounded";
+import LockIcon from '@mui/icons-material/Lock';
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -113,20 +113,12 @@ export default function Ingresos() {
       <p variant="outlined" onClick={handleClickOpen}>
         ¿Olvidaste la contraseña?
       </p>
-      <Dialog fullScreen
+      <Dialog maxWidth="md"
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <Paper
-          sx={{
-            px: 85,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            alignContent: "center"
-          }}
-        >
+     
           <Avatar
             sx={{
               m: 1,
@@ -134,16 +126,11 @@ export default function Ingresos() {
               marginRight: 3
             }}
           >
-            <AccountCircleRoundedIcon fontSize="large" />
+            <LockIcon fontSize="small" />
           </Avatar>
-          <Typography align="center" component="h1" variant="h4">
-            Recuperar mi contraseña
+          <Typography align="center" component="h1" variant="h6">
+            Recuperar Contraseña
           </Typography>
-        </Paper>
-        <Paper>
-          <Typography align='center' component="h1" variant="h6">Completar con tus Datos</Typography>
-
-        </Paper>
         <DialogContent>
 
           <form onSubmit={handleDeterminar}>
@@ -152,7 +139,7 @@ export default function Ingresos() {
 
               <TextField className={cardStyles.field}
                 sx={{
-                  mx: 3, width: '75%'
+                  mx: 4, width: '80%'
                 }}
                 autoFocus
                 required
@@ -268,7 +255,7 @@ export default function Ingresos() {
                   <span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
                   <RegIcon fontSize="small" />
                 </Button>
-              </> : <><p>Contraseñas no son iguales</p></> }
+              </> : <><p>La contraseña no coincide</p></> }
                 
 
               </>}
