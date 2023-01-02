@@ -15,6 +15,7 @@ export default function Contact() {
     
  const navigate = useNavigate();
  const [logueado, setLogueado] = useState(false) 
+  const [usuario, setUsuario] = useState(false) 
  useEffect(() => {
    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
    
@@ -25,7 +26,7 @@ export default function Contact() {
     navigate('/login')
 
      }else{
-
+      setUsuario(user.id)
        setLogueado(true)
      }
    
@@ -43,7 +44,9 @@ export default function Contact() {
             <Toolbar />
             
             <Container maxWidth="lg">
-                <Contacto />
+                <Contacto 
+                usuario= {usuario.id}
+                />
                 <Divider variant="middle" />
                 
         

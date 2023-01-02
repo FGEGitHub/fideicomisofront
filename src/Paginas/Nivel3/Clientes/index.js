@@ -1,28 +1,19 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
-
-
-import DetalleC from '../../../components/nivel2/detalleclienteIngresos/Detallecliente';
+import  { useEffect, useState } from "react";
+import TableAxios from '../../../components/nivel2/listadeclientes/Table';
 
 import { useNavigate } from "react-router-dom";
-import BarraLAteral from '../../../components/nivel2/MenuIzq2'
-import servicioUsuario from '../../../services/usuarios'
 
+import BarraLAteral from '../../../components/nivel3/Menuizq3'
 
+const drawerWidth = 240;
 
-//import {makeStyles} from "@material-ui/core/styles"
-
-
-
-
-
-export default function DetalleCliente() {
+export default function MenuUsuario2() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null)
-  const [modal, setModal] = useState(false)
- 
- 
-  const [logueado, setLogueado] = useState(false) 
+  const [] = useState('')
+
+  const [logueado, setLogueado] = useState(true) 
   useEffect(() => {
     
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -30,7 +21,7 @@ export default function DetalleCliente() {
     if (loggedUserJSON) {
       
       const user = JSON.parse(loggedUserJSON)
-      if (user.nivel != 2 && user.nivel != 3    ){
+      if (user.nivel != 3){
         window.localStorage.removeItem('loggedNoteAppUser')
    
 
@@ -49,21 +40,17 @@ export default function DetalleCliente() {
    
   }, []) 
 
-
-  
   
 
-
- 
-
-  ////////
 
   return (
     <div> 
-  { logueado ? <div> 
+    { logueado ? <div> 
+      
     <BarraLAteral>
+
     
-      {<DetalleC />}
+    <TableAxios/>
  </BarraLAteral>
  </div>   :<div></div> } </div>
   );

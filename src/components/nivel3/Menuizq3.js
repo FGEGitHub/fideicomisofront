@@ -51,7 +51,11 @@ export default function MenuIzq2 ({children}) {
           icon: <GroupIcon color="primary" />, 
           path: '/nivel3/clientes' 
         }, */
-       
+        {
+          text: 'Clientes',
+          icon: <NfcIcon color="primary" />,
+          path:  '/nivel3/clientes',
+        },
         {
           text: 'Lotes',
           icon: <NfcIcon color="primary" />,

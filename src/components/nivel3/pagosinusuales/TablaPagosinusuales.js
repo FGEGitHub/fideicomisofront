@@ -65,6 +65,17 @@ const getPagosi = async () => {
           </>
         );
       }
+
+      function CutomButtonsRenderere(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+       
+           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+pagos[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{pagos[dataIndex].Nombre}</p>
+          
+          </>
+        );
+      }
       //Styles de la tabla
       const StyledTable = () =>
     createTheme({
@@ -85,9 +96,17 @@ const getPagosi = async () => {
         },
         {
             name: "Nombre",
-            label: "nombre",
-
-        },
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRenderere(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
         {
             name: "monto",
             label: "Monto",

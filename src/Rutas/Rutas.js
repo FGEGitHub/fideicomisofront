@@ -51,7 +51,7 @@ import AgregarICC from '../Paginas/Nivel3/AgregarIcc';
 import Declaraciones from '../Paginas/Nivel3/Declaraciones';
 import Agregarusuario from '../Paginas/Nivel3/AgregarUsuario';
 import Pagos3 from '../Paginas/Nivel3/Pagos';
-
+import Clientesniv3 from '../Paginas/Nivel3/Clientes';
 
 
 
@@ -145,6 +145,7 @@ const Rutas = [
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
+	{ path: '/nivel3/clientes', element: <Clientesniv3 /> },
 	{ path: '/nivel3/pagosmensualesinusuales', element: <PagosInusualesMensuales /> },
 	{ path: '/nivel3/', element: <Principal /> },
 	{ path: '/nivel3/icc', element: <Icc /> },

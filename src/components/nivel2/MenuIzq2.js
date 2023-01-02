@@ -19,6 +19,11 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import PaidIcon from '@mui/icons-material/Paid';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import PlagiarismIcon from '@mui/icons-material/Plagiarism';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
+import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
@@ -27,9 +32,13 @@ export default function MenuIzq2 ({children}) {
     const [notificaciones, setNotificaciones] = useState();
     const [notificacioneslegajos, setNotificacioneslegajos] = useState();
     const [notificacionescbus, setNotificacionescbus] = useState();
- 
+    const [user, setUser] = useState();
 
     useEffect(() => {
+      const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      const useer = JSON.parse(loggedUserJSON)
+      setUser(useer)
+     
       cantidadnoti()
   }, [])
   const cantidadnoti = async () => {
@@ -102,7 +111,61 @@ export default function MenuIzq2 ({children}) {
      
       ];
 
-
+      const menuItems2 = [
+        /*  { 
+           text: 'Ver Clientes', 
+           icon: <GroupIcon color="primary" />, 
+           path: '/nivel3/clientes' 
+         }, */
+         {
+           text: 'Clientes',
+           icon: <NfcIcon color="primary" />,
+           path:  '/nivel3/clientes',
+         },
+         {
+           text: 'Lotes',
+           icon: <NfcIcon color="primary" />,
+           path:  '/nivel3/lotes',
+         },
+         {
+           text: 'Aprobación de Pagos',
+           icon: <PriceCheckIcon color="primary" />,
+           path: '/nivel3/aprobacionesdepagos'
+         },
+         {
+           text: 'Pagos Inusuales',
+           icon: <AccountBalanceIcon color="primary" />,
+           path: '/nivel3/pagosinusuales'
+         },
+      
+         {
+             text: 'Agregar ICC',
+             icon: <QueryStatsIcon color="primary" />,
+             path: '/nivel3/icc'
+           },
+           {
+             text: 'Valor Metro Cuadrado ',
+             icon: <PlagiarismIcon color="primary" />,
+             path: '/nivel3/declaraciones'
+           },
+           {
+             text: 'Agregar usuario',
+             icon: <GroupAddIcon color="primary" />,
+             path: '/nivel3/agregarusuario'
+           },
+           {
+             text: 'Pagos Inusuales Mensuales',
+             icon: <MoneyOffIcon color="primary" />,
+             path: '/nivel3/pagosmensualesinusuales'
+           },
+           {
+             text: 'Todos los pagos',
+             icon: <MoneyOffIcon color="primary" />,
+             path: '/nivel3/pagos'
+           },
+         
+      
+       ];
     return(
       <>
     <Box sx={{ display: 'flex' }}>
@@ -128,7 +191,9 @@ export default function MenuIzq2 ({children}) {
         <Toolbar />
         <Divider />
         <List>
-        {menuItems.map((item) => (
+          {user ? <>
+          {user.nivel === 2 ? <> 
+            {menuItems.map((item) => (
             <ListItem 
               button 
               key={item.text} 
@@ -140,6 +205,22 @@ export default function MenuIzq2 ({children}) {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
+          </>: <>
+          {menuItems2.map((item) => (
+            <ListItem 
+              button 
+              key={item.text} 
+              onClick={() => {
+                handleClick(item.path)
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItem>
+          ))}
+          
+          </>}
+          </> :  <></>}
         </List>
         
         <Divider />

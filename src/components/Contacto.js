@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 // Packages
+
+import servicioUsuario1 from "../services/usuario1";
 import React, { useState } from "react";
 import { Divider, Toolbar, Typography } from "@mui/material";
 
@@ -18,7 +20,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function Contacto() {
+function Contacto(props) {
+  const [form, setForm] = useState({
+    id:props.id
+  });
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,43 +44,9 @@ function Contacto() {
     return re.test(email);
   };
 
-  const validatePayload = () => {
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      subject === "" ||
-      content === ""
-    ) {
-      throw Error("Field missing!");
-    }
-    if (validateEmail() === false) {
-      throw Error("Invalid email format");
-    }
-  };
 
-  const handleClick = async () => {
-    const payload = {
-      name: `${firstName} ${lastName}`,
-      email: email,
-      subject: subject,
-      body: content
-    };
 
-    // Try request
-    try {
-      validatePayload(payload);
-      const res = await axios.post(URL, payload);
-      console.log(res.status);
-      if (res.status === 200 || res.status === 201) {
-        setOpen(true);
-        clearForm();
-      }
-    } catch (e) {
-      alert(e);
-      console.error(e);
-    }
-  };
+ 
 
   const handleClose = (reason) => {
     if (reason === "clickaway") {
@@ -84,6 +55,30 @@ function Contacto() {
     setOpen(false);
   };
 
+
+  const handleChange = (e) => {
+    console.log(form)
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleDeterminar = async (event) => {
+    event.preventDefault();
+    try {
+
+      await servicioUsuario1.mandarConsulta(form)
+ 
+     
+     } catch (error) {
+       console.error(error);
+       console.log('Error algo sucedio')
+   
+     
+     }
+
+   
+
+  };
+  
   return (
     <div className="App">
     <Box component="span" sx={{ p: 4}}>
@@ -104,57 +99,62 @@ function Contacto() {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
+               onChange={handleChange}
+             
               style={{ width: "100%" }}
               id="outlined-error-helper-text"
               label="Nombres"
-              placeholder="Enter first name..."
+              placeholder="Ingresar nombre"
+              name="nombre"
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
+            onChange={handleChange}
+            
               style={{ width: "100%" }}
               id="outlined-error-helper-text"
               label="Apellido"
-              placeholder="Enter last name..."
+              name="apellido"
+              placeholder="Apellido"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              onChange={handleChange}
+             
               style={{ width: "100%" }}
               id="outlined-error-helper-text"
               label="Email"
+              name="mail"
               placeholder="Enter contact email..."
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              onChange={(e) => setSubject(e.target.value)}
-              value={subject}
+            onChange={handleChange}
+             
               style={{ width: "100%" }}
               id="outlined-error-helper-text"
               label="Asunto"
-              placeholder="Enter subject regards..."
+              name="asunto"
+              placeholder="Asunto"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
+              onChange={handleChange}
+              
               style={{ width: "100%" }}
               placeholder="Ingresar el mensaje de consulta..."
+              name="consulta"
               multiline
               rows={4}
             />
           </Grid>
           <Grid item xs={12}>
             <Button
-              onClick={handleClick}
+              onClick={handleDeterminar}
               style={{ width: "100%" }}
               variant="contained"
             >

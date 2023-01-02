@@ -26,7 +26,7 @@ export default function DetalleCliente() {
     if (loggedUserJSON) {
       
       const user = JSON.parse(loggedUserJSON)
-      if (user.nivel != 2){
+      if (user.nivel != 2 && user.nivel != 2){
         window.localStorage.removeItem('loggedNoteAppUser')
    
 
