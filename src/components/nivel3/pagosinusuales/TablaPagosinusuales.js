@@ -14,6 +14,7 @@ import VerConstancias from "../../nivel2/nivel2Aprobaciondepagos/VerConstancias"
 const PagosInusuales = () => {
     //configuracion de Hooks
     const [pagos, setpagos] = useState([]);
+   
     const navigate = useNavigate();
 
 
@@ -58,6 +59,7 @@ const getPagosi = async () => {
              id= {pagos[dataIndex].id} 
             />
             <BotonAprobado  id= {pagos[dataIndex].id} 
+            monto= {pagos[dataIndex].monto} 
            
             />
           </>
