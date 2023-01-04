@@ -49,6 +49,14 @@ const crear= async  (datos) => {
     alert(data)  
 }  
 
+const determinarEmpresa= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseURL+'determinarempresa',datos,config)
+     
+     alert(data)  
+ }  
+
+
 const lista= async  () => {
   
     const {data } = await axios.get(baseURL+'infocantidad',config)
@@ -132,6 +140,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

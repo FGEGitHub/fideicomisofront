@@ -239,7 +239,7 @@ const ModificacionC = (props) => {
                   label="Razon Social"
                   id="dirección"
                   name="razon_social"
-                  defaultValue={client.razon_social}
+                  defaultValue={client.razon}
                   onChange={handleChange}
                  /*  value={client.ingresos} */
                   variant="filled"

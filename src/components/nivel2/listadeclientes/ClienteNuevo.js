@@ -93,7 +93,7 @@ export default function ClienteNuevo(props) {
                             defaultValue={30}
                             onChange={handleChange}
                             inputProps={{
-                                name: 'zona',
+                                name: 'razon',
                                 id: 'uncontrolled-native',
                                
                             }}
