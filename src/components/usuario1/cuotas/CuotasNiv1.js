@@ -5,12 +5,15 @@ import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Fab from '@mui/material/Fab';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import UseUser from '../../../hooks/useUser'
-
+import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -243,16 +246,22 @@ function estadoo(dataIndex, rowIndex, data, onClick) {
 
       {
         lotes.map((item, index) =>
-          <div>
-            <Button key={index} variant="contained" onClick={() => { vercuotas(item['id']) }}>{item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}</Button>
+        <Stack spacing={2} direction="row">
+            <Fab key={index} variant="extended" onClick={() => { vercuotas(item['id']) }}><AddLocationAltIcon sx={{ mr: 1 }} /> {item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}
+            
+            </Fab>
             {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
+            <Fab key={index} variant="extended" onClick={() => { verief(item['id']) }}>
+            <LocalAtmIcon sx={{ mr: 1 }} />
+            Estado financiero
+            </Fab>
 
-            <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button>
+            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
 
 
 
 
-          </div>
+          </Stack>
         )
       }
 
