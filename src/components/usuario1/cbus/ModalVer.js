@@ -78,27 +78,7 @@ export default function SelectTextFields(props) {
     console.log(pago)
   }
   ////
-  const pagar = async (event) => {
-    // event.preventDefault();
-
-    console.log(pago)
-    try {
-
-      await servicioPagos.pagar(
-        pago
-
-
-      )
-
-
-    } catch (error) {
-      console.error(error);
-      console.log('Error algo sucedio')
-
-    }
-
-    setOpen(false);
-  };/////
+  
   const [currency, setCurrency] = React.useState('EUR');
 
   /*   const handleChange = (event) => {

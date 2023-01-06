@@ -42,8 +42,6 @@ export default function SelectTextFields(props) {
 
    setActivo(true)
 
-
-
   }
   const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
   const cuil_cuit = preba.cuil_cuit
@@ -60,6 +58,7 @@ export default function SelectTextFields(props) {
   const handleClickOpen = () => {
     setOpen(true);
     traer()
+    props.traer()
   };
 
   const handleClose = () => {

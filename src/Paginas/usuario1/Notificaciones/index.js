@@ -45,7 +45,7 @@ export default function Notificaciones() {
       
                 <Navbar />
 
-                <br /> <br />
+                <br /> <br />    <br /> <br />
                 <Tablanoti
               />
                 

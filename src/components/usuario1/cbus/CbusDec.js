@@ -6,6 +6,35 @@ import ForwardToInboxTwoToneIcon from '@mui/icons-material/ForwardToInboxTwoTone
 import { useNavigate } from "react-router-dom";
 import Nuevo from '../AsociarCbu/ModalAsociar'
 import ModalVer from "./ModalVer";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { styled } from '@mui/material/styles';
+import Skeleton from '@mui/material/Skeleton';
+import { Paper } from '@mui/material';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 const TablaNotificaciones = (props) => {
     const [cbus, setCbus] = useState([''])
@@ -133,6 +162,66 @@ const TablaNotificaciones = (props) => {
 
 
                 />
+
+                <>
+                    <Paper
+                        sx={{
+                            cursor: 'pointer',
+                            background: '#eeeeee',
+                            color: '#bdbdbd',
+                            border: '1px dashed #ccc',
+                            width: "90%",
+                            '&:hover': { border: '1px solid #ccc' },
+                            border: "1px solid black",
+                            margin: '75px',
+
+                        }}
+                    >
+
+                        <TableContainer>
+                            {!cbus ? <Skeleton /> : <>
+                                <Table >
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUIL/CUIT</b> <b /></TableCell>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ALIAS</b></TableCell>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>NUMERO</b></TableCell>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>ESTADO</b></TableCell>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>LAZO</b></TableCell>
+                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DESASOCIAR</b></TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+
+
+
+                                        {cbus.map((row) => (
+                                            <StyledTableRow key={row.name}>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.cuil_cuit_lazo}</b></> : <>{row.cuil_cuit_lazo}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.alias}</b></> : <>{row.alias}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.numero}</b></> : <>{row.numero}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.estado}</b></> : <>{row.estado}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.lazo}</b></> : <>{row.lazo}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.Desasociar}</b></> : <>{row.Desasociar}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row"></StyledTableCell>
+
+                                         
+                                            </StyledTableRow>
+                                        ))}
+
+
+
+
+                                    </TableBody>
+                                </Table>
+                            </>}
+
+                        </TableContainer>
+                    </Paper>
+
+                </>
+
+
             </>
             <MUIDataTable
 
