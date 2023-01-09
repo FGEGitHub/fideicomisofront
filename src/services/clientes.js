@@ -120,6 +120,14 @@ const traerLejagos= async  (cuil_cuit) => {
      return data 
  }
 
+ const borrarcbu= async  (id) => {
+    
+    const {data } = await axios.get(baseURL+'borrarcbu/'+id,config)
+   alert(data)
+    return data 
+}
+ 
+
  const clientehabilitado= async  (cuil_cuit) => {
  
     const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
@@ -140,6 +148,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

@@ -202,8 +202,31 @@ const TablaNotificaciones = (props) => {
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.numero}</b></> : <>{row.numero}</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.estado}</b></> : <>{row.estado}</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.lazo}</b></> : <>{row.lazo}</>}</StyledTableCell>
-                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.Desasociar}</b></> : <>{row.Desasociar}</>}</StyledTableCell>
-                                                <StyledTableCell component="th" scope="row"></StyledTableCell>
+                                                <StyledTableCell component="th" scope="row"> <ModalVer  id= { row.id} numero = {row.numero}
+                                                traer = {async () => {
+                                                    try {
+                                                        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+                                                        if (loggedUserJSON) {
+                                                            const usuario = JSON.parse(loggedUserJSON)
+                                            
+                                                            setUsuario(usuario)
+                                                            const cant = await servicioUsuario1.cbuscliente(usuario.cuil_cuit)
+                                            
+                                                            setCbus(cant)
+                                                        }
+                                            
+                                                    } catch (error) {
+                                            
+                                                    }
+                                            
+                                            
+                                            
+                                            
+                                            
+                                                }}
+                                                
+                                                
+                                                /></StyledTableCell>
 
                                          
                                             </StyledTableRow>
