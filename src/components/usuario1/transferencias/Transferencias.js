@@ -47,7 +47,7 @@ const Transferencias = () => {
   const Grid = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    padding-left: calc(50vw - 160px);
+    padding-left: calc(20vw - 160px);
   
     /* Fake padding-right */
     &::after {
@@ -71,7 +71,7 @@ const Transferencias = () => {
   
 return (
     <Page>
-      <br/><br/><br/><br/><br/>
+      <br/><br/><br/>
 
     <Grid>
       {lotes.map((lote, index) => (

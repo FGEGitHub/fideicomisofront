@@ -20,7 +20,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@material-ui/core";
-
+import InformarPago from './PagodeCuota'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -425,6 +425,7 @@ const CuotasNiv1 = (props) => {
                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA CON AJUSTE</b></TableCell>
                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE ICC</b></TableCell>
                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
+                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>INFORMAR PAGO</b></TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -433,12 +434,17 @@ const CuotasNiv1 = (props) => {
 
                       {cuotas.map((row) => (
                         <StyledTableRow key={row.name}>
-                          <StyledTableCell component="th" scope="row">{row.mes}/{row.anio} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">{ row.mes <10 ? <>0{row.mes}</>:<>{props.mes}</> }/{row.anio} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">$ {row.saldo_inicial} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">$ {row.cuota_con_ajuste} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">{row.Ajuste_ICC} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">$ {row.Saldo_real} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row"  align="center"> <InformarPago 
+                          mes = {row.mes}
+                          anio = {row.anio}
+                          id = {row.id}
+                          /> </StyledTableCell>
                         </StyledTableRow>
                       ))}
 

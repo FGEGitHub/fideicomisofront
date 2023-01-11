@@ -44,9 +44,13 @@ export default function Transferencias() {
                 <Navbar />
               {/*   <LotesCliente
                 /> */}
+                <br/>   <br/>   <br/>
+                <h2>Seleccione un lote a pagar</h2>
                 < Transferencias2 
                 />
-         
+                 <br/>   <br/>   <br/>
+                 <h2>  O seleccione una cuota específica</h2>
+         <Cuotas/>
             </div>
             </div>   :<div></div> } </div>
 

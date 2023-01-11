@@ -216,14 +216,26 @@ console.log(pago)
        return (data)
      
     } 
+    const pagarnivel1cuota= async  (pago) => {
+
+
+      const {data } = await axios.post(baseUrl+'pagarnivel1cuota',(pago),config)
+      alert(data)
+         return (data)
+       
+      } 
+
+
+    
 
     const mandarConsulta= async  (form) => {
 
 
       const {data } = await axios.post(baseUrl+'mandarconsulta',(form),config)
+    
          return (data)
        
       } 
 
     
-export default {mandarConsulta,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {pagarnivel1cuota,mandarConsulta,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
