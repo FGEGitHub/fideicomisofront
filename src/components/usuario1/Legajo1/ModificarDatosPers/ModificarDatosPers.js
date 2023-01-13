@@ -15,132 +15,269 @@ import Cargando from '../../../CargaDeTabla'
 import "./profile.css";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom"
+import KeyIcon from '@mui/icons-material/Key';
+import { Paper } from '@mui/material';
 
 const ModificacionC = (props) => {
   const navigate = useNavigate();
-    const [cliente, setCliente] = useState()
-    const [modificaciones, setModificaciones] = useState([])
+  const [cliente, setCliente] = useState()
+  const [modificaciones, setModificaciones] = useState([])
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
-   
+
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     traer()
-    
 
-}, [])
 
-  const traer = async() => {
-    const preba = JSON.parse( window.localStorage.getItem('loggedNoteAppUser'))
-    
- 
-   
-      const  cliente = await servicioUsuario1.cliente(preba.cuil_cuit)
-      
-      setCliente(cliente)
-      console.log('cliente')
-      console.log(cliente)
+  }, [])
 
-      setModificaciones({cuil_cuit: cliente[0].cuil_cuit,
-        Nombre: cliente[0].Nombre,
-        email: cliente[0].email,
-        provincia: cliente[0].provincia,
-        telefono: cliente[0].telefono,
-        ingresos: cliente[0].ingresos,
-        domicilio: cliente[0].domicilio,
-        razon_social: cliente[0].razon_social} )
-      
+  const traer = async () => {
+    const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
-    };  
- 
 
-    const handleChange = (e) =>{
-      setModificaciones({  ...modificaciones, [e.target.name]: e.target.value })
-      console.log(modificaciones)
+
+    const cliente = await servicioUsuario1.cliente(preba.cuil_cuit)
+
+    setCliente(cliente)
+    console.log('cliente')
+    console.log(cliente)
+
+    setModificaciones({
+      cuil_cuit: cliente[0].cuil_cuit,
+      Nombre: cliente[0].Nombre,
+      email: cliente[0].email,
+      provincia: cliente[0].provincia,
+      telefono: cliente[0].telefono,
+      ingresos: cliente[0].ingresos,
+      domicilio: cliente[0].domicilio,
+      razon_social: cliente[0].razon_social
+    })
+
+
+  };
+
+
+  const handleChange = (e) => {
+    setModificaciones({ ...modificaciones, [e.target.name]: e.target.value })
+    console.log(modificaciones)
+  }
+  const handleDeterminar = async (event) => {
+
+    try {
+
+      const rta = await servicioUsuario1.modificarCliente(modificaciones)
+
+      traer()
+    } catch (error) {
+      console.error(error);
+      console.log('Error algo sucedio')
+
     }
-    const handleDeterminar = async (event) => {
 
-      try {
-  
-        const rta =await servicioUsuario1.modificarCliente( modificaciones)
-    
-          traer()
-       } catch (error) {
-         console.error(error);
-         console.log('Error algo sucedio')
-       
-       }
+  };
 
-    };
+  return (<>
+    {cliente ? <div>
 
-  return (<>    
-    {cliente ?<div>
-   {cliente.map((client) =>( 
-    <div className="profile">
-      <Grid Container>
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-          <Avatar sx={{ width: 170, height: 140 }}>{(client.Nombre).substring(0,1)}</Avatar>
-        </Grid>
-        <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
-  
-            <Container>
-            <Box>
-            <h5>
-            Modificacion de datos personales
-            </h5>
-                
-            </Box>
-       
-              <Box>
-              <TextField
-                  label="CUIL"
-                  id="cuil"
-                  name="cuit_cuil"
-                 // defaultValue="CUIL"
-                 defaultValue= {client.cuil_cuit}
-                 onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
 
+      {cliente.map((client) => (
+
+
+        <div className="profile">
+          <Grid Container>
+
+            <Paper
+              sx={{
+                cursor: 'pointer',
+                background: '#cfd8dc',
+                color: '#bdbdbd',
+                border: '1px dashed #ccc',
+                '&:hover': { border: '1px solid #ccc' },
+              }}
+            >
+              <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
+                <Avatar sx={{ width: 170, height: 140 }}>{(client.Nombre).substring(0, 1)}</Avatar>
+              </Grid>
+              <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
+
+                <Container>
+                  <Box>
+                    <h5>
+                      Modificacion de datos personales
+                    </h5>
+
+                  </Box>
+
+                  <Box>
+                    <TextField
+                      label="CUIL"
+                      id="cuil"
+                      name="cuit_cuil"
+                      // defaultValue="CUIL"
+                      defaultValue={client.cuil_cuit}
+                      onChange={handleChange}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      InputProps={{
+                        readOnly: !editMode,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+                    <TextField
+                      label="Nombre"
+                      id="Nombre"
+                      name="Nombre"
+                      defaultValue={client.Nombre}
+                      onChange={handleChange}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      InputProps={{
+                        readOnly: true,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </Box>
+
+
+
+                  <Box>
+
+                    <TextField
+                      label="Email"
+                      id="email"
+                      name="email"
+                      defaultValue={client.email}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      onChange={handleChange}
+                      InputProps={{
+                        readOnly: false,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+                    <TextField
+                      label="Provincia"
+                      id="Localidad"
+                      name="provincia"
+                      onChange={handleChange}
+                      defaultValue={client.provincia}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      InputProps={{
+                        readOnly: editMode,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <HomeWorkIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </Box>
+                  <Box>
+                    <TextField
+                      label="Numero de Telefono"
+                      id="numero de telefono"
+                      name="telefono"
+                      defaultValue={client.telefono}
+                      onChange={handleChange}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      InputProps={{
+                        readOnly: editMode,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LocalPhoneIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+
+
+                    <TextField
+                      label="Domicilio"
+                      id="domicilio"
+                      name="domicilio"
+                      defaultValue={client.domicilio}
+                      onChange={handleChange}
+                      variant="filled"
+                      sx={{ margin: "10px" }}
+                      InputProps={{
+                        readOnly: editMode,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LocalPhoneIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+
+
+
+                  </Box>
+
+
+                  <Box>
+                    <columns lg={8}>
+                      {editMode ? (
+                        <div className="profile-form-button">
+                          <Button
+                            variant="outlined"
+                            sx={{ marginRight: "10px" }}
+                            onClick={() => setEditMode(false)}
+                          >
+                            Cancelar
+                          </Button>
+                          <Button variant="contained">Enviar</Button>
+                        </div>
+                      ) : (
+                        <div className="profile-edit-button">
+                          <Button
+                            variant="outlined"
+                            onClick={handleDeterminar}
+
+                          >
+                            Guardar
+                          </Button>
+                        </div>
+                      )}
+                    </columns>
+                  </Box>
+                </Container>
+
+              </Grid>
+            </Paper>
+                        <br/> <br/> <br/>
+            <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
+              <Paper
+                sx={{
+                  cursor: 'pointer',
+                  background: '#fafafa',
+                  color: '#bdbdbd',
+                  border: '1px dashed #ccc',
+                  '&:hover': { border: '1px solid #ccc' },
+                }}
+              >
                 <TextField
-                  label="Nombre"
-                  id="Nombre"
-                  name="Nombre"
-                  defaultValue={client.Nombre}
-                  onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Box>
-                   
-
-                    
-              <Box>
-             
-                <TextField
-                  label="Email"
+                  label="Contraseña anterior"
                   id="email"
-                  name="email"
-                  defaultValue={client.email}
+                  name="pass"
                   variant="filled"
                   sx={{ margin: "10px" }}
                   onChange={handleChange}
@@ -148,113 +285,58 @@ const ModificacionC = (props) => {
                     readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <EmailIcon />
+                        <KeyIcon />
                       </InputAdornment>
                     )
                   }}
                 />
-
                 <TextField
-                  label="Provincia"
-                  id="Localidad"
-                  name="provincia"
-                  onChange={handleChange}
-                  defaultValue={client.provincia}
+                  label="Nueva Contraseña"
+                  id="email"
+                  name="pass"
                   variant="filled"
                   sx={{ margin: "10px" }}
+                  onChange={handleChange}
                   InputProps={{
-                    readOnly: editMode,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <HomeWorkIcon />
+                        <KeyIcon />
                       </InputAdornment>
                     )
                   }}
                 />
-              </Box>
-              <Box>
                 <TextField
-                  label="Numero de Telefono"
-                  id="numero de telefono"
-                  name="telefono"
-                  defaultValue={client.telefono}
-                  onChange={handleChange}
+                  label="Repetir conraseña"
+                  id="email"
+                  name="pass"
                   variant="filled"
                   sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-               
-                
-              </Box>
-              <Box>
-                <TextField
-                  label="Domicilio"
-                  id="domicilio"
-                  name="domicilio"
-                  defaultValue={client.domicilio}
                   onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: editMode,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LocalPhoneIcon />
+                        <KeyIcon />
                       </InputAdornment>
                     )
                   }}
                 />
+              </Paper>
+            </Grid>
 
-              
-              
-              </Box>
-              
+          </Grid>
+        </div>
+      ))}</div> : <div><Cargando /></div>}
+      
+      <br/> <br/> <br/>  <br/> <br/> <br/>  <br/> <br/> <br/>
+      </>
+      
+      
+      
+      );
 
-              <Box>
-                <columns lg={8}>
-                  {editMode ? (
-                    <div className="profile-form-button">
-                      <Button
-                        variant="outlined"
-                        sx={{ marginRight: "10px" }}
-                        onClick={() => setEditMode(false)}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button variant="contained">Enviar</Button>
-                    </div>
-                  ) : (
-                    <div className="profile-edit-button">
-                      <Button
-                        variant="outlined"
-                       onClick={handleDeterminar}
-                        
-                      >
-                      Guardar
-                      </Button>
-                    </div>
-                  )}
-                </columns>
-              </Box>
-            </Container>
-          
-        </Grid>
 
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-         
-         
-        </Grid>
-      </Grid>
-    </div>
-    ))}</div> :<div><Cargando/></div> }</>);
 }
 
 export default ModificacionC;

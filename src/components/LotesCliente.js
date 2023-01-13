@@ -11,24 +11,48 @@ import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
-
+import { styled } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import Skeleton from '@mui/material/Skeleton';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-////
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { Box } from "@material-ui/core";
+import Grid from '@mui/material/Grid';
+import Fab from '@mui/material/Fab';
+import Stack from '@mui/material/Stack';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 //////
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
+
 
 const LotesCliente = (props) => {
     let params = useParams()
@@ -50,11 +74,12 @@ const LotesCliente = (props) => {
 
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
+    const [vista1, setVista1] = useState(true)
     const [state, setState] = React.useState({
         gilad: true,
         jason: false,
         antoine: true,
-      });
+    });
     const vercuotas = async (index) => {
 
         const cuotas = await servicioCuotas.vercuotas(index)
@@ -79,12 +104,16 @@ const LotesCliente = (props) => {
     ///
     const handleChange = () => {
         setAct(!act);
-      };
-      const handleChange2 = () => {
+    };
+    const handleChange2 = () => {
         setAct2(!act2);
-      };
+    };
+    const Vista1 = () => {
+        setVista1(!vista1);
+    };
+
     const verief = async (index) => {
-       
+
         const dde = await servicioCuotas.verief(index)
         setDeudaExigible(dde[0])
         setDetallePendiente(dde[1])
@@ -115,7 +144,7 @@ const LotesCliente = (props) => {
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + cuotas[dataIndex].Saldo_real : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].Saldo_real ) : <div> No Calculado </div>}
 
             </>
         );
@@ -123,7 +152,7 @@ const LotesCliente = (props) => {
     function pago(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + (cuotas[dataIndex].pago).toFixed(2) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].pago ) : <div> No Calculado </div>}
 
             </>
         );
@@ -131,7 +160,7 @@ const LotesCliente = (props) => {
     function saldoInicial(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + cuotas[dataIndex].saldo_inicial : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].saldo_inicial  ) : <div> No Calculado </div>}
 
             </>
         );
@@ -139,7 +168,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + cuotas[dataIndex].cuota_con_ajuste : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste ) : <div> No Calculado </div>}
 
             </>
         );
@@ -154,10 +183,10 @@ const LotesCliente = (props) => {
     }
     function diferencia(dataIndex, rowIndex, data, onClick) {
         return (
-            <> 
-            {(cuotas[dataIndex].diferencia>=0) ? <> <p style={{ color: 'green' }} >{cuotas[dataIndex].diferencia} </p> </> : <><p style={{ color: 'red' }} >{cuotas[dataIndex].diferencia}</p></>}
-             
+            <>
+                {(cuotas[dataIndex].diferencia >= 0) ? <> <p style={{ color: 'green' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )} </p> </> : <><p style={{ color: 'red' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )}</p></>}
 
+               
             </>
         );
     }
@@ -177,7 +206,7 @@ const LotesCliente = (props) => {
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
-             {/*   <AgregarIcc
+                {/*   <AgregarIcc
                     id={cuotas[dataIndex].id}
                     traer={async () => {
 
@@ -278,7 +307,7 @@ const LotesCliente = (props) => {
             }
 
         },
-          {
+        {
             name: "Diferencia",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
@@ -291,7 +320,7 @@ const LotesCliente = (props) => {
             }
 
         },
-      
+
 
 
         {
@@ -320,10 +349,10 @@ const LotesCliente = (props) => {
                 Asignar lote a usuario
             </Button>
             <br /> <br />
-            <Button onClick={() => { navigate('/usuario2/agregarviarias/' + cuil_cuit) }}  variant="contained" color="success" >Agregar cuotas a varios lotes</Button><br />
+            <Button onClick={() => { navigate('/usuario2/agregarviarias/' + cuil_cuit) }} variant="contained" color="success" >Agregar cuotas a varios lotes</Button><br />
             <FormControl sx={{ m: 1, minWidth: 140 }}>
                 <InputLabel > LOTE</InputLabel>
-               
+
                 <Select
 
 
@@ -343,19 +372,20 @@ const LotesCliente = (props) => {
                         )
                     }
                 </Select>
-              <h3>  {cuotas ? <>{cuotas[0].zona } Fraccion {cuotas[0].fraccion } Manzana {cuotas[0].manzana } {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela }</> : <>Lote {cuotas[0].lote }</> }  </>:<></>}</h3>
+                <h3>  {cuotas ? <>{cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
                 <FormControlLabel
                     control={
-                        <Switch checked={act} onChange={handleChange}  />
-                    }
-                    label="Cuotas"
-                />
-                <FormControlLabel
-                    control={
-                        <Switch checked={act2} onChange={handleChange2}  />
+                        <Switch checked={act2} onChange={handleChange2} />
                     }
                     label="IEF"
                 />
+                <FormControlLabel
+                    control={
+                        <Switch checked={act} onChange={handleChange} />
+                    }
+                    label="Cuotas"
+                />
+
 
             </FormControl>
 
@@ -379,20 +409,242 @@ const LotesCliente = (props) => {
                     </Button>
                     <BorrarCuotas
                         id={idlote} />
+
+                    {act2 ?
+
+                        <div>
+
+
+
+
+
+                            {cuotas !== '' ? <>
+
+                                <div>
+                                    <Box
+                                        sx={{
+                                            display: 'flex'
+                                        }}
+                                    >
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+
+                                            <Paper
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "40%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '75px',
+                                                    display: 'flex'
+
+                                                }}
+                                            >
+
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Detalles de Deuda Exigible </TableCell>
+
+
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {deudaExigible.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
+
+                                                                    <TableCell align="left">{row.datoa}</TableCell>
+                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+
+                                            <Paper
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "40%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '75px',
+                                                    display: 'flex'
+
+                                                }}
+                                            >
+
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
+
+
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {detallePendiente.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
+
+                                                                    <TableCell align="left">{row.datoa}</TableCell>
+                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+                                            <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
+                                        </Grid>
+                                    </Box>
+                                </div>
+
+
+                            </> : <></>}
+                        </div>
+                        : <div></div>}
+
+
+
+
+
+
                     {cuotas !== '' ? <>
-                        <MUIDataTable
-                            title={"Lista de cuotas"}
-                            data={cuotas}
-                            columns={columns}
-                            actions={[
-                                {
-                                    icon: 'save',
-                                    tooltip: 'Save User',
-                                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                                }
-                            ]}
-                        />
-                        
+
+                        <Stack spacing={2} direction="row">
+                            <Fab variant="extended" onClick={() => { Vista1() }}><RemoveRedEyeIcon sx={{ mr: 1 }} /> Cambiar vista
+
+                            </Fab>
+                            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
+
+                            <br />
+
+                            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
+
+
+
+
+
+                        </Stack>
+
+
+                        {vista1 ? <>
+                            <MUIDataTable
+                                title={"Lista de cuotas"}
+                                data={cuotas}
+                                columns={columns}
+                                actions={[
+                                    {
+                                        icon: 'save',
+                                        tooltip: 'Save User',
+                                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                    }
+                                ]}
+                            />
+
+
+                        </> : <>
+
+                            <>
+                                <Paper
+                                    sx={{
+                                        cursor: 'pointer',
+                                        background: '#eeeeee',
+                                        color: '#bdbdbd',
+                                        border: '1px dashed #ccc',
+                                        width: "90%",
+                                        '&:hover': { border: '1px solid #ccc' },
+                                        border: "1px solid black",
+                                        margin: '75px',
+
+                                    }}
+                                >
+
+                                    <TableContainer>
+                                        {!cuotas ? <Skeleton /> : <>
+                                            <h1>CUOTAS</h1>
+                                            <Table >
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA CON AJUSTE</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+
+
+
+                                                    {cuotas.map((row) => (
+                                                        <StyledTableRow key={row.name}>
+                                                            <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.saldo_inicial)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.Ajuste_ICC} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.pago)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </StyledTableCell>
+                                                           
+                                                            <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row" align="center">
+
+                                                                <CurrencyExchangeIcon
+                                                                    onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
+                                                                    style={{ marginRight: "10px", cursor: "pointer" }}
+                                                                />
+                                                                <SearchIcon style={{ cursor: "pointer" }}
+                                                                    onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                                                                />
+
+
+                                                                <DeleteIcon style={{ cursor: "pointer" }}
+                                                                    onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                                                                />
+
+
+                                                            </StyledTableCell>
+                                                        </StyledTableRow>
+                                                    ))}
+
+
+
+
+                                                </TableBody>
+                                            </Table>
+                                        </>}
+
+                                    </TableContainer>
+                                </Paper>
+
+
+                            </>
+
+                        </>}
                     </> : <> Lote sin cuotas</>}
 
 
@@ -404,65 +656,10 @@ const LotesCliente = (props) => {
 
             <br /><br /><br /><br />
 
-            {act2 ?
-                <div>
-
-                    {cuotas !== '' ? <>
-                        <TableContainer style={{ width: '70%' }} component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Detalles de Deuda Exigible </TableCell>
 
 
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {deudaExigible.map((row) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-
-                                            <TableCell align="left">{row.datoa}</TableCell>
-                                            <TableCell align="left">{(row.datob)}</TableCell>
-
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-
-                        <br /><br />
 
 
-                        <TableContainer style={{ width: '70%' }} component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Detalle de Cuotas Pendientes </TableCell>
-
-
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {detallePendiente.map((row) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-
-                                            <TableCell align="left">{row.datoa}</TableCell>
-                                            <TableCell align="left">{row.datob}</TableCell>
-
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </> : <></>}
-                </div>
-                : <div></div>}
 
         </Fragment>
 

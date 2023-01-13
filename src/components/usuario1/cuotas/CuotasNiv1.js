@@ -338,7 +338,7 @@ const CuotasNiv1 = (props) => {
                     >
 
                       <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{row.datob}</TableCell>
+                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                     </TableRow>
                   ))}
@@ -380,7 +380,7 @@ const CuotasNiv1 = (props) => {
                     >
 
                       <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{row.datob}</TableCell>
+                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                     </TableRow>
                   ))}
@@ -435,11 +435,11 @@ const CuotasNiv1 = (props) => {
                       {cuotas.map((row) => (
                         <StyledTableRow key={row.name}>
                           <StyledTableCell component="th" scope="row">{ row.mes <10 ? <>0{row.mes}</>:<>{props.mes}</> }/{row.anio} </StyledTableCell>
-                          <StyledTableCell component="th" scope="row">$ {row.saldo_inicial} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.saldo_inicial)} </StyledTableCell>
                           <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
-                          <StyledTableCell component="th" scope="row">$ {row.cuota_con_ajuste} </StyledTableCell>
-                          <StyledTableCell component="th" scope="row">{row.Ajuste_ICC} </StyledTableCell>
-                          <StyledTableCell component="th" scope="row">$ {row.Saldo_real} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</StyledTableCell>
+                          <StyledTableCell component="th" scope="row">{new Intl.NumberFormat('de-DE').format(row.Ajuste_ICC)} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</StyledTableCell>
                           <StyledTableCell component="th" scope="row"  align="center"> <InformarPago 
                           mes = {row.mes}
                           anio = {row.anio}
@@ -504,7 +504,7 @@ const CuotasNiv1 = (props) => {
                             <StyledTableRow key={row.name}>
                               <StyledTableCell component="th" scope="row">{row.mes}/{row.anio} </StyledTableCell>
                               <StyledTableCell component="th" scope="row"> {row.estado === "A" ? <>Aprobado</> : <> Pendiente/No Aprobado</>} </StyledTableCell>
-                              <StyledTableCell component="th" scope="row">{row.monto} </StyledTableCell>
+                              <StyledTableCell component="th" scope="row">{new Intl.NumberFormat('de-DE').format(row.monto)} </StyledTableCell>
 
                             </StyledTableRow>
                           ))}
