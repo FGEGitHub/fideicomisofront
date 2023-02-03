@@ -83,7 +83,7 @@ const subirprueba = async (formdata) => {
 
   const cambiarestado= async  (datos) => {
     console.log(datos)
-     const {data } = await axios.post(baseUrl+'cambiarestado',datos,config)
+     const {data } = await axios.post(baseUrl+'cambiarestado/',datos,config)
      console.log(data)
      return data 
  } 

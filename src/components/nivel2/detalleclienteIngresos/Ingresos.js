@@ -120,6 +120,9 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                 <DialogContent>
                     <>
                         Determinar Ingresos Mensuales
+                        <br/>
+                        <p style={{ color: 'crimson' }} > **Cargar Documentación válida para los ingresos</p>
+                       
                     </>
                  
                

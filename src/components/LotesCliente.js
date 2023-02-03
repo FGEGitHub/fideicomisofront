@@ -602,13 +602,13 @@ const LotesCliente = (props) => {
                                                     {cuotas.map((row) => (
                                                         <StyledTableRow key={row.name}>
                                                             <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.saldo_inicial)} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.Ajuste_ICC} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.pago)} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ {new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)} </b></StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
                                                            
                                                             <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">

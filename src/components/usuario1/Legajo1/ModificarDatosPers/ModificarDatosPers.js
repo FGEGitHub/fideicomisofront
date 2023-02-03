@@ -91,15 +91,15 @@ const ModificacionC = (props) => {
             <Paper
               sx={{
                 cursor: 'pointer',
-                background: '#cfd8dc',
+                background: '#f5f5f5',
                 color: '#bdbdbd',
                 border: '1px dashed #ccc',
                 '&:hover': { border: '1px solid #ccc' },
               }}
             >
-              <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
+              {/* <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
                 <Avatar sx={{ width: 170, height: 140 }}>{(client.Nombre).substring(0, 1)}</Avatar>
-              </Grid>
+              </Grid> */}
               <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
 
                 <Container>
@@ -322,7 +322,10 @@ const ModificacionC = (props) => {
                     )
                   }}
                 />
+
+
               </Paper>
+              <Button variant="contained">Cambiar</Button>
             </Grid>
 
           </Grid>
