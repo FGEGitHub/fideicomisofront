@@ -107,6 +107,14 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/aprobacioncbu'
         },
+      
+        {
+          text: 'Agenda de novedades',
+          icon:<div><Badge color="error">
+          <AccountBalanceIcon color="primary" />
+        </Badge></div>,
+          path: '/usuario2/novedades'
+        },
         
      
       ];
@@ -163,6 +171,13 @@ export default function MenuIzq2 ({children}) {
              icon: <MoneyOffIcon color="primary" />,
              path: '/nivel3/pagos'
            },
+           {
+            text: 'Agenda de novedades',
+            icon:<div><Badge color="error">
+            <AccountBalanceIcon color="primary" />
+          </Badge></div>,
+            path: '/nivel3/novedades'
+          },
          
       
        ];

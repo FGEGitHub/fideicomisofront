@@ -97,6 +97,13 @@ export default function MenuIzq2 ({children}) {
             icon: <MoneyOffIcon color="primary" />,
             path: '/nivel3/pagos'
           },
+          {
+            text: 'Agenda de novedades',
+            icon:
+            <AccountBalanceIcon color="primary" />,
+          
+            path: '/nivel3/novedades'
+          },
         
      
       ];
