@@ -26,10 +26,10 @@ if (loggedUserJSON) {
     }
 }
   
-  const funcion= async  (datos) => {
+  const crear= async  (datos) => {
  
-    const data  = await axios.post(baseURL+'todas',datos,config)
- 
+    const data  = await axios.post(baseURL+'crear',datos,config)
+    alert(data.data)
 
     return data.data 
 } 
@@ -39,5 +39,11 @@ const todas= async  (cuil_cuit) => {
   
     return data 
 } 
-export default {todas};
+const leer= async  (id) => {
+ 
+    const {data } = await axios.get(baseURL+'leer/'+id,config)
+  
+    return data 
+} 
+export default {todas,crear,leer};
 

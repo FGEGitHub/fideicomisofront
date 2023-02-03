@@ -27,20 +27,22 @@ export default function SelectTextFields(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
 
-  const [notificacion, setNotidicaciones] = useState()
+  const [novedad, setNovedad] = useState({})
   const [activo, setActivo] = useState(false)
 
 
 
 
   const traer = async () => {
+    
+   const nov = await servicioNovedades.leer(props.id)
 
-   const not = await servicioNovedades.leer(props.id)
-   setNotidicaciones(not)
+  await setNovedad(nov)
 
    setActivo(true)
 
   }
+
   const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
   const cuil_cuit = preba.cuil_cuit
 
@@ -56,7 +58,7 @@ export default function SelectTextFields(props) {
   const handleClickOpen = () => {
     setOpen(true);
     traer()
-    props.traer()
+    
   };
 
   const handleClose = () => {
@@ -64,36 +66,7 @@ export default function SelectTextFields(props) {
   };
 
   
-  const handleChange = (e) => {
-    console.log(pago)
-    // setPago({ ...pago, ['id']: props.id })
-    setPago({ ...pago, [e.target.name]: e.target.value })
 
-
-    console.log(pago)
-  }
-  ////
-  const pagar = async (event) => {
-    // event.preventDefault();
-
-    console.log(pago)
-    try {
-
-      await servicioNovedades.pagar(
-        pago
-
-
-      )
-
-
-    } catch (error) {
-      console.error(error);
-      console.log('Error algo sucedio')
-
-    }
-
-    setOpen(false);
-  };/////
   const [currency, setCurrency] = React.useState('EUR');
 
   /*   const handleChange = (event) => {
@@ -122,13 +95,15 @@ export default function SelectTextFields(props) {
 
             {activo ?   
              <div>
-             <h3>Notificacion: {notificacion.asunto} </h3>
+             <h3>Novedad: 
+              <br/>
+              Asunto: {novedad[0].asunto} </h3>
              
                
    
    
                  <br />
-                 <label>{notificacion.descripcion}</label>
+                 <label>{novedad[0].detalle}</label>
                 
    
    

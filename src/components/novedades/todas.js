@@ -77,6 +77,7 @@ const TablaNotificaciones = (props) => {
                 <div>
                     < ModalVer
                         id={novedades[dataIndex].id} />
+                    
                   
 
 
@@ -91,8 +92,8 @@ const TablaNotificaciones = (props) => {
     // definimos las columnas
     const columns = [
         {
-            name: "id",
-            label: "ID",
+            name: "mes",
+            label: "fecha",
 
         },
         {
@@ -100,16 +101,7 @@ const TablaNotificaciones = (props) => {
             label: "Cuil/cuit",
         },
 
-        {
-            name: "descripcion",
-            label: "descripcion",
-
-        },
-        {
-            name: "leida",
-            label: "leida",
-
-        },
+     
         {
             name: "asunto",
             label: "asunto",

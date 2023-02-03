@@ -14,7 +14,7 @@ import AgregarLegajo from "../Paginas/Usuario2/AgregarLegajo"
 import AprobacionCbu from "../Paginas/Usuario2/AprobacionCbus"
 import Extracto from "../Paginas/Usuario2/Extracto"
 import AgregarVariascuotasL from "../Paginas/Usuario2/AgregarcuotasvariosL"
-
+import Novedades from "../Paginas/Usuario2/Novedades"
 
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
@@ -52,6 +52,7 @@ import Declaraciones from '../Paginas/Nivel3/Declaraciones';
 import Agregarusuario from '../Paginas/Nivel3/AgregarUsuario';
 import Pagos3 from '../Paginas/Nivel3/Pagos';
 import Clientesniv3 from '../Paginas/Nivel3/Clientes';
+import Novedades3 from '../Paginas/Nivel3/Novedades';
 
 
 
@@ -140,7 +141,7 @@ const Rutas = [
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
 	{ path: '/usuario2/extracto', element: <Extracto /> },
 	{ path: '/usuario2/agregarviarias/:cuil_cuit', element: <AgregarVariascuotasL /> },
-	
+	{ path: '/usuario2/novedades', element: <Novedades /> },
 	
 	
 
@@ -156,6 +157,8 @@ const Rutas = [
 	{ path: '/nivel3/declaraciones', element: <Declaraciones /> },
 	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
 	{ path: '/nivel3/pagos', element: <Pagos3 /> },
+	{ path: '/nivel3/novedades', element: <Novedades3 /> },
+
 
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },

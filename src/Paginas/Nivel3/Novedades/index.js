@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import  useUser from '../../../hooks/useUser'
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 import Tabla from '../../../components/novedades/todas'
+import Nueva from '../../../components/novedades/NuevaNovedad'
 import CssBaseline from '@mui/material/CssBaseline';
 
 
@@ -54,6 +55,7 @@ useEffect(() => {
       <CssBaseline />
    
     <BarraLAteral>
+        <Nueva/>
        <Tabla/>
 
  </BarraLAteral>
