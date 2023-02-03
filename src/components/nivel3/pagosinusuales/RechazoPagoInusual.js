@@ -30,6 +30,7 @@ export default function FormDialog(props) {
 
   const rechazar =async ()  => {
      await servicioPagos.rechazararpagoniv3(form)
+     props.getPagosi()
      setOpen(false);
 
   // window.location.reload(true)

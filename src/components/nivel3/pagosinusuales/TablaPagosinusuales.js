@@ -260,10 +260,25 @@ const PagosInusuales = () => {
                                           
                                             <StyledTableCell component="th" scope="row">    <BotonRechazo
                                                 id={row.id}
+                                                getPagosi = {async () => {
+
+                                                    const pagos = await servicioPagos.pagosinusuales({
+                                            
+                                                    })
+                                                    console.log(pagos)
+                                                    setpagos(pagos)
+                                                }}
                                             />
                                                 <BotonAprobado id={row.id}
                                                     monto={row.monto}
+                                                    getPagosi = {async () => {
 
+                                                        const pagos = await servicioPagos.pagosinusuales({
+                                                
+                                                        })
+                                                        console.log(pagos)
+                                                        setpagos(pagos)
+                                                    }}
                                                 /> </StyledTableCell>
 
 

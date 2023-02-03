@@ -154,7 +154,11 @@ const LegajoCliente = (props) => {
     <div>
             < ModalSeguro
             id = {products[dataIndex].id}
-            reload={getData}/>
+            getData = { async () => {
+              const  data = await servicioCliente.traerLejagos(cuil_cuit)
+                   
+                    setProducts(data)
+                }} />
             
           
             </div>
@@ -168,7 +172,11 @@ const LegajoCliente = (props) => {
             < Estadisticas
              cuil_cuit = {cuil_cuit}/>
              < ModalLegajo
-              reload={getData}
+                getData = { async () => {
+                  const  data = await servicioCliente.traerLejagos(cuil_cuit)
+                       
+                        setProducts(data)
+                    }} 
               />
              <Habilitar 
               cuil_cuit_user= {props.cuil_cuit_user} />

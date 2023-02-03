@@ -40,9 +40,10 @@ export default function AprobacionPago(props) {
   }
 
   const aprobar = async () => {
-   const rta =  await servicioPagos.aprobarpago(form)
-    //  setOpen(false)
-    window.location.reload(true);
+    await servicioPagos.aprobarpago(form)
+   props.getPagosi()
+      setOpen(false)
+    
 
     // window.location.reload(true)
   }

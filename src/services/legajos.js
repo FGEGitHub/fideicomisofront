@@ -40,8 +40,10 @@ const subirlegajode = async (formData) => {
 
 
 
-  await axios.post(baseUrl + 'subirlegajo', formData, config)
+  const {data} = await axios.post(baseUrl + 'subirlegajo', formData, config)
   //await axios.post(baseUrl + 'subirlegajo', formData, config)
+ 
+  return (data)
 
 
 }
