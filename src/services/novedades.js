@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
+const  baseURL = 'https://api.santacatalinafideicomiso.com/novedades/'
 
 //const  baseURL = 'http://localhost:4000/novedades/'
 
