@@ -26,6 +26,7 @@ const TablaAprobaciones = () => {
     const [loading, setLoading] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const navigate = useNavigate();
     const id = open ? 'simple-popover' : undefined;
 
 
@@ -117,6 +118,20 @@ const TablaAprobaciones = () => {
             </>
         );
     }    ///Descarga
+    function cuilCuit_nav(dataIndex, rowIndex, data, onClick) {
+
+        return (
+            <>
+           
+            
+            <Tooltip title="Ver detalle"arrow>
+      
+      <p  onClick={() => navigate("/usuario2/detallecliente/"+pendientes[dataIndex].cuil_cuit)}  >{ pendientes[dataIndex].cuil_cuit } </p>
+      
+      </Tooltip>
+            </>
+        );
+    } 
     
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
 
@@ -156,9 +171,24 @@ const TablaAprobaciones = () => {
 
         },
         {
-            name: "cuil_cuit",
-            label: "Cuil/cuit",
+            name: "fecha",
+            label: "Fecha pago",
+
         },
+        {
+            name: "Cuil_cuit",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    cuilCuit_nav(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
+        },
+       
 
         {
             name: "descripcion",
@@ -171,7 +201,7 @@ const TablaAprobaciones = () => {
             label: "Monto Inusual",
         },
         {
-            name: "Inconscistencia",
+            name: "Inconsistencia",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     Inconsistencia(

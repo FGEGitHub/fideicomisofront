@@ -22,6 +22,8 @@ const ModificacionC = (props) => {
   const navigate = useNavigate();
   const [cliente, setCliente] = useState()
   const [modificaciones, setModificaciones] = useState([])
+  const [pass, setPass] = useState([])
+
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 
 
@@ -41,8 +43,7 @@ const ModificacionC = (props) => {
     const cliente = await servicioUsuario1.cliente(preba.cuil_cuit)
 
     setCliente(cliente)
-    console.log('cliente')
-    console.log(cliente)
+ 
 
     setModificaciones({
       cuil_cuit: cliente[0].cuil_cuit,
@@ -54,14 +55,20 @@ const ModificacionC = (props) => {
       domicilio: cliente[0].domicilio,
       razon_social: cliente[0].razon_social
     })
-
+    setPass({
+      cuil_cuit: cliente[0].cuil_cuit,
+    })
 
   };
 
 
   const handleChange = (e) => {
     setModificaciones({ ...modificaciones, [e.target.name]: e.target.value })
-    console.log(modificaciones)
+   
+  }
+  const handleChangePass = (e) => {
+    setPass({ ...pass, [e.target.name]: e.target.value })
+    
   }
   const handleDeterminar = async (event) => {
 
@@ -70,6 +77,21 @@ const ModificacionC = (props) => {
       const rta = await servicioUsuario1.modificarCliente(modificaciones)
 
       traer()
+    } catch (error) {
+  
+      console.log('Error algo sucedio')
+
+    }
+
+  };
+
+  const handleDeterminarPass = async (event) => {
+
+    try {
+
+      const rta = await servicioUsuario1.modificarpass(pass)
+      alert(rta)
+      
     } catch (error) {
       console.error(error);
       console.log('Error algo sucedio')
@@ -263,7 +285,9 @@ const ModificacionC = (props) => {
 
               </Grid>
             </Paper>
-                        <br/> <br/> <br/>
+                        <br/> <br/>
+                       
+                         <br/>
             <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
               <Paper
                 sx={{
@@ -274,13 +298,14 @@ const ModificacionC = (props) => {
                   '&:hover': { border: '1px solid #ccc' },
                 }}
               >
+                 <h2 style={{textAlign: "center"}}>Modificar contrseña</h2>
                 <TextField
                   label="Contraseña anterior"
-                  id="email"
-                  name="pass"
+                  type= "password"
+                  name="password"
                   variant="filled"
                   sx={{ margin: "10px" }}
-                  onChange={handleChange}
+                  onChange={handleChangePass}
                   InputProps={{
                     readOnly: false,
                     startAdornment: (
@@ -293,10 +318,11 @@ const ModificacionC = (props) => {
                 <TextField
                   label="Nueva Contraseña"
                   id="email"
-                  name="pass"
+                  type= "password"
+                  name="newpass"
                   variant="filled"
                   sx={{ margin: "10px" }}
-                  onChange={handleChange}
+                  onChange={handleChangePass}
                   InputProps={{
                     readOnly: false,
                     startAdornment: (
@@ -307,12 +333,15 @@ const ModificacionC = (props) => {
                   }}
                 />
                 <TextField
+                 
                   label="Repetir conraseña"
+                  type= "password"
                   id="email"
-                  name="pass"
+                  name="rnewpass"
                   variant="filled"
                   sx={{ margin: "10px" }}
-                  onChange={handleChange}
+                  onChange={handleChangePass}
+                 
                   InputProps={{
                     readOnly: false,
                     startAdornment: (
@@ -323,9 +352,11 @@ const ModificacionC = (props) => {
                   }}
                 />
 
+              
+              {pass.newpass ===pass.rnewpass ? <><Button onClick={handleDeterminarPass} variant="contained">Cambiar</Button>  </>:<><Button  variant="contained">Cambiar</Button> <p style={{ color: 'crimson' }} >Contraseña nueva o coincide </p></>}
 
               </Paper>
-              <Button variant="contained">Cambiar</Button>
+              
             </Grid>
 
           </Grid>

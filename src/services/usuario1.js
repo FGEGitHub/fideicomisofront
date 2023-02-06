@@ -37,7 +37,6 @@ const verief= async  (id) => {
     console.log(id)
     const data = await axios.get(baseUrl+'ief/'+id,config)
              
-console.log(data.data)
 
    
 
@@ -48,7 +47,7 @@ const lotesCliente= async  (cuil_cuit) => {
    
       let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit,config)
   
-      console.log(data)
+    
   
      
      
@@ -162,7 +161,7 @@ const traercompleto= async  (cuil_cuit) => {
   }
   const {data} = await axios.post(baseUrl+'completolegajos',pos,config)
            
-console.log(data)
+
 
  
  
@@ -225,7 +224,16 @@ console.log(pago)
        
       } 
 
-
+      const modificarpass= async  (datos) => {
+      
+        
+       const {data} = await axios.post(baseUrl+'modificarpass',datos,config)
+                
+      
+       
+       
+     return data
+      } 
     
 
     const mandarConsulta= async  (form) => {
@@ -238,4 +246,4 @@ console.log(pago)
       } 
 
     
-export default {pagarnivel1cuota,mandarConsulta,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {modificarpass,pagarnivel1cuota,mandarConsulta,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
