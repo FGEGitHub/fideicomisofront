@@ -125,7 +125,7 @@ const traercuotasdisponibles = async (id) => {
 
 
 const listavarios = async (cuil_cuit) => {
-    console.log(cuil_cuit)
+   
     const { data } = await axios.get(baseUrl + 'listavarios/' + cuil_cuit, config)
     console.log(data)
 
@@ -141,4 +141,25 @@ const agregarCuotasVarios = async (estadoCuotas) => {
 
     // return data
 }
-export default { agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+
+
+
+const traercuotaselcliente = async (id) => {
+   console.log(id)
+    const { data } = await axios.get(baseUrl + 'traercuotaselcliente/' + id, config)
+    console.log(data)
+
+    return data
+}
+
+
+const asignarloteacuotas = async (datos) => {
+
+    console.log(datos)
+    const { data } = await axios.post(baseUrl + 'asignarloteacuotas/', datos, config)
+
+
+    // return data
+}
+
+export default { asignarloteacuotas, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
