@@ -110,6 +110,10 @@ const DrawerNav = () => {
         case 4:
           irContacto()
           break;
+          case 5:
+            hanleLogout()
+            break;
+          
 
     }
   }
