@@ -93,6 +93,17 @@ const agregarCuotas = async (estadoCuotas) => {
     return data
 }
 
+
+const actualizarcuota = async (cuotaact) => {
+    console.log(cuotaact)
+
+    const { data } = await axios.post(baseUrl + 'actualizarcuota/', cuotaact, config)
+
+
+    return data
+}
+
+
 const asignarICC = async (nuevoicc) => {
     console.log(nuevoicc)
 
@@ -130,4 +141,4 @@ const agregarCuotasVarios = async (estadoCuotas) => {
 
     // return data
 }
-export default { agregarCuotasVarios,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+export default { agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
