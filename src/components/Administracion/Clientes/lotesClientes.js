@@ -84,6 +84,7 @@ const LotesCliente = (props) => {
     const vercuotas = async (index) => {
 
         const cuotas = await servicioCuotas.vercuotas(index)
+        console.log(cuotas)
         setCuotas(cuotas)
         setIdlote(index)
         setAct(true)
@@ -169,7 +170,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format((cuotas[dataIndex].cuota_con_ajuste).tofixed(2) ) : <div> No Calculado </div>}
 
             </>
         );

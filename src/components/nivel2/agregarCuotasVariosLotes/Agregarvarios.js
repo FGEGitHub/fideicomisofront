@@ -45,7 +45,7 @@ const AgregarVarias = () => {
     const getTodos = async () => {
 
         const tod = await servicioCuotas.listavarios(cuil_cuit)
-  
+        console.log(tod)
         setTodos(tod[0])
         setValores(tod[1])
     }
