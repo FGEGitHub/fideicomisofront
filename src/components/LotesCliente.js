@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
+import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -31,6 +32,7 @@ import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
 
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -407,6 +409,10 @@ const LotesCliente = (props) => {
                     <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
+                    <AgregaraCuotas
+                    id_origen = {idlote}
+                    />
+
                     <BorrarCuotas
                         id={idlote} />
 

@@ -154,7 +154,7 @@ const DrawerNav = () => {
     return (
       <React.Fragment>
         <Drawer
-          anchor="left"
+          anchor="right"
           open={openDrawer}
           onClose={() => setOpenDrawer(false)}
         >

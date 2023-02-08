@@ -37,7 +37,7 @@ export default function Contact() {
   
  }, [])
     return (
-        <div>  { logueado ? <div>
+        <div>  
         <React.Fragment>
            <Navbar  />
             <CssBaseline />
@@ -57,6 +57,6 @@ export default function Contact() {
 
             <Footer />
         </React.Fragment>
-        </div>   :<div></div> } </div>
+        </div> 
     );
 }

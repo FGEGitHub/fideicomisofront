@@ -38,7 +38,7 @@ export default function Nosotros() {
  }, [])
 
         return (
-            <div>  { logueado ? <div> 
+            <div> 
             <React.Fragment>
            <Navbar  />
             <CssBaseline />
@@ -96,7 +96,7 @@ export default function Nosotros() {
 
             <Footer />
             </React.Fragment>
-            </div>   :<div></div> } </div>
+            </div>   
             
             
         );
