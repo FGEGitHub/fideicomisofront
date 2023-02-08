@@ -68,7 +68,7 @@ import ModificarCli from '../Paginas/Administracion/ModificarCliente';
 import EstractoAdmin from '../Paginas/Administracion/Extracto';
 import PagosAdmin from '../Paginas/Administracion/Pagos';
 import LotesAdmin from '../Paginas/Administracion/Lotes';
-
+import Detalleclienteadmin from '../Paginas/Administracion/Detallecliente';
 
 //////////esme
 import CursosEsme from '../Paginas/Esme/Cursos';
@@ -172,6 +172,7 @@ const Rutas = [
 	{ path: '/admin/extracto', element: <EstractoAdmin /> },
 	{ path: '/admin/pagos', element: <PagosAdmin /> },
 	{ path: '/admin/lotes', element: <LotesAdmin /> },
+	{ path: '/admin/detallescliente/:cuil_cuit', element: <Detalleclienteadmin /> },
 	
 
 	

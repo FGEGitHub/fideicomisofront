@@ -54,8 +54,8 @@ const Clientes = () => {
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
              <SearchIcon
-            
-              style={{ marginRight: "10px", cursor: "pointer" }}
+             onClick={() =>  navigate('/admin/detallescliente/'+clients[dataIndex].cuil_cuit)}
+             style={{ marginRight: "10px", cursor: "pointer" }}
             />
 
             <DeleteForeverIcon   onClick={() =>  borrar(clients[dataIndex].cuil_cuit)}
