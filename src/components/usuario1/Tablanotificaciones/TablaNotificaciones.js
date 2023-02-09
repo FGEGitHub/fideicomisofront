@@ -237,22 +237,7 @@ const TablaNotificaciones = (props) => {
                 </Paper>
             </>
             <div>
-                <MUIDataTable
-
-                    title={"Notificaciones"}
-                    data={noti}
-                    columns={columns}
-                    actions={[
-                        {
-                            icon: 'save',
-                            tooltip: 'Save User',
-                            onClick: (event, rowData) => alert("You saved " + rowData.name)
-                        }
-                    ]}
-                    options={options}
-
-
-                />
+                
             </div>
 
         </div>

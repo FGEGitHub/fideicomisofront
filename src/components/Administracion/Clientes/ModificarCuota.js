@@ -59,7 +59,7 @@ export default function FormDialog(props) {
     <div><Tooltip title="Pedir documentacion/Rechazar" arrow>
       <IconButton>
         <Button onClick={handleClickOpen}>
-          Rechazar
+          modificar
         </Button>
       </IconButton>
     </Tooltip>
@@ -69,39 +69,15 @@ export default function FormDialog(props) {
 
           <form onSubmit={cambiar}>
             {form ? <>
-              <TextField
-                autoFocus
-                margin="dense"
-                value={form.saldo_inicial}
-                id="name"
-                label="saldo_inicial"
-                name="saldo_inicial"
-                multiline
-                rows={4}
-                onChange={handleChange}
+        
+            
 
-                fullWidth
-                variant="standard"
-              />
-
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                value={form.cuota_con_ajuste}
-                label="cuota_con_ajuste"
-                name="cuota_con_ajuste"
-                multiline
-                rows={4}
-                onChange={handleChange}
-
-                fullWidth
-                variant="standard"
-              />
+          
 
 
 
               <TextField
+              
                 autoFocus
                 margin="dense"
                 id="name"
@@ -115,35 +91,23 @@ export default function FormDialog(props) {
                 fullWidth
                 variant="standard"
               />
+    <TextField
+              
+              autoFocus
+              margin="dense"
+              id="name"
+              value={form.cuota_con_ajuste}
+              label="cuota_con_ajuste"
+              name="cuota_con_ajuste"
+              multiline
+              rows={4}
+              onChange={handleChange}
 
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Saldo_real"
-                value={form.Saldo_real}
-                name="Saldo_real"
-                multiline
-                rows={4}
-                onChange={handleChange}
+              fullWidth
+              variant="standard"
+            />
 
-                fullWidth
-                variant="standard"
-              />
-
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="diferencia"
-                name="diferencia"
-                multiline
-                rows={4}
-                onChange={handleChange}
-
-                fullWidth
-                variant="standard"
-              />
+           
               <Button onClick={() => { cambiar() }}>Enviar </Button>
             </> : <></>}
           </form>

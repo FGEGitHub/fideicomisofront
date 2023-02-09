@@ -82,7 +82,7 @@ const LotesCliente = (props) => {
         antoine: true,
     });
     const vercuotas = async (index) => {
-
+        
         const cuotas = await servicioCuotas.vercuotas(index)
         console.log(cuotas)
         setCuotas(cuotas)
@@ -170,7 +170,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format((cuotas[dataIndex].cuota_con_ajuste).tofixed(2) ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + (cuotas[dataIndex].cuota_con_ajuste)  : <div> No Calculado </div>}
 
             </>
         );
@@ -424,7 +424,7 @@ const LotesCliente = (props) => {
 
 
 
-                            {cuotas !== '' ? <>
+                            {cuotas  ? <>
 
                                 <div>
                                     <Box
@@ -532,7 +532,7 @@ const LotesCliente = (props) => {
 
 
 
-                    {cuotas !== '' ? <>
+                    {cuotas  ? <>
 
                         <Stack spacing={2} direction="row">
                             <Fab variant="extended" onClick={() => { Vista1() }}><RemoveRedEyeIcon sx={{ mr: 1 }} /> Cambiar vista

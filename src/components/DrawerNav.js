@@ -24,7 +24,6 @@ const pages = [
   "Nosotros",
   "Ayuda",
   "Contacto",
-  
   "Notificaciones",
   "Cerrar Sesión"];
 const pagesdeslogueado = [
@@ -83,6 +82,9 @@ const DrawerNav = () => {
   const nomb = () => {
     navigate("/usuario/datosPers");
   };
+  const notif = () => {
+    navigate("/usuario/notificaciones");
+  };
   const hanleLogout = () => {
     /* console.log('click')
      setUser(null)
@@ -108,7 +110,7 @@ const DrawerNav = () => {
         irContacto()
         break;
         case 4:
-          irContacto()
+          notif()
           break;
           case 5:
             hanleLogout()
@@ -120,7 +122,7 @@ const DrawerNav = () => {
     function CutomButtonsRendererdesloqueado(dataIndex, rowIndex, data, onClick) {
       switch (rowIndex) {
         case 0:
-          //Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor1
+          handleClick()
           break;
 
         case 1:
@@ -132,12 +134,7 @@ const DrawerNav = () => {
         case 3:
           irContacto()
           break;
-        case 4:
-          //Declaraciones ejecutadas cuando el resultado de expresión coincide con el valor2
-          break;
-        case 5:
-          hanleLogout()
-          break;
+    
 
 
       }
