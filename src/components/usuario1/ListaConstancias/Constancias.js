@@ -6,10 +6,41 @@ import ForwardToInboxTwoToneIcon from '@mui/icons-material/ForwardToInboxTwoTone
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
-import Tooltip from '@material-ui/core/Tooltip';
+
+import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
-const TablaNotificaciones = (props) => {
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+  
+
+const Constancias = (props) => {
     const [cosntancias, setConstancias] = useState([''])
     const [usuario, setUsuario] = useState([''])
     const navigate = useNavigate();
@@ -90,11 +121,7 @@ const TablaNotificaciones = (props) => {
       }
     // definimos las columnas
     const columns = [
-        {
-            name: "id",
-            label: "ID",
-
-        },
+  
         {
             name: "tipo",
             label: "tipo",
@@ -134,23 +161,43 @@ const options = {
 // renderiza la data table
 return (
     <div>
-        <MUIDataTable
+       
+        <>
+        < Tooltip> 
+    <h2>Constancias </h2>
+    
+     </Tooltip> 
+    <br/>
+<TableContainer component={Paper}>
+      <Table sx={{ minWidth: "20%",maxWidth: "1000%"}} aria-label="customized table"  size="small">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>TIPO</StyledTableCell>
+            <StyledTableCell align="right">ESTADO</StyledTableCell>   
+            <StyledTableCell align="right">DESCARGAR</StyledTableCell>
+          
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cosntancias.map((row, index) => (
+            <StyledTableRow key={row.name}>
+              <StyledTableCell component="th" scope="row">
+              {row.tipo}
+              </StyledTableCell>
+          
+             
+              <StyledTableCell align="right">{row.estado}</StyledTableCell>
+              <StyledTableCell align="right"> <Button
+                    onClick={() => download(index)}
+                >   Descargar</Button>  </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
         
-            title={"Cosntancias"}
-            data={cosntancias}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
-
-
-        />
+        </>
     </div>
 )
 }
-export default TablaNotificaciones
+export default Constancias

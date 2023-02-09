@@ -47,7 +47,9 @@ const ModificacionC = (props) => {
         telefono: cliente[0].telefono,
         ingresos: cliente[0].ingresos,
         domicilio: cliente[0].domicilio,
-        razon_social: cliente[0].razon_social} )
+        razon_social: cliente[0].razon_social,
+         observaciones: cliente[0].observaciones,
+      } )
       
 
       
@@ -134,11 +136,7 @@ const ModificacionC = (props) => {
                     )
                   }}
                 />
-              </Box>
-                   
-
-                    
-              <Box>
+            
              
                 <TextField
                   label="Email"
@@ -175,8 +173,7 @@ const ModificacionC = (props) => {
                     )
                   }}
                 />
-              </Box>
-              <Box>
+             
                 <TextField
                   label="Numero de Telefono"
                   id="numero de telefono"
@@ -215,13 +212,52 @@ const ModificacionC = (props) => {
                 >
                   
                 </TextField>
-              </Box>
-              <Box>
+            
                 <TextField
                   label="Domicilio"
                   id="domicilio"
                   name="domicilio"
                   defaultValue={client.domicilio}
+                  onChange={handleChange}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: editMode,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LocalPhoneIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+
+                <TextField
+                  label="Razon Social"
+                  id="dirección"
+                  name="razon_social"
+                  defaultValue={client.razon}
+                  onChange={handleChange}
+                 /*  value={client.ingresos} */
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: editMode,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <HomeIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                >
+                  
+                </TextField>
+              </Box>
+              <Box>
+                <TextField
+                  label="Observaciones"
+                  id="domicilio"
+                  name="observaciones"
+                  defaultValue={client.observaciones}
                   onChange={handleChange}
                   variant="filled"
                   sx={{ margin: "10px" }}

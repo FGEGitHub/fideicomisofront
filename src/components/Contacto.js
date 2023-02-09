@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 // Packages
-
+import InputLabel from '@mui/material/InputLabel';
 import servicioUsuario1 from "../services/usuario1";
 import React, { useState, useEffect} from "react";
 import { Divider, Toolbar, Typography } from "@mui/material";
@@ -148,6 +148,12 @@ function Contacto(props) {
               multiline
               rows={4}
             />
+               <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                
+                {form.consulta  ? <><>Caracteres: {form.consulta.length }/900</> </> : <>Caracteres: 0/900</>}
+
+
+              </InputLabel>
           </Grid>
           <Grid item xs={12}>
             <Button

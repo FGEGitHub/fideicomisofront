@@ -9,7 +9,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import { useDropzone } from 'react-dropzone';
 import BackupIcon from '@material-ui/icons/Backup';
 import servicioUsuario1 from '../../../services/usuario1'
-
+import InputLabel from '@mui/material/InputLabel';
 import React, { useCallback, useEffect, useState, Fragment } from "react";
 const currencies = [
   {
@@ -183,7 +183,28 @@ export default function SelectTextFields(props) {
 
             <div>
        
+            {pago.lazo ? <> <h4>{pago.lazo} </h4></>:<></>}
+            <TextField component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
+              }}
+              noValidate
+              autoComplete="off"
 
+              id="outlined-select-currency"
+              select
+              label="lazo"
+              value={currency}
+              name="lazo"
+              onChange={handleChange2}
+              helperText="Por favor ingrese su CBU"
+            >
+              {currencies.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
             </div>
 
 
@@ -208,6 +229,12 @@ export default function SelectTextFields(props) {
                 type="number"
                 minlength="5"
               />
+                  <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                
+                {pago.cuil_cuit_lazo  ? <><>Caracteres: {pago.cuil_cuit_lazo.length }/11</> </> : <>Caracteres: 0/11</>}
+
+
+              </InputLabel>
             </Box>
             <Box
               component="form"
@@ -244,12 +271,20 @@ export default function SelectTextFields(props) {
               noValidate
               autoComplete="off"
             >
+                
               <TextField onChange={handleChange1}
                 id="filled-basic"
                 label="Numero"
                 name="numero"
                 variant="filled"
                 type="number" />
+                  <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                
+                {pago.numero  ? <><>Caracteres: {pago.numero.length }/22</> </> : <>Caracteres: 0/22</>}
+
+
+              </InputLabel>
+                
             </Box>
             <Box
               component="form"
@@ -261,28 +296,7 @@ export default function SelectTextFields(props) {
             >
 
             </Box>
-            {pago.lazo ? <> <h4>{pago.lazo} </h4></>:<></>}
-            <TextField component="form"
-              sx={{
-                '& > :not(style)': { m: 1, width: '25ch' },
-              }}
-              noValidate
-              autoComplete="off"
-
-              id="outlined-select-currency"
-              select
-              label="lazo"
-              value={currency}
-              name="lazo"
-              onChange={handleChange2}
-              helperText="Por favor ingrese su CBU"
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+           
               
 
             <Paper
