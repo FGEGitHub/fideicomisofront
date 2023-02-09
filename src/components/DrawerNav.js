@@ -22,14 +22,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 const pages = [
   "Inicio",
   "Nosotros",
-  "Ayuda",
+
   "Contacto",
   "Notificaciones",
   "Cerrar Sesión"];
 const pagesdeslogueado = [
   "Iniciar sesion ",
   "Nosotros",
-  "Ayuda",
+  
   "Contacto",
   ]
 
@@ -106,13 +106,13 @@ const DrawerNav = () => {
       case 2:
         irAyuda()
         break;
-      case 3:
+      case 2:
         irContacto()
         break;
-        case 4:
+        case 3:
           notif()
           break;
-          case 5:
+          case 4:
             hanleLogout()
             break;
           
@@ -131,7 +131,7 @@ const DrawerNav = () => {
         case 2:
           irAyuda()
           break;
-        case 3:
+        case 2:
           irContacto()
           break;
     

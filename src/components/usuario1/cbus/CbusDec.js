@@ -246,22 +246,7 @@ const TablaNotificaciones = (props) => {
 
 
             </>
-            <MUIDataTable
-
-                title={"Notificaciones"}
-                data={cbus}
-                columns={columns}
-                actions={[
-                    {
-                        icon: 'save',
-                        tooltip: 'Save User',
-                        onClick: (event, rowData) => alert("You saved " + rowData.name)
-                    }
-                ]}
-                options={options}
-
-
-            />
+          
         </div>
     )
 }

@@ -36,6 +36,9 @@ export default function Contact() {
    } 
   
  }, [])
+
+
+ 
     return (
         <div>  
         <React.Fragment>
@@ -55,7 +58,7 @@ export default function Contact() {
             <Toolbar />
             <Divider variant="middle" />
 
-            <Footer />
+           
         </React.Fragment>
         </div> 
     );

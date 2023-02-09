@@ -152,7 +152,7 @@ export default function SelectTextFields(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <div>
-            <h3>Asociar CBU</h3>
+            <h1>Asociar CBU</h1>
 
 
 
@@ -179,25 +179,10 @@ export default function SelectTextFields(props) {
               </TextField> */}
 
 
-            <br />
+   
 
             <div>
-              {/*  <NativeSelect
-                  defaultValue={30}
-                  onChange={handleChange}
-                  inputProps={{
-                    name: 'id',
-                    id: 'uncontrolled-native',
-
-                  }}
-
-                >          
-                        <option key={index} value={item['id']}>Elegir</option>
-                        <option key={index} value={item['id']}>  {item['zona']}F{item['fraccion']}M{item['manzana']}P{item['parcela']}</option>
-                      
-
-                </NativeSelect>
- */}
+       
 
             </div>
 
@@ -207,7 +192,6 @@ export default function SelectTextFields(props) {
 
 
 
-            <br />
             <Box
               component="form"
               sx={{

@@ -236,14 +236,16 @@ console.log(pago)
       } 
     
 
-    const mandarConsulta= async  (form) => {
-
-
-      const {data } = await axios.post(baseUrl+'mandarconsulta',(form),config)
     
-         return (data)
-       
-      } 
+      const mandarconsul= async  (form) => {
+
+        console.log(form)
+        
+        const {data} = await axios.post(baseUrl+'enviarconsulta',form,config)
+      console.log(data)
+           return (data)
+         
+        } 
 
     
-export default {modificarpass,pagarnivel1cuota,mandarConsulta,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

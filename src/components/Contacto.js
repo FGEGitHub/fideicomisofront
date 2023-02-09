@@ -7,7 +7,7 @@ import MuiAlert from "@mui/material/Alert";
 // Packages
 
 import servicioUsuario1 from "../services/usuario1";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Divider, Toolbar, Typography } from "@mui/material";
 
 import axios from "axios";
@@ -22,7 +22,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function Contacto(props) {
   const [form, setForm] = useState({
-    id:props.id
+ 
   });
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -44,9 +44,13 @@ function Contacto(props) {
     return re.test(email);
   };
 
+  useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+  const user = JSON.parse(loggedUserJSON)
+  setForm({id:user.id})
 
+}, [])
 
- 
 
   const handleClose = (reason) => {
     if (reason === "clickaway") {
@@ -61,20 +65,13 @@ function Contacto(props) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handleDeterminar = async (event) => {
-    event.preventDefault();
-    try {
-
-      await servicioUsuario1.mandarConsulta(form)
+  const handleDeterminar = async () => {
+  
  
-     
-     } catch (error) {
-       console.error(error);
-       console.log('Error algo sucedio')
-   
-     
-     }
-
+     const rta= await servicioUsuario1.mandarconsul(form)
+     alert()
+     window.location.reload();
+ 
    
 
   };
