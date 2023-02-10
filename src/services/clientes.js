@@ -113,6 +113,15 @@ const traerLejagos= async  (cuil_cuit) => {
      
       return data 
   }
+
+  const modificarCuil= async  (etc) => {
+    console.log(etc)
+     const {data } = await axios.post(baseURL+'modificarcuil/',etc,config)
+    
+     return data 
+ }
+
+  
   const listacbupendientes= async  () => {
     
      const {data } = await axios.get(baseURL+'cbuspendientes/',config)
@@ -148,6 +157,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {borrarcbu,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

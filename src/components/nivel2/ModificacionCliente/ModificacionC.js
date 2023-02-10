@@ -41,6 +41,7 @@ const ModificacionC = (props) => {
       console.log(cliente)
 
       setModificaciones({cuil_cuit: cliente[0].cuil_cuit,
+        id: cliente[0].id,
         Nombre: cliente[0].Nombre,
         email: cliente[0].email,
         provincia: cliente[0].provincia,
@@ -80,7 +81,22 @@ const ModificacionC = (props) => {
        }
 
     };
+    const handleCambiarCuil = async (event) => {
+      event.preventDefault();
+      try {
+  
+        const rta =await servicioCliente.modificarCuil(
+       modificaciones
+       )
+       alert(rta)
+       
+       } catch (error) {
+         console.error(error);
+         console.log('Error algo sucedio')
+       
+       }
 
+    };
   return (<>    
      <form  onSubmit={handleDeterminar}>
    {cliente.map((client) =>( 
@@ -103,17 +119,17 @@ const ModificacionC = (props) => {
               <TextField
                   label="CUIL"
                   id="cuil"
-                  name="cuit_cuil"
+                  name="cuil_cuit"
                  // defaultValue="CUIL"
                  defaultValue= {client.cuil_cuit}
                  onChange={handleChange}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: !editMode,
+                    readOnly: editMode,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <AccountCircle />
+                        <LocalPhoneIcon />
                       </InputAdornment>
                     )
                   }}
@@ -318,6 +334,14 @@ const ModificacionC = (props) => {
                     </div>
                   )}
                 </columns>
+
+
+                <Button
+                        variant="outlined"
+                        onClick={handleCambiarCuil}
+                      >
+                      Cambiar cuil
+                      </Button>
               </Box>
             </Container>
           
