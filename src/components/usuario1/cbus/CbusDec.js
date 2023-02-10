@@ -200,7 +200,7 @@ const TablaNotificaciones = (props) => {
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.cuil_cuit_lazo}</b></> : <>{row.cuil_cuit_lazo}</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.alias}</b></> : <>{row.alias}</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.numero}</b></> : <>{row.numero}</>}</StyledTableCell>
-                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.estado}</b></> : <>{row.estado}</>}</StyledTableCell>
+                                                <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b> Aprobado</b></> : <>Pendiente/No aprobado</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row">{row.estado === 'A' ? <><b>{row.lazo}</b></> : <>{row.lazo}</>}</StyledTableCell>
                                                 <StyledTableCell component="th" scope="row"> <ModalVer  id= { row.id} numero = {row.numero}
                                                 traer = {async () => {

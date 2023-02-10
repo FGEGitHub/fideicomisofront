@@ -94,11 +94,14 @@ export default function Ingresos() {
     const rta = await servicioUsuario.recuperar(
       recupero
     )
-    alert(rta)
-    if (rta === 'Contraseña actualizada') {
-      setVer(true)
+    
+    if (rta === 'Sin Exito') {
+      alert('Error, codigo incorrecto')
+     
+    }else{
+      alert('Cambio de contraseña exitoso ')
     }
-    alert(rta)
+    setVer(true)
 
 
 
