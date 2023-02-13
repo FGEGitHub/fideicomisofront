@@ -19,6 +19,8 @@ export default function MenuUsuario2() {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
       
     if (loggedUserJSON) {
+      try {
+        
       
       const user = JSON.parse(loggedUserJSON)
       if (user.nivel != 2){
@@ -29,7 +31,10 @@ export default function MenuUsuario2() {
 
         setLogueado(true)
       }
-    
+    } catch (error) {
+      window.localStorage.removeItem('loggedNoteAppUser')
+      navigate('/login')
+    }
       //servicioUsuario.setToken(user.token)  
      
       
