@@ -39,11 +39,27 @@ const todas= async  (cuil_cuit) => {
   
     return data 
 } 
+
+const todosloschats= async  (cuil_cuit) => {
+ 
+    const {data } = await axios.get(baseURL+'todosloschats/',config)
+  
+    return data 
+} 
+
+const leerchat= async  (cuil_cuit) => {
+ 
+    const {data } = await axios.get(baseURL+'leerchat/'+cuil_cuit,config)
+  
+    return data 
+} 
+
+
 const leer= async  (id) => {
  
     const {data } = await axios.get(baseURL+'leer/'+id,config)
   
     return data 
 } 
-export default {todas,crear,leer};
+export default {todas,crear,leer,todosloschats,leerchat};
 

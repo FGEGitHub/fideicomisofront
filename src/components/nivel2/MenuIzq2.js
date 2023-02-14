@@ -115,6 +115,13 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/novedades'
         },
+        {
+          text: 'Consultas',
+          icon:<div><Badge color="error">
+          <AccountBalanceIcon color="primary" />
+        </Badge></div>,
+          path: '/usuario2/consultas'
+        },
         
      
       ];

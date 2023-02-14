@@ -47,6 +47,7 @@ const Login = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
+      
       switch (user.nivel) {
         case 1:
           navigate('/usuario/menu')
