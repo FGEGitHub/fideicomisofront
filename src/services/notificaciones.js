@@ -35,7 +35,12 @@ const leer= async  (id) => {
  const cantidadpendientes= async  (cuil_cuit) => {
     
     const {data} = await axios.get(baseUrl+'cantidad/'+cuil_cuit,config)
-
+    if(data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
      return data 
  }  
 

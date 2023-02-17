@@ -8,14 +8,19 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 
 let config = ''
 if (loggedUserJSON) {
-    const userContext = JSON.parse(loggedUserJSON)
- 
 
-     config = {
-        headers:{
-            Authorization:`Bearer ${userContext.token}`
-        }
+    try {
+        const userContext = JSON.parse(loggedUserJSON)
+        config = {
+           headers:{
+               Authorization:`Bearer ${userContext.token}`
+           }
+       }
+    } catch (error) {
+          window.localStorage.removeItem('loggedNoteAppUser')
+     
     }
+   
 
     
 }else{
@@ -29,14 +34,21 @@ if (loggedUserJSON) {
   const datoslegajo= async  (datos) => {
  
     const data  = await axios.post(baseURL+'estadisticaslegajos',datos,config)
- 
+    if(data.data === 'error login'){
+        window.localStorage.removeItem('loggedNoteAppUser')
+    }
 
     return data.data 
 } 
 const modificarCliente= async  (datos) => {
    
     const data  = await axios.post(baseURL+'modificarcli',datos,config)
- 
+    if(data.data === 'error login'){
+       //  alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+      
+        window.location.reload();
+    }
 
     return data.data 
 } 
@@ -52,7 +64,12 @@ const crear= async  (datos) => {
 const determinarEmpresa= async  (datos) => {
     console.log(datos)
      const {data } = await axios.post(baseURL+'determinarempresa',datos,config)
+     if(data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
      
+        window.location.reload();
+    }
      alert(data)  
  }  
 
@@ -63,7 +80,12 @@ const lista= async  () => {
   //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
 
    // const {data } = await axios.get('http://localhost:4000/prueba',config)
-
+   if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    window.location.reload();
+}
     
     return data 
 }   
@@ -147,6 +169,7 @@ const traerLejagos= async  (cuil_cuit) => {
 const infocantidad= async  (cuil_cuit) => {
  
     const {data } = await axios.get(baseURL+'infocantidad/',config)
+  
   
     return data 
 } 
