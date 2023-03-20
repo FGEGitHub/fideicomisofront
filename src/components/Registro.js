@@ -7,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import CircularProgress from '@mui/material/CircularProgress';
 import {  useState } from "react";
 import servicioUsuario from '../services/usuarios'
 import { Box, Typography, Avatar, Grid, Paper } from '@mui/material';
@@ -40,7 +41,7 @@ const theme = createTheme();
 
 export default function Ingresos() {
   const cardStyles = useStyles(theme);
-
+  const [loading, setLoading] = useState(false);
 
   let params = useParams()
     let cuil_cuit = params.cuil_cuit
@@ -59,7 +60,7 @@ export default function Ingresos() {
   };
   const handleDeterminar = async (event) => {
     event.preventDefault()
-
+    setLoading(true)
     const rta=  await servicioUsuario.registro(
       usuario
      )
@@ -197,6 +198,21 @@ export default function Ingresos() {
             required
             margin="dense"
             id="name"
+            label="Email alternativo"
+            name="email2"
+            onChange={handleChange}
+            size="small"
+            variant="standard"
+          />
+          <TextField
+          className={cardStyles.field}
+								sx={{
+                  mx: 3, width: '75%'
+								}}
+            autoFocus
+            required
+            margin="dense"
+            id="name"
             label="Numero de Telefono"
             name="telefono"
             onChange={handleChange}
@@ -221,6 +237,7 @@ export default function Ingresos() {
 								<span style={{ padding: 10 }}>Cancelar{"     "}</span> 
                 
                 </Button>
+          {loading ? <>  <CircularProgress /></>:<>      
           <Button
                   onClick={handleDeterminar}
   								variant="contained"
@@ -233,12 +250,13 @@ export default function Ingresos() {
 									fontSize: 12
 								}}
 							>
-								<span style={{ padding: 10 }}>Registrar{"     "}</span>
+          
+								<span style={{ padding: 10 }}>Registrar{"     "}</span> 
 								<RegIcon fontSize="small" />
 							</Button>
-              
-        </DialogActions>
+             </>}
         
+        </DialogActions>
            </form>
         </DialogContent>
       

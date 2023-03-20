@@ -17,21 +17,26 @@ export default function MenuUsuario2() {
   useEffect(() => {
     
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
+    console.log(1)
     if (loggedUserJSON) {
+      console.log(1)
       try {
-        
+        console.log(1)
       
       const user = JSON.parse(loggedUserJSON)
-      if (user.nivel != 2){
-        window.localStorage.removeItem('loggedNoteAppUser')
-   
-
-      }else{
-
+      console.log(2)
+      if (user.nivel === 2){
         setLogueado(true)
+        
+   
+        console.log(1)
+      }else{
+        alert('Debe volver a iniciar sesion ')
+        window.localStorage.removeItem('loggedNoteAppUser')
+        
       }
     } catch (error) {
+      console.log(1)
       window.localStorage.removeItem('loggedNoteAppUser')
       navigate('/login')
     }

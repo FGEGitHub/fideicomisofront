@@ -4,6 +4,7 @@ import servicioCuotas from '../services/cuotas'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
+import ModalModificarvalortotal from './Modalmodificarmontotoal'
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
@@ -208,7 +209,7 @@ const LotesCliente = (props) => {
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
-                {/*   <AgregarIcc
+               <AgregarIcc
                     id={cuotas[dataIndex].id}
                     traer={async () => {
 
@@ -217,7 +218,7 @@ const LotesCliente = (props) => {
                         setLotes(lotes)
                     }}
 
-                />  */}
+                />  
 
 
 
@@ -409,6 +410,9 @@ const LotesCliente = (props) => {
                     <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
+                    <ModalModificarvalortotal
+                     idlote = {idlote}
+                    />
                     <AgregaraCuotas
                     id_origen = {idlote}
                     />

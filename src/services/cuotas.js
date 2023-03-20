@@ -35,7 +35,12 @@ const vercuotas = async (id) => {
 
     console.log(id)
     const { data } = await axios.get(baseUrl + 'lote2/' + id, config)
-    console.log(data)
+    if(data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
 
     return data
 }
@@ -51,7 +56,12 @@ const traercuota = async (id) => {
 const verief = async (id) => {
     console.log(id)
     const data = await axios.get(baseUrl + 'ief/' + id, config)
-
+    if(data.data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
     console.log(data.data)
 
 
@@ -92,7 +102,14 @@ const agregarCuotas = async (estadoCuotas) => {
 
     return data
 }
+const modificarmontotal = async (estadoCuotas) => {
 
+    console.log(estadoCuotas)
+    const { data } = await axios.post(baseUrl + 'modificarmontotal/', estadoCuotas, config)
+
+
+    return data
+}
 
 const actualizarcuota = async (cuotaact) => {
     console.log(cuotaact)
@@ -162,4 +179,4 @@ const asignarloteacuotas = async (datos) => {
     // return data
 }
 
-export default { asignarloteacuotas, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+export default { asignarloteacuotas,modificarmontotal, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };

@@ -8,6 +8,9 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 /////loggedUserJSON Recupera lasesion el tokeny lo envia mediante la constante config. el back lo filtra 
  let config = ''
  if (loggedUserJSON) {
+  try {
+    
+ 
      const userContext = JSON.parse(loggedUserJSON)
   
  
@@ -17,7 +20,9 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
          }
      }
  
-     
+    } catch (error) {
+      window.localStorage.removeItem('loggedNoteAppUser')
+    }
  }else{
       config = {
          headers:{
@@ -114,7 +119,12 @@ const pagosinusuales= async  () => {
 const cantidadpendientes= async  () => {
 
   const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes',config)
-
+  if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    window.location.reload();
+}
   return data
  } 
  const verCoincidencias= async  (id) => {
