@@ -50,6 +50,11 @@ const traer = async() => {
     // definimos las columnas
     const columns = [
         {
+            name: "zona",
+            label: "Zona",
+
+        },
+        {
             name: "mes",
             label: "Mes",
 

@@ -284,6 +284,11 @@ const LotesCliente = (props) => {
 
         },
         {
+            name: "saldo_cierre",
+            label: "Saldo Cierre",
+
+        },
+        {
             name: "Pago",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
