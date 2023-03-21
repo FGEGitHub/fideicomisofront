@@ -373,14 +373,18 @@ const LotesCliente = (props) => {
                     {
                         lotes.map((item, index) =>
                             <div>
-
+                                    {item['zona']=== 'PIT' ? <>
                                 <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</MenuItem>
-
+                                </>:<>
+                                <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Lote {item['lote']}</MenuItem>
+                                </>}
                             </div>
                         )
                     }
                 </Select>
-                <h3>  {cuotas ? <>{cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
+                <h3>  {cuotas ? <>
+                 
+                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
                 <FormControlLabel
                     control={
                         <Switch checked={act2} onChange={handleChange2} />
