@@ -270,6 +270,18 @@ export default function MenuUsuario2() {
           variant="standard"
         />
           <br /> 
+          <TextField
+         style ={{width: '20%'}}
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Cambiar el monto del anticipo"
+          name="anticipodefinido"
+          onChange={handleChange}
+          fullWidth
+          variant="standard"
+        />
+           <br /> 
    <TextField
          style ={{width: '20%'}}
           autoFocus
