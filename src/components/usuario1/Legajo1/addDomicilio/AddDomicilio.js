@@ -97,6 +97,21 @@ const AddDocimicilio = (props) => {
         </> : <></>}
       </Box>
 
+
+      <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#black',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
+
+        <p><b> A-) </b>Por medio de la presentacion de certificado de domicilio  </p>
+        <p><b> B-) </b>Fotocopia de comprobante de servicio a nombre de la Sociedad/ Representante Legal </p>
+      </Paper>
+
       
     </>
   );

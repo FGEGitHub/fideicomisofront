@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Button , CircularProgress} from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useState,useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
@@ -13,6 +13,7 @@ const AddDeclaraciones = (props) => {
   const [fileUpload, setFileUpload] = useState(null);
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
+  const [cantidad, setCantidad] = useState(null);
   const onDrop = useCallback  ((files, acceptedFiles) => {
         // window.location.reload(true);
         const formData = new FormData();
@@ -39,10 +40,23 @@ const AddDeclaraciones = (props) => {
     setFile({ ...file, [e.target.name]: e.target.value })
     
 }
-  const selecthandler = e =>{
-   setFile(e.target.files[0])
-   console.log(file)
-  }
+
+useEffect(() => {
+
+  traer()
+
+}, [])
+
+const traer = async () => {
+const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+    const lotes = await servicioLegajo.cantidaddjiva(preba.cuil_cuit)
+   console.log(lotes)
+    setCantidad(lotes)
+
+
+
+
+}
 
   const enviar = async () => {
     setLoading(true);
@@ -90,7 +104,8 @@ const AddDeclaraciones = (props) => {
         
         </> : <></>}
       </Box>
-
+      <p> Ultimas declaraciones juradas de I.V.A. consus correspondientes acuses de presentación  </p>
+      { cantidad ? <> Actualmente aprobado(s) {cantidad} Constancia(s)</> : <></>}
       
     </>
   );

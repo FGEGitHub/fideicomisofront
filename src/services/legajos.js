@@ -78,4 +78,22 @@ const borrar = async (id) => {
   await axios.get(baseUrl + 'borrarunlegajo/' + id)
 
 }
-export default { determinarIngreso,subirprueba, borrar, subirlegajode, subirlegajo1 };
+
+const cantidadbalances = async (cuil_cuit) => {
+   
+  
+ const {data } = await axios.get(baseUrl + 'cantidadbalances/' + cuil_cuit,config)
+
+ return data
+
+}
+
+const cantidaddjiva = async (cuil_cuit) => {
+   
+  
+  const {data } = await axios.get(baseUrl + 'cantidaddjiva/' + cuil_cuit,config)
+ 
+  return data
+ 
+ }
+export default { determinarIngreso,cantidadbalances,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };

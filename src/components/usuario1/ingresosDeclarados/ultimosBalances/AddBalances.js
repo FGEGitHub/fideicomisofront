@@ -1,16 +1,16 @@
 import React from 'react';
 import { Paper, Button, CircularProgress } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useState,useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@mui/icons-material/Backup';
 
-
 const AddBalances = (props) => {
                              
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
+  const [cantidad, setCantidad] = useState(null);
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
@@ -24,6 +24,23 @@ const AddBalances = (props) => {
 
 
     });
+
+    useEffect(() => {
+
+      traer()
+
+  }, [])
+
+  const traer = async () => {
+    const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+        const lotes = await servicioLegajo.cantidadbalances(preba.cuil_cuit)
+       console.log(lotes)
+        setCantidad(lotes)
+
+
+
+
+    }
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
       onDrop,
       multiple: false,
@@ -93,6 +110,14 @@ const AddBalances = (props) => {
       </Box>
 
       
+
+
+      
+
+
+        <p>Subir los 2(dos) útlimos balances certificados en el CPCE o vertificación de ingresos de los 12 meses anteriores  </p>
+            { cantidad ? <> Actualmente aprobado(s) {cantidad} Constancia(s)</> : <></>}
+    
     </>
   );
 };
