@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b1c49a37.css",
+    "main.js": "/static/js/main.9ff30dae.js",
+    "static/media/IMG_7194.JPG": "/static/media/IMG_7194.94adbb1f08d595da66d1.JPG",
+    "static/media/fondocalculo.jpg": "/static/media/fondocalculo.a4fd3559e2f1f415d9f5.jpg",
+    "static/media/BOSQUE.jpg": "/static/media/BOSQUE.844fce508ef47c9487ab.jpg",
+    "static/media/marcas.png": "/static/media/marcas.ab0ad4090eece487f095.png",
+    "static/media/undraw_under_construction_-46-pa.svg": "/static/media/undraw_under_construction_-46-pa.286cd589edbe72993fa0aaf75b822856.svg",
+    "static/media/blog-post.1.md": "/static/media/blog-post.1.e2637112c112db9c72c5.md",
+    "static/media/blog-post.3.md": "/static/media/blog-post.3.cfa937b9780c5edbbec9.md",
+    "index.html": "/index.html",
+    "static/media/blog-post.2.md": "/static/media/blog-post.2.da08fb446ef2fc6b2680.md"
+  },
+  "entrypoints": [
+    "static/css/main.b1c49a37.css",
+    "static/js/main.9ff30dae.js"
+  ]
+}
