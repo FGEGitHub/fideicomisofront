@@ -10,9 +10,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './Rechazocbu'
 import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
+<<<<<<< HEAD
 import Button from "@mui/material/Button";
 
 
+=======
+import Button from "@mui/material/Button"
+//import ModalVer from "./ModalVer"
+>>>>>>> ed6a723b99f432295a31c66d5766a0d89dcdf753
 
 
 const TablaAprobaciones = () => {

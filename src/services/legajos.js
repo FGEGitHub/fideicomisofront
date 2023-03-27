@@ -96,4 +96,16 @@ const cantidaddjiva = async (cuil_cuit) => {
   return data
  
  }
-export default { determinarIngreso,cantidadbalances,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+
+
+ 
+ const cantidadiibb = async (cuil_cuit) => {
+   
+  
+  const {data } = await axios.get(baseUrl + 'cantidadiibb/' + cuil_cuit,config)
+ 
+  return data
+ 
+ }
+
+export default { determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
