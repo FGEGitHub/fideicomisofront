@@ -144,6 +144,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         <option value={'Dj OrigenFondos'}>DJ Origen de fondos</option>
                         <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
                         <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
+                        <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
                         
 
                         

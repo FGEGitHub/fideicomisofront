@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Button, CircularProgress } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useState,useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
@@ -15,6 +15,7 @@ const AddEstatuto = (props) => {
   const [fileUpload, setFileUpload] = useState(null);
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
+  const [cantidad, setCantidad] = useState(null);
   const onDrop = useCallback  ((files, acceptedFiles) => {
      // window.location.reload(true);
      const formData = new FormData();
@@ -27,6 +28,24 @@ const AddEstatuto = (props) => {
 
 
     });
+
+    useEffect(() => {
+
+      traer()
+    
+    }, [])
+    
+    const traer = async () => {
+    const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+        const lotes = await servicioLegajo.cantidadiibb(preba.cuil_cuit)
+       console.log(lotes)
+        setCantidad(lotes)
+    
+    
+    
+    
+    }
+    
     const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
       onDrop,
       multiple: false,
@@ -51,7 +70,7 @@ const AddEstatuto = (props) => {
   const enviar = async () => {
     setLoading(true);
     console.log(enviarr)
-     enviarr.append('datos', [props.cuil_cuit,'Dni']);
+     enviarr.append('datos', [props.cuil_cuit,'DDJJ IIBB']);
     console.log(enviarr)
     const rta = await servicioLegajo.subirlegajo1(enviarr)
     setLoading(false);
@@ -94,8 +113,8 @@ const AddEstatuto = (props) => {
         
         </> : <></>}
       </Box>
-
-      
+      <p> Ultimas 12 DDJJ de IIBB   </p>
+      { cantidad ? <> Actualmente aprobado(s) {cantidad} Constancia(s) aprobadas</> : <></>}
     </>
   );
 };

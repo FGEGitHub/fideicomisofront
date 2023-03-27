@@ -63,7 +63,35 @@ const TablaAprobaciones = () => {
 
     }
 
+    function verFile(index, rowIndex, data) {
 
+        /* const filename = (products[index].key)
+        console.log(filename)
+        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+        console.log(link.data)
+        setAct(true) */
+        return (
+            <>
+
+                <Button
+                    onClick={() => veronline(index)}
+                >Ve online</Button>
+
+
+            </>
+        );
+    }
+
+
+    async function veronline(index, rowIndex, data) {
+        const filename = (pendientes[index].ubicacion)
+
+
+        const link = await serviciousuario1.obtenerurl(filename)
+        console.log(link.data)
+        var nueva_ventana = window.open('', '_blank');
+        nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
+    }
     function downloadFile(dataIndex, rowIndex, data) {
 
         /* const filename = (products[index].key)
@@ -226,7 +254,19 @@ const TablaAprobaciones = () => {
             }
 
         },
+        {
+            name: "Ver online",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                verFile(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
+        },
         {
             name: "Ver Constancias",
             options: {

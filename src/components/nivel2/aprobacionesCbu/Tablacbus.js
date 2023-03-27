@@ -11,6 +11,7 @@ import BotonRechazo from './Rechazocbu'
 import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
+import Modalverim from './Modalverimagen'
 //import ModalVer from "./ModalVer"
 
 
@@ -22,7 +23,7 @@ const TablaAprobaciones = () => {
     const navigate = useNavigate();
 
 
-    
+
 
     const getPendientes = async () => {
 
@@ -35,9 +36,9 @@ const TablaAprobaciones = () => {
 
     const aprobar = async (id) => {
         console.log(id)
-    await servicioaprobaciones.aprobacioncbu(id)
-    getPendientes()
-    } 
+        await servicioaprobaciones.aprobacioncbu(id)
+        getPendientes()
+    }
 
     useEffect(() => {
         getPendientes()
@@ -47,14 +48,23 @@ const TablaAprobaciones = () => {
 
     async function download(index, rowIndex, data) {
         const filename = (pendientes[index].ubicacion)
-      
-       
-       const link = await serviciousuario1.obtenerurl(filename)
 
-        console.log(link.data)            
+
+        const link = await serviciousuario1.obtenerurl(filename)
+
+        console.log(link.data)
         window.open(link.data)
-  
-     
+
+
+    }
+    async function veronline(index, rowIndex, data) {
+        const filename = (pendientes[index].ubicacion)
+
+
+        const link = await serviciousuario1.obtenerurl(filename)
+        console.log(link.data)
+        var nueva_ventana = window.open('', '_blank');
+        nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
     }
 
 
@@ -67,32 +77,51 @@ const TablaAprobaciones = () => {
         setAct(true) */
         return (
             <>
-                
-                  <Button
-                        onClick={() => download(index)}
-                    >Descargar</Button> 
-    
-    
+
+                <Button
+                    onClick={() => download(index)}
+                >Descargar</Button>
+
+
             </>
         );
     }
 
+    function verFile(index, rowIndex, data) {
+
+        /* const filename = (products[index].key)
+        console.log(filename)
+        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+        console.log(link.data)
+        setAct(true) */
+        return (
+            <>
+
+                <Button
+                    onClick={() => veronline(index)}
+                >Ve online</Button>
+
+
+            </>
+        );
+    }
 
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
-     
-     return (
-          <>
-           
-            <BotonRechazo 
-             id= {pendientes[dataIndex].id} 
-            />
-            <CheckIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pendientes[dataIndex].id) 
-          }  }
-            />
-          </>
+
+        return (
+            <>
+
+                <BotonRechazo
+                    id={pendientes[dataIndex].id}
+                />
+                <CheckIcon style={{ cursor: "pointer" }}
+                    onClick={() => {
+                        aprobar(pendientes[dataIndex].id)
+                    }}
+                />
+            </>
         )
-      }
+    }
     // definimos las columnas
     const columns = [
         {
@@ -122,15 +151,29 @@ const TablaAprobaciones = () => {
             name: "Descarga",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
-                downloadFile(
+                    downloadFile(
                         dataIndex,
                         rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
+                        // overbookingData,
+                        // handleEditOpen
                     )
             }
-        
-        },   
+
+        },
+        {
+            name: "Descarga",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    verFile(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
+        },
+
         {
             name: "Acciones",
             options: {
@@ -138,48 +181,48 @@ const TablaAprobaciones = () => {
                     CutomButtonsRenderer(
                         dataIndex,
                         rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
+                        // overbookingData,
+                        // handleEditOpen
                     )
             }
-        
-        },   
-        
- 
+
+        },
+
+
 
     ];
 
-const options = {
+    const options = {
 
-    /*    rowsPerPage: 10,
-       download: false, // hide csv download option
-       onTableInit: this.handleTableInit,
-       onTableChange: this.handleTableChange, */
-};
-// renderiza la data table
-return (
-    <div>
+        /*    rowsPerPage: 10,
+           download: false, // hide csv download option
+           onTableInit: this.handleTableInit,
+           onTableChange: this.handleTableChange, */
+    };
+    // renderiza la data table
+    return (
+        <div>
 
-        {loading ?<CargaDeTabla/>  : <>
+            {loading ? <CargaDeTabla /> : <>
 
-        <MUIDataTable
-            title={"Lista de aprobaciones de CBU"}
-            data={pendientes}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
+                <MUIDataTable
+                    title={"Lista de aprobaciones de CBU"}
+                    data={pendientes}
+                    columns={columns}
+                    actions={[
+                        {
+                            icon: 'save',
+                            tooltip: 'Save User',
+                            onClick: (event, rowData) => alert("You saved " + rowData.name)
+                        }
+                    ]}
+                    options={options}
 
 
-        />
-        </>}
-    </div>
-)
+                />
+            </>}
+        </div>
+    )
 }
 
 export default TablaAprobaciones;
