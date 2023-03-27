@@ -12,7 +12,7 @@ import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
 
-//import ModalVer from "./ModalVer"
+
 
 
 const TablaAprobaciones = () => {
