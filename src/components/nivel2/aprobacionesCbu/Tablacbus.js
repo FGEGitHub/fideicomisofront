@@ -11,7 +11,7 @@ import BotonRechazo from './Rechazocbu'
 import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
-import Modalverim from './Modalverimagen'
+
 //import ModalVer from "./ModalVer"
 
 
