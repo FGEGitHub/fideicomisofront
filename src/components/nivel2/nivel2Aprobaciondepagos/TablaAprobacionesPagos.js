@@ -184,6 +184,8 @@ const TablaAprobaciones = () => {
     const columns = [
 
 
+
+        
     
         {
             name: "Fecha cuota",
