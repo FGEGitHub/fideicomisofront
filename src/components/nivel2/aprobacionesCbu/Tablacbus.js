@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 
 
 
+
 const TablaAprobaciones = () => {
     //configuracion de Hooks
     const [pendientes, setPendientes] = useState([]);
