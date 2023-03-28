@@ -102,6 +102,15 @@ const obtenerurl = async (key) => {
 return data
 }
 
+const obtenerurlonline = async (key) => {
+ 
+  const  data = await axios.get(baseUrl+`get-object-url2/` + (key),config)
+ 
+return data
+}
+
+
+
 const pagarnivel1 = async (formdata) => {
 
   const { data } = await axios.post(baseUrl + 'pagarnivel1', formdata,config)
@@ -248,4 +257,4 @@ console.log(pago)
         } 
 
     
-export default {modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {obtenerurlonline,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

@@ -74,7 +74,36 @@ const LegajoCliente = (props) => {
   
           }
   
-  
+          async function veronline(index, rowIndex, data) {
+            const filename = (products[index].ubicacion)
+    
+    
+            const link = await serviciousuario1.obtenerurlonline(filename)
+            console.log(link.data)
+            window.open(link.data)
+            
+           // var nueva_ventana = window.open('', '_blank');
+           // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
+        } 
+     function verFile(index, rowIndex, data) {
+    
+            /* const filename = (products[index].key)
+            console.log(filename)
+            const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+            console.log(link.data)
+            setAct(true) */
+            return (
+                <>
+    
+                    <Button
+                        onClick={() => veronline(index)}
+                    >Ve online</Button>
+    
+    
+                </>
+            );
+        }
+    
        function downloadFile(index, rowIndex, data) {
   
           /* const filename = (products[index].key)
@@ -118,6 +147,19 @@ const LegajoCliente = (props) => {
             name: "estado",
             label: "estado"
         },
+        {
+          name: "ve online",
+          options: {
+              customBodyRenderLite: (dataIndex, rowIndex) =>
+                  verFile(
+                      dataIndex,
+                      rowIndex,
+                      // overbookingData,
+                      // handleEditOpen
+                  )
+          }
+
+      },
           {
               name: "descargar",
               options: {

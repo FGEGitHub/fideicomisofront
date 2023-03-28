@@ -76,7 +76,36 @@ export default function VerConstancias(props) {
       </>
     );
   }
+  
+  async function veronline(index, rowIndex, data) {
+    const filename = (constancias[index].ubicacion)
 
+
+    const link = await serviciousuario1.obtenerurlonline(filename)
+    console.log(link.data)
+    window.open(link.data)
+    
+   // var nueva_ventana = window.open('', '_blank');
+   // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
+} 
+function verFile(index, rowIndex, data) {
+
+    /* const filename = (products[index].key)
+    console.log(filename)
+    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+    console.log(link.data)
+    setAct(true) */
+    return (
+        <>
+
+            <Button
+                onClick={() => veronline(index)}
+            >Ve online</Button>
+
+
+        </>
+    );
+}
 
   // definimos las columnas
 
@@ -131,6 +160,7 @@ export default function VerConstancias(props) {
                         <TableCell align="right">{row.cuil_cuit}</TableCell>
                         <TableCell align="right">{row.fecha === undefined ? row.mes + '/' + row.anio : row.fecha}</TableCell>
                         <TableCell align="right">  {downloadFile(index)} </TableCell>
+                        <TableCell align="right">  {verFile(index)} </TableCell>
 
                       </TableRow>
                     ))}

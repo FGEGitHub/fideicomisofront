@@ -10,14 +10,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './Rechazocbu'
 import CargaDeTabla from "../../CargaDeTabla"
 //import overbookingData from "./overbooking";
-<<<<<<< HEAD
-import Button from "@mui/material/Button";
 
-
-=======
 import Button from "@mui/material/Button"
-//import ModalVer from "./ModalVer"
->>>>>>> ed6a723b99f432295a31c66d5766a0d89dcdf753
+//import ModalVer from "./Modal"
+
 
 
 const TablaAprobaciones = () => {
@@ -66,10 +62,12 @@ const TablaAprobaciones = () => {
         const filename = (pendientes[index].ubicacion)
 
 
-        const link = await serviciousuario1.obtenerurl(filename)
+        const link = await serviciousuario1.obtenerurlonline(filename)
         console.log(link.data)
-        var nueva_ventana = window.open('', '_blank');
-        nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
+        window.open(link.data)
+        
+       // var nueva_ventana = window.open('', '_blank');
+       // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
     }
 
 
@@ -166,7 +164,7 @@ const TablaAprobaciones = () => {
 
         },
         {
-            name: "Descarga",
+            name: "ve online",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     verFile(

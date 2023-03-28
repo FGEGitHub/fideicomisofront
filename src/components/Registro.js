@@ -79,6 +79,7 @@ export default function Ingresos() {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
        Registrarme
+     
       </Button>
       <Dialog maxWidth="md" open={open} onClose={handleClose}>
       <Paper
@@ -235,7 +236,7 @@ export default function Ingresos() {
 								}}
 							>
 								<span style={{ padding: 10 }}>Cancelar{"     "}</span> 
-                
+               
                 </Button>
           {loading ? <>  <CircularProgress /></>:<>      
           <Button

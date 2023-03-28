@@ -89,11 +89,14 @@ const TablaAprobaciones = () => {
         const filename = (pendientes[index].ubicacion)
 
 
-        const link = await serviciousuario1.obtenerurl(filename)
+        const link = await serviciousuario1.obtenerurlonline(filename)
         console.log(link.data)
-        var nueva_ventana = window.open('', '_blank');
-        nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
-    }
+        window.open(link.data)
+
+
+       // var nueva_ventana = window.open('', '_blank');
+        //nueva_ventana.document.write('<html><head><title>PDF de AWS</title></head><body style="text-align:center;"><embed src="' + link + '" width="100%" height="100%" type="application/pdf" /></body></html>');
+      }
     function downloadFile(index, rowIndex, data) {
 
         /* const filename = (products[index].key)
