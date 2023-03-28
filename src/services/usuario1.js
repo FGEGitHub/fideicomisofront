@@ -43,6 +43,18 @@ const verief= async  (id) => {
   return data.data
 } 
 
+
+const usuario1acredingresos= async  (cuil_cuit) => {
+   
+  let {data}  = await axios.get(baseUrl+'usuario1acredingresos/'+cuil_cuit,config)
+
+
+
+ 
+ 
+  return data
+} 
+
 const lotesCliente= async  (cuil_cuit) => {
    
       let {data}  = await axios.get(baseUrl+'lotescliente/'+cuil_cuit,config)
@@ -257,4 +269,4 @@ console.log(pago)
         } 
 
     
-export default {obtenerurlonline,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {obtenerurlonline,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
