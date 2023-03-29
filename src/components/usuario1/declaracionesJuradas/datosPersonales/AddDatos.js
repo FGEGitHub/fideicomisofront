@@ -5,7 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
-
+import { Link } from '@mui/material';
+import logo from "../../../../descargas/Modelo DDJJ Datos Personales.docx";
 const AddDatos = (props) => {
   const [file, setFile] = useState(null);
   const [fileUpload, setFileUpload] = useState(null);
@@ -92,7 +93,9 @@ const AddDatos = (props) => {
         </> : <></>}
       </Box>
 
-
+      <Link href={logo}  download>
+      Descargar modelo de archivo
+    </Link>
     </>
   );
 };

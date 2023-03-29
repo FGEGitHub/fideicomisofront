@@ -5,7 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
-
+import { Link } from '@mui/material';
+import logo from "../../../../descargas/MODELO DDJJ ORIGEN Y LICITUD DE FONDOS.docx";
 
 const AddOrigen = (props) => {
   const [file, setFile] = useState(null);
@@ -89,7 +90,9 @@ const AddOrigen = (props) => {
         
         </> : <></>}
       </Box>
-
+      <Link href={logo}  download>
+      Descargar modelo de archivo
+    </Link>
       
     </>
   );
