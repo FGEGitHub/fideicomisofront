@@ -5,6 +5,40 @@ import { useDropzone } from 'react-dropzone';
 import Box from '@mui/material/Box';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
+import { styled } from '@mui/material/styles';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Table from '@mui/material/Table';
+import Skeleton from '@mui/material/Skeleton';
+import Tooltip from '@material-ui/core/Tooltip';
+import DownloadIcon from '@mui/icons-material/Download';
+import servicioUsuario1 from '../../../../services/usuario1'
+
+
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
 
 
 const AddDeclaraciones = (props) => {
@@ -14,6 +48,7 @@ const AddDeclaraciones = (props) => {
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(null);
+  const [datos, setdatos] = useState()
   const onDrop = useCallback  ((files, acceptedFiles) => {
         // window.location.reload(true);
         const formData = new FormData();
@@ -69,6 +104,61 @@ const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
    
     props.enviado()
 }
+
+
+async function download(index, rowIndex, data) {
+  const filename = (datos[index].ubicacion)
+
+
+  const link = await servicioUsuario1.obtenerurl(filename)
+
+  window.open(link.data)
+
+
+}
+
+
+
+
+function downloadFile(index, rowIndex, data) {
+
+  return (
+    <>
+      <Tooltip title="Descargar" arrow>
+        <DownloadIcon
+          onClick={() => download(index)}
+        />
+
+      </Tooltip>
+    </>
+  );
+}
+
+async function veronline(index, rowIndex, data) {
+  const filename = (datos[index].ubicacion)
+
+
+  const link = await servicioUsuario1.obtenerurlonline(filename)
+  console.log(link.data)
+  window.open(link.data)
+  
+ // var nueva_ventana = window.open('', '_blank');
+ // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
+} 
+function verFile(index, rowIndex, data) {
+
+
+  return (
+      <>
+
+          <Button
+              onClick={() => veronline(index)}
+          >Ver online</Button>
+
+
+      </>
+  );
+}
   return (
     <>
     <h2> Declaraciones Juradas de Iva</h2>
@@ -105,8 +195,55 @@ const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
         </> : <></>}
       </Box>
       <p> Ultimas declaraciones juradas de I.V.A. consus correspondientes acuses de presentación  </p>
-      { cantidad ? <> Actualmente aprobado(s) {cantidad} Constancia(s)</> : <></>}
+      { cantidad ? <> Actualmente aprobado(s) {cantidad.length} Constancia(s)</> : <></>}
       
+
+
+
+   {!cantidad ? 
+<Skeleton /> : <>
+      <TableContainer>
+             
+                  <h1>Constancias</h1>
+                  <Table >
+                    <TableHead>
+                      <TableRow>
+                   
+                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>Constancia</b></TableCell>
+                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ESTADO</b></TableCell>
+                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DESCARGA</b></TableCell>
+                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>VER </b></TableCell>
+              
+                    
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+
+
+
+                      {cantidad.map((row, index) => (
+                        <StyledTableRow key={row.name}>
+                       
+                          <StyledTableCell component="th" scope="row">{ row.tipo} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row"> {row.estado} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row">  {downloadFile(index)} </StyledTableCell>
+                          <StyledTableCell component="th" scope="row"> {verFile(index)} </StyledTableCell>
+                      
+                        </StyledTableRow>
+                      ))}
+
+
+
+
+                    </TableBody>
+                  </Table>
+            
+
+              </TableContainer>
+
+    </>}
+
+
     </>
   );
 };
