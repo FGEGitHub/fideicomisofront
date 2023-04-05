@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
+import servicioAdmin from '../services/Administracion'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
@@ -144,6 +145,18 @@ const LotesCliente = (props) => {
         alert(rta)
 
     }
+
+    
+    const traerlink = async (index) => {
+        console.log(index)
+        const dde = await servicioAdmin.traerlinkcuota(index)
+        window.location.reload(dde)
+
+
+
+    };
+
+
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -193,6 +206,25 @@ const LotesCliente = (props) => {
             </>
         );
     }
+
+    
+
+    function PagomercadoP(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+
+                <SearchIcon style={{ cursor: "pointer" }}
+                    onClick={() => traerlink(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                />
+
+
+
+
+            </>
+        );
+    }
+
+
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -336,6 +368,19 @@ const LotesCliente = (props) => {
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
+        },
+        {
+            name: "Beta pago Mercadop",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    PagomercadoP(
                         dataIndex,
                         rowIndex,
                         // overbookingData,
