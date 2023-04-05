@@ -150,8 +150,8 @@ const LotesCliente = (props) => {
     const traerlink = async (index) => {
         console.log(index)
         const dde = await servicioAdmin.traerlinkcuota(index)
-        window.location.reload(dde)
-
+        
+        window.open(dde)
 
 
     };
@@ -212,10 +212,10 @@ const LotesCliente = (props) => {
     function PagomercadoP(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-
-                <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => traerlink(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
+<Button     onClick={() => traerlink(cuotas[dataIndex].id)} >
+              
+                  Pagar mercado Pago
+               </Button>
 
 
 
