@@ -81,6 +81,16 @@ const subirprueba = async (formdata) => {
   
   }
 
+  
+  const traerlinkcuota = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'traerlinkcuota/'+id,config)
+    console.log(data)
+    return data
+  
+  }
+
+
   const cambiarestado= async  (datos) => {
     console.log(datos)
      const {data } = await axios.post(baseUrl+'cambiarestado/',datos,config)
@@ -88,4 +98,4 @@ const subirprueba = async (formdata) => {
      return data 
  } 
 
-export default {cambiarestado,borrarPago,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+export default {cambiarestado,borrarPago,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
