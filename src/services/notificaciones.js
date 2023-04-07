@@ -1,6 +1,9 @@
 import axios from "axios"
 
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/notificaciones/'
+const url =require ('./url')
+
+
+const baseUrl = url.database+'notificaciones/'
 //const  baseUrl ='http://localhost:4000/notificaciones/'
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')

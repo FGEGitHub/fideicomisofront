@@ -1,7 +1,9 @@
 import axios from "axios"
 
+const url =require ('./url')
 
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/pagos/'
+
+const baseUrl = url.database+'pagos/'
 //const  baseUrl ='http://localhost:4000/pagos/'
 
 

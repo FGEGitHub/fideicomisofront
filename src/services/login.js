@@ -1,7 +1,10 @@
 import axios from "axios"
 
+const url =require ('./url')
 
-const  baseUrl ='https://api.santacatalinafideicomiso.com/signinn'
+
+const baseUrl = url.database+'signinn/'
+//const  baseUrl ='https://api.santacatalinafideicomiso.com/signinn'
 //const  baseUrl ='http://localhost:4000/signinn'
 
 

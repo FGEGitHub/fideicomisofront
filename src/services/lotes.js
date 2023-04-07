@@ -1,6 +1,8 @@
 import axios from "axios"
+const url =require ('./url')
 
-const  baseUrl ='https://api.santacatalinafideicomiso.com/lotes/'
+
+const baseUrl = url.database+'lotes/'
 // const  baseUrl ='http://localhost:4000/lotes/'
 
  const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')

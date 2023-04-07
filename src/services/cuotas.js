@@ -1,11 +1,11 @@
 import axios from "axios"
+const url =require ('./url')
 
 
 
+const baseUrl = url.database+'cuotas/'
+//const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
 
-
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
-//const baseUrl = 'http://localhost:4000/cuotas/'
 
 
 
@@ -33,7 +33,7 @@ if (loggedUserJSON) {
 
 const vercuotas = async (id) => {
 
-    console.log(id)
+    console.log(baseUrl)
     const { data } = await axios.get(baseUrl + 'lote2/' + id, config)
     if(data === 'error login'){  
         // alert('Debe loguearse nuevamente')

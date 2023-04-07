@@ -1,6 +1,9 @@
 import axios from "axios"
 
-const  baseURL = 'https://api.santacatalinafideicomiso.com/links/'
+const url =require ('./url')
+
+
+const baseURL = url.database+'links/'
 
 //const  baseURL = 'http://localhost:4000/links/'
 

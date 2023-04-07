@@ -1,6 +1,9 @@
 import axios from "axios"
 
-const  baseUrl = 'https://api.santacatalinafideicomiso.com/nivel3/'
+const url =require ('./url')
+
+
+const baseUrl = url.database+'nivel3/'
 //const  baseUrl ='http://localhost:4000/nivel3/'
 
 const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
