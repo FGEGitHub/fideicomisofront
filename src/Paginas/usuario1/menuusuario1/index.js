@@ -7,9 +7,8 @@ import Cards from '../../../components/usuario1/Cards'
 import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
 
-import  useUser from '../../../hooks/useUser'
+
 import { Divider, Toolbar } from '@mui/material';
-import NotificacionesFlotantes from '../../..//components/usuario1/NotificacionesFlotantes'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,41 +17,48 @@ import { useNavigate } from "react-router-dom";
 
 export default function MenuUsuario1() {
 
-    const usuario  = useUser().userContext
+
 
 
     const navigate = useNavigate();
     const [logueado, setLogueado] = useState(false) 
+
+
     useEffect(() => {
-      const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
-        if (!user){
-          window.localStorage.removeItem('loggedNoteAppUser')
-       navigate('/login')
-  
-        }else{
-  
-          setLogueado(true)
-        }
+   
+    traer()
       
         //servicioUsuario.setToken(user.token)  
        
         
-      }
      
     }, [])
 
 
+    const traer = async () => {
+      const loggedUserJSON = await window.localStorage.getItem('loggedNoteAppUser')
+      console.log(loggedUserJSON)
+
+    
+     if (!loggedUserJSON){
+       
+       window.localStorage.removeItem('loggedNoteAppUser')
+    navigate('/login')
+
+     }else{
+       console.log('user')
+       setLogueado(true)
+     }
+
+
+    }
     return (
         <><div>  { logueado ? <div> 
             <div disableSticky={false} className="App">
 
 
                 <Navbar /> 
-                <br/><br/><br/><br/><br/>
-           
+                <br/><br/><br/>
                    
                 <Banner />
                 <Divider variant="middle" />
