@@ -41,6 +41,7 @@ const traer = async () => {
     const user = JSON.parse(loggedUserJSON)
    
   const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
+ 
  console.log(notis[0])
   setUser(notis[0])
   setCargado(true)
@@ -56,13 +57,13 @@ const traer = async () => {
     navigate("/login");
   };
   const hanleLogout = () => {
-    /* console.log('click')
+ 
      setUser(null)
-     servicioUsuario.setToken(user.token) 
-        //  navigate('/login')
-     */
+     //servicioUsuario.setToken(user.token) 
+         navigate('/login')
+     
    
-      window.location.reload();
+
      window.localStorage.removeItem('loggedNoteAppUser')
    
 

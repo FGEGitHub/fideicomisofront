@@ -64,6 +64,16 @@ const crear= async  (datos) => {
     alert(data)  
 }  
 
+
+const crear2= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseURL+'add2',datos,config)
+     
+     alert(data)  
+ }  
+
+
+
 const determinarEmpresa= async  (datos) => {
     console.log(datos)
      const {data } = await axios.post(baseURL+'determinarempresa',datos,config)
@@ -104,7 +114,7 @@ const lista= async  () => {
    
 } 
 const cliente= async  (cuil_cuit) => {
- 
+ console.log(config)
     const {data } = await axios.get(baseURL+'detalle/'+cuil_cuit,config)
     
     return data 
@@ -163,7 +173,7 @@ const traerLejagos= async  (cuil_cuit) => {
  
 
  const clientehabilitado= async  (cuil_cuit) => {
- 
+ console.log(config)
     const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
   
     return data 
@@ -172,7 +182,14 @@ const traerLejagos= async  (cuil_cuit) => {
 const infocantidad= async  (cuil_cuit) => {
  
     const {data } = await axios.get(baseURL+'infocantidad/',config)
-  
+    console.log(data)
+    if(data === 'error token'){
+        //  alert('Debe loguearse nuevamente')
+         window.localStorage.removeItem('loggedNoteAppUser')
+       
+         window.location.reload();
+      
+     }
   
     return data 
 } 
@@ -183,6 +200,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {borrarcbu,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,crear2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

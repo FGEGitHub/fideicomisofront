@@ -43,7 +43,17 @@ export default function MenuIzq2 ({children}) {
         window.location.reload(true);
       } 
     const menuItems = [
-        { 
+      { 
+        text: 'Clientes', 
+        icon: <GroupIcon color="primary" />, 
+        path: '/legales/clientes' 
+      },
+      { 
+        text: 'Lotes', 
+        icon: <GroupIcon color="primary" />, 
+        path: '/legales/lotes' 
+      },
+      /*   { 
           text: 'Expedientes', 
           icon: <GroupIcon color="primary" />, 
           path: '/legales/menu' 
@@ -57,7 +67,7 @@ export default function MenuIzq2 ({children}) {
           text: 'Carga Relevamiento', 
           icon: <GroupIcon color="primary" />, 
           path: '/legales/cargarelev' 
-        },
+        }, */
        
      
       ];

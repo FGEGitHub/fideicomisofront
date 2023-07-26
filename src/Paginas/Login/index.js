@@ -60,7 +60,7 @@ const Login = () => {
           navigate('/nivel3/')
           break;
           case 4:
-            navigate('/legales/menu')
+            navigate('/legales/clientes')
           break;
         default:
           
@@ -107,7 +107,7 @@ const Login = () => {
           case 3:navigate('/nivel3')
           window.location.reload(true);
           break;
-          case 4:navigate('/legales/estadisticas1')
+          case 4:navigate('/legales/clientes')
           window.location.reload(true);
           break;
           case 10:navigate('/admin/usuarios')

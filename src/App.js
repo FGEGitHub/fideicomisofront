@@ -57,7 +57,7 @@ useEffect(() => {
  const inusuales = async () => {
 
   const cantInusual =servicioPagos.cantidad()
-  console.log(cantInusual)
+ 
     setUsInusualContext(cantInusual)
 
 }

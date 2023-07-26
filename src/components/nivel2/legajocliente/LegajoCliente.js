@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
 import serviciousuario1 from '../../../services/usuario1'
+import serviciousuarios from '../../../services/usuarios'
 import "../../profile.css";
 import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
@@ -28,12 +29,30 @@ const LegajoCliente = (props) => {
   let cuil_cuit = params.cuil_cuit
       const [products, setProducts] = useState([])
       const [act, setAct] = useState(false)
-  
-  
+      const [user, setUser] = useState(null)
+      const [cargado, setCargado] = useState(false)
   
       //2 - fcion para mostrar los datos con axios
       const endpoint = "http://localhost:4000/usuario1/all-files"
-  
+      const traer = async () => {
+
+        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
+          const user = JSON.parse(loggedUserJSON)
+         
+        const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
+       
+       console.log(notis[0])
+        setUser(notis[0])
+        setCargado(true)
+      
+      
+        /* if (notificaciones>0) {
+          document.title= 'Santa Catalina ('+notificaciones+')'
+       
+        }   */
+      }
+      
   
       const getData = async () => {
         const  data = await servicioCliente.traerLejagos(cuil_cuit)
@@ -51,6 +70,7 @@ const LegajoCliente = (props) => {
   
       useEffect(() => {
           getData()
+          traer()
       }, [])
   
   
@@ -210,9 +230,15 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
-           
-            < Estadisticas
-             cuil_cuit = {cuil_cuit}/>
+           {user ?
+            <>
+           {user.nivel ===2 ? <> 
+           < Estadisticas
+             cuil_cuit = {cuil_cuit}/> 
+             </> : <></>}
+           </>
+             :<></>
+             }
              < ModalLegajo
                 getData = { async () => {
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)

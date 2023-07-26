@@ -15,6 +15,10 @@ import DrawerNav from "../DrawerNav";
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import  servicionotificaciones from '../../services/notificaciones'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+
 
 
 const Navbar = (props) => {
@@ -23,7 +27,23 @@ const Navbar = (props) => {
   const [notificacioness, setNotificacioness] = useState();
   const [nombre, setNombre] = useState(null)
   const [value, setValue] = useState();
+
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [valuee, setValuee] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleClickk = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const islogo = {
@@ -118,16 +138,45 @@ const cantidadnoti = async () => {
               <Button onClick={irContacto} sx={{ marginLeft: "10px" }} variant="Outlined">
                 <Tab label="Contacto" />
                 </Button>
-              
+                {usuario &&  <div>
+
+        
+      
+    </div> }
               {usuario &&  <Button onClick={nomb} sx={{ marginLeft: "10px" }} variant="Outlined">
                <Tab label={nombre}/>
               </Button>  }
-              <Button onClick={notificaciones} sx={{ marginLeft: "10px" }} variant="Outlined">
-                <Tab label="Notificaciones" />
-                <Badge badgeContent={notificacioness} color="error">
-          <MailIcon color="primary" />
-        </Badge>
-              </Button>
+              <Button  sx={{ marginLeft: "10px" }} variant="Outlined" >
+        <Tab l label="Notificaciones"
+          aria-controls="dropdown-menu"
+          aria-haspopup="true"
+          onClick={handleClickk}/>
+           {notificacioness &&
+            <Badge badgeContent={notificacioness.length} color="error">   <MailIcon color="primary" />
+        </Badge>}
+      <Menu
+        id="dropdown-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        label="Notificaciones"
+      >
+           <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px',backgroundColor: 'color-secundario'}} ><b> <h3>Lista de Notificaciones</h3></b></MenuItem>
+           <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px',backgroundColor: 'color-secundario'}} > <div>  <div style={{textAlign: 'right'}}><a > Ver todas</a></div></div></MenuItem>
+       {notificacioness && 
+       notificacioness.length>0 ? <> 
+       {notificacioness.map((row) => (
+           
+               <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px'}} >{row.asunto}</MenuItem>
+
+       )
+        
+       )}
+        </>:<> <MenuItem onClick={notificaciones}>Sin notificaciones nuevas</MenuItem></>}
+     
+      </Menu>
+      </Button>
             
               </Tabs>
               {usuario &&  <Button onClick={hanleLogout} sx={{ marginLeft: "10px" }} variant="Outlined">

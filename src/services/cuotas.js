@@ -179,4 +179,6 @@ const asignarloteacuotas = async (datos) => {
     // return data
 }
 
+
+
 export default { asignarloteacuotas,modificarmontotal, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };

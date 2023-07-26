@@ -202,7 +202,7 @@ const ModificacionC = (props) => {
                       variant="filled"
                       sx={{ margin: "10px" }}
                       InputProps={{
-                        readOnly: editMode,
+                        readOnly: !editMode,
                         startAdornment: (
                           <InputAdornment position="start">
                             <HomeWorkIcon />
@@ -353,7 +353,7 @@ const ModificacionC = (props) => {
                 />
 
               
-              {pass.newpass ===pass.rnewpass ? <><Button onClick={handleDeterminarPass} variant="contained">Cambiar</Button>  </>:<><Button  variant="contained">Cambiar</Button> <p style={{ color: 'crimson' }} >Contraseña nueva o coincide </p></>}
+              {pass.newpass ===pass.rnewpass ? <><Button onClick={handleDeterminarPass} variant="contained">Cambiar</Button>  </>:<><Button  variant="contained">Cambiar</Button> <p style={{ color: 'crimson' }} >Contraseña nueva no coincide </p></>}
 
               </Paper>
               

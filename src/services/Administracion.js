@@ -83,8 +83,15 @@ const subirprueba = async (formdata) => {
     return data
   
   }
-
   
+  
+  const traerlink360 = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'traerlink360/'+id,config)
+    console.log(data)
+    return data
+  
+  }
   const traerlinkcuota = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'traerlinkcuota/'+id,config)
@@ -101,4 +108,4 @@ const subirprueba = async (formdata) => {
      return data 
  } 
 
-export default {cambiarestado,borrarPago,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+export default {cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};

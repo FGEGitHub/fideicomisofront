@@ -61,6 +61,10 @@ import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 import CargaRelev from '../Paginas/Nivel4/CargaRelev';
+import Clientesleg from '../Paginas/Nivel4/clientes';
+import Lotesleg from '../Paginas/Nivel4/lotes';
+import DetalleClienteleg from '../Paginas/Nivel4/DetalleCliente';
+import Legajoslegales from '../Paginas/Nivel4/legajos';
 
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
@@ -165,8 +169,13 @@ const Rutas = [
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
 	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
 	{ path: '/legales/cargarelev', element: <CargaRelev /> },
-
+	{ path: '/legales/clientes', element: <Clientesleg /> },
+	{ path: '/legales/lotes', element: <Lotesleg /> },
+	{ path: '/legales/detallecliente/:cuil_cuit', element: <DetalleClienteleg /> },
+	{ path: '/legales/legajoscliente/:cuil_cuit', element: <Legajoslegales /> },
 	
+
+
 	{ path: '/admin/usuarios', element: <Usuarios /> },
 	{ path: '/admin/clientes', element: <AdminClientes /> },
 	{ path: '/admin/modificarcli/:cuil_cuit', element: <ModificarCli /> },

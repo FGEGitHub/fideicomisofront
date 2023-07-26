@@ -156,6 +156,15 @@ const LotesCliente = (props) => {
 
     };
 
+    
+    const traerlink360 = async (index) => {
+        console.log(index)
+        const dde = await servicioAdmin.traerlink360(index)
+        
+        window.open(dde)
+
+
+    };
 
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
@@ -223,8 +232,21 @@ const LotesCliente = (props) => {
             </>
         );
     }
+    function Pago360(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+<Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
+              
+                  Pagar mercado Pago
+               </Button>
 
 
+
+
+            </>
+        );
+    }
+    
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -389,8 +411,20 @@ const LotesCliente = (props) => {
             }
 
         },
+        {
+            name: "Beta pago 360",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    Pago360(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
-
+        },
+        
 
     ];
 
@@ -398,35 +432,52 @@ const LotesCliente = (props) => {
     return (
 
         <Fragment>
-            <Button onClick={() => { navigate('/usuario2/asignarloteausuario/' + cuil_cuit) }} variant="contained" color="success">
-                Asignar lote a usuario
-            </Button>
-            <br /> <br />
-            <Button onClick={() => { navigate('/usuario2/agregarviarias/' + cuil_cuit) }} variant="contained" color="success" >Agregar cuotas a varios lotes</Button><br />
-            <FormControl sx={{ m: 1, minWidth: 140 }}>
-                <InputLabel > LOTE</InputLabel>
+ <Grid container spacing={2}>
+  <Grid item xs={12} sm={6}>
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
+    >
+      Asignar lote a usuario
+    </Button>
+  </Grid>
+  <Grid item xs={12} sm={6}>
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
+    >
+      Agregar cuotas a varios lotes
+    </Button>
+  </Grid>
+</Grid>
+<br />
+<FormControl sx={{ m: 1, minWidth: 140 }}>
+  <InputLabel>Lote</InputLabel>
+  <Select
+    open={open}
+    onClose={handleClose}
+    onOpen={handleOpen}
+    label="Lote"
+  >
+    {lotes.map((item, index) => (
+      <div>
+        {item['zona'] === 'PIT' ? (
+          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
+            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Parcela {item['parcela']}
+          </MenuItem>
+        ) : (
+          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
+            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Lote {item['lote']}
+          </MenuItem>
+        )}
+      </div>
+    ))}
+  </Select>
 
-                <Select
-
-
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    label="Lote"
-
-                >
-                    {
-                        lotes.map((item, index) =>
-                            <div>
-                                    {item['zona']=== 'PIT' ? <>
-                                <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</MenuItem>
-                                </>:<>
-                                <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Lote {item['lote']}</MenuItem>
-                                </>}
-                            </div>
-                        )
-                    }
-                </Select>
                 <h3>  {cuotas ? <>
                  
                 {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
