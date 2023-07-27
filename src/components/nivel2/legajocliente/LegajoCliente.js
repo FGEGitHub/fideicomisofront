@@ -1,7 +1,7 @@
 import React, { useEffect, useState, } from "react";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from "@mui/material/Button";
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 import MUIDataTable from "mui-datatables";
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
@@ -67,7 +67,10 @@ const LegajoCliente = (props) => {
               
           
       }
-  
+      const volver2 =  () => {
+        navigate('/legales/detallecliente/'+cuil_cuit)
+             
+      }
       useEffect(() => {
           getData()
           traer()
@@ -230,12 +233,22 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
+             <ButtonGroup variant="contained" aria-label="outlined primary button group">
            {user ?
             <>
            {user.nivel ===2 ? <> 
+
            < Estadisticas
              cuil_cuit = {cuil_cuit}/> 
-             </> : <></>}
+
+<Button onClick={volver} > <ArrowBackIcon/> Volver</Button>
+             <div    ></div>
+
+             
+
+             </> : <>
+             <Button onClick={volver2} > <ArrowBackIcon/>  Volver</Button>
+             <div    ></div></>}
            </>
              :<></>
              }
@@ -250,8 +263,7 @@ const LegajoCliente = (props) => {
               cuil_cuit_user= {props.cuil_cuit_user} />
              <Deshabilitar
              cuil_cuit_user= {props.cuil_cuit_user} />
-         
-             <Button onClick={volver} > Volver</Button>
+          </ButtonGroup>
              <div    >
             
               <MUIDataTable
@@ -262,7 +274,7 @@ const LegajoCliente = (props) => {
               
   
                  </div>
-  
+                
           </div>
       )
 }

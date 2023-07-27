@@ -8,10 +8,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {  useState } from "react";
-import servicioCliente from '../../../services/clientes'
+import servicioLotes from '../../../services/lotes'
 import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { Paper } from '@mui/material';
 
 
@@ -20,7 +20,7 @@ export default function ClienteNuevo(props) {
     let cuil_cuit = params.cuil_cuit
    
   const [open, setOpen] = React.useState(false);
-  const [form, setForm] = useState({razon:"Persona",tipo_dni:"DNI"})
+  const [form, setForm] = useState({zona:"Legales",tipo_dni:"DNI"})
   const handleChange = (e) =>{
     setForm({  ...form, [e.target.name]: e.target.value }) 
  }
@@ -32,8 +32,8 @@ export default function ClienteNuevo(props) {
     event.preventDefault();
     try {
 
-      await servicioCliente.crear2(form)
- 
+      const respuestas =await servicioLotes.nuevolote(form)
+    alert(respuestas)
      
      } catch (error) {
        console.error(error);
@@ -42,7 +42,7 @@ export default function ClienteNuevo(props) {
      
      }
      props.getClients()
-   
+
     setOpen(false);
   };
   
@@ -55,12 +55,13 @@ export default function ClienteNuevo(props) {
     <div>
 
 
-      <Button variant="outlined" onClick={handleClickOpen}>
-       CARGAR CLIENTE NUEVO <PersonAddAlt1Icon/>
+      <Button variant="outlined" color='success' onClick={handleClickOpen}>
+       Cargar un nuevo lote <AddToPhotosIcon/>
+     
       </Button>
       <Dialog open={open} onClose={handleClose}>
      
-        <DialogTitle>Cliente Nuevo  </DialogTitle>
+        <DialogTitle>New Lote </DialogTitle>
         <Paper
         sx={{
           cursor: 'pointer',
@@ -72,84 +73,56 @@ export default function ClienteNuevo(props) {
       >
         <DialogContent>
           <DialogContentText>
-        Datos del Nuevo Cliente
+        Datos del Nuevo Lote
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
-      
-          <TextField
-            
-            margin="dense"
-            id="name"
-            label="Nombre"
-            name="Nombre"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
-          
-            <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                          Tipo DNI
+
+          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+                          Fraccion
                         </InputLabel>
                         <NativeSelect
                             defaultValue={30}
                             onChange={handleChange}
                             inputProps={{
-                                name: 'tipo_dni',
+                                name: 'fraccion',
                                 id: 'uncontrolled-native',
                                
                             }}
-                        >   <option  value={'C.U.I.L.'}>Elegir</option>
-                           <option   value={'DNI'}>DNI</option>
-                            <option   value={'C.U.I.L.'}>CUIL</option>
-                            <option  value={'C.U.I.T.'}>CUIT</option>
+                        >   <option  value={'IC3'}>Elegir</option>
+                           <option   value={'ID/4'}>ID/4</option>
+                            <option   value={'ID/5'}>ID/5</option>
+                            <option  value={'ID/6'}>ID/6</option>
                          
                         </NativeSelect> 
-                  
-                        <TextField
-            
+      
+          <TextField
+            autoFocus
             margin="dense"
             id="name"
-            label="Numero (con guiones)"
-            name="cuil_cuit"
+            label="manzana"
+            name="manzana"
+            onChange={handleChange}
+            fullWidth
+            variant="standard"
+          />
+          
+            
+                  
+                        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="parcela"
+            name="parcela"
             onChange={handleChange}
             fullWidth
             variant="standard"
             maxRows="13"
           />
                                    
-              <TextField
-            
-            margin="dense"
-            id="name"
-            label="Domicilio"
-            name="domicilio"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
-              <TextField
-            
-            margin="dense"
-            id="name"
-            label="Telefono"
-            name="telefono"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
-              <TextField
-            
-            margin="dense"
-            id="name"
-            label="Observaciones"
-            name="observaciones"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
-      
+             <b>Podemos agregar datos como superficie, localizacion, etc</b> 
           <DialogActions>
-          {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio  && form.tipo_dni  && form.Nombre ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
+          {form.fraccion && form.manzana && form.parcela ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
           <Button  variant="outlined" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}>Cancelar</Button>
          
         </DialogActions>

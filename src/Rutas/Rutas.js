@@ -65,6 +65,8 @@ import Clientesleg from '../Paginas/Nivel4/clientes';
 import Lotesleg from '../Paginas/Nivel4/lotes';
 import DetalleClienteleg from '../Paginas/Nivel4/DetalleCliente';
 import Legajoslegales from '../Paginas/Nivel4/legajos';
+import Asignarlotes2 from '../Paginas/Nivel4/asignarlote';
+import Asignarvariasc from '../Paginas/Nivel4/agregarviarias';
 
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
@@ -173,8 +175,12 @@ const Rutas = [
 	{ path: '/legales/lotes', element: <Lotesleg /> },
 	{ path: '/legales/detallecliente/:cuil_cuit', element: <DetalleClienteleg /> },
 	{ path: '/legales/legajoscliente/:cuil_cuit', element: <Legajoslegales /> },
-	
+	{ path: '/legales/asignarloteausuario/:cuil_cuit', element: <Asignarlotes2 /> },
+	{ path: '/legales/agregarviarias/:cuil_cuit', element: <Asignarvariasc /> },
 
+
+
+	
 
 	{ path: '/admin/usuarios', element: <Usuarios /> },
 	{ path: '/admin/clientes', element: <AdminClientes /> },

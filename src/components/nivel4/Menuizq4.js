@@ -12,14 +12,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import GroupIcon from '@mui/icons-material/Group';
-import SearchIcon from '@mui/icons-material/Search';
-import NfcIcon from '@mui/icons-material/Nfc';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
-import AlertaInusual from '../AlertaInusual'
+import CabinIcon from '@mui/icons-material/Cabin';
 import Navbar from '../Navbar'
 
 
@@ -50,7 +46,12 @@ export default function MenuIzq2 ({children}) {
       },
       { 
         text: 'Lotes', 
-        icon: <GroupIcon color="primary" />, 
+        icon: <CabinIcon color="primary" />, 
+        path: '/legales/lotes' 
+      },
+      { 
+        text: 'Perfil y contraseña', 
+        icon: <AssignmentIndIcon color="primary" />, 
         path: '/legales/lotes' 
       },
       /*   { 

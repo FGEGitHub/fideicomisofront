@@ -25,7 +25,7 @@ const Lotes = () => {
 
     const getClients = async () => {
         
-        const clients = await servicioClientes.lista({
+        const clients = await servicioClientes.lista2({
 
         })
         setClients(clients)
@@ -158,7 +158,7 @@ return (
     <br/>
     <Nuevo
     getClients =  { async () => {
-        const clients = await servicioClientes.lista({
+        const clients = await servicioClientes.lista2({
         })
         setClients(clients)
     }}

@@ -8,11 +8,11 @@ import CargaDeTabla from "../../CargaDeTabla"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
-
+import Nuevo from './nuevo'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 
 
 
@@ -30,7 +30,7 @@ const Lotes = () => {
                     style={{ marginRight: "10px", cursor: "pointer" }}
                 />
                 <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/usuario2/detallecliente/' + clients[dataIndex].cuil_cuit)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                    onClick={() => navigate('/legales/detallecliente/' + clients[dataIndex].cuil_cuit)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
             </>
         );
@@ -38,7 +38,7 @@ const Lotes = () => {
 
     const getClients = async () => {
 
-        const clients = await servicioLotes.lista({
+        const clients = await servicioLotes.lista2({
 
         })
 
@@ -67,10 +67,7 @@ const Lotes = () => {
             label: "Manzana",
 
         },
-        {
-            name: "lote",
-            label: "Lote",
-        },
+     
         {
             name: "parcela",
             label: "Parcela",
@@ -106,12 +103,24 @@ const Lotes = () => {
     // renderiza la data table
     return (
         <>
+            <Nuevo
+                getClients={async () => {
+
+                    const clients = await servicioLotes.lista2({
+
+                    })
+
+                    setClients(clients)
+                    setLoading(false);
+                }
+                }
+            />
             {loading ? (<CargaDeTabla />)
                 : (
                     <div>
                         <Stack spacing={2} sx={{ width: '100%' }}>
 
-                            <Alert severity="info">Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )</Alert>
+                            <Alert severity="info">Lotes: Total:{clients[0].length} Disponibles {clients[1]} </Alert>
                         </Stack>
                         <MUIDataTable
 

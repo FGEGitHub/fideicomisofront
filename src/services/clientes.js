@@ -64,13 +64,16 @@ const crear= async  (datos) => {
     alert(data)  
 }  
 
+////crear cliente desde legales
 
 const crear2= async  (datos) => {
     console.log(datos)
-     const {data } = await axios.post(baseURL+'add2',datos,config)
+     const {data } = await axios.post(baseURL+'add3',datos,config)
      
      alert(data)  
  }  
+
+
 
 
 
@@ -86,7 +89,23 @@ const determinarEmpresa= async  (datos) => {
      alert(data)  
  }  
 
+ 
+ 
+const lista2= async  () => {
+  
+    const {data } = await axios.get(baseURL+'lista2',config)
+  //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
 
+   // const {data } = await axios.get('http://localhost:4000/prueba',config)
+   if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    window.location.reload();
+}
+    
+    return data 
+}  
 const lista= async  () => {
   
     const {data } = await axios.get(baseURL+'infocantidad',config)
@@ -102,6 +121,17 @@ const lista= async  () => {
     
     return data 
 }   
+
+
+const ventaLoteleg = async  (datos) => {
+   
+    const {data}  = await axios.post(baseURL+'ventaLoteleg',datos,config)
+    
+
+    return data
+   
+} 
+
 
 
  const ventaLote = async  (datos) => {
@@ -200,6 +230,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {borrarcbu,crear2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,ventaLoteleg,crear2,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

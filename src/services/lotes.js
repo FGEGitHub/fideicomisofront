@@ -34,6 +34,22 @@ const lista= async  () => {
     console.log(data)
     return data 
 }  
+
+const lista2= async  () => {
+   
+    const {data } = await axios.get(baseUrl+'lista2',config)
+    console.log(data)
+    return data 
+}
+
+const traerlotesleg= async  () => {
+   
+    const {data } = await axios.get(baseUrl+'traerlotesleg',config)
+    console.log(data)
+    return data 
+}
+
+
 const prueba= async  (s) => {
     await axios.post(baseUrl+'prueba',s)
   console.log(s)
@@ -91,5 +107,10 @@ const lotesCliente2= async  (cuil_cuit) => {
 }  
 
 
-
-export default {lista, lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+const nuevolote= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'nuevolote',datos,config)
+     console.log(data)
+     return data 
+ }  
+export default {lista,lista2, traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};

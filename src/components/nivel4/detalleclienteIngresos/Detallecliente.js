@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom"
-import LotesCliente from '../../LotesCliente'
+import LotesCliente from '../lotescliente'
 import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
-import Ingreso from './Ingresos'
+
 import { Paper } from '@mui/material';
-import PEP from './DeterminarPep'
+
 
 
 const DetalleCliente = () => {
@@ -68,15 +68,15 @@ const DetalleCliente = () => {
         }}
       >
              {habilitado ? <div>
-                Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}
-                <div> <Ingreso/> </div>
+                Cliente habilitado {/* por {cliente.cuil_cuit}  , el dia {cliente.fecha}*/} 
+             
       
             {<LotesCliente
                   cuil_cuit={cuil_cuit} />}
 
 
                  
-            </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }
+            </div> : <div> Cliente no habilitado no se puede asignar el lote </div> }
             </Paper>
         </div>
     )
