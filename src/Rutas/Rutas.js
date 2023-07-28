@@ -67,6 +67,7 @@ import DetalleClienteleg from '../Paginas/Nivel4/DetalleCliente';
 import Legajoslegales from '../Paginas/Nivel4/legajos';
 import Asignarlotes2 from '../Paginas/Nivel4/asignarlote';
 import Asignarvariasc from '../Paginas/Nivel4/agregarviarias';
+import Agregarcuotasleg from '../Paginas/Nivel4/agregarcuotas';
 
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
@@ -177,8 +178,8 @@ const Rutas = [
 	{ path: '/legales/legajoscliente/:cuil_cuit', element: <Legajoslegales /> },
 	{ path: '/legales/asignarloteausuario/:cuil_cuit', element: <Asignarlotes2 /> },
 	{ path: '/legales/agregarviarias/:cuil_cuit', element: <Asignarvariasc /> },
-
-
+	{ path: '/legales/agregarcuotas/:id', element: <Agregarcuotasleg /> },
+	
 
 	
 

@@ -102,6 +102,15 @@ const agregarCuotas = async (estadoCuotas) => {
 
     return data
 }
+
+const agregarCuotasleg = async (estadoCuotas) => {
+
+    console.log(estadoCuotas)
+    const { data } = await axios.post(baseUrl + 'agregarcuotasleg/', estadoCuotas, config)
+
+
+    return data
+}
 const modificarmontotal = async (estadoCuotas) => {
 
     console.log(estadoCuotas)
@@ -181,4 +190,4 @@ const asignarloteacuotas = async (datos) => {
 
 
 
-export default { asignarloteacuotas,modificarmontotal, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+export default { asignarloteacuotas,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };

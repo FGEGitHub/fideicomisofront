@@ -77,7 +77,7 @@ const LotesCliente = (props) => {
     const [deudaExigible, setDeudaExigible] = useState([''])
     const [detallePendiente, setDetallePendiente] = useState([''])
     const [idlote, setIdlote] = useState(null)
-
+    const [selectedValue, setSelectedValue] = useState("");
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
     const [vista1, setVista1] = useState(false)
@@ -430,7 +430,9 @@ const LotesCliente = (props) => {
 
     ];
 
-
+    const handleChangeratio = (event) => {
+        setSelectedValue(event.target.value);
+      };
     return (
 
         <Fragment>
@@ -457,22 +459,27 @@ const LotesCliente = (props) => {
   </Grid>
 </Grid>
 <br />
-
-<FormControl>
+<div>
       <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
+        value={selectedValue}
+        onChange={handleChangeratio}
       >
-
-{lotes.map((item, index) => (
- <FormControlLabel value="female" control={<Radio />} label="Female" />
-))}
-       
-       
+        {lotes.map((item, index) => (
+          <FormControlLabel
+            key={index}
+            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
+            control={<Radio />}
+            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
+            onClick={() => vercuotas(item.id)}
+          />
+        ))}
       </RadioGroup>
-    </FormControl>
+     <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b> 
+    </div>
 
 
 
@@ -543,7 +550,7 @@ const LotesCliente = (props) => {
             <div>
 
                 {act ? <div>
-                    <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
+                    <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
                     <ModalModificarvalortotal
@@ -732,9 +739,7 @@ const LotesCliente = (props) => {
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE ICC</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA CON AJUSTE</b></TableCell>
+                                                        
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
@@ -750,9 +755,7 @@ const LotesCliente = (props) => {
                                                             <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">{row.Ajuste_ICC} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)} </b></StyledTableCell>
+                                                           
                                                             <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
                                                            
