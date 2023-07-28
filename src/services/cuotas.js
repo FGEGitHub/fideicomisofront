@@ -31,6 +31,22 @@ if (loggedUserJSON) {
     }
 }
 
+
+
+const vercuotas2 = async (id) => {
+
+    console.log(baseUrl)
+    const { data } = await axios.get(baseUrl + 'vercuotas2/' + id, config)
+    if(data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
+
+    return data
+}
+
 const vercuotas = async (id) => {
 
     console.log(baseUrl)
@@ -190,4 +206,4 @@ const asignarloteacuotas = async (datos) => {
 
 
 
-export default { asignarloteacuotas,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+export default { asignarloteacuotas,vercuotas2,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };

@@ -52,7 +52,7 @@ export default function MenuIzq2 ({children}) {
       { 
         text: 'Perfil y contraseña', 
         icon: <AssignmentIndIcon color="primary" />, 
-        path: '/legales/lotes' 
+        path: '/legales/perfil' 
       },
       /*   { 
           text: 'Expedientes', 
