@@ -14,12 +14,13 @@ export default function SelectTextFields(props) {
   //const usuario  = useUser().userContext
 
   const [seleccion, seSeleccion] = useState([''])
-  const [pago, setPago] = useState([''])
+  const [pago, setPago] = useState()
 
 
 
   const handleClickOpen = () => {
     setOpen(true);
+    traer()
   };
 
   const handleClose = () => {
@@ -34,21 +35,20 @@ export default function SelectTextFields(props) {
   }
   ////
   const traer = async (event) => {
-    event.preventDefault();
+ 
     try {
 
-      await servicioPagos.traerpagodecuota(
+     const pag = await servicioPagos.traerpagodecuota(
         props.id_cuota
       )
-
-
+console.log(pag)
+      setPago(pag)
     } catch (error) {
       console.error(error);
       console.log('Error algo sucedio')
 
     }
 
-    setOpen(false);
   };/////
   const [currency, setCurrency] = React.useState('EUR');
 
@@ -67,49 +67,44 @@ export default function SelectTextFields(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <div>
+        {pago? <>
         
+        {pago.length>0 ? <>
           <div class="factura">
     <div class="empresa">
-      <p>Pago de factura</p>
+      <p>Pago de factura pago {pago ? <> numero: {pago[0].id} </>:<></> }</p>
       
     </div>
     <div class="datos-cliente">
-      <p>Cliente: Nombre del Cliente</p>
+      <p>Cliente: {pago[0].cuil_cuit}</p>
       <p>Dirección del Cliente</p>
-      <p>Fecha: 31 de Julio de 2023</p>
+   
     </div>
     <table class="items">
       <thead>
         <tr>
-          <th>Descripción</th>
-          <th>Cantidad</th>
-          <th>Precio Unitario</th>
-          <th>Total</th>
+          <th>fecha</th>
+    
+          <th>Monto</th>
+          <th>admin</th>
         </tr>
       </thead>
       <tbody>
+          {pago.map((ob)=>
         <tr>
-          <td>Producto 1</td>
-          <td>2</td>
-          <td>$10.00</td>
-          <td>$20.00</td>
+      
+            <td>{ob.fecha}</td>
+            <td>{ob.monto}</td>
+       
+            <td>{ob.cuil_cuit_administrador}</td>
+
+          
         </tr>
-        <tr>
-          <td>Producto 2</td>
-          <td>1</td>
-          <td>$15.00</td>
-          <td>$15.00</td>
-        </tr>
-        <tr>
-          <td>Producto 3</td>
-          <td>3</td>
-          <td>$5.00</td>
-          <td>$15.00</td>
-        </tr>
+  )}
       </tbody>
     </table>
     <div class="total">
-      <p>Total a pagar: $50.00</p>
+      <p>Total a pagado: </p>
     </div>
   </div>
 
@@ -117,8 +112,11 @@ export default function SelectTextFields(props) {
             <Button onClick={traer} variant='contained' >
                Ver comprobante
             </Button>
-    
+            </>:<>No hay pagos en la cuota</>}
+        
+        </>:<></>}
         </div>
+        
       </DialogContent>
     </Dialog>
     </Box >

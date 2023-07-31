@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import NativeSelect from '@mui/material/NativeSelect';
 import DialogActions from '@mui/material/DialogActions';
-
+import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from "react";
 
 
@@ -34,6 +34,7 @@ export default function MenuUsuario2() {
 
   })
   const [logueado, setLogueado] = useState(false) 
+  const [cambiarmonto, setCambiarmonto] = React.useState(false);
   useEffect(() => {
     
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -61,7 +62,11 @@ export default function MenuUsuario2() {
   }, []) 
 
   ///
-
+  const handlemonto = () =>{
+    setestadoCuotas({  ...estadoCuotas, ['cambiarmonto']:!cambiarmonto})
+  setCambiarmonto(!cambiarmonto)
+  
+  }
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -213,13 +218,28 @@ export default function MenuUsuario2() {
           fullWidth
           variant="standard"
         />
- 
+<br/>
+<label><Checkbox label="Cambiar el monto" onChange={handlemonto} /> Asignar manualmente el valor de la cuota
+      </label>
+    {cambiarmonto ? <div> 
+      <TextField
+         style ={{width: '20%'}}
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Definir el valor de la amortizacion "
+          name="Amortizacion"
+          onChange={handleChange}
+          fullWidth
+          variant="standard"
+        />
+         </div>:<div> </div>}
 
 
 
-        <DialogActions>
-        {  estadoCuotas.mes && estadoCuotas.anio ? <> <Button onClick={() => {agregarCuotas()}} >Enviar</Button> </>  :  <> <p>Completar todos los datos</p></> } 
-        </DialogActions>
+  
+        {  estadoCuotas.mes && estadoCuotas.anio ? <> <Button onClick={() => {agregarCuotas()}} >Enviar</Button> </>  :  <> <p  style={{ color: 'crimson' }}>Completar todos los datos</p></> } 
+      
       </form>
 
     </MenuIzq4>

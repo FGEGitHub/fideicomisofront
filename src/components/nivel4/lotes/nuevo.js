@@ -77,7 +77,7 @@ export default function ClienteNuevo(props) {
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
 
-          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
+      {/*     <InputLabel  variant="standard" htmlFor="uncontrolled-native">
                           Fraccion
                         </InputLabel>
                         <NativeSelect
@@ -93,7 +93,7 @@ export default function ClienteNuevo(props) {
                             <option   value={'ID/5'}>ID/5</option>
                             <option  value={'ID/6'}>ID/6</option>
                          
-                        </NativeSelect> 
+                        </NativeSelect>  */}
       
           <TextField
             autoFocus
@@ -122,7 +122,7 @@ export default function ClienteNuevo(props) {
                                    
              <b>Podemos agregar datos como superficie, localizacion, etc</b> 
           <DialogActions>
-          {form.fraccion && form.manzana && form.parcela ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
+          {form.manzana && form.parcela ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
           <Button  variant="outlined" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}>Cancelar</Button>
          
         </DialogActions>

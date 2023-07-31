@@ -769,9 +769,7 @@ const LotesCliente = (props) => {
                                                                 <Verpagos
                                                                     id_cuota={row.id} />
 
-                                                                <DeleteIcon style={{ cursor: "pointer" }}
-                                                                    onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                />
+                                                              
 
 
                                                             </StyledTableCell>

@@ -79,11 +79,19 @@ const Lotes = () => {
     // definimos las columnas
     const columns = [
         {
-            name: "id",
-            label: "ID",
-
-        },
-       
+            name: "Nombre",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRenderere(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        }, 
+ 
            {
             name: "cuil_cuit",
             options: {
@@ -98,24 +106,8 @@ const Lotes = () => {
         
         },   
        
-         {
-            name: "Nombre",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderere(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
-        {
-            name: "razon",
-            label: "Razon",
-           
-        },
+    
+  
         {
             name: "observaciones",
             label:"Observaciones",
