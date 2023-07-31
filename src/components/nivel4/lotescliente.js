@@ -6,11 +6,11 @@ import AgregarIcc from '../nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from '../nivel2/Asignarcuotasalote'
 import BorrarCuotas from '../nivel2/borrarcuotas/BorrarCuotas'
 import ModalModificarvalortotal from '../Modalmodificarmontotoal'
-import Switch from '@mui/material/Switch';
+import DesasignarLote from './Modaldesasignarlote'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import SearchIcon from '@mui/icons-material/Search';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import MUIDataTable from "mui-datatables";
@@ -437,6 +437,7 @@ const LotesCliente = (props) => {
         <Fragment>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
+                
                     <Button
                         fullWidth
                         variant="contained"
@@ -548,7 +549,9 @@ const LotesCliente = (props) => {
 
             <div>
 
-                {act ? <div>
+                {act ? 
+                
+                <div><ButtonGroup variant="contained" aria-label="outlined primary button group">   
                     <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
@@ -561,7 +564,10 @@ const LotesCliente = (props) => {
 
                     <BorrarCuotas
                         id={idlote} />
-
+                        <DesasignarLote
+                        id={idlote}
+                        />
+  </ButtonGroup>
                     {act2 ?
 
                         <div>
