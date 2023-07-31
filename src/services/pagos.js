@@ -142,6 +142,17 @@ const cantidadpendientes= async  () => {
     console.log(data)
   return data
  } 
+ const traerpagodecuota= async  (id) => {
+
+  const {data}  = await axios.get(baseUrl+'pagos/traerpagodecuota/'+id,config)
+    console.log(data)
+  return data
+ } 
+
+
+ 
+
+
  const rechazararpagoniv3= async  (form) => {
  console.log(form)
   
@@ -161,4 +172,4 @@ const cantidadpendientes= async  () => {
      }
 
 
-export default {todoslospagos,pagarnivel4,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {todoslospagos,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

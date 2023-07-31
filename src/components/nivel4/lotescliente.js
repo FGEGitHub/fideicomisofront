@@ -37,7 +37,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
-
+import Verpagos from './Modalverpagos';
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -148,21 +148,21 @@ const LotesCliente = (props) => {
 
     }
 
-    
+
     const traerlink = async (index) => {
         console.log(index)
         const dde = await servicioAdmin.traerlinkcuota(index)
-        
+
         window.open(dde)
 
 
     };
 
-    
+
     const traerlink360 = async (index) => {
         console.log(index)
         const dde = await servicioAdmin.traerlink360(index)
-        
+
         window.open(dde)
 
 
@@ -171,7 +171,7 @@ const LotesCliente = (props) => {
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].Saldo_real ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].Saldo_real) : <div> No Calculado </div>}
 
             </>
         );
@@ -179,7 +179,7 @@ const LotesCliente = (props) => {
     function pago(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].pago ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].pago) : <div> No Calculado </div>}
 
             </>
         );
@@ -187,7 +187,7 @@ const LotesCliente = (props) => {
     function saldoInicial(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].saldo_inicial  ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].saldo_inicial) : <div> No Calculado </div>}
 
             </>
         );
@@ -195,7 +195,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste) : <div> No Calculado </div>}
 
             </>
         );
@@ -211,22 +211,22 @@ const LotesCliente = (props) => {
     function diferencia(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {(cuotas[dataIndex].diferencia >= 0) ? <> <p style={{ color: 'green' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )} </p> </> : <><p style={{ color: 'red' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )}</p></>}
+                {(cuotas[dataIndex].diferencia >= 0) ? <> <p style={{ color: 'green' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia)} </p> </> : <><p style={{ color: 'red' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia)}</p></>}
 
-               
+
             </>
         );
     }
 
-    
+
 
     function PagomercadoP(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-<Button     onClick={() => traerlink(cuotas[dataIndex].id)} >
-              
-                  Pagar mercado Pago
-               </Button>
+                <Button onClick={() => traerlink(cuotas[dataIndex].id)} >
+
+                    Pagar mercado Pago
+                </Button>
 
 
 
@@ -237,10 +237,10 @@ const LotesCliente = (props) => {
     function Pago360(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-<Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
-              
-                  Pagar mercado Pago
-               </Button>
+                <Button onClick={() => traerlink360(cuotas[dataIndex].id)} >
+
+                    Pagar mercado Pago
+                </Button>
 
 
 
@@ -248,7 +248,7 @@ const LotesCliente = (props) => {
             </>
         );
     }
-    
+
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -257,15 +257,14 @@ const LotesCliente = (props) => {
                     onClick={() => navigate('/usuario2/pagarcuota/' + cuotas[dataIndex].id)}
                     style={{ marginRight: "10px", cursor: "pointer" }}
                 />
-                <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/usuario2/pagoscuotas/' + cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
+                <Verpagos
+                    id_cuota={cuotas[dataIndex].id} />
 
 
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
-               <AgregarIcc
+                <AgregarIcc
                     id={cuotas[dataIndex].id}
                     traer={async () => {
 
@@ -274,7 +273,7 @@ const LotesCliente = (props) => {
                         setLotes(lotes)
                     }}
 
-                />  
+                />
 
 
 
@@ -426,65 +425,65 @@ const LotesCliente = (props) => {
             }
 
         },
-        
+
 
     ];
 
     const handleChangeratio = (event) => {
         setSelectedValue(event.target.value);
-      };
+    };
     return (
 
         <Fragment>
- <Grid container spacing={2}>
-  <Grid item xs={12} sm={6}>
-    <Button
-      fullWidth
-      variant="contained"
-      color="primary"
-      onClick={() => navigate('/legales/asignarloteausuario/' + cuil_cuit)}
-    >
-      Asignar lote a usuario
-    </Button>
-  </Grid>
-  <Grid item xs={12} sm={6}>
-    <Button
-      fullWidth
-      variant="contained"
-      color="primary"
-      onClick={() => navigate('/legales/agregarviarias/' + cuil_cuit)}
-    >
-      Agregar cuotas a varios lotes
-    </Button>
-  </Grid>
-</Grid>
-<br />
-<div>
-      <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        value={selectedValue}
-        onChange={handleChangeratio}
-      >
-        {lotes.map((item, index) => (
-          <FormControlLabel
-            key={index}
-            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
-            control={<Radio />}
-            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
-            onClick={() => vercuotas(item.id)}
-          />
-        ))}
-      </RadioGroup>
-     <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b> 
-    </div>
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate('/legales/asignarloteausuario/' + cuil_cuit)}
+                    >
+                        Asignar lote a usuario
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate('/legales/agregarviarias/' + cuil_cuit)}
+                    >
+                        Agregar cuotas a varios lotes
+                    </Button>
+                </Grid>
+            </Grid>
+            <br />
+            <div>
+                <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    value={selectedValue}
+                    onChange={handleChangeratio}
+                >
+                    {lotes.map((item, index) => (
+                        <FormControlLabel
+                            key={index}
+                            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
+                            control={<Radio />}
+                            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
+                            onClick={() => vercuotas(item.id)}
+                        />
+                    ))}
+                </RadioGroup>
+                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+            </div>
 
 
 
 
-{/* 
+            {/* 
 <FormControl sx={{ m: 1, minWidth: 140 }}>
   <InputLabel>Lote</InputLabel>
   <Select
@@ -517,7 +516,7 @@ const LotesCliente = (props) => {
                     }
                     label="IEF"
                 /> */}
-                {/* <FormControlLabel
+            {/* <FormControlLabel
                     control={
                         <Switch checked={act} onChange={handleChange} />
                     }
@@ -554,10 +553,10 @@ const LotesCliente = (props) => {
                         Agregar cuotas al lote
                     </Button>
                     <ModalModificarvalortotal
-                     idlote = {idlote}
+                        idlote={idlote}
                     />
                     <AgregaraCuotas
-                    id_origen = {idlote}
+                        id_origen={idlote}
                     />
 
                     <BorrarCuotas
@@ -574,7 +573,7 @@ const LotesCliente = (props) => {
                             {cuotas !== '' ? <>
 
                                 <div>
-                                   {/*  <Box
+                                    {/*  <Box
                                         sx={{
                                             display: 'flex'
                                         }}
@@ -739,7 +738,7 @@ const LotesCliente = (props) => {
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                                                        
+
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
@@ -755,21 +754,20 @@ const LotesCliente = (props) => {
                                                             <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
-                                                           
+
                                                             <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
-                                                           
-                                                            <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
+
+                                                            <StyledTableCell component="th" scope="row">  {row.diferencia < 0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
 
                                                                 <CurrencyExchangeIcon
                                                                     onClick={() => navigate('/legales/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
                                                                 />
-                                                                <SearchIcon style={{ cursor: "pointer" }}
-                                                                    onClick={() => navigate('/legales/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                />
 
+                                                                <Verpagos
+                                                                    id_cuota={row.id} />
 
                                                                 <DeleteIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
