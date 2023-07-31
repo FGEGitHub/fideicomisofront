@@ -1,6 +1,5 @@
 import { Button, CircularProgress } from '@mui/material';
 import { useCallback, useEffect, useState, Fragment } from "react";
-import servicioPagos from '../../../services/pagos'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,8 +10,8 @@ import FormControl from '@mui/material/FormControl';
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { Toolbar } from '@mui/material';
-import { Paper } from '@mui/material';
-import servicioUsuario1 from '../../../services/usuario1'
+import { Paper,Grid } from '@mui/material';
+import servicioPagos from '../../../services/pagos'
 import servicioCuotas from '../../../services/cuotas'
 import * as React from 'react';
 import ComprobantePDF from './comprobante';
@@ -27,20 +26,20 @@ export default function PagarCuota() {
   const navigate = useNavigate();
   let params = useParams()
   let id = params.id
- 
+
   const [pago, setPagos] = useState({
-fecha:'03-04-2023'
+    fecha: '03-04-2023'
   })
 
   const [eleccion, setEleccion] = useState({ tipo: '1' })
-  const [cuotas, setCuotas] = useState([])
+  const [cuotas, setCuotas] = useState()
   const [pagosVarios, setpagosVarios] = useState(null)
   const [enviarr, setEnviarr] = useState();
   const [fileUpload, setFileUpload] = useState(null);
   const [loading, setLoading] = useState(false)
   const [facturas, setFacturas] = useState([]);
   const [pdfContent, setPdfContent] = useState('');
-    
+  const [total, setTotal] = useState(0)
   const comprobanteData = {
     nombre: 'Juan Pérez',
     direccion: 'Calle 123, Ciudad ABC',
@@ -50,7 +49,7 @@ fecha:'03-04-2023'
   const onDrop = useCallback((files, acceptedFiles) => {
     setLoading(true)
     const formData = new FormData();
-    
+
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
     setEnviarr(formData)
@@ -60,17 +59,17 @@ fecha:'03-04-2023'
 
   });
 
-/*   const onDrop = useCallback((files, acceptedFiles) => {
-    setLoading(true)
-    const formData = new FormData();
-    setFileUpload(acceptedFiles);
-    formData.append('file', files[0]);
-    setEnviarr(formData)
-    setLoading(false)
-
-
-
-  }); */
+  /*   const onDrop = useCallback((files, acceptedFiles) => {
+      setLoading(true)
+      const formData = new FormData();
+      setFileUpload(acceptedFiles);
+      formData.append('file', files[0]);
+      setEnviarr(formData)
+      setLoading(false)
+  
+  
+  
+    }); */
 
 
   const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
@@ -80,7 +79,7 @@ fecha:'03-04-2023'
 
   });
 
- 
+
   const acceptedFileItems = acceptedFiles.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
@@ -145,6 +144,7 @@ fecha:'03-04-2023'
 
 
     const cuot = await servicioCuotas.traercuotasdisponibles(params.id)
+   
     setCuotas(cuot)
 
 
@@ -152,15 +152,13 @@ fecha:'03-04-2023'
 
   const enviar = async () => {
 
-setLoading(true)
-await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]);///// aca en forma de array se envian datos del dormulario
 
-    const rta = await servicioUsuario1.pagarnivel2(enviarr)
+    const rta = await servicioPagos.pagarnivel4(pago)
     console.log(rta)
     alert(rta[0])
     navigate('/legales/detallecliente/' + rta[1])
 
-   
+
 
 
 
@@ -170,9 +168,9 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
   const enviar2 = async () => {
 
     setLoading(true)
-    enviarr.append('datos', [pago.cuil_cuit, pago.fecha,pago.id, JSON.stringify(pagosVarios)]);///// aca en forma de array se envian datos del dormulario
+    enviarr.append('datos', [pago.cuil_cuit, pago.fecha, pago.id, JSON.stringify(pagosVarios)]);///// aca en forma de array se envian datos del dormulario
 
-    const rta = await servicioUsuario1.pagarnivel2varios(enviarr)
+    const rta = await servicioPagos.pagarnivel2varios(enviarr)
     console.log(rta)
     alert(rta[0])
     navigate('/legales/detallecliente/' + rta[1])
@@ -187,14 +185,11 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
     console.log(pago)
     setPagos({ ...pago, [e.target.name]: e.target.value })
   }
-  const handleChangee = (e) => {
-    console.log(eleccion)
-    setEleccion({ ...eleccion, [e.target.name]: e.target.value })
-  }
+  const handleChange3 = (e) => {
+    handleChange(e)
+    console.log(pago)
+    setTotal(cuotas[0].Amortizacion*e.target.value)
 
-  const handleChangeVarios = (e) => {
-    console.log(pagosVarios)
-    setpagosVarios({ ...pagosVarios, [e.target.name]: e.target.value })
   }
 
 
@@ -206,26 +201,43 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
 
     <Fragment>
       <Toolbar />
-      <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined" >
-        <button onClick={generarFactura}>Generar Factura</button>
-          <form >
+      <Box sx={{ p: 2 }}>
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12} md={6} lg={4}>
+            <Paper variant="outlined">  <form >
+          <h3>Pagar cuota(s)</h3>
+          
+          {cuotas ? <>
+
+            <p style={{ color: '#2c387e' }}>    Valor de cuota:$ <b>{cuotas[0].Amortizacion
+            }</b></p>
+          
+ 
+       
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Cuantas Cuotas
             </InputLabel>
-            <NativeSelect
-              sx={{ '& > :not(style)': { m: 1 } }}
-              defaultValue={30}
-              onChange={handleChangee}
+            <TextField
+              /* style ={{width: '25%'}} */
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Cantidad"
+              name="cantidad"
+              onChange={handleChange3}
+              fullWidth
+              variant="filled"
+              type="number"
               inputProps={{
-                name: 'tipo',
-                id: 'uncontrolled-native',
-
+                pattern: "\\d*", // Expresión regular para aceptar solo dígitos (números enteros)
+                inputMode: "numeric", // Para mostrar el teclado numérico en dispositivos móviles
               }}
-            >   <option value={'1'}>Una</option>
-              <option value={'varias'}>Varias</option>
-
-            </NativeSelect>
+            
+            /> 
+             {pago.cantidad ? <>
+        <p style={{ color: 'green' }}> Total:$ {total} </p> </>: <></>}
+          </> : <></>}
+         
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
 
@@ -250,21 +262,9 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
               <>
 
 
-                <TextField
-                  /* style ={{width: '25%'}} */
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Monto"
-                  name="monto"
-                  onChange={handleChange}
-                  fullWidth
-                  variant="filled"
-                  type={"Number"}
-                />
+              
 
-
-                {pago.monto > 0 && pago.fecha ?
+                {pago.fecha && pago.cantidad ?
                   <div>
                     <Box sx={{
                       m: 1,
@@ -272,13 +272,12 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
                       fontSize: '1rem',
                     }}
                     >
-                      Archivos Aceptados <BackupIcon fontSize="small" />
-                      <ul>{acceptedFileItems}</ul>
+                   
                       <Button variant='contained' onClick={enviar}>
                         {loading ? (
                           <CircularProgress color="inherit" size={25} />
                         ) : (
-                          "Enviar"
+                          "Pagar"
                         )}
                       </Button>
                     </Box>
@@ -290,102 +289,14 @@ await  enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha]
 
 
           </form>
-
-        </Card>
-
+          </Paper>
+          </Grid>
+        </Grid>
       </Box>
 
 
-
-      {eleccion.tipo === 'varias' ? <>
-        {cuotas ?
-          <>
-
-            {cuotas.map((option) => (
-              <>
-                <TextField
-                  /* style ={{width: '25%'}} */
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label={"Cuota " + option.nro_cuota}
-                  name={option.id}
-                  onChange={handleChangeVarios}
-                  fullWidth
-                  variant="filled"
-                  type={"Number"}
-                />
-
-
-
-
-
-              </>))}</> : <></>
-
-
-        }
-
-       
-          <div>
-            <Box sx={{
-              m: 1,
-              color: 'green',
-              fontSize: '1rem',
-            }}
-            >
-              Archivos Aceptados <BackupIcon fontSize="small" />
-              <ul>{acceptedFileItems}</ul>
-              <Button variant='contained' onClick={enviar2}>
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Enviar varias"
-                )}
-              </Button>
-            </Box>
-
-
-
-          </div> 
-
-      </> : <></>}
-  {/*
-      <h2>SUBIR COMPROBANTE </h2>
-     <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-          ) : (
-            <p>Arrastra hasta aqui el archivo </p>
-          )}
-          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-        </div>
-      </Paper>
- */}
-
-      {/*  {
-                               lotes.map((item, index) =>
-                                   //   item['']
-                                   <div>
-                                       <MenuItem value={10}>{item['zona']}  </MenuItem>
-                                   </div>
-                               )} */}
-
-
-
-<div>
-      <h1>Comprobante</h1>
-      <ComprobantePDF data={comprobanteData} />
-    </div>
+    
+    
 
 
     </Fragment>

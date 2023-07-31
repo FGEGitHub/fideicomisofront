@@ -88,7 +88,7 @@ const LotesCliente = (props) => {
     });
     const vercuotas = async (index) => {
 
-        const cuotas = await servicioCuotas.vercuotas(index)
+        const cuotas = await servicioCuotas.vercuotas4(index)
         setCuotas(cuotas)
         setIdlote(index)
         setAct(true)
