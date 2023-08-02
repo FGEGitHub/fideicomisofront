@@ -112,6 +112,8 @@ console.log(clients)
 
 
   return (
+    <>
+    {clients ? <>
     <PDFViewer width="100%" height="500px">
       <Document>
         <Page size="A4" style={ 'width= 50%'}>
@@ -132,29 +134,33 @@ console.log(clients)
           <View style={styles.tableContainer}>
             <View style={styles.tableHeader}>
               <Text style={styles.columnHeader}>ID</Text>
+              <Text style={styles.columnHeader}>Corresponde</Text>
+              <Text style={styles.columnHeader}>Fech de pago</Text>
               <Text style={styles.columnHeader}>Descripción</Text>
-              <Text style={styles.columnHeader}>Cantidad</Text>
+             
               <Text style={styles.columnHeader}>Precio unitario</Text>
               <Text style={styles.columnHeader}>Descuento</Text>
               <Text style={styles.columnHeader}>Subtotal</Text>
-              <Text style={styles.columnHeader}>Fecha</Text>
+              
               <Text style={styles.columnHeader}>Total</Text>
               <Text style={styles.lastCell}>Observaciones</Text>
             </View>
-{clients ? <>
+
         
               <View style={styles.tableRow}>
                 <Text style={styles.cell}>{clients[0].id}</Text>
+                <Text style={styles.cell}>{clients[0].mes}/{clients[0].anio}</Text>
+                <Text style={styles.cell}>{clients[0].fecha}</Text>
                 <Text style={styles.cell}>Pago de cuota</Text>
-                <Text style={styles.cell}>1</Text>
+             
                 <Text style={styles.cell}>${clients[0].monto}</Text>
                 <Text style={styles.cell}>${clients[0].descuento}</Text>
                 <Text style={styles.cell}>${clients[0].subtotal}</Text>
-                <Text style={styles.cell}>${clients[0].fecha}</Text>
+                
                 <Text style={styles.cell}>${clients[0].monto}</Text>
                 <Text style={styles.lastCell}>{clients[0].observaciones}</Text>
               </View>
-          </>:<></>}
+       
           </View>
 
           <View style={styles.sello}>
@@ -163,6 +169,9 @@ console.log(clients)
         </Page>
       </Document>
     </PDFViewer>
+       </>:<></>}
+    
+    </>
   );
 };
 
