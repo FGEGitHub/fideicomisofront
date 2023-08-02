@@ -170,6 +170,13 @@ const cantidadpendientes= async  () => {
        
       return data
      }
+     const traerpago= async  (id) => {
+  
+     
+      const {data } = await axios.get(baseUrl+'pagos/traerpago/'+id,config)
+        
+       return data
+      }
+ 
 
-
-export default {todoslospagos,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {todoslospagos,traerpago,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

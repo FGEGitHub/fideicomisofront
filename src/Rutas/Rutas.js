@@ -70,7 +70,7 @@ import Asignarvariasc from '../Paginas/Nivel4/agregarviarias';
 import Agregarcuotasleg from '../Paginas/Nivel4/agregarcuotas';
 import Perfilleg from '../Paginas/Nivel4/Perfil';
 import PagosNvel4 from '../Paginas/Nivel4/pagarcuota';
-
+import Comprobantepag from '../Paginas/Nivel4/comprobante';
 
 
 
@@ -186,7 +186,10 @@ const Rutas = [
 	{ path: '/legales/agregarcuotas/:id', element: <Agregarcuotasleg /> },
 	{ path: '/legales/perfil', element: <Perfilleg/> },
 	{ path: '/legales/pagarcuota/:id', element: <PagosNvel4 /> },
+	{ path: '/legales/comprobante/:id', element: <Comprobantepag /> },
 	
+
+
 
 	{ path: '/admin/usuarios', element: <Usuarios /> },
 	{ path: '/admin/clientes', element: <AdminClientes /> },

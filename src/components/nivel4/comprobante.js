@@ -1,6 +1,9 @@
 import React from 'react';
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import logo from "../../../Assets/marcas.png.png";
+import logo from "../../Assets/marcas.png.png";
+import servicioPagos from '../../services/pagos'
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom"
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
@@ -77,7 +80,37 @@ const styles = StyleSheet.create({
   },
 });
 
-const FacturaDePagoPDF = ({ data }) => {
+const ComprobantePDF = ({ data }) => {
+  let params = useParams()
+    let id = params.id
+  const [clients, setClients] = useState();
+    const [loading, setLoading] = useState(true);
+
+
+
+  useEffect(() => {
+    getClients()
+}, [])
+
+const getClients = async () => {
+
+  const clients = await servicioPagos.traerpago(id)
+console.log(clients)
+  setClients(clients)
+  setLoading(false);
+}
+
+  const comprobanteData = {
+    nombre: 'Juan Pérez',
+    direccion: 'Calle 123, Ciudad ABC',
+    fecha: '23-07',
+    // Agrega aquí los datos necesarios para tu comprobante
+  };
+
+
+
+
+
   return (
     <PDFViewer width="100%" height="500px">
       <Document>
@@ -87,11 +120,12 @@ const FacturaDePagoPDF = ({ data }) => {
               <Image src={logo} style={styles.logoImage} />
             </View>
             <View style={styles.fecha}>
-              <Text>Fecha: </Text>
+              <Text>Fecha:{clients[0].fecha} </Text>
             </View>
             <View style={styles.detalle}>
-              <Text>Número de factura: </Text>
-              <Text>Total a pagar: $</Text>
+              <Text>Número de factura:{clients[0].id}</Text>
+              <Text>Total a pagar: ${clients[0].monto}</Text>
+              <Text>DNI: {clients[0].cuil_cuit}</Text>
             </View>
           </View>
 
@@ -103,24 +137,24 @@ const FacturaDePagoPDF = ({ data }) => {
               <Text style={styles.columnHeader}>Precio unitario</Text>
               <Text style={styles.columnHeader}>Descuento</Text>
               <Text style={styles.columnHeader}>Subtotal</Text>
-              <Text style={styles.columnHeader}>Impuesto</Text>
+              <Text style={styles.columnHeader}>Fecha</Text>
               <Text style={styles.columnHeader}>Total</Text>
               <Text style={styles.lastCell}>Observaciones</Text>
             </View>
-
-          {/*   {data.detalle.map((rowData, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={styles.cell}>{rowData.id}</Text>
-                <Text style={styles.cell}>{rowData.descripcion}</Text>
-                <Text style={styles.cell}>{rowData.cantidad}</Text>
-                <Text style={styles.cell}>${rowData.precioUnitario}</Text>
-                <Text style={styles.cell}>${rowData.descuento}</Text>
-                <Text style={styles.cell}>${rowData.subtotal}</Text>
-                <Text style={styles.cell}>${rowData.impuesto}</Text>
-                <Text style={styles.cell}>${rowData.total}</Text>
-                <Text style={styles.lastCell}>{rowData.observaciones}</Text>
+{clients ? <>
+        
+              <View style={styles.tableRow}>
+                <Text style={styles.cell}>{clients[0].id}</Text>
+                <Text style={styles.cell}>Pago de cuota</Text>
+                <Text style={styles.cell}>1</Text>
+                <Text style={styles.cell}>${clients[0].monto}</Text>
+                <Text style={styles.cell}>${clients[0].descuento}</Text>
+                <Text style={styles.cell}>${clients[0].subtotal}</Text>
+                <Text style={styles.cell}>${clients[0].fecha}</Text>
+                <Text style={styles.cell}>${clients[0].monto}</Text>
+                <Text style={styles.lastCell}>{clients[0].observaciones}</Text>
               </View>
-            ))} */}
+          </>:<></>}
           </View>
 
           <View style={styles.sello}>
@@ -132,4 +166,4 @@ const FacturaDePagoPDF = ({ data }) => {
   );
 };
 
-export default FacturaDePagoPDF;
+export default ComprobantePDF;

@@ -29,8 +29,8 @@ export default function MenuUsuario2() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null)
   const [estadoCuotas, setestadoCuotas] = useState({
-    id:id
-
+    id:id,
+    cambiarmonto:false
 
   })
   const [logueado, setLogueado] = useState(false) 

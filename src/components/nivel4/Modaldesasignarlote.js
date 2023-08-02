@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 
 import NativeSelect from '@mui/material/NativeSelect';
 
-import servicioRelevamiento from '../../services/relevamiento'
+import servicioLotes from '../../services/lotes'
 
 import React, { useEffect, useState, Fragment } from "react";
 
@@ -39,8 +39,8 @@ export default function SelectTextFields(props) {
     event.preventDefault();
     try {
 
-      await servicioRelevamiento.borrar(
-        seleccion
+      await servicioLotes.desasignarlote(
+        props.id
       )
 
 
@@ -70,7 +70,7 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
       <Button variant="outlined" color="error" onClick={handleClickOpen}>
-       Desasignar lote
+       Desasignar lote {props.id}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
@@ -86,28 +86,15 @@ export default function SelectTextFields(props) {
 
       
          
-            <label>Zona</label>   <br />
-            <NativeSelect
-              defaultValue={30}
-              onChange={handleChange}
-              inputProps={{
-                name: 'Zona',
-                id: 'uncontrolled-native',
-
-              }}
-
-            > <option value={''}>Elegir</option>
-              <option value={'La Tosquera'}>La Tosquera</option>
-              <option value={'Otra'}>Otra</option>
-      
-
-
-            </NativeSelect>
+            <label>Seguro que deseas desasignar lote?</label>   <br />
+           <p>El lote quedarà libre,sin embargo las cuotas seguiran existiendo, procura borrarlas antes si deseas hacerlo</p>
        
             <Button onClick={borrar} variant='contained' >
-               Borrar
+               Si
             </Button>
-    
+            <Button onClick={handleClose} variant='contained' >
+               No
+            </Button>
         </div>
       </DialogContent>
     </Dialog>

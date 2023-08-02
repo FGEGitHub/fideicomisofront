@@ -14,7 +14,7 @@ import { Paper,Grid } from '@mui/material';
 import servicioPagos from '../../../services/pagos'
 import servicioCuotas from '../../../services/cuotas'
 import * as React from 'react';
-import ComprobantePDF from './comprobante';
+import ComprobantePDF from '../comprobante';
 import { useDropzone } from 'react-dropzone';
 import { PDFViewer, Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 

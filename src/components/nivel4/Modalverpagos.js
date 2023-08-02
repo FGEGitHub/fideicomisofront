@@ -5,11 +5,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import NativeSelect from '@mui/material/NativeSelect';
 import servicioPagos from '../../services/pagos'
-
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, Fragment } from "react";
 
 
 export default function SelectTextFields(props) {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
 
@@ -58,13 +59,10 @@ console.log(pag)
 
 
   return (
-
-    <Box
-  
-    >
+<>
         <SearchIcon onClick={handleClickOpen} />
      
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}  s  style={{width: '100%'}}>
         <DialogContent>
           <div>
         {pago? <>
@@ -87,6 +85,7 @@ console.log(pag)
     
           <th>Monto</th>
           <th>admin</th>
+          <th>comprobante</th>
         </tr>
       </thead>
       <tbody>
@@ -97,7 +96,9 @@ console.log(pag)
             <td>{ob.monto}</td>
        
             <td>{ob.cuil_cuit_administrador}</td>
-
+            <td> <button  onClick={() => window.open('/legales/comprobante/'+ob.id)} variant='contained' >
+              Comprobante
+            </button></td>  
           
         </tr>
   )}
@@ -109,9 +110,7 @@ console.log(pag)
   </div>
 
        
-            <Button onClick={traer} variant='contained' >
-               Ver comprobante
-            </Button>
+         
             </>:<>No hay pagos en la cuota</>}
         
         </>:<></>}
@@ -119,10 +118,10 @@ console.log(pag)
         
       </DialogContent>
     </Dialog>
-    </Box >
 
 
 
 
+</>
   );
 }

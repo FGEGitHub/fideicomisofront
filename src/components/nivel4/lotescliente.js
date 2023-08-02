@@ -24,12 +24,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Box } from "@material-ui/core";
+
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
@@ -38,6 +33,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Verpagos from './Modalverpagos';
+import ModalPagar from'./ModalPagar'
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -437,7 +433,7 @@ const LotesCliente = (props) => {
         <Fragment>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                
+
                     <Button
                         fullWidth
                         variant="contained"
@@ -549,37 +545,37 @@ const LotesCliente = (props) => {
 
             <div>
 
-                {act ? 
-                
-                <div><ButtonGroup variant="contained" aria-label="outlined primary button group">   
-                    <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
-                        Agregar cuotas al lote
-                    </Button>
-                    <ModalModificarvalortotal
-                        idlote={idlote}
-                    />
-                    <AgregaraCuotas
-                        id_origen={idlote}
-                    />
+                {act ?
 
-                    <BorrarCuotas
-                        id={idlote} />
-                        <DesasignarLote
-                        id={idlote}
+                    <div><ButtonGroup variant="contained" aria-label="outlined primary button group">
+                        <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
+                            Agregar cuotas al lote
+                        </Button>
+                        <ModalModificarvalortotal
+                            idlote={idlote}
                         />
-  </ButtonGroup>
-                    {act2 ?
+                        <AgregaraCuotas
+                            id_origen={idlote}
+                        />
 
-                        <div>
+                        <BorrarCuotas
+                            id={idlote} />
+                        <DesasignarLote
+                            id={idlote}
+                        />
+                    </ButtonGroup>
+                        {act2 ?
+
+                            <div>
 
 
 
 
 
-                            {cuotas !== '' ? <>
+                                {cuotas !== '' ? <>
 
-                                <div>
-                                    {/*  <Box
+                                    <div>
+                                        {/*  <Box
                                         sx={{
                                             display: 'flex'
                                         }}
@@ -672,134 +668,144 @@ const LotesCliente = (props) => {
                                             <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
                                         </Grid>
                                     </Box> */}
-                                </div>
+                                    </div>
 
 
-                            </> : <></>}
-                        </div>
-                        : <div></div>}
-
-
-
-
-
-
-                    {cuotas !== '' ? <>
-
-                        <Stack spacing={2} direction="row">
-                            <Fab variant="extended" onClick={() => { Vista1() }}><RemoveRedEyeIcon sx={{ mr: 1 }} /> Cambiar vista
-
-                            </Fab>
-                            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
-
-                            <br />
-
-                            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
+                                </> : <></>}
+                            </div>
+                            : <div></div>}
 
 
 
 
 
-                        </Stack>
 
+                        {cuotas !== '' ? <>
 
-                        {vista1 ? <>
-                            <MUIDataTable
-                                title={"Lista de cuotas"}
-                                data={cuotas}
-                                columns={columns}
-                                actions={[
-                                    {
-                                        icon: 'save',
-                                        tooltip: 'Save User',
-                                        onClick: (event, rowData) => alert("You saved " + rowData.name)
-                                    }
-                                ]}
-                            />
+                            <Stack spacing={2} direction="row">
+                                <Fab variant="extended" onClick={() => { Vista1() }}><RemoveRedEyeIcon sx={{ mr: 1 }} /> Cambiar vista
 
+                                </Fab>
+                                {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
 
-                        </> : <>
+                                <br />
 
-                            <>
-                                <Paper
-                                    sx={{
-                                        cursor: 'pointer',
-                                        background: '#eeeeee',
-                                        color: '#bdbdbd',
-                                        border: '1px dashed #ccc',
-                                        width: "90%",
-                                        '&:hover': { border: '1px solid #ccc' },
-                                        border: "1px solid black",
-                                        margin: '75px',
-
-                                    }}
-                                >
-
-                                    <TableContainer>
-                                        {!cuotas ? <Skeleton /> : <>
-                                            <h1>CUOTAS</h1>
-                                            <Table >
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-
-
-
-                                                    {cuotas.map((row) => (
-                                                        <StyledTableRow key={row.name}>
-                                                            <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
-
-                                                            <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
-
-                                                            <StyledTableCell component="th" scope="row">  {row.diferencia < 0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row" align="center">
-
-                                                                <CurrencyExchangeIcon
-                                                                    onClick={() => navigate('/legales/pagarcuota/' + row.id)}
-                                                                    style={{ marginRight: "10px", cursor: "pointer" }}
-                                                                />
-
-                                                                <Verpagos
-                                                                    id_cuota={row.id} />
-
-                                                              
-
-
-                                                            </StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
+                                {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
 
 
 
 
-                                                </TableBody>
-                                            </Table>
-                                        </>}
 
-                                    </TableContainer>
-                                </Paper>
+                            </Stack>
 
 
-                            </>
+                            {vista1 ? <>
+                                <MUIDataTable
+                                    title={"Lista de cuotas"}
+                                    data={cuotas}
+                                    columns={columns}
+                                    actions={[
+                                        {
+                                            icon: 'save',
+                                            tooltip: 'Save User',
+                                            onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                        }
+                                    ]}
+                                />
 
-                        </>}
-                    </> : <> Lote sin cuotas</>}
+
+                            </> : <>
+
+                                <>
+                                    <Paper
+                                        sx={{
+                                            cursor: 'pointer',
+                                            background: '#eeeeee',
+                                            color: '#bdbdbd',
+                                            border: '1px dashed #ccc',
+                                            width: "90%",
+                                            '&:hover': { border: '1px solid #ccc' },
+                                            border: "1px solid black",
+                                            margin: '75px',
+
+                                        }}
+                                    >
+
+                                        <TableContainer>
+                                            {!cuotas ? <Skeleton /> : <>
+                                                <h1>CUOTAS</h1>
+                                                <Table >
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
+
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
 
 
-                </div> : <div> Seleccione un Lote </div>}
+
+                                                        {cuotas.map((row) => (
+                                                            <StyledTableRow key={row.name}>
+                                                                <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
+
+                                                                <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
+
+                                                                <StyledTableCell component="th" scope="row">  {row.diferencia < 0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row" align="center">
+                                                                <ModalPagar
+                                                                id={row.id}
+                                                                id_lote={row.id_lote}
+                                                                
+                                                                vercuotas = {async (index) => {
+
+                                                                    const cuotas = await servicioCuotas.vercuotas4(index)
+                                                                    setCuotas(cuotas)
+                                                                    setIdlote(index)
+                                                                    setAct(true)
+                                                                    verief(index)
+                                                                    setOpen(false)
+                                                            
+                                                                }}/>
+                                                                   
+
+                                                                    <Verpagos
+                                                                        id_cuota={row.id} />
+
+
+
+
+                                                                </StyledTableCell>
+                                                            </StyledTableRow>
+                                                        ))}
+
+
+
+
+                                                    </TableBody>
+                                                </Table>
+                                            </>}
+
+                                        </TableContainer>
+                                    </Paper>
+
+
+                                </>
+
+                            </>}
+                        </> : <> Lote sin cuotas</>}
+
+
+                    </div> : <div> Seleccione un Lote </div>}
 
 
 
