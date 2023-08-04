@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   fecha: {
-    width: '33%',
+    width: '50%',
     textAlign: 'center',
   },
   detalle: {
     width: '33%',
     textAlign: 'right',
+    fontSize: 15,
   },
   tableContainer: {
     marginBottom: 20,
@@ -78,6 +79,13 @@ const styles = StyleSheet.create({
     width: '50%',
     marginTop: 20,
   },
+  pieDePagina: {
+    position: 'absolute',
+    bottom: 40,
+    left: 40,
+    right: 40,
+    textAlign: 'left',
+  },
 });
 
 const ComprobantePDF = ({ data }) => {
@@ -100,12 +108,6 @@ console.log(clients)
   setLoading(false);
 }
 
-  const comprobanteData = {
-    nombre: 'Juan Pérez',
-    direccion: 'Calle 123, Ciudad ABC',
-    fecha: '23-07',
-    // Agrega aquí los datos necesarios para tu comprobante
-  };
 
 
 
@@ -114,9 +116,9 @@ console.log(clients)
   return (
     <>
     {clients ? <>
-    <PDFViewer width="100%" height="500px">
+    <PDFViewer width="100%" height="1000px">
       <Document>
-        <Page size="A4" style={ 'width= 50%'}>
+        <Page size="A4">
           <View style={styles.container}>
             <View style={styles.logo}>
               <Image src={logo} style={styles.logoImage} />
@@ -125,9 +127,12 @@ console.log(clients)
               <Text>Fecha:{clients[0].fecha} </Text>
             </View>
             <View style={styles.detalle}>
-              <Text>Número de factura:{clients[0].id}</Text>
-              <Text>Total a pagar: ${clients[0].monto}</Text>
-              <Text>DNI: {clients[0].cuil_cuit}</Text>
+         
+              <Text  style={{ textAlign: 'left' }}>Número de factura:{clients[0].id}</Text>
+            
+              <Text style={{ textAlign: 'left' }}>Nombre:{clients[0].nombrecli}</Text>
+              <Text style={{ textAlign: 'left' }}>Total a pagar: ${clients[0].monto}</Text>
+              <Text style={{ textAlign: 'left' }}>DNI: {clients[0].cuil_cuit}</Text>
             </View>
           </View>
 
@@ -136,12 +141,11 @@ console.log(clients)
               <Text style={styles.columnHeader}>ID</Text>
               <Text style={styles.columnHeader}>Corresponde</Text>
               <Text style={styles.columnHeader}>Fech de pago</Text>
+              <Text style={styles.columnHeader}>Nro de cuota</Text>
               <Text style={styles.columnHeader}>Descripción</Text>
              
               <Text style={styles.columnHeader}>Precio unitario</Text>
-              <Text style={styles.columnHeader}>Descuento</Text>
-              <Text style={styles.columnHeader}>Subtotal</Text>
-              
+           
               <Text style={styles.columnHeader}>Total</Text>
               <Text style={styles.lastCell}>Observaciones</Text>
             </View>
@@ -150,19 +154,25 @@ console.log(clients)
               <View style={styles.tableRow}>
                 <Text style={styles.cell}>{clients[0].id}</Text>
                 <Text style={styles.cell}>{clients[0].mes}/{clients[0].anio}</Text>
+    
                 <Text style={styles.cell}>{clients[0].fecha}</Text>
+                <Text style={styles.cell}>{clients[0].nro_cuota}</Text>
                 <Text style={styles.cell}>Pago de cuota</Text>
              
                 <Text style={styles.cell}>${clients[0].monto}</Text>
-                <Text style={styles.cell}>${clients[0].descuento}</Text>
-                <Text style={styles.cell}>${clients[0].subtotal}</Text>
+               
                 
                 <Text style={styles.cell}>${clients[0].monto}</Text>
                 <Text style={styles.lastCell}>{clients[0].observaciones}</Text>
               </View>
        
           </View>
-
+          <View style={styles.pieDePagina}>
+                  <Text>Fideicomiso Santa Catalina</Text>
+                  <Text>Dirección a</Text>
+                  <Text>Teléfono </Text>
+                  {/* Agrega aquí los datos que desees mostrar */}
+                </View>
           <View style={styles.sello}>
             <Image src="ruta_del_sello.png" style={styles.selloImage} />
           </View>

@@ -67,10 +67,10 @@ export default function DetalleCliente() {
   return (
     <div> 
   { logueado ? <div> 
-    <BarraLAteral>
+
     
     <Comprobante/>
- </BarraLAteral>
+
  </div>   :<div></div> } </div>
   );
 }

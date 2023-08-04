@@ -112,7 +112,7 @@ export default function SelectTextFields(props) {
     
             <Paper variant="outlined">  <form >
           <h3>Pagar cuota(s)</h3>
-          {props.id}-{props.id_lote}
+       
           {cuotas ? <>
 
             <p style={{ color: '#2c387e' }}>    Valor de cuota:$ <b>{cuotas[0].Amortizacion
