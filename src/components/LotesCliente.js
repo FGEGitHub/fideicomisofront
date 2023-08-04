@@ -25,8 +25,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@material-ui/core";
@@ -34,7 +35,7 @@ import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -75,7 +76,7 @@ const LotesCliente = (props) => {
     const [deudaExigible, setDeudaExigible] = useState([''])
     const [detallePendiente, setDetallePendiente] = useState([''])
     const [idlote, setIdlote] = useState(null)
-
+    const [selectedValue, setSelectedValue] = useState("");
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
     const [vista1, setVista1] = useState(true)
@@ -115,7 +116,9 @@ const LotesCliente = (props) => {
     const Vista1 = () => {
         setVista1(!vista1);
     };
-
+    const handleChangeratio = (event) => {
+        setSelectedValue(event.target.value);
+    };
     const verief = async (index) => {
 
         const dde = await servicioCuotas.verief(index)
@@ -456,27 +459,27 @@ const LotesCliente = (props) => {
 </Grid>
 <br />
 <FormControl sx={{ m: 1, minWidth: 140 }}>
-  <InputLabel>Lote</InputLabel>
-  <Select
-    open={open}
-    onClose={handleClose}
-    onOpen={handleOpen}
-    label="Lote"
-  >
-    {lotes.map((item, index) => (
-      <div>
-        {item['zona'] === 'PIT' ? (
-          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
-            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Parcela {item['parcela']}
-          </MenuItem>
-        ) : (
-          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
-            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Lote {item['lote']}
-          </MenuItem>
-        )}
-      </div>
-    ))}
-  </Select>
+<div>
+                <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel>
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    value={selectedValue}
+                    onChange={handleChangeratio}
+                >
+                    {lotes.map((item, index) => (
+                        <FormControlLabel
+                            key={index}
+                            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
+                            control={<Radio />}
+                            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
+                            onClick={() => vercuotas(item.id)}
+                        />
+                    ))}
+                </RadioGroup>
+                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+            </div>
 
                 <h3>  {cuotas ? <>
                  
@@ -512,6 +515,7 @@ const LotesCliente = (props) => {
             <div>
 
                 {act ? <div>
+                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
                     <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
@@ -524,6 +528,7 @@ const LotesCliente = (props) => {
 
                     <BorrarCuotas
                         id={idlote} />
+                        </ButtonGroup>
 
                     {act2 ?
 

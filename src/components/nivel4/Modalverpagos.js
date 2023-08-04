@@ -60,15 +60,15 @@ console.log(pag)
 
   return (
 <>
-        <SearchIcon onClick={handleClickOpen} />
+       <button onClick={handleClickOpen} > Ver pagos</button>
      
-      <Dialog open={open} onClose={handleClose}  s  style={{width: '100%'}}>
+      <Dialog      open={open} onClose={handleClose}  style={{width: '100%',maxWidth:"maxWidth"}}>
         <DialogContent>
           <div>
         {pago? <>
         
         {pago.length>0 ? <>
-          <div class="factura">
+         
     <div class="empresa">
       <p>Pago de factura pago {pago ? <> numero: {pago[0].id} </>:<></> }</p>
       
@@ -107,7 +107,7 @@ console.log(pag)
     <div class="total">
       <p>Total a pagado: </p>
     </div>
-  </div>
+ 
 
        
          
