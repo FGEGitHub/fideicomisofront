@@ -62,82 +62,66 @@ export default function SelectTextFields(props) {
 
   return (
     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} noValidate autoComplete="off">
-      <Button variant="outlined" color="success" onClick={handleClickOpen}>
-        Pagar
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogContent>
-          <h3>Pagar cuota(s)</h3>
-          <Fragment>
-            <Toolbar />
-            <Paper variant="outlined">
-              
-                {cuotas ? (
-                  <>
-                    <p style={{ color: '#2c387e' }}>Valor de cuota: $<b>{cuotas[0].Amortizacion}</b></p>
-                    <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                      Cuantas Cuotas
-                    </InputLabel>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      id="name"
-                      label="Cantidad"
-                      name="cantidad"
-                      onChange={handleChange3}
-                      fullWidth
-                      variant="filled"
-                      type="number"
-                      inputProps={{
-                        pattern: "\\d*", // Expresión regular para aceptar solo dígitos (números enteros)
-                        inputMode: "numeric", // Para mostrar el teclado numérico en dispositivos móviles
-                      }}
-                    />
-                    {pago.cantidad ? <p style={{ color: 'green' }}>Total: $ {total}</p> : <></>}
-                  </>
-                ) : (
-                  <></>
-                )}
-                <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                  <TextField
-                    onChange={handleChange}
-                    name="fecha"
-                    id="date"
-                    label="Fecha de pago"
-                    type="date"
-                    defaultValue="2020-01"
-                    sx={{ width: 220 }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Box>
-                {eleccion.tipo === '1' ? (
-                  <>
-                    {pago.fecha && pago.cantidad ? (
-                      <div>
-                        <Box sx={{ m: 1, color: 'green', fontSize: '1rem' }}>
-                          <Button variant='contained' onClick={enviar}>
-                            {loading ? (
-                              <CircularProgress color="inherit" size={25} />
-                            ) : (
-                              "Pagar"
-                            )}
-                          </Button>
-                        </Box>
-                      </div>
-                    ) : (
-                      <div> </div>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-              
-            </Paper>
-          </Fragment>
-        </DialogContent>
-      </Dialog>
-    </Box>
+    <Button variant="outlined" color="success" onClick={handleClickOpen}>
+      Pagar
+    </Button>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogContent>
+        <h3>Pagar cuota(s)</h3>
+        <Fragment>
+          <Paper variant="outlined">
+            {cuotas.length > 0 ? (
+              <>
+                <p style={{ color: '#2c387e' }}>Valor de cuota: $<b>{cuotas[0].Amortizacion}</b></p>
+                <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  Cuantas Cuotas
+                </InputLabel>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Cantidad"
+                  name="cantidad"
+                  onChange={handleChange3}
+                  fullWidth
+                  variant="filled"
+                  type="number"
+                  inputProps={{
+                    pattern: "\\d*",
+                    inputMode: "numeric",
+                    min: "0",
+                  }}
+                />
+                {pago.cantidad ? <p style={{ color: 'green' }}>Total: $ {total}</p> : null}
+              </>
+            ) : null}
+            <TextField
+              onChange={handleChange}
+              name="fecha"
+              id="date"
+              label="Fecha de pago"
+              type="date"
+              defaultValue="2020-01"
+              sx={{ width: 220 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            {eleccion.tipo === '1' && pago.fecha && pago.cantidad ? (
+              <div>
+                <Button variant='contained' onClick={enviar}>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    "Pagar"
+                  )}
+                </Button>
+              </div>
+            ) : null}
+          </Paper>
+        </Fragment>
+      </DialogContent>
+    </Dialog>
+  </Box>
   );
 }

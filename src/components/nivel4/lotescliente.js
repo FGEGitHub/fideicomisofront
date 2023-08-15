@@ -457,7 +457,8 @@ const LotesCliente = (props) => {
                         />
                     ))}
                 </RadioGroup>
-                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+                {act ? <>
+                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b></>:<></> }
             </div>
 
 
