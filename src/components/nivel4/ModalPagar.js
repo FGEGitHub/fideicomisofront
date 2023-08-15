@@ -11,20 +11,14 @@ export default function SelectTextFields(props) {
   const [open, setOpen] = useState(false);
   const [eleccion, setEleccion] = useState({ tipo: '1' });
   const [loading, setLoading] = useState(false);
-  const [facturas, setFacturas] = useState([]);
-  const [pdfContent, setPdfContent] = useState('');
+
   const [total, setTotal] = useState(0);
   const [pago, setPagos] = useState({
     fecha: '03-04-2023',
     cuil_cuit: props.cuil_cuit,
     id: props.id
   });
-  const comprobanteData = {
-    nombre: 'Juan Pérez',
-    direccion: 'Calle 123, Ciudad ABC',
-    // Agrega aquí los datos necesarios para tu comprobante
-  };
-  const [seleccion, setSeleccion] = useState(['']);
+
   const [cuotas, setCuotas] = useState(['']);
 
   const handleChange = (e) => {
@@ -33,7 +27,7 @@ export default function SelectTextFields(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
-    traer();
+ traer();
   };
 
   const traer = async () => {
@@ -42,8 +36,9 @@ export default function SelectTextFields(props) {
       const user = JSON.parse(loggedUserJSON);
       setPagos({ ...pago, cuil_cuit: user.cuil_cuit });
     }
-
+    console.log(1)
     const cuot = await servicioCuotas.traercuotasdisponibles(props.id);
+    console.log(2)
     setCuotas(cuot);
   }
 
@@ -51,7 +46,7 @@ export default function SelectTextFields(props) {
     const rta = await servicioPagos.pagarnivel4(pago);
     console.log(rta);
     alert(rta[0]);
-    props.vercuotas(props.id_lote);
+  props.vercuotas(props.id_lote);
     setOpen(false);
   }
 
@@ -67,16 +62,16 @@ export default function SelectTextFields(props) {
 
   return (
     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} noValidate autoComplete="off">
-      <button variant="outlined" color="error" onClick={handleClickOpen}>
+      <Button variant="outlined" color="success" onClick={handleClickOpen}>
         Pagar
-      </button>
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <h3>Pagar cuota(s)</h3>
           <Fragment>
             <Toolbar />
             <Paper variant="outlined">
-              <form>
+              
                 {cuotas ? (
                   <>
                     <p style={{ color: '#2c387e' }}>Valor de cuota: $<b>{cuotas[0].Amortizacion}</b></p>
@@ -138,7 +133,7 @@ export default function SelectTextFields(props) {
                 ) : (
                   <></>
                 )}
-              </form>
+              
             </Paper>
           </Fragment>
         </DialogContent>

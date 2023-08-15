@@ -23,8 +23,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
@@ -89,27 +88,12 @@ const LotesCliente = (props) => {
         setIdlote(index)
         setAct(true)
         verief(index)
-        setOpen(false)
+
 
     };
     //////////servicioCuotas
 
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    ///
-    const handleChange = () => {
-        setAct(!act);
-    };
-    const handleChange2 = () => {
-        setAct2(!act2);
-    };
     const Vista1 = () => {
         setVista1(!vista1);
     };
@@ -120,7 +104,6 @@ const LotesCliente = (props) => {
         setDeudaExigible(dde[0])
         setDetallePendiente(dde[1])
         setAct2(true)
-        setOpen(false)
 
 
 
@@ -480,68 +463,10 @@ const LotesCliente = (props) => {
 
 
 
-            {/* 
-<FormControl sx={{ m: 1, minWidth: 140 }}>
-  <InputLabel>Lote</InputLabel>
-  <Select
-    open={open}
-    onClose={handleClose}
-    onOpen={handleOpen}
-    label="Lote"
-  >
-    {lotes.map((item, index) => (
-      <div>
-        {item['zona'] === 'PIT' ? (
-          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
-            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Parcela {item['parcela']}
-          </MenuItem>
-        ) : (
-          <MenuItem key={index} onClick={() => vercuotas(item['id'])}>
-            {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} - Lote {item['lote']}
-          </MenuItem>
-        )}
-      </div>
-    ))}
-  </Select>
-  
-                <h3>  {cuotas ? <>
-                 
-                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
-           {/*      <FormControlLabel
-                    control={
-                        <Switch checked={act2} onChange={handleChange2} />
-                    }
-                    label="IEF"
-                /> */}
-            {/* <FormControlLabel
-                    control={
-                        <Switch checked={act} onChange={handleChange} />
-                    }
-                    label="Cuotas"
-                />
-
-
-            </FormControl>
-  */}
 
 
 
 
-
-
-
-
-
-
-
-
-            {/*  {act ?
-            <div> 
-               <h2> Lote {lotes[0]['zona']} Fraccion {lotes[0]['fraccion']} - Manzana {lotes[0]['manzana']} -Parcela {lotes[0]['parcela']} </h2>
-
-            <BorrarCuotas 
-            id={lotes[0]['id']} />
-            </div>   : <div> </div>} */}
 
             <div>
 
@@ -575,99 +500,7 @@ const LotesCliente = (props) => {
                                 {cuotas !== '' ? <>
 
                                     <div>
-                                        {/*  <Box
-                                        sx={{
-                                            display: 'flex'
-                                        }}
-                                    >
-                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-
-                                            <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "40%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '75px',
-                                                    display: 'flex'
-
-                                                }}
-                                            >
-
-                                                <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell>Detalles de Deuda Exigible </TableCell>
-
-
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        <TableBody>
-                                                            {deudaExigible.map((row) => (
-                                                                <TableRow
-                                                                    key={row.name}
-                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                                >
-
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
-
-                                                                </TableRow>
-                                                            ))}
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </Paper>
-
-
-                                            <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "40%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '75px',
-                                                    display: 'flex'
-
-                                                }}
-                                            >
-
-                                                <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
-
-
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        <TableBody>
-                                                            {detallePendiente.map((row) => (
-                                                                <TableRow
-                                                                    key={row.name}
-                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                                >
-
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
-
-                                                                </TableRow>
-                                                            ))}
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </Paper>
-
-                                            <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                                        </Grid>
-                                    </Box> */}
+                                        
                                     </div>
 
 
@@ -773,7 +606,7 @@ const LotesCliente = (props) => {
                                                                     setIdlote(index)
                                                                     setAct(true)
                                                                     verief(index)
-                                                                    setOpen(false)
+                                                                    
                                                             
                                                                 }}/>
                                                                    
@@ -825,29 +658,3 @@ const LotesCliente = (props) => {
 
 }
 export default LotesCliente
-
-/* 
-ANTE POSIBLE PROBLEMA AGREGAR EN LA LINEA 233
-{
-    lotes.map((item, index) =>
-
-        <div>
-
-
-            <Button key={index} variant="contained" onClick={() => { vercuotas(item['id']) }}> Ver cuotas del lote {item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</Button>
-          
-            <Button key={index} variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + item['id']) }} >
-                Agregar cuotas al lote
-            </Button>
-
-            <BorrarCuotas
-                id={item['id']} />
-
-            <br /><br />
-            <Button  key={index} variant="contained" onClick={() => { verief(item['id']) }} >
-                Informe estado financiero
-            </Button>
-
-        </div>
-    )
-} */

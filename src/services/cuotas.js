@@ -172,8 +172,10 @@ const asignarICC = async (nuevoicc) => {
 
 
 const traercuotasdisponibles = async (id) => {
+    console.log('data')
     console.log(id)
     const { data } = await axios.get(baseUrl + 'traercuotasfinales/' + id, config)
+
     console.log(data)
 
     return data
