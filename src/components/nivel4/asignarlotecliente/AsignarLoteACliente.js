@@ -26,6 +26,7 @@ const AsignarLoteACliente = () => {
     parcela: "",
     lote: "",
   });
+  const [manzanas, setManzanas] = useState([]);
 
   const [lot, setLot] = useState();
 
@@ -36,9 +37,9 @@ const AsignarLoteACliente = () => {
 }, [])
 const traerLotes = async () => {
         
-  const clients = await servicioLotes.traerlotesleg()
+  const clients = await servicioLotes.traermanzanas()
   console.log(clients)
-  setLot(clients)
+  setManzanas(clients)
 
 }
 
@@ -69,38 +70,32 @@ const traerLotes = async () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <FormControl fullWidth>
-           <h5  variant="standard" htmlFor="uncontrolled-native">
-                          Fraccion
-                        </h5>
-            
-          
-                        <NativeSelect
-                            defaultValue={30}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'fraccion',
-                                id: 'uncontrolled-native',
-                               
-                            }}
-                            displayEmpty  
-                        >    {lot ? <>
-                          <option value={"ID/4"}>Elegir</option>
-                          {lot.map( (row)=>
-                            <option value={row.fraccion}>{row.fraccion}</option>
-                           )}
+           
+          <InputLabel variant="standard" htmlFor="uncontrolled-native">
+          Manzana
+                            </InputLabel>
+                            <NativeSelect
+                                defaultValue={30}
+                                onChange={handleChange}
+                                inputProps={{
+                                    name: 'manzana',
+                                    id: 'uncontrolled-native',
+
+                                }}
                             
-                       </>:<>Cargando</>}
-                        </NativeSelect> 
-             <TextField
-            
-            margin="dense"
-            id="name"
-            label="manzana"
-            name="manzana"
-            onChange={handleChange}
-            fullWidth
-            variant="standard"
-          />
+                            >  
+                             <option value={'1'}> Elegir</option>
+                 
+                    
+                 
+                    {manzanas.map((row) => (
+                                       
+                              <option value={row.manzana}> {row.manzana}</option>
+
+                    ))}
+                
+               
+                    </NativeSelect>
            
                <TextField
             

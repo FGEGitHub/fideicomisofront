@@ -447,6 +447,7 @@ const LotesCliente = (props) => {
                     value={selectedValue}
                     onChange={handleChangeratio}
                 >
+                    {lotes ? <>
                     {lotes.map((item, index) => (
                         <FormControlLabel
                             key={index}
@@ -455,7 +456,7 @@ const LotesCliente = (props) => {
                             label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
                             onClick={() => vercuotas(item.id)}
                         />
-                    ))}
+                    ))}</>:<></>}
                 </RadioGroup>
                 {act ? <>
                 <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b></>:<></> }
