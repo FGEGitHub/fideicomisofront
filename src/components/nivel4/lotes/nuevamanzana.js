@@ -9,8 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {  useState } from "react";
 import servicioLotes from '../../../services/lotes'
-import NativeSelect from '@mui/material/NativeSelect';
-import InputLabel from '@mui/material/InputLabel';
+import AppleIcon from '@mui/icons-material/Apple';
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import { Paper } from '@mui/material';
 
@@ -21,34 +20,18 @@ export default function ClienteNuevo(props) {
    
   const [open, setOpen] = React.useState(false);
   const [form, setForm] = useState({zona:"Legales",tipo_dni:"DNI"})
-  const [manzanas, setManzanas] = useState([])
   const handleChange = (e) =>{
     setForm({  ...form, [e.target.name]: e.target.value }) 
  }
 
   const handleClickOpen = () => {
-    traer()
     setOpen(true);
   };
-  
- const traer = async () => {
-   
-   
-  const turnos = await servicioLotes.traermanzanas()
-  console.log(turnos)
-  setManzanas(turnos)
-
- 
-
- }
-
- 
-
   const handleDeterminar = async (event) => {
     event.preventDefault();
     try {
 
-      const respuestas =await servicioLotes.nuevolote(form)
+      const respuestas =await servicioLotes.nuevamanzana(form)
     alert(respuestas)
      
      } catch (error) {
@@ -59,7 +42,7 @@ export default function ClienteNuevo(props) {
      }
      props.getClients()
 
-    setOpen(false);
+     setOpen(false);
   };
   
   const handleClose = () => {
@@ -72,7 +55,7 @@ export default function ClienteNuevo(props) {
 
 
       <Button variant="outlined" color='success' onClick={handleClickOpen}>
-       Cargar un nuevo lote <AddToPhotosIcon/>
+       Cargar nueva manzana  <AppleIcon/>
      
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -110,49 +93,22 @@ export default function ClienteNuevo(props) {
                             <option  value={'ID/6'}>ID/6</option>
                          
                         </NativeSelect>  */}
-
       
-          <InputLabel variant="standard" htmlFor="uncontrolled-native">
-          Manzana
-                            </InputLabel>
-                            <NativeSelect
-                                defaultValue={30}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: 'manzana',
-                                    id: 'uncontrolled-native',
-
-                                }}
-                            
-                            >  
-                             <option value={'1'}> Elegir</option>
-                 
-                    
-                 
-                    {manzanas.map((row) => (
-                                       
-                              <option value={row.id}> {row.manzana}</option>
-
-                    ))}
-                
-               
-                    </NativeSelect>
-                  
-                        <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="parcela"
-            name="parcela"
+            label="manzana"
+            name="manzana"
             onChange={handleChange}
             fullWidth
             variant="standard"
-            maxRows="13"
           />
-                                   
-             <b>Podemos agregar datos como superficie, localizacion, etc</b> 
+          
+            
+
           <DialogActions>
-          {form.manzana && form.parcela ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
+          {form.manzana ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
           <Button  variant="outlined" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}>Cancelar</Button>
          
         </DialogActions>

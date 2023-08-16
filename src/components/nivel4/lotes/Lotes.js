@@ -9,7 +9,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import Nuevo from './nuevo'
-
+import Nuevamanzana from './nuevamanzana'
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -103,6 +103,7 @@ const Lotes = () => {
     // renderiza la data table
     return (
         <>
+        <Nuevamanzana/>
             <Nuevo
                 getClients={async () => {
 

@@ -49,6 +49,17 @@ const Lotes = () => {
         );
       }
       //
+      
+      function CutomButtonsRendervencida(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+          {clients[dataIndex].cuil_cuit ? <><p style={{ color: 'crimson' }} >Si</p></>:<><p style={{ color: 'crimson' }} >No</p></>}
+         
+          
+          </>
+        );
+      }
 
       function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
         return (
@@ -105,12 +116,24 @@ const Lotes = () => {
             }
         
         },   
-       
+        {
+            name: "Cuota del mes vencida?",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                  CutomButtonsRendervencida(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },
     
   
         {
-            name: "observaciones",
-            label:"Observaciones",
+            name: "cantidad_falt",
+            label:"Cuotas faltantes",
            
         },
         {

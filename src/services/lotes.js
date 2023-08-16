@@ -108,6 +108,17 @@ const lotesCliente2= async  (cuil_cuit) => {
        return data
    }  
 
+   
+   const traermanzanas= async  () => {
+
+     let {data}  = await axios.get(baseUrl+'traermanzanas/',config)
+    
+    
+    
+     return data
+ }  
+
+
    const calcular= async  (datos) => {
    console.log(datos)
     const {data } = await axios.post(baseUrl+'calcularvalor',datos,config)
@@ -122,4 +133,11 @@ const nuevolote= async  (datos) => {
      console.log(data)
      return data 
  }  
-export default {lista,lista2, desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+ const nuevamanzana= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'nuevamanzana',datos,config)
+     console.log(data)
+     return data 
+ }  
+ 
+export default {lista,lista2,nuevamanzana, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
