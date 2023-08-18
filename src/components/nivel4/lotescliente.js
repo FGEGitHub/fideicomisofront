@@ -569,7 +569,7 @@ const LotesCliente = (props) => {
 
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
-                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGADO</b></TableCell>
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
                                                         </TableRow>
                                                     </TableHead>
@@ -586,7 +586,7 @@ const LotesCliente = (props) => {
                                                                 <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
                                                                 <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
 
-                                                                <StyledTableCell component="th" scope="row">  {row.diferencia < 0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row">  {row.pago > 0 ? <> <p style={{ color: 'green' }}>Si </p></> : <><p style={{ color: 'crimson' }}>No </p></>} </StyledTableCell>
                                                                 <StyledTableCell component="th" scope="row" align="center">
                                                                 <ModalPagar
                                                                 id={row.id}
