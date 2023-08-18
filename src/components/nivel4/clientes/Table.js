@@ -9,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
+import { Button } from "@mui/material";
 
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -75,14 +76,11 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
-            <EditIcon
-             onClick={() =>  navigate('/legales/modificarcliente/'+clients[dataIndex].cuil_cuit)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            />
-             <SearchIcon
+          
+            <Button ><SearchIcon
              onClick={() =>  navigate('/legales/detallecliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
-            />
+            /></Button> 
            
           </>
         );
@@ -137,7 +135,7 @@ const Lotes = () => {
            
         },
         {
-            name: "Actions",
+            name: "Ver",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(

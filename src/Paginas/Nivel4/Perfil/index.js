@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 
 import Mantenimiento from '../../../Assets/mantenimiento.jpeg';
-
+import Perfil from '../../../components/nivel4/Modificarperfil/ModificarDatosPers'
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel4/Menuizq4'
 
@@ -68,8 +68,8 @@ export default function DetalleCliente() {
     <div> 
   { logueado ? <div> 
     <BarraLAteral>
-    
-    <img style={islogo} src={Mantenimiento} alt="logo" />
+    <Perfil/>
+   {/*  <img style={islogo} src={Mantenimiento} alt="logo" /> */}
  </BarraLAteral>
  </div>   :<div></div> } </div>
   );
