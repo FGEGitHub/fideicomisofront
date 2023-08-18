@@ -87,7 +87,7 @@ const LotesCliente = (props) => {
         setCuotas(cuotas)
         setIdlote(index)
         setAct(true)
-        verief(index)
+   
 
 
     };
@@ -98,16 +98,7 @@ const LotesCliente = (props) => {
         setVista1(!vista1);
     };
 
-    const verief = async (index) => {
-
-        const dde = await servicioCuotas.verief(index)
-        setDeudaExigible(dde[0])
-        setDetallePendiente(dde[1])
-        setAct2(true)
-
-
-
-    };
+ 
 
     const traer = async () => {
 
@@ -552,7 +543,7 @@ const LotesCliente = (props) => {
                             </> : <>
 
                                 <>
-                                   {/*  <Paper
+                                    <Paper
                                         sx={{
                                             cursor: 'pointer',
                                             background: '#eeeeee',
@@ -585,7 +576,7 @@ const LotesCliente = (props) => {
                                                     <TableBody>
 
 
-
+                                                
                                                         {cuotas.map((row) => (
                                                             <StyledTableRow key={row.name}>
                                                                 <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
@@ -607,7 +598,7 @@ const LotesCliente = (props) => {
                                                                     setCuotas(cuotas)
                                                                     setIdlote(index)
                                                                     setAct(true)
-                                                                    verief(index)
+                                                         
                                                                     
                                                             
                                                                 }}/>
@@ -632,7 +623,7 @@ const LotesCliente = (props) => {
 
                                         </TableContainer>
                                     </Paper>
- */}
+
 
                                 </>
 
