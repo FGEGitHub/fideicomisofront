@@ -144,22 +144,22 @@ const ventaLoteleg = async  (datos) => {
    
 } 
 const cliente= async  (cuil_cuit) => {
- console.log(config)
+
     const {data } = await axios.get(baseURL+'detalle/'+cuil_cuit,config)
     
     return data 
 } 
 
 const determinarIngreso= async  (datos) => {
-   console.log(datos)
+  
   const {data } = await axios.post(baseURL+'agregaringreso2/',datos,config)
-    console.log(data)
+
     alert('Guardado con exito')
     return data 
 }
 
 const traerLejagos= async  (cuil_cuit) => {
-   console.log(cuil_cuit)
+  
     const {data } = await axios.get(baseURL+'legajos/'+cuil_cuit,config)
     
     return data 
@@ -167,20 +167,20 @@ const traerLejagos= async  (cuil_cuit) => {
 
  
   const habilitar= async  (etc) => {
-     console.log(etc)
+   
       const {data } = await axios.post(baseURL+'habilitar/',etc,config)
      
       return data 
   }
   const deshabilitar= async  (etc) => {
-     console.log(etc)
+    
       const {data } = await axios.post(baseURL+'deshabilitar/',etc,config)
      
       return data 
   }
 
   const modificarCuil= async  (etc) => {
-    console.log(etc)
+ 
      const {data } = await axios.post(baseURL+'modificarcuil/',etc,config)
     
      return data 
@@ -203,7 +203,7 @@ const traerLejagos= async  (cuil_cuit) => {
  
 
  const clientehabilitado= async  (cuil_cuit) => {
- console.log(config)
+
     const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
   
     return data 
@@ -212,7 +212,7 @@ const traerLejagos= async  (cuil_cuit) => {
 const infocantidad= async  (cuil_cuit) => {
  
     const {data } = await axios.get(baseURL+'infocantidad/',config)
-    console.log(data)
+
     if(data === 'error token'){
         //  alert('Debe loguearse nuevamente')
          window.localStorage.removeItem('loggedNoteAppUser')
@@ -224,7 +224,7 @@ const infocantidad= async  (cuil_cuit) => {
     return data 
 } 
 const enviarmailprueba= async  (etc) => {
- console.log(etc)
+
     const {data } = await axios.post(baseURL+'enviarmailprueba/',etc,config)
   
     return data 

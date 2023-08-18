@@ -552,7 +552,7 @@ const LotesCliente = (props) => {
                             </> : <>
 
                                 <>
-                                    <Paper
+                                   {/*  <Paper
                                         sx={{
                                             cursor: 'pointer',
                                             background: '#eeeeee',
@@ -632,7 +632,7 @@ const LotesCliente = (props) => {
 
                                         </TableContainer>
                                     </Paper>
-
+ */}
 
                                 </>
 

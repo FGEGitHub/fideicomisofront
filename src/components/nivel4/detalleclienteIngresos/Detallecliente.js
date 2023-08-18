@@ -54,8 +54,8 @@ const DetalleCliente = () => {
           '&:hover': { border: '1px solid #ccc' },
         }}
       >
-             <InfoCliente
-                 cuil_cuit={cuil_cuit} />
+           {/* < InfoCliente
+                 cuil_cuit={cuil_cuit} />*/}  
                  </Paper>
              </div>
              <Paper
