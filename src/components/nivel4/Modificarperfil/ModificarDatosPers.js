@@ -17,7 +17,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import KeyIcon from '@mui/icons-material/Key';
 import { Paper } from '@mui/material';
-
+import logo from "../../../Assets/perfil.png";
 const ModificacionC = (props) => {
   const navigate = useNavigate();
   const [cliente, setCliente] = useState()
@@ -101,7 +101,11 @@ const ModificacionC = (props) => {
     }
 
   };
-
+  const islogo = {
+    width: "18%",    
+    float: 'right', // Hace que la imagen se ubique a la derecha
+    marginRight: '10px',              
+    };
   return (<>
     {cliente ? <div>
 
@@ -128,12 +132,14 @@ const ModificacionC = (props) => {
 
                 <Container>
                   <Box>
+                  <img style={islogo} src={logo} alt="logo" />
+                  <Box>
                     <h5>
                       Modificacion de datos personales
                     </h5>
 
                   </Box>
-
+              
                   <Box>
                     <TextField
                       label="Cuil o nombre de usaurio"
@@ -171,6 +177,7 @@ const ModificacionC = (props) => {
                         )
                       }}
                     />
+
                   </Box>
 
 
@@ -214,8 +221,7 @@ const ModificacionC = (props) => {
                     />
                   </Box>
                 
-
-
+              
                   <Box>
                     <columns lg={8}>
                       {editMode ? (
@@ -241,6 +247,9 @@ const ModificacionC = (props) => {
                         </div>
                       )}
                     </columns>
+                  </Box>
+                 
+                
                   </Box>
                 </Container>
 

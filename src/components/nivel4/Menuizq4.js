@@ -16,7 +16,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
 import CabinIcon from '@mui/icons-material/Cabin';
-import Navbar from '../Navbar'
+import Navbar from './Navbar'
 
 
 const drawerWidth = 240;
