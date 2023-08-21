@@ -149,7 +149,18 @@ export default function ClienteNuevo(props) {
             variant="standard"
             maxRows="13"
           />
-                                   
+
+                                        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="adrema"
+            name="adrema"
+            onChange={handleChange}
+            fullWidth
+            variant="standard"
+            maxRows="13"
+          />             
              <b>Podemos agregar datos como superficie, localizacion, etc</b> 
           <DialogActions>
           {form.manzana && form.parcela ? <><Button variant="contained" color="primary"  type="submit">Crear</Button></> : <><h6  style={{color: "red"}} >Completar todos los campos</h6></> } 
