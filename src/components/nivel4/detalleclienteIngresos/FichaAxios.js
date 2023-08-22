@@ -20,7 +20,7 @@ const FichaAxios = (props) => {
   const navigate = useNavigate();
     const [cliente, setCliente] = useState([])
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-  const [address, setAddress] = useState(null);
+  const [modificaciones, setModificaciones] = useState({});
   const [editMode, setEditMode] = useState(false);
   function submitFormHandler(event) {
     event.preventDefault();
@@ -36,27 +36,39 @@ const FichaAxios = (props) => {
    
       const  cliente = await servicioCliente.cliente(props.cuil_cuit)
       
+      setModificaciones({
+        id: cliente[0].id,
+       Nombre: cliente[0].Nombre,
+        telefono: cliente[0].telefono,
+        cuil_cuit: cliente[0].cuil_cuit,
+        email: cliente[0].email,
+      }
+      )
+   
       setCliente(cliente)
-  
-     
-  
-      ;
+
     };  
  
-    const enviarMail = async() => {
+    const handleChange = (e) =>{
+      setModificaciones({  ...modificaciones, [e.target.name]: e.target.value })
+      console.log(modificaciones)
+    }
+    const handleDeterminar = async (event) => {
+
+      try {
+  
+        const rta =await servicioCliente.modificarclientelegales(
+       modificaciones
+       )
+       alert(rta)
        
-     const etc = {
-        cuil_cuit:props.cuil_cuit
-      }
-       await servicioCliente.enviarmailprueba(etc)
-      
-      setCliente(cliente)
-  
-     
-  
-      ;
-    }; 
-    
+       } catch (error) {
+         console.error(error);
+         console.log('Error algo sucedio')
+       
+       }
+
+    };
 
   return (<>    
     
@@ -80,12 +92,14 @@ const FichaAxios = (props) => {
               <TextField
                   label="CUIL"
                   id="cuil"
+                  name="cuil_cuit"
                  // defaultValue="CUIL"
-                  value= {client.cuil_cuit}
+                 defaultValue= {client.cuil_cuit}
                   variant="filled"
                   sx={{ margin: "10px" }}
+                  onChange={handleChange}
                   InputProps={{
-                    readOnly: !editMode,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
                         <AccountCircle />
@@ -97,11 +111,13 @@ const FichaAxios = (props) => {
                 <TextField
                   label="Nombre"
                   id="Nombre"
-                  value={client.Nombre}
+                  name="Nombre"
+                  onChange={handleChange}
+                  defaultValue={client.Nombre}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: true,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
                         <AccountCircle />
@@ -118,11 +134,13 @@ const FichaAxios = (props) => {
                 <TextField
                   label="Email"
                   id="email"
-                  value={client.email}
+                  onChange={handleChange}
+                  name="email"
+                  defaultValue={client.email}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: true,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
                         <EmailIcon />
@@ -131,32 +149,16 @@ const FichaAxios = (props) => {
                   }}
                 />
 
-                <TextField
-                  label="Localidad"
-                  id="Localidad"
-                  value={client.provincia}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeWorkIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Box>
-              <Box>
-                <TextField
+<TextField
                   label="Numero de Telefono"
                   id="numero de telefono"
-                  defaultValue=""
-                  value={client.telefono}
+                  name="telefono"
+                  onChange={handleChange}
+                  defaultValue={client.telefono}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: !editMode,
+                    readOnly: false,
                     startAdornment: (
                       <InputAdornment position="start">
                         <LocalPhoneIcon />
@@ -164,63 +166,9 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
-
-                <TextField
-                  label="ID para registro"
-                  id="ID para registro"
-                  defaultValue=""
-                  value={client.id}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
               </Box>
-              <Box>
-                <TextField
-                  label="Razon"
-                  id="Razon"
-                  defaultValue=""
-                  value={client.razon}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-                <TextField
-                  label="Ingresos Declarados"
-                  id="dirección"
-                  defaultValue=""
-                  value={client.ingresos}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
-              </Box>
+            
+             
               
 
               <Box>
@@ -237,7 +185,9 @@ const FichaAxios = (props) => {
                       <Button variant="contained">Enviar</Button>
                     </div>
                   ) : (
+                   
                     <div className="profile-edit-button">
+                       <Button variant="contained" onClick={handleDeterminar}>Modificar </Button>
                       <Button
                         variant="outlined"
                         onClick={() => navigate('/legales/legajoscliente/'+props.cuil_cuit)}

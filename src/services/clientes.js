@@ -158,6 +158,15 @@ const determinarIngreso= async  (datos) => {
     return data 
 }
 
+const modificarclientelegales= async  (datos) => {
+  
+    const {data } = await axios.post(baseURL+'modificarclientelegales/',datos,config)
+  
+
+      return data 
+  }
+
+
 const traerLejagos= async  (cuil_cuit) => {
   
     const {data } = await axios.get(baseURL+'legajos/'+cuil_cuit,config)
@@ -230,6 +239,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {borrarcbu,ventaLoteleg,crear2,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 
