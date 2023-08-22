@@ -127,6 +127,11 @@ const Lotes = () => {
             }
         
         },
+        {
+          name: "cantidad_venc",
+          label:"Cuotas vencidas",
+         
+      },
     
   
         {

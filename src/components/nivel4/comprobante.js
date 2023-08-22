@@ -128,7 +128,7 @@ console.log(clients)
             </View>
             <View style={styles.detalle}>
          
-              <Text  style={{ textAlign: 'left' }}>Número de factura:{clients[0].id}</Text>
+              <Text  style={{ textAlign: 'left' }}>Número de comprobante:{clients[0].id}</Text>
             
               <Text style={{ textAlign: 'left' }}>Nombre:{clients[0].nombrecli}</Text>
               <Text style={{ textAlign: 'left' }}>Total a pagar: ${clients[0].monto}</Text>
@@ -140,7 +140,7 @@ console.log(clients)
             <View style={styles.tableHeader}>
               <Text style={styles.columnHeader}>ID</Text>
               <Text style={styles.columnHeader}>Corresponde</Text>
-              <Text style={styles.columnHeader}>Fech de pago</Text>
+              <Text style={styles.columnHeader}>Fecha de pago</Text>
               <Text style={styles.columnHeader}>Nro de cuota</Text>
               <Text style={styles.columnHeader}>Descripción</Text>
              
