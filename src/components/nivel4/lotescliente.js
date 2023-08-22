@@ -33,6 +33,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Verpagos from './Modalverpagos';
 import ModalPagar from'./ModalPagar'
+import ModalBorrarPago from'./borrarpago'
 import { Box } from "@material-ui/core";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 //////
@@ -673,6 +674,7 @@ const LotesCliente = (props) => {
                                                     <TableHead>
                                                         <TableRow>
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
+                                                            <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>NRO CUOTA</b></TableCell>
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
                                                             <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
 
@@ -689,6 +691,7 @@ const LotesCliente = (props) => {
                                                         {cuotas.map((row) => (
                                                             <StyledTableRow key={row.name}>
                                                                 <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
+                                                                <StyledTableCell component="th" scope="row">{row.nro_cuota} </StyledTableCell>
                                                                 <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
                                                                 <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
 
@@ -697,7 +700,12 @@ const LotesCliente = (props) => {
 
                                                                 <StyledTableCell component="th" scope="row">  {row.pago > 0 ? <> <p style={{ color: 'green' }}>Si </p></> : <><p style={{ color: 'crimson' }}>No </p></>} </StyledTableCell>
                                                                 <StyledTableCell component="th" scope="row" align="left">
-                                                                {row.pago > 0 ? <> </> : <><ModalPagar
+                                                                {row.pago > 0 ? <> <><Verpagos
+                                                                        id_cuota={row.id} /> </>
+                                                                        <ModalBorrarPago
+                                                                         id_cuota={row.id}
+                                                                       />
+                                                                        </> : <><ModalPagar
                                                                 id={row.id}
                                                                 id_lote={row.id_lote}
                                                                 
@@ -714,8 +722,7 @@ const LotesCliente = (props) => {
                                                                 
                                                                    
 
-                                                                    <Verpagos
-                                                                        id_cuota={row.id} />
+                                                                   
 
 
 

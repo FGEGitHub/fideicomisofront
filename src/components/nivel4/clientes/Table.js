@@ -61,7 +61,16 @@ const Lotes = () => {
           </>
         );
       }
-
+      function pagadastotales(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+          {clients[dataIndex].pagadas}/{clients[dataIndex].totales}
+         
+          
+          </>
+        );
+      }
       function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
         return (
           <>
@@ -132,7 +141,19 @@ const Lotes = () => {
           label:"Cuotas vencidas",
          
       },
+      {
+        name: "Pagadas/Totales",
+        options: {
+            customBodyRenderLite: (dataIndex, rowIndex) =>
+              pagadastotales(
+                    dataIndex,
+                    rowIndex,
+                   // overbookingData,
+                   // handleEditOpen
+                )
+        }
     
+    },
   
         {
             name: "cantidad_falt",

@@ -133,6 +133,17 @@ const borrarcuota = async (id) => {
     return rta.data
 }
 
+
+const borrarpago = async (id) => {
+
+    console.log(id)
+    const { data } = await axios.post(baseUrl + 'borrarpago/', id, config)
+ 
+
+
+    return data
+}
+
 const borrarcuotas = async (id) => {
 
     console.log(id)
@@ -239,4 +250,4 @@ const asignarloteacuotas = async (datos) => {
 
 
 
-export default {vercuotas4, asignarloteacuotas,vercuotas2,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
+export default {vercuotas4, asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
