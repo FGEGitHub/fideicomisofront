@@ -1,6 +1,7 @@
 import React from 'react';
 import { PDFViewer, Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import logo from "../../Assets/marcas.png.png";
+import Firma from "../../Assets/firma.jpeg";
 import servicioPagos from '../../services/pagos'
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   selloImage: {
     width: '50%',
-    marginTop: 20,
+    
   },
   pieDePagina: {
     position: 'absolute',
@@ -89,7 +90,15 @@ const styles = StyleSheet.create({
     right: 40,
     textAlign: 'left',
   },
+  pieDePaginaSello: {
+    position: 'absolute',
+    bottom: 40,
+    right: 30,
+    left: 450,
+    textAlign: 'right',
+  }
 });
+
 
 const ComprobantePDF = ({ data }) => {
   let params = useParams()
@@ -176,8 +185,9 @@ console.log(clients)
                   <Text>Teléfono </Text>
                   {/* Agrega aquí los datos que desees mostrar */}
                 </View>
-          <View style={styles.sello}>
-            <Image src="ruta_del_sello.png" style={styles.selloImage} />
+           
+          <View style={styles.pieDePaginaSello}>
+            <Image src={Firma}  style={styles.selloImage} />
           </View>
         </Page>
       </Document>
