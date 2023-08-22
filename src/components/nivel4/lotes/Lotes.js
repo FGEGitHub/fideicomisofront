@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import Nuevo from './nuevo'
 import Nuevamanzana from './nuevamanzana'
+import Modificar from "./modificar"
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -22,15 +23,25 @@ const Lotes = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
+    function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {    console.log(clients[0][dataIndex].id)
         return (
+        
             <>
-                <EditIcon
-                    onClick={() => onClick(data[dataIndex].id, dataIndex)}
-                    style={{ marginRight: "10px", cursor: "pointer" }}
-                />
-                <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/legales/detallecliente/' + clients[dataIndex].cuil_cuit)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                <Modificar 
+                id = {clients[0][dataIndex].id}
+                fraccion = {clients[0][dataIndex].fraccion}
+                manzana = {clients[0][dataIndex].manzana}
+                parcela = {clients[0][dataIndex].parcela}
+                adrema = {clients[0][dataIndex].adrema}
+                getClients = {async () => {
+
+                    const clients = await servicioLotes.lista2({
+            
+                    })
+            
+                    setClients(clients)
+                    setLoading(false);
+                }}
                 />
             </>
         );
@@ -57,8 +68,8 @@ const Lotes = () => {
             label: "Zona",
         },
         {
-            name: "fraccion",
-            label: "Fraccion",
+            name: "adrema",
+            label: "adrema",
 
 
         },
@@ -85,8 +96,8 @@ const Lotes = () => {
             label: "cuil_cuit",
         },
 
-        /*   {
-              name: "Actions",
+  {
+              name: "Modificar",
               options: {
                   customBodyRenderLite: (dataIndex, rowIndex) =>
                       CutomButtonsRenderer(
@@ -97,8 +108,7 @@ const Lotes = () => {
                       )
               }
           
-          },   */
-
+          },   
     ];
     // renderiza la data table
     return (
