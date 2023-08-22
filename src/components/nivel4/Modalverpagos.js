@@ -60,7 +60,7 @@ console.log(pag)
 
   return (
 <>
-       <button onClick={handleClickOpen} > Ver pagos</button>
+       <button onClick={handleClickOpen} > Ver pago</button>
      
       <Dialog      open={open} onClose={handleClose}  style={{width: '100%',maxWidth:"maxWidth"}}>
         <DialogContent>

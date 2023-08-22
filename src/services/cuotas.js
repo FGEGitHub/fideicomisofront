@@ -98,6 +98,24 @@ const verief = async (id) => {
 
     return data.data
 }
+
+////ief legales
+const verief2 = async (id) => {
+    console.log(id)
+    const data = await axios.get(baseUrl + 'ief2/' + id, config)
+    if(data.data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
+    console.log(data.data)
+
+
+
+    return data.data
+}
+
 const cuotasDeUnLote = async (id) => {
 
     console.log(id)
@@ -145,7 +163,6 @@ const modificarmontotal = async (estadoCuotas) => {
 
     console.log(estadoCuotas)
     const { data } = await axios.post(baseUrl + 'modificarmontotal/', estadoCuotas, config)
-
 
     return data
 }
@@ -222,4 +239,4 @@ const asignarloteacuotas = async (datos) => {
 
 
 
-export default {vercuotas4, asignarloteacuotas,vercuotas2,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief, borrarcuotas };
+export default {vercuotas4, asignarloteacuotas,vercuotas2,modificarmontotal,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };

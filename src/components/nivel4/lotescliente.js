@@ -33,6 +33,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Verpagos from './Modalverpagos';
 import ModalPagar from'./ModalPagar'
+import { Box } from "@material-ui/core";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -87,12 +89,26 @@ const LotesCliente = (props) => {
         setCuotas(cuotas)
         setIdlote(index)
         setAct(true)
+        verief(index)
    
 
 
     };
     //////////servicioCuotas
+    const handleChange2 = () => {
+        setAct2(!act2);
+    };
+    const verief = async (index) => {
 
+        const dde = await servicioCuotas.verief2(index)
+        setDeudaExigible(dde[0])
+        setDetallePendiente(dde[1])
+        setAct2(true)
+        setOpen(false)
+
+
+
+    };
 
     const Vista1 = () => {
         setVista1(!vista1);
@@ -543,6 +559,99 @@ const LotesCliente = (props) => {
                             </> : <>
 
                                 <>
+                                <Box
+                                        sx={{
+                                            display: 'flex'
+                                        }}
+                                    >
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+
+                                            <Paper
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "40%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '75px',
+                                                    display: 'flex'
+
+                                                }}
+                                            >
+
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Detalles de Deuda Exigible </TableCell>
+
+
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {deudaExigible.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
+
+                                                                    <TableCell align="left">{row.datoa}</TableCell>
+                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+
+                                            <Paper
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "40%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '75px',
+                                                    display: 'flex'
+
+                                                }}
+                                            >
+
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
+
+
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {detallePendiente.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
+
+                                                                    <TableCell align="left">{row.datoa}</TableCell>
+                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+                                           {/*  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab> */}
+                                        </Grid>
+                                    </Box>
                                     <Paper
                                         sx={{
                                             cursor: 'pointer',
@@ -587,8 +696,8 @@ const LotesCliente = (props) => {
                                                                 <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
 
                                                                 <StyledTableCell component="th" scope="row">  {row.pago > 0 ? <> <p style={{ color: 'green' }}>Si </p></> : <><p style={{ color: 'crimson' }}>No </p></>} </StyledTableCell>
-                                                                <StyledTableCell component="th" scope="row" align="center">
-                                                                <ModalPagar
+                                                                <StyledTableCell component="th" scope="row" align="left">
+                                                                {row.pago > 0 ? <> </> : <><ModalPagar
                                                                 id={row.id}
                                                                 id_lote={row.id_lote}
                                                                 
@@ -601,7 +710,8 @@ const LotesCliente = (props) => {
                                                          
                                                                     
                                                             
-                                                                }}/>
+                                                                }}/></>}
+                                                                
                                                                    
 
                                                                     <Verpagos
