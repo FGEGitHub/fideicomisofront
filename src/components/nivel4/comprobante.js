@@ -17,9 +17,12 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     marginBottom: 20,
     paddingBottom: 10,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 10,
   },
   logo: {
-    width: '33%',
+    width: '30%',
     paddingRight: 10,
   },
   logoImage: {
@@ -30,9 +33,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   detalle: {
-    width: '33%',
+    width: '30%',
     textAlign: 'right',
-    fontSize: 15,
+    fontSize: 12,
   },
   tableContainer: {
     marginBottom: 20,
@@ -124,11 +127,11 @@ console.log(clients)
               <Image src={logo} style={styles.logoImage} />
             </View>
             <View style={styles.fecha}>
-              <Text>Fecha:{clients[0].fecha} </Text>
+             {/*  <Text>Fecha:{clients[0].fecha} </Text> */}
             </View>
             <View style={styles.detalle}>
-         
-              <Text  style={{ textAlign: 'left' }}>Número de comprobante:{clients[0].id}</Text>
+              
+              <Text  style={{ textAlign: 'left' }}>Nro comprobante:{clients[0].id}</Text>
             
               <Text style={{ textAlign: 'left' }}>Nombre:{clients[0].nombrecli}</Text>
               <Text style={{ textAlign: 'left' }}>Total a pagar: ${clients[0].monto}</Text>
