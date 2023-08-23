@@ -55,7 +55,7 @@ const Lotes = () => {
         return (
           <>
           
-          {clients[dataIndex].cuil_cuit ? <><p style={{ color: 'crimson' }} >Si</p></>:<><p style={{ color: 'crimson' }} >No</p></>}
+          {!clients[dataIndex].bandmesconcurr ? <><p style={{ color: 'crimson' }} >Si</p></>:<><p style={{ color: 'green' }} >No</p></>}
          
           
           </>
