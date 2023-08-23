@@ -209,7 +209,15 @@ const traercuotasdisponibles = async (id) => {
     return data
 }
 
+const traercuotasdisponiblesporlote = async (id) => {
+    console.log('data')
+    console.log(id)
+    const { data } = await axios.get(baseUrl + 'traercuotasdisponiblesporlote/' + id, config)
 
+    console.log(data)
+
+    return data
+}
 const listavarios = async (cuil_cuit) => {
    
     const { data } = await axios.get(baseUrl + 'listavarios/' + cuil_cuit, config)
@@ -250,4 +258,4 @@ const asignarloteacuotas = async (datos) => {
 
 
 
-export default {vercuotas4, asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
+export default {vercuotas4, traercuotasdisponiblesporlote,asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };

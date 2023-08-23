@@ -33,6 +33,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Verpagos from './Modalverpagos';
 import ModalPagar from'./ModalPagar'
+import ModalPagar2 from'./PagarUnLote'
 import ModalBorrarPago from'./borrarpago'
 import { Box } from "@material-ui/core";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -467,7 +468,21 @@ const LotesCliente = (props) => {
                     ))}</>:<></>}
                 </RadioGroup>
                 {act ? <>
-                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b></>:<></> }
+                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+                <ModalPagar2 
+                id={idlote}
+                vercuotas= {async (index) => {
+
+                    const cuotas = await servicioCuotas.vercuotas(index)
+                    setCuotas(cuotas)
+                    setIdlote(index)
+                    setAct(true)
+                    verief(index)
+                    setOpen(false)
+            
+                }}
+                
+                /></>:<></> }
             </div>
 
 

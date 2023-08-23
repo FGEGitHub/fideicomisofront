@@ -43,6 +43,18 @@ const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago),config)
    return (data)
  
 } 
+
+
+
+
+
+const pagarnivel4lote= async  (pago) => {
+
+
+  const {data } = await axios.post(baseUrl+'pagos/pagarnivel4lote',(pago),config)
+     return (data)
+   
+  } 
 const pagarnivel4= async  (pago) => {
 
 
@@ -179,4 +191,4 @@ const cantidadpendientes= async  () => {
       }
  
 
-export default {todoslospagos,traerpago,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

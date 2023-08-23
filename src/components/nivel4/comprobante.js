@@ -89,12 +89,20 @@ const styles = StyleSheet.create({
     left: 40,
     right: 40,
     textAlign: 'left',
+    width: '90%',
   },
   pieDePaginaSello: {
     position: 'absolute',
-    bottom: 40,
-    right: 30,
-    left: 450,
+    bottom: 50,
+    right: 15,
+    left: 420,
+    textAlign: 'right',
+  },
+  pieDePaginaSellodesc: {
+    position: 'absolute',
+    bottom: 20,
+    right: 50,
+    left: 380,
     textAlign: 'right',
   }
 });
@@ -105,6 +113,7 @@ const ComprobantePDF = ({ data }) => {
     let id = params.id
   const [clients, setClients] = useState();
     const [loading, setLoading] = useState(true);
+    const [tot, setTot] = useState();
 
 
 
@@ -115,8 +124,9 @@ const ComprobantePDF = ({ data }) => {
 const getClients = async () => {
 
   const clients = await servicioPagos.traerpago(id)
-console.log(clients)
-  setClients(clients)
+
+  setClients(clients[0])
+  setTot(clients[1])
   setLoading(false);
 }
 
@@ -127,7 +137,7 @@ console.log(clients)
 
   return (
     <>
-    {clients ? <>
+    {clients && tot ? <>
     <PDFViewer width="100%" height="1000px">
       <Document>
         <Page size="A4">
@@ -150,7 +160,7 @@ console.log(clients)
 
           <View style={styles.tableContainer}>
             <View style={styles.tableHeader}>
-              <Text style={styles.columnHeader}>ID</Text>
+              <Text style={styles.columnHeader}>ID de pago</Text>
               <Text style={styles.columnHeader}>Corresponde</Text>
               <Text style={styles.columnHeader}>Fecha de pago</Text>
               <Text style={styles.columnHeader}>Nro de cuota</Text>
@@ -168,26 +178,32 @@ console.log(clients)
                 <Text style={styles.cell}>{clients[0].mes}/{clients[0].anio}</Text>
     
                 <Text style={styles.cell}>{clients[0].fecha}</Text>
-                <Text style={styles.cell}>{clients[0].nro_cuota}</Text>
+                <Text style={styles.cell}>{clients[0].nro_cuota}/{tot}</Text>
                 <Text style={styles.cell}>Pago de cuota</Text>
              
                 <Text style={styles.cell}>${clients[0].monto}</Text>
                
                 
                 <Text style={styles.cell}>${clients[0].monto}</Text>
-                <Text style={styles.lastCell}>{clients[0].observaciones}</Text>
+                <Text style={styles.lastCell}>Ninguna</Text>
               </View>
        
           </View>
           <View style={styles.pieDePagina}>
                   <Text>Fideicomiso Santa Catalina</Text>
-                  <Text>Dirección a</Text>
-                  <Text>Teléfono </Text>
+                  <Text>Dirección: 25 de Mayo 1476</Text>
+                  <Text>Teléfono: 3795171604 </Text>
                   {/* Agrega aquí los datos que desees mostrar */}
                 </View>
            
           <View style={styles.pieDePaginaSello}>
             <Image src={Firma}  style={styles.selloImage} />
+    
+          </View>
+          
+          <View style={styles.pieDePaginaSellodesc}>
+            
+            <Text>Santiago Merino </Text>
           </View>
         </Page>
       </Document>
