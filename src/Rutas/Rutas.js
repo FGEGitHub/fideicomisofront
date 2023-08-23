@@ -71,6 +71,7 @@ import Agregarcuotasleg from '../Paginas/Nivel4/agregarcuotas';
 import Perfilleg from '../Paginas/Nivel4/Perfil';
 import PagosNvel4 from '../Paginas/Nivel4/pagarcuota';
 import Comprobantepag from '../Paginas/Nivel4/comprobante';
+import Resumen4 from '../Paginas/Nivel4/resumen';
 
 
 
@@ -187,7 +188,7 @@ const Rutas = [
 	{ path: '/legales/perfil', element: <Perfilleg/> },
 	{ path: '/legales/pagarcuota/:id', element: <PagosNvel4 /> },
 	{ path: '/legales/comprobante/:id', element: <Comprobantepag /> },
-	
+	{ path: '/legales/resumen', element: <Resumen4 /> },
 
 
 

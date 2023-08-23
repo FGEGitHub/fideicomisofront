@@ -122,9 +122,14 @@ const Lotes = () => {
                     )
             }
         
-        },   
+        }, 
         {
-            name: "Cuota del mes vencida?",
+          name: "quelote",
+          label:"Lote",
+         
+      },  
+        {
+            name: "Cuota vencida?",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                   CutomButtonsRendervencida(

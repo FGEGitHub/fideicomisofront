@@ -17,7 +17,7 @@ import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
 import CabinIcon from '@mui/icons-material/Cabin';
 import Navbar from './Navbar'
-
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
@@ -48,6 +48,11 @@ export default function MenuIzq2 ({children}) {
         text: 'Lotes', 
         icon: <CabinIcon color="primary" />, 
         path: '/legales/lotes' 
+      },
+      { 
+        text: 'Resumen', 
+        icon: <AssessmentIcon color="primary" />, 
+        path: '/legales/resumen' 
       },
       { 
         text: 'Perfil y contraseña', 
