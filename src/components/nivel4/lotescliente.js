@@ -483,18 +483,19 @@ const LotesCliente = (props) => {
                 {act ?
 
                     <div><ButtonGroup variant="contained" aria-label="outlined primary button group">
+                              {cuotas !== '' ? <></>:<>
                         <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
                             Agregar cuotas al lote
-                        </Button>
-                        <ModalModificarvalortotal
+                        </Button></>}
+            {/*             <ModalModificarvalortotal
                             idlote={idlote}
                         />
                         <AgregaraCuotas
                             id_origen={idlote}
-                        />
-
+                        /> */}
+    {cuotas !== '' ? <>
                         <BorrarCuotas
-                            id={idlote} />
+                            id={idlote} /></>:<></>}
                         <DesasignarLote
                             id={idlote}
                         />
