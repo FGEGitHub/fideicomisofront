@@ -65,6 +65,7 @@ const AddEstatuto = (props) => {
   const selecthandler = e =>{
    setFile(e.target.files[0])
    console.log(file)
+
   }
 
   const enviar = async () => {

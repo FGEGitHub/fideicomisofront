@@ -76,7 +76,7 @@ const LotesCliente = (props) => {
     const [deudaExigible, setDeudaExigible] = useState([''])
     const [detallePendiente, setDetallePendiente] = useState([''])
     const [idlote, setIdlote] = useState(null)
-    const [selectedValue, setSelectedValue] = useState("");
+    const [selectedValue, setSelectedValue] = useState();
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
     const [vista1, setVista1] = useState(true)
@@ -457,10 +457,11 @@ const LotesCliente = (props) => {
     </Button>
   </Grid>
 </Grid>
-<br />
+<br />   
 <FormControl sx={{ m: 1, minWidth: 140 }}>
-<div>
-                <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel>
+
+<div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </>:<> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
+               
                 <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"

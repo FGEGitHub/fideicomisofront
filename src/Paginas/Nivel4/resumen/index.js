@@ -2,7 +2,7 @@
 
 
 import MenuUsuario4 from '../../../components/nivel4/Menuizq4'
-import Lista from '../../../components/nivel4/clientes/Table';
+import Ief from '../../../components/nivel4/resumen/ief';
 import Mantenimiento from '../../../Assets/mantenimiento.jpeg';
 
 
@@ -22,7 +22,7 @@ export default function Legajos() {
 
     return (
         <MenuUsuario4>
- <img style={islogo} src={Mantenimiento} alt="logo" /> 
+ <Ief/> 
     </MenuUsuario4> 
     );
 
