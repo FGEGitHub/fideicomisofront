@@ -55,12 +55,12 @@ export default function ClienteNuevo(props) {
 
 
       <Button variant="outlined" color='success' onClick={handleClickOpen}>
-       Cargar nueva manzana  <AppleIcon/>
+       Habilitar una nueva manzana  <AppleIcon/>
      
       </Button>
       <Dialog open={open} onClose={handleClose}>
      
-        <DialogTitle>New Lote </DialogTitle>
+        <DialogTitle>New apple </DialogTitle>
         <Paper
         sx={{
           cursor: 'pointer',
@@ -72,7 +72,7 @@ export default function ClienteNuevo(props) {
       >
         <DialogContent>
           <DialogContentText>
-        Datos del Nuevo Lote
+        Datos de la nueva manzana
           </DialogContentText>
           <form  onSubmit={handleDeterminar}> 
 

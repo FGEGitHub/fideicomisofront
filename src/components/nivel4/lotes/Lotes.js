@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from '@mui/icons-material/Search';
 import MUIDataTable from "mui-datatables";
 import servicioLotes from '../../../services/lotes'
 import { useNavigate } from "react-router-dom";
@@ -11,6 +9,7 @@ import MuiAlert from '@mui/material/Alert';
 import Nuevo from './nuevo'
 import Nuevamanzana from './nuevamanzana'
 import Modificar from "./modificar"
+import ButtonGroup from '@mui/material/ButtonGroup';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -113,6 +112,7 @@ const Lotes = () => {
     // renderiza la data table
     return (
         <>
+        <ButtonGroup variant="text" aria-label="text button group">
         <Nuevamanzana/>
             <Nuevo
                 getClients={async () => {
@@ -125,7 +125,7 @@ const Lotes = () => {
                     setLoading(false);
                 }
                 }
-            />
+            /></ButtonGroup>
             {loading ? (<CargaDeTabla />)
                 : (
                     <div>
