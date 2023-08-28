@@ -718,9 +718,9 @@ const LotesCliente = (props) => {
                                                                 <StyledTableCell component="th" scope="row" align="left">
                                                                 {row.pago > 0 ? <> <><Verpagos
                                                                         id_cuota={row.id} /> </>
-                                                                        <ModalBorrarPago
-                                                                         id_cuota={row.id}
-                                                                       />
+                                                                       {/*  <ModalBorrarPago
+                                                                         id_cuota={row.id} 
+                                                                       />*/}
                                                                         </> : <><ModalPagar
                                                                 id={row.id}
                                                                 id_lote={row.id_lote}
