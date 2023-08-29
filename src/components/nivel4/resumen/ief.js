@@ -31,7 +31,12 @@ const Lotes = () => {
     const verief = async () => {
 
         const dde = await servicioCuotas.iefgralleg()
-        console.log(dde)
+    
+        if (dde == "error login"){
+            console.log('dde')
+            navigate('/')
+          }
+  
         setDeudaExigible(dde[0])
         setDetallePendiente(dde[1])
         setAct2(true)

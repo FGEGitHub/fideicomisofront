@@ -1,7 +1,8 @@
 import axios from "axios"
 
-const url =require ('./url')
+import { useNavigate } from "react-router-dom";
 
+const url =require ('./url')
 
 const baseURL = url.database+'links/'
 
@@ -92,17 +93,19 @@ const determinarEmpresa= async  (datos) => {
  
  
 const lista2= async  () => {
-  
+
+
     const {data } = await axios.get(baseURL+'lista2',config)
   //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
 
-   // const {data } = await axios.get('http://localhost:4000/prueba',config)
-   if(data === 'error login'){  
+  
+  if(data === 'error login'){  
     // alert('Debe loguearse nuevamente')
     window.localStorage.removeItem('loggedNoteAppUser')
  
-    window.location.reload();
-}
+    return 'error login' 
+
+} 
     
     return data 
 }  
@@ -215,6 +218,13 @@ const traerLejagos= async  (cuil_cuit) => {
 
     const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
   
+    if(data === 'error login'){  
+       alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        return 'error login' 
+    
+    } 
     return data 
 } 
 

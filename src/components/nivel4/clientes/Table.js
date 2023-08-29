@@ -29,6 +29,10 @@ const Lotes = () => {
         const clients = await servicioClientes.lista2({
 
         })
+ 
+        if (clients == "error login"){
+          navigate('/')
+        }
         setClients(clients)
         setLoading(false);
     }

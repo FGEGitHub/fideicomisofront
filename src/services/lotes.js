@@ -38,7 +38,13 @@ const lista= async  () => {
 const lista2= async  () => {
    
     const {data } = await axios.get(baseUrl+'lista2',config)
-    console.log(data)
+    if(data === 'error login'){  
+        alert('Debe loguearse nuevamente')
+         window.localStorage.removeItem('loggedNoteAppUser')
+      
+         return 'error login' 
+     
+     } 
     return data 
 }
 

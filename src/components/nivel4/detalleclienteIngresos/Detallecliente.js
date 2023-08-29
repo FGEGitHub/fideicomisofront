@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import LotesCliente from '../lotescliente'
 import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
-
+import { useNavigate } from "react-router-dom";
 import { Paper } from '@mui/material';
 
 
@@ -15,7 +15,7 @@ const DetalleCliente = () => {
     const [cliente, setCliente] = useState({})
      const [habilitado, sethabilitado] = useState(false)
      const [expuesta, setExpuesta] = useState(false)
-     
+     const navigate = useNavigate();
      useEffect(() => {
 
         traer()
@@ -24,7 +24,9 @@ const DetalleCliente = () => {
      const traer = async () => {
 
         const clientee = await servicioCliente.clientehabilitado(cuil_cuit)
-       
+        if (clientee == "error login"){
+          navigate('/')
+        }
          setCliente(clientee[1])
     console.log(clientee[0])
          if (clientee[0][0].habilitado =='Si'){

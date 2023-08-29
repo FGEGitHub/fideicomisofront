@@ -90,12 +90,13 @@ const traercuota = async (id) => {
 const iefgralleg = async () => {
 
     const data = await axios.get(baseUrl + 'iefgralleg/', config)
-    if(data.data === 'error login'){  
-        // alert('Debe loguearse nuevamente')
-        window.localStorage.removeItem('loggedNoteAppUser')
+    if(data === 'error login'){  
+        alert('Debe loguearse nuevamente')
+         window.localStorage.removeItem('loggedNoteAppUser')
+      
+         return 'error login' 
      
-        window.location.reload();
-    }
+     } 
     
 
 console.log(data.data)
