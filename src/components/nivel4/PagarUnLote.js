@@ -16,7 +16,7 @@ export default function SelectTextFields(props) {
   const [pago, setPagos] = useState({
     fecha: '03-04-2023',
     cuil_cuit: props.cuil_cuit,
-   
+   id:props.id
   });
 
   const [cuotas, setCuotas] = useState(['']);
@@ -28,6 +28,7 @@ export default function SelectTextFields(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    console.log(props.id)
  traer();
   };
 
@@ -40,15 +41,17 @@ export default function SelectTextFields(props) {
 
     const cuot = await servicioCuotas.traercuotasdisponiblesporlote(props.id);
    
-    setPagos({ ...pago, id: cuot[0]['id'] });
+   
     setCuotas(cuot);
   }
 
   const enviar = async () => {
-    const rta = await servicioPagos.pagarnivel4(pago);
+    setLoading(true)
+    const rta = await servicioPagos.pagarnivel4lote(pago);
     console.log(rta);
     alert(rta[0]);
   props.vercuotas(props.id);
+  setLoading(false)
     setOpen(false);
   }
 

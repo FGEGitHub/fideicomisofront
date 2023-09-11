@@ -86,7 +86,7 @@ const LotesCliente = (props) => {
         antoine: true,
     });
     const vercuotas = async (index) => {
-
+console.log(index)
         const cuotas = await servicioCuotas.vercuotas4(index)
         setCuotas(cuotas)
         setIdlote(index)
@@ -470,12 +470,13 @@ const LotesCliente = (props) => {
                 {act ? <>
                 <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
                 <ModalPagar2 
+                cuil_cuit={cuil_cuit}
                 id={idlote}
                 vercuotas= {async (index) => {
 
-                    const cuotas = await servicioCuotas.vercuotas(index)
-                    setCuotas(cuotas)
-                    setIdlote(index)
+                    const cuotass = await servicioCuotas.vercuotas(index)
+                    setCuotas(cuotass)
+                    setIdlote(cuotas[0]['id_lote'])
                     setAct(true)
                     verief(index)
                     setOpen(false)
@@ -722,6 +723,7 @@ const LotesCliente = (props) => {
                                                                          id_cuota={row.id} 
                                                                        />*/}
                                                                         </> : <><ModalPagar
+                                                                           cuil_cuit={cuil_cuit}
                                                                 id={row.id}
                                                                 id_lote={row.id_lote}
                                                                 
