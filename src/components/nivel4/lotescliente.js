@@ -483,7 +483,11 @@ console.log(index)
             
                 }}
                 
-                /></>:<></> }
+                />
+                 <Button variant="contained" onClick={() => { navigate('/legales/agregarcuotas/' + idlote) }} >
+                            Agregar cuotas al lote
+                        </Button>
+                        </>:<></> }
             </div>
 
 
