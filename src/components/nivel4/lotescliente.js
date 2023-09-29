@@ -723,9 +723,9 @@ console.log(index)
                                                                 <StyledTableCell component="th" scope="row" align="left">
                                                                 {row.pago > 0 ? <> <><Verpagos
                                                                         id_cuota={row.id} /> </>
-                                                                       {/*  <ModalBorrarPago
+                                                                     <ModalBorrarPago
                                                                          id_cuota={row.id} 
-                                                                       />*/}
+                                                                       />
                                                                         </> : <><ModalPagar
                                                                            cuil_cuit={cuil_cuit}
                                                                 id={row.id}
