@@ -241,28 +241,27 @@ console.log(index)
         return (
             <>
 
-                <CurrencyExchangeIcon
-                    onClick={() => navigate('/usuario2/pagarcuota/' + cuotas[dataIndex].id)}
-                    style={{ marginRight: "10px", cursor: "pointer" }}
-                />
-                <Verpagos
-                    id_cuota={cuotas[dataIndex].id} />
+{cuotas[dataIndex].pago > 0 ? <> <><Verpagos
+                                                                        id_cuota={cuotas[dataIndex].id} /> </>
+                                                                     <ModalBorrarPago
+                                                                         id_cuota={cuotas[dataIndex].id} 
+                                                                       />
+                                                                        </> : <><ModalPagar
+                                                                           cuil_cuit={cuil_cuit}
+                                                                id={cuotas[dataIndex].id}
+                                                                id_lote={cuotas[dataIndex].id_lote}
+                                                                
+                                                                vercuotas = {async (index) => {
 
-
-                <DeleteIcon style={{ cursor: "pointer" }}
-                    onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
-                <AgregarIcc
-                    id={cuotas[dataIndex].id}
-                    traer={async () => {
-
-                        const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-                        console.log(lotes)
-                        setLotes(lotes)
-                    }}
-
-                />
-
+                                                                    const cuotas = await servicioCuotas.vercuotas4(index)
+                                                                    setCuotas(cuotas)
+                                                                    setIdlote(index)
+                                                                    setAct(true)
+                                                         
+                                                                    
+                                                            
+                                                                }}/></>}
+                                                                
 
 
             </>
@@ -303,16 +302,7 @@ console.log(index)
             label: "Amortizacion",
 
         },
-        {
-            name: "ICC",
-            label: "ICC",
-
-        },
-        {
-            name: "Ajuste_ICC",
-            label: "Ajuste ICC",
-
-        },
+     
         {
             name: "Cuota con ajuste",
             options: {
@@ -358,19 +348,7 @@ console.log(index)
             }
 
         },
-        {
-            name: "Diferencia",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    diferencia(
-                        dataIndex,
-                        rowIndex,
-                        // overbookingData,
-                        // handleEditOpen
-                    )
-            }
 
-        },
 
 
 
@@ -387,32 +365,8 @@ console.log(index)
             }
 
         },
-        {
-            name: "Beta pago Mercadop",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    PagomercadoP(
-                        dataIndex,
-                        rowIndex,
-                        // overbookingData,
-                        // handleEditOpen
-                    )
-            }
 
-        },
-        {
-            name: "Beta pago 360",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    Pago360(
-                        dataIndex,
-                        rowIndex,
-                        // overbookingData,
-                        // handleEditOpen
-                    )
-            }
-
-        },
+     
 
 
     ];

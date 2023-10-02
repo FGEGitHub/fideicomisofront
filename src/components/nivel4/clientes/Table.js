@@ -186,13 +186,9 @@ const Lotes = () => {
 
     ];
 
-const options = {
-
-    /*    rowsPerPage: 10,
-       download: false, // hide csv download option
-       onTableInit: this.handleTableInit,
-       onTableChange: this.handleTableChange, */
-};
+    const options = {
+      selectableRows: false, // Deshabilita los checkboxes
+    };
 // renderiza la data table
 return (
     <>
