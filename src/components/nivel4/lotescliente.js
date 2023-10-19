@@ -316,11 +316,7 @@ console.log(index)
             }
 
         },
-        {
-            name: "saldo_cierre",
-            label: "Saldo Cierre",
-
-        },
+      
         {
             name: "Pago",
             options: {

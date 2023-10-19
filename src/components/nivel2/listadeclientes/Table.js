@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
-
+import Tooltip from '@mui/material/Tooltip';
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -64,15 +64,17 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
+              <Tooltip title="Editar">
             <EditIcon
              onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
-            />
+            /></Tooltip>
+             <Tooltip title="Ver">
              <SearchIcon
              onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
-           
+           </Tooltip>
           </>
         );
       }
@@ -122,7 +124,7 @@ const Lotes = () => {
            
         },
         {
-            name: "Actions",
+            name: "Acciones",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -138,13 +140,9 @@ const Lotes = () => {
 
     ];
 
-const options = {
-
-    /*    rowsPerPage: 10,
-       download: false, // hide csv download option
-       onTableInit: this.handleTableInit,
-       onTableChange: this.handleTableChange, */
-};
+    const options = {
+        selectableRows: false, // Deshabilita los checkboxes
+      };
 // renderiza la data table
 return (
     <>

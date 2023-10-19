@@ -300,12 +300,8 @@ const TablaAprobaciones = () => {
     ];
 
     const options = {
-
-        /*    rowsPerPage: 10,
-           download: false, // hide csv download option
-           onTableInit: this.handleTableInit,
-           onTableChange: this.handleTableChange, */
-    };
+        selectableRows: false, // Deshabilita los checkboxes
+      };
     // renderiza la data table
     return (
         <div>

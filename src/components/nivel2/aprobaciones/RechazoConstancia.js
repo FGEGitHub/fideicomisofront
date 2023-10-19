@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import servicioAprobaciones from '../../../services/Aprobaciones'
 import {  useState } from "react";
+import Tooltip from '@mui/material/Tooltip';
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [completo, setCompleto] = React.useState(false);
@@ -39,9 +40,9 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <ThumbDownAltIcon variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </ThumbDownAltIcon>
+      <Tooltip title="Rechazar">
+      <ThumbDownAltIcon variant="outlined" onClick={handleClickOpen}/>
+    </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Rechazar</DialogTitle>
         <DialogContent>

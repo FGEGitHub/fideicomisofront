@@ -104,6 +104,9 @@ const Lotes = () => {
 
     ];
     // renderiza la data table
+    const options = {
+        selectableRows: false, // Deshabilita los checkboxes
+      };
     return (
         <>
             {loading ? (<CargaDeTabla />)
@@ -125,6 +128,7 @@ const Lotes = () => {
                                     onClick: (event, rowData) => alert("You saved " + rowData.name)
                                 }
                             ]}
+                            options={options}
 
 
 
