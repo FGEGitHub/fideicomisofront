@@ -55,7 +55,7 @@ const SubirLegajo = () => {
         } else {
             setSteps([
                 { label: 'Fotocopia Dni', completed: completoo[0] },
-                { label: 'Constancia de AFIP', completed: completoo[1] },
+                { label: 'Constancia de CUIL/CUIT', completed: completoo[1] },
                 { label: 'Acreditacion de Domicilio', completed: completoo[2] },
                 { label: 'DJJ Datos Personales', completed: completoo[3] },
                 { label: 'DJJ Calidad de Persona(pep)', completed: completoo[4] },

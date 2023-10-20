@@ -161,8 +161,9 @@ const cantidadnoti = async () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         label="Notificaciones"
+        style={{minWidth: '150px'}}
       >
-           <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px',backgroundColor: 'color-secundario'}} ><b> <h3>Lista de Notificaciones</h3></b></MenuItem>
+           <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px',backgroundColor: 'color-secundario'}} ><b> <h3>Notificaciones</h3></b></MenuItem>
            <MenuItem onClick={notificaciones} style = {{ borderBottom: '1px solid gray', padding: '8px 16px',backgroundColor: 'color-secundario'}} > <div>  <div style={{textAlign: 'right'}}><a > Ver todas</a></div></div></MenuItem>
        {notificacioness && 
        notificacioness.length>0 ? <> 

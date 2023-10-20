@@ -102,7 +102,7 @@ const TablaAprobaciones = () => {
 
                 <Button
                     onClick={() => veronline(index)}
-                >Ve online</Button>
+                >Ver online</Button>
 
 
             </>

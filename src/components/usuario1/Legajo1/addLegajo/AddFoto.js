@@ -5,19 +5,27 @@ import { useDropzone } from 'react-dropzone';
 import servicioLegajo from '../../../../services/legajos'
 import BackupIcon from '@material-ui/icons/Backup';
 import Box from '@mui/material/Box';
-
+import '../../styles2.css'
 const AddFoto = (props) => {
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
+  const [noespedef, setNoespdf] = useState(false);
   const [fileUpload, setFileUpload] = useState(null);
 
-  const onDrop = useCallback  ((files, acceptedFiles) => {
+  const onDrop =  useCallback  (async(files, acceptedFiles) => {
 
-    
 
        // window.location.reload(true);
        const formData = new FormData();
+  
+
+    if(files[0].path[files[0].path.length-1] =="f" && files[0].path[files[0].path.length-2] =="d" && files[0].path[files[0].path.length-3] =="p" ){
+      setNoespdf(false)
+    }else{
+      setNoespdf(true)
+    }
+
+
     setFileUpload(acceptedFiles);
     formData.append('file', files[0]);
     setEnviarr(formData)
@@ -73,12 +81,15 @@ const AddFoto = (props) => {
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
+
+        {!noespedef ? <>
+     
       <Box sx={{ m: 1, 
       color: 'green',
       fontSize: '1rem',      }}
        >
         Archivos Aceptados <BackupIcon fontSize="small" />
-       
+        
         <ul>{acceptedFileItems}</ul>
         { enviarr ? <>  
           {loading ? (
@@ -89,7 +100,24 @@ const AddFoto = (props) => {
       
       </Box>
 
+      </>:<>
+      <Box sx={{ m: 1, 
+      color: 'red',
+      fontSize: '1rem',      }}
+       >
+        archivo no es formato pdf <BackupIcon fontSize="small" />
+        
+        <ul>{acceptedFileItems}</ul>
+        { enviarr ? <>  
+          {loading ? (
+                                <CircularProgress color="inherit" size={25} />
+                            ) : <Button variant="contained" color="success" disabled>Enviar</Button>}
+        
+        </> : <></>}
       
+      </Box>
+
+</>}
     </>
   );
 };
