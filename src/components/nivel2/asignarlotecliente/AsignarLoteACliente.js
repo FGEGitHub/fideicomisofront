@@ -71,7 +71,7 @@ const AsignarLoteACliente = () => {
                 onChange={handleChange}
                 fullWidth
               />
-              {parque ? (
+              {lotes.zona=='PIT' ? (
                 <TextField
                   autoFocus
                   margin="dense"

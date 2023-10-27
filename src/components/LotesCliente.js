@@ -79,7 +79,7 @@ const LotesCliente = (props) => {
     const [selectedValue, setSelectedValue] = useState();
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
-    const [vista1, setVista1] = useState(true)
+    const [vista1, setVista1] = useState(false)
     const [state, setState] = React.useState({
         gilad: true,
         jason: false,

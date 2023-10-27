@@ -25,12 +25,24 @@ export default function Ingresos(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    cargar()
+  };
+  const cargar = async (event) => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const usuario = JSON.parse(loggedUserJSON)
+    //  console.log(usuario.cuil_cuit)
+
+  
+      setIngreso({ ...ingreso,  ['cuil_cuit_admin']: usuario.cuil_cuit});
+   
+    }
   };
   const handleDeterminar = async (event) => {
     event.preventDefault();
     try {
  
-
+console.log(ingreso)
       await servicioCliente.habilitar(ingreso)
 
 
