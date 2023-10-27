@@ -233,7 +233,7 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
-             <ButtonGroup variant="contained" aria-label="outlined primary button group">
+           
            {user ?
             <>
            {user.nivel ===2 ? <> 
@@ -242,7 +242,7 @@ const LegajoCliente = (props) => {
              cuil_cuit = {cuil_cuit}/> 
 
 <Button onClick={volver} > <ArrowBackIcon/> Volver</Button>
-             <div    ></div>
+          
 
              
 
@@ -251,7 +251,7 @@ const LegajoCliente = (props) => {
              <div    ></div></>}
            </>
              :<></>
-             }
+             }<ButtonGroup variant="contained" aria-label="outlined primary button group">
              < ModalLegajo
                 getData = { async () => {
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)

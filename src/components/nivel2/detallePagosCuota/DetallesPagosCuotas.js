@@ -4,7 +4,7 @@ import MUIDataTable from "mui-datatables";
 import {  useState, useEffect } from "react";
 import servicioPagos from '../../../services/pagos'
 import serviciousuario1 from '../../../services/usuario1'
-import Dialog from '@mui/material/Dialog';
+import Borrar from './modalborrar';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
@@ -108,7 +108,8 @@ function downloadFile(index, rowIndex, data) {
               <Button
                     onClick={() => download(index)}
                 >Descargar</Button> 
-
+<Borrar
+id={pagos[index].id}/>
 
         </>
     );
