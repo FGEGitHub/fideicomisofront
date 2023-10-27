@@ -760,9 +760,9 @@ const LotesCliente = (props) => {
                                                                 />
 
 
-                                                                <DeleteIcon style={{ cursor: "pointer" }}
+                                                            {/*     <DeleteIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                />
+                                                                /> */}
 
 
                                                             </StyledTableCell>

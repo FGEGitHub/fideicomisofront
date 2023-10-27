@@ -275,7 +275,7 @@ export default function MenuUsuario2() {
           autoFocus
           margin="dense"
           id="name"
-          label="Cambiar el monto del anticipo"
+          label="Cambiar el monto a financiar"
           name="anticipodefinido"
           onChange={handleChange}
           fullWidth
