@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const PagosInusuales = () => {
     //configuracion de Hooks
     const [pagos, setpagos] = useState([]);
-
+    const [vista, setVista] = useState(true);
     const navigate = useNavigate();
 
 
@@ -219,6 +219,7 @@ const PagosInusuales = () => {
 
 
         <div>
+{vista ? <>
 
             <>
                 <Paper
@@ -269,7 +270,7 @@ const PagosInusuales = () => {
                                                     setpagos(pagos)
                                                 }}
                                             />
-                                                <BotonAprobado id={row.id}
+                                              {/*   <BotonAprobado id={row.id}
                                                     monto={row.monto}
                                                     getPagosi = {async () => {
 
@@ -279,7 +280,7 @@ const PagosInusuales = () => {
                                                         console.log(pagos)
                                                         setpagos(pagos)
                                                     }}
-                                                /> </StyledTableCell>
+                                                /> */} </StyledTableCell>
 
 
                                             <StyledTableCell component="th" scope="row"> <Button
@@ -300,7 +301,7 @@ const PagosInusuales = () => {
                 </Paper>
 
             </>
-
+            </>:<>
             <ThemeProvider theme={StyledTable()}>
                 <MUIDataTable
                     title={"Lista de pagos inusuales"}
@@ -316,7 +317,7 @@ const PagosInusuales = () => {
                     options={options}
 
                 />
-            </ThemeProvider>
+            </ThemeProvider></>}
         </div>
     )
 }

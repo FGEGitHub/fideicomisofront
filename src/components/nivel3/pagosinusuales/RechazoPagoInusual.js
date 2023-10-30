@@ -39,10 +39,10 @@ export default function FormDialog(props) {
   setForm({  ...form, [e.target.name]: e.target.value })
   return (
     <div>
-      <Tooltip title="Aprobar pago/cambiar monto"arrow>
+      <Tooltip title="Clasificar"arrow>
       <IconButton>
       <Button  onClick={handleClickOpen}>
-       Rechazar
+ Clasificar
       </Button>
       </IconButton>
       </Tooltip>
@@ -81,7 +81,7 @@ export default function FormDialog(props) {
             fullWidth
             variant="standard"
           />
-           <Button onClick={() => {rechazar(props.id)}}>Rechazar</Button>
+           <Button onClick={() => {rechazar(props.id)}}>Clasificar</Button>
           </form>
         </DialogContent>
         <DialogActions>
