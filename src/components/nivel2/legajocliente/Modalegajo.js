@@ -12,6 +12,8 @@ import BackupIcon from '@material-ui/icons/Backup';
 import { useDropzone } from 'react-dropzone'
 import Box from '@mui/material/Box';
 import { useParams } from "react-router-dom"
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 export default function FormDialog(props) {
@@ -22,6 +24,8 @@ export default function FormDialog(props) {
     const [enviarr,setEnviarr] = useState()
     const [completado, setCompletado] = useState(false);
     const [fileUpload, setFileUpload] = useState(null);
+    const [cargando, setCargando] = useState(false);
+
     const [legform, setLegform] = useState({
         cuil_cuit:cuil_cuit
     })
@@ -78,6 +82,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
     const enviar = async () => {
+      setCargando(true)
      await enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
 
     const rta =  await servicioLegajo.subirlegajode(enviarr)
@@ -208,7 +213,10 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                 <DialogActions>
                        
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={enviar}>Enviar</Button>
+                    {cargando ? <>   <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box></>:<>
+                    <Button onClick={enviar}>Enviar</Button></>}
                 </DialogActions>
             </Dialog>
         </div>
