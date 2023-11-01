@@ -317,7 +317,7 @@ const MensualInusuales = (props) => {
                                                             <StyledTableCell component="th" scope="row">{row.cuil_cuit} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.ingresos} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.monto} </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">{row.estado =='P' ? <>Pendiente</>:<>  Aoorivao</>} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.estado =='P' ? <>Pendiente</>:<>  Aprobado</>} </StyledTableCell>
 
                                                         </StyledTableRow>
                                                     ))}
