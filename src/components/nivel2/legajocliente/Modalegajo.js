@@ -88,6 +88,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
     const rta =  await servicioLegajo.subirlegajode(enviarr)
     alert(rta)
      props.getData()
+     setCargando(false)
       setOpen(false);
 
 
@@ -214,7 +215,8 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                        
                     <Button onClick={handleClose}>Cancelar</Button>
                     {cargando ? <>   <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
+                    <Button > <CircularProgress /></Button>
+     
     </Box></>:<>
                     <Button onClick={enviar}>Enviar</Button></>}
                 </DialogActions>
