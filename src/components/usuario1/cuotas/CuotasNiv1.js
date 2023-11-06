@@ -8,7 +8,8 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import Button from '@mui/material/Button';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import TextField from '@mui/material/TextField';
+import { List, ListItem, ListItemText, Checkbox } from '@mui/material';
+
 import { useNavigate } from "react-router-dom";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Stack from '@mui/material/Stack';
@@ -45,16 +46,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const CuotasNiv1 = (props) => {
-  const [lotes, setLotes] = useState([''])
+  const [lotes, setLotes] = useState([])
   const [deudaExigible, setDeudaExigible] = useState([''])
   const [detallePendiente, setDetallePendiente] = useState([''])
   const [user, setUser] = useState([''])
 
   const [act, setAct] = useState(false)
   const [act2, setAct2] = useState(false)
-
-  const [verPag, setVerpag] = useState(false)
-  const [verCuot, setVerCuot] = useState(false)
 
 
   const [cuotas, setCuotas] = useState([''])
@@ -74,18 +72,7 @@ const CuotasNiv1 = (props) => {
     traer(preba)
 
   }, [])
-  /* useEffect(() => {
- 
-     
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
   
-   
-      }
-   
-   
-    }, []) */
-
 
 
   const verief = async (index) => {
@@ -132,13 +119,6 @@ const CuotasNiv1 = (props) => {
 
 
 
-
-  }
-  const borrar = async (id) => {
-
-    const rta = await servicioCuotas.borrarcuota(id)
-
-    alert(rta)
 
   }
   
@@ -297,101 +277,109 @@ const CuotasNiv1 = (props) => {
         )
       }
 
+
+
+
+
+
+
+
+
+
+
+
+
       {act2 ?
         <div>
             <Box
-            sx= {{
-              display: 'flex'
-            }}
-            >
- <Grid container  columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        sx={{display: 'flex'}}
+                                    >
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
-          <Paper
-            sx={{
-              cursor: 'pointer',
-              background: '#eeeeee',
-              color: '#bdbdbd',
-              border: '1px dashed #ccc',
-              width: "40%",
-              '&:hover': { border: '1px solid #ccc' },
-              border: "1px solid black",
-              margin: '75px',
-              display: 'flex'
+                                            <Paper
+                                               sx={{
+                                                cursor: 'pointer',
+                                                background: '#eeeeee',
+                                                color: '#bdbdbd',
+                                                border: '1px dashed #ccc',
+                                                width: "45%",
+                                                '&:hover': { border: '1px solid #ccc' },
+                                                border: "1px solid black",
+                                                margin: '10px',
+                                                display: 'flex'
+                                            }}
+                                            >
 
-            }}
-          >
-
-            <TableContainer >
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Detalles de Deuda Exigible </TableCell>
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
 
 
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {deudaExigible.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {deudaExigible.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
 
-                      <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-
-
-          <Paper
-            sx={{
-              cursor: 'pointer',
-              background: '#eeeeee',
-              color: '#bdbdbd',
-              border: '1px dashed #ccc',
-              width: "40%",
-              '&:hover': { border: '1px solid #ccc' },
-              border: "1px solid black",
-              margin: '75px',
-              display: 'flex'
-
-            }}
-          >
-
-            <TableContainer >
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Detalle de Cuotas Pendientes </TableCell>
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
 
 
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {detallePendiente.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                                            <Paper
+                                                 sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "45%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '10px',
+                                                    display: 'flex'
+                                                }}
+                                            >
 
-                      <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell  padding="normal" >Detalle de Cuotas Pendientes </TableCell>
 
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-       
-          <Fab  sx={{ margin: '75px',}} variant="extended" onClick={() => { ocultarIEF() }}  ><VisibilityOffIcon sx={{ mr: 1 }}  /> Ocultar IEF</Fab>
-          </Grid>
-          </Box>
+
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {detallePendiente.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
+
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+                                            <Fab  sx={{ margin: '75px',}} variant="extended" onClick={() => { ocultarIEF() }}  ><VisibilityOffIcon sx={{ mr: 1 }}  /> Ocultar IEF</Fab>
+                                        </Grid>
+                                    </Box>
         </div>
         : <div></div>}
 
