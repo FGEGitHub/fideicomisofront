@@ -560,32 +560,29 @@ const LotesCliente = (props) => {
 
                                 <div>
                                     <Box
-                                        sx={{
-                                            display: 'flex'
-                                        }}
+                                        sx={{display: 'flex'}}
                                     >
-                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
                                             <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "40%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '75px',
-                                                    display: 'flex'
-
-                                                }}
+                                               sx={{
+                                                cursor: 'pointer',
+                                                background: '#eeeeee',
+                                                color: '#bdbdbd',
+                                                border: '1px dashed #ccc',
+                                                width: "45%",
+                                                '&:hover': { border: '1px solid #ccc' },
+                                                border: "1px solid black",
+                                                margin: '10px',
+                                                display: 'flex'
+                                            }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell>Detalles de Deuda Exigible </TableCell>
+                                                                <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
 
 
                                                             </TableRow>
@@ -597,8 +594,8 @@ const LotesCliente = (props) => {
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                                                                 </TableRow>
                                                             ))}
@@ -609,25 +606,24 @@ const LotesCliente = (props) => {
 
 
                                             <Paper
-                                                sx={{
+                                                 sx={{
                                                     cursor: 'pointer',
                                                     background: '#eeeeee',
                                                     color: '#bdbdbd',
                                                     border: '1px dashed #ccc',
-                                                    width: "40%",
+                                                    width: "45%",
                                                     '&:hover': { border: '1px solid #ccc' },
                                                     border: "1px solid black",
-                                                    margin: '75px',
+                                                    margin: '10px',
                                                     display: 'flex'
-
                                                 }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
+                                                                <TableCell  padding="normal" >Detalle de Cuotas Pendientes </TableCell>
 
 
                                                             </TableRow>
@@ -639,8 +635,8 @@ const LotesCliente = (props) => {
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                                                                 </TableRow>
                                                             ))}
