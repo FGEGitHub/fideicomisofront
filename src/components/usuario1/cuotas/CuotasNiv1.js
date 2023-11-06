@@ -22,7 +22,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@material-ui/core";
 import InformarPago from './PagodeCuota'
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -253,33 +253,55 @@ const CuotasNiv1 = (props) => {
     <Fragment>
 
       <br /><br /><br /><br /><br /><br />
-    
+      <div style={{ textAlign: 'center' }}>
+      <ButtonGroup variant="contained" aria-label="outlined primary button group">
       {
         lotes.map((item, index) =>
           <Stack spacing={2} direction="row">
-            <Fab key={index} variant="extended" onClick={() => { vercuotas(item['id']) }}><AddLocationAltIcon sx={{ mr: 1 }} /> {item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}
+            <Fab key={index} variant="extended" onClick={() => { vercuotas(item['id']) }}> {item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}
 
             </Fab>
+            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
+          
+
+
+            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
+         
+        
+          </Stack>
+          
+        )
+      }
+</ButtonGroup>
+<br/>
+<Box
+      sx={{
+        display: 'flex',
+        '& > *': {
+          m: 1,
+        },
+      }}
+    >
+<ButtonGroup variant="contained" aria-label="outlined primary button group">
+      {
+        lotes.map((item, index) =>
+        <Stack spacing={2} direction="row">
             {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
             <Fab key={index} variant="extended" onClick={() => { verief(item['id']) }}>
               <LocalAtmIcon sx={{ mr: 1 }} />
               Estado financiero
             </Fab>
-            <br/>
+      
 
             {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
 
-
-
-        
         
           </Stack>
         )
       }
-
-
-
-
+</ButtonGroup>
+</Box>
+</div>
 
 
 

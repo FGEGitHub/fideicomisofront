@@ -53,7 +53,7 @@ export default function SelectTextFields(props) {
     
     const prueba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
 
-    const lotes = await servicioUsuario1.lotesCliente(prueba.cuil_cuit)
+    const lotes = await servicioUsuario1.lotesCliente2(props.id)
     console.log('Si')
     console.log(lotes[3][0].habilitado === 'Si')
     setPago({ ...pago, cuil_cuit: cuil_cuit, })
