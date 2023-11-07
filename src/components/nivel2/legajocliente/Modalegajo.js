@@ -137,6 +137,8 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         }}
 
                     > <option value={''}>Elegir</option>
+                    <option value={'Cbu personal'}>CBU personal</option>
+                    <option value={'Cbu familiar'}>CBU familiar</option>
                         <option value={'Dni'}>dni</option>
                         <option value={'Constancia de Afip'}>Constancia de Afip</option>
                         <option value={'Estatuto Social'}>Estatuto Social</option>
@@ -218,7 +220,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                     <Button > <CircularProgress /></Button>
      
     </Box></>:<>
-                    <Button onClick={enviar}>Enviar</Button></>}
+                    <Button onClick={enviar}>Guardar</Button></>}
                 </DialogActions>
             </Dialog>
         </div>

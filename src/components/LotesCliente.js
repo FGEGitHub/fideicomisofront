@@ -36,6 +36,7 @@ import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
 
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -746,7 +747,20 @@ const LotesCliente = (props) => {
                                                            
                                                             <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
-
+                                                            <Pagorapido
+                                                            id_cuota={row.id }
+                                                            traer={ async (index) => {
+                                                                console.log(index)
+                                                                const cuotas = await servicioCuotas.vercuotas(index)
+                                                                console.log(cuotas)
+                                                                setCuotas(cuotas)
+                                                                setIdlote(index)
+                                                                setAct(true)
+                                                                verief(index)
+                                                                setOpen(false)
+                                                        
+                                                            }}
+                                                            />
                                                                 <CurrencyExchangeIcon
                                                                     onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
