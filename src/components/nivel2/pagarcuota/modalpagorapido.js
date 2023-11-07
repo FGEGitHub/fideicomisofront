@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import servicioUsuario1 from '../../../services/usuario1'
-
+import MenuItem from '@mui/material/MenuItem';
 export default function SelectTextFields(props) {
     const navigate = useNavigate();
     let params = useParams()
@@ -25,6 +25,7 @@ export default function SelectTextFields(props) {
   
     })
   
+    const [cbus, setCbus] = useState([''])
     const [eleccion, setEleccion] = useState({ tipo: '1' })
     const [cuotas, setCuotas] = useState([])
     const [pagosVarios, setpagosVarios] = useState(null)
@@ -70,7 +71,7 @@ export default function SelectTextFields(props) {
   
     }
   
-   /*
+
     useEffect(() => {
   
       const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -80,24 +81,24 @@ export default function SelectTextFields(props) {
           cuil_cuit: user.cuil_cuit,
           id: params.id
         })
-        traer()
+        traercbu()
   
       }
   
     }, [])
-    const traer = async () => {
+    const traercbu = async () => {
   
   
-      const cuot = await servicioCuotas.traercuotasdisponibles(params.id)
-      setCuotas(cuot)
+      const cuot = await servicioUsuario1.listacbus(params.cuil_cuit)
+      setCbus(cuot)
   
   
     }
-   */
+
     const enviar = async () => {
   
   setLoading(true)
-  await  enviarr.append('datos', [pago.cuil_cuit, props.id_cuota, pago.monto, pago.fecha]);///// aca en forma de array se envian datos del dormulario
+  await  enviarr.append('datos', [pago.cuil_cuit, props.id_cuota, pago.monto, pago.fecha, pago.cbu]);///// aca en forma de array se envian datos del dormulario
   
       const rta = await servicioUsuario1.pagarnivel2(enviarr)
       console.log(rta)
@@ -161,23 +162,29 @@ export default function SelectTextFields(props) {
       <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined" >
 
-          <form >
-            <InputLabel variant="standard" htmlFor="uncontrolled-native">
-              Cuantas Cuotas
-            </InputLabel>
-            <NativeSelect
-              sx={{ '& > :not(style)': { m: 1 } }}
-              defaultValue={30}
-              onChange={handleChangee}
-              inputProps={{
-                name: 'tipo',
-                id: 'uncontrolled-native',
-
+  
+          <TextField component="form"
+              sx={{
+                '& > :not(style)': { m: 1, width: '25ch' },
               }}
-            >   <option value={'1'}>Una</option>
-              <option value={'varias'}>Varias</option>
+              noValidate
 
-            </NativeSelect>
+
+              id="outlined-select-currency"
+              select
+              label="Elegir CBU"
+            
+              name="cbu"
+              onChange={handleChange}
+              helperText="Por favor ingrese su CBU"
+            >
+              {
+                cbus.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.lazo}-  {option.numero}
+                  </MenuItem>
+                ))}
+            </TextField>
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
 
@@ -216,7 +223,32 @@ export default function SelectTextFields(props) {
                 />
 
 
-                {pago.monto > 0 && pago.fecha ?
+             
+
+              </> : <></>}
+
+              <h2>SUBIR COMPROBANTE </h2>
+      <Paper
+        sx={{
+          cursor: 'pointer',
+          background: '#fafafa',
+          color: '#bdbdbd',
+          border: '1px dashed #ccc',
+          '&:hover': { border: '1px solid #ccc' },
+        }}
+      >
+        <div style={{ padding: '16px' }} {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p style={{ color: 'green' }}>Suelta aqui el documento</p>
+          ) : (
+            <p>Arrastra hasta aqui el archivo </p>
+          )}
+          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
+        </div>
+      </Paper>
+       
+          {pago.monto > 0 && pago.fecha ?
                   <div>
                     <Box sx={{
                       m: 1,
@@ -237,12 +269,6 @@ export default function SelectTextFields(props) {
 
                   </div>
                   : <div> </div>}
-
-              </> : <></>}
-
-
-          </form>
-
         </Card>
 
       </Box>
@@ -302,26 +328,7 @@ export default function SelectTextFields(props) {
 
       </> : <></>}
 
-      <h2>SUBIR COMPROBANTE </h2>
-      <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        <div style={{ padding: '16px' }} {...getRootProps()}>
-          <input {...getInputProps()} />
-          {isDragActive ? (
-            <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-          ) : (
-            <p>Arrastra hasta aqui el archivo </p>
-          )}
-          <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-        </div>
-      </Paper>
+      
 
 
       {/*  {
