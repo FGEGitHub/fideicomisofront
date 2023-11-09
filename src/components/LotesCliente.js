@@ -647,7 +647,7 @@ const LotesCliente = (props) => {
                                             </Paper>
 
                                             <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                                        </Grid>
+                                        </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/'+idlote) }}  > Imprimir comprobante</Fab>
                                     </Box>
                                 </div>
 
