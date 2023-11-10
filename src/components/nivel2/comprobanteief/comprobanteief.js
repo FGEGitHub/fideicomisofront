@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     borderTop: 1,
     borderBottom: 1,
+    
     borderColor: '#000000',
     marginBottom: 20,
     paddingBottom: 10,
@@ -37,13 +38,17 @@ const styles = StyleSheet.create({
   detalle: {
     width: '30%',
     textAlign: 'right',
-    fontSize: 12,
+    fontSize: 17,
   },
   tableContainer: {
+    marginTop: 50,
     marginBottom: 20,
+    marginLeft: 40,
+    alignItems: 'center',
+    width: '90%',
   },
   tableHeader: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#cfd8dc',
     flexDirection: 'row',
     borderBottom: 1,
     borderColor: '#000000',
@@ -82,7 +87,7 @@ const styles = StyleSheet.create({
   },
   selloImage: {
     width: '50%',
-    
+
   },
   pieDePagina: {
     position: 'absolute',
@@ -111,25 +116,25 @@ const styles = StyleSheet.create({
 
 const ComprobantePDF = ({ data }) => {
   let params = useParams()
-    let id = params.id
+  let id = params.id
   const [clients, setClients] = useState();
-    const [loading, setLoading] = useState(true);
-    const [tot, setTot] = useState();
+  const [loading, setLoading] = useState(true);
+  const [tot, setTot] = useState();
 
 
 
   useEffect(() => {
     getClients()
-}, [])
+  }, [])
 
-const getClients = async () => {
+  const getClients = async () => {
 
     const dde = await servicioCuotas.verief(id)
     console.log(dde)
-  setClients(dde)
-  //setTot(clients[1])
-  setLoading(false);
-}
+    setClients(dde)
+    //setTot(clients[1])
+    setLoading(false);
+  }
 
 
 
@@ -138,63 +143,117 @@ const getClients = async () => {
 
   return (
     <>
-    {clients ? <>
-    <PDFViewer width="100%" height="1000px">
-      <Document>
-        <Page size="A4">
-          <View style={styles.container}>
-            <View style={styles.logo}>
-              <Image src={logo} style={styles.logoImage} />
-            </View>
-            <View style={styles.fecha}>
-             {/*  <Text>Fecha:{clients[0].fecha} </Text> */}
-            </View>
-            <View style={styles.detalle}>
-              
-              <Text  style={{ textAlign: 'left' }}>Nro comprobante:123</Text>
-          
-            </View>
-          </View>
-
-          <View style={styles.tableContainer}>
-            <View style={styles.tableHeader}>
-              <Text style={styles.columnHeader}>ID de pago</Text>
-              <Text style={styles.columnHeader}>Corresponde</Text>
-             
-            </View>
-
-            {clients[0].map((ob)=>
-              <View style={styles.tableRow}>
-
-                <Text style={styles.cell}>{ob.datoa}</Text>
-              
-    
-                <Text style={styles.cell}>{ob.datob}</Text>
-              
-              </View>
-       )}
-          </View>
-          <View style={styles.pieDePagina}>
-                  <Text>Fideicomiso Santa Catalina</Text>
-                  <Text>Dirección: 25 de Mayo 1476</Text>
-                  <Text>Teléfono: 3795171604 </Text>
-                  {/* Agrega aquí los datos que desees mostrar */}
+      {clients ? <>
+        <PDFViewer width="100%" height="1000px">
+          <Document>
+            <Page size="A4">
+              <View style={styles.container}>
+                <View style={styles.logo}>
+                  <Image src={logo} style={styles.logoImage} />
                 </View>
-           
-          <View style={styles.pieDePaginaSello}>
-            <Image src={Firma}  style={styles.selloImage} />
-    
-          </View>
-          
-          <View style={styles.pieDePaginaSellodesc}>
-            
-            <Text>Santiago Merino </Text>
-          </View>
-        </Page>
-      </Document>
-    </PDFViewer>
-       </>:<></>}
-    
+                <View style={styles.fecha}>
+                  {/*  <Text>Fecha:{clients[0].fecha} </Text> */}
+                </View>
+                <View style={styles.detalle}>
+
+                  <Text style={{ textAlign: 'left' }}>Detalles deuda </Text>
+                  <Text style={{ textAlign: 'left' }}> exigible</Text>
+
+                </View>
+              </View>
+
+              <View style={styles.tableContainer}>
+                <View style={styles.tableHeader}>
+                  <Text style={styles.columnHeader}>ID de pago</Text>
+                  <Text style={styles.columnHeader}>Corresponde</Text>
+
+                </View>
+
+                {clients[0].map((ob) =>
+
+                  <View style={styles.tableHeader}>
+
+                    <Text style={styles.columnHeader}>{ob.datoa}</Text>
+
+
+                    <Text style={styles.columnHeader}>{ob.datob}</Text>
+
+                  </View>
+                )}
+              </View>
+              <View style={styles.pieDePagina}>
+                <Text>Fideicomiso Santa Catalina</Text>
+                <Text>Dirección: 25 de Mayo 1476</Text>
+                <Text>Teléfono: 3795171604 </Text>
+                {/* Agrega aquí los datos que desees mostrar */}
+              </View>
+
+              <View style={styles.pieDePaginaSello}>
+                <Image src={Firma} style={styles.selloImage} />
+
+              </View>
+
+              <View style={styles.pieDePaginaSellodesc}>
+
+                <Text>Santiago Merino </Text>
+              </View>
+            </Page>
+          </Document>
+        </PDFViewer>
+        <PDFViewer width="100%" height="1000px">
+          <Document>
+            <Page size="A4">
+              <View style={styles.container}>
+                <View style={styles.logo}>
+                  <Image src={logo} style={styles.logoImage} />
+                </View>
+                <View style={styles.fecha}>
+                  {/*  <Text>Fecha:{clients[0].fecha} </Text> */}
+                </View>
+                <View style={styles.detalle}>
+
+                  <Text style={{ textAlign: 'left' }}>Detalles de cuotas </Text>
+                  <Text style={{ textAlign: 'left' }}> pendientes</Text>
+                </View>
+              </View>
+
+              <View style={styles.tableContainer}>
+         
+         
+
+                {clients[1].map((ob) =>
+
+                  <View style={styles.tableHeader}>
+
+                    <Text style={styles.columnHeader}>{ob.datoa}</Text>
+
+
+                    <Text style={styles.columnHeader}>{ob.datob}</Text>
+
+                  </View>
+                )}
+              </View>
+              <View style={styles.pieDePagina}>
+                <Text>Fideicomiso Santa Catalina</Text>
+                <Text>Dirección: 25 de Mayo 1476</Text>
+                <Text>Teléfono: 3795171604 </Text>
+                {/* Agrega aquí los datos que desees mostrar */}
+              </View>
+
+              <View style={styles.pieDePaginaSello}>
+                <Image src={Firma} style={styles.selloImage} />
+
+              </View>
+
+              <View style={styles.pieDePaginaSellodesc}>
+
+                <Text>Santiago Merino </Text>
+              </View>
+            </Page>
+          </Document>
+        </PDFViewer>
+      </> : <></>}
+
     </>
   );
 };
