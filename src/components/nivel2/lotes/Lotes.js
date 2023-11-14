@@ -8,6 +8,7 @@ import CargaDeTabla from "../../CargaDeTabla"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
+import Modaldetalles from './modalver'
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -25,13 +26,20 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                <EditIcon
-                    onClick={() => onClick(data[dataIndex].id, dataIndex)}
-                    style={{ marginRight: "10px", cursor: "pointer" }}
-                />
-                <SearchIcon style={{ cursor: "pointer" }}
-                    onClick={() => navigate('/usuario2/detallecliente/' + clients[dataIndex].cuil_cuit)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
+              <Modaldetalles
+              zona={clients[0][dataIndex]['zona']}
+              fraccion={clients[0][dataIndex]['fraccion']}
+              manzana={clients[0][dataIndex]['manzana']}
+              lote={clients[0][dataIndex]['lote']}
+              parcela={clients[0][dataIndex]['parcela']}
+              adrema={clients[0][dataIndex]['adrema']}
+              superficie={clients[0][dataIndex]['superficie']}
+              mensura={clients[0][dataIndex]['mensura']}
+              nombre={clients[0][dataIndex]['nombre']}
+              cuil_cuit={clients[0][dataIndex]['cuil_cuit']}
+            
+
+              />
             </>
         );
     }
@@ -52,6 +60,19 @@ const Lotes = () => {
 
     // definimos las columnas
     const columns = [
+        {
+            name: "Ver/ir",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    CutomButtonsRenderer(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
         {
             name: "zona",
             label: "Zona",
@@ -86,6 +107,10 @@ const Lotes = () => {
         {
             name: "cuil_cuit",
             label: "cuil_cuit",
+        },
+        {
+            name: "nombre",
+            label: "Persona",
         },
 
         /*   {

@@ -499,7 +499,7 @@ const LotesCliente = (props) => {
 
                 <h3>  {cuotas ? <>
                  
-                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
+                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}
                 <FormControlLabel
                     control={
                         <Switch checked={act2} onChange={handleChange2} />
@@ -512,7 +512,7 @@ const LotesCliente = (props) => {
                     }
                     label="Cuotas"
                 />
-
+</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
 
             </FormControl>
 
