@@ -113,11 +113,7 @@ const Lotes = () => {
             }
         
         },   
-        {
-            name: "razon",
-            label: "Razon",
-           
-        },
+    
         {
             name: "observaciones",
             label:"Observaciones",

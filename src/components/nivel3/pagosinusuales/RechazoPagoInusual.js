@@ -47,10 +47,10 @@ export default function FormDialog(props) {
       </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Rechazar</DialogTitle>
+        <DialogTitle></DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Detalla  motivo del rechazo 
+            Detalla  motivo 
           </DialogContentText>
           <form  onSubmit={rechazar}>
 

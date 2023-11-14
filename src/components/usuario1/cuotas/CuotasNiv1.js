@@ -254,7 +254,7 @@ const CuotasNiv1 = (props) => {
 
       <br /><br /><br /><br /><br /><br />
       <div style={{ textAlign: 'center' }}>
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
+      <ButtonGroup  aria-label="outlined primary button group">
       {
         lotes.map((item, index) =>
           <Stack spacing={2} direction="row">
@@ -282,7 +282,7 @@ const CuotasNiv1 = (props) => {
         },
       }}
     >
-<ButtonGroup variant="contained" aria-label="outlined primary button group">
+<ButtonGroup aria-label="outlined primary button group">
       {
         lotes.map((item, index) =>
         <Stack spacing={2} direction="row">

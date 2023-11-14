@@ -761,10 +761,10 @@ const LotesCliente = (props) => {
                                                         
                                                             }}
                                                             />
-                                                                <CurrencyExchangeIcon
+                                                              {/*   <CurrencyExchangeIcon
                                                                     onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
-                                                                />
+                                                                /> */}
                                                                 <SearchIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                                                                 />
