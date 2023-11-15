@@ -37,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const TablaNotificaciones = (props) => {
-    const [cbus, setCbus] = useState([''])
+    const [cbus, setCbus] = useState([])
     const [usuario, setUsuario] = useState([''])
     const navigate = useNavigate();
     useEffect(() => {
