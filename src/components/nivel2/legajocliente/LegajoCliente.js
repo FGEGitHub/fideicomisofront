@@ -20,11 +20,7 @@ import ModalSeguro from './Modalseguroborrar'
 
 const LegajoCliente = (props) => {
   const navigate = useNavigate();
-  const [legajos, setLegajos] = useState([])
-  const [file, setFile] = useState(null);
-  const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-  const [address, setAddress] = useState(null);
-  const [editMode, setEditMode] = useState(false);
+
   let params = useParams()
   let cuil_cuit = params.cuil_cuit
       const [products, setProducts] = useState([])
@@ -42,7 +38,6 @@ const LegajoCliente = (props) => {
          
         const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
        
-       console.log(notis[0])
         setUser(notis[0])
         setCargado(true)
       

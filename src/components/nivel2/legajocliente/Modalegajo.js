@@ -141,18 +141,23 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                     <option value={'Cbu familiar'}>CBU familiar</option>
                         <option value={'Dni'}>dni</option>
                         <option value={'Constancia de Afip'}>Constancia de Afip</option>
+                        <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option> 
+                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
+                        <option value={'Ultimos balances'}>Ultimos Balances</option> 
+                        <option value={'DjIva'}>DJ IVA</option> 
+                        <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
+                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
+                            <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
+                          <option value={'Dj Datospers'}>DJ Datos Personales</option>   
                         <option value={'Estatuto Social'}>Estatuto Social</option>
                         <option value={'Acta del organo decisorio'}>Acta de organo Sucesorio Asignado</option>
-                        <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option>
-                        <option value={'Ultimos balances'}>Ultimos Balances</option>
-                        <option value={'DjIva'}>DJ IVA</option>
-                        <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
-                        <option value={'Dj Datospers'}>DJ Datos Personales</option>
-                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona</option>
-                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos</option>
-                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
-                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
-                        <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
+                        
+                        
+                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona(Pers fisica)</option>
+                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos(Pers fisica)</option>
+                        
+                       
+                    
                         
 
                         
