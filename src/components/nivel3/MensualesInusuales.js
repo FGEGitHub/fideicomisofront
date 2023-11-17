@@ -169,8 +169,8 @@ const MensualInusuales = (props) => {
         }, */
         
         {
-            name: "domicilio",
-            label: "Direccion",
+            name: "proceso",
+            label: "Clasificacion",
 
         },
       
@@ -304,7 +304,7 @@ const MensualInusuales = (props) => {
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>INGRESOS</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>MONTO</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>ESTADO</b></TableCell>
-                                                   
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>Clasificacion</b></TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -318,7 +318,7 @@ const MensualInusuales = (props) => {
                                                             <StyledTableCell component="th" scope="row">{row.ingresos} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.monto} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.estado =='P' ? <>Pendiente</>:<>  Aprobado</>} </StyledTableCell>
-
+                                                            <StyledTableCell component="th" scope="row">{row.proceso} </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}
 
