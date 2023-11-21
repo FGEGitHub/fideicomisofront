@@ -155,9 +155,10 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         
                         <option value={'Dj CalidadPerso'}>DJ Calidad de Persona(Pers fisica)</option>
                         <option value={'Dj OrigenFondos'}>DJ Origen de fondos(Pers fisica)</option>
-                        
-                       
-                    
+
+                        <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
+                        <option value={'Pago Monotributo'}>Pago Monotributo</option>
+                        <option value={'Pago autonomo'}>Pago de autonomo</option>
                         
 
                         
