@@ -143,7 +143,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         <option value={'Constancia de Afip'}>Constancia de Afip</option>
                         <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option> 
                         <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
-                        <option value={'Ultimos balances'}>Ultimos Balances</option> 
+                        <option value={'Ultimos balances CPCE'}>Ultimos Balances certificados en el CPCE </option> 
                         <option value={'DjIva'}>DJ IVA</option> 
                         <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
                         <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
