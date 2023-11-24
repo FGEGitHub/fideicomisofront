@@ -145,7 +145,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
                         <option value={'Ultimos balances CPCE'}>Ultimos Balances certificados en el CPCE </option> 
                         <option value={'DjIva'}>DJ IVA</option> 
-                        <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
+                        <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
                         <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
                             <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
                           <option value={'Dj Datospers'}>DJ Datos Personales</option>   
