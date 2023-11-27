@@ -1,3 +1,5 @@
+///////foto dni
+
 import React from 'react';
 import { Paper, Button,CircularProgress } from '@mui/material';
 import { useCallback, useState } from 'react';

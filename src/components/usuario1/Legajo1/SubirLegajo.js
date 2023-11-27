@@ -42,24 +42,25 @@ const SubirLegajo = () => {
         if (preba.razon == 'Persona') {
             setSteps([
                 { label: 'Fotocopia Dni', completed: completoo[0] },
-                { label: 'Constancia de CUIL/CUIT', completed: completoo[1] },
-                { label: 'Acreditacion de Domicilio', completed: completoo[2] },
-                { label: 'DJJ Datos Personales', completed: completoo[3] },
-                { label: 'DJJ Calidad de Persona(pep)', completed: completoo[4] },
-                { label: 'DJJ Origen de fondos', completed: completoo[5] },
-                { label: 'Acreditacion de ingresos', completed: completoo[6] },
-                { label: 'Constancias de CBU', completed: completoo[7] },
+              
+                { label: 'Acreditacion de Domicilio', completed: completoo[1] },
+                { label: 'DJJ Datos Personales', completed: completoo[2] },
+                { label: 'DJJ Calidad de Persona(pep)', completed: completoo[3] },
+                { label: 'DJJ Origen de fondos', completed: completoo[4] },
+                { label: 'Acreditacion de ingresos', completed: completoo[5] },
+        
+                { label: 'Constancia de Cuil/Cuit', completed: completoo[6] },
                 { label: 'Otras constancias', completed: false},
 
             ])
         } else {
             setSteps([
                 { label: 'Fotocopia Dni', completed: completoo[0] },
-                { label: 'Constancia de CUIL/CUIT', completed: completoo[1] },
-                { label: 'Acreditacion de Domicilio', completed: completoo[2] },
-                { label: 'DJJ Datos Personales', completed: completoo[3] },
-                { label: 'DJJ Calidad de Persona(pep)', completed: completoo[4] },
-                { label: 'DJJ Origen de fondos', completed: completoo[5] },
+             
+                { label: 'Acreditacion de Domicilio', completed: completoo[1] },
+                { label: 'DJJ Datos Personales', completed: completoo[2] },
+                { label: 'DJJ Calidad de Persona(pep)', completed: completoo[3] },
+                { label: 'DJJ Origen de fondos', completed: completoo[4] },
 
 
 
@@ -111,35 +112,36 @@ const SubirLegajo = () => {
                         }}
                         
                         />,
-                    1: <AddConstanciaCuil_cuit
+        
+
+                    1: <AddDomicilio
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
+                    2: <DjjDatosPerso
                         cuil_cuit={user.cuil_cuit} 
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }}/>,
 
-                    2: <AddDomicilio
-                        cuil_cuit={user.cuil_cuit} 
-                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
-                        }}/>,
-                    3: <DjjDatosPerso
-                        cuil_cuit={user.cuil_cuit} 
-                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
-                        }}/>,
-
-                    4: <DjjCalidadPep
+                    3: <DjjCalidadPep
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                    5: <   DjjOrigen
+                    4: <   DjjOrigen
                         cuil_cuit={user.cuil_cuit} 
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }}/>,
-                    6: <   AcreditacionIngresos
+                    5: <   AcreditacionIngresos
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                     7: <   OtrasConstancias
+                 
+                       6: <AddConstanciaCuil_cuit
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
+                        7: <   OtrasConstancias
                         cuil_cuit={user.cuil_cuit} />,
-
 
 
 

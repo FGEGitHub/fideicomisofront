@@ -10,11 +10,12 @@ import AddActa from "../addActa/AddActa";
 import IIBB from "../iibb/IIBB";
 import ReferenciasComerciales from "../referenciascomerciales/ReferenciasComerciale";
 import ServicioUsuario1 from "../../../../services/usuario1"
-
+import AddAfip from "../addAfip/AddAfip";
 
 const MenuDatosEmpresa = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [steps, setSteps] = useState([
+        { label: 'Constancia de Afip', completed: false },
         { label: 'Ultimos Balances', completed: false },
         { label: 'DJ IVA', completed: false },
         { label: 'Pagos Previsionales', completed: false },
@@ -55,13 +56,14 @@ const MenuDatosEmpresa = () => {
             ])
         } else {
             setSteps([
+                { label: 'Constancia AFIP', completed: completoo[5] },
                 { label: 'Ultimos Balances', completed: completoo[6] },
                 { label: 'DJ IVA', completed: completoo[7] },
                 { label: 'Pagos Previsionales', completed: completoo[8] },
                 { label: 'Estatuto Social', completed: completoo[9] },
                 { label: 'Acta del organo decisorio', completed: completoo[10] },
                 { label: 'Referencias comerciales', completed: completoo[11] },
-                { label: 'IIBBs', completed: false },
+                { label: 'IIBBs',completed: completoo[12]},
 
 
 
@@ -95,38 +97,43 @@ const MenuDatosEmpresa = () => {
             </Stepper>
             <Box>
                 {{
-                    0: <UltimosBal
+                         0: <AddAfip
+                         cuil_cuit={user.cuil_cuit} 
+                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                         }}/>,
+
+                    1: <UltimosBal
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                    1: <DjIva
+                    2: <DjIva
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }}
                     />,
-                    2: <PagosPrev
+                    3: <PagosPrev
                         cuil_cuit={user.cuil_cuit}  
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }}
                         />,
-                    3: <AddEstatuto
+                    4: <AddEstatuto
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                    4: <AddActa
+                   5: <AddActa
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                    5: <ReferenciasComerciales
+                    6: <ReferenciasComerciales
                         cuil_cuit={user.cuil_cuit}
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }} />,
-                   6: <IIBB
+                  7: <IIBB
                         cuil_cuit={user.cuil_cuit} 
                         enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
                         }}/>,
-
-
+                   
+                        
 
 
                 }[activeStep]}
