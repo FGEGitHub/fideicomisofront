@@ -21,20 +21,18 @@ const Lotes = () => {
     const navigate = useNavigate();
 
 
-    
+        useEffect(() => {
+        getClients()
+    }, [])
 
     const getClients = async () => {
         
-        const clients = await servicioClientes.lista({
-
-        })
+        const clients = await servicioClientes.lista({}) //////  api/links/infocantidad
         setClients(clients)
         setLoading(false);
     }
 
-    useEffect(() => {
-        getClients()
-    }, [])
+
 
     ///
 //opcionde click en el nombre
@@ -78,7 +76,9 @@ const Lotes = () => {
           </>
         );
       }
-    // definimos las columnas
+
+
+    // definimos las columnas de la tabla mui de clientes
     const columns = [
         {
             name: "id",
@@ -142,7 +142,7 @@ const Lotes = () => {
 // renderiza la data table
 return (
     <>
-    {loading ? (<CargaDeTabla/>)
+    {loading ? (<CargaDeTabla/>) 
         :(
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
@@ -150,13 +150,17 @@ return (
  <Alert severity="info">Cantidad de clientes: {clients.length}</Alert>
     </Stack>
     <br/>
-    <Nuevo
+{/* componente de cliente nuevo, envio de funcion para actualizar de inmediato */}
+    <Nuevo  
     getClients =  { async () => {
         const clients = await servicioClientes.lista({
         })
         setClients(clients)
     }}
     />
+
+
+
         <MUIDataTable
         
             title={"Lista de Clientes"}

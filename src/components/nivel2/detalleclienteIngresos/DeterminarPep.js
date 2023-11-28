@@ -30,11 +30,9 @@ const currencies = [
 export default function SelectTextFields(props) {
   const [open, setOpen] = React.useState(false);
   //const usuario  = useUser().userContext
-  const [file, setFile] = useState(null);
+
   const [fileUpload, setFileUpload] = useState(null);
-  const [lotes, setLotes] = useState([''])
-  const [cuotas, setCuotas] = useState([''])
-   const [ultima, setUltima] = useState([''])
+
    const [establecer, setEstablecer] = useState({
     cuil_cuit:props.cuil_cuit,
     expuesta:'SI'

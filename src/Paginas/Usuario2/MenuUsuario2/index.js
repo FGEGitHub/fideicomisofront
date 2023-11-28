@@ -1,7 +1,7 @@
 import * as React from 'react';
 import  { useEffect, useState } from "react";
 import TableAxios from '../../../components/nivel2/listadeclientes/Table';
-
+import {nivel} from '../../../herlpers/herlperlogin'
 import { useNavigate } from "react-router-dom";
 
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
@@ -26,51 +26,26 @@ export default function MenuUsuario2() {
      
     }, [])
 
-
+/////////////////////////////////////Deslogueo si no es nivel 2
     const traer = async () => {
+     const esniv2 =  await nivel(2) //helper de verificacion
+     console.log(esniv2)
+     if (esniv2){
+      setLogueado(true)
+     }else{
+      navigate('/login')
+     }
 
-      const loggedUserJSON = await window.localStorage.getItem('loggedNoteAppUser')
-    
-      if (loggedUserJSON) {
-  
-        try {
-         
-        
-        const user = JSON.parse(loggedUserJSON)
-        console.log(2)
-        if (user.nivel === 2){
-          setLogueado(true)
-          
-     
-        }else{
-          alert('Debe volver a iniciar sesion ')
-          window.localStorage.removeItem('loggedNoteAppUser')
-          
-        }
-      } catch (error) {
-        console.log(1)
-        window.localStorage.removeItem('loggedNoteAppUser')
-        navigate('/login')
-      }
-        //servicioUsuario.setToken(user.token)  
-       
-        
-      }else{
-        navigate('/login')
-       
-      }
-      
     }
 
+    
 
   return (
     <div> 
     { logueado ? <div> 
       
     <BarraLAteral>
-
-    
-    <TableAxios/>
+    <TableAxios/> {/* Children */}
  </BarraLAteral>
  </div>   :<div></div> } </div>
   );

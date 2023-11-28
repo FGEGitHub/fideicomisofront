@@ -6,7 +6,7 @@ import Banner from '../../../components/usuario1/Banner'
 import Cards from '../../../components/usuario1/Cards'
 import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
-
+import {nivel} from '../../../herlpers/herlperlogin'
 
 import { Divider, Toolbar } from '@mui/material';
 import { useEffect, useState } from "react";
@@ -23,35 +23,27 @@ export default function MenuUsuario1() {
     const navigate = useNavigate();
     const [logueado, setLogueado] = useState(false) 
 
-
     useEffect(() => {
    
-    traer()
-      
-        //servicioUsuario.setToken(user.token)  
-       
-        
-     
-    }, [])
-
-
-    const traer = async () => {
-      const loggedUserJSON = await window.localStorage.getItem('loggedNoteAppUser')
-      console.log(loggedUserJSON)
-
+        traer()
+          
+            //servicioUsuario.setToken(user.token)  
+           
+            
+         
+        }, [])
     
-     if (!loggedUserJSON){
-       
-       window.localStorage.removeItem('loggedNoteAppUser')
-    navigate('/login')
-
-     }else{
-       console.log('user')
-       setLogueado(true)
-     }
-
-
-    }
+    /////////////////////////////////////Deslogueo si no es nivel 1
+        const traer = async () => {
+         const esniv2 =  await nivel(1) //helper de verificacion
+         console.log(esniv2)
+         if (esniv2){
+          setLogueado(true)
+         }else{
+          navigate('/login')
+         }
+    
+        }
     return (
         <><div>  { logueado ? <div> 
             <div disableSticky={false} className="App">

@@ -22,13 +22,13 @@ const DetalleCliente = () => {
     }, [])
      const traer = async () => {
 
-        const clientee = await servicioCliente.clientehabilitado(cuil_cuit)
-       
+        const clientee = await servicioCliente.clientehabilitado(cuil_cuit) ////api/links/clientehabilitado
          setCliente(clientee[1])
-    console.log(clientee[0])
+        /// veridicacion de cliente segun posibilidad de gestionarlo
          if (clientee[0][0].habilitado =='Si'){
              sethabilitado(true)
          }
+           /// veridicacion de cliente segun PEP
          if (clientee[0][0].expuesta =='SI'){
           setExpuesta(true)
       }
@@ -86,7 +86,6 @@ const DetalleCliente = () => {
       
             {<LotesCliente
                   cuil_cuit={cuil_cuit} />}
-
 
                  
             </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }

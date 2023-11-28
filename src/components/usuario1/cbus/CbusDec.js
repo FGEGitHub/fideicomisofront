@@ -180,6 +180,10 @@ const TablaNotificaciones = (props) => {
 
                         <TableContainer>
                             {!cbus ? <Skeleton /> : <>
+
+
+
+                            {cbus.length >0 ? <>
                                 <Table >
                                     <TableHead>
                                         <TableRow>
@@ -237,6 +241,10 @@ const TablaNotificaciones = (props) => {
 
                                     </TableBody>
                                 </Table>
+                                </>:<>
+                                <h2 >No tienes CBU(s) asociados</h2>
+                                
+                                </>}
                             </>}
 
                         </TableContainer>

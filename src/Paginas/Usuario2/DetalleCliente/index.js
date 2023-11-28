@@ -1,55 +1,41 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
-
+import {nivel} from '../../../herlpers/herlperlogin'
 
 import DetalleC from '../../../components/nivel2/detalleclienteIngresos/Detallecliente';
 
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
-import servicioUsuario from '../../../services/usuarios'
-
-
-
-//import {makeStyles} from "@material-ui/core/styles"
-
 
 
 
 
 export default function DetalleCliente() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null)
-  const [modal, setModal] = useState(false)
- 
+
  
   const [logueado, setLogueado] = useState(false) 
+
   useEffect(() => {
-    
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-    if (loggedUserJSON) {
-      
-      const user = JSON.parse(loggedUserJSON)
-      if (user.nivel != 2 && user.nivel != 3    ){
-        window.localStorage.removeItem('loggedNoteAppUser')
    
-
-      }else{
-
-        setLogueado(true)
-      }
-    
-      //servicioUsuario.setToken(user.token)  
-     
+    traer()
       
+        //servicioUsuario.setToken(user.token)  
+       
+        
+     
+    }, [])
+
+  const traer = async () => {
+    const esniv2 =  await nivel(2) //helper de verificacion
+    console.log(esniv2)
+    if (esniv2){
+     setLogueado(true)
     }else{
-      navigate('/login')
-     
+     navigate('/login')
     }
-   
-  }, []) 
 
-
+   }
   
   
 

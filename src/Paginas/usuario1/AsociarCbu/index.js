@@ -2,36 +2,36 @@
 
 
 import Navbar from '../../../components/usuario1/Navbar1'
-import Modalasociar from '../../../components/usuario1/AsociarCbu/ModalAsociar'
 import Tabla from '../../../components/usuario1/cbus/CbusDec'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {nivel} from '../../../herlpers/herlperlogin'
 
 
 export default function AsociarCbu() {
     const navigate = useNavigate();
     const [logueado, setLogueado] = useState(false) 
     useEffect(() => {
-      const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
-        if (!user){
-          window.localStorage.removeItem('loggedNoteAppUser')
-       navigate('/login')
-  
-        }else{
-  
-          setLogueado(true)
-        }
-      
-        //servicioUsuario.setToken(user.token)  
-       
+   
+      traer()
         
+          //servicioUsuario.setToken(user.token)  
+         
+          
+       
+      }, [])
+  
+  /////////////////////////////////////Deslogueo si no es nivel 1
+      const traer = async () => {
+       const esniv2 =  await nivel(1) //helper de verificacion
+       console.log(esniv2)
+       if (esniv2){
+        setLogueado(true)
+       }else{
+        navigate('/login')
+       }
+  
       }
-     
-    }, [])
   
   
     
@@ -48,7 +48,7 @@ export default function AsociarCbu() {
 
                 <Navbar />
                 <br />  <br />  <br />  <br />
-              
+          
                 <  Tabla/>
                 
 

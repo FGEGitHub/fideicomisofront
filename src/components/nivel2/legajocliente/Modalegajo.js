@@ -141,6 +141,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                     <option value={'Cbu familiar'}>CBU familiar</option>
                         <option value={'Dni'}>dni</option>
                         <option value={'Constancia de Afip'}>Constancia de Afip</option>
+                      
                         <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option> 
                         <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
                         <option value={'Ultimos balances CPCE'}>Ultimos Balances certificados en el CPCE </option> 
@@ -152,10 +153,10 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         <option value={'Estatuto Social'}>Estatuto Social</option>
                         <option value={'Acta del organo decisorio'}>Acta de organo Sucesorio Asignado</option>
                         
-                        
+                          <option value={'Constancia CUIL/CUIT'}> Constancia CUIL/CUIT(Pers fisica)</option>
                         <option value={'Dj CalidadPerso'}>DJ Calidad de Persona(Pers fisica)</option>
                         <option value={'Dj OrigenFondos'}>DJ Origen de fondos(Pers fisica)</option>
-
+                       
                         <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
                         <option value={'Pago Monotributo'}>Pago Monotributo</option>
                         <option value={'Pago autonomo'}>Pago de autonomo</option>
