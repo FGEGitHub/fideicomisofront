@@ -5,11 +5,10 @@ import React, { useEffect, useState, Fragment } from "react";
 import Skeleton from '@mui/material/Skeleton';
 import Fab from '@mui/material/Fab';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { List, ListItem, ListItemText, Checkbox } from '@mui/material';
-
+import NativeSelect from '@mui/material/NativeSelect';
 import { useNavigate } from "react-router-dom";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Stack from '@mui/material/Stack';
@@ -22,7 +21,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@material-ui/core";
 import InformarPago from './PagodeCuota'
-import ButtonGroup from '@mui/material/ButtonGroup';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -57,6 +57,7 @@ const CuotasNiv1 = (props) => {
 
   const [cuotas, setCuotas] = useState([''])
   const [pagos, setPagos] = useState([''])
+  const [age, setAge] = React.useState('');
 
 
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const CuotasNiv1 = (props) => {
   };
 
   const vercuotas = async (index) => {
-    
+    verief(index)
     const cuotas = await servicioUsuario1.vercuotas(index)
     console.log(cuotas)
     if (cuotas[0] !== '') {
@@ -98,15 +99,6 @@ const CuotasNiv1 = (props) => {
     setAct(true)
 
   };
-  //////////servicioCuotas
-
-  const borarTodas = async (index) => {
-
-    const cuotas = await servicioCuotas.borrarcuotas(index)
-
-
-  };
-
 
 
   const traer = async (preba) => {
@@ -247,60 +239,46 @@ const CuotasNiv1 = (props) => {
 
 
   ];
-
+  const handleChange = (event) => {
+    vercuotas(event.target.value);
+  };
   return (
 
-    <Fragment>
+    <>
 
       <br /><br /><br /><br /><br /><br />
       <div style={{ textAlign: 'center' }}>
-      <ButtonGroup  aria-label="outlined primary button group">
-      {
-        lotes.map((item, index) =>
-          <Stack spacing={2} direction="row">
-            <Fab key={index} variant="extended" onClick={() => { vercuotas(item['id']) }}> {item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}
-
-            </Fab>
-            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
-          
-
-
-            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
-         
+      <Box sx={{ minWidth: 120 }}>
+ 
+      <TextField component="form"
         
-          </Stack>
-          
-        )
-      }
-</ButtonGroup>
-<br/>
-<Box
-      sx={{
-        display: 'flex',
-        '& > *': {
-          m: 1,
-        },
-      }}
-    >
-<ButtonGroup aria-label="outlined primary button group">
-      {
-        lotes.map((item, index) =>
-        <Stack spacing={2} direction="row">
-            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
-            <Fab key={index} variant="extended" onClick={() => { verief(item['id']) }}>
-              <LocalAtmIcon sx={{ mr: 1 }} />
-              Estado financiero
-            </Fab>
+              noValidate
+
+
+              id="outlined-select-currency"
+              select
+              label="Elegir Lote"
+            
+              name="cbu"
+              onChange={handleChange}
+              helperText="Seleccionar"
+            >
+              {
+                lotes.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                   {option['zona']} Manzana {option['manzana']}  p {option['parcela']}
+                  </MenuItem>
+                ))}
+            </TextField>
+    </Box>
+  
+        
       
+    
 
-            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
+<br/>
 
-        
-          </Stack>
-        )
-      }
-</ButtonGroup>
-</Box>
+
 </div>
 
 
@@ -337,8 +315,6 @@ const CuotasNiv1 = (props) => {
                                                         <TableHead>
                                                             <TableRow>
                                                                 <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
-
-
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -544,7 +520,7 @@ const CuotasNiv1 = (props) => {
       <br /><br /><br /><br />
 
 
-    </Fragment>
+    </>
 
   )
 
