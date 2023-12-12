@@ -62,6 +62,9 @@ const prueba= async  (s) => {
     
    
 }  
+
+
+
 const listalotes= async  () => {
    
     const {data } = await axios.get(baseUrl+'listadelotes',config)
@@ -132,6 +135,13 @@ const lotesCliente2= async  (cuil_cuit) => {
     return data 
 }  
 
+const determinarmapa1= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'determinarmapa1',datos,config)
+     console.log(data)
+     return data 
+ }  
+
 const modificarlote= async  (datos) => {
     console.log(datos)
      const {data } = await axios.post(baseUrl+'modificarlote',datos,config)
@@ -151,4 +161,4 @@ const nuevolote= async  (datos) => {
      return data 
  }  
  
-export default {lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+export default {determinarmapa1,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};

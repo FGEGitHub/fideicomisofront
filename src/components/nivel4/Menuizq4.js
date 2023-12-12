@@ -59,6 +59,11 @@ export default function MenuIzq2 ({children}) {
         icon: <AssignmentIndIcon color="primary" />, 
         path: '/legales/perfil' 
       },
+      { 
+        text: 'mapas', 
+        icon: <AssignmentIndIcon color="primary" />, 
+        path: '/legales/mapas' 
+      },
       /*   { 
           text: 'Expedientes', 
           icon: <GroupIcon color="primary" />, 

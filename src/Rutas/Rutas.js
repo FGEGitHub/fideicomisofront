@@ -73,7 +73,7 @@ import Perfilleg from '../Paginas/Nivel4/Perfil';
 import PagosNvel4 from '../Paginas/Nivel4/pagarcuota';
 import Comprobantepag from '../Paginas/Nivel4/comprobante';
 import Resumen4 from '../Paginas/Nivel4/resumen';
-
+import Mapalegales from '../Paginas/Nivel4/mapas';
 
 
 /////////// Administracion
@@ -94,6 +94,7 @@ import Alumnos from '../Paginas/Esme/Alumnos'
 
 import Home from '../Paginas/Home/Home'
 import HomeCalculo from '../Paginas/Home/Calculo'
+import Mapaarg from '../Paginas/maparg'
 
 
 
@@ -103,9 +104,9 @@ const Rutas = [
 
 	 {path: '/home',element: (<Home />)},
 	 {path: '/home/calcular',element: (<HomeCalculo />)},
+	 {path: '/home/maparg',element: (<Mapaarg />)},
+
 	 
-
-
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
@@ -191,7 +192,7 @@ const Rutas = [
 	{ path: '/legales/pagarcuota/:id', element: <PagosNvel4 /> },
 	{ path: '/legales/comprobante/:id', element: <Comprobantepag /> },
 	{ path: '/legales/resumen', element: <Resumen4 /> },
-
+	{ path: '/legales/mapas', element: <Mapalegales /> },
 
 
 	{ path: '/admin/usuarios', element: <Usuarios /> },
