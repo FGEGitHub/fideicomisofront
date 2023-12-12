@@ -42,7 +42,7 @@ const Arg = () => {
 
   const handleOpenDialog = (p) => {
     setInfo(p)
-    setForm({ mapa1: p })
+    setForm({ mapa1: p,fraccion:1,manzana:1,lote:1 })
     dialogRef.current.openDialog();
 
 
@@ -30987,7 +30987,8 @@ const Arg = () => {
             id: 'uncontrolled-native',
 
           }}
-        >   <option value={'A'}>A</option>
+        >   <option value={1}>Seleccionar</option>  
+        <option value={'A'}>A</option>
           <option value={"B"}>B</option>
           <option value={"C"}>C</option>
           <option value={"D"}>D</option>
@@ -31006,7 +31007,8 @@ const Arg = () => {
             id: 'uncontrolled-native',
 
           }}
-        >   <option value={1}>1</option>
+        >  <option value={1}>Seleccionar</option>  
+         <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
           <option value={4}>4</option>
@@ -31051,7 +31053,8 @@ const Arg = () => {
             id: 'uncontrolled-native',
 
           }}
-        >   <option value={1}>1</option>
+        ><option value={1}>Seleccionar</option>  
+         <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
           <option value={4}>4</option>
