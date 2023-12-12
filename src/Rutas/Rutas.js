@@ -17,7 +17,7 @@ import AgregarVariascuotasL from "../Paginas/Usuario2/AgregarcuotasvariosL"
 import Novedades from "../Paginas/Usuario2/Novedades"
 import Chats from "../Paginas/Usuario2/chats"
 import Comprobanteief from "../Paginas/Usuario2/comporbanteief"
-
+import Mapaniv2 from '../Paginas/Usuario2/mapas';
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
 import Navbar from "../components/Navbar";
@@ -160,6 +160,7 @@ const Rutas = [
 	{ path: '/usuario2/novedades', element: <Novedades /> },
 	{ path: '/usuario2/consultas', element: <Chats /> },
 	{ path: '/usuario2/comprobanteief/:id', element: <Comprobanteief /> },
+	{ path: '/usuario2/mapas', element: <Mapaniv2 /> },
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },

@@ -5,15 +5,33 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import servicioLotes from '../../services/lotes'
+import Formulario from './formulariolotes'
+import Componentever from './componenteinfo'
 
 
 const DialogComponent = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false);
+  const [nivel, setNivel] = useState(false);
 
+
+  const getClients = async () => {
+
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setNivel(user.nivel)
+      
+    
+  }
+}
+   
+      
+   
   // Función para abrir el diálogo
   const openDialog = () => {
     setOpen(true);
+    getClients()
   };
 
   // Función para cerrar el diálogo
@@ -30,7 +48,33 @@ const DialogComponent = forwardRef((props, ref) => {
   return (
     <Dialog open={open} onClose={closeDialog}>
       <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>{props.children}</DialogContent>
+      <DialogContent>
+        
+        {nivel ? <>
+          {nivel == 4 ? <>
+
+            <Formulario
+            getClients={props.getClients}
+            info={props.info}
+            mapa={props.mapa}
+            cerrar={() => {
+              setOpen(false);
+            }}
+            />
+          </>:<>
+          <Componentever
+          info={props.info}
+          mapa={props.mapa}
+          cerrar={() => {
+            setOpen(false);
+          }}/>
+            </>}
+        
+        </>:<></>}
+        {props.children}
+      {props.info}
+      </DialogContent>
+    
 
     </Dialog>
   );

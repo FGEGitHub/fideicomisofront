@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import Ic3 from "./soloic3"
+import PIT from "./soloparque"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
@@ -50,7 +51,20 @@ inputProps={{
 
 
 </NativeSelect>
-{ mapa === "1" ? <><Ic3/></>:<></>}
+{ mapa === "1" ? <><Ic3/></>:<>
+
+
+{ mapa === "2" ? <><PIT/></>:<>
+<br/><br/><br/><br/>
+Sin seleccion
+
+
+
+</>}
+
+
+
+</>}
 
         </>
 

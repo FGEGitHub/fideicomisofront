@@ -24,7 +24,7 @@ import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
@@ -116,14 +116,14 @@ export default function MenuIzq2 ({children}) {
           path: '/usuario2/novedades'
         },
         {
-          text: 'Consultas',
+          text: 'Mapas',
           icon:<div><Badge color="error">
-          <AccountBalanceIcon color="primary" />
+          <TravelExploreIcon color="primary" />
         </Badge></div>,
-          path: '/usuario2/consultas'
+          path: '/usuario2/mapas'
         },
         
-     
+       
       ];
 
       const menuItems2 = [
