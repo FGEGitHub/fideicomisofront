@@ -73,18 +73,13 @@ const Arg = () => {
         <TransformWrapper>
           {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
             <React.Fragment>
-              <div className="tools">
-                <button onClick={zoomIn}>Zoom In</button>
-                <button onClick={zoomOut}>Zoom Out</button>
-                <button onClick={resetTransform}>Reset</button>
-              </div>
+        
               <TransformComponent>
 
                 {lotes ? <>
 
                   <svg width="296.926mm" height="209.973mm" version="1.2" baseProfile="tiny" viewBox="0 0 3507 2480">
-                    <title>Qt SVG Document</title>
-                    <desc>Generated with Qt</desc>
+         
                     <defs />
                     <g stroke="black" stroke-linejoin="bevel" fill="none" stroke-linecap="square" fill-rule="evenodd" stroke-width="1">
                       <g stroke="#000000" stroke-linejoin="bevel" fill="none" stroke-linecap="square" font-family="MS Shell Dlg 2" font-weight="400" stroke-opacity="1" font-size="32.5" transform="matrix(1,0,0,1,0,0)" font-style="normal" stroke-width="1" />
