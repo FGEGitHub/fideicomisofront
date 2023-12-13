@@ -29,7 +29,7 @@ const Formulario = (props) => {
   }
   const cerrar = () => {
 
-    props.closeDialog();
+    props.cerrar();
 
 
   };
