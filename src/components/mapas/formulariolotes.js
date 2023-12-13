@@ -147,6 +147,17 @@ const Formulario = (props) => {
      <option value={28}>28</option>
      <option value={29}>29</option>
      <option value={30}>30</option>
+     <option value={"a"}>a</option>
+     <option value={"b"}>b</option>
+     <option value={"c"}>c</option>
+     <option value={"d"}>d</option>
+     <option value={"e"}>e</option>
+     <option value={"f"}>f</option>
+     <option value={"g"}>g</option>
+     <option value={"h"}>h</option>
+     <option value={"i"}>i</option>
+     <option value={"j"}>j</option>
+     <option value={"k"}>k</option>
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
 
@@ -195,6 +206,17 @@ const Formulario = (props) => {
      <option value={28}>28</option>
      <option value={29}>29</option>
      <option value={30}>30</option>
+     <option value={"a"}>a</option>
+     <option value={"b"}>b</option>
+     <option value={"c"}>c</option>
+     <option value={"d"}>d</option>
+     <option value={"e"}>e</option>
+     <option value={"f"}>f</option>
+     <option value={"g"}>g</option>
+     <option value={"h"}>h</option>
+     <option value={"i"}>i</option>
+     <option value={"j"}>j</option>
+     <option value={"k"}>k</option>
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
 
