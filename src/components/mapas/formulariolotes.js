@@ -36,7 +36,7 @@ const Formulario = (props) => {
   return (
    <>
    <InputLabel variant="standard" htmlFor="uncontrolled-native">
-     Lote/parcela
+ Fraccion
    </InputLabel>
    <NativeSelect
      defaultValue={'sin determnar'}
