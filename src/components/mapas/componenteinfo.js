@@ -21,7 +21,7 @@ const Formulario = (props) => {
  }
     
 
-    setClients(clients[0])
+    setClients(clients)
    
 }
 
@@ -37,10 +37,11 @@ useEffect(() => {
   return (
    <>
   {clients ? <>
-  Cuil
- { clients.cuil_cuit}<br/>
- Adrema
- { clients.adrema}<br/>
+  Cliente: { clients.nombrec}<br/>
+ Adrema:{ clients.adrema}<br/>
+ Cantidad de cuotas:{ clients.cant_cuotas}<br/>
+ Liquidadas:{ clients.cuotasliq}<br/>
+ Adrema:{ clients.adrema}<br/>
   </>:<></>}
   
    <DialogActions>

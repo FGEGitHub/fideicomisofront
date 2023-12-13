@@ -22,7 +22,7 @@ const Formulario = (props) => {
     }
     
     props.cerrar();
-    alert(rta)
+  
     props.getClients()
 
 
