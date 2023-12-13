@@ -56,7 +56,7 @@ const Formulario = (props) => {
           Cantidad de cuotas:{clients[0].cant_cuotas}<br />
           Liquidadas:{clients[0].cuotasliq}<br />
           Adrema:{clients[0].adrema}<br />
-          {deudaExigible[0]===0 ? 
+          {deudaExigible[0]!=0 ? 
           <>
             <Paper
               sx={{
