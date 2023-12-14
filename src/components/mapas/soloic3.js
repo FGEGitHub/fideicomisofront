@@ -26,7 +26,7 @@ const Arg = () => {
   const [open, setOpen] = React.useState(false);
   const [lotes, setLotes] = React.useState();
   const [form, setForm] = useState({})
-  const [imagenDeFondoActivada, setImagenDeFondoActivada] = useState(true);
+  const [imagenDeFondoActivada, setImagenDeFondoActivada] = useState(false);
   const navigate = useNavigate();
   const getClients = async () => {
 
@@ -30980,7 +30980,7 @@ const Arg = () => {
 
 
       </div>
-      <DialogComponent ref={dialogRef} title="Modificar Lote"
+      <DialogComponent ref={dialogRef} title=""
         info={info}
         mapa={'IC3'}
         getClients={async () => {

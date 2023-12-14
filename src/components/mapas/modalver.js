@@ -17,17 +17,17 @@ const DialogComponent = forwardRef((props, ref) => {
   const getClients = async () => {
 
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
+
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setNivel(user.nivel)
-      
-    
+
+
+    }
   }
-}
-   
-      
-   
+
+
+
   // Función para abrir el diálogo
   const openDialog = () => {
     setOpen(true);
@@ -46,35 +46,38 @@ const DialogComponent = forwardRef((props, ref) => {
   }), []); // Asegura que esto se ejecute solo una vez
 
   return (
-    <Dialog open={open} onClose={closeDialog}>
-      <DialogTitle>{props.title}</DialogTitle>
-      <DialogContent>
-        
-        {nivel ? <>
-          {nivel == 4 ? <>
+    <Dialog open={open} onClose={closeDialog} maxWidth={"110%"}>
 
+
+      {nivel ? <>
+        {nivel == 4 ? <>
+          <DialogTitle>"Agregar detalles"</DialogTitle>
+          <DialogContent>
             <Formulario
-            getClients={props.getClients}
-            info={props.info}
-            mapa={props.mapa}
-            cerrar={() => {
-              setOpen(false);
-            }}
+              getClients={props.getClients}
+              info={props.info}
+              mapa={props.mapa}
+              cerrar={() => {
+                setOpen(false);
+              }}
             />
-          </>:<>
-          <Componentever
-          info={props.info}
-          mapa={props.mapa}
-          cerrar={() => {
-            setOpen(false);
-          }}/>
-            </>}
-        
-        </>:<></>}
-        {props.children}
+          </DialogContent>
+        </> : <>
+          <DialogTitle>{"Info del lote"}</DialogTitle>
+          <DialogContent>
+            <Componentever
+              info={props.info}
+              mapa={props.mapa}
+              cerrar={() => {
+                setOpen(false);
+              }} />  </DialogContent>
+        </>}
+
+      </> : <></>}
+      {props.children}
       {props.info}
-      </DialogContent>
-    
+
+
 
     </Dialog>
   );

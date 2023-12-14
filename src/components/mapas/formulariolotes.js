@@ -35,28 +35,7 @@ const Formulario = (props) => {
   };
   return (
    <>
-   <InputLabel variant="standard" htmlFor="uncontrolled-native">
- Fraccion
-   </InputLabel>
-   <NativeSelect
-     defaultValue={'sin determnar'}
-     onChange={handleChange}
-     inputProps={{
-       name: 'fraccion',
-       id: 'uncontrolled-native',
-
-     }}
-   >   <option value={1}>Seleccionar</option>  
-   <option value={'A'}>A</option>
-     <option value={"B"}>B</option>
-     <option value={"C"}>C</option>
-     <option value={"D"}>D</option>
-     <option value={"ID/4"}>ID/4</option>
-     
-
-
-
-   </NativeSelect>
+  
    <InputLabel variant="standard" htmlFor="uncontrolled-native">
      Manzana
    </InputLabel>
