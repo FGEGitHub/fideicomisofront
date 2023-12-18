@@ -206,11 +206,6 @@ const Rutas = [
 	
 
 	
-	/*{	path: '/',	element: <NotFound />
-		}, */
-		{ path: '/esme/cursos', element: <CursosEsme /> },
-		{ path: '/esme/curso/:id', element: <Curso /> },
-		{ path: '/esme/alumnos', element: <Alumnos /> },
 
 
 ];

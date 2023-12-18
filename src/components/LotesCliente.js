@@ -241,7 +241,7 @@ const LotesCliente = (props) => {
             <>
 <Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
               
-                  Pagar mercado Pago
+                  Pagar 360
                </Button>
 
 
