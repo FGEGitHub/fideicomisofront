@@ -27,6 +27,15 @@ const Formulario = (props) => {
 
 
   }
+  const determinarposecion = async () => {
+
+    const rta = await servicioLotes.determinarposecion(form)
+    props.cerrar();
+  
+    props.getClients()
+
+
+  }
   const cerrar = () => {
 
     props.cerrar();
@@ -208,9 +217,31 @@ const Formulario = (props) => {
      <option value={'D/5'}>D/5</option>
 
    </NativeSelect></>}
+
+   <InputLabel variant="standard" htmlFor="uncontrolled-native">
+    <b>Posecion Lote</b>
+   </InputLabel>
+   <NativeSelect
+     defaultValue={'sin determnar'}
+     onChange={handleChange}
+     inputProps={{
+       name: 'posecion_lote',
+       id: 'uncontrolled-native',
+
+     }}
+   ><option value={1}>Seleccionar</option>  
+    <option value={"Acta de entrega"}>Acta de entrega</option>
+     <option value={"Acta de amojonamiento"}>Acta de amojonamiento</option>
+     <option value={3}>3</option>
+   
+
+   </NativeSelect>
   
    <DialogActions>
-     <Button onClick={determinar}>Determinar</Button>
+     <Button onClick={determinar}>Determinar ubicacion</Button>
+     <Button onClick={determinarposecion}>Determinar posecion</Button>
+
+     
      <Button onClick={cerrar}>Cerrar</Button>
      
    </DialogActions></>

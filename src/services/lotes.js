@@ -160,6 +160,14 @@ const nuevolote= async  (datos) => {
      console.log(data)
      return data 
  }  
+
+ const determinarposecion= async  (datos) => {
+    console.log(datos)
+     const {data } = await axios.post(baseUrl+'determinarposecion',datos,config)
+     console.log(data)
+     return data 
+ }  
+ 
  const nuevamanzana= async  (datos) => {
     console.log(datos)
      const {data } = await axios.post(baseUrl+'nuevamanzana',datos,config)
@@ -180,4 +188,4 @@ const nuevolote= async  (datos) => {
      console.log(data)
      return data 
  }  
-export default {traersegunmapa1,traersegunmapa2,determinarmapa1,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+export default {traersegunmapa1,traersegunmapa2,determinarposecion,determinarmapa1,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
