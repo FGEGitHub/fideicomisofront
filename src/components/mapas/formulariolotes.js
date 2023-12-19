@@ -230,9 +230,9 @@ const Formulario = (props) => {
 
      }}
    ><option value={1}>Seleccionar</option>  
-    <option value={"Acta de entrega"}>Acta de entrega</option>
-     <option value={"Acta de amojonamiento"}>Acta de amojonamiento</option>
-     <option value={3}>3</option>
+    <option value={"Dos actas"}>Dos actas</option>
+     <option value={"Un acta"}>Un acta</option>
+     <option value={"Ningun acta"}>Ningun acta</option>
    
 
    </NativeSelect>
