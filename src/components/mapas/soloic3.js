@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import DialogComponent from './modalver';
 import Tooltip from '@mui/material/Tooltip';
-import { useNavigate } from "react-router-dom";
+
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import * as React from 'react';
 import Chip from '@material-ui/core/Chip';
@@ -27,7 +27,7 @@ const Arg = () => {
   const [lotes, setLotes] = React.useState();
   const [form, setForm] = useState({})
   const [imagenDeFondoActivada, setImagenDeFondoActivada] = useState(false);
-  const navigate = useNavigate();
+
   const getClients = async () => {
 
     const lotess = await servicioLotes.lista()

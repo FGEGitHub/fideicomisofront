@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import servicioLotes from '../../services/lotes'
 import DialogActions from '@mui/material/DialogActions';
-import NativeSelect from '@mui/material/NativeSelect';
-import InputLabel from '@mui/material/InputLabel';
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+
 /////////////actualmente para usuario legales
 
 
@@ -20,7 +20,7 @@ const Formulario = (props) => {
   const [clients, setClients] = useState()
   const [deudaExigible, setDeudaExigible] = useState([''])
   const [detallePendiente, setDetallePendiente] = useState([''])
-
+  const navigate = useNavigate();
 
   const getClients = async () => {
     let clients
@@ -53,6 +53,8 @@ const Formulario = (props) => {
 
           Cliente: {clients[0].nombrec}<br />
           Adrema:{clients[0].adrema}<br />
+          {clients[0].nombrec ? <><p style={{ color: 'green', cursor: 'pointer' }} onClick={()=>{ window.open("/usuario2/detallecliente/"+clients[0].cuil_cuit)}}  >Ver cliente</p></>:<></>}
+          
           Cantidad de cuotas:{clients[0].cant_cuotas}<br />
           Liquidadas:{clients[0].cuotasliq}<br />
           Adrema:{clients[0].adrema}<br />
