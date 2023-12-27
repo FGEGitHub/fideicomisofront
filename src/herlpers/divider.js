@@ -11,13 +11,14 @@ import Divider from '@mui/material/Divider';
 
 export default function InsetDividers(props) {
   return (
+    
     <List
       sx={{
         width: props.width,
         height:props.height,
         //maxWidth: 360,
         bgcolor: 'background.paper',
-      position:"absolute",
+        position: 'fixed',
       zIndex: 1
       }}
     >
@@ -36,7 +37,7 @@ export default function InsetDividers(props) {
             <ImageIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.texto2}secondary={props.texto4} />
+        <ListItemText primary={props.texto2}secondary={props.texto5} />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem sx={{color:props.color3}}>
@@ -45,7 +46,7 @@ export default function InsetDividers(props) {
             <ImageIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={props.texto3} secondary={props.texto4}/>
+        <ListItemText primary={props.texto3} secondary={props.texto6}/>
       </ListItem>
     </List>
   );

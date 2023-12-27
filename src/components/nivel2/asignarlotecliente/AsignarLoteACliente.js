@@ -120,6 +120,7 @@ const AsignarLoteACliente = () => {
                   <MenuItem value={"IC3"}>Elegir</MenuItem>
                   <MenuItem value={"VENDIDO"}>Venta</MenuItem>
                   <MenuItem value={"RESERVADO"}>Reservar</MenuItem>
+                  <MenuItem value={"CANJE"}>Canje</MenuItem>
                 </Select>
               </FormControl>
             </FormControl>
