@@ -98,6 +98,7 @@ const Formulario = (props) => {
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
      <option value={'Area verde'}>Area verde</option>
+     <option value={'Equipamiento del parque'}>Equipamiento del parque</option>
 
    </NativeSelect>
 
