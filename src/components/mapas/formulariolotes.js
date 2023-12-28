@@ -97,6 +97,7 @@ const Formulario = (props) => {
      <option value={38}>38</option>
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
+     <option value={'Area verde'}>Area verde</option>
 
    </NativeSelect>
 
@@ -156,6 +157,7 @@ const Formulario = (props) => {
      <option value={"k"}>k</option>
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
+     
 
    </NativeSelect>
    
@@ -215,6 +217,8 @@ const Formulario = (props) => {
      <option value={"k"}>k</option>
      <option value={'B/3'}>B/3</option>
      <option value={'D/5'}>D/5</option>
+
+     
 
    </NativeSelect></>}
 
