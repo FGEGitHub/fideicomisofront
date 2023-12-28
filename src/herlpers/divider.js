@@ -5,8 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
-import WorkIcon from '@mui/icons-material/Work';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import GridOnIcon from '@mui/icons-material/GridOn';
 import Divider from '@mui/material/Divider';
 
 export default function InsetDividers(props) {
@@ -25,7 +24,7 @@ export default function InsetDividers(props) {
       <ListItem >
         <ListItemAvatar  >
           <Avatar sx={{color:props.color1}}>
-            <ImageIcon  />
+            <GridOnIcon  />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={props.texto1} secondary={props.texto4}  />
@@ -34,7 +33,7 @@ export default function InsetDividers(props) {
       <ListItem>
         <ListItemAvatar sx={{color:props.color2}}>
           <Avatar sx={{color:props.color2}}>
-            <ImageIcon />
+            <GridOnIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={props.texto2}secondary={props.texto5} />
@@ -43,10 +42,19 @@ export default function InsetDividers(props) {
       <ListItem sx={{color:props.color3}}>
         <ListItemAvatar >
           <Avatar sx={{color:props.color3}}>
-            <ImageIcon />
+            <GridOnIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={props.texto3} secondary={props.texto6}/>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem sx={{color:props.color4}}>
+        <ListItemAvatar >
+          <Avatar sx={{color:props.color4}}>
+            <GridOnIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={props.texto7} secondary={props.texto8}/>
       </ListItem>
     </List>
   );

@@ -98,10 +98,12 @@ const Arg = () => {
                     texto3={"Libre"}
                     color1={"blue"}
                     color2={"#ffeb3b"}
-                    color3={"green"}               
+                    color3={"green"}     
+                    color4={"orange"}               
                     texto4={"Total: "+estadisticas[2]}
                     texto5={""}
                    texto6={"Total: "+estadisticas[0]}
+                   texto7={"Canje"}
                     />
                     <br/>
                        <InformativeChip label={"Cantidad libres"+estadisticas[0]} color="#76ff03"  />
