@@ -18,7 +18,10 @@ export default function InsetDividers(props) {
         //maxWidth: 360,
         bgcolor: 'background.paper',
         position: 'fixed',
-      zIndex: 1
+      zIndex: 1,
+ 
+        backgroundColor: 'rgba(255, 255, 255, )', // Fondo blanco con opacidad 0.5
+     
       }}
     >
       <ListItem >
@@ -55,6 +58,24 @@ export default function InsetDividers(props) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={props.texto7} secondary={props.texto8}/>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem sx={{color:props.color5}}>
+        <ListItemAvatar >
+          <Avatar sx={{color:props.color5}}>
+            <GridOnIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={props.texto8} />
+      </ListItem>
+      <Divider variant="inset" component="li" />
+      <ListItem sx={{color:props.color6}}>
+        <ListItemAvatar >
+          <Avatar sx={{color:props.color6}}>
+            <GridOnIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={props.texto9} />
       </ListItem>
     </List>
   );

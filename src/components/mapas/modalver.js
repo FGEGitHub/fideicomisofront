@@ -66,6 +66,7 @@ const DialogComponent = forwardRef((props, ref) => {
           <DialogTitle>{"Info del lote"}</DialogTitle>
           <DialogContent>
             <Componentever
+            nivel={nivel}
               info={props.info}
               mapa={props.mapa}
               cerrar={() => {

@@ -53,8 +53,12 @@ const Formulario = (props) => {
 
           Cliente: {clients[0].nombrec}<br />
           Adrema:{clients[0].adrema}<br />
+          {props.nivel ? <>
+             {props.nivel ==2 ? <>
           {clients[0].nombrec ? <><p style={{ color: 'green', cursor: 'pointer' }} onClick={()=>{ window.open("/usuario2/detallecliente/"+clients[0].cuil_cuit)}}  >Ver cliente</p></>:<></>}
-          
+      </>:<></>}
+      
+          </>:<></>}
           Cantidad de cuotas:{clients[0].cant_cuotas}<br />
           Liquidadas:{clients[0].cuotasliq}<br />
           Adrema:{clients[0].adrema}<br />

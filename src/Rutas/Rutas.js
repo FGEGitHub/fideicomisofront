@@ -97,7 +97,7 @@ import HomeCalculo from '../Paginas/Home/Calculo'
 import Mapaarg from '../Paginas/maparg'
 
 
-
+import Mapasusuario from '../Paginas/usuariomapas/inicio'
 const Rutas = [
 	 <Navbar/> ,
 	 
@@ -203,6 +203,9 @@ const Rutas = [
 	{ path: '/admin/pagos', element: <PagosAdmin /> },
 	{ path: '/admin/lotes', element: <LotesAdmin /> },
 	{ path: '/admin/detallescliente/:cuil_cuit', element: <Detalleclienteadmin /> },
+
+
+	{ path: '/usuariomapas/inicio', element: <Mapasusuario /> },
 	
 
 	

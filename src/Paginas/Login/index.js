@@ -62,6 +62,9 @@ const Login = () => {
           case 4:
             navigate('/legales/clientes')
           break;
+          case 5:
+            navigate('/usuariomapas/inicio')
+          break;
         default:
           
           break;
@@ -109,6 +112,9 @@ const Login = () => {
           break;
           case 4:navigate('/legales/clientes')
           window.location.reload(true);
+          break;
+          case 5:
+            navigate('/usuariomapas/inicio')
           break;
           case 10:navigate('/admin/usuarios')
           window.location.reload(true);
