@@ -14831,7 +14831,7 @@ const Arg = () => {
                           const objetoEncontrado = lotes.find(item => item.mapa2 == tooltipValue);
                           return (
                             <Tooltip title={objetoEncontrado ? "Manzana " + objetoEncontrado.manzana + " Parcela " + objetoEncontrado.parcela + " "+objetoEncontrado.estado+" "+objetoEncontrado.nombre : 'Sin datos'}>
-                              <path className="mi-path" fill={objetoEncontrado ? objetoEncontrado.estado ==="VENDIDO" ? "#90caf9": objetoEncontrado.estado ==="RESERVADO" ? "#ffeb3b":objetoEncontrado.estado ==="CANJE" ? "#ef6c00":objetoEncontrado.manzana ==="Area verde" ? "#81c784": objetoEncontrado.manzana ==="Equipamiento del parque" ? "#8d6e63":"#43a047":"white"} fillOpacity={imagenDeFondoActivada ? 0.2:1}onClick={() => handleOpenDialog(1618)} fill-rule="evenodd" d="M1755.07,871.564 L1761.46,756.627 L1495.57,744.059 L1492.62,857.197 L1755.07,871.564" vector-effect="none" />
+                              <path className="mi-path" fill={objetoEncontrado ? objetoEncontrado.estado ==="VENDIDO" ? "#90caf9": objetoEncontrado.estado ==="RESERVADO" ? "#ffeb3b":objetoEncontrado.estado ==="CANJE" ? "#ef6c00":objetoEncontrado.manzana ==="Area verde" ? "#81c784": objetoEncontrado.manzana ==="Equipamiento del parque" ? "#8d6e63":"#43a047":"white"} fillOpacity={imagenDeFondoActivada ? 0.2:1}onClick={() => handleOpenDialog(1618)} fill-rule="evenodd" d="M1755.07,871.564 L1761.46,756.627 L1607.59,749.343 L1604.39,863.378 L1755.07,871.564" vector-effect="none" />
                             </Tooltip>
                           );
                         })}
@@ -16083,7 +16083,7 @@ const Arg = () => {
                           const objetoEncontrado = lotes.find(item => item.mapa2 == tooltipValue);
                           return (
                             <Tooltip title={objetoEncontrado ? "Manzana " + objetoEncontrado.manzana + " Parcela " + objetoEncontrado.parcela + " "+objetoEncontrado.estado+" "+objetoEncontrado.nombre : 'Sin datos'}>
-                              <path className="mi-path" fill={objetoEncontrado ? objetoEncontrado.estado ==="VENDIDO" ? "#90caf9": objetoEncontrado.estado ==="RESERVADO" ? "#ffeb3b":objetoEncontrado.estado ==="CANJE" ? "#ef6c00":objetoEncontrado.manzana ==="Area verde" ? "#81c784": objetoEncontrado.manzana ==="Equipamiento del parque" ? "#8d6e63":"#43a047":"white"} fillOpacity={imagenDeFondoActivada ? 0.2:1}onClick={() => handleOpenDialog(1759)} fill-rule="evenodd" d="M1755.09,871.897 L1827.93,875.805 L1835.66,751.32 L1495.84,734.966 L1495.56,744.048 L1761.48,756.638 L1755.09,871.897" vector-effect="none" />
+                              <path className="mi-path" fill={objetoEncontrado ? objetoEncontrado.estado ==="VENDIDO" ? "#90caf9": objetoEncontrado.estado ==="RESERVADO" ? "#ffeb3b":objetoEncontrado.estado ==="CANJE" ? "#ef6c00":objetoEncontrado.manzana ==="Area verde" ? "#81c784": objetoEncontrado.manzana ==="Equipamiento del parque" ? "#8d6e63":"#43a047":"white"} fillOpacity={imagenDeFondoActivada ? 0.2:1}onClick={() => handleOpenDialog(1759)} fill-rule="evenodd" d="M1755.09,871.897 L1827.93,875.805 L1835.66,751.32 L1607.94,740.462 L1607.59,749.343 L1761.48,756.638 L1755.09,871.897" vector-effect="none" />
                             </Tooltip>
                           );
                         })}
@@ -16103,7 +16103,14 @@ const Arg = () => {
                             </Tooltip>
                           );
                         })}
-
+            {[1762].map((tooltipValue) => {
+                          const objetoEncontrado = lotes.find(item => item.mapa2 == tooltipValue);
+                          return (
+                            <Tooltip title={objetoEncontrado ? "Manzana " + objetoEncontrado.manzana + " Parcela " + objetoEncontrado.parcela + " "+objetoEncontrado.estado+" "+objetoEncontrado.nombre : 'Sin datos'}>
+                              <path className="mi-path" fill={objetoEncontrado ? objetoEncontrado.estado ==="VENDIDO" ? "#90caf9": objetoEncontrado.estado ==="RESERVADO" ? "#ffeb3b":objetoEncontrado.estado ==="CANJE" ? "#ef6c00":objetoEncontrado.manzana ==="Area verde" ? "#81c784": objetoEncontrado.manzana ==="Equipamiento del parque" ? "#8d6e63":"#43a047":"white"} fillOpacity={imagenDeFondoActivada ? 0.2:1}onClick={() => handleOpenDialog(1762)} fill-rule="evenodd" d="M1495.86,734.955 L1607.98,740.373 L1604.39,863.445 L1492.64,857.239 L1495.86,734.955" vector-effect="none" />
+                            </Tooltip>
+                          );
+                        })}
                       <g stroke="#000000" stroke-linejoin="bevel" fill="none" stroke-linecap="square" font-family="MS Shell Dlg 2" font-weight="400" stroke-opacity="1" font-size="32.5" transform="matrix(11.8081,0,0,11.8081,0,0)" font-style="normal" stroke-width="1" />
                       <g stroke="#000000" stroke-linejoin="bevel" fill="none" stroke-linecap="square" font-family="MS Shell Dlg 2" font-weight="400" stroke-opacity="1" font-size="32.5" transform="matrix(11.8081,0,0,11.8081,0,0)" font-style="normal" stroke-width="1" />
                       <g stroke="#000000" stroke-linejoin="bevel" fill="none" stroke-linecap="square" font-family="MS Shell Dlg 2" font-weight="400" stroke-opacity="1" font-size="32.5" transform="matrix(11.8081,0,0,11.8081,0,0)" font-style="normal" stroke-width="1" />

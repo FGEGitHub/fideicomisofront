@@ -6,6 +6,7 @@ import DetallesPagos from '../../../components/mapas/listayseleccion';
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 import servicioUsuario from '../../../services/usuarios'
+import Navbar from '../../../components/Navbar';
 
 
 
@@ -60,7 +61,9 @@ export default function DetalleCliente() {
     <div> 
   { logueado ? <div> 
 
-
+    <Navbar
+       />
+<br/><br/><br/>
       <DetallesPagos
        />
 
