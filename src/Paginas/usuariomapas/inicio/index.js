@@ -44,7 +44,7 @@ export default function DetalleCliente() {
      
       
     }else{
-        alert('Debes logearte')
+       
       navigate('/login')
      
     }
