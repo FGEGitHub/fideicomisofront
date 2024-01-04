@@ -6,7 +6,7 @@ import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
 import { Paper } from '@mui/material';
 import PEP from './DeterminarPep'
-
+import Debitoaut from '../../360/modalcrearadhesion'
 
 const DetalleCliente = () => {
    
@@ -90,6 +90,7 @@ const DetalleCliente = () => {
                  
             </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }
             </Paper>
+            <Debitoaut/>
         </div>
     )
 }
