@@ -48,7 +48,7 @@ export default function SelectTextFields(props) {
     const designar = async (event) => {
 
 
-        const resp = await servicio360.crearadhesiondebtarjeta(rta)
+        const resp = await servicio360.cancelaradhecioncbu(rta)
         console.log(resp)
         alert(resp)
 
@@ -71,7 +71,7 @@ export default function SelectTextFields(props) {
             autoComplete="off"
         >
             <Button variant="outlined" onClick={handleClickOpen}>
-                  Adherir debito tarjeta
+                 Cancelar ahesion CBU
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>

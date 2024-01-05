@@ -37,13 +37,27 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     return data
   
   }
-  const crearAdhesiondeb  = async (datos) => {
+  const crearadhesiondebtarjeta  = async (datos) => {
     
-    const { data } = await axios.post(baseUrl + 'crearadhesiondeb/',datos,config)
+    const { data } = await axios.post(baseUrl + 'crearadhesiondebtarjeta/',datos,config)
    
     return data
   
   }
+  const crearadhesiondebcbu  = async (datos) => {
+    
+    const { data } = await axios.post(baseUrl + 'crearadhesiondebcbu/',datos,config)
+   
+    return data
+  
+  }
+  
 
-
-  export default {traerlink360,crearAdhesiondeb}
+  const cancelaradhecioncbu  = async (datos) => {
+    
+    const { data } = await axios.post(baseUrl + 'cancelaradhecioncbu/',datos,config)
+   
+    return data
+  
+  }
+  export default {traerlink360,crearadhesiondebtarjeta,crearadhesiondebcbu,cancelaradhecioncbu}
