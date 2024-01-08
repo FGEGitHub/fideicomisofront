@@ -17,7 +17,7 @@ export default function SelectTextFields(props) {
     //const usuario  = useUser().userContext
 
     const [rta, setRta] = useState({
-        id_lote: props.idlote,
+        identificacion: props.identificacion,
     })
 
     const [habilitado, setHabilitado] = useState(false)
@@ -41,14 +41,14 @@ export default function SelectTextFields(props) {
     };
 
     const handleClose = () => {
-        window.location.reload()
+        setOpen(false);
 
     };
 
     const designar = async (event) => {
 
 
-        const resp = await servicio360.cancelaradhecioncbu(rta)
+        const resp = await servicio360.cancelaradhecioncbu({identificacion: props.identificacion})
         console.log(resp)
         alert(resp)
 
@@ -76,58 +76,10 @@ export default function SelectTextFields(props) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
 
-                    <TextField
-                        variant="outlined"
-                        label="Nombre"
-                     
-                        name="adhesion_holder_name"
-                        onChange={handleChange}
-
-                    />
-                         <TextField
-                        variant="outlined"
-                        label="Email"
-                     
-                        name="email"
-                        onChange={handleChange}
-
-                    
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="Numero de CBU"
-                     
-                        name="cbu_number"
-                        onChange={handleChange}
-
-                        
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="cbu_holder_name"
-                     
-                        name="cbu_holder_name"
-                        onChange={handleChange}
-
-            
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="cbu_holder_id_number"
-                     
-                        sx={{
-                         
-                            margin: ".5rem 0",
-                        }}
-                        name="cbu_holder_id_number"
-                        onChange={handleChange}
-
-                       
-                    />
-
+                 Estas seguro?
 
                     <Button onClick={designar} size="small" variant="contained" >
-                        designar
+                      Estoy seguro
                     </Button>
                     <Button onClick={handleClose} size="small" variant="contained" >
                         Cerrar

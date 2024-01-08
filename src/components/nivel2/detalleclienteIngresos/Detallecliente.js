@@ -9,6 +9,7 @@ import PEP from './DeterminarPep'
 import Debitoaut from '../../360/modalcrearadhesion'
 import DebitoauCBUt from '../../360/modaladhesiondebito'
 import Cancelarcbu from '../../360/modalcancelaradesion'
+import Listacbus from '../../360/modallistacbu'
 
 const DetalleCliente = () => {
    
@@ -92,9 +93,17 @@ const DetalleCliente = () => {
                  
             </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }
             </Paper>
-            <Debitoaut/>
-            <DebitoauCBUt/>
-            <Cancelarcbu/>
+            <Debitoaut
+            cuil_cuit={cuil_cuit}/>
+            <DebitoauCBUt
+              cuil_cuit={cuil_cuit}/>
+            <Cancelarcbu
+              cuil_cuit={cuil_cuit}/>
+    <Listacbus
+              cuil_cuit={cuil_cuit}/>
+
+
+
         </div>
     )
 }

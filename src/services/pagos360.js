@@ -60,4 +60,13 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     return data
   
   }
-  export default {traerlink360,crearadhesiondebtarjeta,crearadhesiondebcbu,cancelaradhecioncbu}
+
+  const listacbus360  = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'listacbus360/'+id,config)
+
+    return data
+  
+  }
+  
+  export default {traerlink360,crearadhesiondebtarjeta,crearadhesiondebcbu,cancelaradhecioncbu,listacbus360}

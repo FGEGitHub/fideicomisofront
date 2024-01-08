@@ -42,7 +42,6 @@ const traer = async () => {
    
   const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
  
- console.log(notis[0])
   setUser(notis[0])
   setCargado(true)
 

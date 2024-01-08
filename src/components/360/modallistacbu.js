@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import servicio360 from '../../services/pagos360'
 import NativeSelect from '@mui/material/NativeSelect';
-
+import Listacbs from './listacbu'
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState, Fragment } from "react";
 
@@ -17,7 +17,7 @@ export default function SelectTextFields(props) {
     //const usuario  = useUser().userContext
 
     const [rta, setRta] = useState({
-        cuil_cuit: props.cuil_cuit,
+        id_lote: props.idlote,
     })
 
     const [habilitado, setHabilitado] = useState(false)
@@ -26,6 +26,9 @@ export default function SelectTextFields(props) {
 
     //{if(rta.puede=''){ props.setpuede()}}
 
+
+    const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
+    const cuil_cuit = preba.cuil_cuit
 
     const handleChange = (e) => {
         console.log(rta)
@@ -38,15 +41,15 @@ export default function SelectTextFields(props) {
     };
 
     const handleClose = () => {
-        setRta({})
-        setOpen(true);
+        
+        setOpen(false);
 
     };
 
     const designar = async (event) => {
 
 
-        const resp = await servicio360.crearadhesiondebcbu(rta)
+        const resp = await servicio360.cancelaradhecioncbu(rta)
         console.log(resp)
         alert(resp)
 
@@ -69,59 +72,13 @@ export default function SelectTextFields(props) {
             autoComplete="off"
         >
             <Button variant="outlined" onClick={handleClickOpen}>
-                  Adherir debito CBU
+                 Lista de cbus CBU
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
 
-                    <TextField
-                        variant="outlined"
-                        label="Nombre"
-                     
-                        name="adhesion_holder_name"
-                        onChange={handleChange}
-
-                    />
-                         <TextField
-                        variant="outlined"
-                        label="alias"
-                     
-                        name="cbu_holder_name"
-                        onChange={handleChange}
-
-                    
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="Numero de CBU"
-                     
-                        name="cbu_number"
-                        onChange={handleChange}
-
-                        
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="cbu_holder_name"
-                     
-                        name="cbu_holder_name"
-                        onChange={handleChange}
-
-            
-                    />
-                        <TextField
-                        variant="outlined"
-                        label="cbu_holder_id_number"
-                     
-                        sx={{
-                         
-                            margin: ".5rem 0",
-                        }}
-                        name="cbu_holder_id_number"
-                        onChange={handleChange}
-
-                       
-                    />
+                 <Listacbs
+                 cuil_cuit={props.cuil_cuit}/>
 
 
                     <Button onClick={designar} size="small" variant="contained" >
