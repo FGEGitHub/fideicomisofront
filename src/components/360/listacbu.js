@@ -128,10 +128,7 @@ const Lotes = (props) => {
             {loading ? (<CargaDeTabla />)
                 : (
                     <div>
-                        <Stack spacing={2} sx={{ width: '100%' }}>
-
-                            <Alert severity="info">Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )</Alert>
-                        </Stack>
+                       
                         <MUIDataTable
 
                             title={"Lista de CBUS"}

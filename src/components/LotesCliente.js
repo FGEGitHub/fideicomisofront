@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
 import servicioAdmin from '../services/Administracion'
+import servicio360 from '../services/pagos360'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
@@ -170,6 +171,15 @@ const LotesCliente = (props) => {
 
     };
 
+    const crearsolicituddebito = async (index) => {
+        console.log(index)
+        const dde = await servicio360.crearsolicituddebito({id_cuota:index})
+        
+      alert (dde)
+
+
+    };
+    
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -242,6 +252,20 @@ const LotesCliente = (props) => {
 <Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
               
                   Pagar 360
+               </Button>
+
+
+
+
+            </>
+        );
+    }
+    function Pagodebito360(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+<Button     onClick={() => crearsolicituddebito(cuotas[dataIndex].id)} >
+              
+                 debito en  360
                </Button>
 
 
@@ -420,6 +444,19 @@ const LotesCliente = (props) => {
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     Pago360(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+
+        },
+        {
+            name: "Pagodebito360",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                Pagodebito360(
                         dataIndex,
                         rowIndex,
                         // overbookingData,

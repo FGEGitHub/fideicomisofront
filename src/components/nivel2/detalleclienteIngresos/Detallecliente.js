@@ -97,8 +97,7 @@ const DetalleCliente = () => {
             cuil_cuit={cuil_cuit}/>
             <DebitoauCBUt
               cuil_cuit={cuil_cuit}/>
-            <Cancelarcbu
-              cuil_cuit={cuil_cuit}/>
+          
     <Listacbus
               cuil_cuit={cuil_cuit}/>
 

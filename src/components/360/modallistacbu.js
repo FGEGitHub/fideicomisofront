@@ -81,9 +81,7 @@ export default function SelectTextFields(props) {
                  cuil_cuit={props.cuil_cuit}/>
 
 
-                    <Button onClick={designar} size="small" variant="contained" >
-                        designar
-                    </Button>
+              
                     <Button onClick={handleClose} size="small" variant="contained" >
                         Cerrar
                     </Button>

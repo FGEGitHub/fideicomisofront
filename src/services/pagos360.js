@@ -60,7 +60,14 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
     return data
   
   }
-
+  const crearsolicituddebito  = async (datos) => {
+    
+    const { data } = await axios.post(baseUrl + 'crearsolicituddebito/',datos,config)
+   
+    return data
+  
+  }
+  
   const listacbus360  = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'listacbus360/'+id,config)
@@ -69,4 +76,4 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
   
   }
   
-  export default {traerlink360,crearadhesiondebtarjeta,crearadhesiondebcbu,cancelaradhecioncbu,listacbus360}
+  export default {traerlink360,crearadhesiondebtarjeta,crearadhesiondebcbu,cancelaradhecioncbu,listacbus360,crearsolicituddebito}

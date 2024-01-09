@@ -39,7 +39,7 @@ export default function SelectTextFields(props) {
 
     const handleClose = () => {
         setRta({})
-        setOpen(true);
+        setOpen(false);
 
     };
 
