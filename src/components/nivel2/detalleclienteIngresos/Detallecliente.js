@@ -6,9 +6,8 @@ import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
 import { Paper } from '@mui/material';
 import PEP from './DeterminarPep'
-import Debitoaut from '../../360/modalcrearadhesion'
+import Debitoaut from '../../360/modalcrearadhesiontarjeta'
 import DebitoauCBUt from '../../360/modaladhesiondebito'
-import Cancelarcbu from '../../360/modalcancelaradesion'
 import Listacbus from '../../360/modallistacbu'
 
 const DetalleCliente = () => {

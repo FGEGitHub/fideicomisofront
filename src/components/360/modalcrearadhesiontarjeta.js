@@ -17,7 +17,7 @@ export default function SelectTextFields(props) {
     //const usuario  = useUser().userContext
 
     const [rta, setRta] = useState({
-        id_lote: props.idlote,
+        cuil_cuit: props.cuil_cuit,
     })
 
     const [habilitado, setHabilitado] = useState(false)
@@ -41,8 +41,7 @@ export default function SelectTextFields(props) {
     };
 
     const handleClose = () => {
-        window.location.reload()
-
+        setOpen(false);
     };
 
     const designar = async (event) => {
@@ -84,41 +83,30 @@ export default function SelectTextFields(props) {
                         onChange={handleChange}
 
                     />
-                         <TextField
-                        variant="outlined"
-                        label="Email"
                      
-                        name="email"
-                        onChange={handleChange}
-
-                    
-                    />
                         <TextField
                         variant="outlined"
-                        label="Numero de CBU"
+                        label="Numero de tarjeta"
                      
-                        name="cbu_number"
+                        name="card_number"
                         onChange={handleChange}
 
                         
                     />
                         <TextField
                         variant="outlined"
-                        label="cbu_holder_name"
+                        label="CVV"
                      
-                        name="cbu_holder_name"
+                        name="CVV"
                         onChange={handleChange}
 
             
                     />
                         <TextField
                         variant="outlined"
-                        label="cbu_holder_id_number"
+                        label="Vencimiento"
                      
-                        sx={{
-                         
-                            margin: ".5rem 0",
-                        }}
+                       
                         name="cbu_holder_id_number"
                         onChange={handleChange}
 

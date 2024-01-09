@@ -27,7 +27,7 @@ const Lotes = (props) => {
         return (
             <>
               <Baja
-              identificacion={clients[0][dataIndex]['identificacion']}
+              identificacion={clients[0][dataIndex]['id']}
               
             
 
@@ -51,10 +51,7 @@ const Lotes = (props) => {
     // definimos las columnas
     const columns = [
        
-        {
-            name: "id",
-            label: "id",
-        },
+     
         {
             name: "identificacion",
             label: "identificacion",
@@ -66,18 +63,8 @@ const Lotes = (props) => {
             label: "CBU",
 
         },
-        {
-            name: "estado",
-            label: "estado",
-        },
-        {
-            name: "parcela",
-            label: "Parcela",
-        },
-        {
-            name: "superficie",
-            label: "superficie",
-        },
+  
+   
         {
             name: "estado",
             label: "Estado",
@@ -86,10 +73,7 @@ const Lotes = (props) => {
             name: "cuil_cuit",
             label: "cuil_cuit",
         },
-        {
-            name: "nombre",
-            label: "Persona",
-        },
+       
 
         /*   {
               name: "Actions",

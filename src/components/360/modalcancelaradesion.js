@@ -71,7 +71,7 @@ export default function SelectTextFields(props) {
             autoComplete="off"
         >
             <Button variant="outlined" onClick={handleClickOpen}>
-                 Cancelar ahesion CBU
+                 Cancelar adhesion 
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
