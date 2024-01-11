@@ -33,7 +33,7 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
  const traerlink360  = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'traerlink360/'+id,config)
-    console.log(data)
+    
     return data
   
   }

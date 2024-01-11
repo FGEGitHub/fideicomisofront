@@ -86,10 +86,6 @@ import LotesAdmin from '../Paginas/Administracion/Lotes';
 import Detalleclienteadmin from '../Paginas/Administracion/Detallecliente';
 
 //////////esme
-import CursosEsme from '../Paginas/Esme/Cursos';
-import Curso from '../Paginas/Esme/Curso'
-import Alumnos from '../Paginas/Esme/Alumnos'
-
 
 
 import Home from '../Paginas/Home/Home'
@@ -98,6 +94,10 @@ import Mapaarg from '../Paginas/maparg'
 
 
 import Mapasusuario from '../Paginas/usuariomapas/inicio'
+
+import NOtFound from '../Paginas/not found'
+
+
 const Rutas = [
 	 <Navbar/> ,
 	 
@@ -209,7 +209,7 @@ const Rutas = [
 	
 
 	
-
+	{ path: '*', element: <NOtFound /> },
 
 ];
 

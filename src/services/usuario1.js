@@ -32,12 +32,12 @@ if (loggedUserJSON) {
 const cantidadd= async  (cuil_cuit) => {///////////////ver no esta conctado
    
     const {data } = await axios.get(baseUrl+'cantidadnotificaciones/'+cuil_cuit,config)
-    console.log(cuil_cuit)
+   
     return(data)
    
 }
 const verief= async  (id) => {
-    console.log(id)
+    
     const data = await axios.get(baseUrl+'ief/'+id,config)
              
 
@@ -83,7 +83,7 @@ const lotesCliente= async  (cuil_cuit) => {
   const vercuotas= async  (id) => {
  
     const {data } = await axios.get(baseUrl+'lote2/'+id,config)
-    console.log(data)
+    
     
     return data 
 }  
@@ -91,7 +91,7 @@ const vertodascuotas= async  (id) => {
     
    console.log(id)
     const {data } = await axios.get(baseUrl+'lote2/'+id,config)
-    console.log(data)
+    
     
     return data 
 }  
@@ -113,7 +113,7 @@ const notiId= async  (id) => {
 }
 
 const respuestanoti= async  (rta) => {
-  console.log(rta)
+  
   const data = await axios.post(baseUrl+'justificacion/',rta,config)
 return (data.data)
  
@@ -172,17 +172,17 @@ const subirprueba = async (formdata) => {
 
 ///legajo
 const cargarcbu = async (formdata) => {
-  console.log('formdata')
+  
  const data = await axios.post(baseUrl + 'cargarcbu/', formdata,config)
- console.log({data})
+
 
 }
 
 const constancias= async  (cuil_cuit) => {
-  console.log(cuil_cuit)
+
   const data = await axios.get(baseUrl+'constancias/'+cuil_cuit,config)
            
-console.log(data.data)
+
 
  
  
@@ -190,7 +190,7 @@ return data.data
 } 
 
 const traercompleto= async  (cuil_cuit) => {
-  console.log(cuil_cuit)
+
   const pos = {
     cuil_cuit
   }
@@ -204,7 +204,6 @@ return data
 } 
 
 const determinarPep = async (formdata) => {
-  console.log(formdata)
   const { data } = await axios.post(baseUrl + 'determinarPep', formdata,config)
 
 }
@@ -220,7 +219,6 @@ const constanciasdelpago = async (id) => {
 
 const pagarnivel2= async  (pago) => {////pago desde el usuario 2
 
-console.log(pago)
   const {data } = await axios.post(baseUrl+'pagonivel2',(pago),config)
 
     
@@ -297,10 +295,9 @@ console.log(pago)
     
       const mandarconsul= async  (form) => {
 
-        console.log(form)
         
         const {data} = await axios.post(baseUrl+'enviarconsulta',form,config)
-      console.log(data)
+      
            return (data)
          
         } 

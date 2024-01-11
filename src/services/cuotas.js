@@ -35,7 +35,6 @@ if (loggedUserJSON) {
 
 const vercuotas4 = async (id) => {
 
-    console.log(baseUrl)
     const { data } = await axios.get(baseUrl + 'vercuotas4/' + id, config)
     if(data === 'error login'){  
         // alert('Debe loguearse nuevamente')
@@ -49,7 +48,6 @@ const vercuotas4 = async (id) => {
 
 const vercuotas2 = async (id) => {
 
-    console.log(baseUrl)
     const { data } = await axios.get(baseUrl + 'vercuotas2/' + id, config)
     if(data === 'error login'){  
         // alert('Debe loguearse nuevamente')

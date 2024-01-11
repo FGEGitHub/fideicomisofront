@@ -34,35 +34,35 @@ if (loggedUserJSON) {
 const lista= async  () => {
    
     const {data } = await axios.get(baseUrl+'pendientestodas')
-    console.log(data)
+    
     return data 
 }   
 
 const borrarusuario= async  (cuil_cuit) => {
    
   const {rta}  = await axios.get(baseUrl+'borrarusuario/'+cuil_cuit,config)
-    console.log(rta)
+   
     return rta 
 } 
 
 const rechazocbu= async  (form) => {
 
-  console.log(form)
+ 
   const data  = await axios.post(baseUrl+'rechazarcbu/',form)
-  console.log(data)
+
  
 } 
 
 const extracto= async  () => {
    
     const {data } = await axios.get(baseUrl+'extracto')
-    console.log(data)
+    
     return data 
 }  
 const subirprueba = async (formdata) => {
-    console.log(formdata)
+   
     const { data } = await axios.post(baseUrl + 'subirprueba', formdata,config)
-    console.log(data)
+   
   
   }
 
@@ -71,7 +71,7 @@ const subirprueba = async (formdata) => {
   const traerPagos = async () => {
     
     const { data } = await axios.get(baseUrl + 'pagos',config)
-    console.log(data)
+   
     return data
   
   }
@@ -79,7 +79,7 @@ const subirprueba = async (formdata) => {
   const borrarPago = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'borrarpago/'+id,config)
-    console.log(data)
+    
     return data
   
   }
@@ -88,23 +88,23 @@ const subirprueba = async (formdata) => {
   const traerlink360 = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'traerlink360/'+id,config)
-    console.log(data)
+   
     return data
   
   }
   const traerlinkcuota = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'traerlinkcuota/'+id,config)
-    console.log(data)
+   
     return data
   
   }
 
 
   const cambiarestado= async  (datos) => {
-    console.log(datos)
+   
      const {data } = await axios.post(baseUrl+'cambiarestado/',datos,config)
-     console.log(data)
+ 
      return data 
  } 
 

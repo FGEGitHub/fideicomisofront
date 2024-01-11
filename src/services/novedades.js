@@ -32,7 +32,7 @@ if (loggedUserJSON) {
   const crear= async  (datos) => {
  
     const data  = await axios.post(baseURL+'crear',datos,config)
-    alert(data.data)
+    
 
     return data.data 
 } 

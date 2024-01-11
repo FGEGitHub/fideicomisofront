@@ -32,10 +32,10 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 
 
 const buscar= async  (form) => {
-   console.log(form)
+   
 
  const {data} = await axios.post(baseUrl+'mensualesinusuales',form,config)
- console.log(data)
+ 
 
   return data
 }
@@ -44,7 +44,7 @@ const cantidad= async  () => {
  
 
 const cantidad = await axios.get(baseUrl+'cantidadinusuales',config)
-console.log(cantidad)
+
 
  return cantidad
 }   

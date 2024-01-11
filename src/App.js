@@ -28,7 +28,7 @@ useEffect(() => {
    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
    if (loggedUserJSON) {
      const userContext = JSON.parse(loggedUserJSON)
-    console.log(userContext)
+    
      setUserContext(userContext)
    
      servicioUsuario.setToken(userContext.token) 

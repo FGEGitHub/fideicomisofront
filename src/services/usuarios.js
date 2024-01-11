@@ -58,8 +58,7 @@ const usuarios = async () => {
 
 
 const registro = async (datos) => {
-  console.log(datos)
-
+ 
 
 
 
@@ -88,7 +87,6 @@ const recupero = async (datos) => {
 }
 const recuperar = async (datos) => {
 
-console.log(datos)
   // const data = await axios.post('http://localhost:4000/signupp', datos)
   const { data } = await axios.post(baseUrl + 'recuperoo', datos)
   return data

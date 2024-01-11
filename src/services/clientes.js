@@ -59,7 +59,7 @@ const modificarCliente= async  (datos) => {
 
 
 const crear= async  (datos) => {
-   console.log(datos)
+ 
     const {data } = await axios.post(baseURL+'add2',datos,config)
     
     alert(data)  
@@ -68,7 +68,7 @@ const crear= async  (datos) => {
 ////crear cliente desde legales
 
 const crear2= async  (datos) => {
-    console.log(datos)
+   
      const {data } = await axios.post(baseURL+'add3',datos,config)
      
      alert(data)  
@@ -79,7 +79,7 @@ const crear2= async  (datos) => {
 
 
 const determinarEmpresa= async  (datos) => {
-    console.log(datos)
+  
      const {data } = await axios.post(baseURL+'determinarempresa',datos,config)
      if(data === 'error login'){  
         // alert('Debe loguearse nuevamente')
@@ -141,8 +141,6 @@ const ventaLoteleg = async  (datos) => {
    
     const {data}  = await axios.post(baseURL+'ventalotee',datos,config)
     
-    
-    alert(data[0])
     return data
    
 } 
@@ -157,7 +155,6 @@ const determinarIngreso= async  (datos) => {
   
   const {data } = await axios.post(baseURL+'agregaringreso2/',datos,config)
 
-    alert('Guardado con exito')
     return data 
 }
 
