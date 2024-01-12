@@ -29,7 +29,7 @@ export default function MenuUsuario2() {
 /////////////////////////////////////Deslogueo si no es nivel 2
     const traer = async () => {
      const esniv2 =  await nivel(2) //helper de verificacion
-     console.log(esniv2)
+     
      if (esniv2){
       setLogueado(true)
      }else{

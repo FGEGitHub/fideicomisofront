@@ -136,7 +136,7 @@ const LotesCliente = (props) => {
     const traer = async () => {
 
         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-        console.log(lotes)
+      
         setLotes(lotes)
 
 
@@ -153,7 +153,7 @@ const LotesCliente = (props) => {
 
     
     const traerlink = async (index) => {
-        console.log(index)
+    
         const dde = await servicioAdmin.traerlinkcuota(index)
         
         window.open(dde)
@@ -163,7 +163,7 @@ const LotesCliente = (props) => {
 
     
     const traerlink360 = async (index) => {
-        console.log(index)
+       
         const dde = await servicioAdmin.traerlink360(index)
         
         window.open(dde)
@@ -172,7 +172,7 @@ const LotesCliente = (props) => {
     };
 
     const crearsolicituddebito = async (index) => {
-        console.log(index)
+     
         const dde = await servicio360.crearsolicituddebito({id_cuota:index})
         
       alert (dde)
@@ -296,7 +296,7 @@ const LotesCliente = (props) => {
                     traer={async () => {
 
                         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-                        console.log(lotes)
+                       
                         setLotes(lotes)
                     }}
 
@@ -787,9 +787,9 @@ const LotesCliente = (props) => {
                                                             <Pagorapido
                                                             id_cuota={row.id }
                                                             traer={ async (index) => {
-                                                                console.log(index)
+                                                               
                                                                 const cuotas = await servicioCuotas.vercuotas(index)
-                                                                console.log(cuotas)
+                                                              
                                                                 setCuotas(cuotas)
                                                                 setIdlote(index)
                                                                 setAct(true)
