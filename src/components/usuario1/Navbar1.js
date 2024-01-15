@@ -44,7 +44,7 @@ const Navbar = (props) => {
     setAnchorEl(null);
   };
 
-  console.log(theme);
+  ;
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const islogo = {
                   width: "100px",                  
@@ -64,7 +64,7 @@ const cantidadnoti = async () => {
       const usuario = JSON.parse(loggedUserJSON)
     //  console.log(usuario.cuil_cuit)
       const notis = await servicionotificaciones.cantidadpendientes(usuario.cuil_cuit)
-      console.log(notis)
+      
       setNotificacioness(notis[0])
       setNombre(notis[1])
 
