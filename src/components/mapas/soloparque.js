@@ -124,7 +124,7 @@ const Arg = () => {
                       <img
                         src={Gps}
                         alt="Imagen de fondo"
-                        style={{ position: "absolute", width: "400mm", height: "209.973mm", viewBox: "0 0 3507 2480", zIndex: -1 }}
+                        style={{ position: "absolute", width: "400mm", viewBox: "0 0 3507 2480", zIndex: -1 }}
 
                       />
                     )}
