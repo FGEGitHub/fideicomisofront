@@ -41,7 +41,6 @@ const Login = () => {
   //const [editing, setEditing] = useState(false);
 
   const navigate = useNavigate();
-  const params = useParams();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')

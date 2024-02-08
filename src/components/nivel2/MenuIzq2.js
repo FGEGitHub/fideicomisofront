@@ -13,8 +13,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import NfcIcon from '@mui/icons-material/Nfc';
 import { useState, useEffect } from "react";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import servicioPagos from '../../services/pagos'
-import Navbar from '../Navbar'
+import servicioPagos from '../../services/pagos';
+import Navbar from '../Navbar';
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -48,10 +48,7 @@ export default function MenuIzq2 ({children}) {
     setNotificaciones(notis[0])
     setNotificacioneslegajos(notis[1])
     setNotificacionescbus(notis[2])
-    /* if (notificaciones>0) {
-      document.title= 'Santa Catalina ('+notificaciones+')'
-   
-    }   */
+
 }
 
     const handleClick = (path) => {
