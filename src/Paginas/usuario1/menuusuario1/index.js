@@ -7,7 +7,7 @@ import Cards from '../../../components/usuario1/Cards'
 import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
 import {nivel} from '../../../herlpers/herlperlogin'
-
+import Carrusel  from '../../../components/usuario1/carrusel1'
 import { Divider, Toolbar } from '@mui/material';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -51,13 +51,13 @@ export default function MenuUsuario1() {
 
                 <Navbar /> 
                 <br/><br/><br/>
-                   
+              
                 <Banner />
                 <Divider variant="middle" />
 
                 <Cards />
                 <Divider variant="middle" />
-
+               
                 <Faq />
                 <Toolbar />
                 <Divider variant="middle" />

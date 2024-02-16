@@ -55,7 +55,7 @@ const CuotasNiv1 = (props) => {
   const [act2, setAct2] = useState(false)
 
 
-  const [cuotas, setCuotas] = useState([''])
+  const [cuotas, setCuotas] = useState([])
   const [pagos, setPagos] = useState([''])
   const [age, setAge] = React.useState('');
 
@@ -248,8 +248,12 @@ const CuotasNiv1 = (props) => {
 
       <br /><br /><br /><br /><br /><br />
       <div style={{ textAlign: 'center' }}>
-      <Box sx={{ minWidth: 120 }}>
- 
+   
+    {lotes ?  <>
+
+   
+
+      <Box sx={{ minWidth: 120 }}>   {lotes.length >0 ? <>
       <TextField component="form"
         
               noValidate
@@ -269,10 +273,10 @@ const CuotasNiv1 = (props) => {
                    {option['zona']} Manzana {option['manzana']}  p {option['parcela']}
                   </MenuItem>
                 ))}
-            </TextField>
+            </TextField>  </>:<><h1>No hay lotes asociados al usuario</h1></>}
     </Box>
-  
-        
+
+  </>:<></>}
       
     
 

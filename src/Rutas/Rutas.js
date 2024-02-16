@@ -30,7 +30,7 @@ import Legajos from "../Paginas/usuario1/Legajos"
 import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
-
+import Asociar1 from "../Paginas/usuario1/debitoaut"
 import CBU from "../Paginas/usuario1/SubirCbu"
 import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 import Constancias from "../Paginas/usuario1/Constancias"
@@ -129,7 +129,7 @@ const Rutas = [
 	{ path: '/usuario/contacto', element: < Contacto /> },
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
 	{ path: '/usuario/datosPers', element: < DatosPer /> },
-	
+	{ path: '/usuario/asociar', element: < Asociar1 /> },
 	
 	{ path: '/usuario/cbu-declarado', element: < CBU /> },
 	{ path: '/usuario/asociarcbu', element: < AsociarCBU /> },
