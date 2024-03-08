@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Ic3 from "./soloic3"
 import PIT from "./soloparque"
+import Usuar from "./usur"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
@@ -47,6 +48,7 @@ inputProps={{
 <option value={0}>Todo</option>
 <option value={1}>IC3</option>
 <option value={2}>Parque</option>
+<option value={3}>Otro</option>
 
 
 
@@ -56,7 +58,13 @@ inputProps={{
 
 { mapa === "2" ? <><PIT/></>:<>
 <br/><br/><br/><br/>
+{ mapa === "3" ? <><Usuar/></>:<>
+<br/><br/><br/><br/>
 Sin seleccion
+
+
+
+</>}
 
 
 

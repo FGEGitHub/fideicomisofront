@@ -35,6 +35,13 @@ const lista= async  () => {
     return data 
 }  
 
+const listausur= async  () => {
+   
+    const {data } = await axios.get(baseUrl+'listausur',config)
+    
+    return data 
+}  
+
 const lista2= async  () => {
    
     const {data } = await axios.get(baseUrl+'lista2',config)
@@ -141,6 +148,21 @@ const determinarmapa1= async  (datos) => {
      
      return data 
  }  
+
+
+ 
+
+
+ const determinarmapatodos= async  (datos) => {
+    console.log(datos)
+    //const {data } = await axios.post(baseUrl+'determinarmapatodos',datos,config)
+    
+   // return data 
+}  
+
+
+
+
  const determinarmapa2= async  (datos) => {
     
      const {data } = await axios.post(baseUrl+'determinarmapa2',datos,config)
@@ -188,4 +210,4 @@ const nuevolote= async  (datos) => {
      
      return data 
  }  
-export default {traersegunmapa1,traersegunmapa2,determinarposecion,determinarmapa1,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+export default {traersegunmapa1,traersegunmapa2,determinarposecion,determinarmapatodos,determinarmapa1,listausur,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
