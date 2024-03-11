@@ -155,9 +155,9 @@ const determinarmapa1= async  (datos) => {
 
  const determinarmapatodos= async  (datos) => {
     console.log(datos)
-    //const {data } = await axios.post(baseUrl+'determinarmapatodos',datos,config)
+    const {data } = await axios.post(baseUrl+'determinarmapatodos',datos,config)
     
-   // return data 
+    return data 
 }  
 
 
