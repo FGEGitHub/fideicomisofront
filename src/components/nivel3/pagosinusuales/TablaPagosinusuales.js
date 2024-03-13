@@ -256,7 +256,7 @@ const PagosInusuales = () => {
 
                                     {pagos.map((row, index) => (
                                         <StyledTableRow key={row.name}>
-                                             <StyledTableCell component="th" scope="row"><b>{row.mes}/{row.anio}</b></StyledTableCell>
+                                             <StyledTableCell component="th" scope="row"><b>{row.fecha} Cuota({row.mes}/{row.anio})</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row"><b   onClick={() => navigate('/usuario2/detallecliente/'+row.cuil_cuit)} >{row.cuil_cuit}</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row"><b>{row.id_cuota}</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row">$<b>{row.monto}</b></StyledTableCell>
