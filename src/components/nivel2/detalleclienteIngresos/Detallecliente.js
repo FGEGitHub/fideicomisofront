@@ -9,9 +9,11 @@ import PEP from './DeterminarPep'
 import Debitoaut from '../../360/modalcrearadhesiontarjeta'
 import DebitoauCBUt from '../../360/modaladhesiondebito'
 import Listacbus from '../../360/modallistacbu'
-
+import Alert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 const DetalleCliente = () => {
-   
+  const navigate = useNavigate();
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
     const [cliente, setCliente] = useState({})
@@ -63,7 +65,7 @@ const DetalleCliente = () => {
                <Paper
         sx={{
           cursor: 'pointer',
-          background: '#fafafa',
+          background: '#b0bec5',
           color: '#bdbdbd',
           border: '1px dashed #ccc',
           '&:hover': { border: '1px solid #ccc' },
@@ -83,15 +85,22 @@ const DetalleCliente = () => {
         }}
       >
              {habilitado ? <div>
-                Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}
+              <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
+            
                 <div> <Ingreso/> </div>
       
             {<LotesCliente
                   cuil_cuit={cuil_cuit} />}
 
                  
-            </div> : <div> Cliente no habilitado por {cliente.cuil_cuit}  ,el dia {cliente.fecha}, no se puede asignar el lote </div> }
+            </div> : <div><Alert severity="error"> <b>Cliente no habilitado por {cliente.cuil_cuit}  el dia {cliente.fecha}, (No se puede asignar lote a un cliente no habilitado)</b>. Ir a LEGAJOS para habilitar</Alert></div> }
             </Paper>
+            <Button
+                        variant="outlined"
+                        onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
+                      >
+                      Ir a legajos
+                      </Button>
             <Debitoaut
             cuil_cuit={cuil_cuit}/>
             <DebitoauCBUt

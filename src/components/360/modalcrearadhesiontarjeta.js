@@ -69,7 +69,7 @@ export default function SelectTextFields(props) {
             noValidate
             autoComplete="off"
         >
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="outlined" onClick={handleClickOpen} disabled>
                   Adherir debito tarjeta
             </Button>
             <Dialog open={open} onClose={handleClose}>

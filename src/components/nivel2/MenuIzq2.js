@@ -83,12 +83,12 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
-        { 
+     /*    { 
           text: 'Extracto', 
           icon: <GroupIcon color="primary" />, 
           path: '/usuario2/extracto' 
         },
-   
+    */
         
         {
           text: 'Aprobación de Legajos',

@@ -45,7 +45,7 @@ useEffect(() => {
        <BarraLAteral>
        
   
-       < BorrarIcc/>
+       
   <Historialicc/>
      
       </BarraLAteral>
