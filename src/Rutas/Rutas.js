@@ -16,7 +16,8 @@ import Extracto from "../Paginas/Usuario2/Extracto"
 import AgregarVariascuotasL from "../Paginas/Usuario2/AgregarcuotasvariosL"
 import Novedades from "../Paginas/Usuario2/Novedades"
 import Chats from "../Paginas/Usuario2/chats"
-
+import Comprobanteief from "../Paginas/Usuario2/comporbanteief"
+import Mapaniv2 from '../Paginas/Usuario2/mapas';
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 
 import Navbar from "../components/Navbar";
@@ -29,7 +30,7 @@ import Legajos from "../Paginas/usuario1/Legajos"
 import IngresosDeclarados from "../Paginas/usuario1/IngresosDeclarados"
 import Notificaciones from "../Paginas/usuario1/Notificaciones"
 import DeclaracionesJuradas from "../Paginas/usuario1/declaracionesJuradas"
-
+import Asociar1 from "../Paginas/usuario1/debitoaut"
 import CBU from "../Paginas/usuario1/SubirCbu"
 import AsociarCBU from "../Paginas/usuario1/AsociarCbu"
 import Constancias from "../Paginas/usuario1/Constancias"
@@ -61,6 +62,19 @@ import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
 import CargaRelev from '../Paginas/Nivel4/CargaRelev';
+import Clientesleg from '../Paginas/Nivel4/clientes';
+import Lotesleg from '../Paginas/Nivel4/lotes';
+import DetalleClienteleg from '../Paginas/Nivel4/DetalleCliente';
+import Legajoslegales from '../Paginas/Nivel4/legajos';
+import Asignarlotes2 from '../Paginas/Nivel4/asignarlote';
+import Asignarvariasc from '../Paginas/Nivel4/agregarviarias';
+import Agregarcuotasleg from '../Paginas/Nivel4/agregarcuotas';
+import Perfilleg from '../Paginas/Nivel4/Perfil';
+import PagosNvel4 from '../Paginas/Nivel4/pagarcuota';
+import Comprobantepag from '../Paginas/Nivel4/comprobante';
+import Resumen4 from '../Paginas/Nivel4/resumen';
+import Mapalegales from '../Paginas/Nivel4/mapas';
+
 
 /////////// Administracion
 import Usuarios from '../Paginas/Administracion/Menu';
@@ -72,15 +86,16 @@ import LotesAdmin from '../Paginas/Administracion/Lotes';
 import Detalleclienteadmin from '../Paginas/Administracion/Detallecliente';
 
 //////////esme
-import CursosEsme from '../Paginas/Esme/Cursos';
-import Curso from '../Paginas/Esme/Curso'
-import Alumnos from '../Paginas/Esme/Alumnos'
-
 
 
 import Home from '../Paginas/Home/Home'
 import HomeCalculo from '../Paginas/Home/Calculo'
+import Mapaarg from '../Paginas/maparg'
 
+
+import Mapasusuario from '../Paginas/usuariomapas/inicio'
+
+import NOtFound from '../Paginas/not found'
 
 
 const Rutas = [
@@ -89,9 +104,9 @@ const Rutas = [
 
 	 {path: '/home',element: (<Home />)},
 	 {path: '/home/calcular',element: (<HomeCalculo />)},
+	 {path: '/home/maparg',element: (<Mapaarg />)},
+
 	 
-
-
 
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
@@ -114,7 +129,7 @@ const Rutas = [
 	{ path: '/usuario/contacto', element: < Contacto /> },
 	{ path: '/usuario/respuesta/:id', element: < RespuestaNoti /> },
 	{ path: '/usuario/datosPers', element: < DatosPer /> },
-	
+	{ path: '/usuario/asociar', element: < Asociar1 /> },
 	
 	{ path: '/usuario/cbu-declarado', element: < CBU /> },
 	{ path: '/usuario/asociarcbu', element: < AsociarCBU /> },
@@ -144,6 +159,8 @@ const Rutas = [
 	{ path: '/usuario2/agregarviarias/:cuil_cuit', element: <AgregarVariascuotasL /> },
 	{ path: '/usuario2/novedades', element: <Novedades /> },
 	{ path: '/usuario2/consultas', element: <Chats /> },
+	{ path: '/usuario2/comprobanteief/:id', element: <Comprobanteief /> },
+	{ path: '/usuario2/mapas', element: <Mapaniv2 /> },
 	
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
@@ -165,8 +182,20 @@ const Rutas = [
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
 	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
 	{ path: '/legales/cargarelev', element: <CargaRelev /> },
+	{ path: '/legales/clientes', element: <Clientesleg /> },
+	{ path: '/legales/lotes', element: <Lotesleg /> },
+	{ path: '/legales/detallecliente/:cuil_cuit', element: <DetalleClienteleg /> },
+	{ path: '/legales/legajoscliente/:cuil_cuit', element: <Legajoslegales /> },
+	{ path: '/legales/asignarloteausuario/:cuil_cuit', element: <Asignarlotes2 /> },
+	{ path: '/legales/agregarviarias/:cuil_cuit', element: <Asignarvariasc /> },
+	{ path: '/legales/agregarcuotas/:id', element: <Agregarcuotasleg /> },
+	{ path: '/legales/perfil', element: <Perfilleg/> },
+	{ path: '/legales/pagarcuota/:id', element: <PagosNvel4 /> },
+	{ path: '/legales/comprobante/:id', element: <Comprobantepag /> },
+	{ path: '/legales/resumen', element: <Resumen4 /> },
+	{ path: '/legales/mapas', element: <Mapalegales /> },
 
-	
+
 	{ path: '/admin/usuarios', element: <Usuarios /> },
 	{ path: '/admin/clientes', element: <AdminClientes /> },
 	{ path: '/admin/modificarcli/:cuil_cuit', element: <ModificarCli /> },
@@ -174,15 +203,13 @@ const Rutas = [
 	{ path: '/admin/pagos', element: <PagosAdmin /> },
 	{ path: '/admin/lotes', element: <LotesAdmin /> },
 	{ path: '/admin/detallescliente/:cuil_cuit', element: <Detalleclienteadmin /> },
+
+
+	{ path: '/usuariomapas/inicio', element: <Mapasusuario /> },
 	
 
 	
-	/*{	path: '/',	element: <NotFound />
-		}, */
-		{ path: '/esme/cursos', element: <CursosEsme /> },
-		{ path: '/esme/curso/:id', element: <Curso /> },
-		{ path: '/esme/alumnos', element: <Alumnos /> },
-
+	{ path: '*', element: <NOtFound /> },
 
 ];
 

@@ -7,7 +7,7 @@ const  baseUrl ='https://api.santacatalinafideicomiso.com/relevamiento/'
 
 
 const buscar = async (barrio) => {
-    console.log(barrio)
+  
 
     const data = await axios.post(baseUrl + 'datos', barrio)
 

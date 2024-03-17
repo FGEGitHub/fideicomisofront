@@ -1,11 +1,12 @@
 import React, { useEffect, useState, } from "react";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from "@mui/material/Button";
-
+import ButtonGroup from '@mui/material/ButtonGroup';
 import MUIDataTable from "mui-datatables";
 import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
 import serviciousuario1 from '../../../services/usuario1'
+import serviciousuarios from '../../../services/usuarios'
 import "../../profile.css";
 import { Box } from "@mui/system";
 import ModalLegajo from './Modalegajo'
@@ -19,21 +20,33 @@ import ModalSeguro from './Modalseguroborrar'
 
 const LegajoCliente = (props) => {
   const navigate = useNavigate();
-  const [legajos, setLegajos] = useState([])
-  const [file, setFile] = useState(null);
-  const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-  const [address, setAddress] = useState(null);
-  const [editMode, setEditMode] = useState(false);
+
   let params = useParams()
   let cuil_cuit = params.cuil_cuit
       const [products, setProducts] = useState([])
       const [act, setAct] = useState(false)
-  
-  
+      const [user, setUser] = useState(null)
+      const [cargado, setCargado] = useState(false)
   
       //2 - fcion para mostrar los datos con axios
-      const endpoint = "http://localhost:4000/usuario1/all-files"
-  
+      const traer = async () => {
+
+        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+      
+          const user = JSON.parse(loggedUserJSON)
+         
+        const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
+       
+        setUser(notis[0])
+        setCargado(true)
+      
+      
+        /* if (notificaciones>0) {
+          document.title= 'Santa Catalina ('+notificaciones+')'
+       
+        }   */
+      }
+      
   
       const getData = async () => {
         const  data = await servicioCliente.traerLejagos(cuil_cuit)
@@ -48,18 +61,16 @@ const LegajoCliente = (props) => {
               
           
       }
-  
+      const volver2 =  () => {
+        navigate('/legales/detallecliente/'+cuil_cuit)
+             
+      }
       useEffect(() => {
           getData()
+          traer()
       }, [])
   
-  
-      /* const downloadFile = async (index) => {
-          const filename = (products[index].key)
-      
-          const link = await axios.get(`http://localhost:8080/get-object-url/`+filename).then(res => {
-              
-          } */
+
   
           async function download(index, rowIndex, data) {
               const filename = (products[index].ubicacion)
@@ -87,17 +98,13 @@ const LegajoCliente = (props) => {
         } 
      function verFile(index, rowIndex, data) {
     
-            /* const filename = (products[index].key)
-            console.log(filename)
-            const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-            console.log(link.data)
-            setAct(true) */
+   
             return (
                 <>
     
                     <Button
                         onClick={() => veronline(index)}
-                    >Ve online</Button>
+                    >Ver online</Button>
     
     
                 </>
@@ -106,11 +113,7 @@ const LegajoCliente = (props) => {
     
        function downloadFile(index, rowIndex, data) {
   
-          /* const filename = (products[index].key)
-          console.log(filename)
-          const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-          console.log(link.data)
-          setAct(true) */
+  
           return (
               <>
                   
@@ -211,21 +214,39 @@ const LegajoCliente = (props) => {
       return (
           <div>
            
-            < Estadisticas
-             cuil_cuit = {cuil_cuit}/>
+           {user ?
+            <>
+           {user.nivel ===2 ? <> 
+
+           < Estadisticas
+             cuil_cuit = {cuil_cuit}/> 
+
+<Button onClick={volver} > <ArrowBackIcon/> Volver</Button>
+          
+
+             
+
+             </> : <>
+             <Button onClick={volver2} > <ArrowBackIcon/>  Volver</Button>
+             <div    ></div></>}
+           </>
+             :<></>
+             }<ButtonGroup variant="contained" aria-label="outlined primary button group">
              < ModalLegajo
-                getData = { async () => {
+                getData = {async () => {
+                  console.log("get")
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)
                        
                         setProducts(data)
-                    }} 
+                    
+                }
+                } 
               />
              <Habilitar 
               cuil_cuit_user= {props.cuil_cuit_user} />
              <Deshabilitar
              cuil_cuit_user= {props.cuil_cuit_user} />
-         
-             <Button onClick={volver} > Volver</Button>
+          </ButtonGroup>
              <div    >
             
               <MUIDataTable
@@ -236,7 +257,7 @@ const LegajoCliente = (props) => {
               
   
                  </div>
-  
+                
           </div>
       )
 }

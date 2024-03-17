@@ -13,8 +13,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import NfcIcon from '@mui/icons-material/Nfc';
 import { useState, useEffect } from "react";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import servicioPagos from '../../services/pagos'
-import Navbar from '../Navbar'
+import servicioPagos from '../../services/pagos';
+import Navbar from '../Navbar';
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -24,7 +24,7 @@ import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
@@ -48,10 +48,7 @@ export default function MenuIzq2 ({children}) {
     setNotificaciones(notis[0])
     setNotificacioneslegajos(notis[1])
     setNotificacionescbus(notis[2])
-    /* if (notificaciones>0) {
-      document.title= 'Santa Catalina ('+notificaciones+')'
-   
-    }   */
+
 }
 
     const handleClick = (path) => {
@@ -86,12 +83,12 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
-        { 
+     /*    { 
           text: 'Extracto', 
           icon: <GroupIcon color="primary" />, 
           path: '/usuario2/extracto' 
         },
-   
+    */
         
         {
           text: 'Aprobación de Legajos',
@@ -116,14 +113,14 @@ export default function MenuIzq2 ({children}) {
           path: '/usuario2/novedades'
         },
         {
-          text: 'Consultas',
+          text: 'Mapas',
           icon:<div><Badge color="error">
-          <AccountBalanceIcon color="primary" />
+          <TravelExploreIcon color="primary" />
         </Badge></div>,
-          path: '/usuario2/consultas'
+          path: '/usuario2/mapas'
         },
         
-     
+       
       ];
 
       const menuItems2 = [

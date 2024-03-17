@@ -47,8 +47,26 @@ const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago),config)
 
 
 
+
+const pagarnivel4lote= async  (pago) => {
+
+
+  const {data } = await axios.post(baseUrl+'pagos/pagarnivel4lote',(pago),config)
+     return (data)
+   
+  } 
+const pagarnivel4= async  (pago) => {
+
+
+  const {data } = await axios.post(baseUrl+'pagos/pagarnivel4',(pago),config)
+     return (data)
+   
+  } 
+
+
+
 const detallespagoscuota= async  (id_cuota) => {
-  console.log(id_cuota)
+  
 // pago nivel 1
 // const {data } = await axios.post(baseUrl+'usuario1/realizarr',(pago))
    
@@ -66,16 +84,16 @@ const rechazararpago= async  (form) => {
  
   
    const {data } = await axios.post(baseUrl+'pagos/rechazarr',form,config)
-     console.log(data)
+     
     return data
    } 
 
 ///////aprobar pago nivel 2
 const aprobarpago= async  (form) => {
 
-console.log(form)
+
   const {data } = await axios.post(baseUrl+'pagos/aprobarr/',form,config)
-    //console.log(data)
+    //
   return data
  }  
 
@@ -83,7 +101,7 @@ const aprobaciones= async  () => {
 
 
  const {data } = await axios.get(baseUrl+'pagos/pendientess',config)
-   console.log(data)
+   
  return data
 }  
 
@@ -91,7 +109,7 @@ const listaExtractos= async  () => {
 
 
   const {data } = await axios.get(baseUrl+'pagos/todoslosextractos',config)
-    console.log(data)
+    
   return data
  }  
 
@@ -99,17 +117,17 @@ const listaExtractos= async  () => {
 
 const detallesPago= async  (id) => {
 ////detalles de los pagos de una cuota(nivel2)
-console.log(id)
+
   const {data } = await axios.post(baseUrl+'pagos/detallespagos',id,config)
-    console.log(data)
+    
   return data
  }  
 
  const VerExtracto= async  (id) => {
   ////
-  console.log(id)
+  
   const {data } = await axios.post(baseUrl+'pagos/extractoid',id,config)
-    console.log(data)
+    
    return data
    } 
  
@@ -133,14 +151,25 @@ const cantidadpendientes= async  () => {
  const verCoincidencias= async  (id) => {
 
   const {data}  = await axios.get(baseUrl+'pagos/vercoincidencias/'+id,config)
-    console.log(data)
+    
   return data
  } 
+ const traerpagodecuota= async  (id) => {
+
+  const {data}  = await axios.get(baseUrl+'pagos/traerpagodecuota/'+id,config)
+    
+  return data
+ } 
+
+
+ 
+
+
  const rechazararpagoniv3= async  (form) => {
- console.log(form)
+ 
   
   const {data } = await axios.post(baseUrl+'pagos/rechazararpagoniv3',form,config)
-    console.log(data)
+    
    return data
   } 
 
@@ -153,6 +182,13 @@ const cantidadpendientes= async  () => {
        
       return data
      }
+     const traerpago= async  (id) => {
+  
+     
+      const {data } = await axios.get(baseUrl+'pagos/traerpago/'+id,config)
+        
+       return data
+      }
+ 
 
-
-export default {todoslospagos,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

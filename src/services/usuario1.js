@@ -32,12 +32,12 @@ if (loggedUserJSON) {
 const cantidadd= async  (cuil_cuit) => {///////////////ver no esta conctado
    
     const {data } = await axios.get(baseUrl+'cantidadnotificaciones/'+cuil_cuit,config)
-    console.log(cuil_cuit)
+   
     return(data)
    
 }
 const verief= async  (id) => {
-    console.log(id)
+    
     const data = await axios.get(baseUrl+'ief/'+id,config)
              
 
@@ -69,10 +69,21 @@ const lotesCliente= async  (cuil_cuit) => {
       return data
   } 
 
+  const lotesCliente2= async  (cuil_cuit) => {
+   
+    let {data}  = await axios.get(baseUrl+'lotesCliente2/'+cuil_cuit,config)
+
+  
+
+   
+   
+    return data
+} 
+  
   const vercuotas= async  (id) => {
  
     const {data } = await axios.get(baseUrl+'lote2/'+id,config)
-    console.log(data)
+    
     
     return data 
 }  
@@ -80,7 +91,7 @@ const vertodascuotas= async  (id) => {
     
    console.log(id)
     const {data } = await axios.get(baseUrl+'lote2/'+id,config)
-    console.log(data)
+    
     
     return data 
 }  
@@ -102,7 +113,7 @@ const notiId= async  (id) => {
 }
 
 const respuestanoti= async  (rta) => {
-  console.log(rta)
+  
   const data = await axios.post(baseUrl+'justificacion/',rta,config)
 return (data.data)
  
@@ -161,17 +172,17 @@ const subirprueba = async (formdata) => {
 
 ///legajo
 const cargarcbu = async (formdata) => {
-  console.log('formdata')
+  
  const data = await axios.post(baseUrl + 'cargarcbu/', formdata,config)
- console.log({data})
+
 
 }
 
 const constancias= async  (cuil_cuit) => {
-  console.log(cuil_cuit)
+
   const data = await axios.get(baseUrl+'constancias/'+cuil_cuit,config)
            
-console.log(data.data)
+
 
  
  
@@ -179,7 +190,7 @@ return data.data
 } 
 
 const traercompleto= async  (cuil_cuit) => {
-  console.log(cuil_cuit)
+
   const pos = {
     cuil_cuit
   }
@@ -193,7 +204,6 @@ return data
 } 
 
 const determinarPep = async (formdata) => {
-  console.log(formdata)
   const { data } = await axios.post(baseUrl + 'determinarPep', formdata,config)
 
 }
@@ -209,7 +219,6 @@ const constanciasdelpago = async (id) => {
 
 const pagarnivel2= async  (pago) => {////pago desde el usuario 2
 
-console.log(pago)
   const {data } = await axios.post(baseUrl+'pagonivel2',(pago),config)
 
     
@@ -222,6 +231,16 @@ console.log(pago)
          alert(data)
        
       } 
+
+      
+      const modificarcli2= async  (datosNuevos) => {////
+
+        const {data } = await axios.post(baseUrl+'modificarcli2',(datosNuevos),config)
+           alert(data)
+         
+        } 
+
+
   
   const cliente = async (cuil) => {
    
@@ -231,6 +250,19 @@ console.log(pago)
      return data
    
    }
+
+
+
+   const cliente2 = async (cuil) => {
+   
+  
+    const { data } = await axios.get(baseUrl + 'cliente2/'+cuil,config)
+    
+     return data
+   
+   }
+
+
 
    const pagarnivel2varios= async  (pago) => {
 
@@ -263,13 +295,12 @@ console.log(pago)
     
       const mandarconsul= async  (form) => {
 
-        console.log(form)
         
         const {data} = await axios.post(baseUrl+'enviarconsulta',form,config)
-      console.log(data)
+      
            return (data)
          
         } 
 
     
-export default {obtenerurlonline,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {obtenerurlonline,lotesCliente2,cliente2,modificarcli2,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

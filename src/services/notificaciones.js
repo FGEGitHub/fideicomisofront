@@ -32,7 +32,7 @@ const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
 const leer= async  (id) => {
     
     const {data} = await axios.get(baseUrl+'leer/'+id,config)
-    console.log(data.asunto)
+    
      return data 
  }  
  const cantidadpendientes= async  (cuil_cuit) => {

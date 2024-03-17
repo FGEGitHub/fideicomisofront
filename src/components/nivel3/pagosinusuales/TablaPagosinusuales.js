@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const PagosInusuales = () => {
     //configuracion de Hooks
     const [pagos, setpagos] = useState([]);
-
+    const [vista, setVista] = useState(true);
     const navigate = useNavigate();
 
 
@@ -219,6 +219,7 @@ const PagosInusuales = () => {
 
 
         <div>
+{vista ? <>
 
             <>
                 <Paper
@@ -240,6 +241,7 @@ const PagosInusuales = () => {
                             <Table >
                                 <TableHead>
                                     <TableRow>
+                                    <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUIL/CUIT</b> <b /></TableCell>
                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA</b></TableCell>
                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>MONTO</b></TableCell>
@@ -254,6 +256,7 @@ const PagosInusuales = () => {
 
                                     {pagos.map((row, index) => (
                                         <StyledTableRow key={row.name}>
+                                             <StyledTableCell component="th" scope="row"><b>{row.fecha} Cuota({row.mes}/{row.anio})</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row"><b   onClick={() => navigate('/usuario2/detallecliente/'+row.cuil_cuit)} >{row.cuil_cuit}</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row"><b>{row.id_cuota}</b></StyledTableCell>
                                             <StyledTableCell component="th" scope="row">$<b>{row.monto}</b></StyledTableCell>
@@ -269,7 +272,7 @@ const PagosInusuales = () => {
                                                     setpagos(pagos)
                                                 }}
                                             />
-                                                <BotonAprobado id={row.id}
+                                              {/*   <BotonAprobado id={row.id}
                                                     monto={row.monto}
                                                     getPagosi = {async () => {
 
@@ -279,7 +282,7 @@ const PagosInusuales = () => {
                                                         console.log(pagos)
                                                         setpagos(pagos)
                                                     }}
-                                                /> </StyledTableCell>
+                                                /> */} </StyledTableCell>
 
 
                                             <StyledTableCell component="th" scope="row"> <Button
@@ -300,7 +303,7 @@ const PagosInusuales = () => {
                 </Paper>
 
             </>
-
+            </>:<>
             <ThemeProvider theme={StyledTable()}>
                 <MUIDataTable
                     title={"Lista de pagos inusuales"}
@@ -316,7 +319,7 @@ const PagosInusuales = () => {
                     options={options}
 
                 />
-            </ThemeProvider>
+            </ThemeProvider></>}
         </div>
     )
 }

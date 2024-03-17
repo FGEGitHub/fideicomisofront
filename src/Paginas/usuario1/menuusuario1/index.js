@@ -6,10 +6,9 @@ import Banner from '../../../components/usuario1/Banner'
 import Cards from '../../../components/usuario1/Cards'
 import Faq from '../../../components/usuario1/Faq'
 import Navbar from '../../../components/usuario1/Navbar1'
-
-import  useUser from '../../../hooks/useUser'
+import {nivel} from '../../../herlpers/herlperlogin'
+import Carrusel  from '../../../components/usuario1/carrusel1'
 import { Divider, Toolbar } from '@mui/material';
-import NotificacionesFlotantes from '../../..//components/usuario1/NotificacionesFlotantes'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,48 +17,47 @@ import { useNavigate } from "react-router-dom";
 
 export default function MenuUsuario1() {
 
-    const usuario  = useUser().userContext
+
 
 
     const navigate = useNavigate();
     const [logueado, setLogueado] = useState(false) 
+
     useEffect(() => {
-      const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
-        if (!user){
-          window.localStorage.removeItem('loggedNoteAppUser')
-       navigate('/login')
-  
-        }else{
-  
+   
+        traer()
+          
+            //servicioUsuario.setToken(user.token)  
+           
+            
+         
+        }, [])
+    
+    /////////////////////////////////////Deslogueo si no es nivel 1
+        const traer = async () => {
+         const esniv2 =  await nivel(1) //helper de verificacion
+         console.log(esniv2)
+         if (esniv2){
           setLogueado(true)
+         }else{
+          navigate('/login')
+         }
+    
         }
-      
-        //servicioUsuario.setToken(user.token)  
-       
-        
-      }
-     
-    }, [])
-
-
     return (
         <><div>  { logueado ? <div> 
             <div disableSticky={false} className="App">
 
 
                 <Navbar /> 
-                <br/><br/><br/><br/><br/>
-           
-                   
+                <br/><br/><br/>
+              
                 <Banner />
                 <Divider variant="middle" />
 
                 <Cards />
                 <Divider variant="middle" />
-
+               
                 <Faq />
                 <Toolbar />
                 <Divider variant="middle" />

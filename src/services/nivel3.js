@@ -30,34 +30,34 @@ if (loggedUserJSON) {
 
 
 const agregariccgral= async  (datos) => {
-   console.log(datos)
+   
     const {data } = await axios.post(baseUrl+'agregariccgral2',datos,config)
     alert(data)
    
 }  
 const agregariccgral2= async  (datos) => {
-    console.log(datos)
+    
      const {data } = await axios.post(baseUrl+'agregariccgral22',datos,config)
      alert(data)
     
  }  
 const traerhistorial= async  () => {
-   console.log(1)
+   
     const {data } =await axios.get(baseUrl+'historialicc',config)
 
     return data 
 }  
 
 const nuevoicc= async  (datos) => {
-    console.log(datos)
+    
      const {data } =await axios.post(baseUrl+'consultaricc',datos,config)
-    console.log(data)
+    
      return data 
  } 
  const valormetrocuadrado= async  (datos) => {
-    console.log(datos)
+    
      const {data } =await axios.post(baseUrl+'asignarvalormetroc',datos,config)
-    console.log(data)
+    
      return data 
  } 
 
@@ -69,13 +69,13 @@ const borrarhistorial= async  () => {
  }  
 
  const asignarclave= async  (datos) => {
-    console.log(datos)
+    
      const {data } =await axios.post(baseUrl+'asignarclave',datos,config)
         alert(data)
      return data 
  } 
  const registronivel3 = async (datos) => {
-    console.log(datos)
+    
   
  
       const {data} = await axios.post(baseUrl+'signupp', datos,config)
@@ -90,7 +90,7 @@ const borrarhistorial= async  () => {
   
  
       const {data} = await axios.get(baseUrl+'traerusuarios',config)
-      console.log(data)
+      
 
       return data
  

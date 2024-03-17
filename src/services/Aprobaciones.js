@@ -33,44 +33,43 @@ if (loggedUserJSON) {
 const lista= async  () => {
    
     const {data } = await axios.get(baseUrl+'pendientestodas',config)
-    console.log(data)
+ 
     return data 
 }   
 
 const cantidad= async  () => {
    
   const {data } = await axios.get(baseUrl+'pendientestodas')
-  console.log(data)
+  
   return data 
 } 
 
 const aprobacion= async  (id) => {
-   console.log(id)
+   
   const {data } = await axios.get(baseUrl+'aprobar/'+id,config)
-    console.log(data)
- 
+    
+  return data
 }   
 
 const rechazo= async  (form) => {
 
-  console.log(form)
+  
   const data  = await axios.post(baseUrl+'rechazarr/',form,config)
-  console.log(data)
+  return data
  
 } 
 
 const rechazocbu= async  (form) => {
 
-  console.log(form)
   const data  = await axios.post(baseUrl+'rechazarcbu/',form,config)
-  console.log(data)
+  return data
  
 } 
 const aprobacioncbu= async  (id) => {
-  console.log(id)
+ 
  const {data } = await axios.get(baseUrl+'aprobarcbu/'+id,config)
-   console.log(data)
+ return data
 
 }  
 
-export default {lista,aprobacioncbu, aprobacion,rechazo,rechazocbu};
+export default {lista,aprobacioncbu, aprobacion,rechazo,rechazocbu,cantidad};

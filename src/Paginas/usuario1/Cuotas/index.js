@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Fragment } from "react";
 import Navbar from '../../../components/usuario1/Navbar1'
-
+import {nivel} from '../../../herlpers/herlperlogin'
 import useUser from '../../../hooks/useUser'
 import Cuotas from '../../../components/usuario1/cuotas/CuotasNiv1'
 
@@ -20,26 +20,24 @@ export default function Transferencias() {
   const navigate = useNavigate();
   const [logueado, setLogueado] = useState(false)
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      if (!user) {
-        window.localStorage.removeItem('loggedNoteAppUser')
-        navigate('/login')
-
-      } else {
-
-        setLogueado(true)
-      }
-
-      //servicioUsuario.setToken(user.token)  
-
-
+   
+    traer()
+      
+        //servicioUsuario.setToken(user.token)  
+       
+     
+    }, [])
+  /////////////////////////////////////Deslogueo si no es nivel 1
+  const traer = async () => {
+    const esniv2 =  await nivel(1) //helper de verificacion
+    console.log(esniv2)
+    if (esniv2){
+     setLogueado(true)
+    }else{
+     navigate('/login')
     }
 
-  }, [])
-
+   }
   return (
     <>
       <div>  {logueado ? <div>
@@ -48,10 +46,7 @@ export default function Transferencias() {
 
 
         <Cuotas
-          user={1}
-          user2={usuarioo}
-
-
+      
         />
       </div> : <div></div>} </div>
 

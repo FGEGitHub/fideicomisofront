@@ -39,19 +39,17 @@ export default function FormDialog(props) {
   setForm({  ...form, [e.target.name]: e.target.value })
   return (
     <div>
-      <Tooltip title="Aprobar pago/cambiar monto"arrow>
+      <Tooltip title="Clasificar"arrow>
       <IconButton>
       <Button  onClick={handleClickOpen}>
-       Rechazar
+ Clasificar
       </Button>
       </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Rechazar</DialogTitle>
+        <DialogTitle>Detalla motivo de clasificacion </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Detalla  motivo del rechazo 
-          </DialogContentText>
+       
           <form  onSubmit={rechazar}>
 
           <InputLabel  variant="standard" htmlFor="uncontrolled-native">
@@ -81,7 +79,7 @@ export default function FormDialog(props) {
             fullWidth
             variant="standard"
           />
-           <Button onClick={() => {rechazar(props.id)}}>Rechazar</Button>
+           <Button onClick={() => {rechazar(props.id)}}>Clasificar</Button>
           </form>
         </DialogContent>
         <DialogActions>

@@ -12,6 +12,8 @@ import BackupIcon from '@material-ui/icons/Backup';
 import { useDropzone } from 'react-dropzone'
 import Box from '@mui/material/Box';
 import { useParams } from "react-router-dom"
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 export default function FormDialog(props) {
@@ -22,6 +24,8 @@ export default function FormDialog(props) {
     const [enviarr,setEnviarr] = useState()
     const [completado, setCompletado] = useState(false);
     const [fileUpload, setFileUpload] = useState(null);
+    const [cargando, setCargando] = useState(false);
+
     const [legform, setLegform] = useState({
         cuil_cuit:cuil_cuit
     })
@@ -78,11 +82,14 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
     const enviar = async () => {
+      setCargando(true)
      await enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
 
     const rta =  await servicioLegajo.subirlegajode(enviarr)
     alert(rta)
+    console.log("getData")
      props.getData()
+     setCargando(false)
       setOpen(false);
 
 
@@ -131,20 +138,29 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                         }}
 
                     > <option value={''}>Elegir</option>
+                    <option value={'Cbu personal'}>CBU personal</option>
+                    <option value={'Cbu familiar'}>CBU familiar</option>
                         <option value={'Dni'}>dni</option>
                         <option value={'Constancia de Afip'}>Constancia de Afip</option>
+                      
+                        <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option> 
+                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
+                        <option value={'Ultimos balances CPCE'}>Ultimos Balances certificados en el CPCE </option> 
+                        <option value={'DjIva'}>DJ IVA</option> 
+                        <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
+                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
+                            <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
+                          <option value={'Dj Datospers'}>DJ Datos Personales</option>   
                         <option value={'Estatuto Social'}>Estatuto Social</option>
                         <option value={'Acta del organo decisorio'}>Acta de organo Sucesorio Asignado</option>
-                        <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option>
-                        <option value={'Ultimos balances'}>Ultimos Balances</option>
-                        <option value={'DjIva'}>DJ IVA</option>
-                        <option value={'Pagos Previsionales'}>Pagos Provisionales</option>
-                        <option value={'Dj Datospers'}>DJ Datos Personales</option>
-                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona</option>
-                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos</option>
-                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
-                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
-                        <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
+                        
+                          <option value={'Constancia CUIL/CUIT'}> Constancia CUIL/CUIT(Pers fisica)</option>
+                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona(Pers fisica)</option>
+                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos(Pers fisica)</option>
+                       
+                        <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
+                        <option value={'Pago Monotributo'}>Pago Monotributo</option>
+                        <option value={'Pago autonomo'}>Pago de autonomo</option>
                         
 
                         
@@ -208,7 +224,11 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
                 <DialogActions>
                        
                     <Button onClick={handleClose}>Cancelar</Button>
-                    <Button onClick={enviar}>Enviar</Button>
+                    {cargando ? <>   <Box sx={{ display: 'flex' }}>
+                    <Button > <CircularProgress /></Button>
+     
+    </Box></>:<>
+                    <Button onClick={enviar}>Guardar</Button></>}
                 </DialogActions>
             </Dialog>
         </div>

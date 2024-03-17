@@ -5,10 +5,10 @@ import React, { useEffect, useState, Fragment } from "react";
 import Skeleton from '@mui/material/Skeleton';
 import Fab from '@mui/material/Fab';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import TextField from '@mui/material/TextField';
+import NativeSelect from '@mui/material/NativeSelect';
 import { useNavigate } from "react-router-dom";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Stack from '@mui/material/Stack';
@@ -21,7 +21,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@material-ui/core";
 import InformarPago from './PagodeCuota'
-
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -45,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const CuotasNiv1 = (props) => {
-  const [lotes, setLotes] = useState([''])
+  const [lotes, setLotes] = useState([])
   const [deudaExigible, setDeudaExigible] = useState([''])
   const [detallePendiente, setDetallePendiente] = useState([''])
   const [user, setUser] = useState([''])
@@ -53,12 +54,10 @@ const CuotasNiv1 = (props) => {
   const [act, setAct] = useState(false)
   const [act2, setAct2] = useState(false)
 
-  const [verPag, setVerpag] = useState(false)
-  const [verCuot, setVerCuot] = useState(false)
 
-
-  const [cuotas, setCuotas] = useState([''])
+  const [cuotas, setCuotas] = useState([])
   const [pagos, setPagos] = useState([''])
+  const [age, setAge] = React.useState('');
 
 
   const navigate = useNavigate();
@@ -74,18 +73,7 @@ const CuotasNiv1 = (props) => {
     traer(preba)
 
   }, [])
-  /* useEffect(() => {
- 
-     
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON)
   
-   
-      }
-   
-   
-    }, []) */
-
 
 
   const verief = async (index) => {
@@ -101,7 +89,7 @@ const CuotasNiv1 = (props) => {
   };
 
   const vercuotas = async (index) => {
-    
+    verief(index)
     const cuotas = await servicioUsuario1.vercuotas(index)
     console.log(cuotas)
     if (cuotas[0] !== '') {
@@ -111,15 +99,6 @@ const CuotasNiv1 = (props) => {
     setAct(true)
 
   };
-  //////////servicioCuotas
-
-  const borarTodas = async (index) => {
-
-    const cuotas = await servicioCuotas.borrarcuotas(index)
-
-
-  };
-
 
 
   const traer = async (preba) => {
@@ -132,13 +111,6 @@ const CuotasNiv1 = (props) => {
 
 
 
-
-  }
-  const borrar = async (id) => {
-
-    const rta = await servicioCuotas.borrarcuota(id)
-
-    alert(rta)
 
   }
   
@@ -267,131 +239,149 @@ const CuotasNiv1 = (props) => {
 
 
   ];
-
+  const handleChange = (event) => {
+    vercuotas(event.target.value);
+  };
   return (
 
-    <Fragment>
+    <>
 
       <br /><br /><br /><br /><br /><br />
+      <div style={{ textAlign: 'center' }}>
+   
+    {lotes ?  <>
+
+   
+
+      <Box sx={{ minWidth: 120 }}>   {lotes.length >0 ? <>
+      <TextField component="form"
+        
+              noValidate
+
+
+              id="outlined-select-currency"
+              select
+              label="Elegir Lote"
+            
+              name="cbu"
+              onChange={handleChange}
+              helperText="Seleccionar"
+            >
+              {
+                lotes.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                   {option['zona']} Manzana {option['manzana']}  p {option['parcela']}
+                  </MenuItem>
+                ))}
+            </TextField>  </>:<><h1>No hay lotes asociados al usuario</h1></>}
+    </Box>
+
+  </>:<></>}
+      
     
-      {
-        lotes.map((item, index) =>
-          <Stack spacing={2} direction="row">
-            <Fab key={index} variant="extended" onClick={() => { vercuotas(item['id']) }}><AddLocationAltIcon sx={{ mr: 1 }} /> {item['zona']} Manzana {item['manzana']} Parcela {item['parcela']}
 
-            </Fab>
-            {/*  <Button  key= {index} variant="contained"onClick={()=>{agregar(item['id'])}}> Agregar Cuotas</Button> */}
-            <Fab key={index} variant="extended" onClick={() => { verief(item['id']) }}>
-              <LocalAtmIcon sx={{ mr: 1 }} />
-              Estado financiero
-            </Fab>
-            <br/>
+<br/>
 
-            {/* <Button key={index} variant="contained" onClick={() => { verief(item['id']) }}> Estado financiero </Button> */}
+
+</div>
 
 
 
-        
-        
-          </Stack>
-        )
-      }
+
+
+
+
+
 
       {act2 ?
         <div>
             <Box
-            sx= {{
-              display: 'flex'
-            }}
-            >
- <Grid container  columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        sx={{display: 'flex'}}
+                                    >
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
-          <Paper
-            sx={{
-              cursor: 'pointer',
-              background: '#eeeeee',
-              color: '#bdbdbd',
-              border: '1px dashed #ccc',
-              width: "40%",
-              '&:hover': { border: '1px solid #ccc' },
-              border: "1px solid black",
-              margin: '75px',
-              display: 'flex'
+                                            <Paper
+                                               sx={{
+                                                cursor: 'pointer',
+                                                background: '#eeeeee',
+                                                color: '#bdbdbd',
+                                                border: '1px dashed #ccc',
+                                                width: "45%",
+                                                '&:hover': { border: '1px solid #ccc' },
+                                                border: "1px solid black",
+                                                margin: '10px',
+                                                display: 'flex'
+                                            }}
+                                            >
 
-            }}
-          >
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {deudaExigible.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
 
-            <TableContainer >
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Detalles de Deuda Exigible </TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
-
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {deudaExigible.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-
-                      <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
-
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
 
 
-          <Paper
-            sx={{
-              cursor: 'pointer',
-              background: '#eeeeee',
-              color: '#bdbdbd',
-              border: '1px dashed #ccc',
-              width: "40%",
-              '&:hover': { border: '1px solid #ccc' },
-              border: "1px solid black",
-              margin: '75px',
-              display: 'flex'
+                                            <Paper
+                                                 sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "45%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '10px',
+                                                    display: 'flex'
+                                                }}
+                                            >
 
-            }}
-          >
-
-            <TableContainer >
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Detalle de Cuotas Pendientes </TableCell>
+                                                <TableContainer >
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell  padding="normal" >Detalle de Cuotas Pendientes </TableCell>
 
 
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {detallePendiente.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {detallePendiente.map((row) => (
+                                                                <TableRow
+                                                                    key={row.name}
+                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                                >
 
-                      <TableCell align="left">{row.datoa}</TableCell>
-                      <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Paper>
-       
-          <Fab  sx={{ margin: '75px',}} variant="extended" onClick={() => { ocultarIEF() }}  ><VisibilityOffIcon sx={{ mr: 1 }}  /> Ocultar IEF</Fab>
-          </Grid>
-          </Box>
+                                                                </TableRow>
+                                                            ))}
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                            </Paper>
+
+                                            <Fab  sx={{ margin: '75px',}} variant="extended" onClick={() => { ocultarIEF() }}  ><VisibilityOffIcon sx={{ mr: 1 }}  /> Ocultar IEF</Fab>
+                                        </Grid>
+                                    </Box>
         </div>
         : <div></div>}
 
@@ -534,7 +524,7 @@ const CuotasNiv1 = (props) => {
       <br /><br /><br /><br />
 
 
-    </Fragment>
+    </>
 
   )
 

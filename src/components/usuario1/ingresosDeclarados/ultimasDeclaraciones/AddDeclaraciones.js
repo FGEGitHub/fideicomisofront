@@ -49,9 +49,16 @@ const AddDeclaraciones = (props) => {
   const [loading, setLoading] = useState(false);
   const [cantidad, setCantidad] = useState(null);
   const [datos, setdatos] = useState()
+  const [noespedef, setNoespdf] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
         // window.location.reload(true);
         const formData = new FormData();
+        
+    if(files[0].path[files[0].path.length-1] =="f" && files[0].path[files[0].path.length-2] =="d" && files[0].path[files[0].path.length-3] =="p" ){
+      setNoespdf(false)
+    }else{
+      setNoespdf(true)
+    }
         setFileUpload(acceptedFiles);
         formData.append('file', files[0]);
         setEnviarr(formData)

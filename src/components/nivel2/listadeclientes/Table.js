@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
-
+import Tooltip from '@mui/material/Tooltip';
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -21,20 +21,18 @@ const Lotes = () => {
     const navigate = useNavigate();
 
 
-    
+        useEffect(() => {
+        getClients()
+    }, [])
 
     const getClients = async () => {
         
-        const clients = await servicioClientes.lista({
-
-        })
+        const clients = await servicioClientes.lista({}) //////  api/links/infocantidad
         setClients(clients)
         setLoading(false);
     }
 
-    useEffect(() => {
-        getClients()
-    }, [])
+
 
     ///
 //opcionde click en el nombre
@@ -64,19 +62,23 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
           <>
+              <Tooltip title="Editar">
             <EditIcon
              onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
-            />
+            /></Tooltip>
+             <Tooltip title="Ver">
              <SearchIcon
              onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
-           
+           </Tooltip>
           </>
         );
       }
-    // definimos las columnas
+
+
+    // definimos las columnas de la tabla mui de clientes
     const columns = [
         {
             name: "id",
@@ -111,18 +113,14 @@ const Lotes = () => {
             }
         
         },   
-        {
-            name: "razon",
-            label: "Razon",
-           
-        },
+    
         {
             name: "observaciones",
             label:"Observaciones",
            
         },
         {
-            name: "Actions",
+            name: "Acciones",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -138,17 +136,13 @@ const Lotes = () => {
 
     ];
 
-const options = {
-
-    /*    rowsPerPage: 10,
-       download: false, // hide csv download option
-       onTableInit: this.handleTableInit,
-       onTableChange: this.handleTableChange, */
-};
+    const options = {
+        selectableRows: false, // Deshabilita los checkboxes
+      };
 // renderiza la data table
 return (
     <>
-    {loading ? (<CargaDeTabla/>)
+    {loading ? (<CargaDeTabla/>) 
         :(
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
@@ -156,13 +150,17 @@ return (
  <Alert severity="info">Cantidad de clientes: {clients.length}</Alert>
     </Stack>
     <br/>
-    <Nuevo
+{/* componente de cliente nuevo, envio de funcion para actualizar de inmediato */}
+    <Nuevo  
     getClients =  { async () => {
         const clients = await servicioClientes.lista({
         })
         setClients(clients)
     }}
     />
+
+
+
         <MUIDataTable
         
             title={"Lista de Clientes"}

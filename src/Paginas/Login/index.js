@@ -41,7 +41,6 @@ const Login = () => {
   //const [editing, setEditing] = useState(false);
 
   const navigate = useNavigate();
-  const params = useParams();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -60,7 +59,10 @@ const Login = () => {
           navigate('/nivel3/')
           break;
           case 4:
-            navigate('/legales/menu')
+            navigate('/legales/clientes')
+          break;
+          case 5:
+            navigate('/usuariomapas/inicio')
           break;
         default:
           
@@ -107,8 +109,11 @@ const Login = () => {
           case 3:navigate('/nivel3')
           window.location.reload(true);
           break;
-          case 4:navigate('/legales/estadisticas1')
+          case 4:navigate('/legales/clientes')
           window.location.reload(true);
+          break;
+          case 5:
+            navigate('/usuariomapas/inicio')
           break;
           case 10:navigate('/admin/usuarios')
           window.location.reload(true);

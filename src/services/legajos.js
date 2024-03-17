@@ -32,9 +32,9 @@ if (loggedUserJSON) {
 
 
 const subirprueba = async (formdata) => {
-  console.log(formdata)
+  
   const { data } = await axios.post(baseUrl + 'subirlegajoprueba', formdata, config)
-  console.log(data)
+  
 
 }
 //nivel2
@@ -52,7 +52,7 @@ const subirlegajode = async (formData) => {
 
 const determinarIngreso = async (formData) => {
 
-  console.log(formData)
+  
 
  const {data} = await axios.post(baseUrl + 'determinaringreso', formData, config)
  alert(data)
@@ -65,10 +65,10 @@ const determinarIngreso = async (formData) => {
 }
 const subirlegajo1 = async (formData) => {
 
-  console.log(formData)
+  
 
  const {data} = await axios.post(baseUrl + 'subirlegajo1', formData, config)
- console.log(data)
+ 
  return (data)
 
   //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'

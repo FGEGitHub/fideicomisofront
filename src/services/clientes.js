@@ -1,7 +1,8 @@
 import axios from "axios"
 
-const url =require ('./url')
+import { useNavigate } from "react-router-dom";
 
+const url =require ('./url')
 
 const baseURL = url.database+'links/'
 
@@ -58,14 +59,27 @@ const modificarCliente= async  (datos) => {
 
 
 const crear= async  (datos) => {
-   console.log(datos)
+ 
     const {data } = await axios.post(baseURL+'add2',datos,config)
     
     alert(data)  
 }  
 
+////crear cliente desde legales
+
+const crear2= async  (datos) => {
+   
+     const {data } = await axios.post(baseURL+'add3',datos,config)
+     
+     alert(data)  
+ }  
+
+
+
+
+
 const determinarEmpresa= async  (datos) => {
-    console.log(datos)
+  
      const {data } = await axios.post(baseURL+'determinarempresa',datos,config)
      if(data === 'error login'){  
         // alert('Debe loguearse nuevamente')
@@ -76,7 +90,25 @@ const determinarEmpresa= async  (datos) => {
      alert(data)  
  }  
 
+ 
+ 
+const lista2= async  () => {
 
+
+    const {data } = await axios.get(baseURL+'lista2',config)
+  //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
+
+  
+  if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    return 'error login' 
+
+} 
+    
+    return data 
+}  
 const lista= async  () => {
   
     const {data } = await axios.get(baseURL+'infocantidad',config)
@@ -94,32 +126,49 @@ const lista= async  () => {
 }   
 
 
+const ventaLoteleg = async  (datos) => {
+   
+    const {data}  = await axios.post(baseURL+'ventaLoteleg',datos,config)
+    
+
+    return data
+   
+} 
+
+
+
  const ventaLote = async  (datos) => {
    
     const {data}  = await axios.post(baseURL+'ventalotee',datos,config)
     
-    
-    alert(data[0])
     return data
    
 } 
 const cliente= async  (cuil_cuit) => {
- 
+
     const {data } = await axios.get(baseURL+'detalle/'+cuil_cuit,config)
     
     return data 
 } 
 
 const determinarIngreso= async  (datos) => {
-   console.log(datos)
+  
   const {data } = await axios.post(baseURL+'agregaringreso2/',datos,config)
-    console.log(data)
-    alert('Guardado con exito')
+
     return data 
 }
 
+const modificarclientelegales= async  (datos) => {
+  
+    const {data } = await axios.post(baseURL+'modificarclientelegales/',datos,config)
+  
+
+      return data 
+  }
+
+
 const traerLejagos= async  (cuil_cuit) => {
-   console.log(cuil_cuit)
+  
     const {data } = await axios.get(baseURL+'legajos/'+cuil_cuit,config)
     
     return data 
@@ -127,20 +176,20 @@ const traerLejagos= async  (cuil_cuit) => {
 
  
   const habilitar= async  (etc) => {
-     console.log(etc)
+   
       const {data } = await axios.post(baseURL+'habilitar/',etc,config)
      
       return data 
   }
   const deshabilitar= async  (etc) => {
-     console.log(etc)
+    
       const {data } = await axios.post(baseURL+'deshabilitar/',etc,config)
      
       return data 
   }
 
   const modificarCuil= async  (etc) => {
-    console.log(etc)
+ 
      const {data } = await axios.post(baseURL+'modificarcuil/',etc,config)
     
      return data 
@@ -163,26 +212,40 @@ const traerLejagos= async  (cuil_cuit) => {
  
 
  const clientehabilitado= async  (cuil_cuit) => {
- 
+
     const {data } = await axios.get(baseURL+'clientehabilitado/'+cuil_cuit,config)
   
+    if(data === 'error login'){  
+       alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        return 'error login' 
+    
+    } 
     return data 
 } 
 
 const infocantidad= async  (cuil_cuit) => {
  
     const {data } = await axios.get(baseURL+'infocantidad/',config)
-  
+
+    if(data === 'error token'){
+        //  alert('Debe loguearse nuevamente')
+         window.localStorage.removeItem('loggedNoteAppUser')
+       
+         window.location.reload();
+      
+     }
   
     return data 
 } 
 const enviarmailprueba= async  (etc) => {
- console.log(etc)
+
     const {data } = await axios.post(baseURL+'enviarmailprueba/',etc,config)
   
     return data 
 } 
 
-export default {borrarcbu,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

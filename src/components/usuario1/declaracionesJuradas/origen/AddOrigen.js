@@ -13,9 +13,15 @@ const AddOrigen = (props) => {
   const [fileUpload, setFileUpload] = useState(null);
   const [enviarr, setEnviarr] = useState(null);    
   const [loading, setLoading] = useState(false);
+  const [noespedef, setNoespdf] = useState(false);
   const onDrop = useCallback  ((files, acceptedFiles) => {
          // window.location.reload(true);
          const formData = new FormData();
+         if(files[0].path[files[0].path.length-1] =="f" && files[0].path[files[0].path.length-2] =="d" && files[0].path[files[0].path.length-3] =="p" ){
+          setNoespdf(false)
+        }else{
+          setNoespdf(true)
+        }
          setFileUpload(acceptedFiles);
          formData.append('file', files[0]);
          setEnviarr(formData)
@@ -77,19 +83,42 @@ const AddOrigen = (props) => {
             <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
           </div>
         </Paper>
-      <Box sx={{ m: 1, 
-      color: 'green',
-      fontSize: '1rem',      }}
-       >
-        Archivos Aceptados <BackupIcon fontSize="small" />
-        <ul>{acceptedFileItems}</ul>
-        { enviarr ? <>  
-          {loading ? (
-                                <CircularProgress color="inherit" size={25} />
-                            ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
-        
-        </> : <></>}
-      </Box>
+        {!noespedef ? <>
+     
+     <Box sx={{ m: 1, 
+     color: 'green',
+     fontSize: '1rem',      }}
+      >
+       Archivos Aceptados <BackupIcon fontSize="small" />
+       
+       <ul>{acceptedFileItems}</ul>
+       { enviarr ? <>  
+         {loading ? (
+                               <CircularProgress color="inherit" size={25} />
+                           ) : <Button variant="contained" color="success" onClick={enviar}>Enviar</Button>}
+       
+       </> : <></>}
+     
+     </Box>
+
+     </>:<>
+     <Box sx={{ m: 1, 
+     color: 'red',
+     fontSize: '1rem',      }}
+      >
+       archivo no es formato pdf <BackupIcon fontSize="small" />
+       
+       <ul>{acceptedFileItems}</ul>
+       { enviarr ? <>  
+         {loading ? (
+                               <CircularProgress color="inherit" size={25} />
+                           ) : <Button variant="contained" color="success" disabled>Enviar</Button>}
+       
+       </> : <></>}
+     
+     </Box>
+
+</>}
       <Link href={logo}  download>
       Descargar modelo de archivo
     </Link>

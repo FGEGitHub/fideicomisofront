@@ -108,6 +108,26 @@ const ModificacionC = (props) => {
         <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
   
             <Container>
+            <TextField
+                  label="Razon Social"
+                  id="dirección"
+                  name="razon_social"
+                  defaultValue={client.razon}
+                  onChange={handleChange}
+                 /*  value={client.ingresos} */
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: !editMode,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <HomeIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                >
+                  
+                </TextField>
             <Box>
             <h5>
             Datos Personales del Cliente
@@ -218,7 +238,7 @@ const ModificacionC = (props) => {
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
-                    readOnly: editMode,
+                    readOnly: !editMode,
                     startAdornment: (
                       <InputAdornment position="start">
                         <HomeIcon />
@@ -269,44 +289,8 @@ const ModificacionC = (props) => {
                 </TextField>
               </Box>
               <Box>
-                <TextField
-                  label="Observaciones"
-                  id="domicilio"
-                  name="observaciones"
-                  defaultValue={client.observaciones}
-                  onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-                <TextField
-                  label="Razon Social"
-                  id="dirección"
-                  name="razon_social"
-                  defaultValue={client.razon}
-                  onChange={handleChange}
-                 /*  value={client.ingresos} */
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
+               
+              
               </Box>
               
 

@@ -22,4 +22,35 @@ h5{
     color: #777777;
   }  
 
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .factura {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  .empresa {
+    text-align: center;
+    font-weight: bold;
+  }
+  .datos-cliente {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .items {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .items th, .items td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  .total {
+    margin-top: 20px;
+    text-align: right;
+  }
   

@@ -10,7 +10,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import BotonRechazo from './RechazoConstancia'
 //import overbookingData from "./overbooking";
 import Button from "@mui/material/Button";
-import ModalVer from "./ModalVer"
+import Tooltip from '@mui/material/Tooltip';
 import CargaDeTabla from "../../CargaDeTabla"
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
@@ -77,7 +77,7 @@ const TablaAprobaciones = () => {
 
                 <Button
                     onClick={() => veronline(index)}
-                >Ve online</Button>
+                >Ver online</Button>
 
 
             </>
@@ -121,16 +121,19 @@ const TablaAprobaciones = () => {
 
         return (
             <>
-
+    
                 <BotonRechazo
                     id={pendientes[dataIndex].id}
                 />
+               
+                <Tooltip title="Aprobar">
                 <CheckIcon style={{ cursor: "pointer" }}
                     onClick={() => {
                         aprobar(pendientes[dataIndex].id)
                         /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */
 }}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
+                </Tooltip>
             </>
         );
     }
@@ -203,14 +206,9 @@ const TablaAprobaciones = () => {
 
 
     ];
-
     const options = {
-
-        /*    rowsPerPage: 10,
-           download: false, // hide csv download option
-           onTableInit: this.handleTableInit,
-           onTableChange: this.handleTableChange, */
-    };
+        selectableRows: false, // Deshabilita los checkboxes
+      };
     // renderiza la data table
     return (
         <div>

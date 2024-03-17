@@ -59,6 +59,7 @@ export default function Legajos(props) {
   const buscar = async () => {
 
     const datoss = await servicioClientes.datoslegajo(cli)
+    console.log(datoss)
     setDatos(datoss)
     //setHistorial(datos[2])  
     setState({ open: true, ...{ vertical: 'top', horizontal: 'right' } })
@@ -99,6 +100,7 @@ export default function Legajos(props) {
 
       {datos ?
         <div>
+          {datos[0].acreditacion_i}
           <div className="home">
 
             <div className="container">

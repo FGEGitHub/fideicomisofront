@@ -85,7 +85,6 @@ export default function ModalIcc(props) {
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
                             <Button onClick={handleDeterminar}>Agregar a todos</Button>
-                            <Button onClick={handleDeterminar2}>Agregar a quienes no tienen calculado</Button>
                         </DialogActions>
                    
                 </DialogContent>

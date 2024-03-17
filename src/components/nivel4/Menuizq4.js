@@ -12,16 +12,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import GroupIcon from '@mui/icons-material/Group';
-import SearchIcon from '@mui/icons-material/Search';
-import NfcIcon from '@mui/icons-material/Nfc';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import  useNoti from '../../hooks/useNoti'
 import  useInusual from '../../hooks/useInusual'
-import AlertaInusual from '../AlertaInusual'
-import Navbar from '../Navbar'
-
+import CabinIcon from '@mui/icons-material/Cabin';
+import Navbar from './Navbar'
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
@@ -43,7 +39,32 @@ export default function MenuIzq2 ({children}) {
         window.location.reload(true);
       } 
     const menuItems = [
-        { 
+      { 
+        text: 'Clientes', 
+        icon: <GroupIcon color="primary" />, 
+        path: '/legales/clientes' 
+      },
+      { 
+        text: 'Lotes', 
+        icon: <CabinIcon color="primary" />, 
+        path: '/legales/lotes' 
+      },
+      { 
+        text: 'Resumen', 
+        icon: <AssessmentIcon color="primary" />, 
+        path: '/legales/resumen' 
+      },
+      { 
+        text: 'Perfil y contraseña', 
+        icon: <AssignmentIndIcon color="primary" />, 
+        path: '/legales/perfil' 
+      },
+      { 
+        text: 'mapas', 
+        icon: <AssignmentIndIcon color="primary" />, 
+        path: '/legales/mapas' 
+      },
+      /*   { 
           text: 'Expedientes', 
           icon: <GroupIcon color="primary" />, 
           path: '/legales/menu' 
@@ -57,7 +78,7 @@ export default function MenuIzq2 ({children}) {
           text: 'Carga Relevamiento', 
           icon: <GroupIcon color="primary" />, 
           path: '/legales/cargarelev' 
-        },
+        }, */
        
      
       ];

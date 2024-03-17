@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.65531d14.css",
+    "main.js": "/static/js/main.c00328ef.js",
+    "static/media/IMG_7194.JPG": "/static/media/IMG_7194.94adbb1f08d595da66d1.JPG",
+    "static/media/soloic3.jpeg": "/static/media/soloic3.9d90b3b10cead22e7bf3.jpeg",
+    "static/media/completo.jpeg": "/static/media/completo.55089f5da0773c391b57.jpeg",
+    "static/media/fotoparque.jpeg": "/static/media/fotoparque.8c12d996c1dff4c259a6.jpeg",
+    "static/media/fondocalculo.jpg": "/static/media/fondocalculo.a4fd3559e2f1f415d9f5.jpg",
+    "static/media/BOSQUE.jpg": "/static/media/BOSQUE.844fce508ef47c9487ab.jpg",
+    "static/media/marcas.png": "/static/media/marcas.ab0ad4090eece487f095.png",
+    "static/media/marcas.png.png": "/static/media/marcas.png.ab0ad4090eece487f095.png",
+    "static/media/mantenimiento.jpeg": "/static/media/mantenimiento.2a336fd51c7a987c4c42.jpeg",
+    "static/media/perfil.png": "/static/media/perfil.9f2595027f39dc8f7bd7.png",
+    "static/media/MODELO DDJJ ORIGEN Y LICITUD DE FONDOS.docx": "/static/media/MODELO DDJJ ORIGEN Y LICITUD DE FONDOS.107f453946a6130ee780.docx",
+    "static/media/firma.jpeg": "/static/media/firma.c591cc50ea86ee0d4313.jpeg",
+    "static/media/undraw_under_construction_-46-pa.svg": "/static/media/undraw_under_construction_-46-pa.286cd589edbe72993fa0aaf75b822856.svg",
+    "static/media/Modelo DDJJ Datos Personales.docx": "/static/media/Modelo DDJJ Datos Personales.a66630f6ff1555c862a5.docx",
+    "static/media/Modelo DDJJ Persona Expuesta Politicamente.docx": "/static/media/Modelo DDJJ Persona Expuesta Politicamente.a16c78d42818de42c2ce.docx",
+    "static/media/legajo.webp": "/static/media/legajo.752080bba700c8720662.webp",
+    "static/media/blog-post.1.md": "/static/media/blog-post.1.f3cf63a6c22954b694c0.md",
+    "static/media/blog-post.3.md": "/static/media/blog-post.3.257efee432523d345b56.md",
+    "index.html": "/index.html",
+    "static/media/blog-post.2.md": "/static/media/blog-post.2.0c991394afafded8be39.md"
+  },
+  "entrypoints": [
+    "static/css/main.65531d14.css",
+    "static/js/main.c00328ef.js"
+  ]
+}

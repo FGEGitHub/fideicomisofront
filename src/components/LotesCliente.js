@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import servicioLotes from '../services/lotes'
 import servicioCuotas from '../services/cuotas'
 import servicioAdmin from '../services/Administracion'
+import servicio360 from '../services/pagos360'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
@@ -25,8 +26,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Box } from "@material-ui/core";
@@ -34,7 +36,8 @@ import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
 
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -75,10 +78,10 @@ const LotesCliente = (props) => {
     const [deudaExigible, setDeudaExigible] = useState([''])
     const [detallePendiente, setDetallePendiente] = useState([''])
     const [idlote, setIdlote] = useState(null)
-
+    const [selectedValue, setSelectedValue] = useState();
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
-    const [vista1, setVista1] = useState(true)
+    const [vista1, setVista1] = useState(false)
     const [state, setState] = React.useState({
         gilad: true,
         jason: false,
@@ -115,7 +118,9 @@ const LotesCliente = (props) => {
     const Vista1 = () => {
         setVista1(!vista1);
     };
-
+    const handleChangeratio = (event) => {
+        setSelectedValue(event.target.value);
+    };
     const verief = async (index) => {
 
         const dde = await servicioCuotas.verief(index)
@@ -131,7 +136,7 @@ const LotesCliente = (props) => {
     const traer = async () => {
 
         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-        console.log(lotes)
+      
         setLotes(lotes)
 
 
@@ -148,7 +153,7 @@ const LotesCliente = (props) => {
 
     
     const traerlink = async (index) => {
-        console.log(index)
+    
         const dde = await servicioAdmin.traerlinkcuota(index)
         
         window.open(dde)
@@ -156,7 +161,25 @@ const LotesCliente = (props) => {
 
     };
 
+    
+    const traerlink360 = async (index) => {
+       
+        const dde = await servicioAdmin.traerlink360(index)
+        
+        window.open(dde)
 
+
+    };
+
+    const crearsolicituddebito = async (index) => {
+     
+        const dde = await servicio360.crearsolicituddebito({id_cuota:index})
+        
+      alert (dde)
+
+
+    };
+    
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -223,8 +246,35 @@ const LotesCliente = (props) => {
             </>
         );
     }
+    function Pago360(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+<Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
+              
+                  Pagar 360
+               </Button>
 
 
+
+
+            </>
+        );
+    }
+    function Pagodebito360(dataIndex, rowIndex, data, onClick) {
+        return (
+            <>
+<Button     onClick={() => crearsolicituddebito(cuotas[dataIndex].id)} >
+              
+                 debito en  360
+               </Button>
+
+
+
+
+            </>
+        );
+    }
+    
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -246,7 +296,7 @@ const LotesCliente = (props) => {
                     traer={async () => {
 
                         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-                        console.log(lotes)
+                       
                         setLotes(lotes)
                     }}
 
@@ -389,8 +439,33 @@ const LotesCliente = (props) => {
             }
 
         },
+        {
+            name: "Beta pago 360",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    Pago360(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
+        },
+        {
+            name: "Pagodebito360",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                Pagodebito360(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
 
+        },
+        
 
     ];
 
@@ -398,38 +473,70 @@ const LotesCliente = (props) => {
     return (
 
         <Fragment>
-            <Button onClick={() => { navigate('/usuario2/asignarloteausuario/' + cuil_cuit) }} variant="contained" color="success">
-                Asignar lote a usuario
-            </Button>
-            <br /> <br />
-            <Button onClick={() => { navigate('/usuario2/agregarviarias/' + cuil_cuit) }} variant="contained" color="success" >Agregar cuotas a varios lotes</Button><br />
-            <FormControl sx={{ m: 1, minWidth: 140 }}>
-                <InputLabel > LOTE</InputLabel>
+ <Grid container spacing={2}>
+  <Grid item xs={12} sm={6}>
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
+    >
+      Asignar lote a usuario
+    </Button>
+  </Grid>
+  <Grid item xs={12} sm={6}>
+    <Button
+      fullWidth
+      variant="contained"
+      color="primary"
+      onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
+    >
+      Agregar cuotas a varios lotes
+    </Button>
+  </Grid>
+</Grid>
+<br />
+   {lotes ? <>  
 
-                <Select
+{lotes.length>0 ? <>
+
+<FormControl sx={{ m: 1, minWidth: 140 }}>
 
 
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    label="Lote"
 
+
+
+
+
+
+
+
+
+<div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </>:<> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
+               
+                <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    value={selectedValue}
+                    onChange={handleChangeratio}
                 >
-                    {
-                        lotes.map((item, index) =>
-                            <div>
-                                    {item['zona']=== 'PIT' ? <>
-                                <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Parcela {item['parcela']}</MenuItem>
-                                </>:<>
-                                <MenuItem key={index} onClick={() => { vercuotas(item['id']) }}>{item['zona']} Fraccion {item['fraccion']} - Manzana {item['manzana']} -Lote {item['lote']}</MenuItem>
-                                </>}
-                            </div>
-                        )
-                    }
-                </Select>
+                    {lotes.map((item, index) => (
+                        <FormControlLabel
+                            key={index}
+                            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
+                            control={<Radio />}
+                            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
+                            onClick={() => vercuotas(item.id)}
+                        />
+                    ))}
+                </RadioGroup>
+                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+            </div>
+
                 <h3>  {cuotas ? <>
                  
-                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
+                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}
                 <FormControlLabel
                     control={
                         <Switch checked={act2} onChange={handleChange2} />
@@ -442,11 +549,14 @@ const LotesCliente = (props) => {
                     }
                     label="Cuotas"
                 />
-
+</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
 
             </FormControl>
 
 
+</>:<></>}
+
+</>:<></>}
 
 
 
@@ -461,6 +571,7 @@ const LotesCliente = (props) => {
             <div>
 
                 {act ? <div>
+                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
                     <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                         Agregar cuotas al lote
                     </Button>
@@ -473,6 +584,7 @@ const LotesCliente = (props) => {
 
                     <BorrarCuotas
                         id={idlote} />
+                        </ButtonGroup>
 
                     {act2 ?
 
@@ -486,32 +598,29 @@ const LotesCliente = (props) => {
 
                                 <div>
                                     <Box
-                                        sx={{
-                                            display: 'flex'
-                                        }}
+                                        sx={{display: 'flex'}}
                                     >
-                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
                                             <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "40%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '75px',
-                                                    display: 'flex'
-
-                                                }}
+                                               sx={{
+                                                cursor: 'pointer',
+                                                background: '#eeeeee',
+                                                color: '#bdbdbd',
+                                                border: '1px dashed #ccc',
+                                                width: "45%",
+                                                '&:hover': { border: '1px solid #ccc' },
+                                                border: "1px solid black",
+                                                margin: '10px',
+                                                display: 'flex'
+                                            }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell>Detalles de Deuda Exigible </TableCell>
+                                                                <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
 
 
                                                             </TableRow>
@@ -523,8 +632,8 @@ const LotesCliente = (props) => {
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                                                                 </TableRow>
                                                             ))}
@@ -535,25 +644,24 @@ const LotesCliente = (props) => {
 
 
                                             <Paper
-                                                sx={{
+                                                 sx={{
                                                     cursor: 'pointer',
                                                     background: '#eeeeee',
                                                     color: '#bdbdbd',
                                                     border: '1px dashed #ccc',
-                                                    width: "40%",
+                                                    width: "45%",
                                                     '&:hover': { border: '1px solid #ccc' },
                                                     border: "1px solid black",
-                                                    margin: '75px',
+                                                    margin: '10px',
                                                     display: 'flex'
-
                                                 }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell>Detalle de Cuotas Pendientes </TableCell>
+                                                                <TableCell  padding="normal" >Detalle de Cuotas Pendientes </TableCell>
 
 
                                                             </TableRow>
@@ -565,8 +673,8 @@ const LotesCliente = (props) => {
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
-                                                                    <TableCell align="left">{row.datoa}</TableCell>
-                                                                    <TableCell align="left">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
 
                                                                 </TableRow>
                                                             ))}
@@ -576,7 +684,7 @@ const LotesCliente = (props) => {
                                             </Paper>
 
                                             <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                                        </Grid>
+                                        </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/'+idlote) }}  > Imprimir comprobante</Fab>
                                     </Box>
                                 </div>
 
@@ -676,19 +784,32 @@ const LotesCliente = (props) => {
                                                            
                                                             <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
-
-                                                                <CurrencyExchangeIcon
+                                                            <Pagorapido
+                                                            id_cuota={row.id }
+                                                            traer={ async (index) => {
+                                                               
+                                                                const cuotas = await servicioCuotas.vercuotas(index)
+                                                              
+                                                                setCuotas(cuotas)
+                                                                setIdlote(index)
+                                                                setAct(true)
+                                                                verief(index)
+                                                                setOpen(false)
+                                                        
+                                                            }}
+                                                            />
+                                                              {/*   <CurrencyExchangeIcon
                                                                     onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
-                                                                />
+                                                                /> */}
                                                                 <SearchIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                                                                 />
 
 
-                                                                <DeleteIcon style={{ cursor: "pointer" }}
+                                                            {/*     <DeleteIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                />
+                                                                /> */}
 
 
                                                             </StyledTableCell>
@@ -712,7 +833,7 @@ const LotesCliente = (props) => {
                     </> : <> Lote sin cuotas</>}
 
 
-                </div> : <div> Seleccione un Lote </div>}
+                </div> : <div> Sin lote asignado </div>}
 
 
 
