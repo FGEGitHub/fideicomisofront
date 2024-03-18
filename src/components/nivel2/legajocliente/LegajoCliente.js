@@ -29,7 +29,6 @@ const LegajoCliente = (props) => {
       const [cargado, setCargado] = useState(false)
   
       //2 - fcion para mostrar los datos con axios
-      const endpoint = "http://localhost:4000/usuario1/all-files"
       const traer = async () => {
 
         const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -71,13 +70,7 @@ const LegajoCliente = (props) => {
           traer()
       }, [])
   
-  
-      /* const downloadFile = async (index) => {
-          const filename = (products[index].key)
-      
-          const link = await axios.get(`http://localhost:8080/get-object-url/`+filename).then(res => {
-              
-          } */
+
   
           async function download(index, rowIndex, data) {
               const filename = (products[index].ubicacion)
@@ -105,11 +98,7 @@ const LegajoCliente = (props) => {
         } 
      function verFile(index, rowIndex, data) {
     
-            /* const filename = (products[index].key)
-            console.log(filename)
-            const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-            console.log(link.data)
-            setAct(true) */
+   
             return (
                 <>
     
@@ -124,11 +113,7 @@ const LegajoCliente = (props) => {
     
        function downloadFile(index, rowIndex, data) {
   
-          /* const filename = (products[index].key)
-          console.log(filename)
-          const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-          console.log(link.data)
-          setAct(true) */
+  
           return (
               <>
                   
@@ -248,11 +233,14 @@ const LegajoCliente = (props) => {
              :<></>
              }<ButtonGroup variant="contained" aria-label="outlined primary button group">
              < ModalLegajo
-                getData = { async () => {
+                getData = {async () => {
+                  console.log("get")
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)
                        
                         setProducts(data)
-                    }} 
+                    
+                }
+                } 
               />
              <Habilitar 
               cuil_cuit_user= {props.cuil_cuit_user} />

@@ -87,6 +87,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
     const rta =  await servicioLegajo.subirlegajode(enviarr)
     alert(rta)
+    console.log("getData")
      props.getData()
      setCargando(false)
       setOpen(false);

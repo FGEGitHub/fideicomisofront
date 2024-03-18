@@ -47,11 +47,9 @@ export default function FormDialog(props) {
       </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle></DialogTitle>
+        <DialogTitle>Detalla motivo de clasificacion </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Detalla  motivo 
-          </DialogContentText>
+       
           <form  onSubmit={rechazar}>
 
           <InputLabel  variant="standard" htmlFor="uncontrolled-native">
