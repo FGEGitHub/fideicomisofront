@@ -16,21 +16,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import NfcIcon from '@mui/icons-material/Nfc';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import AlertaAprobaciones from '../AlertaAprobaciones'
-import  useNoti from '../../hooks/useNoti'
+import { useState, useEffect } from "react";
 import  useInusual from '../../hooks/useInusual'
-import AlertaInusual from '../AlertaInusual'
+import servicioPagos from '../../services/pagos';
 import Navbar from './Navbar3';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import PlagiarismIcon from '@mui/icons-material/Plagiarism';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
-
+import Badge from '@mui/material/Badge';
+import PaidIcon from '@mui/icons-material/Paid';
 const drawerWidth = 240;
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
-    const {cantidad } = useNoti()
+    const [notificaciones, setNotificaciones] = useState();
     const {cantidadInusual } = useInusual()
     const handleClick = (path) => {
         
@@ -38,6 +37,21 @@ export default function MenuIzq2 ({children}) {
       }; 
     
 
+      useEffect(() => {
+        /* const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+        const useer = JSON.parse(loggedUserJSON)
+        setUser(useer) */
+       
+        cantidadnoti()
+    }, [])
+    const cantidadnoti = async () => {
+          
+      const notis = await servicioPagos.cantidadpendientesadmin()
+  console.log(notis[0])
+      setNotificaciones(notis[0])
+
+  
+  }
        const hanleLogout = () => {
        /* console.log('click')
         setUser(null)
@@ -68,7 +82,9 @@ export default function MenuIzq2 ({children}) {
         },
         {
           text: 'Pagos Inusuales',
-          icon: <AccountBalanceIcon color="primary" />,
+          icon: <div><Badge badgeContent={notificaciones} color="error">
+          <PaidIcon color="primary" />
+        </Badge></div>,
           path: '/nivel3/pagosinusuales'
         },
      

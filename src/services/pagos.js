@@ -137,6 +137,20 @@ const pagosinusuales= async  () => {
    
  return data
 }  
+
+
+const cantidadpendientesadmin= async  () => {
+
+  const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientesadmin',config)
+  if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    window.location.reload();
+}
+  return data
+ } 
+
 const cantidadpendientes= async  () => {
 
   const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientes',config)
@@ -191,4 +205,4 @@ const cantidadpendientes= async  () => {
       }
  
 
-export default {todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

@@ -12,6 +12,7 @@ import Listacbus from '../../360/modallistacbu'
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Chip from '@mui/material/Chip';
 const DetalleCliente = () => {
   const navigate = useNavigate();
     let params = useParams()
@@ -53,12 +54,14 @@ const DetalleCliente = () => {
                 /> 
              
                 {expuesta ? <div>
-                 Persona PEP
-
+                  <Alert variant="filled" severity="warning">
+                  Persona PEP
+</Alert>
+               
                    </div> : 
                    <div>
+                    <Chip label="Persona no PEP" color="success" />
                    
-                   No es PEP
                      </div>}
                 
                </div>
