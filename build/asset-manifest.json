@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.65531d14.css",
-    "main.js": "/static/js/main.6285a63a.js",
+    "main.js": "/static/js/main.e7f68ae3.js",
     "static/media/IMG_7194.JPG": "/static/media/IMG_7194.94adbb1f08d595da66d1.JPG",
     "static/media/soloic3.jpeg": "/static/media/soloic3.9d90b3b10cead22e7bf3.jpeg",
     "static/media/completo.jpeg": "/static/media/completo.55089f5da0773c391b57.jpeg",
@@ -25,6 +25,6 @@
   },
   "entrypoints": [
     "static/css/main.65531d14.css",
-    "static/js/main.6285a63a.js"
+    "static/js/main.e7f68ae3.js"
   ]
 }
