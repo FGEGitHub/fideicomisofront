@@ -2,10 +2,10 @@
 module.exports = {
 
 
-//  database:'http://localhost:4000/'
-
- database:'https://api.santacatalinafideicomiso.com/'
+// database:'http://localhost:4000/'
+database: '172.25.50.45/'
+// database:'https://api.santacatalinafideicomiso.com/'
 
 
 }
-///const  baseUrl = 'https://api.santacatalinafideicomiso.com/cuotas/'
+///const  baseUrl = '90.57.233.213:8084/'
