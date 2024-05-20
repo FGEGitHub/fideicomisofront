@@ -62,7 +62,7 @@ export default function SelectTextFields(props) {
   };
 
   const handleClose = () => {
-    window.location.reload()
+    setOpen(false)
    
   };
 

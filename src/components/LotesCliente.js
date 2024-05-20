@@ -784,6 +784,7 @@ const LotesCliente = (props) => {
                                                            
                                                             <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
+                                                     
                                                             <Pagorapido
                                                             id_cuota={row.id }
                                                             traer={ async (index) => {
@@ -802,6 +803,7 @@ const LotesCliente = (props) => {
                                                                     onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
                                                                 /> */}
+
                                                                 <SearchIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                                                                 />
