@@ -104,8 +104,8 @@ export default function SelectTextFields(props) {
       console.log(rta)
       alert(rta[0])
       props.traer(rta[2])
-  
-     
+      setLoading(false)
+      handleClose()
   
   
   
