@@ -38,7 +38,7 @@ import Stack from '@mui/material/Stack';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
-
+import CircularProgress from '@mui/material/CircularProgress';
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -82,11 +82,7 @@ const LotesCliente = (props) => {
     const [act, setAct] = useState(false)
     const [act2, setAct2] = useState(false)
     const [vista1, setVista1] = useState(false)
-    const [state, setState] = React.useState({
-        gilad: true,
-        jason: false,
-        antoine: true,
-    });
+    const [cargalink, setCargalink] = useState(false);
     const vercuotas = async (index) => {
 
         const cuotas = await servicioCuotas.vercuotas(index)
@@ -136,7 +132,7 @@ const LotesCliente = (props) => {
     const traer = async () => {
 
         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-      
+
         setLotes(lotes)
 
 
@@ -151,39 +147,39 @@ const LotesCliente = (props) => {
 
     }
 
-    
+
     const traerlink = async (index) => {
-    
+
         const dde = await servicioAdmin.traerlinkcuota(index)
-        
+
         window.open(dde)
 
 
     };
 
-    
-    const traerlink360 = async (index) => {
-       
-        const dde = await servicioAdmin.traerlink360(index)
-        
-        window.open(dde)
 
+    const traerlink360 = async (index) => {
+setCargalink(true)
+        const dde = await servicio360.traerlink360(index)
+
+        window.open(dde)
+        setCargalink(false)
 
     };
 
     const crearsolicituddebito = async (index) => {
-     
-        const dde = await servicio360.crearsolicituddebito({id_cuota:index})
-        
-      alert (dde)
+
+        const dde = await servicio360.crearsolicituddebito({ id_cuota: index })
+
+        alert(dde)
 
 
     };
-    
+
     function saldoReal(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].Saldo_real ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].Saldo_real) : <div> No Calculado </div>}
 
             </>
         );
@@ -191,7 +187,7 @@ const LotesCliente = (props) => {
     function pago(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].pago ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].pago) : <div> No Calculado </div>}
 
             </>
         );
@@ -199,7 +195,7 @@ const LotesCliente = (props) => {
     function saldoInicial(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].saldo_inicial  ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].saldo_inicial) : <div> No Calculado </div>}
 
             </>
         );
@@ -207,7 +203,7 @@ const LotesCliente = (props) => {
     function cuotaConAjuste(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' +  new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste ) : <div> No Calculado </div>}
+                {cuotas[dataIndex].parcialidad === 'Final' ? '$ ' + new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].cuota_con_ajuste) : <div> No Calculado </div>}
 
             </>
         );
@@ -223,22 +219,22 @@ const LotesCliente = (props) => {
     function diferencia(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-                {(cuotas[dataIndex].diferencia >= 0) ? <> <p style={{ color: 'green' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )} </p> </> : <><p style={{ color: 'red' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia )}</p></>}
+                {(cuotas[dataIndex].diferencia >= 0) ? <> <p style={{ color: 'green' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia)} </p> </> : <><p style={{ color: 'red' }} > {new Intl.NumberFormat('de-DE').format(cuotas[dataIndex].diferencia)}</p></>}
 
-               
+
             </>
         );
     }
 
-    
+
 
     function PagomercadoP(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-<Button     onClick={() => traerlink(cuotas[dataIndex].id)} >
-              
-                  Pagar mercado Pago
-               </Button>
+                <Button onClick={() => traerlink(cuotas[dataIndex].id)} >
+
+                    Pagar mercado Pago
+                </Button>
 
 
 
@@ -249,10 +245,10 @@ const LotesCliente = (props) => {
     function Pago360(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-<Button     onClick={() => traerlink360(cuotas[dataIndex].id)} >
-              
-                  Pagar 360
-               </Button>
+                <Button onClick={() => traerlink360(cuotas[dataIndex].id)} >
+
+                    Pagar 360
+                </Button>
 
 
 
@@ -263,10 +259,10 @@ const LotesCliente = (props) => {
     function Pagodebito360(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-<Button     onClick={() => crearsolicituddebito(cuotas[dataIndex].id)} >
-              
-                 debito en  360
-               </Button>
+                <Button onClick={() => crearsolicituddebito(cuotas[dataIndex].id)} >
+
+                    debito en  360
+                </Button>
 
 
 
@@ -274,7 +270,7 @@ const LotesCliente = (props) => {
             </>
         );
     }
-    
+
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
@@ -291,16 +287,16 @@ const LotesCliente = (props) => {
                 <DeleteIcon style={{ cursor: "pointer" }}
                     onClick={() => borrar(cuotas[dataIndex].id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                 />
-               <AgregarIcc
+                <AgregarIcc
                     id={cuotas[dataIndex].id}
                     traer={async () => {
 
                         const lotes = await servicioLotes.lotesCliente(props.cuil_cuit)
-                       
+
                         setLotes(lotes)
                     }}
 
-                />  
+                />
 
 
 
@@ -456,7 +452,7 @@ const LotesCliente = (props) => {
             name: "Pagodebito360",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
-                Pagodebito360(
+                    Pagodebito360(
                         dataIndex,
                         rowIndex,
                         // overbookingData,
@@ -465,7 +461,7 @@ const LotesCliente = (props) => {
             }
 
         },
-        
+
 
     ];
 
@@ -473,36 +469,34 @@ const LotesCliente = (props) => {
     return (
 
         <Fragment>
- <Grid container spacing={2}>
-  <Grid item xs={12} sm={6}>
-    <Button
-      fullWidth
-      variant="contained"
-      color="primary"
-      onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
-    >
-      Asignar lote a usuario
-    </Button>
-  </Grid>
-  <Grid item xs={12} sm={6}>
-    <Button
-      fullWidth
-      variant="contained"
-      color="primary"
-      onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
-    >
-      Agregar cuotas a varios lotes
-    </Button>
-  </Grid>
-</Grid>
-<br />
-   {lotes ? <>  
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
+                    >
+                        Asignar lote a usuario
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
+                    >
+                        Agregar cuotas a varios lotes
+                    </Button>
+                </Grid>
+            </Grid>
+            <br />
+            {lotes ? <>
 
-{lotes.length>0 ? <>
+                {lotes.length > 0 ? <>
 
-<FormControl sx={{ m: 1, minWidth: 140 }}>
-
-
+                    <FormControl sx={{ m: 1, minWidth: 140 }}>
 
 
 
@@ -512,51 +506,53 @@ const LotesCliente = (props) => {
 
 
 
-<div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </>:<> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
-               
-                <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    value={selectedValue}
-                    onChange={handleChangeratio}
-                >
-                    {lotes.map((item, index) => (
-                        <FormControlLabel
-                            key={index}
-                            value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
-                            control={<Radio />}
-                            label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
-                            onClick={() => vercuotas(item.id)}
-                        />
-                    ))}
-                </RadioGroup>
-                <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
-            </div>
-
-                <h3>  {cuotas ? <>
-                 
-                {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}
-                <FormControlLabel
-                    control={
-                        <Switch checked={act2} onChange={handleChange2} />
-                    }
-                    label="IEF"
-                />
-                <FormControlLabel
-                    control={
-                        <Switch checked={act} onChange={handleChange} />
-                    }
-                    label="Cuotas"
-                />
-</> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
-
-            </FormControl>
 
 
-</>:<></>}
+                        <div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </> : <> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
 
-</>:<></>}
+                            <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
+                                value={selectedValue}
+                                onChange={handleChangeratio}
+                            >
+                                {lotes.map((item, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
+                                        control={<Radio />}
+                                        label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
+                                        onClick={() => vercuotas(item.id)}
+                                    />
+                                ))}
+                            </RadioGroup>
+                            <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+                        </div>
+
+                        <h3>  {cuotas ? <>
+
+                            {cuotas[0].zona} Fraccion {cuotas[0].fraccion} Manzana {cuotas[0].manzana} {cuotas[0].zona === 'PIT' ? <>Parcela {cuotas[0].parcela}
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={act2} onChange={handleChange2} />
+                                    }
+                                    label="IEF"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Switch checked={act} onChange={handleChange} />
+                                    }
+                                    label="Cuotas"
+                                />
+                            </> : <>Lote {cuotas[0].lote}</>}  </> : <></>}</h3>
+
+                    </FormControl>
+
+
+                </> : <></>}
+
+            </> : <></>}
 
 
 
@@ -572,19 +568,19 @@ const LotesCliente = (props) => {
 
                 {act ? <div>
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                    <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
-                        Agregar cuotas al lote
-                    </Button>
-                    <ModalModificarvalortotal
-                     idlote = {idlote}
-                    />
-                    <AgregaraCuotas
-                    id_origen = {idlote}
-                    />
+                        <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
+                            Agregar cuotas al lote
+                        </Button>
+                        <ModalModificarvalortotal
+                            idlote={idlote}
+                        />
+                        <AgregaraCuotas
+                            id_origen={idlote}
+                        />
 
-                    <BorrarCuotas
-                        id={idlote} />
-                        </ButtonGroup>
+                        <BorrarCuotas
+                            id={idlote} />
+                    </ButtonGroup>
 
                     {act2 ?
 
@@ -598,29 +594,29 @@ const LotesCliente = (props) => {
 
                                 <div>
                                     <Box
-                                        sx={{display: 'flex'}}
+                                        sx={{ display: 'flex' }}
                                     >
                                         <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
                                             <Paper
-                                               sx={{
-                                                cursor: 'pointer',
-                                                background: '#eeeeee',
-                                                color: '#bdbdbd',
-                                                border: '1px dashed #ccc',
-                                                width: "45%",
-                                                '&:hover': { border: '1px solid #ccc' },
-                                                border: "1px solid black",
-                                                margin: '10px',
-                                                display: 'flex'
-                                            }}
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    background: '#eeeeee',
+                                                    color: '#bdbdbd',
+                                                    border: '1px dashed #ccc',
+                                                    width: "45%",
+                                                    '&:hover': { border: '1px solid #ccc' },
+                                                    border: "1px solid black",
+                                                    margin: '10px',
+                                                    display: 'flex'
+                                                }}
                                             >
 
                                                 <TableContainer >
                                                     <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell  padding="normal" >Detalles de Deuda Exigible </TableCell>
+                                                                <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
 
 
                                                             </TableRow>
@@ -644,7 +640,7 @@ const LotesCliente = (props) => {
 
 
                                             <Paper
-                                                 sx={{
+                                                sx={{
                                                     cursor: 'pointer',
                                                     background: '#eeeeee',
                                                     color: '#bdbdbd',
@@ -661,7 +657,7 @@ const LotesCliente = (props) => {
                                                     <Table sx={{ minWidth: 650 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
-                                                                <TableCell  padding="normal" >Detalle de Cuotas Pendientes </TableCell>
+                                                                <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
 
 
                                                             </TableRow>
@@ -684,7 +680,7 @@ const LotesCliente = (props) => {
                                             </Paper>
 
                                             <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                                        </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/'+idlote) }}  > Imprimir comprobante</Fab>
+                                        </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/' + idlote) }}  > Imprimir comprobante</Fab>
                                     </Box>
                                 </div>
 
@@ -773,7 +769,7 @@ const LotesCliente = (props) => {
 
                                                     {cuotas.map((row) => (
                                                         <StyledTableRow key={row.name}>
-                                                            <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{props.mes}</>}/{row.anio} </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)} </b></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">{row.ICC} </StyledTableCell>
@@ -781,25 +777,25 @@ const LotesCliente = (props) => {
                                                             <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)} </b></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$  <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b> </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)} </b></StyledTableCell>
-                                                           
-                                                            <StyledTableCell component="th" scope="row">  {row.diferencia<0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
+
+                                                            <StyledTableCell component="th" scope="row">  {row.diferencia < 0 ? <> <p style={{ color: 'crimson' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></> : <><p style={{ color: 'green' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)} </p></>} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
-                                                     
-                                                            <Pagorapido
-                                                            id_cuota={row.id }
-                                                            traer={ async (index) => {
-                                                               
-                                                                const cuotas = await servicioCuotas.vercuotas(index)
-                                                              
-                                                                setCuotas(cuotas)
-                                                                setIdlote(index)
-                                                                setAct(true)
-                                                                verief(index)
-                                                                setOpen(false)
-                                                        
-                                                            }}
-                                                            />
-                                                              {/*   <CurrencyExchangeIcon
+
+                                                                <Pagorapido
+                                                                    id_cuota={row.id}
+                                                                    traer={async (index) => {
+
+                                                                        const cuotas = await servicioCuotas.vercuotas(index)
+
+                                                                        setCuotas(cuotas)
+                                                                        setIdlote(index)
+                                                                        setAct(true)
+                                                                        verief(index)
+                                                                        setOpen(false)
+
+                                                                    }}
+                                                                />
+                                                                {/*   <CurrencyExchangeIcon
                                                                     onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
                                                                     style={{ marginRight: "10px", cursor: "pointer" }}
                                                                 /> */}
@@ -809,11 +805,18 @@ const LotesCliente = (props) => {
                                                                 />
 
 
-                                                            {/*     <DeleteIcon style={{ cursor: "pointer" }}
+                                                                {/*     <DeleteIcon style={{ cursor: "pointer" }}
                                                                     onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
                                                                 /> */}
 
 
+                                                            </StyledTableCell>
+
+                                                            <StyledTableCell component="th" scope="row">
+                                                                {cargalink ? <><CircularProgress /></> : <> <Button onClick={() => traerlink360(row.id)} >
+
+                                                                    Pagar 360
+                                                                </Button></>}
                                                             </StyledTableCell>
                                                         </StyledTableRow>
                                                     ))}

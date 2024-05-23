@@ -12,6 +12,7 @@ import Listacbus from '../../360/modallistacbu'
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Cargadetabla from '../../CargaDeTabla'
 import Chip from '@mui/material/Chip';
 const DetalleCliente = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const DetalleCliente = () => {
     let cuil_cuit = params.cuil_cuit
     const [cliente, setCliente] = useState({})
      const [habilitado, sethabilitado] = useState(false)
+     const [carga, setCarga] = useState(true)
      const [expuesta, setExpuesta] = useState(false)
      useEffect(() => {
 
@@ -26,7 +28,7 @@ const DetalleCliente = () => {
 
     }, [])
      const traer = async () => {
-
+      
         const clientee = await servicioCliente.clientehabilitado(cuil_cuit) ////api/links/clientehabilitado
          setCliente(clientee[1])
         /// veridicacion de cliente segun posibilidad de gestionarlo
@@ -38,7 +40,7 @@ const DetalleCliente = () => {
           setExpuesta(true)
       }
 
-            ;
+      setCarga(false)    ;
     };
   
 
@@ -46,7 +48,7 @@ const DetalleCliente = () => {
 
 
         <div> 
-            
+            {!carga ? <>
                <div>   
                 <div> 
                 <PEP
@@ -113,7 +115,7 @@ const DetalleCliente = () => {
               cuil_cuit={cuil_cuit}/>
 
 
-
+</>:<><Cargadetabla/></>}
         </div>
     )
 }
