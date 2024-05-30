@@ -54,7 +54,7 @@ export default function Ingresos(props) {
 
 
     }
-
+    props.getData()
     setOpen(false);
   };
 

@@ -23,7 +23,7 @@ const LegajoCliente = (props) => {
 
   let params = useParams()
   let cuil_cuit = params.cuil_cuit
-      const [products, setProducts] = useState([])
+      const [products, setProducts] = useState()
       const [act, setAct] = useState(false)
       const [user, setUser] = useState(null)
       const [cargado, setCargado] = useState(false)
@@ -50,7 +50,9 @@ const LegajoCliente = (props) => {
   
       const getData = async () => {
         const  data = await servicioCliente.traerLejagos(cuil_cuit)
-             
+             console.log(data)
+             console.log(data[0])
+             console.log(data[1][0].habilitado)
               setProducts(data)
           
       }
@@ -73,7 +75,7 @@ const LegajoCliente = (props) => {
 
   
           async function download(index, rowIndex, data) {
-              const filename = (products[index].ubicacion)
+              const filename = (products[0][index].ubicacion)
             
              
              const link = await serviciousuario1.obtenerurl(filename)
@@ -86,7 +88,7 @@ const LegajoCliente = (props) => {
           }
   
           async function veronline(index, rowIndex, data) {
-            const filename = (products[index].ubicacion)
+            const filename = (products[0][index].ubicacion)
     
     
             const link = await serviciousuario1.obtenerurlonline(filename)
@@ -198,7 +200,7 @@ const LegajoCliente = (props) => {
           <>
     <div>
             < ModalSeguro
-            id = {products[dataIndex].id}
+            id = {products[0][dataIndex].id}
             getData = { async () => {
               const  data = await servicioCliente.traerLejagos(cuil_cuit)
                    
@@ -242,19 +244,44 @@ const LegajoCliente = (props) => {
                 }
                 } 
               />
-             <Habilitar 
-              cuil_cuit_user= {props.cuil_cuit_user} />
-             <Deshabilitar
-             cuil_cuit_user= {props.cuil_cuit_user} />
+              {products ? <>
+              {products[1][0].habilitado=="Si" ? <>
+              <Deshabilitar
+             cuil_cuit_user= {props.cuil_cuit_user}
+             getData= {async () => {
+              const  data = await servicioCliente.traerLejagos(cuil_cuit)
+                   console.log(data)
+                   console.log(data[0])
+                   console.log(data[1][0].habilitado)
+                    setProducts(data)
+                
+            }} />
+              </>:<>
+              <Habilitar 
+              cuil_cuit_user= {props.cuil_cuit_user} 
+              getData= {async () => {
+                const  data = await servicioCliente.traerLejagos(cuil_cuit)
+                     console.log(data)
+                     console.log(data[0])
+                     console.log(data[1][0].habilitado)
+                      setProducts(data)
+                  
+              }}/>
+              </>}
+              
+              
+              </>:<></>}
+          
+         
           </ButtonGroup>
              <div    >
-            
-              <MUIDataTable
+             {products ? <>
+           <MUIDataTable
                   title={"Documentacion del Cliente"}
-                  data={products}
+                  data={products[0]}
                   columns={columns}
               />
-              
+              </>:<></>}
   
                  </div>
                 

@@ -100,7 +100,9 @@ const DetalleCliente = () => {
                  
             </div> : <div><Alert severity="error"> <b>Cliente no habilitado por {cliente.cuil_cuit}  el dia {cliente.fecha}, (No se puede asignar lote a un cliente no habilitado)</b>. Ir a LEGAJOS para habilitar</Alert></div> }
             </Paper>
-            <Button
+          
+                      {habilitado ? <>
+                        <Button
                         variant="outlined"
                         onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
                       >
@@ -113,7 +115,33 @@ const DetalleCliente = () => {
           
     <Listacbus
               cuil_cuit={cuil_cuit}/>
-
+</>:<><Button
+      variant="outlined"
+      onClick={() => navigate('/usuario2/legajoscliente/' + cuil_cuit)}
+      sx={{
+        position: 'relative',
+        border: '2px solid #ff0000', // Borde rojo
+        color: '#f50057', // Texto rojo
+        fontWeight: 'bold', // Texto en negrita
+        backgroundColor: '#fff0f0', // Fondo ligeramente rojo
+        transition: 'transform 0.2s', // Transición para el efecto de zoom
+        '&:hover': {
+          transform: 'scale(1.1)', // Efecto de zoom al pasar el cursor
+        },
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: '-10px',
+          right: '-10px',
+          width: '20px',
+          height: '20px',
+          background: 'url("path-to-your-arrow-image.png") no-repeat center center', // Puedes usar una imagen de flecha para señalar
+          backgroundSize: 'contain',
+        },
+      }}
+    >
+      Ir a legajos
+    </Button></>}
 
 </>:<><Cargadetabla/></>}
         </div>

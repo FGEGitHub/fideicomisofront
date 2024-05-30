@@ -52,7 +52,7 @@ console.log(ingreso)
 
 
     }
-
+    props.getData()
     setOpen(false);
   };
 

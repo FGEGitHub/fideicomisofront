@@ -486,6 +486,7 @@ setCargalink(true)
                         variant="contained"
                         color="primary"
                         onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
+                        disabled
                     >
                         Agregar cuotas a varios lotes
                     </Button>
