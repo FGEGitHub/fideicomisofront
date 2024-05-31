@@ -128,7 +128,7 @@ export default function SelectTextFields(props) {
                                 id: 'uncontrolled-native',
                                
                             }}
-                        >   <option  value={'SI'}>SI</option>
+                        >   <option  value={'Sin determinar'}>Elegir</option>
                             <option   value={'SI'}>SI</option>
                             <option  value={'NO'}>NO</option>
                          
