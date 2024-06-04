@@ -25,7 +25,7 @@ export default function FormDialog(props) {
     const [legform, setLegform] = useState({
         cuil_cuit:cuil_cuit
     })
-
+    const [cargando, setCargando] = useState(false);
     const selecthandler = e => {
         setFile(e.target.files[0])
         console.log(file)
@@ -78,10 +78,27 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
 
     const enviar = async() => {
-      await enviarr.append('datos', [cuil_cuit,legform.descripcion])
+      setCargando(true);
+   //   
+   if (enviarr) {
+      enviarr.append('cuil_cuit', legform.cuil_cuit);
+    
+      enviarr.append('descripcion', legform.descripcion);
+      
+      try {
+        const response =  await servicioLegajo.determinarIngreso(enviarr)
+        alert(response.data);
+        console.log("getData");
+        props.getData();
+      } catch (error) {
+        console.error('Error subiendo archivo:', error);
+      }
+    } else {
+      alert('No hay archivo para subir');
+    }
+    setCargando(false);
+    setOpen(false);
 
-     await servicioLegajo.determinarIngreso(enviarr)
-   //  
     
    setOpen(false);
 
