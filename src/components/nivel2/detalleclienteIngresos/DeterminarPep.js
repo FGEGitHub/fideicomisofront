@@ -10,7 +10,7 @@ import ServicioUsuario1 from '../../../services/usuario1'
 import { useDropzone } from 'react-dropzone';
 import BackupIcon from '@material-ui/icons/Backup';
 import InputLabel from '@mui/material/InputLabel';
-
+import { useParams } from "react-router-dom"
 import React, {useCallback, useEffect, useState, Fragment } from "react";
 
 
@@ -28,12 +28,15 @@ const currencies = [
 ];
 
 export default function SelectTextFields(props) {
+  let params = useParams()
+  let cuil_cuit = params.cuil_cuit
   const [open, setOpen] = React.useState(false);
-  //const usuario  = useUser().userContext
-
+  const [file, setFile] = useState();
+  const [enviarr,setEnviarr] = useState()
+  const [completado, setCompletado] = useState(false);
   const [fileUpload, setFileUpload] = useState(null);
-
-   const [establecer, setEstablecer] = useState({
+  const [cargando, setCargando] = useState(false);
+   const [legform, setLegform] = useState({
     cuil_cuit:props.cuil_cuit,
     expuesta:'SI'
 
@@ -56,33 +59,29 @@ export default function SelectTextFields(props) {
   };
 
 
+
   const handleChange = (e) => {
-    console.log(establecer)
-    setEstablecer({ ...establecer, [e.target.name]: e.target.value })
+    setLegform({ ...legform, [e.target.name]: e.target.value })
+    setCompletado(true)
+    console.log(legform)
+}
 
-
-  }
   ////
   
   const [currency, setCurrency] = React.useState('EUR');
 
 
 
-
-    const onDrop = useCallback  ((files, acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 0 && acceptedFiles[0].type === 'application/pdf') {
       const formData = new FormData();
       setFileUpload(acceptedFiles);
-      formData.append('file', files[0]);
-    
-      formData.append('datos', [establecer.cuil_cuit,establecer.expuesta]);///// aca en forma de array se envian datos del dormulario
-     
-      ServicioUsuario1.determinarPep(formData)
-     
-      
-       
-  
-  
-      });
+      formData.append('file', acceptedFiles[0]);
+      setEnviarr(formData);
+    } else {
+      alert('Solo se aceptan archivos PDF');
+    }
+  }, []);
       const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
         onDrop,
         multiple: false,
@@ -97,10 +96,33 @@ export default function SelectTextFields(props) {
       )); 
 
   
-    const enviar = () => {
-   
-      window.location.reload(true);
-  }
+      const enviar = async() => {
+        setCargando(true);
+     //   
+     if (enviarr) {
+        enviarr.append('cuil_cuit', legform.cuil_cuit);
+      
+        enviarr.append('descripcion', legform.descripcion);
+        
+        try {
+          const response =  await ServicioUsuario1.determinarPep(enviarr)
+          alert(response.data);
+          console.log("getData");
+          props.getData();
+        } catch (error) {
+          console.error('Error subiendo archivo:', error);
+        }
+      } else {
+        alert('No hay archivo para subir');
+      }
+      setCargando(false);
+      setOpen(false);
+  
+      
+     setOpen(false);
+  
+  
+      }
   return (
 
     <Box

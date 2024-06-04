@@ -33,33 +33,16 @@ export default function FormDialog(props) {
     }
 //////////
 
-const onDrop = useCallback((files, acceptedFiles) => {
+const onDrop = useCallback((acceptedFiles) => {
+  if (acceptedFiles.length > 0 && acceptedFiles[0].type === 'application/pdf') {
     const formData = new FormData();
     setFileUpload(acceptedFiles);
-    formData.append('file', files[0]);
-  
-    
-    setEnviarr(formData)
-   
-      
-   
-     
-
-/*axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'
-}})
-        .then((res) => {
-            
-            setFileUpload({fileName: files[0].name});
-            console.log(res)
-            if (res.status === 200)
-                return (this.setState({sucessmessage: "File uploaded successfullyS3"}))
-        })
-        .catch((error) => {
-            console.error(error.response);
-            this.setState({errormessage:error.response.status+" Please select the file"})
-        })*/
-
-    });
+    formData.append('file', acceptedFiles[0]);
+    setEnviarr(formData);
+  } else {
+    alert('Solo se aceptan archivos PDF');
+  }
+}, []);
 
 
 const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({

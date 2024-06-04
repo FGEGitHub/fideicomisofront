@@ -68,7 +68,7 @@ export default function DetallesPagos(props) {
         label: "Cuil/Cuit",
     },
     {
-        name: "Descarga",
+        name: "Ver/borrar",
         options: {
             customBodyRenderLite: (dataIndex, rowIndex) =>
             downloadFile(
@@ -108,7 +108,7 @@ function downloadFile(index, rowIndex, data) {
             
               <Button
                     onClick={() => download(index)}
-                >Descargar</Button> 
+                >Ver Online</Button> 
 <Borrar
 id={pagos[index].id}/>
 

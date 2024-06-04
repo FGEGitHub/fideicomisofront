@@ -165,19 +165,7 @@ const LegajoCliente = (props) => {
           }
 
       },
-          {
-              name: "descargar",
-              options: {
-                  customBodyRenderLite: (index, getData, rowindex) =>
-                      downloadFile(
-                          index,
-                          rowindex,
-                          getData,
-                          // overbookingData,
-                          // handleEditOpen
-                      )
-              },
-          },
+         
           {
             name: "Borrar",
             options: {
