@@ -8,7 +8,7 @@ import servicioCliente from '../../../services/clientes'
 import serviciousuario1 from '../../../services/usuario1'
 import serviciousuarios from '../../../services/usuarios'
 import "../../profile.css";
-import { Box } from "@mui/system";
+import Modalveronline from './Modalveronline'
 import ModalLegajo from './Modalegajo'
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
@@ -103,10 +103,10 @@ const LegajoCliente = (props) => {
    
             return (
                 <>
-    
-                    <Button
+    <Modalveronline id={products[0][index].id}/>
+                  {/*   <Button
                         onClick={() => veronline(index)}
-                    >Ver online</Button>
+                    >Ver online</Button> */}
     
     
                 </>

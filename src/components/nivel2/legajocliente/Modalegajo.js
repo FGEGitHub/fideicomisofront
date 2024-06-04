@@ -1,236 +1,189 @@
 import * as React from 'react';
-import { Paper, Button } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import NativeSelect from '@mui/material/NativeSelect';
-import DialogTitle from '@mui/material/DialogTitle';
-import {useCallback,useState,  } from "react";
-import servicioLegajo from '../../../services/legajos'
+import { Paper, Button, TextField, Dialog, DialogActions, DialogContent, NativeSelect, DialogTitle, Box, CircularProgress } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useParams } from "react-router-dom";
+
 import BackupIcon from '@material-ui/icons/Backup';
-import { useDropzone } from 'react-dropzone'
-import Box from '@mui/material/Box';
-import { useParams } from "react-router-dom"
-import CircularProgress from '@mui/material/CircularProgress';
-
-
-
+import servicioLegajo from '../../../services/legajos'
 export default function FormDialog(props) {
-    let params = useParams()
-    let cuil_cuit = params.cuil_cuit
-    const [open, setOpen] = React.useState(false);
-    const [file, setFile] = useState();
-    const [enviarr,setEnviarr] = useState()
-    const [completado, setCompletado] = useState(false);
-    const [fileUpload, setFileUpload] = useState(null);
-    const [cargando, setCargando] = useState(false);
+  let params = useParams();
+  let cuil_cuit = params.cuil_cuit;
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState();
+  const [enviarr, setEnviarr] = useState();
+  const [completado, setCompletado] = useState(false);
+  const [fileUpload, setFileUpload] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
-    const [legform, setLegform] = useState({
-        cuil_cuit:cuil_cuit
-    })
+  const [legform, setLegform] = useState({
+    cuil_cuit: cuil_cuit,
+    tipo: '',
+    descripcion: ''
+  });
 
-    const selecthandler = e => {
-        setFile(e.target.files[0])
-        console.log(file)
+  const selecthandler = e => {
+    setFile(e.target.files[0]);
+    console.log(file);
+  };
 
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 0 && acceptedFiles[0].type === 'application/pdf') {
+      const formData = new FormData();
+      setFileUpload(acceptedFiles);
+      formData.append('file', acceptedFiles[0]);
+      setEnviarr(formData);
+    } else {
+      alert('Solo se aceptan archivos PDF');
     }
-//////////
+  }, []);
 
-const onDrop = useCallback((files, acceptedFiles) => {
-    const formData = new FormData();
-    setFileUpload(acceptedFiles);
-    formData.append('file', files[0]);
-  
-    
-    setEnviarr(formData)
-   
-      
-   
-     
-
-/*axios.post("http://localhost:4000/usuario1/upload-to-s3", formData, { headers: {'Content-Type': 'multipart/form-data'
-}})
-        .then((res) => {
-            
-            setFileUpload({fileName: files[0].name});
-            console.log(res)
-            if (res.status === 200)
-                return (this.setState({sucessmessage: "File uploaded successfullyS3"}))
-        })
-        .catch((error) => {
-            console.error(error.response);
-            this.setState({errormessage:error.response.status+" Please select the file"})
-        })*/
-
-    });
-
-
-const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf',
-
+    accept: 'application/pdf'
   });
+
   const acceptedFileItems = acceptedFiles.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
-  )); 
-/////////////////cargar  no actualizo 
+  ));
 
-
-
-    const enviar = async () => {
-      setCargando(true)
-     await enviarr.append('datos', [cuil_cuit,legform.tipo,legform.descripcion])
-
-    const rta =  await servicioLegajo.subirlegajode(enviarr)
-    alert(rta)
-    console.log("getData")
-     props.getData()
-     setCargando(false)
-      setOpen(false);
-
-
+  const enviar = async () => {
+    setCargando(true);
+    if (enviarr) {
+      enviarr.append('cuil_cuit', legform.cuil_cuit);
+      enviarr.append('tipo', legform.tipo);
+      enviarr.append('descripcion', legform.descripcion);
+      
+      try {
+        const response = await servicioLegajo.subirlegajode(enviarr) 
+        alert(response.data);
+        console.log("getData");
+        props.getData();
+      } catch (error) {
+        console.error('Error subiendo archivo:', error);
+      }
+    } else {
+      alert('No hay archivo para subir');
     }
+    setCargando(false);
+    setOpen(false);
+  };
 
-    const handleChange = (e) => {
-        setLegform({ ...legform, [e.target.name]: e.target.value })
-        setCompletado(true)
-        console.log(legform)
-    }
+  const handleChange = (e) => {
+    setLegform({ ...legform, [e.target.name]: e.target.value });
+    setCompletado(true);
+    console.log(legform);
+  };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+    setCompletado(false);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
+  return (
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Agregar Legajo
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Completar</DialogTitle>
+        <DialogContent>
+          <>
+            Seleccionar archivo y el tipo de comprobante
+          </>
+          <NativeSelect
+            defaultValue={30}
+            onChange={handleChange}
+            inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
+          >
+            <option value={''}>Elegir</option>
+            <option value={'Cbu personal'}>CBU personal</option>
+            <option value={'Cbu familiar'}>CBU familiar</option>
+            <option value={'Dni'}>DNI</option>
+            <option value={'Constancia de Afip'}>Constancia de Afip</option>
+            <option value={'Acreditacion Domicilio'}>Acreditación Domicilio</option>
+            <option value={'Acreditacion de ingresos'}>Acreditación de ingresos</option>
+            <option value={'Ultimos balances CPCE'}>Últimos Balances certificados en el CPCE</option>
+            <option value={'DjIva'}>DJ IVA</option>
+            <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
+            <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
+            <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
+            <option value={'Dj Datospers'}>DJ Datos Personales</option>
+            <option value={'Estatuto Social'}>Estatuto Social</option>
+            <option value={'Acta del organo decisorio'}>Acta de órgano Sucesorio Asignado</option>
+            <option value={'Constancia CUIL/CUIT'}>Constancia CUIL/CUIT (Pers física)</option>
+            <option value={'Dj CalidadPerso'}>DJ Calidad de Persona (Pers física)</option>
+            <option value={'Dj OrigenFondos'}>DJ Origen de fondos (Pers física)</option>
+            <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
+            <option value={'Pago Monotributo'}>Pago Monotributo</option>
+            <option value={'Pago autonomo'}>Pago de autónomo</option>
+          </NativeSelect>
 
+          {completado ? (
+            <div>
+              <Box sx={{ m: 1 }}>
+                <Button size="small" variant="contained">
+                  Descargar modelo
+                </Button>
+              </Box>
+              <Paper
+                sx={{
+                  cursor: 'pointer',
+                  background: '#fafafa',
+                  color: '#bdbdbd',
+                  border: '1px dashed #ccc',
+                  '&:hover': { border: '1px solid #ccc' },
+                }}
+              >
+                <div style={{ padding: '16px' }} {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {isDragActive ? (
+                    <p style={{ color: 'green' }}>Suelta aquí el documento</p>
+                  ) : (
+                    <p>Arrastra hasta aquí el archivo descargado con tus datos personales</p>
+                  )}
+                  <em>(Solo se aceptan documentos en formato PDF)</em>
+                </div>
+                <Box sx={{ m: 1, color: 'green', fontSize: '1rem' }}>
+                  Archivos Aceptados <BackupIcon fontSize="small" />
+                  <ul>{acceptedFileItems}</ul>
+                </Box>
+              </Paper>
 
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Descripción"
+                name="descripcion"
+                onChange={handleChange}
+                fullWidth
+                variant="standard"
+              />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </DialogContent>
 
-
-
-    const handleClickOpen = () => {
-        setOpen(true);
-        setCompletado(false)
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Agregar Legajo
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Completar</DialogTitle>
-                <DialogContent>
-                    <>
-                        Seleccionar archivo y el tipo de comprobante
-                    </>
-                    <NativeSelect
-                        defaultValue={30}
-                        onChange={handleChange}
-                        inputProps={{
-                            name: 'tipo',
-                            id: 'uncontrolled-native',
-
-                        }}
-
-                    > <option value={''}>Elegir</option>
-                    <option value={'Cbu personal'}>CBU personal</option>
-                    <option value={'Cbu familiar'}>CBU familiar</option>
-                        <option value={'Dni'}>dni</option>
-                        <option value={'Constancia de Afip'}>Constancia de Afip</option>
-                      
-                        <option value={'Acreditacion Domicilio'}>Acreditacion Domicilio</option> 
-                        <option value={'Acreditacion de ingresos'}>Acreditacion de ingresos</option>
-                        <option value={'Ultimos balances CPCE'}>Ultimos Balances certificados en el CPCE </option> 
-                        <option value={'DjIva'}>DJ IVA</option> 
-                        <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
-                        <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
-                            <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
-                          <option value={'Dj Datospers'}>DJ Datos Personales</option>   
-                        <option value={'Estatuto Social'}>Estatuto Social</option>
-                        <option value={'Acta del organo decisorio'}>Acta de organo Sucesorio Asignado</option>
-                        
-                          <option value={'Constancia CUIL/CUIT'}> Constancia CUIL/CUIT(Pers fisica)</option>
-                        <option value={'Dj CalidadPerso'}>DJ Calidad de Persona(Pers fisica)</option>
-                        <option value={'Dj OrigenFondos'}>DJ Origen de fondos(Pers fisica)</option>
-                       
-                        <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
-                        <option value={'Pago Monotributo'}>Pago Monotributo</option>
-                        <option value={'Pago autonomo'}>Pago de autonomo</option>
-                        
-
-                        
-
-
-                    </NativeSelect>
-               
-                {completado? <div>
-                    <Box sx={{ m: 1 }}>
-          <Button size="small" variant="contained">
-            Descargar modelo
-          </Button>
-        </Box>
-        <Paper
-          sx={{
-            cursor: 'pointer',
-            background: '#fafafa',
-            color: '#bdbdbd',
-            border: '1px dashed #ccc',
-            '&:hover': { border: '1px solid #ccc' },
-          }}
-        >
-          <div style={{ padding: '16px' }} {...getRootProps()}>
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-            ) : (
-              <p>Arrastra hasta aqui el archivo descargado con tus datos personales</p>
-            )}
-            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-          </div>
-          
- <Box sx={{
-                      m: 1,
-                      color: 'green',
-                      fontSize: '1rem',
-                    }}
-                    >
-                      Archivos Aceptados <BackupIcon fontSize="small" />
-                      <ul>{acceptedFileItems}</ul>
-                      </Box>
-              
-        </Paper>
-
-        <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Descripcion"
-                        name="descripcion"
-                        onChange={handleChange}
-                        fullWidth
-                        variant="standard"
-                    /> 
-        </div>:<div></div>}
-
-
-
-                </DialogContent>
-            
-                <DialogActions>
-                       
-                    <Button onClick={handleClose}>Cancelar</Button>
-                    {cargando ? <>   <Box sx={{ display: 'flex' }}>
-                    <Button > <CircularProgress /></Button>
-     
-    </Box></>:<>
-                    <Button onClick={enviar}>Guardar</Button></>}
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+        <DialogActions>
+          <Button onClick={handleClose}>Cancelar</Button>
+          {cargando ? (
+            <Box sx={{ display: 'flex' }}>
+              <Button><CircularProgress /></Button>
+            </Box>
+          ) : (
+            <Button onClick={enviar}>Guardar</Button>
+          )}
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

@@ -17,6 +17,7 @@ if (loggedUserJSON) {
   config = {
     headers: {
       Authorization: `Bearer ${userContext.token}`
+      
     }
   }
 
@@ -39,10 +40,13 @@ const subirprueba = async (formdata) => {
 }
 //nivel2
 const subirlegajode = async (formData) => {
+  const newData = {
+    ...config,
+    headers: { 'Content-Type': 'multipart/form-data' }
+  };
 
 
-
-  const {data} = await axios.post(baseUrl + 'subirlegajo', formData, config)
+  const {data} = await axios.post(baseUrl + 'subirlegajo', formData)
   //await axios.post(baseUrl + 'subirlegajo', formData, config)
  
   return (data)
@@ -109,5 +113,19 @@ const cantidaddjiva = async (cuil_cuit) => {
   return data
  
  }
+ 
 
-export default { determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+ const traerPdfConstancia = async (id) => {
+  try {
+    const config = {
+      responseType: 'blob', // Esto es importante para manejar blobs de archivos
+    };
+    const { data } = await axios.get(`${baseUrl}traerpdfconstancia/${id}`, config);
+    return data;
+  } catch (error) {
+    console.error('Error al obtener el PDF:', error);
+    throw error;
+  }
+};
+
+export default { traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
