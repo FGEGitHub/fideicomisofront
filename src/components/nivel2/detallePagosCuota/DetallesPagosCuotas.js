@@ -84,13 +84,14 @@ export default function DetallesPagos(props) {
 ];
 
 async function download(index, rowIndex, data) {
-    const filename = (pagos[index].ubicacion)
-  
-   
-   const link = await serviciousuario1.obtenerurl(filename)
-
-    console.log(link.data)            
-    window.open(link.data)
+    try {
+        const pdfBlob = await servicioPagos.traerPdfConstanciadepago(pagos[index].id);
+        const url = URL.createObjectURL(pdfBlob);
+        window.open(url, '_blank');
+      } catch (error) {
+        console.error('Error al obtener el PDF:', error);
+        alert('Error al cargar el PDF');
+      }
 
  
 }

@@ -204,5 +204,17 @@ const cantidadpendientes= async  () => {
        return data
       }
  
+      const traerPdfConstanciadepago = async (id) => {
+        try {
+          const config = {
+            responseType: 'blob', // Esto es importante para manejar blobs de archivos
+          };
+          const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepago/${id}`, config);
+          return data;
+        } catch (error) {
+          console.error('Error al obtener el PDF:', error);
+          throw error;
+        }
+      };
 
-export default {cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
