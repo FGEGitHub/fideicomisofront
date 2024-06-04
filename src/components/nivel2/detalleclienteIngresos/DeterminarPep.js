@@ -116,7 +116,7 @@ export default function SelectTextFields(props) {
         alert('No hay archivo para subir');
       }
       setCargando(false);
-      setOpen(false);
+ 
   
       
      setOpen(false);
@@ -217,6 +217,7 @@ export default function SelectTextFields(props) {
         </DialogContent>
       </Dialog>
     </Box >
+
 
 
 
