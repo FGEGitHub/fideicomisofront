@@ -205,7 +205,7 @@ return data
 
 const determinarPep = async (formdata) => {
   const { data } = await axios.post(baseUrl + 'determinarPep', formdata,config)
-
+return data
 }
 
 const constanciasdelpago = async (id) => {
