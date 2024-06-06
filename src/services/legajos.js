@@ -80,6 +80,21 @@ const subirlegajo1 = async (formData) => {
 
   //  }})
 }
+
+const actualizarpago = async (formData) => {
+
+  
+
+  const {data} = await axios.post(baseUrl + 'actualizarpago', formData, config)
+  
+  return (data)
+ 
+   //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+ 
+ 
+   //  }})
+ }
+
 const borrar = async (id) => {
   await axios.get(baseUrl + 'borrarunlegajo/' + id)
 
@@ -128,4 +143,4 @@ const cantidaddjiva = async (cuil_cuit) => {
   }
 };
 
-export default { traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+export default { actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };

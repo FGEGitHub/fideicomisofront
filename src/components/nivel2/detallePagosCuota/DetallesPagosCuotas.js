@@ -7,7 +7,7 @@ import serviciousuario1 from '../../../services/usuario1'
 import Borrar from './modalborrar';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-
+import Modif from './modalactcomp';
 export default function DetallesPagos(props) {
     let params = useParams()
     let id = params.id
@@ -64,8 +64,18 @@ export default function DetallesPagos(props) {
         label: "Cuil administrador",
     },
     {
-        name: "cuil_cuit",
-        label: "Cuil/Cuit",
+        name: "Modificar",
+        options: {
+            customBodyRenderLite: (dataIndex, rowIndex) =>
+                modifa(
+                    dataIndex,
+                    rowIndex,
+                   // overbookingData,
+                   // handleEditOpen
+                )
+        }
+    
+ 
     },
     {
         name: "Ver/borrar",
@@ -96,6 +106,25 @@ async function download(index, rowIndex, data) {
  
 }
 
+
+function modifa(index, rowIndex, data) {
+
+    /* const filename = (products[index].key)
+    console.log(filename)
+    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+    console.log(link.data)
+    setAct(true) */
+    return (
+        <>
+            
+   
+   
+<Modif
+id={pagos[index].id}/>
+
+        </>
+    );
+}
 function downloadFile(index, rowIndex, data) {
 
     /* const filename = (products[index].key)
