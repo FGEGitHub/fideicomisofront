@@ -96,7 +96,7 @@ import Mapaarg from '../Paginas/maparg'
 import Mapasusuario from '../Paginas/usuariomapas/inicio'
 
 import NOtFound from '../Paginas/not found'
-
+import Subirexcell from '../Paginas/subirexcel';
 
 const Rutas = [
 	 <Navbar/> ,
@@ -206,8 +206,8 @@ const Rutas = [
 
 
 	{ path: '/usuariomapas/inicio', element: <Mapasusuario /> },
+	{ path: '/subbir', element: <Subirexcell /> },
 	
-
 	
 	{ path: '*', element: <NOtFound /> },
 
