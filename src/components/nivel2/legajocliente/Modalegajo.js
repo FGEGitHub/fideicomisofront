@@ -58,8 +58,8 @@ export default function FormDialog(props) {
       enviarr.append('descripcion', legform.descripcion);
       
       try {
-        const response = await servicioLegajo.subirlegajode(enviarr) 
-        alert(response.data);
+        const data = await servicioLegajo.subirlegajode(enviarr) 
+        alert(data);
         console.log("getData");
         props.getData();
       } catch (error) {

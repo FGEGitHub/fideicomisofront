@@ -48,8 +48,8 @@ const subirlegajode = async (formData) => {
 
   const {data} = await axios.post(baseUrl + 'subirlegajo', formData)
   //await axios.post(baseUrl + 'subirlegajo', formData, config)
- 
-  return (data)
+ console.log(data)
+  return data
 
 
 }
