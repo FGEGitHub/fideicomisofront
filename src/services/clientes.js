@@ -92,6 +92,21 @@ const determinarEmpresa= async  (datos) => {
 
  
  
+ const listaic3= async  () => {
+  
+    const {data } = await axios.get(baseURL+'listaic3',config)
+  //const {data } = await axios.get('https://api.santacatalinafideicomiso.com/prueba',config)
+
+   // const {data } = await axios.get('http://localhost:4000/prueba',config)
+   if(data === 'error login'){  
+    // alert('Debe loguearse nuevamente')
+    window.localStorage.removeItem('loggedNoteAppUser')
+ 
+    window.location.reload();
+}
+    
+    return data 
+}   
 const lista2= async  () => {
 
 
@@ -209,7 +224,21 @@ const traerLejagos= async  (cuil_cuit) => {
    alert(data)
     return data 
 }
- 
+
+
+const clientehabilitadoic3= async  (cuil_cuit) => {
+
+    const {data } = await axios.get(baseURL+'clientehabilitadoic3/'+cuil_cuit,config)
+  
+    if(data === 'error login'){  
+       alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        return 'error login' 
+    
+    } 
+    return data 
+} 
 
  const clientehabilitado= async  (cuil_cuit) => {
 
@@ -246,6 +275,6 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+export default {clientehabilitadoic3,listaic3,borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 

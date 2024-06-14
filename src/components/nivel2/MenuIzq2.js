@@ -83,6 +83,13 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
+        {
+          text: 'Clientes IC3',
+          icon:<div><Badge badgeContent={notificaciones} color="error">
+          <PaidIcon color="primary" />
+        </Badge></div>,
+          path: '/usuario2/clientesic3'
+        },
      /*    { 
           text: 'Extracto', 
           icon: <GroupIcon color="primary" />, 

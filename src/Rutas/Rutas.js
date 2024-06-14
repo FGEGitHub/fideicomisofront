@@ -19,6 +19,11 @@ import Chats from "../Paginas/Usuario2/chats"
 import Comprobanteief from "../Paginas/Usuario2/comporbanteief"
 import Mapaniv2 from '../Paginas/Usuario2/mapas';
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
+import Clientesic3 from '../Paginas/Usuario2/clientesic3';
+import DetalleClienteic3 from '../Paginas/Usuario2/detalleclic3';
+
+
+
 
 import Navbar from "../components/Navbar";
 import Usuario1 from "../Paginas/usuario1/menuusuario1";
@@ -145,6 +150,9 @@ const Rutas = [
 	{ path: '/usuario2/clientes', element: <Clientes /> },
 	{ path: '/usuario2/lotes', element: <Lotes /> },
 	{ path: '/usuario2/detallecliente/:cuil_cuit', element: <DetalleCliente /> },
+	{ path: '/usuario2/detalleclic3/:cuil_cuit', element: <DetalleClienteic3 /> },
+
+
 	{ path: '/usuario2/agregarcuotas/:id', element: <Agregarcuotas /> },
 	{ path: '/usuario2/asignarloteausuario/:cuil_cuit', element: <AsignarLoteAUsuario /> },
 	{ path: '/usuario2/aprobaciones', element: <Aprobaciones /> },
@@ -161,7 +169,7 @@ const Rutas = [
 	{ path: '/usuario2/consultas', element: <Chats /> },
 	{ path: '/usuario2/comprobanteief/:id', element: <Comprobanteief /> },
 	{ path: '/usuario2/mapas', element: <Mapaniv2 /> },
-	
+	{ path: '/usuario2/clientesic3', element: <Clientesic3 /> },
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
 	{ path: '/nivel3/clientes', element: <Clientesniv3 /> },
