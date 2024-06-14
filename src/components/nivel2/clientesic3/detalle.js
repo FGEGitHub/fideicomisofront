@@ -6,7 +6,7 @@ import servicioCliente from '../../../services/clientes'
 import Ingreso from '../detalleclienteIngresos/Ingresos'
 import { Paper } from '@mui/material';
 import PEP from '../detalleclienteIngresos/DeterminarPep'
-
+import Cuotas from '../cuotasic3/tabla'
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -136,7 +136,16 @@ const DetalleCliente = () => {
     </Button></>}
 
 </>:<>Cargando</>}
+
+{cuil_cuit ? <>
+  <Cuotas
+  cuil_cuit={cuil_cuit}
+  />
+  
+  </>:<></>}
         </div>
+
+
     )
 }
 export default DetalleCliente

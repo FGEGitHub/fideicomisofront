@@ -73,6 +73,19 @@ const vercuotas = async (id) => {
     return data
 }
 
+const traercuotasic3 = async (cuil_cuit) => {
+
+    console.log(baseUrl)
+    const { data } = await axios.get(baseUrl + 'traercuotasic3/' + cuil_cuit, config)
+    if(data === 'error login'){  
+        // alert('Debe loguearse nuevamente')
+        window.localStorage.removeItem('loggedNoteAppUser')
+     
+        window.location.reload();
+    }
+
+    return data
+}
 const traercuota = async (id) => {
 
     console.log(id)
@@ -272,9 +285,9 @@ const asignarloteacuotas = async (datos) => {
     const { data } = await axios.post(baseUrl + 'asignarloteacuotas/', datos, config)
 
 
-    // return data
+    return data
 }
 
 
 
-export default {vercuotas4,iefgralleg, traercuotasdisponiblesporlote,asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
+export default {traercuotasic3,vercuotas4,iefgralleg, traercuotasdisponiblesporlote,asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
