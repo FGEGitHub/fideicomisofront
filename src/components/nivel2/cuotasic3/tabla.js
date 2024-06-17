@@ -234,6 +234,8 @@ return (
                                             <Table >
                                                 <TableHead>
                                                     <TableRow>
+                                                    <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA</b> <b /></TableCell>
+
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
@@ -254,6 +256,8 @@ return (
 
                                                     {cuotas.map((row) => (
                                                         <StyledTableRow key={row.name}>
+                                                                                                                      <StyledTableCell component="th" scope="row">{row.cuota}</StyledTableCell>
+
                                                             <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio} </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.amortizacion)}</b></span></StyledTableCell>

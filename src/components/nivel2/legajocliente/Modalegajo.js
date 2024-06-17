@@ -3,9 +3,9 @@ import { Paper, Button, TextField, Dialog, DialogActions, DialogContent, NativeS
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useParams } from "react-router-dom";
-
 import BackupIcon from '@material-ui/icons/Backup';
-import servicioLegajo from '../../../services/legajos'
+import servicioLegajo from '../../../services/legajos';
+
 export default function FormDialog(props) {
   let params = useParams();
   let cuil_cuit = params.cuil_cuit;
@@ -28,20 +28,19 @@ export default function FormDialog(props) {
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0 && acceptedFiles[0].type === 'application/pdf') {
+    if (acceptedFiles.length > 0) {
       const formData = new FormData();
       setFileUpload(acceptedFiles);
       formData.append('file', acceptedFiles[0]);
       setEnviarr(formData);
     } else {
-      alert('Solo se aceptan archivos PDF');
+      alert('No se aceptó ningún archivo');
     }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'application/pdf'
   });
 
   const acceptedFileItems = acceptedFiles.map(file => (
@@ -149,7 +148,7 @@ export default function FormDialog(props) {
                   ) : (
                     <p>Arrastra hasta aquí el archivo descargado con tus datos personales</p>
                   )}
-                  <em>(Solo se aceptan documentos en formato PDF)</em>
+                  <em>(Se aceptan todos los tipos de archivos)</em>
                 </div>
                 <Box sx={{ m: 1, color: 'green', fontSize: '1rem' }}>
                   Archivos Aceptados <BackupIcon fontSize="small" />
