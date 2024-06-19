@@ -21,7 +21,7 @@ import Mapaniv2 from '../Paginas/Usuario2/mapas';
 import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 import Clientesic3 from '../Paginas/Usuario2/clientesic3';
 import DetalleClienteic3 from '../Paginas/Usuario2/detalleclic3';
-
+import Actualizarcomprobantes from '../Paginas/Usuario2/actualziarcomprobantes';
 
 
 
@@ -211,6 +211,9 @@ const Rutas = [
 	{ path: '/admin/pagos', element: <PagosAdmin /> },
 	{ path: '/admin/lotes', element: <LotesAdmin /> },
 	{ path: '/admin/detallescliente/:cuil_cuit', element: <Detalleclienteadmin /> },
+	{ path: '/usuario2/actualizarcomporbantes/:id', element: <Actualizarcomprobantes/> },
+
+	
 
 
 	{ path: '/usuariomapas/inicio', element: <Mapasusuario /> },

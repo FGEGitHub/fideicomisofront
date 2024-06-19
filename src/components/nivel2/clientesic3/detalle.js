@@ -87,6 +87,12 @@ const DetalleCliente = () => {
           '&:hover': { border: '1px solid #ccc' },
         }}
       >
+           <Button
+                        variant="outlined"
+                        onClick={() => navigate('/usuario2/actualizarcomporbantes/'+cuil_cuit)}
+                      >
+                   ACTUALIZAR COMPROBANTES
+                      </Button>
              {habilitado ? <div>
               <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
             
@@ -143,6 +149,7 @@ const DetalleCliente = () => {
   />
   
   </>:<></>}
+  
         </div>
 
 

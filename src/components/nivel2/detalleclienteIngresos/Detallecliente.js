@@ -142,7 +142,12 @@ const DetalleCliente = () => {
     >
       Ir a legajos
     </Button></>}
-
+    <Button
+                        variant="outlined"
+                        onClick={() => navigate('/usuario2/actualizarcomporbantes/'+cuil_cuit)}
+                      >
+                   ACTUALIZAR COMPROBANTES
+                      </Button>
 </>:<><Cargadetabla/></>}
         </div>
     )

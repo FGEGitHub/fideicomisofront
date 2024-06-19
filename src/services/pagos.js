@@ -113,8 +113,14 @@ const listaExtractos= async  () => {
   return data
  }  
 
-
-
+ 
+ const detallesPagocli= async  (id) => {
+  ////detalles de los pagos de una cuota(nivel2)
+  
+    const {data } = await axios.post(baseUrl+'pagos/detallesPagocli',id,config)
+      
+    return data
+   }  
 const detallesPago= async  (id) => {
 ////detalles de los pagos de una cuota(nivel2)
 
@@ -217,4 +223,4 @@ const cantidadpendientes= async  () => {
         }
       };
 
-export default {traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {detallesPagocli,traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
