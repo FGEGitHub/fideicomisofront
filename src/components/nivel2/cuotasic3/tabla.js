@@ -239,10 +239,11 @@ return (
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE POR ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA CON AJUSTE</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO FINAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
@@ -265,11 +266,12 @@ return (
                                                             <StyledTableCell component="th" scope="row">{row.ajuste}</StyledTableCell>
                                                             <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span></StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span></StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_final)}</b></span></StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_real)}</b></span></StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {row.diferencia < 0 ?
-                                                                    <p style={{ color: 'crimson', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p> :
-                                                                    <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p>}
+                                                                {row.excedente < 0 ?
+                                                                    <p style={{ color: 'crimson', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.excedente)}</p> :
+                                                                    <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.excedente)}</p>}
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row" align="center">
 
