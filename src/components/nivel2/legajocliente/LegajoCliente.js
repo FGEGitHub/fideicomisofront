@@ -141,8 +141,8 @@ const LegajoCliente = (props) => {
   
           },
           {
-              name: "cuil_cuit",
-              label: "cuil_cuit"
+              name: "descripcion",
+              label: "descripcion"
           },
           {
             name: "fecha",
