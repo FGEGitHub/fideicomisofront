@@ -26,14 +26,10 @@ id:props.id
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0 && acceptedFiles[0].type === 'application/pdf') {
-      const formData = new FormData();
-      setFileUpload(acceptedFiles);
-      formData.append('file', acceptedFiles[0]);
-      setEnviarr(formData);
-    } else {
-      alert('Solo se aceptan archivos PDF');
-    }
+    const formData = new FormData();
+    setFileUpload(acceptedFiles);
+    formData.append('file', acceptedFiles[0]);
+    setEnviarr(formData);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
