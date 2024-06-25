@@ -111,10 +111,14 @@ function modifa(index, rowIndex, data) {
     return (
         <>
             
-   
-   
-<Modif
+   {pagos[index].ubicacion != null ? <>Tiene comprobante
+    <Modif
+id={pagos[index].id}/></>:<>
+    <Modif
 id={pagos[index].id}/>
+</>}
+   
+
 
         </>
     );
