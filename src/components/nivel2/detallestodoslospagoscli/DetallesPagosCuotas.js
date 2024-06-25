@@ -70,7 +70,7 @@ export default function DetallesPagos(props) {
                             </TableCell>
                             <TableCell>
                                 <Button onClick={() => download(index)}>Ver Online</Button>
-                                <Borrar id={pago.id} />
+                               {/*  <Borrar id={pago.id} /> */}
                             </TableCell>
                         </TableRow>
                     ))}

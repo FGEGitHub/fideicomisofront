@@ -271,12 +271,12 @@ return (
                       <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.excedente)}</p>}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
-                    <Pagorapido
+                {/*     <Pagorapido
                       id_cuota={row.id}
                       traer={async (index) => {
                         const cuotas = await servicioCuotas.vercuotas(index);
                       }}
-                    />
+                    /> */}
                     <SearchIcon style={{ cursor: "pointer" }}
                       onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}
                     />
