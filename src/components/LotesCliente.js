@@ -745,96 +745,77 @@ setCargalink(true)
 
                                     }}
                                 >
+<TableContainer style={{ maxHeight: '400px' }}>
+    {!cuotas ? <Skeleton /> : <>
+        <h1>CUOTAS</h1>
+        <Table stickyHeader>
+            <TableHead>
+                <TableRow>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>FECHA</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
+                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO 360</b></TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {cuotas.map((row) => (
+                    <StyledTableRow key={row.name}>
+                        <StyledTableCell component="th" scope="row">
+                            {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)}</b></span>
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">{row.ICC}</StyledTableCell>
+                        <StyledTableCell component="th" scope="row">{row.Ajuste_ICC}</StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            {row.diferencia < 0 ?
+                                <p style={{ color: 'crimson', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p> :
+                                <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p>}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row" align="center">
+                            <Pagorapido
+                                id_cuota={row.id}
+                                traer={async (index) => {
+                                    const cuotas = await servicioCuotas.vercuotas(index)
+                                    setCuotas(cuotas)
+                                    setIdlote(index)
+                                    setAct(true)
+                                    verief(index)
+                                    setOpen(false)
+                                }}
+                            />
+                            <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                            {cargalink ? <CircularProgress /> : <Button onClick={() => traerlink360(row.id)}>Pagar 360</Button>}
+                        </StyledTableCell>
+                    </StyledTableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </>}
+</TableContainer>
 
-                                    <TableContainer>
-                                        {!cuotas ? <Skeleton /> : <>
-                                            <h1>CUOTAS</h1>
-                                            <Table >
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>FECHA</b> <b /></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>AJUSTE ICC</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>CUOTA CON AJUSTE</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>SALDO REAL</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>DIFERENCIA</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGAR/VER PAGO</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }} ><b>PAGO 360</b></TableCell>
-
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-
-
-
-                                                    {cuotas.map((row) => (
-                                                        <StyledTableRow key={row.name}>
-                                                          <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio} </StyledTableCell>
-<StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span></StyledTableCell>
-<StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)}</b></span></StyledTableCell>
-<StyledTableCell component="th" scope="row">{row.ICC}</StyledTableCell>
-<StyledTableCell component="th" scope="row">{row.Ajuste_ICC}</StyledTableCell>
-<StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span></StyledTableCell>
-<StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span></StyledTableCell>
-<StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span></StyledTableCell>
-<StyledTableCell component="th" scope="row">
-  {row.diferencia < 0 ? 
-    <p style={{ color: 'crimson', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p> : 
-    <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p>}
-</StyledTableCell>
- <StyledTableCell component="th" scope="row" align="center">
-
-                                                                <Pagorapido
-                                                                    id_cuota={row.id}
-                                                                    traer={async (index) => {
-
-                                                                        const cuotas = await servicioCuotas.vercuotas(index)
-
-                                                                        setCuotas(cuotas)
-                                                                        setIdlote(index)
-                                                                        setAct(true)
-                                                                        verief(index)
-                                                                        setOpen(false)
-
-                                                                    }}
-                                                                />
-                                                                {/*   <CurrencyExchangeIcon
-                                                                    onClick={() => navigate('/usuario2/pagarcuota/' + row.id)}
-                                                                    style={{ marginRight: "10px", cursor: "pointer" }}
-                                                                /> */}
-
-                                                                <SearchIcon style={{ cursor: "pointer" }}
-                                                                    onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                />
-
-
-                                                                {/*     <DeleteIcon style={{ cursor: "pointer" }}
-                                                                    onClick={() => borrar(row.id)}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                                                                /> */}
-
-
-                                                            </StyledTableCell>
-
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {cargalink ? <><CircularProgress /></> : <> <Button onClick={() => traerlink360(row.id)} >
-
-                                                                    Pagar 360
-                                                                </Button></>}
-                                                            </StyledTableCell>
-                                                        </StyledTableRow>
-                                                    ))}
-
-
-
-
-                                                </TableBody>
-                                            </Table>
-                                        </>}
-
-                                    </TableContainer>
                                 </Paper>
 
 
