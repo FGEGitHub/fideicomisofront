@@ -104,6 +104,8 @@ export default function FormDialog(props) {
             inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
           >
             <option value={''}>Elegir</option>
+            <option value={'Poder General'}>Poder General</option>
+            <option value={'Acta de Entrega'}>Acta de Entrega </option>
             <option value={'Cbu personal'}>CBU personal</option>
             <option value={'Cbu familiar'}>CBU familiar</option>
             <option value={'Dni'}>DNI</option>
