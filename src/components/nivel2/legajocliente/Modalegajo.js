@@ -67,6 +67,7 @@ export default function FormDialog(props) {
     } else {
       alert('No hay archivo para subir');
     }
+    setFileUpload(null)
     setCargando(false);
     setOpen(false);
   };
