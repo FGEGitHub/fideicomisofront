@@ -16,7 +16,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Skeleton from '@mui/material/Skeleton';
 import { styled } from '@mui/material/styles';
-import Pagorapido from '../pagarcuota/modalpagorapido'
+import Pagorapido from './pagaric3'
 //import overbookingData from "./overbooking";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -240,8 +240,7 @@ return (
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '7%' }}><b>CUOTA</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '7%' }}><b>FECHA</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>SALDO INICIAL</b></TableCell>
-                <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>AMORTIZACION</b></TableCell>
-                <TableCell style={{ backgroundColor: "black", color: 'white', width: '8%' }}><b>AJUSTE POR ICC</b></TableCell>
+                <TableCell style={{ backgroundColor: "black", color: 'white', width: '8%' }}><b> ICC</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '8%' }}><b>AJUSTE</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>CUOTA CON AJUSTE</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>PAGO</b></TableCell>
@@ -249,7 +248,6 @@ return (
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>SALDO REAL</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>DIFERENCIA</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>PAGAR/VER PAGO</b></TableCell>
-                <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>PAGO 360</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -258,8 +256,7 @@ return (
                   <StyledTableCell component="th" scope="row">{row.cuota}</StyledTableCell>
                   <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio}</StyledTableCell>
                   <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span></StyledTableCell>
-                  <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.amortizacion)}</b></span></StyledTableCell>
-                  <StyledTableCell component="th" scope="row">{row.ajuste_icc}</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">{parseFloat(row.ajuste_icc).toFixed(3)}</StyledTableCell>
                   <StyledTableCell component="th" scope="row">{row.ajuste}</StyledTableCell>
                   <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span></StyledTableCell>
                   <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span></StyledTableCell>
@@ -271,12 +268,12 @@ return (
                       <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.excedente)}</p>}
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" align="center">
-                {/*     <Pagorapido
+                  <Pagorapido
                       id_cuota={row.id}
                       traer={async (index) => {
                         const cuotas = await servicioCuotas.vercuotas(index);
                       }}
-                    /> */}
+                    /> 
                     <SearchIcon style={{ cursor: "pointer" }}
                       onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}
                     />
