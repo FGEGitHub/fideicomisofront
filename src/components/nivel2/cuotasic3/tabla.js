@@ -270,9 +270,12 @@ return (
                   <StyledTableCell component="th" scope="row" align="center">
                   <Pagorapido
                       id_cuota={row.id}
-                      traer={async (index) => {
-                        const cuotas = await servicioCuotas.vercuotas(index);
-                      }}
+                      traer={async () => {
+        
+                        const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit) //////  api/links/infocantidad
+                        setCuotas(clients)
+                        setLoading(false);
+                    }}
                     /> 
                     <SearchIcon style={{ cursor: "pointer" }}
                       onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}

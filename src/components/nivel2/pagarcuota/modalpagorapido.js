@@ -107,9 +107,9 @@ export default function SelectTextFields(props) {
       console.log(enviarr)
       try {
         const response = await servicioUsuario1.pagarnivel2(enviarr)
-        alert(response.data);
+      
         console.log("getData");
-        props.traer(response[2])
+        props.traer(props.id_lote)
         setLoading(false)
         handleClose()
       } catch (error) {
@@ -130,9 +130,9 @@ export default function SelectTextFields(props) {
 
     const rta = await servicioUsuario1.pagarnivel2varios(enviarr)
     console.log(rta)
-    alert(rta[0])
-    navigate('/usuario2/detallecliente/' + rta[1])
-
+    alert(rta)
+    console.log(props.id_lote)
+props.traer(props.id_lote)
 
 
 

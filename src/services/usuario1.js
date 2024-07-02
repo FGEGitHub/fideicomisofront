@@ -225,6 +225,19 @@ const pagarnivel2= async  (pago) => {////pago desde el usuario 2
      return data
    
   } 
+
+  const pagarrapidoic3= async  (pago) => {////pago desde el usuario 2
+
+    const {data } = await axios.post(baseUrl+'pagarrapidoic3',(pago),config)
+  
+      
+       return data
+     
+    } 
+  
+  
+
+
   const modificarCliente= async  (datosNuevos) => {////
 
       const {data } = await axios.post(baseUrl+'modificarcli',(datosNuevos),config)
@@ -303,4 +316,4 @@ const pagarnivel2= async  (pago) => {////pago desde el usuario 2
         } 
 
     
-export default {obtenerurlonline,lotesCliente2,cliente2,modificarcli2,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {pagarrapidoic3,obtenerurlonline,lotesCliente2,cliente2,modificarcli2,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

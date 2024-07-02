@@ -67,6 +67,16 @@ const LegajoCliente = (props) => {
         navigate('/legales/detallecliente/'+cuil_cuit)
              
       }
+
+      
+   
+      const volver3 =  () => {
+        navigate('/usuario2/detalleclic3/'+cuil_cuit)
+             
+              
+          
+      }
+
       useEffect(() => {
           getData()
           traer()
@@ -275,8 +285,8 @@ const LegajoCliente = (props) => {
 
            < Estadisticas
              cuil_cuit = {cuil_cuit}/> 
+  {products[1][0].zona=="IC3" ? <><Button onClick={volver3} > <ArrowBackIcon/> Volver</Button></>:<><Button onClick={volver} > <ArrowBackIcon/> Volver</Button></>}
 
-<Button onClick={volver} > <ArrowBackIcon/> Volver</Button>
           
 
              

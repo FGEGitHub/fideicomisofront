@@ -795,13 +795,16 @@ setCargalink(true)
                         <StyledTableCell component="th" scope="row" align="center">
                             <Pagorapido
                                 id_cuota={row.id}
+                                id_lote={row.id_lote}
                                 traer={async (index) => {
-                                    const cuotas = await servicioCuotas.vercuotas(index)
+                                        
+                                    const cuotas = await servicioCuotas.vercuotas(idlote)
                                     setCuotas(cuotas)
-                                    setIdlote(index)
+                                    //setIdlote(idlote)
                                     setAct(true)
-                                    verief(index)
+                                    verief(idlote)
                                     setOpen(false)
+                            
                                 }}
                             />
                             <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />

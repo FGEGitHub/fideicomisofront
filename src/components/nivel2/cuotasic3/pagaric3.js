@@ -128,7 +128,7 @@ export default function SelectTextFields(props) {
     setLoading(true)
     enviarr.append('datos', [pago.cuil_cuit, pago.fecha, pago.id, JSON.stringify(pagosVarios)]);///// aca en forma de array se envian datos del dormulario
 
-    const rta = await servicioUsuario1.pagarnivel2varios(enviarr)
+    const rta = await servicioUsuario1.pagarrapidoic3(enviarr)
     console.log(rta)
     alert(rta[0])
     navigate('/usuario2/detallecliente/' + rta[1])
