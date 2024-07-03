@@ -745,7 +745,7 @@ setCargalink(true)
 
                                     }}
                                 >
-<TableContainer style={{ maxHeight: '400px' }}>
+<TableContainer style={{ height: '80vh' }}>
     {!cuotas ? <Skeleton /> : <>
         <h1>CUOTAS</h1>
         <Table stickyHeader>
