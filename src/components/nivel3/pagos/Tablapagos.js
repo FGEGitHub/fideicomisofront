@@ -95,6 +95,10 @@ const getPagosi = async () => {
             label: "Año",
         },
         {
+            name: "fecha",
+            label: "fecha de pago",
+        },
+        {
             name: "cuil_cuit",
             label: "Cuil/cuit",
         },
@@ -119,6 +123,11 @@ const getPagosi = async () => {
         {
             name: "monto",
             label: "Monto",
+            
+        },
+        {
+            name: "monto_distinto",
+            label: "Monto distinto",
             
         },
         {
