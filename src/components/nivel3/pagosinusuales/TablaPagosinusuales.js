@@ -180,14 +180,11 @@ const PagosInusuales = () => {
 
     ];
     async function download(index, rowIndex, data) {
-        const filename = (pagos[index].ubicacion)
+   
 
-
-        const link = await serviciousuario1.obtenerurl(filename)
-
-        console.log(link.data)
-        window.open(link.data)
-
+        const pdfBlob = await servicioPagos.traerPdfConstanciadepago(pagos[index].id);
+        const url = URL.createObjectURL(pdfBlob);
+        window.open(url, '_blank');
 
     }
     function downloadFile(index, rowIndex, data) {
