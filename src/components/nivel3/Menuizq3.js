@@ -82,7 +82,7 @@ export default function MenuIzq2 ({children}) {
         },
         {
           text: 'Pagos Inusuales',
-          icon: <div><Badge badgeContent={notificaciones} color="error">
+          icon: <div><Badge color="error">
           <PaidIcon color="primary" />
         </Badge></div>,
           path: '/nivel3/pagosinusuales'
