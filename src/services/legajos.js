@@ -130,6 +130,18 @@ const cantidaddjiva = async (cuil_cuit) => {
  }
  
 
+ const traerPdfConstanciacbu = async (id) => {
+  try {
+    const config = {
+      responseType: 'blob', // Esto es importante para manejar blobs de archivos
+    };
+    const { data } = await axios.get(`${baseUrl}traerpdfonstanciacbu/${id}`, config);
+    return data;
+  } catch (error) {
+    console.error('Error al obtener el PDF:', error);
+    throw error;
+  }
+};
  const traerPdfConstancia = async (id) => {
   try {
     const config = {
@@ -143,4 +155,4 @@ const cantidaddjiva = async (cuil_cuit) => {
   }
 };
 
-export default { actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+export default {traerPdfConstanciacbu, actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };

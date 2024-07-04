@@ -24,7 +24,6 @@ import DetalleClienteic3 from '../Paginas/Usuario2/detalleclic3';
 import Actualizarcomprobantes from '../Paginas/Usuario2/actualziarcomprobantes';
 
 
-
 import Navbar from "../components/Navbar";
 import Usuario1 from "../Paginas/usuario1/menuusuario1";
 import Nosotros from "../Paginas/usuario1/nosotros";
@@ -60,6 +59,7 @@ import Agregarusuario from '../Paginas/Nivel3/AgregarUsuario';
 import Pagos3 from '../Paginas/Nivel3/Pagos';
 import Clientesniv3 from '../Paginas/Nivel3/Clientes';
 import Novedades3 from '../Paginas/Nivel3/Novedades';
+import Extractp from '../Paginas/Nivel3/extracto';
 
 
 
@@ -184,6 +184,8 @@ const Rutas = [
 	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
 	{ path: '/nivel3/pagos', element: <Pagos3 /> },
 	{ path: '/nivel3/novedades', element: <Novedades3 /> },
+
+	{ path: '/nivel3/extracto', element: <Extractp /> },
 
 
 	{ path: '/legales/menu', element: <Menu4 /> },

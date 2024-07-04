@@ -98,6 +98,12 @@ export default function MenuIzq2 ({children}) {
             icon: <PlagiarismIcon color="primary" />,
             path: '/nivel3/declaraciones'
           },
+          
+          {
+            text: 'Extracto',
+            icon: <GroupAddIcon color="primary" />,
+            path: '/nivel3/extracto'
+          },
           {
             text: 'Agregar usuario',
             icon: <GroupAddIcon color="primary" />,

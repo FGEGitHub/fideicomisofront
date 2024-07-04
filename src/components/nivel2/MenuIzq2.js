@@ -90,12 +90,12 @@ export default function MenuIzq2 ({children}) {
         </Badge></div>,
           path: '/usuario2/clientesic3'
         },
-     /*    { 
+       { 
           text: 'Extracto', 
           icon: <GroupIcon color="primary" />, 
           path: '/usuario2/extracto' 
         },
-    */
+
         
         {
           text: 'Aprobación de Legajos',
@@ -113,11 +113,11 @@ export default function MenuIzq2 ({children}) {
         },
       
         {
-          text: 'Agenda de novedades',
+          text: 'Aprobaciones de pagos',
           icon:<div><Badge color="error">
           <AccountBalanceIcon color="primary" />
         </Badge></div>,
-          path: '/usuario2/novedades'
+          path: '/usuario2/aprobacionesdepagos'
         },
         {
           text: 'Mapas',

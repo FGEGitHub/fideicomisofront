@@ -5,7 +5,7 @@ import { Toolbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import servicioPagos from '../../../services/pagos';
-import servicioCuotas from '../../../services/cuotas';
+import Modalveronline from './verpdfcbu';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import Tooltip from '@mui/material/Tooltip';
 import NativeSelect from '@mui/material/NativeSelect';
@@ -107,8 +107,8 @@ export default function SelectTextFields(props) {
       console.log(enviarr)
       try {
         const response = await servicioUsuario1.pagarnivel2(enviarr)
-      
-        console.log("getData");
+      alert(response)
+        
         props.traer(props.id_lote)
         setLoading(false)
         handleClose()
@@ -131,7 +131,7 @@ export default function SelectTextFields(props) {
     const rta = await servicioUsuario1.pagarnivel2varios(enviarr)
     console.log(rta)
     alert(rta)
-    console.log(props.id_lote)
+    
 props.traer(props.id_lote)
 
 
@@ -196,6 +196,8 @@ props.traer(props.id_lote)
                       </MenuItem>
                     ))}
                 </TextField>
+                {   pago.cbu ?  <Modalveronline id={pago.cbu}/>:<></>
+              }
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
 

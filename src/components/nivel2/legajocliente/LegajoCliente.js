@@ -9,6 +9,7 @@ import serviciousuario1 from '../../../services/usuario1'
 import serviciousuarios from '../../../services/usuarios'
 import "../../profile.css";
 import Modalveronline from './Modalveronline'
+import Modalveronlinecbu from '../pagarcuota/verpdfcbu'
 import ModalLegajo from './Modalegajo'
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
@@ -113,7 +114,8 @@ const LegajoCliente = (props) => {
    
             return (
                 <>
-    <Modalveronline id={products[0][index].id}/>
+                {products[0][index].lazo != undefined ? <> <Modalveronlinecbu id={products[0][index].id}/></>:<> <Modalveronline id={products[0][index].id}/></>}
+   
                   {/*   <Button
                         onClick={() => veronline(index)}
                     >Ver online</Button> */}

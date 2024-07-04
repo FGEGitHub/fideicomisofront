@@ -52,8 +52,18 @@ export default function DetallesPagos(props) {
         
     },
     {
-        name: "monto",
-        label: "monto",
+        name: "Monto",
+        options: {
+            customBodyRenderLite: (dataIndex, rowIndex) =>
+                monto(
+                    dataIndex,
+                    rowIndex,
+                   // overbookingData,
+                   // handleEditOpen
+                )
+        }
+    
+ 
     },
     {
         name: "tipo",
@@ -121,6 +131,25 @@ function modifa(index, rowIndex, data) {
    
 <Modif
 id={pagos[index].id}/>
+
+        </>
+    );
+}
+
+
+function monto(index, rowIndex, data) {
+
+    /* const filename = (products[index].key)
+    console.log(filename)
+    const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
+    console.log(link.data)
+    setAct(true) */
+    return (
+        <>
+            
+   
+   
+            {pagos[index].monto_distinto =="Si" ? <p style={{ color: 'crimson' }} >{pagos[index].monto}</p> :pagos[index].monto}
 
         </>
     );
