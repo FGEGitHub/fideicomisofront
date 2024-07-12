@@ -106,7 +106,7 @@ export default function SelectTextFields(props) {
       enviarr.append('cbu', pago.cbu,);
       console.log(enviarr)
       try {
-        const response = await servicioUsuario1.pagarnivel2(enviarr)
+        const response = await servicioUsuario1.pagarnivel2ic3(enviarr)
         alert(response.data);
         console.log("getData");
         props.traer(response[2])

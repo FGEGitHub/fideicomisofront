@@ -60,6 +60,7 @@ import Pagos3 from '../Paginas/Nivel3/Pagos';
 import Clientesniv3 from '../Paginas/Nivel3/Clientes';
 import Novedades3 from '../Paginas/Nivel3/Novedades';
 import Extractp from '../Paginas/Nivel3/extracto';
+import Niv3Cuota from '../Paginas/Nivel3/cuota';
 
 
 
@@ -184,7 +185,7 @@ const Rutas = [
 	{ path: '/nivel3/agregarusuario', element: <Agregarusuario /> },
 	{ path: '/nivel3/pagos', element: <Pagos3 /> },
 	{ path: '/nivel3/novedades', element: <Novedades3 /> },
-
+	{ path: '/nivel3/cuota/:id', element: <Niv3Cuota /> },
 	{ path: '/nivel3/extracto', element: <Extractp /> },
 
 

@@ -182,9 +182,7 @@ const PagosInusuales = () => {
     async function download(index, rowIndex, data) {
    
 
-        const pdfBlob = await servicioPagos.traerPdfConstanciadepago(pagos[index].id);
-        const url = URL.createObjectURL(pdfBlob);
-        window.open(url, '_blank');
+      navigate('/nivel3/cuota/'+(pagos[index].id_cuota))
 
     }
     function downloadFile(index, rowIndex, data) {
@@ -199,7 +197,7 @@ const PagosInusuales = () => {
 
                 <Button
                     onClick={() => download(index)}
-                >Descargar</Button>
+                >Ver pagos de cuota</Button>
 
 
             </>
@@ -285,7 +283,7 @@ const PagosInusuales = () => {
 
                                             <StyledTableCell component="th" scope="row"> <Button
                                                 onClick={() => download(index)}
-                                            >Descargar</Button> </StyledTableCell>
+                                            >Ver pagos de cuota</Button> </StyledTableCell>
                                         </StyledTableRow>
 
                                     ))}

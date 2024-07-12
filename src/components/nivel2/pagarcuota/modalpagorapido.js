@@ -107,7 +107,7 @@ export default function SelectTextFields(props) {
       console.log(enviarr)
       try {
         const response = await servicioUsuario1.pagarnivel2(enviarr)
-      alert(response)
+      alert(response[0])
         
         props.traer(props.id_lote)
         setLoading(false)
