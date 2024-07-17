@@ -53,6 +53,21 @@ const DetalleCliente = () => {
                 <div> 
                 <PEP
                 cuil_cuit = {cuil_cuit}
+                getData={async () => {
+      
+                  const clientee = await servicioCliente.clientehabilitado(cuil_cuit) ////api/links/clientehabilitado
+                   setCliente(clientee[1])
+                  /// veridicacion de cliente segun posibilidad de gestionarlo
+                   if (clientee[0][0].habilitado =='Si'){
+                       sethabilitado(true)
+                   }
+                     /// veridicacion de cliente segun PEP
+                   if (clientee[0][0].expuesta =='SI'){
+                    setExpuesta(true)
+                }
+          
+                setCarga(false)    ;
+              }}
                 /> 
              
                 {expuesta ? <div>

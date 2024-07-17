@@ -102,9 +102,10 @@ export default function SelectTextFields(props) {
      if (enviarr) {
         enviarr.append('cuil_cuit', legform.cuil_cuit);
       
-        enviarr.append('descripcion', legform.descripcion);
-        
+        enviarr.append('expuesta', legform.expuesta);
+
         try {
+          console.log(enviarr)
           const response =  await ServicioUsuario1.determinarPep(enviarr)
           alert(response.data);
           console.log("getData");
