@@ -116,6 +116,8 @@ export default function FormDialog(props) {
             <option value={'DjIva'}>DJ IVA</option>
             <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
             <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
+            <option value={'Constancia RePET'}>Constancia RePET</option>
+            
             <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
             <option value={'Dj Datospers'}>DJ Datos Personales</option>
             <option value={'Estatuto Social'}>Estatuto Social</option>
