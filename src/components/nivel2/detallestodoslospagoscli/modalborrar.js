@@ -107,7 +107,7 @@ export default function SelectTextFields(props) {
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-            Seguro? {props.id}
+            Seguro? 
          <Button  onClick={() => borrar()} >Aceptar</Button>
         </DialogContent>
       </Dialog>

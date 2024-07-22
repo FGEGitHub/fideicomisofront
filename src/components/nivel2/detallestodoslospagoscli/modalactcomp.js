@@ -53,7 +53,6 @@ id:props.id
       try {
         const response = await servicioLegajo.actualizarpago(enviarr) 
         alert(response.data);
-        console.log("getData");
         props.getData();
       } catch (error) {
         console.error('Error subiendo archivo:', error);

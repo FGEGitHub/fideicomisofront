@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Modif from './modalactcomp';
-import Borrar from './modalborrar';
+import BorrarComp from '../detallePagosCuota/modalborrarcomprobante';
 
 export default function DetallesPagos(props) {
     let params = useParams();
@@ -48,6 +48,7 @@ export default function DetallesPagos(props) {
                         <TableCell>ID</TableCell>
                         <TableCell>Cuota</TableCell>
                         <TableCell>fecha</TableCell>
+                        <TableCell>Borrar comprobante</TableCell>
                         <TableCell>Modificar</TableCell>
                         <TableCell>Ver/Borrar</TableCell>
                     </TableRow>
@@ -58,11 +59,30 @@ export default function DetallesPagos(props) {
                             <TableCell>{pago.id}</TableCell>
                             <TableCell>{pago.cuo}</TableCell>
                             <TableCell>{pago.messs}/{pago.aniooo}</TableCell>
+                            
                             <TableCell>
                                 {pago.ubicacion != null ? (
                                     <>
                                         Tiene comprobante
-                                        <Modif id={pago.id} />
+                                        <BorrarComp id={pago.id}
+                                           getData={async () => {
+                                            const aux = { id: id };
+                                            const pag = await servicioPagos.detallesPagocli(aux);
+                                            setPagos(pag);
+                                        }} />
+                                    </>
+                                ) : <></>}
+                            </TableCell>
+                            <TableCell>
+                                {pago.ubicacion != null ? (
+                                    <>
+                                        Tiene comprobante
+                                        <Modif id={pago.id} 
+                                         getData={async () => {
+                                            const aux = { id: id };
+                                            const pag = await servicioPagos.detallesPagocli(aux);
+                                            setPagos(pag);
+                                        }}/>
                                     </>
                                 ) : (
                                     <Modif id={pago.id} />

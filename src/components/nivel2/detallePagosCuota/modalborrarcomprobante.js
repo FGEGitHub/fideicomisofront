@@ -72,7 +72,7 @@ export default function SelectTextFields(props) {
       await servicioAdmin.borrarcomprobante(
       props.id
       )
-      props.traer()
+      props.getData()
 
     } catch (error) {
       console.error(error);
