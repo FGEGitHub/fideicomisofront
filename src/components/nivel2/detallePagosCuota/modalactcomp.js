@@ -83,9 +83,9 @@ id:props.id
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <button onClick={handleClickOpen}>
     Actualizar comprobante
-      </Button>
+      </button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Completar</DialogTitle>
         <DialogContent>

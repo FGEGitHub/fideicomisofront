@@ -69,7 +69,7 @@ export default function SelectTextFields(props) {
     console.log(pago)
     try {
 
-      await servicioAdmin.borrarPago(
+      await servicioAdmin.borrarcomprobante(
       props.id
       )
       props.traer()
@@ -103,8 +103,7 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
        < Tooltip title="Borrar pago">
-       <button onClick={handleClickOpen}>Borrar Pago</button>
-      
+       <button onClick={handleClickOpen}> Borrar el comprobante</button>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>

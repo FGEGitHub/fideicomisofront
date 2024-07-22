@@ -83,7 +83,13 @@ const subirprueba = async (formdata) => {
     return data
   
   }
+  const borrarcomprobante = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'borrarcomprobante/'+id,config)
+    
+    return data
   
+  }
   
   const traerlink360 = async (id) => {
     
@@ -108,4 +114,4 @@ const subirprueba = async (formdata) => {
      return data 
  } 
 
-export default {cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+export default {borrarcomprobante,cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
