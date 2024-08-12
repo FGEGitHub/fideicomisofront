@@ -64,12 +64,12 @@ export default function MenuIzq2 ({children}) {
           text: 'Ver Clientes', 
           icon: <GroupIcon color="primary" />, 
           path: '/nivel3/clientes' 
-        }, */
+        }, 
         {
           text: 'Clientes',
           icon: <NfcIcon color="primary" />,
           path:  '/nivel3/clientes',
-        },
+        },*/
         {
           text: 'Lotes',
           icon: <NfcIcon color="primary" />,
