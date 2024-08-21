@@ -55,9 +55,9 @@ export default function FormDialog(props) {
       enviarr.append('cuil_cuit', legform.cuil_cuit);
       enviarr.append('tipo', legform.tipo);
       enviarr.append('descripcion', legform.descripcion);
-      
+
       try {
-        const data = await servicioLegajo.subirlegajode(enviarr) 
+        const data = await servicioLegajo.subirlegajode(enviarr)
         alert(data);
         console.log("getData");
         props.getData();
@@ -93,42 +93,80 @@ export default function FormDialog(props) {
         Agregar Legajo
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Completar</DialogTitle>
+        <DialogTitle>Completar Legajo {props.razon}</DialogTitle>
         <DialogContent>
           <>
             Seleccionar archivo y el tipo de comprobante
           </>
-          <NativeSelect
-            defaultValue={30}
-            onChange={handleChange}
-            inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
-          >
+
+          {props.razon == "Persona" ? <>
             <option value={''}>Elegir</option>
-            <option value={'Poder General'}>Poder General</option>
-            <option value={'Acta de Entrega'}>Acta de Entrega </option>
-            <option value={'Cbu personal'}>CBU personal</option>
-            <option value={'Cbu familiar'}>CBU familiar</option>
-            <option value={'Dni'}>DNI</option>
-            <option value={'Constancia de Afip'}>Constancia de Afip</option>
-            <option value={'Acreditacion Domicilio'}>Acreditación Domicilio</option>
-            <option value={'Acreditacion de ingresos'}>Acreditación de ingresos</option>
-            <option value={'Ultimos balances CPCE'}>Últimos Balances certificados en el CPCE</option>
-            <option value={'DjIva'}>DJ IVA</option>
-            <option value={'Pagos Previsionales'}>Pagos Previsionales</option>
-            <option value={'Referencias comerciales'}>Detalle Referencias comerciales</option>
-            <option value={'Constancia RePET'}>Constancia RePET</option>
+              <option value={'Dni'}>1 a-DNI Frente</option>
+              <option value={'Dni dorso'}>1 b DNI dorso</option>
+  <option value={'Constancia CUIL/CUIT'}>Constancia CUIL/CUIT (Pers física)</option>
+           
+
+              <option value={'Acreditacion Domicilio'}>3 Acreditación Domicilio</option>
+              <option value={'Acreditacion de ingresos'}>4-1 Certificacion de ingresos</option>
+              <option value={'Recibo de sueldo'}>4.a Recibo de sueldo</option>
+  <option value={'Pago Monotributo'}>4 b Pago Monotributo</option>
+
+          
+              <option value={'Dj CalidadPerso'}>DJ Calidad de Persona (Pers física)</option>
+              <option value={'Constancia de Afip'}> 4c. Constancia de Afip</option>
+              <option value={'Pago autonomo'}>4.c-Pago de autónomo</option>
+              <option value={'DDJJ IIBB'}>4.d DDJJ IIBB</option>
             
-            <option value={'DDJJ IIBB'}>DDJJ IIBB</option>
-            <option value={'Dj Datospers'}>DJ Datos Personales</option>
-            <option value={'Estatuto Social'}>Estatuto Social</option>
-            <option value={'Acta del organo decisorio'}>Acta de órgano Sucesorio Asignado</option>
-            <option value={'Constancia CUIL/CUIT'}>Constancia CUIL/CUIT (Pers física)</option>
-            <option value={'Dj CalidadPerso'}>DJ Calidad de Persona (Pers física)</option>
-            <option value={'Dj OrigenFondos'}>DJ Origen de fondos (Pers física)</option>
-            <option value={'Recibo de sueldo'}>Recibo de sueldo</option>
-            <option value={'Pago Monotributo'}>Pago Monotributo</option>
-            <option value={'Pago autonomo'}>Pago de autónomo</option>
-          </NativeSelect>
+          </> : <>
+
+
+            <NativeSelect
+              defaultValue={30}
+              onChange={handleChange}
+              inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
+            >
+              <option value={''}>Elegir</option>
+              <option value={'Dni'}>1 a-DNI Frente</option>
+              <option value={'Dni dorso'}>1 bDNI dorso</option>
+
+              <option value={'Constancia de Afip'}> 2 Constancia de Afip</option>
+
+              <option value={'Acreditacion Domicilio'}>3 Acreditación Domicilio</option>
+
+              <option value={'Acta de Entrega'}>Acta de Entrega </option>
+  
+
+              <option value={'Ultimos balances CPCE'}>4-1 Últimos Balances certificados en el CPCE</option>
+
+              <option value={'Acreditacion de ingresos'}>4-1 Certificacion de ingresos</option>
+              <option value={'DjIva'}>-4.2 DJ IVA</option>
+              <option value={'Pagos Previsionales'}>4.3Pagos Previsionales</option>
+              <option value={'Referencias comerciales'}>4.4 Detalle Referencias comerciales</option>
+              <option value={'DDJJ IIBB'}>4.5 DDJJ IIBB</option>
+
+              <option value={'Dj Datospers'}>5- DJ Datos Personales</option>
+
+              <option value={'Dj OrigenFondos'}>7- DJ Origen de fondos (Pers física)</option>
+
+              <option value={'Cbu personal'}>8-CBU personal</option>
+              <option value={'Cbu familiar'}>8- CBU familiar</option>
+
+              <option value={'Estatuto Social'}>9-Estatuto Social</option>
+
+          
+              <option value={'Acta del organo decisorio'}>10 Acta de órgano Sucesorio Asignado</option>
+              <option value={'Constancia RePET'}>11- Constancia RePET</option>
+
+              <option value={'Poder General'}>Poder General</option>
+    
+    
+           
+       
+      
+  
+            </NativeSelect>
+          </>}
+
 
           {completado ? (
             <div>

@@ -299,7 +299,9 @@ const LegajoCliente = (props) => {
            </>
              :<></>
              }<ButtonGroup variant="contained" aria-label="outlined primary button group">
-             < ModalLegajo
+{products ? <>
+  < ModalLegajo
+             razon={products[1][0].razon}
                 getData = {async () => {
                   console.log("get")
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)
@@ -309,6 +311,9 @@ const LegajoCliente = (props) => {
                 }
                 } 
               />
+</>:<></>}
+
+            
               {products ? <>
               {products[1][0].habilitado=="Si" ? <>
               <Deshabilitar
