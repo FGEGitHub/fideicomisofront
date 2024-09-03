@@ -212,6 +212,7 @@ const LegajoCliente = (props) => {
           </>
         );
       }
+      
       const optionss = {
     
         setTableProps: () => {
@@ -302,6 +303,8 @@ const LegajoCliente = (props) => {
 {products ? <>
   < ModalLegajo
              razon={products[1][0].razon}
+             tiposExistentes={products[0].map((legajo) => legajo.tipo)} // Asegúrate de que esta línea capture los tipos correctamente
+
                 getData = {async () => {
                   console.log("get")
                   const  data = await servicioCliente.traerLejagos(cuil_cuit)
