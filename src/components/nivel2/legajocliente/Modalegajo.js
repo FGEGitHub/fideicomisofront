@@ -106,22 +106,22 @@ export default function FormDialog(props) {
 
           {props.razon == "Persona" ? <>
             <option value={''}>Elegir</option>
-            <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>1 a-DNI Frente</option>
-              <option value={'Dni'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>1 a-DNI Frente</option>
-              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>1 b DNI dorso</option>
-  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>Constancia CUIL/CUIT (Pers física)</option>
+            <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
+              <option value={'Dni'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
+              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 b DNI dorso</option>
+  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>Constancia CUIL/CUIT (Pers física)</option>
            
 
-              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>3 Acreditación Domicilio</option>
-              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>4-1 Certificacion de ingresos</option>
-              <option value={'Recibo de sueldo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>4.a Recibo de sueldo</option>
-  <option value={'Pago Monotributo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>4.b- Pago Monotributo</option>
+              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
+              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
+              <option value={'Recibo de sueldo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.a Recibo de sueldo</option>
+  <option value={'Pago Monotributo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.b- Pago Monotributo</option>
 
           
-              <option value={'Dj CalidadPerso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>DJ Calidad de Persona (Pers física)</option>
-              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}> 4.c- Constancia de Afip</option>
-              <option value={'Pago autonomo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>4.c-Pago de autónomo</option>
-              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>4.d DDJJ IIBB</option>
+              <option value={'Dj CalidadPerso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>DJ Calidad de Persona (Pers física)</option>
+              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}> 4.c- Constancia de Afip</option>
+              <option value={'Pago autonomo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.c-Pago de autónomo</option>
+              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.d DDJJ IIBB</option>
             
           </> : <>
 
@@ -132,40 +132,40 @@ export default function FormDialog(props) {
               inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
             >
               <option value={''}>Elegir</option>
-              <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'black' }}>1 a-DNI Frente</option>
+              <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
 
-              <option value={'Dni'}>1 a-DNI Frente</option>
-              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'black' }}>1 bDNI dorso</option>
+            
+              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'red' }}>1 b-DNI dorso</option>
 
-              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Constancia de Afip') ? 'blue' : 'black' }}> 2 Constancia de Afip</option>
+              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Constancia de Afip') ? 'blue' : 'red' }}> 2 Constancia de Afip</option>
 
-              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'black' }}>3 Acreditación Domicilio</option>
+              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
 
-              <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'black' }}>Acta de Entrega </option>
+              <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'red' }}>Acta de Entrega </option>
   
 
-              <option value={'Ultimos balances CPCE'}style={{ color: esTipoExistente('Ultimos balances CPCE') ? 'blue' : 'black' }}>4-1 Últimos Balances certificados en el CPCE</option>
+              <option value={'Ultimos balances CPCE'}style={{ color: esTipoExistente('Ultimos balances CPCE') ? 'blue' : 'red' }}>4-1 Últimos Balances certificados en el CPCE</option>
 
-              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Acreditacion de ingresos') ? 'blue' : 'black' }}>4-1 Certificacion de ingresos</option>
-              <option value={'DjIva'}style={{ color: esTipoExistente('DjIva') ? 'blue' : 'black' }}>-4.2 DJ IVA</option>
-              <option value={'Pagos Previsionales'}style={{ color: esTipoExistente('Pagos Previsionales') ? 'blue' : 'black' }}>4.3Pagos Previsionales</option>
-              <option value={'Referencias comerciales'}style={{ color: esTipoExistente('Referencias comerciales') ? 'blue' : 'black' }}>4.4 Detalle Referencias comerciales</option>
-              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('DDJJ IIBB') ? 'blue' : 'black' }}>4.5 DDJJ IIBB</option>
+              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Acreditacion de ingresos') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
+              <option value={'DjIva'}style={{ color: esTipoExistente('DjIva') ? 'blue' : 'red' }}>-4.2 DJ IVA</option>
+              <option value={'Pagos Previsionales'}style={{ color: esTipoExistente('Pagos Previsionales') ? 'blue' : 'red' }}>4.3Pagos Previsionales</option>
+              <option value={'Referencias comerciales'}style={{ color: esTipoExistente('Referencias comerciales') ? 'blue' : 'red' }}>4.4 Detalle Referencias comerciales</option>
+              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('DDJJ IIBB') ? 'blue' : 'red' }}>4.5 DDJJ IIBB</option>
 
-              <option value={'Dj Datospers'}style={{ color: esTipoExistente('Dj Datospers') ? 'blue' : 'black' }}>5- DJ Datos Personales</option>
+              <option value={'Dj Datospers'}style={{ color: esTipoExistente('Dj Datospers') ? 'blue' : 'red' }}>5- DJ Datos Personales</option>
 
-              <option value={'Dj OrigenFondos'}style={{ color: esTipoExistente('Dj OrigenFondos') ? 'blue' : 'black' }}>7- DJ Origen de fondos (Pers física)</option>
+              <option value={'Dj OrigenFondos'}style={{ color: esTipoExistente('Dj OrigenFondos') ? 'blue' : 'red' }}>7- DJ Origen de fondos (Pers física)</option>
 
-              <option value={'Cbu personal'}style={{ color: esTipoExistente('Cbu personal') ? 'blue' : 'black' }}>8-CBU personal</option>
-              <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'black' }}>8- CBU familiar</option>
+              <option value={'Cbu personal'}style={{ color: esTipoExistente('Cbu personal') ? 'blue' : 'red' }}>8-CBU personal</option>
+              <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'red' }}>8- CBU familiar</option>
 
-              <option value={'Estatuto Social'}style={{ color: esTipoExistente('Estatuto Social') ? 'blue' : 'black' }}>9-Estatuto Social</option>
+              <option value={'Estatuto Social'}style={{ color: esTipoExistente('Estatuto Social') ? 'blue' : 'red' }}>9-Estatuto Social</option>
 
           
-              <option value={'Acta del organo decisorio'}style={{ color: esTipoExistente('Acta del organo decisorio') ? 'blue' : 'black' }}>10 Acta de órgano Sucesorio Asignado</option>
-              <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'black' }}>11- Constancia RePET</option>
+              <option value={'Acta del organo decisorio'}style={{ color: esTipoExistente('Acta del organo decisorio') ? 'blue' : 'red' }}>10 Acta de órgano Sucesorio Asignado</option>
+              <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>11- Constancia RePET</option>
 
-              <option value={'Poder General'}style={{ color: esTipoExistente('Poder General') ? 'blue' : 'black' }}>Poder General</option>
+              <option value={'Poder General'}style={{ color: esTipoExistente('Poder General') ? 'blue' : 'red' }}>Poder General</option>
     
     
            
