@@ -80,6 +80,7 @@ export default function FormDialog(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+
     setCompletado(false);
   };
 
@@ -105,24 +106,35 @@ export default function FormDialog(props) {
           </>
 
           {props.razon == "Persona" ? <>
+            <NativeSelect
+              defaultValue={30}
+              onChange={handleChange}
+              inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
+            >
             <option value={''}>Elegir</option>
-            <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
               <option value={'Dni'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
-              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 b DNI dorso</option>
-  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>Constancia CUIL/CUIT (Pers física)</option>
+              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'red' }}>1 b DNI dorso</option>
+  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Constancia CUIL/CUIT') ? 'blue' : 'red' }}>Constancia CUIL/CUIT (Pers física)</option>
            
 
-              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
-              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
-              <option value={'Recibo de sueldo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.a Recibo de sueldo</option>
-  <option value={'Pago Monotributo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.b- Pago Monotributo</option>
+              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
+              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Acreditacion de ingresos') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
+              <option value={'Recibo de sueldo'}style={{ color: esTipoExistente('Recibo de sueldo') ? 'blue' : 'red' }}>4.a Recibo de sueldo</option>
+  <option value={'Pago Monotributo'}style={{ color: esTipoExistente('Pago Monotributo') ? 'blue' : 'red' }}>4.b- Pago Monotributo</option>
 
           
-              <option value={'Dj CalidadPerso'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>DJ Calidad de Persona (Pers física)</option>
-              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}> 4.c- Constancia de Afip</option>
-              <option value={'Pago autonomo'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.c-Pago de autónomo</option>
-              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>4.d DDJJ IIBB</option>
-            
+              <option value={'Dj CalidadPerso'}style={{ color: esTipoExistente('Dj CalidadPerso') ? 'blue' : 'red' }}>DJ Calidad de Persona (Pers física)</option>
+              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Constancia de Afip') ? 'blue' : 'red' }}> 4.c- Constancia de Afip</option>
+              <option value={'Pago autonomo'}style={{ color: esTipoExistente('Pago autonomo') ? 'blue' : 'red' }}>4.c-Pago de autónomo</option>
+              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('DDJJ IIBB') ? 'blue' : 'red' }}>4.d DDJJ IIBB</option>
+              <option value={'Dj Datospers'}style={{ color: esTipoExistente('Dj Datospers') ? 'blue' : 'red' }}>5- DJ Datos Personales</option>
+              <option value={'Dj OrigenFondos'}style={{ color: esTipoExistente('Dj OrigenFondos') ? 'blue' : 'red' }}>7- DJ Origen de fondos (Pers física)</option>
+              <option value={'Cbu personal'}style={{ color: esTipoExistente('Cbu personal') ? 'blue' : 'red' }}>8-CBU personal</option>
+              <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'red' }}>8- CBU familiar</option>
+
+              <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>91- Constancia RePET</option>
+
+              </NativeSelect>
           </> : <>
 
 
