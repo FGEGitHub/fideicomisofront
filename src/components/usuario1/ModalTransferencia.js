@@ -42,7 +42,7 @@ export default function SelectTextFields(props) {
 
     id: props.id,
   })
-
+  const [cargando, setCargando] = useState(false);
   const [cbus, setCbus] = useState([''])
   const [completo, setCompleto] = useState(false);
 
@@ -132,18 +132,32 @@ export default function SelectTextFields(props) {
   ));
 
 
+ 
   const enviar = async () => {
-    setLoading(true)
+    setCargando(true);
+    if (enviarr) {
+      enviarr.append('cuil_cuit', pago.cuil_cuit,);
+      enviarr.append('id', pago.id);
+      enviarr.append('monto', pago.monto);
+      enviarr.append('fecha',pago.fecha);
+      enviarr.append('fechapago', pago.fechapago);
+      enviarr.append('cbu', pago.cbu);
+      try {
+        await servicioUsuario1.pagarnivel1(enviarr)
+        handleClose()
 
-    await enviarr.append('datos', [pago.cuil_cuit, pago.id, pago.monto, pago.fecha, pago.fechapago, pago.cbu]);///// aca en forma de array se envian datos del dormulario
 
-    await servicioUsuario1.pagarnivel1(enviarr)
-
-    handleClose()
-
-
-   window.location.reload(true);
-  }
+        window.location.reload(true);
+      } catch (error) {
+        console.error('Error subiendo archivo:', error);
+      }
+    } else {
+      alert('No hay archivo para subir');
+    }
+    setFileUpload(null)
+    setCargando(false);
+    setOpen(false);
+  };
   return (
 
     <Box

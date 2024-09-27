@@ -572,9 +572,9 @@ setCargalink(true)
                         <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                             Agregar cuotas al lote
                         </Button>
-                        <ModalModificarvalortotal
+                   {/*      <ModalModificarvalortotal
                             idlote={idlote}
-                        />
+                        /> */}
                         <AgregaraCuotas
                             id_origen={idlote}
                         />

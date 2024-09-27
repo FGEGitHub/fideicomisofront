@@ -153,12 +153,11 @@ export default function FormDialog(props) {
 
               <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
 
-              <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'red' }}>Acta de Entrega </option>
   
 
               <option value={'Ultimos balances CPCE'}style={{ color: esTipoExistente('Ultimos balances CPCE') ? 'blue' : 'red' }}>4-1 Últimos Balances certificados en el CPCE</option>
 
-              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Acreditacion de ingresos') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
+
               <option value={'DjIva'}style={{ color: esTipoExistente('DjIva') ? 'blue' : 'red' }}>-4.2 DJ IVA</option>
               <option value={'Pagos Previsionales'}style={{ color: esTipoExistente('Pagos Previsionales') ? 'blue' : 'red' }}>4.3Pagos Previsionales</option>
               <option value={'Referencias comerciales'}style={{ color: esTipoExistente('Referencias comerciales') ? 'blue' : 'red' }}>4.4 Detalle Referencias comerciales</option>
@@ -178,7 +177,8 @@ export default function FormDialog(props) {
               <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>11- Constancia RePET</option>
 
               <option value={'Poder General'}style={{ color: esTipoExistente('Poder General') ? 'blue' : 'red' }}>Poder General</option>
-    
+              <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'red' }}>Acta de Entrega </option>
+
     
            
        

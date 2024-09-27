@@ -50,7 +50,9 @@ const SubirLegajo = () => {
                 { label: 'Acreditacion de ingresos', completed: completoo[5] },
         
                 { label: 'Constancia de Cuil/Cuit', completed: completoo[6] },
+                { label: 'Constancia de Repet', completed: completoo[7] },
                 { label: 'Otras constancias', completed: false},
+                
 
             ])
         } else {
@@ -61,7 +63,7 @@ const SubirLegajo = () => {
                 { label: 'DJJ Datos Personales', completed: completoo[2] },
                 { label: 'DJJ Calidad de Persona(pep)', completed: completoo[3] },
                 { label: 'DJJ Origen de fondos', completed: completoo[4] },
-
+                { label: 'Constancia de Repet', completed: completoo[5] },
 
 
             ])
@@ -143,7 +145,12 @@ const SubirLegajo = () => {
                         7: <   OtrasConstancias
                         cuil_cuit={user.cuil_cuit} />,
 
-
+                       8: <AddConstanciaCuil_cuit
+                        cuil_cuit={user.cuil_cuit} 
+                        enviado =  {  () => { setActiveStep(activeStep => activeStep + 1)
+                        }}/>,
+                        9: <   OtrasConstancias
+                        cuil_cuit={user.cuil_cuit} />,
 
 
                 }[activeStep]}
