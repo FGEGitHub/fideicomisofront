@@ -113,5 +113,10 @@ const subirprueba = async (formdata) => {
  
      return data 
  } 
-
-export default {borrarcomprobante,cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+ const consultapep= async  (nombre) => {
+   
+  const {data } = await axios.post(baseUrl+'consultapep',{nombre:nombre})
+  
+  return data 
+}
+export default {consultapep,borrarcomprobante,cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};

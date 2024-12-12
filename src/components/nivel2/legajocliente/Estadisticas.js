@@ -47,7 +47,9 @@ export default function Legajos(props) {
 
   }, [])
 
-
+  useEffect(() => {
+    buscar();
+  }, [props.refresh]); // Actualizar cuando cambie el prop refresh
 
 
 
@@ -55,17 +57,10 @@ export default function Legajos(props) {
 
     console.log(e)
   }
-
   const buscar = async () => {
-
-    const datoss = await servicioClientes.datoslegajo(cli)
-    console.log(datoss)
-    setDatos(datoss)
-    //setHistorial(datos[2])  
-    setState({ open: true, ...{ vertical: 'top', horizontal: 'right' } })
-
+    const datoss = await servicioClientes.datoslegajo({ cuil_cuit: props.cuil_cuit });
+    setDatos(datoss);
   };
-
   const handleClose = () => {
     setState({ ...state, open: false });
   };

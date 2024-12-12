@@ -55,19 +55,18 @@ export default function FormDialog(props) {
       enviarr.append('cuil_cuit', legform.cuil_cuit);
       enviarr.append('tipo', legform.tipo);
       enviarr.append('descripcion', legform.descripcion);
-
+  
       try {
-        const data = await servicioLegajo.subirlegajode(enviarr)
+        const data = await servicioLegajo.subirlegajode(enviarr);
         alert(data);
-        console.log("getData");
-        props.getData();
+        props.getData(); 
+        props.getData2();// Notificar al padre que actualice las estadísticas
       } catch (error) {
         console.error('Error subiendo archivo:', error);
       }
     } else {
       alert('No hay archivo para subir');
     }
-    setFileUpload(null)
     setCargando(false);
     setOpen(false);
   };
@@ -114,7 +113,7 @@ export default function FormDialog(props) {
             <option value={''}>Elegir</option>
               <option value={'Dni'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
               <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'red' }}>1 b DNI dorso</option>
-  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Constancia CUIL/CUIT') ? 'blue' : 'red' }}>Constancia CUIL/CUIT (Pers física)</option>
+  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Constancia CUIL/CUIT') ? 'blue' : 'red' }}>2 Constancia CUIL/CUIT (Pers física)</option>
            
 
               <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>

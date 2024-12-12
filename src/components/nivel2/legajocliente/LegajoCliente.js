@@ -28,7 +28,11 @@ const LegajoCliente = (props) => {
       const [act, setAct] = useState(false)
       const [user, setUser] = useState(null)
       const [cargado, setCargado] = useState(false)
-  
+      const [refreshStats, setRefreshStats] = useState(false); // Estado para manejar las actualizaciones de estadísticas
+
+      const actualizarEstadisticas = () => {
+        setRefreshStats(prev => !prev); // Cambiar el estado para forzar la actualización
+      };
       //2 - fcion para mostrar los datos con axios
       const traer = async () => {
 
@@ -286,8 +290,8 @@ const LegajoCliente = (props) => {
             <>
            {user.nivel ===2 ? <> 
 
-           < Estadisticas
-             cuil_cuit = {cuil_cuit}/> 
+            <Estadisticas cuil_cuit={props.cuil_cuit} refresh={refreshStats} /> 
+             {products && <></>}
   {products[1][0].zona=="IC3" ? <><Button onClick={volver3} > <ArrowBackIcon/> Volver</Button></>:<><Button onClick={volver} > <ArrowBackIcon/> Volver</Button></>}
 
           
@@ -312,7 +316,8 @@ const LegajoCliente = (props) => {
                         setProducts(data)
                     
                 }
-                } 
+                }
+                getData2={actualizarEstadisticas}  
               />
 </>:<></>}
 

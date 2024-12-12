@@ -1,7 +1,7 @@
 /* import NotFound from '../Paginas/Notfound'; */
 import Login from '../Paginas/Login';
 import DetalleCliente from '../Paginas/Usuario2/DetalleCliente';
-
+import Consultare from '../Paginas/buscador/index'
 import Clientes from '../Paginas/Usuario2/MenuUsuario2';
 import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
@@ -107,7 +107,7 @@ import Subirexcell from '../Paginas/subirexcel';
 const Rutas = [
 	 <Navbar/> ,
 	 
-
+	 {path: '/consultar',element: (<Consultare />)},
 	 {path: '/home',element: (<Home />)},
 	 {path: '/home/calcular',element: (<HomeCalculo />)},
 	 {path: '/home/maparg',element: (<Mapaarg />)},
