@@ -40,8 +40,13 @@ const Lotes = () => {
         return (
           <>
           
-       
-           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
+       {clients[dataIndex].zona =='IC3' ? <>
+        <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+
+       </>:<>
+       <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+
+       </>}
           
           </>
         );
@@ -53,8 +58,13 @@ const Lotes = () => {
           <>
           
        
-           <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
-          
+          {clients[dataIndex].zona =='IC3' ? <>
+        <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+
+       </>:<>
+       <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+
+       </>}          
           </>
         );
       }
@@ -81,8 +91,8 @@ const Lotes = () => {
     // definimos las columnas de la tabla mui de clientes
     const columns = [
         {
-            name: "id",
-            label: "ID",
+            name: "zona",
+            label: "zona",
 
         },
        
