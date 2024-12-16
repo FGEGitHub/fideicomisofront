@@ -10,6 +10,8 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 //import overbookingData from "./overbooking";
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -87,14 +89,29 @@ const Lotes = () => {
         );
       }
 
-
+      function CustomProgressRenderer(dataIndex, rowIndex) {
+        const value = clients[dataIndex]?.porcentaje || 0; // Suponemos que 'observaciones' es el campo con el porcentaje
+        return (
+          <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+            <LinearProgress
+              variant="determinate"
+              value={value}
+              style={{ width: "100%", marginRight: 8 }}
+            />
+            <span>{`${value}%`}</span>
+          </Box>
+        );
+      }
     // definimos las columnas de la tabla mui de clientes
     const columns = [
-        {
-            name: "zona",
-            label: "zona",
-
+      {
+        name: "observaciones",
+        label: "Progreso",
+        options: {
+          customBodyRenderLite: (dataIndex, rowIndex) =>
+            CustomProgressRenderer(dataIndex, rowIndex),
         },
+      },
        
            {
             name: "cuil_cuit",
