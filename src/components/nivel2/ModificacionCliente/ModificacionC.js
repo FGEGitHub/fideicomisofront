@@ -1,343 +1,219 @@
-import React, { useEffect, useState, } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import EmailIcon from "@mui/icons-material/Email";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import HomeIcon from "@mui/icons-material/Home";
-import InputAdornment from "@mui/material/InputAdornment";
-import HomeWorkIcon from '@mui/icons-material/HomeWork';
-import Avatar from "@mui/material/Avatar";
-import Container from '@mui/material/Container';
-import servicioCliente from '../../../services/clientes'
-import "../detalleclienteIngresos/profile.css";
-import { Box } from "@mui/system";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom"
+import MenuItem from "@mui/material/MenuItem";
+import Container from "@mui/material/Container";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { useParams } from "react-router-dom";
+import servicioCliente from "../../../services/clientes";
 
-const ModificacionC = (props) => {
-  const navigate = useNavigate();
-    const [cliente, setCliente] = useState([])
-    const [modificaciones, setModificaciones] = useState([])
-  const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-  let params = useParams()
-    let cuil_cuit = params.cuil_cuit
-   
-  const [editMode, setEditMode] = useState(false);
+const ModificacionC = () => {
+  const [cliente, setCliente] = useState([]);
+  const [modificaciones, setModificaciones] = useState({});
+  const [fechaNacimiento, setFechaNacimiento] = useState(null);
+  const [edad, setEdad] = useState(null);
+  const [tipoCliente, setTipoCliente] = useState("");
+  const [actividadEconomica, setActividadEconomica] = useState("");
+  const [nacionalidad, setNacionalidad] = useState("");
+  const [volumenTransaccional, setVolumenTransaccional] = useState("");
+  const { cuil_cuit } = useParams();
 
   useEffect(() => {
-      
-    traer()
-    
-}, []) 
+    traerCliente();
+  }, []);
 
-  const traer = async() => {
-       
-   
-      const  cliente = await servicioCliente.cliente(cuil_cuit)
-      
-      setCliente(cliente)
-      console.log(cliente)
-
-      setModificaciones({cuil_cuit: cliente[0].cuil_cuit,
-        id: cliente[0].id,
-        Nombre: cliente[0].Nombre,
-        email: cliente[0].email,
-        provincia: cliente[0].provincia,
-        telefono: cliente[0].telefono,
-        ingresos: cliente[0].ingresos,
-        domicilio: cliente[0].domicilio,
-        razon_social: cliente[0].razon_social,
-         observaciones: cliente[0].observaciones,
-      } )
-      
-
-      
-     
-     
-  
-      ;
-    };  
- 
-
-    const handleChange = (e) =>{
-      setModificaciones({  ...modificaciones, [e.target.name]: e.target.value })
-      console.log(modificaciones)
+  const traerCliente = async () => {
+    const clienteResponse = await servicioCliente.cliente(cuil_cuit);
+    const client = clienteResponse[0];
+    setCliente(clienteResponse);
+    setModificaciones({ ...client });
+    setFechaNacimiento(client.fechaNacimiento || "1990-01-01"); 
+    setTipoCliente(client.tipoCliente || "");
+    setActividadEconomica(client.actividadEconomica || "");
+    setNacionalidad(client.nacionalidad || "");
+    setVolumenTransaccional(client.volumenTransaccional || "");
+    if (client.fechaNacimiento) {
+      calcularEdad(new Date(client.fechaNacimiento));
     }
-    const handleDeterminar = async (event) => {
-      event.preventDefault();
-      try {
-  
-        const rta =await servicioCliente.modificarCliente(
-       modificaciones
-       )
-       alert(rta)
-       
-       } catch (error) {
-         console.error(error);
-         console.log('Error algo sucedio')
-       
-       }
+  };
 
+  const calcularEdad = (fecha) => {
+    const hoy = new Date();
+    const edadCalculada = hoy.getFullYear() - fecha.getFullYear();
+    const mes = hoy.getMonth() - fecha.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
+      setEdad(edadCalculada - 1);
+    } else {
+      setEdad(edadCalculada);
+    }
+  };
+
+  const handleFechaNacimientoChange = (newValue) => {
+    setFechaNacimiento(newValue);
+    if (newValue) {
+      calcularEdad(new Date(newValue));
+    } else {
+      setEdad(null);
+    }
+  };
+
+  const handleChange = (e) => {
+    setModificaciones({ ...modificaciones, [e.target.name]: e.target.value });
+  };
+
+  const handleGuardar = async (e) => {
+    e.preventDefault();
+    const datosActualizados = {
+      ...modificaciones,
+      fechaNacimiento,
+      tipoCliente,
+      actividadEconomica,
+      nacionalidad,
+      volumenTransaccional,
     };
-    const handleCambiarCuil = async (event) => {
-      event.preventDefault();
-      try {
-  
-        const rta =await servicioCliente.modificarCuil(
-       modificaciones
-       )
-       alert(rta)
-       
-       } catch (error) {
-         console.error(error);
-         console.log('Error algo sucedio')
-       
-       }
+    try {
+      await servicioCliente.modificarCliente(datosActualizados);
+      alert("Datos actualizados correctamente");
+    } catch (error) {
+      console.error("Error al guardar los datos:", error);
+    }
+  };
 
-    };
-  return (<>    
-     <form  onSubmit={handleDeterminar}>
-   {cliente.map((client) =>( 
-    <div className="profile">
-      <Grid Container>
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-          <Avatar sx={{ width: 170, height: 140 }}>{(client.Nombre).substring(0,1)}</Avatar>
-        </Grid>
-        <Grid item xs={8}style={{ justifyContent: "center", display: "flex" }}>
-  
-            <Container>
-            <TextField
-                  label="Razon Social"
-                  id="dirección"
-                  name="razon_social"
-                  defaultValue={client.razon}
-                  onChange={handleChange}
-                 /*  value={client.ingresos} */
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
-            <Box>
-            <h5>
-            Datos Personales del Cliente
-            </h5>
-                
-            </Box>
-       
-              <Box>
-              <TextField
-                  label="CUIL"
-                  id="cuil"
-                  name="cuil_cuit"
-                 // defaultValue="CUIL"
-                 defaultValue= {client.cuil_cuit}
-                 onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
+  return (
+    <form onSubmit={handleGuardar}>
+      {modificaciones &&
+        cliente.map((client) => (
+          <Container key={client.id} maxWidth="sm">
+            <Card sx={{ backgroundColor: "#bdbdbd", borderRadius: 2, p: 2 }}>
+              <CardContent>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Nombre"
+                      name="Nombre"
+                      defaultValue={client.Nombre || ""}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="CUIL/CUIT"
+                      name="cuil_cuit"
+                      defaultValue={client.cuil_cuit || ""}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Email"
+                      name="email"
+                      defaultValue={client.email || ""}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                  <TextField
+  label="Fecha de Nacimiento"
+  name="fecha_nac"
+  type="date"
+  value={fechaNacimiento || "1990-01-01"} // Fecha por defecto si no existe
+  onChange={(e) => {
+    const nuevaFecha = e.target.value;
+    setFechaNacimiento(nuevaFecha);
 
-                <TextField
-                  label="Nombre"
-                  id="Nombre"
-                  name="Nombre"
-                  defaultValue={client.Nombre}
-                  onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-            
-             
-                <TextField
-                  label="Email"
-                  id="email"
-                  name="email"
-                  defaultValue={client.email}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  onChange={handleChange}
-                  InputProps={{
-                    readOnly: false,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <EmailIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
+    // Calcular la edad automáticamente al seleccionar una fecha
+    if (nuevaFecha) {
+      const hoy = new Date();
+      const fechaNac = new Date(nuevaFecha);
+      let edad = hoy.getFullYear() - fechaNac.getFullYear();
+      const mes = hoy.getMonth() - fechaNac.getMonth();
+      if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+        edad--;
+      }
+      setModificaciones({ ...modificaciones, edad });
+    }
+  }}
+  InputLabelProps={{
+    shrink: true,
+  }}
+  fullWidth
+/> { modificaciones.edad &&     modificaciones.edad +" años"|| ""}
+</Grid>
 
-                <TextField
-                  label="Provincia"
-                  id="Localidad"
-                  name="provincia"
-                  onChange={handleChange}
-                  defaultValue={client.provincia}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeWorkIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-             
-                <TextField
-                  label="Numero de Telefono"
-                  id="numero de telefono"
-                  name="telefono"
-                  defaultValue={client.telefono}
-                  onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-                <TextField
-                  label="Ingresos Declarados"
-                  id="dirección"
-                  name="ingresos"
-                  defaultValue={client.ingresos}
-                  onChange={handleChange}
-                 /*  value={client.ingresos} */
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: !editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
-            
-                <TextField
-                  label="Domicilio"
-                  id="domicilio"
-                  name="domicilio"
-                  defaultValue={client.domicilio}
-                  onChange={handleChange}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPhoneIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-                <TextField
-                  label="Razon Social"
-                  id="dirección"
-                  name="razon_social"
-                  defaultValue={client.razon}
-                  onChange={handleChange}
-                 /*  value={client.ingresos} */
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: editMode,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <HomeIcon />
-                      </InputAdornment>
-                    )
-                  }}
-                >
-                  
-                </TextField>
-              </Box>
-              <Box>
-               
-              
-              </Box>
-              
-
-              <Box>
-                <columns lg={8}>
-                  {editMode ? (
-                    <div className="profile-form-button">
-                      <Button
-                        variant="outlined"
-                        sx={{ marginRight: "10px" }}
-                        onClick={() => setEditMode(false)}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button variant="contained">Enviar</Button>
-                    </div>
-                  ) : (
-                    <div className="profile-edit-button">
-                      <Button
-                        variant="outlined"
-                        type="submit"
-                      >
-                      Guardar
-                      </Button>
-                    </div>
-                  )}
-                </columns>
-
-
-                <Button
-                        variant="outlined"
-                        onClick={handleCambiarCuil}
-                      >
-                      Cambiar cuil
-                      </Button>
-              </Box>
-            </Container>
-          
-        </Grid>
-
-        <Grid item xs={8} style={{ justifyContent: "center", display: "flex" }}>
-         
-         
-        </Grid>
-      </Grid>
-    </div>
-    ))}</form> </>);
-}
+                 
+                  <Grid item xs={12}>
+                    <TextField
+                      select
+                      label="Tipo de Cliente"
+                      value={tipoCliente}
+                      onChange={(e) => setTipoCliente(e.target.value)}
+                      fullWidth
+                    >
+                      <MenuItem value="Persona Humana">Persona Humana</MenuItem>
+                      <MenuItem value="Persona Humana con Actividad Comercial">
+                        Persona Humana con Actividad Comercial
+                      </MenuItem>
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      select
+                      label="Actividad Económica"
+                      value={actividadEconomica}
+                      onChange={(e) => setActividadEconomica(e.target.value)}
+                      fullWidth
+                    >
+                      {["Jubilado", "Estudiante", "Ama de casa", "Trabajo Relac. Dependencia"].map(
+                        (opcion, index) => (
+                          <MenuItem key={index} value={opcion}>
+                            {opcion}
+                          </MenuItem>
+                        )
+                      )}
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Nacionalidad"
+                      name="nacionalidad"
+                      defaultValue={nacionalidad || ""}
+                      onChange={(e) => setNacionalidad(e.target.value)}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Volumen Transaccional"
+                      name="volumenTransaccional"
+                      defaultValue={volumenTransaccional || ""}
+                      onChange={(e) => setVolumenTransaccional(e.target.value)}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+                <Box sx={{ mt: 3, textAlign: "center" }}>
+                  <Button variant="contained" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Container>
+        ))}
+    </form>
+  );
+};
 
 export default ModificacionC;
