@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import actividades from './actividades.json';
 import servicioCliente from "../../../services/clientes";
 import codigosp from './codigop.json';
+import nacionalidadjson from './nacionalidad.json';
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 
@@ -26,6 +27,10 @@ const ModificacionC = () => {
   const filteredOptions2 = codigosp.filter(opcion =>
     opcion.codigo.toLowerCase().includes(search.toLowerCase())
   );
+  const filteredOptions3 = nacionalidadjson.filter(opcion =>
+    opcion.NACIONALIDAD.toLowerCase().includes(search.toLowerCase())
+  );
+
   useEffect(() => {
     traerCliente();
   }, []);
@@ -210,13 +215,27 @@ const ModificacionC = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
+                      select
+                      fullWidth
                       label="Nacionalidad"
                       name="nacionalidad"
                       value={modificaciones.nacionalidad || ""}
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setModificaciones({
+                          ...modificaciones,
+                          nacionalidad: e.target.value,
+                        })
+                      }
                       variant="outlined"
-                      fullWidth
-                    />
+                      margin="normal"
+                    >
+                      {filteredOptions3.map((opcion, index) => (
+                        <MenuItem key={index} value={opcion.NACIONALIDAD}>
+                          {opcion.NACIONALIDAD} (Riesgo: {opcion.riesgo})
+                        </MenuItem>
+                      ))}
+                    </TextField>
+
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
