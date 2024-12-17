@@ -43,10 +43,10 @@ const Lotes = () => {
           <>
           
        {clients[dataIndex].zona =='IC3' ? <>
-        <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+        <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
 
        </>:<>
-       <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+       <p  onClick={() =>  navigate('/usuario2/detallecliente/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
 
        </>}
           
@@ -106,7 +106,7 @@ const Lotes = () => {
     const columns = [
       {
         name: "observaciones",
-        label: "Progreso",
+        label: "Riesgo",
         options: {
           customBodyRenderLite: (dataIndex, rowIndex) =>
             CustomProgressRenderer(dataIndex, rowIndex),

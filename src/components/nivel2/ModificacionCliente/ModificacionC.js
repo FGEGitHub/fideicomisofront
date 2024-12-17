@@ -4,23 +4,22 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import Container from "@mui/material/Container";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { useParams } from "react-router-dom";
+import actividades from './actividades.json';
 import servicioCliente from "../../../services/clientes";
 
 const ModificacionC = () => {
   const [cliente, setCliente] = useState([]);
   const [modificaciones, setModificaciones] = useState({});
   const [fechaNacimiento, setFechaNacimiento] = useState(null);
-  const [edad, setEdad] = useState(null);
-  const [tipoCliente, setTipoCliente] = useState("");
-  const [actividadEconomica, setActividadEconomica] = useState("");
-  const [nacionalidad, setNacionalidad] = useState("");
-  const [volumenTransaccional, setVolumenTransaccional] = useState("");
+  const [search, setSearch] = useState('');
   const { cuil_cuit } = useParams();
+
+  const filteredOptions = actividades.filter(opcion =>
+    opcion.actividad.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     traerCliente();
@@ -31,52 +30,40 @@ const ModificacionC = () => {
     const client = clienteResponse[0];
     setCliente(clienteResponse);
     setModificaciones({ ...client });
-    setFechaNacimiento(client.fechaNacimiento || "1990-01-01"); 
-    setTipoCliente(client.tipoCliente || "");
-    setActividadEconomica(client.actividadEconomica || "");
-    setNacionalidad(client.nacionalidad || "");
-    setVolumenTransaccional(client.volumenTransaccional || "");
-    if (client.fechaNacimiento) {
-      calcularEdad(new Date(client.fechaNacimiento));
-    }
+    setFechaNacimiento(client.fechaNacimiento || "1990-01-01");
   };
 
   const calcularEdad = (fecha) => {
     const hoy = new Date();
-    const edadCalculada = hoy.getFullYear() - fecha.getFullYear();
+    let edad = hoy.getFullYear() - fecha.getFullYear();
     const mes = hoy.getMonth() - fecha.getMonth();
     if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
-      setEdad(edadCalculada - 1);
-    } else {
-      setEdad(edadCalculada);
+      edad--;
     }
+    return edad;
   };
 
   const handleFechaNacimientoChange = (newValue) => {
     setFechaNacimiento(newValue);
     if (newValue) {
-      calcularEdad(new Date(newValue));
-    } else {
-      setEdad(null);
+      const fecha = new Date(newValue);
+      setModificaciones({
+        ...modificaciones,
+        fechaNacimiento: newValue,
+        edad: calcularEdad(fecha),
+      });
     }
   };
 
   const handleChange = (e) => {
+    console.log(modificaciones)
     setModificaciones({ ...modificaciones, [e.target.name]: e.target.value });
   };
 
   const handleGuardar = async (e) => {
     e.preventDefault();
-    const datosActualizados = {
-      ...modificaciones,
-      fechaNacimiento,
-      tipoCliente,
-      actividadEconomica,
-      nacionalidad,
-      volumenTransaccional,
-    };
     try {
-      await servicioCliente.modificarCliente(datosActualizados);
+      await servicioCliente.modificarCliente(modificaciones);
       alert("Datos actualizados correctamente");
     } catch (error) {
       console.error("Error al guardar los datos:", error);
@@ -122,41 +109,26 @@ const ModificacionC = () => {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                  <TextField
-  label="Fecha de Nacimiento"
-  name="fecha_nac"
-  type="date"
-  value={fechaNacimiento || "1990-01-01"} // Fecha por defecto si no existe
-  onChange={(e) => {
-    const nuevaFecha = e.target.value;
-    setFechaNacimiento(nuevaFecha);
-
-    // Calcular la edad automáticamente al seleccionar una fecha
-    if (nuevaFecha) {
-      const hoy = new Date();
-      const fechaNac = new Date(nuevaFecha);
-      let edad = hoy.getFullYear() - fechaNac.getFullYear();
-      const mes = hoy.getMonth() - fechaNac.getMonth();
-      if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
-        edad--;
-      }
-      setModificaciones({ ...modificaciones, edad });
-    }
-  }}
-  InputLabelProps={{
-    shrink: true,
-  }}
-  fullWidth
-/> { modificaciones.edad &&     modificaciones.edad +" años"|| ""}
-</Grid>
-
-                 
+                    <TextField
+                      label="Fecha de Nacimiento"
+                      name="fechaNacimiento"
+                      type="date"
+                      value={fechaNacimiento || "1990-01-01"}
+                      onChange={(e) => handleFechaNacimientoChange(e.target.value)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      fullWidth
+                    />
+                    {modificaciones.edad && `${modificaciones.edad} años`}
+                  </Grid>
                   <Grid item xs={12}>
                     <TextField
                       select
                       label="Tipo de Cliente"
-                      value={tipoCliente}
-                      onChange={(e) => setTipoCliente(e.target.value)}
+                      name="tipoCliente"
+                      value={modificaciones.tipoCliente || ""}
+                      onChange={handleChange}
                       fullWidth
                     >
                       <MenuItem value="Persona Humana">Persona Humana</MenuItem>
@@ -165,29 +137,36 @@ const ModificacionC = () => {
                       </MenuItem>
                     </TextField>
                   </Grid>
+          
                   <Grid item xs={12}>
                     <TextField
                       select
-                      label="Actividad Económica"
-                      value={actividadEconomica}
-                      onChange={(e) => setActividadEconomica(e.target.value)}
                       fullWidth
+                      label="Seleccionar actividad"
+                      name="actividadEconomica"
+                      value={modificaciones.actividadEconomica || ""}
+                      onChange={(e) =>
+                        setModificaciones({
+                          ...modificaciones,
+                          actividadEconomica: e.target.value,
+                        })
+                      }
+                      variant="outlined"
+                      margin="normal"
                     >
-                      {["Jubilado", "Estudiante", "Ama de casa", "Trabajo Relac. Dependencia"].map(
-                        (opcion, index) => (
-                          <MenuItem key={index} value={opcion}>
-                            {opcion}
-                          </MenuItem>
-                        )
-                      )}
+                      {filteredOptions.map((opcion, index) => (
+                        <MenuItem key={index} value={opcion.actividad}>
+                          {opcion.actividad} (Riesgo: {opcion.riesgo})
+                        </MenuItem>
+                      ))}
                     </TextField>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       label="Nacionalidad"
                       name="nacionalidad"
-                      defaultValue={nacionalidad || ""}
-                      onChange={(e) => setNacionalidad(e.target.value)}
+                      value={modificaciones.nacionalidad || ""}
+                      onChange={handleChange}
                       variant="outlined"
                       fullWidth
                     />
@@ -196,18 +175,21 @@ const ModificacionC = () => {
                     <TextField
                       label="Volumen Transaccional"
                       name="volumenTransaccional"
-                      defaultValue={volumenTransaccional || ""}
-                      onChange={(e) => setVolumenTransaccional(e.target.value)}
+                      value={modificaciones.volumenTransaccional || ""}
+                      onChange={handleChange}
                       variant="outlined"
                       fullWidth
                     />
                   </Grid>
                 </Grid>
-                <Box sx={{ mt: 3, textAlign: "center" }}>
-                  <Button variant="contained" color="primary" type="submit">
-                    Guardar
-                  </Button>
-                </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  sx={{ mt: 3 }}
+                >
+                  Guardar
+                </Button>
               </CardContent>
             </Card>
           </Container>
