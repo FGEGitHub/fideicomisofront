@@ -9,6 +9,9 @@ import CardContent from "@mui/material/CardContent";
 import { useParams } from "react-router-dom";
 import actividades from './actividades.json';
 import servicioCliente from "../../../services/clientes";
+import codigosp from './codigop.json';
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 const ModificacionC = () => {
   const [cliente, setCliente] = useState([]);
@@ -20,7 +23,9 @@ const ModificacionC = () => {
   const filteredOptions = actividades.filter(opcion =>
     opcion.actividad.toLowerCase().includes(search.toLowerCase())
   );
-
+  const filteredOptions2 = codigosp.filter(opcion =>
+    opcion.codigo.toLowerCase().includes(search.toLowerCase())
+  );
   useEffect(() => {
     traerCliente();
   }, []);
@@ -71,6 +76,22 @@ const ModificacionC = () => {
   };
 
   return (
+    <>
+
+    {cliente.length>0 &&
+    <>
+    Edad:{cliente[0].edad}
+   <Box sx={{ display: "flex", alignItems: "center", width: "2%" }}>
+   Riesgo
+            <LinearProgress
+              variant="determinate"
+        
+              style={{ width: "100%", marginRight: 8 }}
+            />
+            <span>{`${cliente[0].riesgo}%`}</span>
+          </Box>
+    </>}
+
     <form onSubmit={handleGuardar}>
       {modificaciones &&
         cliente.map((client) => (
@@ -137,7 +158,7 @@ const ModificacionC = () => {
                       </MenuItem>
                     </TextField>
                   </Grid>
-          
+
                   <Grid item xs={12}>
                     <TextField
                       select
@@ -160,6 +181,32 @@ const ModificacionC = () => {
                         </MenuItem>
                       ))}
                     </TextField>
+                  </Grid>
+
+
+                  <Grid item xs={12}>
+                    <TextField
+                      select
+                      fullWidth
+                      label="Codigo postal"
+                      name="cp"
+                      value={modificaciones.cp || ""}
+                      onChange={(e) =>
+                        setModificaciones({
+                          ...modificaciones,
+                          cp: e.target.value,
+                        })
+                      }
+                      variant="outlined"
+                      margin="normal"
+                    >
+                      {filteredOptions2.map((opcion, index) => (
+                        <MenuItem key={index} value={opcion.codigo}>
+                          {opcion.codigo} (Riesgo: {opcion.riesgo})
+                        </MenuItem>
+                      ))}
+                    </TextField>
+
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
@@ -195,6 +242,7 @@ const ModificacionC = () => {
           </Container>
         ))}
     </form>
+    </>
   );
 };
 
