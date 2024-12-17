@@ -21,6 +21,15 @@ const ModificacionC = () => {
   const [search, setSearch] = useState('');
   const { cuil_cuit } = useParams();
 
+  const opcionesSMVM = [
+    { rango: "0 A 15 SMVM", valor: 1 },
+    { rango: "MAYOR DE 15 A 30 SMVM", valor: 2 },
+    { rango: "MAYOR DE 30 A 45 SMVM", valor: 3 },
+    { rango: "MAYOR DE 45 A 60 SMVM", valor: 4 },
+    { rango: "MAYOR DE 60 SMVM", valor: 5 },
+  ];
+
+
   const filteredOptions = actividades.filter(opcion =>
     opcion.actividad.toLowerCase().includes(search.toLowerCase())
   );
@@ -83,184 +92,197 @@ const ModificacionC = () => {
   return (
     <>
 
-    {cliente.length>0 &&
-    <>
-    Edad:{cliente[0].edad}
-   <Box sx={{ display: "flex", alignItems: "center", width: "2%" }}>
-   Riesgo
+      {cliente.length > 0 &&
+        <>
+          Edad:{cliente[0].edad}
+          <Box sx={{ display: "flex", alignItems: "center", width: "2%" }}>
+            Riesgo
             <LinearProgress
               variant="determinate"
-        
+
               style={{ width: "100%", marginRight: 8 }}
             />
             <span>{`${cliente[0].riesgo}%`}</span>
           </Box>
-    </>}
+        </>}
 
-    <form onSubmit={handleGuardar}>
-      {modificaciones &&
-        cliente.map((client) => (
-          <Container key={client.id} maxWidth="sm">
-            <Card sx={{ backgroundColor: "#bdbdbd", borderRadius: 2, p: 2 }}>
-              <CardContent>
-                <Grid container spacing={3}>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Nombre"
-                      name="Nombre"
-                      defaultValue={client.Nombre || ""}
-                      onChange={handleChange}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="CUIL/CUIT"
-                      name="cuil_cuit"
-                      defaultValue={client.cuil_cuit || ""}
-                      onChange={handleChange}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Email"
-                      name="email"
-                      defaultValue={client.email || ""}
-                      onChange={handleChange}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      label="Fecha de Nacimiento"
-                      name="fechaNacimiento"
-                      type="date"
-                      value={fechaNacimiento || "1990-01-01"}
-                      onChange={(e) => handleFechaNacimientoChange(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      fullWidth
-                    />
-                    {modificaciones.edad && `${modificaciones.edad} años`}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      select
-                      label="Tipo de Cliente"
-                      name="tipoCliente"
-                      value={modificaciones.tipoCliente || ""}
-                      onChange={handleChange}
-                      fullWidth
-                    >
-                      <MenuItem value="Persona Humana">Persona Humana</MenuItem>
-                      <MenuItem value="Persona Humana con Actividad Comercial">
-                        Persona Humana con Actividad Comercial
-                      </MenuItem>
-                    </TextField>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Seleccionar actividad"
-                      name="actividadEconomica"
-                      value={modificaciones.actividadEconomica || ""}
-                      onChange={(e) =>
-                        setModificaciones({
-                          ...modificaciones,
-                          actividadEconomica: e.target.value,
-                        })
-                      }
-                      variant="outlined"
-                      margin="normal"
-                    >
-                      {filteredOptions.map((opcion, index) => (
-                        <MenuItem key={index} value={opcion.actividad}>
-                          {opcion.actividad} (Riesgo: {opcion.riesgo})
+      <form onSubmit={handleGuardar}>
+        {modificaciones &&
+          cliente.map((client) => (
+            <Container key={client.id} maxWidth="sm">
+              <Card sx={{ backgroundColor: "#bdbdbd", borderRadius: 2, p: 2 }}>
+                <CardContent>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Nombre"
+                        name="Nombre"
+                        defaultValue={client.Nombre || ""}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        label="CUIL/CUIT"
+                        name="cuil_cuit"
+                        defaultValue={client.cuil_cuit || ""}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Email"
+                        name="email"
+                        defaultValue={client.email || ""}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        label="Fecha de Nacimiento"
+                        name="fechaNacimiento"
+                        type="date"
+                        value={fechaNacimiento || "1990-01-01"}
+                        onChange={(e) => handleFechaNacimientoChange(e.target.value)}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        fullWidth
+                      />
+                      {modificaciones.edad && `${modificaciones.edad} años`}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        select
+                        label="Tipo de Cliente"
+                        name="tipoCliente"
+                        value={modificaciones.tipoCliente || ""}
+                        onChange={handleChange}
+                        fullWidth
+                      >
+                        <MenuItem value="Persona Humana">Persona Humana</MenuItem>
+                        <MenuItem value="Persona Humana con Actividad Comercial">
+                          Persona Humana con Actividad Comercial
                         </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
+                      </TextField>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Seleccionar actividad"
+                        name="actividadEconomica"
+                        value={modificaciones.actividadEconomica || ""}
+                        onChange={(e) =>
+                          setModificaciones({
+                            ...modificaciones,
+                            actividadEconomica: e.target.value,
+                          })
+                        }
+                        variant="outlined"
+                        margin="normal"
+                      >
+                        {filteredOptions.map((opcion, index) => (
+                          <MenuItem key={index} value={opcion.actividad}>
+                            {opcion.actividad} (Riesgo: {opcion.riesgo})
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
 
 
-                  <Grid item xs={12}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Codigo postal"
-                      name="cp"
-                      value={modificaciones.cp || ""}
-                      onChange={(e) =>
-                        setModificaciones({
-                          ...modificaciones,
-                          cp: e.target.value,
-                        })
-                      }
-                      variant="outlined"
-                      margin="normal"
-                    >
-                      {filteredOptions2.map((opcion, index) => (
-                        <MenuItem key={index} value={opcion.codigo}>
-                          {opcion.codigo} (Riesgo: {opcion.riesgo})
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    <Grid item xs={12}>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Codigo postal"
+                        name="cp"
+                        value={modificaciones.cp || ""}
+                        onChange={(e) =>
+                          setModificaciones({
+                            ...modificaciones,
+                            cp: e.target.value,
+                          })
+                        }
+                        variant="outlined"
+                        margin="normal"
+                      >
+                        {filteredOptions2.map((opcion, index) => (
+                          <MenuItem key={index} value={opcion.codigo}>
+                            {opcion.codigo} (Riesgo: {opcion.riesgo})
+                          </MenuItem>
+                        ))}
+                      </TextField>
 
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      select
-                      fullWidth
-                      label="Nacionalidad"
-                      name="nacionalidad"
-                      value={modificaciones.nacionalidad || ""}
-                      onChange={(e) =>
-                        setModificaciones({
-                          ...modificaciones,
-                          nacionalidad: e.target.value,
-                        })
-                      }
-                      variant="outlined"
-                      margin="normal"
-                    >
-                      {filteredOptions3.map((opcion, index) => (
-                        <MenuItem key={index} value={opcion.NACIONALIDAD}>
-                          {opcion.NACIONALIDAD} (Riesgo: {opcion.riesgo})
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Nacionalidad"
+                        name="nacionalidad"
+                        value={modificaciones.nacionalidad || ""}
+                        onChange={(e) =>
+                          setModificaciones({
+                            ...modificaciones,
+                            nacionalidad: e.target.value,
+                          })
+                        }
+                        variant="outlined"
+                        margin="normal"
+                      >
+                        {filteredOptions3.map((opcion, index) => (
+                          <MenuItem key={index} value={opcion.NACIONALIDAD}>
+                            {opcion.NACIONALIDAD} (Riesgo: {opcion.riesgo})
+                          </MenuItem>
+                        ))}
+                      </TextField>
 
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Rango Volumen Transaccional"
+                        name="volumenTransaccional"
+                        value={modificaciones.volumenTransaccional || ""}
+                        onChange={(e) =>
+                          setModificaciones({
+                            ...modificaciones,
+                            volumenTransaccional: e.target.value,
+                          })
+                        }
+                        variant="outlined"
+                        margin="normal"
+                      >
+                        {opcionesSMVM.map((opcion, index) => (
+                          <MenuItem key={index} value={opcion.rango}>
+                            {opcion.rango} (Valor: {opcion.valor})
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Volumen Transaccional"
-                      name="volumenTransaccional"
-                      value={modificaciones.volumenTransaccional || ""}
-                      onChange={handleChange}
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  sx={{ mt: 3 }}
-                >
-                  Guardar
-                </Button>
-              </CardContent>
-            </Card>
-          </Container>
-        ))}
-    </form>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    sx={{ mt: 3 }}
+                  >
+                    Guardar
+                  </Button>
+                </CardContent>
+              </Card>
+            </Container>
+          ))}
+      </form>
     </>
   );
 };
