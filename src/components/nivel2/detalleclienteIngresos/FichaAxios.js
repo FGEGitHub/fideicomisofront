@@ -14,6 +14,7 @@ import servicioCliente from '../../../services/clientes';
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import "../../profile.css";
+import LinearProgress from "@mui/material/LinearProgress";
 
 
 const FichaAxios = (props) => {
@@ -60,7 +61,49 @@ const FichaAxios = (props) => {
             <h5>
             Datos Personales del Cliente
             </h5>
-                
+            <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
+      Riesgo
+      <LinearProgress
+        variant="determinate"
+        value={client.riesgo}
+        style={{
+          width: "100%",
+          marginRight: 8,
+          height: 10,
+          borderRadius: 5,
+          backgroundColor: "#e0e0e0", // Fondo de la barra
+        }}
+        sx={{
+          "& .MuiLinearProgress-bar": {
+            backgroundColor:
+            client.riesgo <= 58
+                ? "green"
+                : client.riesgo <= 70
+                ? "yellow"
+                : "red", // Color de la barra según el valor
+          },
+        }}
+      />
+      <span
+        style={{
+          fontWeight: "bold",
+          color:
+          client.riesgo <= 58
+              ? "green"
+              : client.riesgo <= 70
+              ? "yellow"
+              : "red", // Color del texto según el valor
+          textTransform: "uppercase",
+        }}
+      >
+        {client.riesgo <= 58
+          ? "Bajo"
+          : client.riesgo <= 70
+          ? "Medio"
+          : "Alto"}{" "}
+        ({client.riesgo}%)
+      </span>
+    </Box>  
             </Box>
        
               <Box>
@@ -231,7 +274,12 @@ const FichaAxios = (props) => {
                       >
                       Ir a legajos
                       </Button>
-           
+                     
+                   <Button
+                   variant="outlined"
+                   onClick={() =>  navigate('/usuario2/modificarcliente/'+props.cuil_cuit)}                 >
+                Modificar cliente
+                 </Button>
                     </div>
                   )}
                 </columns>
