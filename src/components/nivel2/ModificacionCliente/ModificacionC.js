@@ -143,35 +143,115 @@ const ModificacionC = () => {
                         fullWidth
                       />
                     </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Fecha de Nacimiento"
-                        name="fechaNacimiento"
-                        type="date"
-                        value={fechaNacimiento || "1990-01-01"}
-                        onChange={(e) => handleFechaNacimientoChange(e.target.value)}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        fullWidth
-                      />
-                      {modificaciones.edad && `${modificaciones.edad} años`}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        select
-                        label="Tipo de Cliente"
-                        name="tipoCliente"
-                        value={modificaciones.tipoCliente || ""}
-                        onChange={handleChange}
-                        fullWidth
-                      >
-                        <MenuItem value="Persona Humana">Persona Humana</MenuItem>
-                        <MenuItem value="Persona Humana con Actividad Comercial">
-                          Persona Humana con Actividad Comercial
-                        </MenuItem>
-                      </TextField>
-                    </Grid>
+
+
+                    {client.razon == "Persona" ? <>
+                      <Grid item xs={6}>
+                        <TextField
+                          label="Fecha de Nacimiento"
+                          name="fechaNacimiento"
+                          type="date"
+                          value={fechaNacimiento || "1990-01-01"}
+                          onChange={(e) => handleFechaNacimientoChange(e.target.value)}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          fullWidth
+                        />
+                        {modificaciones.edad && `${modificaciones.edad} años`}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          select
+                          label="Tipo de Cliente"
+                          name="tipoCliente"
+                          value={modificaciones.tipoCliente || ""}
+                          onChange={handleChange}
+                          fullWidth
+                        >
+                          <MenuItem value="Persona Humana">Persona Humana</MenuItem>
+                          <MenuItem value="Persona Humana con Actividad Comercial">
+                            Persona Humana con Actividad Comercial
+                          </MenuItem>
+                        </TextField>
+                      </Grid>
+                    </> : <>
+                      <Grid item xs={12}>
+                        <TextField
+                          select
+                          label="Tipo de Cliente Empresa"
+                          name="tipoClienteEmpresa"
+                          value={modificaciones.tipoClienteEmpresa || ""}
+                          onChange={(e) =>
+                            setModificaciones({
+                              ...modificaciones,
+                              tipoClienteEmpresa: e.target.value,
+                            })
+                          }
+                          fullWidth
+                          variant="outlined"
+                          margin="normal"
+                        >
+                          <MenuItem value="Consorcios de Propietarios">Consorcios de Propietarios</MenuItem>
+                          <MenuItem value="Sociedad Anónima">Sociedad Anónima</MenuItem>
+                          <MenuItem value="Sociedad de Hecho">Sociedad de Hecho</MenuItem>
+                          <MenuItem value="Sociedad de Responsabilidad Limitada">
+                            Sociedad de Responsabilidad Limitada
+                          </MenuItem>
+                          <MenuItem value="Sociedad en comandita por acciones">
+                            Sociedad en comandita por acciones
+                          </MenuItem>
+                          <MenuItem value="Sociedad en comandita Simple">Sociedad en comandita Simple</MenuItem>
+                          <MenuItem value="Sociedad Irregular">Sociedad Irregular</MenuItem>
+                          <MenuItem value="Sociedad Unipersonal">Sociedad Unipersonal</MenuItem>
+                          <MenuItem value="Sociedades cooperativas de trabajo">
+                            Sociedades cooperativas de trabajo
+                          </MenuItem>
+                          <MenuItem value="Sociedades de garantía recíproca (SGR)">
+                            Sociedades de garantía recíproca (SGR)
+                          </MenuItem>
+                          <MenuItem value="Asociaciones Civiles">Asociaciones Civiles</MenuItem>
+                          <MenuItem value="Cooperativas">Cooperativas</MenuItem>
+                          <MenuItem value="Embajadas">Embajadas</MenuItem>
+                          <MenuItem value="Entidades sindicales">Entidades sindicales</MenuItem>
+                          <MenuItem value="Fideicomisos">Fideicomisos</MenuItem>
+                          <MenuItem value="Fundación">Fundación</MenuItem>
+                          <MenuItem value="Mutuales">Mutuales</MenuItem>
+                          <MenuItem value="Organizaciones sin fines de lucro - Otros">
+                            Organizaciones sin fines de lucro - Otros
+                          </MenuItem>
+                          <MenuItem value="Sociedad Anónima Simplificada">
+                            Sociedad Anónima Simplificada
+                          </MenuItem>
+                          <MenuItem value="Entes Autarquicos">Entes Autarquicos</MenuItem>
+                          <MenuItem value="La Iglesia Católica">La Iglesia Católica</MenuItem>
+                          <MenuItem value="SAPEM (participación estatal mayoritaria)">
+                            SAPEM (participación estatal mayoritaria)
+                          </MenuItem>
+                          <MenuItem value="Sector Público Nacional, Provincial o Municipal">
+                            Sector Público Nacional, Provincial o Municipal
+                          </MenuItem>
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          select
+                          label="Antiguedad"
+                          name="antiguedad"
+                          value={modificaciones.antiguedad || ""}
+                          onChange={handleChange}
+                          fullWidth
+                        >
+                          <MenuItem value="Mayor a 21 años">Mayor a 21 años</MenuItem>
+                          <MenuItem value="Entre 11 y 20 años">Entre 11 y 20 años</MenuItem>
+                          <MenuItem value="Entre 6 y 10 años">Entre 6 y 10 años</MenuItem>
+                          <MenuItem value="Entre 2 y 5 años">Entre 2 y 5 años</MenuItem>
+                          <MenuItem value="Menor o igual a 1 años">Menor o igual a 1 años</MenuItem>
+
+                        </TextField>
+                      </Grid>
+
+                    </>}
 
                     <Grid item xs={12}>
                       <TextField
