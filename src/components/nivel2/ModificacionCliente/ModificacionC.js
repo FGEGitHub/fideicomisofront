@@ -94,16 +94,53 @@ const ModificacionC = () => {
 
       {cliente.length > 0 &&
         <>
+        {cliente[0].razon=='Persona' ? <>
           Edad:{cliente[0].edad}
-          <Box sx={{ display: "flex", alignItems: "center", width: "2%" }}>
-            Riesgo
-            <LinearProgress
-              variant="determinate"
-
-              style={{ width: "100%", marginRight: 8 }}
-            />
-            <span>{`${cliente[0].riesgo}%`}</span>
-          </Box>
+        </>:<></>}
+        
+        <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
+      Riesgo
+      <LinearProgress
+        variant="determinate"
+        value={cliente[0].riesgo}
+        style={{
+          width: "100%",
+          marginRight: 8,
+          height: 10,
+          borderRadius: 5,
+          backgroundColor: "#e0e0e0", // Fondo de la barra
+        }}
+        sx={{
+          "& .MuiLinearProgress-bar": {
+            backgroundColor:
+            cliente[0].riesgo <= 58
+                ? "green"
+                : cliente[0].riesgo <= 70
+                ? "yellow"
+                : "red", // Color de la barra según el valor
+          },
+        }}
+      />
+      <span
+        style={{
+          fontWeight: "bold",
+          color:
+          cliente[0].riesgo <= 58
+              ? "green"
+              : cliente[0].riesgo <= 70
+              ? "yellow"
+              : "red", // Color del texto según el valor
+          textTransform: "uppercase",
+        }}
+      >
+        {cliente[0].riesgo <= 58
+          ? "Bajo"
+          : cliente[0].riesgo <= 70
+          ? "Medio"
+          : "Alto"}{" "}
+        ({cliente[0].riesgo}%)
+      </span>
+    </Box>
         </>}
 
       <form onSubmit={handleGuardar}>
