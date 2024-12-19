@@ -41,7 +41,7 @@ const Lotes = () => {
           <>
           
        
-           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].id)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
+           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
           
           </>
         );
@@ -53,7 +53,7 @@ const Lotes = () => {
           <>
           
        
-           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].id)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
+           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
           
           </>
         );
@@ -69,7 +69,7 @@ const Lotes = () => {
             /></Tooltip>
              <Tooltip title="Ver">
              <SearchIcon
-             onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].id)}
+             onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)}
               style={{ marginRight: "10px", cursor: "pointer" }}
             />
            </Tooltip>
