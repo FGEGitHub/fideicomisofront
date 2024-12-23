@@ -70,8 +70,11 @@ export default function Legajos(props) {
 
 
   return (
+<>
+{datos  ? <>
+
     <div>
-      {datos ?
+      {datos[0] ?
         <div>
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
@@ -82,7 +85,7 @@ export default function Legajos(props) {
           />
         </div> : <div> </div>
       }
-      {datos ?
+      {datos[0] ?
         <div>
           <Featured
             porcentaje={datos[0].porccompleto}
@@ -93,7 +96,7 @@ export default function Legajos(props) {
 
 
 
-      {datos ?
+      {datos[0] ?
         <div>
           {datos[0].acreditacion_i}
           <div className="home">
@@ -101,7 +104,7 @@ export default function Legajos(props) {
             <div className="container">
 
               <div className="widgets">
-                {datos ?
+                {datos[0] ?
                   <div>
                     <Widget type="total"
                       cantidad={datos[0].total}
@@ -110,7 +113,7 @@ export default function Legajos(props) {
                   /></div>
                 }
 
-                {datos ?
+                {datos[0] ?
                   <div>
                     <Widget type="Pendientes"
                       cantidad={datos[0].Pendientes}
@@ -119,7 +122,7 @@ export default function Legajos(props) {
                   </div> : <div> <Widget type="Pendientes"
                   /></div>
                 }
-                {datos ?
+                {datos[0] ?
                   <div>
                     <Widget type="Aprobadas"
                       cantidad={datos[0].Aprobadas}
@@ -128,7 +131,7 @@ export default function Legajos(props) {
                   </div> : <div> <Widget type="Aprobadas"
                   /></div>
                 }
-                {datos ?
+                {datos[0] ?
                   <div>
                     <Widget type="Rechazadas"
                       cantidad={datos[0].Rechazadas}
@@ -162,6 +165,14 @@ export default function Legajos(props) {
         : <div></div>}
 
     </div>
+
+
+</>:<></>
+
+  }
+
+
+</>
   );
 
 }
