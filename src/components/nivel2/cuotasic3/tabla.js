@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import servicioCuotas from '../../../services/cuotas'
-import MUIDataTable from "mui-datatables";
+import CancelarLote from "./cancelarLote";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
@@ -9,7 +9,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import { Paper} from '@mui/material';
+import { Paper,Button} from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -42,6 +42,10 @@ const Lotes = (props) => {
     const [clients, setClients] = useState();
     const [loading, setLoading] = useState(true);
     const [cuotas, setCuotas] = useState()
+    const [filteredCuotas, setFilteredCuotas] = useState([]);
+    const [uniqueClients, setUniqueClients] = useState([]);
+    const [selectedClient, setSelectedClient] = useState(null);
+    const [showCuotas, setShowCuotas] = useState(false);
     const navigate = useNavigate();
 
 
@@ -50,13 +54,34 @@ const Lotes = (props) => {
     }, [])
 
     const getClients = async () => {
-        
-        const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit) //////  api/links/infocantidad
-        setCuotas(clients)
-        setLoading(false);
-    }
+      const response = await servicioCuotas.traercuotasic3(props.cuil_cuit);
+      console.log(response)
+      setCuotas(response);
+      setFilteredCuotas(response);
+      const clients = [...new Set(response.map((cuota) => cuota.id_cliente))];
+      setUniqueClients(clients);
+      setLoading(false);
+    };
+  
+    const handleClientFilter = (id_cliente) => {
+      console.log(id_cliente)
+      setShowCuotas(true);
+      setSelectedClient(id_cliente);
+      if (id_cliente === null) {
+        setFilteredCuotas(cuotas);
+      } else {
+        setFilteredCuotas(cuotas.filter((cuota) => cuota.id_cliente === id_cliente));
+      }
+    };
+  
 
-
+    const handleShowCuotas = () => {
+      setShowCuotas(true);
+    };
+  
+    const handleCancelarLote = (id_cliente) => {
+      console.log("Cancelar lote para cliente:", id_cliente);
+    };
 
     ///
 //opcionde click en el nombre
@@ -234,6 +259,30 @@ return (
       ) : (
         <>
           <h1>CUOTAS</h1>
+          <div>
+        <Button
+          variant="contained"
+          onClick={() => handleClientFilter(null)}
+          style={{ marginRight: '10px', marginBottom: '20px' }}
+        >
+          Todos
+        </Button>
+        {uniqueClients.map((id_cliente) => (
+          <Button
+            key={id_cliente}
+            variant="contained"
+            onClick={() => handleClientFilter(id_cliente)}
+            style={{ marginRight: '10px', marginBottom: '20px' }}
+          >
+            Cliente {id_cliente}
+          </Button>
+        ))}
+     
+      </div>
+      {showCuotas ? <>
+      <CancelarLote
+      id_cliente={selectedClient}
+      cuotas={filteredCuotas}/>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -285,6 +334,7 @@ return (
               ))}
             </TableBody>
           </Table>
+          </>:<>Seleccionar id del cliente</>}
         </>
       )}
     </TableContainer>
