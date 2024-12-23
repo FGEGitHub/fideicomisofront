@@ -39,9 +39,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 const Lotes = (props) => {
     //configuracion de Hooks
-    const [clients, setClients] = useState([]);
+    const [clients, setClients] = useState();
     const [loading, setLoading] = useState(true);
-    const [cuotas, setCuotas] = useState([''])
+    const [cuotas, setCuotas] = useState()
     const navigate = useNavigate();
 
 
