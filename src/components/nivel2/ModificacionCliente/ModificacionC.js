@@ -364,28 +364,28 @@ const ModificacionC = () => {
 
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        select
-                        fullWidth
-                        label="Rango Volumen Transaccional"
-                        name="volumenTransaccional"
-                        value={modificaciones.volumenTransaccional || ""}
-                        onChange={(e) =>
-                          setModificaciones({
-                            ...modificaciones,
-                            volumenTransaccional: e.target.value,
-                          })
-                        }
-                        variant="outlined"
-                        margin="normal"
-                      >
-                        {opcionesSMVM.map((opcion, index) => (
-                          <MenuItem key={index} value={opcion.rango}>
-                            {opcion.rango} (Valor: {opcion.valor})
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
+  <TextField
+    fullWidth
+    label="Volumen Transaccional (en pesos)"
+    name="volumenTransaccional"
+    value={modificaciones.volumenTransaccional || ""}
+    onChange={(e) => {
+      const valor = e.target.value;
+      // Validación para permitir solo números
+      if (/^\d*$/.test(valor)) {
+        setModificaciones({
+          ...modificaciones,
+          volumenTransaccional: valor,
+        });
+      }
+    }}
+    variant="outlined"
+    margin="normal"
+    InputProps={{
+      inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
+    }}
+  />
+</Grid>
                   </Grid>
                   <Button
                     variant="contained"
