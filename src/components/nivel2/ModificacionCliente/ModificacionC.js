@@ -19,6 +19,7 @@ const ModificacionC = () => {
   const [modificaciones, setModificaciones] = useState({});
   const [fechaNacimiento, setFechaNacimiento] = useState(null);
   const [search, setSearch] = useState('');
+  const [cpManual, setCpManual] = useState("");
   const { cuil_cuit } = useParams();
 
   const opcionesSMVM = [
@@ -82,8 +83,12 @@ const ModificacionC = () => {
   const handleGuardar = async (e) => {
     e.preventDefault();
     try {
+      // Si se seleccionó "OTRAS ZONAS" y se completó el CP manual
+      if (modificaciones.cp === "OTRAS_ZONAS" && cpManual.trim()) {
+        modificaciones.cp = cpManual; // Sobrescribe el valor de CP
+      }
       await servicioCliente.modificarCliente(modificaciones);
-      traerCliente()
+      traerCliente();
       alert("Datos actualizados correctamente");
     } catch (error) {
       console.error("Error al guardar los datos:", error);
@@ -317,29 +322,49 @@ const ModificacionC = () => {
 
 
                     <Grid item xs={12}>
-                      <TextField
-                        select
-                        fullWidth
-                        label="Codigo postal"
-                        name="cp"
-                        value={modificaciones.cp || ""}
-                        onChange={(e) =>
-                          setModificaciones({
-                            ...modificaciones,
-                            cp: e.target.value,
-                          })
+                      {client.cp && <>Actual: {client.cp}</>}
+                    <TextField
+                      select
+                      fullWidth
+                      label="Codigo postal"
+                      name="cp"
+                      value={modificaciones.cp || ""}
+                      onChange={(e) => {
+                        setModificaciones({
+                          ...modificaciones,
+                          cp: e.target.value,
+                        });
+                        if (e.target.value !== "OTRAS_ZONAS") {
+                          setCpManual(""); // Limpia el campo manual si no es "OTRAS_ZONAS"
                         }
+                      }}
+                      variant="outlined"
+                      margin="normal"
+                    >
+                      {codigosp.map((opcion, index) => (
+                        <MenuItem key={index} value={opcion.codigo}>
+                          {opcion.codigo} (Riesgo: {opcion.riesgo})
+                        </MenuItem>
+                      ))}
+                      <MenuItem value="OTRAS_ZONAS">
+                        OTRAS ZONAS RIESGO BAJO - LOCALIDAD RIESGO BAJO
+                      </MenuItem>
+                    </TextField>
+                  </Grid>
+
+                  {modificaciones.cp === "OTRAS_ZONAS" && (
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Ingrese código postal manualmente"
+                        value={cpManual}
+                        onChange={(e) => setCpManual(e.target.value)}
                         variant="outlined"
                         margin="normal"
-                      >
-                        {filteredOptions2.map((opcion, index) => (
-                          <MenuItem key={index} value={opcion.codigo}>
-                            {opcion.codigo} (Riesgo: {opcion.riesgo})
-                          </MenuItem>
-                        ))}
-                      </TextField>
-
+                      />
                     </Grid>
+                  )}
+                
                     <Grid item xs={12}>
                       <TextField
                         select
