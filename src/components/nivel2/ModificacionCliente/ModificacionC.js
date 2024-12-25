@@ -83,6 +83,7 @@ const ModificacionC = () => {
     e.preventDefault();
     try {
       await servicioCliente.modificarCliente(modificaciones);
+      traerCliente()
       alert("Datos actualizados correctamente");
     } catch (error) {
       console.error("Error al guardar los datos:", error);
