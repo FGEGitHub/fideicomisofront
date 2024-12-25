@@ -319,7 +319,16 @@ const ModificacionC = () => {
                         ))}
                       </TextField>
                     </Grid>
-
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Domicilio"
+                        name="domicilio"
+                        defaultValue={client.domicilio || ""}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                      />
+                    </Grid>
 
                     <Grid item xs={12}>
                       {client.cp && <>Actual: {client.cp}</>}
