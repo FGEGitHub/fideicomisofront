@@ -799,6 +799,7 @@ setCargalink(true)
                         <StyledTableCell component="th" scope="row" align="center">
                             <Pagorapido
                                 id_cuota={row.id}
+                                cuota_con_ajuste={row.cuota_con_ajuste}
                                 id_lote={row.id_lote}
                                 traer={async (index) => {
                                         

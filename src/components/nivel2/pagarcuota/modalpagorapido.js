@@ -224,7 +224,7 @@ props.traer(props.id_lote)
 
                     <TextField
                       /* style ={{width: '25%'}} */
-                      autoFocus
+                      defaultValue={props.cuota_con_ajuste}
                       margin="dense"
                       id="name"
                       label="Monto"
