@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useDropzone } from 'react-dropzone';
 import servicioUsuario1 from '../../../services/usuario1'
 import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 export default function SelectTextFields(props) {
   const navigate = useNavigate();
   let params = useParams()
@@ -31,6 +32,7 @@ export default function SelectTextFields(props) {
   const [pagosVarios, setpagosVarios] = useState(null)
   const [enviarr, setEnviarr] = useState();
   const [fileUpload, setFileUpload] = useState(null);
+  const [warning, setWarning] = useState('');
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false);
   const onDrop = useCallback((files, acceptedFiles) => {
@@ -138,7 +140,27 @@ props.traer(props.id_lote)
 
 
     //window.location.reload(true);
+
+
   }
+
+
+      /////fecha handle 
+      const handleChangefecha = (event) => {
+        const selectedDate = new Date(event.target.value);
+        const currentDate = new Date();
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+    
+        if (selectedDate > currentDate) {
+          setWarning('La fecha seleccionada es en el futuro.');
+        } else if (selectedDate < oneYearAgo) {
+          setWarning('La fecha seleccionada es de hace más de un año.');
+        } else {
+          setWarning(''); // Limpia el mensaje si la fecha es válida.
+        }
+        handleChange(event)
+      };
   const handleChange = (e) => {
     console.log(pago)
     setPagos({ ...pago, [e.target.name]: e.target.value })
@@ -201,19 +223,25 @@ props.traer(props.id_lote)
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
 
-                  <TextField
-
-                    onChange={handleChange}
-                    name="fecha"
-                    id="date"
-                    label="Fecha de pago"
-                    type="date"
-                    defaultValue="2020-01"
-                    sx={{ width: 220 }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
+                <div>
+      <TextField
+        onChange={handleChangefecha}
+        name="fecha"
+        id="date"
+        label="Fecha de pago"
+        type="date"
+        defaultValue="2020-01"
+        sx={{ width: 220 }}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      {warning && (
+        <Typography color="error" sx={{ mt: 2 }}>
+          {warning}
+        </Typography>
+      )}
+    </div>
                 </Box>
 
 
