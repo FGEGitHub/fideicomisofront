@@ -2,22 +2,17 @@
 import Widget from '../../../components/nivel4/EstadistivasRelev/Widget/Widget';
 import Widgett from '../../../components/nivel4/EstadistivasRelev/Widget/Widget';
 import Featured from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
-import Chart from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
+/* import Chart from '../../../components/nivel4/EstadistivasRelev/Featured/Featured'
 import Tabla from '../../../components/nivel4/EstadistivasRelev/Tabla/Tabla'
-import ModalBorrar from '../../../components/nivel4/ModalBorrar/ModalBorrar'
+import ModalBorrar from '../../../components/nivel4/ModalBorrar/ModalBorrar' */
 import "./Home.scss";
 
 import React, { useEffect, useState, } from "react";
-import Box from '@mui/material/Box';
 
-import NativeSelect from '@mui/material/NativeSelect';
-import { Button } from '@mui/material';
 import servicioClientes from '../../../services/clientes'
 
 import { useNavigate } from "react-router-dom";
-import MUIDataTable from "mui-datatables";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import Snackbar from '@mui/material/Snackbar';
 
 
@@ -32,7 +27,7 @@ export default function Legajos(props) {
     {
       cuil_cuit: props.cuil_cuit
     });
-  const [datos, setDatos] = useState(null);
+  const [datos, setDatos] = useState();
   const [historial, setHistorial] = useState([]);
   const navigate = useNavigate();
   const [state, setState] = React.useState({
