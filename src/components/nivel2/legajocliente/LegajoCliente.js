@@ -55,9 +55,8 @@ const LegajoCliente = (props) => {
   
       const getData = async () => {
         const  data = await servicioCliente.traerLejagos(cuil_cuit)
-             console.log(data)
-             console.log(data[0])
-             console.log(data[1][0].habilitado)
+        
+          
               setProducts(data)
           
       }
@@ -328,9 +327,7 @@ const LegajoCliente = (props) => {
              cuil_cuit_user= {props.cuil_cuit_user}
              getData= {async () => {
               const  data = await servicioCliente.traerLejagos(cuil_cuit)
-                   console.log(data)
-                   console.log(data[0])
-                   console.log(data[1][0].habilitado)
+                  
                     setProducts(data)
                 
             }} />
@@ -339,9 +336,7 @@ const LegajoCliente = (props) => {
               cuil_cuit_user= {props.cuil_cuit_user} 
               getData= {async () => {
                 const  data = await servicioCliente.traerLejagos(cuil_cuit)
-                     console.log(data)
-                     console.log(data[0])
-                     console.log(data[1][0].habilitado)
+            
                       setProducts(data)
                   
               }}/>

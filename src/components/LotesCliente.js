@@ -6,7 +6,8 @@ import servicio360 from '../services/pagos360'
 import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
-import ModalModificarvalortotal from './Modalmodificarmontotoal'
+import CancelarLote from './pagarloteparque'
+
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
@@ -581,6 +582,9 @@ setCargalink(true)
 
                         <BorrarCuotas
                             id={idlote} />
+                            <CancelarLote
+      id_cliente={idlote}
+      cuotas={cuotas}/>
                     </ButtonGroup>
 
                     {act2 ?
