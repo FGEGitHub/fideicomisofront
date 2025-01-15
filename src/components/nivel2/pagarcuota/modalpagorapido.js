@@ -165,10 +165,7 @@ props.traer(props.id_lote)
     console.log(pago)
     setPagos({ ...pago, [e.target.name]: e.target.value })
   }
-  const handleChangee = (e) => {
-    console.log(eleccion)
-    setEleccion({ ...eleccion, [e.target.name]: e.target.value })
-  }
+
 
   const handleClose = () => {
     setOpen(false);
@@ -176,6 +173,8 @@ props.traer(props.id_lote)
 
   const handleClickOpen = () => {
     setOpen(true);
+    
+    setPagos({ ...pago, monto: props.cuota_con_ajuste })
     //traer();
   };
   const handleChangeVarios = (e) => {
