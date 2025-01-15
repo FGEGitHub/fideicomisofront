@@ -327,7 +327,7 @@ return (
                     }}
                     /> 
                     <SearchIcon style={{ cursor: "pointer" }}
-                      onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)}
+                      onClick={() => navigate('/usuario2/pagoscuotasic3/' + row.id)}
                     />
                   </StyledTableCell>
                 </StyledTableRow>

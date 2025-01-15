@@ -128,6 +128,15 @@ const detallesPago= async  (id) => {
     
   return data
  }  
+ 
+
+ const detallesPagoic3= async  (id) => {
+  ////detalles de los pagos de una cuota(nivel2)
+  
+    const {data } = await axios.post(baseUrl+'pagos/detallesPagoic3',id,config)
+      
+    return data
+   } 
 
  const VerExtracto= async  (id) => {
   ////
@@ -222,5 +231,17 @@ const cantidadpendientes= async  () => {
           throw error;
         }
       };
-
-export default {detallesPagocli,traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+      
+      const traerPdfConstanciadepagoic3 = async (id) => {
+        try {
+          const config = {
+            responseType: 'blob', // Esto es importante para manejar blobs de archivos
+          };
+          const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepagoic3/${id}`, config);
+          return data;
+        } catch (error) {
+          console.error('Error al obtener el PDF:', error);
+          throw error;
+        }
+      };
+export default {traerPdfConstanciadepagoic3,detallesPagoic3,detallesPagocli,traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

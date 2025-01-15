@@ -7,6 +7,7 @@ import Lotes from '../Paginas/Usuario2/Lotes';
 import LegajosCliente from '../Paginas/Usuario2/LegajoCliente';
 import EditarCliente from '../Paginas/Usuario2/ModificarCliente';
 import PagosCuotas from '../Paginas/Usuario2/PagosCuota';
+import PagoscuotaIc3 from '../Paginas/Usuario2/pagosCuotaic3';
 import AsignarLoteAUsuario from "../Paginas/Usuario2/AsignarLoteAUsuario"
 import AprobacionesPagos from "../Paginas/Usuario2/AprobacionesPagos"
 import PagosNvel2 from "../Paginas/Usuario2/PagarCuota"
@@ -164,6 +165,7 @@ const Rutas = [
 	{ path: '/usuario2/agregarlegajo/:cuil_cut', element: <AgregarLegajo /> },
 	{ path: '/usuario2/pagarcuota/:id', element: <PagosNvel2 /> },
 	{ path: '/usuario2/pagoscuotas/:id', element: <PagosCuotas /> },
+	{ path: '/usuario2/pagoscuotasic3/:id', element: <PagoscuotaIc3 /> },
 	{ path: '/usuario2/extracto', element: <Extracto /> },
 	{ path: '/usuario2/agregarviarias/:cuil_cuit', element: <AgregarVariascuotasL /> },
 	{ path: '/usuario2/novedades', element: <Novedades /> },
