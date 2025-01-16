@@ -7,7 +7,7 @@ import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 import CancelarLote from './pagarloteparque'
-
+import Alert from '@mui/material/Alert';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
@@ -752,6 +752,15 @@ setCargalink(true)
 <TableContainer style={{ height: '80vh' }}>
     {!cuotas ? <Skeleton /> : <>
         <h1>CUOTAS</h1>
+        <Alert variant="filled" severity="success">
+  Se muestra en color VERDE la columna pago las cuotas pagadas en su totalidad monto superior
+</Alert>
+<Alert variant="filled" severity="info">
+Se muestra en color ROJO la columna pago las cuotas Sin ningun pago efectuado
+</Alert>
+      <Alert variant="filled" severity="error">
+      Se muestra en color VERDE la columna pago las cuotas pagadas en su totalidad monto superior
+      </Alert>
         <Table stickyHeader>
             <TableHead>
                 <TableRow>
@@ -792,10 +801,23 @@ setCargalink(true)
                             <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                            {row.diferencia < 0 ?
-                                <p style={{ color: 'crimson', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p> :
-                                <p style={{ color: 'green', whiteSpace: 'nowrap' }}>{new Intl.NumberFormat('de-DE').format(row.diferencia)}</p>}
-                        </StyledTableCell>
+    {row.diferencia < 0 ? (
+        row.diferencia == -row.cuota_con_ajuste ? (
+            <p style={{ color: 'red', whiteSpace: 'nowrap' }}>
+                {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+            </p>
+        ) : (
+            <p style={{ color: 'blue', whiteSpace: 'nowrap' }}>
+                {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+            </p>
+        )
+    ) : (
+        <p style={{ color: 'green', whiteSpace: 'nowrap' }}>
+            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+        </p>
+    )}
+</StyledTableCell>
+
                         <StyledTableCell component="th" scope="row" align="center">
                             <Pagorapido
                                 id_cuota={row.id}
