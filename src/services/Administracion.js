@@ -83,6 +83,16 @@ const subirprueba = async (formdata) => {
     return data
   
   }
+  
+
+  const borrarPagoic3 = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'borrarpagoic3/'+id,config)
+    
+    return data
+  
+  }
+
   const borrarcomprobante = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'borrarcomprobante/'+id,config)
@@ -91,6 +101,13 @@ const subirprueba = async (formdata) => {
   
   }
   
+  const borrarcomprobanteic3 = async (id) => {
+    
+    const { data } = await axios.get(baseUrl + 'borrarcomprobanteic3/'+id,config)
+    
+    return data
+  
+  }
   const traerlink360 = async (id) => {
     
     const { data } = await axios.get(baseUrl + 'traerlink360/'+id,config)
@@ -119,4 +136,4 @@ const subirprueba = async (formdata) => {
   
   return data 
 }
-export default {consultapep,borrarcomprobante,cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};
+export default {borrarcomprobanteic3,borrarPagoic3,consultapep,borrarcomprobante,cambiarestado,borrarPago,traerlink360,traerlinkcuota,lista,rechazocbu,borrarusuario,extracto,subirprueba,traerPagos};

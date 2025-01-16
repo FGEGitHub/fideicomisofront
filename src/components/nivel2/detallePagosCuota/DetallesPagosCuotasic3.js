@@ -4,11 +4,11 @@ import MUIDataTable from "mui-datatables";
 import { useState, useEffect } from "react";
 import servicioPagos from '../../../services/pagos'
 import serviciousuario1 from '../../../services/usuario1'
-import Borrar from './modalborrar';
+import Borrar from './modalborraric3';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Modif from './modalactcompic3';
-import Borrarcomp from './modalborrarcomprobante';
+import Borrarcomp from './modalborrarcomprobanteic3';
 
 export default function DetallesPagoic3s(props) {
     let params = useParams()
