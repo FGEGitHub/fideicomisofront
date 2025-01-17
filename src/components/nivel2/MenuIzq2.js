@@ -26,6 +26,7 @@ import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 const drawerWidth = 240;
+const initialWidth = 240; // Ancho inicial del menú
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
   
@@ -33,7 +34,38 @@ export default function MenuIzq2 ({children}) {
     const [notificacioneslegajos, setNotificacioneslegajos] = useState();
     const [notificacionescbus, setNotificacionescbus] = useState();
     const [user, setUser] = useState();
+    const [drawerWidth, setDrawerWidth] = useState(initialWidth);
+    const [resizing, setResizing] = useState(false);
+    ///////////////
+///Funciones para ajustar el ancho 
+const handleMouseDown = () => {
+  setResizing(true);
+};
 
+const handleMouseMove = (e) => {
+  if (resizing) {
+    const newWidth = Math.max(200, Math.min(e.clientX, 500)); // Limita entre 200 y 500px
+    setDrawerWidth(newWidth);
+  }
+};
+
+const handleMouseUp = () => {
+  setResizing(false);
+};
+useEffect(() => {
+  if (resizing) {
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  } else {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleMouseUp);
+  }
+  return () => {
+    window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("mouseup", handleMouseUp);
+  };
+}, [resizing]);
+    ///////////
     useEffect(() => {
       const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
       const useer = JSON.parse(loggedUserJSON)
@@ -199,16 +231,17 @@ export default function MenuIzq2 ({children}) {
       
     
       <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+       
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="permanent"
-        anchor="left"
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant="permanent"
+          anchor="left"
       >
         <Navbar
       logout = {{hanleLogout}}/>
@@ -250,7 +283,20 @@ export default function MenuIzq2 ({children}) {
         </List>
         
         <Divider />
-       
+        {/* Handle para redimensionar */}
+        <div
+            style={{
+              width: "5px",
+              cursor: "ew-resize",
+              height: "100%",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              zIndex: 1,
+              backgroundColor: "transparent",
+            }}
+            onMouseDown={handleMouseDown}
+          />
       </Drawer>
       <Box
         component="main"

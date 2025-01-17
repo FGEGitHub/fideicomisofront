@@ -609,16 +609,16 @@ setCargalink(true)
                                                     background: '#eeeeee',
                                                     color: '#bdbdbd',
                                                     border: '1px dashed #ccc',
-                                                    width: "45%",
+                                                    width: "38%",
                                                     '&:hover': { border: '1px solid #ccc' },
                                                     border: "1px solid black",
-                                                    margin: '10px',
+                                                    margin: '3%',
                                                     display: 'flex'
                                                 }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                    <Table sx={{ minWidth: 520 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
                                                                 <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
@@ -627,15 +627,16 @@ setCargalink(true)
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
-                                                            {deudaExigible.map((row) => (
+                                                            {deudaExigible.map((row, index) => (
                                                                 <TableRow
                                                                     key={row.name}
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
                                                                     <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
-
+                                                                    <TableCell align="left" padding="normal">
+      {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+    </TableCell>
                                                                 </TableRow>
                                                             ))}
                                                         </TableBody>
@@ -650,16 +651,17 @@ setCargalink(true)
                                                     background: '#eeeeee',
                                                     color: '#bdbdbd',
                                                     border: '1px dashed #ccc',
-                                                    width: "45%",
+                                                    width: "38%",
                                                     '&:hover': { border: '1px solid #ccc' },
                                                     border: "1px solid black",
-                                                    margin: '10px',
+                                                    margin: '3%',
+                                                    marginLeft:'-1%',
                                                     display: 'flex'
                                                 }}
                                             >
 
                                                 <TableContainer >
-                                                    <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+                                                    <Table sx={{ minWidth: 520 }} aria-label="simple table" >
                                                         <TableHead>
                                                             <TableRow>
                                                                 <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
@@ -668,15 +670,16 @@ setCargalink(true)
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
-                                                            {detallePendiente.map((row) => (
+                                                            {detallePendiente.map((row, index) => (
                                                                 <TableRow
                                                                     key={row.name}
                                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                                 >
 
                                                                     <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                                                    <TableCell align="left" padding="normal">{new Intl.NumberFormat('de-DE').format(row.datob)}</TableCell>
-
+                                                                    <TableCell align="left" padding="normal">
+      {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+    </TableCell>
                                                                 </TableRow>
                                                             ))}
                                                         </TableBody>
@@ -745,7 +748,7 @@ setCargalink(true)
                                         width: "90%",
                                         '&:hover': { border: '1px solid #ccc' },
                                         border: "1px solid black",
-                                        margin: '75px',
+                                        marginLeft: '1%',
 
                                     }}
                                 >

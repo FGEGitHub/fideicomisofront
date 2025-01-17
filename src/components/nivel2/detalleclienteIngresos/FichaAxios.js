@@ -50,8 +50,8 @@ const FichaAxios = (props) => {
     
    {cliente.map((client) =>( 
     <div className="profile">
-      <Grid Container style={{ direction: "column", alignItems:"center", justifyContent: "center", display: "flex"}}>
-        <Grid item xs={8} style={{ direction: "column", justifyContent: "center", display: "flex" }}>
+      <Grid Container style={{ direction: "column", alignItems:"left", justifyContent: "left", display: "flex"}}>
+        <Grid item xs={8} style={{ direction: "column", justifyContent: "left", display: "flex" }}>
         <Avatar sx={{ width: 170, height: 140 }}> <AccountCircle fontSize="large"/> </Avatar>
         </Grid>
         <Grid item xs={8}style={{ }}>
@@ -139,6 +139,41 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
+                         {client.razon =="Empresa" ? <>
+                          <TextField
+                  label="Tipo de cliente"
+                  id="tipoCliente"
+                  value={client.tipoCliente}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                         </>:<>
+                         <TextField
+                  label="Fecha de nacimiento"
+                  id="FechaNacimiento"
+                  value={client.FechaNacimiento}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                         </>}
+             
+                         
               </Box>
                    
 
@@ -162,9 +197,9 @@ const FichaAxios = (props) => {
                 />
 
                 <TextField
-                  label="Localidad"
-                  id="Localidad"
-                  value={client.provincia}
+                  label="Codigo postal"
+                  id="cp"
+                  value={client.cp}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -176,6 +211,26 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
+
+
+                <TextField
+                  label="Actividad economica"
+                  id="actividadEconomica"
+                  value={client.actividadEconomica}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+             
+
+
               </Box>
               <Box>
                 <TextField
@@ -213,6 +268,39 @@ const FichaAxios = (props) => {
                 >
                   
                 </TextField>
+                {client.razon =="Empresa" ? <>
+                  <TextField
+                  label="Antiguedad"
+                  id="antiguedad"
+                  value={client.antiguedad}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                </>:<>
+                <TextField
+                  label="Tipo de cliente"
+                  id="tipoCliente"
+                  value={client.tipoCliente}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                </>}
               </Box>
               <Box>
                 <TextField
@@ -234,7 +322,7 @@ const FichaAxios = (props) => {
 
                 <TextField
                   label="Ingresos Declarados"
-                  id="dirección"
+                
                   defaultValue=""
                   value={client.ingresos}
                   variant="filled"
@@ -248,8 +336,23 @@ const FichaAxios = (props) => {
                     )
                   }}
                 >
-                  
+               
                 </TextField>
+                <TextField
+                  label="Volumen Transaccional"
+                  id="volumenTransaccional"
+                  value={"$"+client.volumenTransaccional}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
               </Box>
               
 
