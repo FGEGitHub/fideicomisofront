@@ -15,7 +15,7 @@ import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import "../../profile.css";
 import LinearProgress from "@mui/material/LinearProgress";
-
+import Agregarbenefciarios from './agregarbeneficiarios'
 
 const FichaAxios = (props) => {
   const navigate = useNavigate();
@@ -354,9 +354,167 @@ const FichaAxios = (props) => {
                   }}
                 />
               </Box>
+              <Box>
+  {/* Beneficiario 1 */}
+  {client.beneficiarios !== "No" && (
+    <>
+      <Box>
+      <TextField
+        label="Beneficiario 1"
+        id="beneficiario"
+        value={client.beneficiario1}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+         <TextField
+        label="CUIL Beneficiario 1"
+        id="cuilBeneficiario1"
+        value={client.cuilbeneficiario1}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        label="porcentaje 1"
+        id="porcentaje1"
+        value={client.cuilbeneficiario1}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+</Box>
+    </>
+  )}
+
+  {/* Beneficiario 2 */}
+  {client.beneficiario2 !== "No" && (
+    <>   <Box>
+      <TextField
+        label="Beneficiario 2"
+        id="beneficiario2"
+        value={client.beneficiario2}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        label="CUIL Beneficiario 2"
+        id="cuilBeneficiario2"
+        value={client.cuilbeneficiario2}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        label="porcentaje 2"
+        id="porcentaje2"
+        value={client.cuilbeneficiario2}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      /></Box>
+    </>
+  )}
+
+  {/* Beneficiario 3 */}
+  {client.beneficiario3 !== "No" && (
+    <>
+      <TextField
+        label="Beneficiario 3"
+        id="beneficiario3"
+        value={client.beneficiario3}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        label="CUIL Beneficiario 3"
+        id="cuilBeneficiario3"
+        value={client.cuilbeneficiario3}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        label="porcentaje 3"
+        id="porcentaje3"
+        value={client.cuilbeneficiario3}
+        variant="filled"
+        sx={{ margin: "10px" }}
+        InputProps={{
+          readOnly: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </>
+  )}
+</Box>
+
               
 
               <Box>
+           
                 <columns lg={8}>
                   {editMode ? (
                     <div className="profile-form-button">
@@ -383,9 +541,27 @@ const FichaAxios = (props) => {
                    onClick={() =>  navigate('/usuario2/modificarcliente/'+props.cuil_cuit)}                 >
                 Modificar cliente
                  </Button>
+                 { client ? <>
+                 
+                  <Agregarbenefciarios
+                  id={client.id}
+                  traer={async() => {
+       
+   
+                    const  cliente = await servicioCliente.cliente(props.cuil_cuit)
+                    
+                    setCliente(cliente)
+                
+                   
+                
+                    ;
+                  }}/>
+                 </>:<></>}
+                 
                     </div>
                   )}
                 </columns>
+         
               </Box>
             </Container>
           

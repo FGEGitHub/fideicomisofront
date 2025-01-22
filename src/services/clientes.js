@@ -275,6 +275,12 @@ const enviarmailprueba= async  (etc) => {
     return data 
 } 
 
-export default {clientehabilitadoic3,listaic3,borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
+const agregarbeneficiarios= async  (etc) => {
+
+    const {data } = await axios.post(baseURL+'agregarbeneficiarios/',etc,config)
+  
+    return data 
+} 
+export default {agregarbeneficiarios,clientehabilitadoic3,listaic3,borrarcbu,ventaLoteleg,crear2,modificarclientelegales,lista2,modificarCuil,determinarEmpresa,enviarmailprueba,lista,infocantidad,datoslegajo, clientehabilitado,listacbupendientes,cliente,modificarCliente,deshabilitar, determinarIngreso,ventaLote,traerLejagos,crear,habilitar};
 
 
