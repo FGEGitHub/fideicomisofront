@@ -100,53 +100,61 @@ const ModificacionC = () => {
 
       {cliente.length > 0 &&
         <>
-        {cliente[0].razon=='Persona' ? <>
-          Edad:{cliente[0].edad}
-        </>:<></>}
-        
-        <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
-      Riesgo
-      <LinearProgress
-        variant="determinate"
-        value={cliente[0].riesgo}
-        style={{
-          width: "100%",
-          marginRight: 8,
-          height: 10,
-          borderRadius: 5,
-          backgroundColor: "#e0e0e0", // Fondo de la barra
-        }}
-        sx={{
-          "& .MuiLinearProgress-bar": {
-            backgroundColor:
-            cliente[0].riesgo <= 58
-                ? "green"
+          {cliente[0].razon == 'Persona' ? <>
+            Edad:{cliente[0].edad}
+          </> : <></>}
+
+          <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
+            Riesgo
+            <LinearProgress
+              variant="determinate"
+              value={cliente[0].riesgo}
+              style={{
+                width: "100%",
+                marginRight: 8,
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: "#e0e0e0", // Fondo de la barra
+              }}
+              sx={{
+                "& .MuiLinearProgress-bar": {
+                  backgroundColor:
+                    cliente[0].riesgo <= 58
+                      ? "green"
+                      : cliente[0].riesgo <= 70
+                        ? "yellow"
+                        : "red", // Color de la barra según el valor
+                },
+              }}
+            />
+            <span
+              style={{
+                fontWeight: "bold",
+                color:
+                  cliente[0].riesgo <= 58
+                    ? "green"
+                    : cliente[0].riesgo <= 70
+                      ? "yellow"
+                      : "red", // Color del texto según el valor
+                textTransform: "uppercase",
+              }}
+            >
+              {cliente[0].riesgo <= 58
+                ? "Bajo"
                 : cliente[0].riesgo <= 70
-                ? "yellow"
-                : "red", // Color de la barra según el valor
-          },
-        }}
-      />
-      <span
-        style={{
-          fontWeight: "bold",
-          color:
-          cliente[0].riesgo <= 58
-              ? "green"
-              : cliente[0].riesgo <= 70
-              ? "yellow"
-              : "red", // Color del texto según el valor
-          textTransform: "uppercase",
-        }}
-      >
-        {cliente[0].riesgo <= 58
-          ? "Bajo"
-          : cliente[0].riesgo <= 70
-          ? "Medio"
-          : "Alto"}{" "}
-        ({cliente[0].riesgo}%)
-      </span>
-    </Box>
+                  ? "Medio"
+                  : "Alto"}{" "}
+                  
+              ({cliente[0].riesgo}%)
+            </span>
+            <br/>
+         
+          </Box>   {cliente[0].pep_extranjero =="Si" ? <>
+            <p style={{ color: 'crimson' }} > Pep Extranjero </p><br/>
+          </> : <></>}
+          {cliente[0].categoria_especial == "Si" ? <>
+            <p style={{ color: 'crimson' }} >    Categoria Especial</p>
+          </> : <></>}
         </>}
 
       <form onSubmit={handleGuardar}>
@@ -332,48 +340,48 @@ const ModificacionC = () => {
 
                     <Grid item xs={12}>
                       {client.cp && <>Actual: {client.cp}</>}
-                    <TextField
-                      select
-                      fullWidth
-                      label="Codigo postal"
-                      name="cp"
-                      value={modificaciones.cp || ""}
-                      onChange={(e) => {
-                        setModificaciones({
-                          ...modificaciones,
-                          cp: e.target.value,
-                        });
-                        if (e.target.value !== "OTRAS_ZONAS") {
-                          setCpManual(""); // Limpia el campo manual si no es "OTRAS_ZONAS"
-                        }
-                      }}
-                      variant="outlined"
-                      margin="normal"
-                    >
-                      {codigosp.map((opcion, index) => (
-                        <MenuItem key={index} value={opcion.codigo}>
-                          {opcion.codigo} (Riesgo: {opcion.riesgo})
-                        </MenuItem>
-                      ))}
-                      <MenuItem value="OTRAS_ZONAS">
-                        OTRAS ZONAS RIESGO BAJO - LOCALIDAD RIESGO BAJO
-                      </MenuItem>
-                    </TextField>
-                  </Grid>
-
-                  {modificaciones.cp === "OTRAS_ZONAS" && (
-                    <Grid item xs={12}>
                       <TextField
+                        select
                         fullWidth
-                        label="Ingrese código postal manualmente"
-                        value={cpManual}
-                        onChange={(e) => setCpManual(e.target.value)}
+                        label="Codigo postal"
+                        name="cp"
+                        value={modificaciones.cp || ""}
+                        onChange={(e) => {
+                          setModificaciones({
+                            ...modificaciones,
+                            cp: e.target.value,
+                          });
+                          if (e.target.value !== "OTRAS_ZONAS") {
+                            setCpManual(""); // Limpia el campo manual si no es "OTRAS_ZONAS"
+                          }
+                        }}
                         variant="outlined"
                         margin="normal"
-                      />
+                      >
+                        {codigosp.map((opcion, index) => (
+                          <MenuItem key={index} value={opcion.codigo}>
+                            {opcion.codigo} (Riesgo: {opcion.riesgo})
+                          </MenuItem>
+                        ))}
+                        <MenuItem value="OTRAS_ZONAS">
+                          OTRAS ZONAS RIESGO BAJO - LOCALIDAD RIESGO BAJO
+                        </MenuItem>
+                      </TextField>
                     </Grid>
-                  )}
-                
+
+                    {modificaciones.cp === "OTRAS_ZONAS" && (
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Ingrese código postal manualmente"
+                          value={cpManual}
+                          onChange={(e) => setCpManual(e.target.value)}
+                          variant="outlined"
+                          margin="normal"
+                        />
+                      </Grid>
+                    )}
+
                     <Grid item xs={12}>
                       <TextField
                         select
@@ -399,28 +407,59 @@ const ModificacionC = () => {
 
                     </Grid>
                     <Grid item xs={12}>
-  <TextField
-    fullWidth
-    label="Volumen Transaccional (en pesos)"
-    name="volumenTransaccional"
-    value={modificaciones.volumenTransaccional || ""}
-    onChange={(e) => {
-      const valor = e.target.value;
-      // Validación para permitir solo números
-      if (/^\d*$/.test(valor)) {
-        setModificaciones({
-          ...modificaciones,
-          volumenTransaccional: valor,
-        });
-      }
-    }}
-    variant="outlined"
-    margin="normal"
-    InputProps={{
-      inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
-    }}
-  />
-</Grid>
+                      <TextField
+                        fullWidth
+                        label="Volumen Transaccional (en pesos)"
+                        name="volumenTransaccional"
+                        value={modificaciones.volumenTransaccional || ""}
+                        onChange={(e) => {
+                          const valor = e.target.value;
+                          // Validación para permitir solo números
+                          if (/^\d*$/.test(valor)) {
+                            setModificaciones({
+                              ...modificaciones,
+                              volumenTransaccional: valor,
+                            });
+                          }
+                        }}
+                        variant="outlined"
+                        margin="normal"
+                        InputProps={{
+                          inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
+                        }}
+                      /><br /><br/>
+                      <Grid item xs={12}>
+                        <TextField
+                          select
+                          label="Pep Extranjero"
+                          name="pep_extranjero"
+                          value={modificaciones.pep_extranjero || ""}
+                          onChange={handleChange}
+                          fullWidth
+                        >
+                          <MenuItem value="Si">Si</MenuItem>
+                          <MenuItem value="No">
+                            No
+                          </MenuItem>
+                        </TextField>
+                      </Grid><br/>
+                      <Grid item xs={12}>
+                        <TextField
+                          select
+                          label="Categoria especial"
+                          name="categoria_especial"
+                          value={modificaciones.categoria_especial || ""}
+                          onChange={handleChange}
+                          fullWidth
+                        >
+                          <MenuItem value="Si">Si</MenuItem>
+                          <MenuItem value="No">
+                            No
+                          </MenuItem>
+                        </TextField>
+                      </Grid>
+                    </Grid>
+
                   </Grid>
                   <Button
                     variant="contained"
