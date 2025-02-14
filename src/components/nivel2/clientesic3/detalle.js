@@ -16,7 +16,8 @@ const DetalleCliente = () => {
   const navigate = useNavigate();
     let params = useParams()
     let cuil_cuit = params.cuil_cuit
-    const [cliente, setCliente] = useState({})
+    const [cliente, setCliente] = useState()
+    const [idd, setIdd] = useState()
      const [habilitado, sethabilitado] = useState(false)
      const [carga, setCarga] = useState(true)
      const [expuesta, setExpuesta] = useState(false)
@@ -28,6 +29,8 @@ const DetalleCliente = () => {
      const traer = async () => {
       
         const clientee = await servicioCliente.clientehabilitadoic3(cuil_cuit) ////api/links/clientehabilitado
+      console.log(clientee[0][clientee[0].length-1])
+        setIdd(clientee[0][clientee[0].length-1])
          setCliente(clientee[1])
         /// veridicacion de cliente segun posibilidad de gestionarlo
          if (clientee[0][0].habilitado =='Si'){
@@ -87,12 +90,13 @@ const DetalleCliente = () => {
           '&:hover': { border: '1px solid #ccc' },
         }}
       >
+        {idd &&  
            <Button
                         variant="outlined"
-                        onClick={() => navigate('/usuario2/actualizarcomporbantes/'+cuil_cuit)}
+                        onClick={() => navigate('/usuario2/actualizarcomporbantes/'+idd.id)}
                       >
                    ACTUALIZAR COMPROBANTES
-                      </Button>
+                      </Button>}
              {habilitado ? <div>
               <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
             
