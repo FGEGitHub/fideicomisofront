@@ -100,7 +100,7 @@ export default function SelectTextFields(props) {
         handleClose()
       } catch (error) {
         console.error('Error subiendo archivo:', error);
-      }
+      } 
     } else {
       alert('No hay archivo para subir');
     }
