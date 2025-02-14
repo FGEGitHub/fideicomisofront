@@ -95,7 +95,7 @@ export default function SelectTextFields(props) {
         const response = await servicioUsuario1.pagarnivel2ic3(enviarr)
         alert(response.data);
         console.log("getData");
-        props.traer(response[2])
+        props.traer(response[2]) 
         setLoading(false)
         handleClose()
       } catch (error) {
