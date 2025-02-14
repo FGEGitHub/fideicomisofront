@@ -101,7 +101,7 @@ export default function SelectTextFields(props) {
       } catch (error) {
         console.error('Error subiendo archivo:', error);
       } 
-    } else {
+    } else {  
       alert('No hay archivo para subir');
     }
 
