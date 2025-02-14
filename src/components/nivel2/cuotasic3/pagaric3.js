@@ -72,20 +72,6 @@ export default function SelectTextFields(props) {
   }
 
 
-  useEffect(() => {
-
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setPagos({
-        cuil_cuit: user.cuil_cuit,
-        id: params.id
-      })
-      traercbu()
-
-    }
-
-  }, [])
   const traercbu = async () => {
 
 
@@ -154,6 +140,18 @@ export default function SelectTextFields(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setPagos({
+        cuil_cuit: user.cuil_cuit,
+        id: params.id,
+        monto:props.cuota_con_ajuste
+      })
+      traercbu()
+
+    }
+
     //traer();
   };
   const handleChangeVarios = (e) => {
@@ -228,7 +226,7 @@ export default function SelectTextFields(props) {
                       label="Monto"
                       name="monto"
                       onChange={handleChange}
-                      fullWidth
+                      defaultValue={props.cuota_con_ajuste}
                       variant="filled"
                       type={"Number"}
                     />

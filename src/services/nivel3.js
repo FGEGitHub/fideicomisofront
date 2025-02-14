@@ -30,7 +30,7 @@ if (loggedUserJSON) {
 
 
 const agregariccgral= async  (datos) => {
-   
+   ///activo
     const {data } = await axios.post(baseUrl+'agregariccgral2',datos,config)
     alert(data)
    

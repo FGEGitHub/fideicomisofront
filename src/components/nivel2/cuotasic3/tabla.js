@@ -52,7 +52,13 @@ const Lotes = (props) => {
         useEffect(() => {
         getClients()
     }, [])
-
+/*     useEffect(() => {
+      const interval = setInterval(() => {
+        getClients()
+      }, 50000); // Consulta cada 50 segundos
+  
+      return () => clearInterval(interval);
+  }, []); */
     const getClients = async () => {
       const response = await servicioCuotas.traercuotasic3(props.cuil_cuit);
       console.log(response)
@@ -319,6 +325,7 @@ return (
                   <StyledTableCell component="th" scope="row" align="center">
                   <Pagorapido
                       id_cuota={row.id}
+                      cuota_con_ajuste={row.cuota_con_ajuste}
                       traer={async () => {
         
                         const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit) //////  api/links/infocantidad
