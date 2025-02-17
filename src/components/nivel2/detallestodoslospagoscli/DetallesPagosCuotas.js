@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Modif from './modalactcomp';
+import Modif from './modalactcompic3';
 import BorrarComp from '../detallePagosCuota/modalborrarcomprobante';
 
 export default function DetallesPagos(props) {
@@ -31,7 +31,7 @@ export default function DetallesPagos(props) {
 
     const download = async (index) => {
         try {
-            const pdfBlob = await servicioPagos.traerPdfConstanciadepago(pagos[index].id);
+            const pdfBlob = await servicioPagos.traerPdfConstanciadepagoic3(pagos[index].id);
             const url = URL.createObjectURL(pdfBlob);
             window.open(url, '_blank');
         } catch (error) {

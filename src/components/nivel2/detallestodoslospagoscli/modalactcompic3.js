@@ -51,7 +51,7 @@ id:props.id
 
       
       try {
-        const response = await servicioLegajo.actualizarpago(enviarr) 
+        const response = await servicioLegajo.actualizarpagoic3(enviarr) 
         alert(response.data);
         props.getData();
       } catch (error) {
