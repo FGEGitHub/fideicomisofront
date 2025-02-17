@@ -19,7 +19,7 @@ const Historial = () => {
     
 const traer = async() => {
       
-    const historial = await servicionivel3.traerhistorial()
+    const historial = await servicionivel3.traerdatosdetarjetas()
    
     setHistorial(historial)
   // 

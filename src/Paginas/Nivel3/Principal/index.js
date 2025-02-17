@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 
-import AsignarLoteACliente from '../../../components/nivel2/asignarlotecliente/AsignarLoteACliente';
+import Tarjetas from '../../../components/nivel3/principal/tarjetas';
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel3/Menuizq3'
 
@@ -52,7 +52,7 @@ export default function DetalleCliente() {
   { logueado ? <div> 
       <CssBaseline />
     <BarraLAteral>
-
+    <Tarjetas/>
      
  </BarraLAteral>
  </div>   :<div></div> } </div>

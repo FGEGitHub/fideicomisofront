@@ -48,6 +48,12 @@ const traerhistorial= async  () => {
     return data 
 }  
 
+const traerdatosdetarjetas= async  () => {
+   
+    const {data } =await axios.get(baseUrl+'traerdatosdetarjetas',config)
+
+    return data 
+} 
 const nuevoicc= async  (datos) => {
     
      const {data } =await axios.post(baseUrl+'consultaricc',datos,config)
@@ -105,4 +111,4 @@ const borrarhistorial= async  () => {
  
      return data 
  }  
-export default {traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+export default {traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
