@@ -52,8 +52,9 @@ id:props.id
       
       try {
         const response = await servicioLegajo.actualizarpagoic3(enviarr) 
-        alert(response.data);
-        props.getData();
+        alert(response);
+        setFile()
+    
       } catch (error) {
         console.error('Error subiendo archivo:', error);
       }
@@ -62,6 +63,7 @@ id:props.id
     }
     setCargando(false);
     setOpen(false);
+    props.traer();
   };
 
   const handleChange = (e) => {

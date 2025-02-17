@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Modif from './modalactcompic3';
-import BorrarComp from '../detallePagosCuota/modalborrarcomprobante';
+import BorrarComp from '../detallePagosCuota/modalborrarcomprobanteic3';
 
 export default function DetallesPagos(props) {
     let params = useParams();
@@ -78,14 +78,19 @@ export default function DetallesPagos(props) {
                                     <>
                                         Tiene comprobante
                                         <Modif id={pago.id} 
-                                         getData={async () => {
-                                            const aux = { id: id };
-                                            const pag = await servicioPagos.detallesPagocli(aux);
-                                            setPagos(pag);
-                                        }}/>
+                                    traer={async () => {
+                                        const aux = { id: id };
+                                        const pag = await servicioPagos.detallesPagocli(aux);
+                                        setPagos(pag);
+                                    }}/>
                                     </>
                                 ) : (
-                                    <Modif id={pago.id} />
+                                    <Modif id={pago.id}
+                                    traer={async () => {
+                                        const aux = { id: id };
+                                        const pag = await servicioPagos.detallesPagocli(aux);
+                                        setPagos(pag);
+                                    }} />
                                 )}
                             </TableCell>
                             <TableCell>

@@ -69,7 +69,7 @@ export default function SelectTextFields(props) {
     console.log(pago)
     try {
 
-      await servicioAdmin.borrarPago(
+      await servicioAdmin.borrarPagoic3(
       props.id
       )
       props.traer()
