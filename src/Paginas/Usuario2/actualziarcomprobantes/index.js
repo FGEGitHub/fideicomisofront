@@ -12,7 +12,7 @@ import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 
 export default function DetalleCliente() {
   const navigate = useNavigate();
-
+ 
  
   const [logueado, setLogueado] = useState(false) 
 
