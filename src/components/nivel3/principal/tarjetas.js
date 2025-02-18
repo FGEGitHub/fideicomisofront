@@ -9,9 +9,14 @@ import servicionivel3 from '../../../services/nivel3'
 const MainMenu = () => {
   const [open, setOpen] = useState(false);
   const [datos, setDatos] = useState();
-  const [salary, setSalary] = useState(800);
-  const [newSalary, setNewSalary] = useState("");
-  const [newDate, setNewDate] = useState("");
+  const [form, setForm] = useState('');
+  const fecha = new Date();
+  const anio = fecha.getFullYear();
+  const meses = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+  const mesNombre = meses[fecha.getMonth()];
 
 
 
@@ -23,7 +28,7 @@ const MainMenu = () => {
 const traer = async() => {
       
     const historial = await servicionivel3.traerdatosdetarjetas()
-  
+  console.log(historial)
    setDatos(historial)  // 0 slario vital
   // 
     
@@ -33,20 +38,21 @@ const traer = async() => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleSubmit = () => {
-    if (newSalary) {
-      const today = new Date();
-      const formattedToday = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
-
-      const formattedDate = newDate.match(/^\d{2}\/\d{2}\/\d{4}$/) ? newDate : formattedToday;
-      
-      setSalary(Number(newSalary));
-      setNewDate(formattedDate);
-
-      setNewSalary("");
-      handleClose();
-    }
+  const handleSubmit = async () => {
+    const historial = await servicionivel3.enviardatosnuevosalario(form)
+    alert(historial)
+    traer()
+    setOpen(false);
   };
+  const handleSubmitfalso = () => {
+   alert('Completa los campos')
+   };
+
+  const handleChange = (e) =>{
+    setForm({  ...form, [e.target.name]: e.target.value })
+
+  }
+
 
   const payments = [
     { fecha: "2025-02-17", monto: 500 },
@@ -60,11 +66,11 @@ const traer = async() => {
   return (
     <Box sx={{ display: "grid", gap: 2, padding: 2 }}>
       {/* Salario mínimo */}
-      <Card>
+      <Card> 
         <CardContent>
           <Typography variant="h6">Salario mínimo, vital y móvil:</Typography>
           <Typography variant="h4">${datos && formatNumber(datos[0][0]['valor'])} pesos</Typography>
-          <Typography variant="h6">con fecha {datos && datos[0][0]['fecha']} </Typography>
+          <Typography variant="h6">con fecha de carga {datos && datos[0][0]['fecha']} </Typography>
           <Button variant="contained" color="primary" onClick={handleOpen}>
             Modificar
           </Button>
@@ -75,26 +81,31 @@ const traer = async() => {
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", bgcolor: "white", p: 3, borderRadius: 2 }}>
           <Typography variant="h6">Modificar Salario</Typography>
+          Nuevo Salario
           <TextField
-            label="Nuevo Salario"
+           
             type="number"
             fullWidth
-            value={newSalary}
-            onChange={(e) => setNewSalary(e.target.value)}
+        
+            name="valor"
+            onChange={handleChange}
             sx={{ my: 2 }}
           />
+
+          Fecha
              <TextField
-            label="Fecha (DD/MM/YYYY)"
+            
             type="text"
             fullWidth
-            value={newDate}
-            onChange={(e) => setNewDate(e.target.value)}
+   
+            name="fecha"
+            onChange={handleChange}
             placeholder="17/02/2024"
             sx={{ my: 2 }}
           />
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+                {form.valor && form.fecha ? <><Button variant="contained" color="primary" onClick={handleSubmit}>
             Guardar
-          </Button>
+          </Button>  </> :<><Button variant="contained" color="primary" onClick={handleSubmitfalso}>Completar los datos</Button>  </>  }
         </Box>
       </Modal>
 
@@ -102,30 +113,35 @@ const traer = async() => {
       <Card>
         <CardContent>
           <Typography variant="h6">ICC:</Typography>
-          <Typography variant="h5">$200 pesos</Typography>
-          <Typography variant="subtitle1">Mes: Enero 2018</Typography>
+          <Typography variant="h5">{datos &&     datos[1].length > 0 ? datos[1][0].ICC:<>Sin ICC en este mes</>        }</Typography>
+          <Typography variant="subtitle1">
+      Mes: {mesNombre} {anio}
+    </Typography>
         </CardContent>
       </Card>
 
       {/* Pagos de hoy */}
       <Card>
         <CardContent>
-          <Typography variant="h6">Pagos de hoy:</Typography>
+          <Typography variant="h6">Criterios de Riesgo</Typography>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Fecha</TableCell>
-                  <TableCell>Monto</TableCell>
+                  <TableCell>Categoria</TableCell>
+                  <TableCell>Cantidad</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {payments.map((pago, index) => (
+{datos &&   datos[2].length>0 ? <>
+                { datos[2].map((pago, index) => (
                   <TableRow key={index}>
-                    <TableCell>{pago.fecha}</TableCell>
-                    <TableCell>${pago.monto}</TableCell>
+                    <TableCell>{pago.tipo}</TableCell>
+                    <TableCell>{pago.valor} salarios minimos ({formatNumber(pago.valor*datos[0][0]['valor'])} pesos)</TableCell>
                   </TableRow>
                 ))}
+
+</>:<>Sin valores</>  }
               </TableBody>
             </Table>
           </TableContainer>

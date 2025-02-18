@@ -80,6 +80,15 @@ const borrarhistorial= async  () => {
         alert(data)
      return data 
  } 
+ 
+ const enviardatosnuevosalario= async  (datos) => {
+    
+    const {data } =await axios.post(baseUrl+'enviardatosnuevosalario',datos,config)
+       
+    return data 
+} 
+
+
  const registronivel3 = async (datos) => {
     
   
@@ -111,4 +120,4 @@ const borrarhistorial= async  () => {
  
      return data 
  }  
-export default {traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+export default {enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
