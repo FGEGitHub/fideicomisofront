@@ -63,16 +63,6 @@ export default function SelectTextFields(props) {
 
 
 
-  const designar = async (event) => {
-    event.preventDefault()
-
-
-    const rta = await servicioPagos.pagarnivel2(pago)
-    alert(rta[1])
-    navigate('/usuario2/detallecliente/' + rta[0])
-
-  }
-
 
   useEffect(() => {
 
