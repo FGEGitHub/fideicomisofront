@@ -59,7 +59,7 @@ const nuevoicc= async  (datos) => {
      const {data } =await axios.post(baseUrl+'consultaricc',datos,config)
     
      return data 
- } 
+ }  
  const valormetrocuadrado= async  (datos) => {
     
      const {data } =await axios.post(baseUrl+'asignarvalormetroc',datos,config)
