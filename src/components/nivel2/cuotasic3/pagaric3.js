@@ -44,10 +44,13 @@ export default function SelectTextFields(props) {
 
 
   });
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive,  acceptedFiles } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'document/*',
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif'], 
+      'application/pdf': ['.pdf']
+    }
 
   });
 

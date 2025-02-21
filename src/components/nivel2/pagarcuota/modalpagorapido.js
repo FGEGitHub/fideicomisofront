@@ -64,20 +64,6 @@ export default function SelectTextFields(props) {
 
 
 
-  useEffect(() => {
-
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setPagos({
-        cuil_cuit: user.cuil_cuit,
-        id: params.id
-      })
-      traercbu()
-
-    }
-
-  }, [])
   const traercbu = async () => {
 
 
@@ -163,8 +149,18 @@ props.traer(props.id_lote)
 
   const handleClickOpen = () => {
     setOpen(true);
-    
-    setPagos({ ...pago, monto: props.cuota_con_ajuste })
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setPagos({
+        cuil_cuit: user.cuil_cuit,
+        id: id,
+        monto: props.cuota_con_ajuste
+      })
+     
+
+    }
+    traercbu()
     //traer();
   };
   const handleChangeVarios = (e) => {

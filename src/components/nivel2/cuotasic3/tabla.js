@@ -70,13 +70,17 @@ const Lotes = (props) => {
     };
   
     const handleClientFilter = (id_cliente) => {
-      console.log(id_cliente)
+      console.log("Filtrando por id_cliente:", id_cliente);
       setShowCuotas(true);
       setSelectedClient(id_cliente);
+    
       if (id_cliente === null) {
         setFilteredCuotas(cuotas);
       } else {
-        setFilteredCuotas(cuotas.filter((cuota) => cuota.id_cliente === id_cliente));
+        console.log("Cuotas antes del filtro:", cuotas);
+        const nuevasCuotas = cuotas.filter((cuota) => cuota.id_cliente === id_cliente);
+        console.log("Cuotas después del filtro:", nuevasCuotas);
+        setFilteredCuotas(nuevasCuotas);
       }
     };
   
@@ -292,6 +296,7 @@ return (
           <Table stickyHeader>
             <TableHead>
               <TableRow>
+              <TableCell style={{ backgroundColor: "black", color: 'white', width: '7%' }}><b>ID cli</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '7%' }}><b>CUOTA</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '7%' }}><b>FECHA</b></TableCell>
                 <TableCell style={{ backgroundColor: "black", color: 'white', width: '10%' }}><b>SALDO INICIAL</b></TableCell>
@@ -306,8 +311,9 @@ return (
               </TableRow>
             </TableHead>
             <TableBody>
-              {cuotas.map((row) => (
+              {filteredCuotas.map((row) => (
                 <StyledTableRow key={row.name}>
+                    <StyledTableCell component="th" scope="row">{row.id_cliente}</StyledTableCell>
                   <StyledTableCell component="th" scope="row">{row.cuota}</StyledTableCell>
                   <StyledTableCell component="th" scope="row">{row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio}</StyledTableCell>
                   <StyledTableCell component="th" scope="row"><span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span></StyledTableCell>
@@ -331,6 +337,14 @@ return (
                         const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit) //////  api/links/infocantidad
                         setCuotas(clients)
                         setLoading(false);
+                        if (selectedClient === null) {
+                          setFilteredCuotas(clients);
+                        } else {
+                          console.log("Cuotas antes del filtro:", clients);
+                          const nuevasCuotas = clients.filter((cuota) => cuota.id_cliente === selectedClient);
+                          console.log("Cuotas después del filtro:", nuevasCuotas);
+                          setFilteredCuotas(nuevasCuotas);
+                        }
                     }}
                     /> 
                     <SearchIcon style={{ cursor: "pointer" }}
