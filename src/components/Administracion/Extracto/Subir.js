@@ -1,124 +1,111 @@
-import { Paper, Button } from '@mui/material';
-import { useDropzone } from 'react-dropzone'
-import Box from '@mui/material/Box';
-import {useCallback, useState} from 'react';
-import axios from 'axios';
-import BackupIcon from '@material-ui/icons/Backup';
-import servicioAdministracion from '../../../services/Administracion'
-import TextField from '@mui/material/TextField';
+import { useState, useCallback } from 'react';
+import { Paper, Button, TextField, Box, Modal, Typography } from '@mui/material';
+import { useDropzone } from 'react-dropzone';
+import BackupIcon from '@mui/icons-material/Backup';
+import servicioAdministracion from '../../../services/Administracion';
 
-const SubirLegajo = (props) => {
-  
-    const [fileUpload, setFileUpload] = useState(null);
-    const [file, setFile] = useState();
-    const [pago, setPago] = useState()
-    const onDrop = useCallback((files, acceptedFiles) => {
-        const formData = new FormData();
-        setFileUpload(acceptedFiles);
-           servicioAdministracion.subirprueba(acceptedFiles)
-          
-   
-        });
-    
-    
-    const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles } = useDropzone({
-        onDrop,
-        multiple: false,
-        accept: "image/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.tsv,.ppt,.pptx,.pages,.odt,.rtf",
-    
-      });
-      const acceptedFileItems = acceptedFiles.map(file => (
-        <li key={file.path}>
-          {file.path} - {file.size} bytes
-        </li>
-      ));  
-  
+const SubirLegajo = () => {
+  const [file, setFile] = useState(null);
+  const [pago, setPago] = useState({ fecha: new Date().toISOString().slice(0, 7) });
+  const [open, setOpen] = useState(false);
 
-
-      const selecthandler = e => {
-        setFile(e.target.files[0])
-        console.log(file)
-
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 0) {
+      setFile(acceptedFiles[0]);
     }
+  }, []);
 
-    const handleChange = (e) => {
-  
-      console.log(pago)
-    
-      // setPago({ ...pago, ['id']: props.id })
-      setPago({ ...pago, [e.target.name]: e.target.value })
-  
-  
-    }
-    const enviar = () => {
-        if (!file) {
-            alert('No seleccionaste el archivo')
-            return
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept: '.xls,.xlsx',
+  });
 
-        }
-        let formdata = new FormData()
-        formdata.append('image', file)
-        formdata.append('datos', [pago.fecha])
+  const handleChange = (e) => {
+    setPago({ ...pago, [e.target.name]: e.target.value });
+  };
 
-        servicioAdministracion.subirprueba(formdata)
-  
-    }
+  const enviar = async () => {
+    if (!file || !pago.fecha) return;
+
+    const formData = new FormData();
+    formData.append('image', file)
+    formData.append('datos', [pago.fecha])
+
+    await servicioAdministracion.subirprueba(formData);
+
+    if (!file) {
+      alert('No seleccionaste el archivo')
+      return
+
+  }
 
 
-    return (
-        <>
-        <Box sx={{ m: 1 }}>
-          <Button size="small" variant="contained">
-            Descargar modelo
-          </Button>
-        </Box>
-        <Paper
+
+    setOpen(false); // Cierra el modal después de enviar
+  };
+
+  return (
+    <>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        Subir Extracto
+      </Button>
+
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box
           sx={{
-            cursor: 'pointer',
-            background: '#fafafa',
-            color: '#bdbdbd',
-            border: '1px dashed #ccc',
-            '&:hover': { border: '1px solid #ccc' },
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
           }}
         >
-          <div style={{ padding: '16px' }} {...getRootProps()}>
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <p style={{ color: 'green' }}>Suelta aqui el documento</p>
-            ) : (
-              <p>Arrastra hasta aqui el archivo descargado con tus datos personales</p>
-            )}
-            <em>(Documentos .*pdf, .*doc, *.jpeg, *.png, *.jpg  extenciones aceptadas)</em>
-          </div>
-        </Paper>
-  
-        <Box sx={{ m: 1, 
-      color: 'green',
-      fontSize: '1rem',      }}
-       >
-        Archivos Aceptados <BackupIcon fontSize="small" />
-        <ul>{acceptedFileItems}</ul>
-      </Box>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                <TextField
+          <Typography variant="h6" sx={{ mb: 2 }}>Subir Archivo de Legajo</Typography>
 
-                  onChange={handleChange}
-                  name="fecha"
-                  id="date"
-                  label="Fecha de pago"
-                  type="month"
-                  defaultValue="2020-01"
-                  sx={{ width: 220 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Box>
-      <input onChange={selecthandler} type="file" />
-      <Button onClick={enviar}>Enviar</Button>
-      </>
-    );
-  };
-      
-    
-  export default SubirLegajo;
+          <Paper
+            sx={{
+              cursor: 'pointer',
+              background: '#fafafa',
+              color: '#bdbdbd',
+              border: '1px dashed #ccc',
+              '&:hover': { border: '1px solid #ccc' },
+              p: 2,
+            }}
+            {...getRootProps()}
+          >
+            <input {...getInputProps()} />
+            <p>{acceptedFiles.length > 0 ? 'Archivo listo para subir' : 'Arrastra aquí un archivo Excel o haz clic para seleccionarlo'}</p>
+            <em>(Solo se aceptan archivos .xls y .xlsx)</em>
+          </Paper>
+
+          <Box sx={{ mt: 2 }}>
+            <TextField
+              onChange={handleChange}
+              name="fecha"
+              id="date"
+              label="Fecha de pago"
+              type="month"
+              value={pago.fecha}
+              sx={{ width: '100%' }}
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
+
+          <Box sx={{ mt: 3, textAlign: 'right' }}>
+            <Button onClick={() => setOpen(false)} sx={{ mr: 1 }}>Cancelar</Button>
+            <Button onClick={enviar} variant="contained" color="primary" disabled={!file || !pago.fecha}>
+              Enviar
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+    </>
+  );
+};
+
+export default SubirLegajo;

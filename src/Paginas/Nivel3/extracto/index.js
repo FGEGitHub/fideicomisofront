@@ -57,8 +57,9 @@ useEffect(() => {
   { logueado ? <div> 
 
     <BarraLAteral>
+    <  Subir/><br/>
     < Estr />
-    <  Subir/>
+    
    
  </BarraLAteral> 
 

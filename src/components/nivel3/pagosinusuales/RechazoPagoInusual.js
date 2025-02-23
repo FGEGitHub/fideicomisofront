@@ -29,7 +29,8 @@ export default function FormDialog(props) {
   };
 
   const rechazar =async ()  => {
-     await servicioPagos.rechazararpagoniv3(form)
+   const rta =  await servicioPagos.rechazararpagoniv3(form)
+   alert(rta)
      props.getPagosi()
      setOpen(false);
 
@@ -40,11 +41,11 @@ export default function FormDialog(props) {
   return (
     <div>
       <Tooltip title="Clasificar"arrow>
-      <IconButton>
-      <Button  onClick={handleClickOpen}>
+    
+      <button  onClick={handleClickOpen}>
  Clasificar
-      </Button>
-      </IconButton>
+      </button>
+     
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Detalla motivo de clasificacion </DialogTitle>
