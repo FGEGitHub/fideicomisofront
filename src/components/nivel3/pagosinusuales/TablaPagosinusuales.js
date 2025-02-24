@@ -106,7 +106,8 @@ const PagosInusuales = () => {
                                     <TableRow>
                                         <StyledTableCell>Fecha</StyledTableCell>
                                         <StyledTableCell>Cuil/Cuit</StyledTableCell>
-                                        <StyledTableCell>Cuota</StyledTableCell>
+                                        <StyledTableCell>Cliente</StyledTableCell>
+                                      
                                         <StyledTableCell>Monto</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
                                         <StyledTableCell>Descarga</StyledTableCell>
@@ -115,9 +116,10 @@ const PagosInusuales = () => {
                                 <TableBody>
                                     {pagos.map((row, index) => (
                                         <StyledTableRow key={index}>
-                                            <StyledTableCell>{row.fecha} Cuota({row.mes}/{row.anio})</StyledTableCell>
-                                            <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/'+row.cuil_cuit)}>{row.cuil_cuit}</StyledTableCell>
-                                            <StyledTableCell>{row.detalle}</StyledTableCell>
+                                            <StyledTableCell>{row.fecha} Cuota({row.mesc}/{row.anioc})</StyledTableCell>
+                                            <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/'+row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
+                                            <StyledTableCell>{row.Nombre}</StyledTableCell>
+                                          
                                             <StyledTableCell>${row.monto}</StyledTableCell>
                                             <StyledTableCell>
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
