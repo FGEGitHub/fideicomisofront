@@ -56,12 +56,12 @@ const PagosInusuales = () => {
 
     const columns = [
         { name: "cuil_cuit", label: "Cuil/cuit" },
-        { 
-            name: "Nombre", 
+        {
+            name: "Nombre",
             options: {
                 customBodyRenderLite: (dataIndex) => (
-                    <p onClick={() => navigate('/usuario2/detallecliente/' + pagos[dataIndex].cuil_cuit)} 
-                       style={{ marginRight: "10px", cursor: "pointer" }}>
+                    <p onClick={() => navigate('/usuario2/detallecliente/' + pagos[dataIndex].cuil_cuit)}
+                        style={{ marginRight: "10px", cursor: "pointer" }}>
                         {pagos[dataIndex].Nombre}
                     </p>
                 )
@@ -69,19 +69,19 @@ const PagosInusuales = () => {
         },
         { name: "monto", label: "Monto" },
         { name: "ingresos", label: "Ingresos declarados" },
-        { 
-            name: "Actions", 
+        {
+            name: "Actions",
             options: {
                 customBodyRenderLite: (dataIndex) => (
                     <>
                         <BotonRechazo id={pagos[dataIndex].id} getPagosi={getPagosi} />
-                    {/*     <BotonAprobado id={pagos[dataIndex].id} monto={pagos[dataIndex].monto} getPagosi={getPagosi} /> */}
+                        {/*     <BotonAprobado id={pagos[dataIndex].id} monto={pagos[dataIndex].monto} getPagosi={getPagosi} /> */}
                     </>
                 )
             }
         },
-        { 
-            name: "Descarga", 
+        {
+            name: "Descarga",
             options: {
                 customBodyRenderLite: (dataIndex) => (
                     <Button onClick={() => navigate('/nivel3/cuota/' + pagos[dataIndex].id_cuota)}>Ver pagos de cuota</Button>
@@ -107,7 +107,7 @@ const PagosInusuales = () => {
                                         <StyledTableCell>Fecha</StyledTableCell>
                                         <StyledTableCell>Cuil/Cuit</StyledTableCell>
                                         <StyledTableCell>Cliente</StyledTableCell>
-                                      
+
                                         <StyledTableCell>Monto</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
                                         <StyledTableCell>Descarga</StyledTableCell>
@@ -116,17 +116,17 @@ const PagosInusuales = () => {
                                 <TableBody>
                                     {pagos.map((row, index) => (
                                         <StyledTableRow key={index}>
-                                            <StyledTableCell>{row.fecha} Cuota({row.mesc}/{row.anioc})</StyledTableCell>
-                                            <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/'+row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
+                                            <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
+                                            <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
                                             <StyledTableCell>{row.Nombre}</StyledTableCell>
-                                          
+
                                             <StyledTableCell>${row.monto}</StyledTableCell>
                                             <StyledTableCell>
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
-                                               {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
+                                                {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
                                             </StyledTableCell>
-                                            <StyledTableCell>
-                                                <Button onClick={() => navigate('/nivel3/cuota/' + row.id_cuota)}>Ver pagos de cuota</Button>
+                                            <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/nivel3/cuotaic3/${row.id_cuota}` : `/nivel3/cuota/${row.id_cuota}`)}>
+                                                <Button>Ver pagos de cuota</Button>
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
