@@ -180,7 +180,71 @@ const MensualInusuales = (props) => {
 
 
     ];
+    const options = {
+    
+        setTableProps: () => {
+            return {
+              style: {
+                backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
+              },
+            };
+          },
+          customHeadRender: (columnMeta, handleToggleColumn) => ({
+            TableCell: {
+              style: {
+                backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
+                color: 'white', // Cambia el color del texto del encabezado
+              },
+            },
+          }),
+        selectableRows: false, // Desactivar la selección de filas
+        stickyHeader: true,
+        selectableRowsHeader: false,
+        selectableRowsOnClick: true,
+        responsive: 'scroll',
+        rowsPerPage: 10,
+        rowsPerPageOptions: [5, 10, 15],
+        downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
+        print: true,
+        filter: true,
+        viewColumns: true,
+        pagination: true,
 
+        textLabels: {
+          body: {
+            noMatch: "No se encontraron registros de pagos inusuales para el mes seleccionado",
+            toolTip: "Ordenar",
+          },
+          pagination: {
+            next: "Siguiente",
+            previous: "Anterior",
+            rowsPerPage: "Filas por página:",
+            displayRows: "de",
+          },
+          toolbar: {
+            search: "Buscar",
+            downloadCsv: "Descargar CSV",
+            print: "Imprimir",
+            viewColumns: "Ver columnas",
+            filterTable: "Filtrar tabla",
+          },
+          filter: {
+            all: "Todos",
+            title: "FILTROS",
+            reset: "RESETEAR",
+          },
+          viewColumns: {
+            title: "Mostrar columnas",
+            titleAria: "Mostrar/ocultar columnas de la tabla",
+          },
+          selectedRows: {
+            text: "fila(s) seleccionada(s)",
+            delete: "Eliminar",
+            deleteAria: "Eliminar filas seleccionadas",
+          },
+        },
+    
+  };
     const handleChange = (e) => {
         console.log(FormFecha)
         setFormFecha({ ...FormFecha, [e.target.name]: e.target.value })
@@ -252,6 +316,7 @@ const MensualInusuales = (props) => {
                             <option  value={'2022'}>2022</option>
                             <option  value={'2023'}>2023</option>
                             <option  value={'2024'}>2024</option>
+                            <option  value={'2025'}>2025</option>
                         </NativeSelect> 
                         
 
@@ -269,6 +334,7 @@ const MensualInusuales = (props) => {
                         title={"Lista de Pagos Inusuales"}
                         data={pagos}
                         columns={columns}
+                        options={options}
                         actions={[
                             {
                                 icon: 'save',
