@@ -78,7 +78,9 @@ const MensualInusuales = (props) => {
 
         return (
             <>
-            {pagos[dataIndex].mes}/ {pagos[dataIndex].anio}
+            {pagos[dataIndex].fecha}<br/>
+           (  cuota:
+           {pagos[dataIndex].mes}/ {pagos[dataIndex].anio})
 
 
             </>
@@ -88,8 +90,9 @@ const MensualInusuales = (props) => {
 
         return (
             <>
-            {pagos[dataIndex].estado ==='declaradosospechoso' ? <>Declarado Sospechoso</>:<>  {pagos[dataIndex].estado ==='P'? <>Pendiente</>:<> {pagos[dataIndex].estado ==='A'? <>Aprobado</>:<>{pagos[dataIndex].estado ==='averificarnivel3'? <>Pendiente clasificacion Nivel 3</>:<></>}</>}</>}     </>}
-
+            
+                                                <Button  onClick={() => navigate(pagos[dataIndex].zona === "IC3" ? `/nivel3/cuotaic3/${pagos[dataIndex].id_cuota}` : `/nivel3/cuota/${pagos[dataIndex].id_cuota}`)}>Ver pagos</Button>
+                                      
 
             </>
         );
@@ -122,12 +125,12 @@ const MensualInusuales = (props) => {
         },
 
         {
-            name: "cuil_cuit",
+            name: "cuil_cuitc",
             label: "Cuil/Cuit",
         },
         {
-            name: "ingresos",
-            label: "ingresos",
+            name: "nombreadmin",
+            label: "Administrador",
 
         },
         {
