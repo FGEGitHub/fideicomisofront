@@ -107,7 +107,7 @@ export default function SelectTextFields(props) {
         try {
           console.log(enviarr)
           const response =  await ServicioUsuario1.determinarPep(enviarr)
-          alert(response.data);
+          alert(response);
           console.log("getData");
           props.getData();
         } catch (error) {
