@@ -48,13 +48,9 @@ export default function Legajos(props) {
 
 
 
-  const borrar = (e) => {
-
-    console.log(e)
-  }
   const buscar = async () => {
     const datoss = await servicioClientes.datoslegajo({ cuil_cuit: props.cuil_cuit });
-    setDatos(datoss);
+    setDatos(Array.isArray(datoss) ? datoss : []); // Si `datoss` no es un array, se asigna un array vacío
   };
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -71,13 +67,19 @@ export default function Legajos(props) {
     <div>
       {datos[0] ?
         <div>
-          <Snackbar
-            anchorOrigin={{ vertical, horizontal }}
-            open={open}
-             onClose={handleClose}
-            message={datos[0].Faltan}
-            key={vertical + horizontal}
-          />
+         {Array.isArray(datos) && datos.length > 0 ? (
+  <div>
+    <Snackbar
+      anchorOrigin={{ vertical, horizontal }}
+      open={open}
+      onClose={handleClose}
+      message={datos[0]?.Faltan} // Usa "?" para prevenir el error
+      key={vertical + horizontal}
+    />
+  </div>
+) : (
+  <div></div>
+)}
         </div> : <div> </div>
       }
       {datos[0] ?
