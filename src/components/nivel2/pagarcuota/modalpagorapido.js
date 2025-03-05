@@ -74,32 +74,40 @@ export default function SelectTextFields(props) {
   }
 
   const enviar = async () => {
-
-    setLoading(true)
-    if (enviarr) {
-      enviarr.append('cuil_cuit', pago.cuil_cuit);
-      enviarr.append('id_cuota', props.id_cuota);
-      enviarr.append('pago', pago.monto,);
-      enviarr.append('fecha', pago.fecha,);
-      enviarr.append('cbu', pago.cbu,);
-      console.log(enviarr)
-      try {
-        const response = await servicioUsuario1.pagarnivel2(enviarr)
-      alert(response[0])
-        
-        props.traer(props.id_lote)
-        setLoading(false)
-        handleClose()
-      } catch (error) {
-        console.error('Error subiendo archivo:', error);
+    setLoading(true);
+  
+    if (!enviarr) {
+      const continuarSinArchivo = window.confirm(
+        "Atención: No hay archivo de comprobante adjunto. ¿Desea continuar?"
+      );
+      if (!continuarSinArchivo) {
+        setLoading(false);
+        return; // Cancela el envío si el usuario no quiere continuar
       }
-    } else {
-      alert('No hay archivo para subir');
     }
-
-
-    //window.location.reload(true);
-  }
+  
+    const formData = enviarr || new FormData(); // Si no hay archivo, inicializa un FormData vacío
+  
+    formData.append("cuil_cuit", pago.cuil_cuit);
+    formData.append("id_cuota", props.id_cuota);
+    formData.append("pago", pago.monto);
+    formData.append("fecha", pago.fecha);
+    formData.append("cbu", pago.cbu);
+  
+    console.log(formData);
+  
+    try {
+      const response = await servicioUsuario1.pagarnivel2(formData);
+      alert(response[0]);
+  
+      props.traer(props.id_lote);
+      setLoading(false);
+      handleClose();
+    } catch (error) {
+      console.error("Error subiendo archivo:", error);
+    }
+  };
+  
 
   const enviar2 = async () => {
 
