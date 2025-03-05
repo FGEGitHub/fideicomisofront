@@ -288,8 +288,8 @@ const LegajoCliente = (props) => {
            {user ?
             <>
            {user.nivel ===2 ? <> 
-
-            <Estadisticas cuil_cuit={props.cuil_cuit} refresh={refreshStats} /> 
+             {props.cuil_cuit &&  
+            <Estadisticas cuil_cuit={props.cuil_cuit} refresh={refreshStats} />  }
              {products && <></>}
   {products[1][0].zona=="IC3" ? <><Button onClick={volver3} > <ArrowBackIcon/> Volver</Button></>:<><Button onClick={volver} > <ArrowBackIcon/> Volver</Button></>}
 
