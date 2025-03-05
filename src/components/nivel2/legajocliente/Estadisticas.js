@@ -27,7 +27,7 @@ export default function Legajos(props) {
     {
       cuil_cuit: props.cuil_cuit
     });
-  const [datos, setDatos] = useState();
+  const [datos, setDatos] = useState([]);
   const [historial, setHistorial] = useState([]);
   const navigate = useNavigate();
   const [state, setState] = React.useState({
@@ -51,7 +51,7 @@ export default function Legajos(props) {
   const buscar = async () => {
     const datoss = await servicioClientes.datoslegajo({ cuil_cuit: props.cuil_cuit });
     setDatos(Array.isArray(datoss) ? datoss : []); // Si `datoss` no es un array, se asigna un array vacío
-  };
+  }; 
   const handleClose = () => {
     setState({ ...state, open: false });
   };
