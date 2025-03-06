@@ -160,7 +160,7 @@ const LotesCliente = (props) => {
 
 
     const traerlink360 = async (index) => {
-setCargalink(true)
+        setCargalink(true)
         const dde = await servicio360.traerlink360(index)
 
         window.open(dde)
@@ -573,7 +573,7 @@ setCargalink(true)
                         <Button variant="contained" onClick={() => { navigate('/usuario2/agregarcuotas/' + idlote) }} >
                             Agregar cuotas al lote
                         </Button>
-                   {/*      <ModalModificarvalortotal
+                        {/*      <ModalModificarvalortotal
                             idlote={idlote}
                         /> */}
                         <AgregaraCuotas
@@ -582,120 +582,12 @@ setCargalink(true)
 
                         <BorrarCuotas
                             id={idlote} />
-                            <CancelarLote
-      id_cliente={idlote}
-      cuotas={cuotas}/>
+                        <CancelarLote
+                            id_cliente={idlote}
+                            cuotas={cuotas} />
                     </ButtonGroup>
 
-                    {act2 ?
-
-                        <div>
-
-
-
-
-
-                            {cuotas !== '' ? <>
-
-                                <div>
-                                    <Box
-                                        sx={{ display: 'flex' }}
-                                    >
-                                        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
-
-                                            <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "38%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '3%',
-                                                    display: 'flex'
-                                                }}
-                                            >
-
-                                                <TableContainer >
-                                                    <Table sx={{ minWidth: 520 }} aria-label="simple table" >
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
-
-
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        <TableBody>
-                                                            {deudaExigible.map((row, index) => (
-                                                                <TableRow
-                                                                    key={row.name}
-                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                                >
-
-                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                                                    <TableCell align="left" padding="normal">
-      {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
-    </TableCell>
-                                                                </TableRow>
-                                                            ))}
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </Paper>
-
-
-                                            <Paper
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    background: '#eeeeee',
-                                                    color: '#bdbdbd',
-                                                    border: '1px dashed #ccc',
-                                                    width: "38%",
-                                                    '&:hover': { border: '1px solid #ccc' },
-                                                    border: "1px solid black",
-                                                    margin: '3%',
-                                                    marginLeft:'-1%',
-                                                    display: 'flex'
-                                                }}
-                                            >
-
-                                                <TableContainer >
-                                                    <Table sx={{ minWidth: 520 }} aria-label="simple table" >
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
-
-
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        <TableBody>
-                                                            {detallePendiente.map((row, index) => (
-                                                                <TableRow
-                                                                    key={row.name}
-                                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                                >
-
-                                                                    <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                                                    <TableCell align="left" padding="normal">
-      {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
-    </TableCell>
-                                                                </TableRow>
-                                                            ))}
-                                                        </TableBody>
-                                                    </Table>
-                                                </TableContainer>
-                                            </Paper>
-
-                                            <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                                        </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/' + idlote) }}  > Imprimir comprobante</Fab>
-                                    </Box>
-                                </div>
-
-
-                            </> : <></>}
-                        </div>
-                        : <div></div>}
+                 
 
 
 
@@ -752,102 +644,94 @@ setCargalink(true)
 
                                     }}
                                 >
-<TableContainer style={{ height: '80vh' }}>
-    {!cuotas ? <Skeleton /> : <>
-        <h1>CUOTAS</h1>
-        <Alert variant="filled" severity="success">
-  Se muestra en color VERDE la columna pago las cuotas pagadas en su totalidad monto superior
-</Alert>
-<Alert variant="filled" severity="info">
-Se muestra en color ROJO la columna pago las cuotas Sin ningun pago efectuado
-</Alert>
-      <Alert variant="filled" severity="error">
-      Se muestra en color VERDE la columna pago las cuotas pagadas en su totalidad monto superior
-      </Alert>
-        <Table stickyHeader>
-            <TableHead>
-                <TableRow>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>FECHA</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
-                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO 360</b></TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {cuotas.map((row) => (
-                    <StyledTableRow key={row.name}>
-                        <StyledTableCell component="th" scope="row">
-                            {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)}</b></span>
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">{row.ICC}</StyledTableCell>
-                        <StyledTableCell component="th" scope="row">{row.Ajuste_ICC}</StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-    {row.diferencia < 0 ? (
-        row.diferencia == -row.cuota_con_ajuste ? (
-            <p style={{ color: 'red', whiteSpace: 'nowrap' }}>
-                {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-            </p>
-        ) : (
-            <p style={{ color: 'blue', whiteSpace: 'nowrap' }}>
-                {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-            </p>
-        )
-    ) : (
-        <p style={{ color: 'green', whiteSpace: 'nowrap' }}>
-            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-        </p>
-    )}
-</StyledTableCell>
+                                    <TableContainer style={{ height: '80vh' }}>
+                                        {!cuotas ? <Skeleton /> : <>
+                                            <h1>CUOTAS</h1>
 
-                        <StyledTableCell component="th" scope="row" align="center">
-                            <Pagorapido
-                                id_cuota={row.id}
-                                cuota_con_ajuste={row.cuota_con_ajuste}
-                                id_lote={row.id_lote}
-                                traer={async (index) => {
-                                        
-                                    const cuotas = await servicioCuotas.vercuotas(idlote)
-                                    setCuotas(cuotas)
-                                    //setIdlote(idlote)
-                                    setAct(true)
-                                    verief(idlote)
-                                    setOpen(false)
-                            
-                                }}
-                            />
-                            <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            {cargalink ? <CircularProgress /> : <Button onClick={() => traerlink360(row.id)}>Pagar 360</Button>}
-                        </StyledTableCell>
-                    </StyledTableRow>
-                ))}
-            </TableBody>
-        </Table>
-    </>}
-</TableContainer>
+                                            <Table stickyHeader>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>FECHA</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO 360</b></TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {cuotas.map((row) => (
+                                                        <StyledTableRow key={row.name}>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)}</b></span>
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.ICC}</StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">{row.Ajuste_ICC}</StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                {row.diferencia < 0 ? (
+                                                                    row.diferencia == -row.cuota_con_ajuste ? (
+                                                                        <p style={{ color: 'red', whiteSpace: 'nowrap' }}>
+                                                                            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+                                                                        </p>
+                                                                    ) : (
+                                                                        <p style={{ color: 'blue', whiteSpace: 'nowrap' }}>
+                                                                            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+                                                                        </p>
+                                                                    )
+                                                                ) : (
+                                                                    <p style={{ color: 'green', whiteSpace: 'nowrap' }}>
+                                                                        {new Intl.NumberFormat('de-DE').format(row.diferencia)}
+                                                                    </p>
+                                                                )}
+                                                            </StyledTableCell>
+
+                                                            <StyledTableCell component="th" scope="row" align="center">
+                                                                <Pagorapido
+                                                                    id_cuota={row.id}
+                                                                    cuota_con_ajuste={row.cuota_con_ajuste}
+                                                                    id_lote={row.id_lote}
+                                                                    traer={async (index) => {
+
+                                                                        const cuotas = await servicioCuotas.vercuotas(idlote)
+                                                                        setCuotas(cuotas)
+                                                                        //setIdlote(idlote)
+                                                                        setAct(true)
+                                                                        verief(idlote)
+                                                                        setOpen(false)
+
+                                                                    }}
+                                                                />
+                                                                <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />
+                                                            </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                {cargalink ? <CircularProgress /> : <Button onClick={() => traerlink360(row.id)}>Pagar 360</Button>}
+                                                            </StyledTableCell>
+                                                        </StyledTableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </>}
+                                    </TableContainer>
 
                                 </Paper>
 
@@ -864,7 +748,115 @@ Se muestra en color ROJO la columna pago las cuotas Sin ningun pago efectuado
 
             </div>
 
-            <br /><br /><br /><br />
+            <br />   {act2 ?
+
+<div>
+
+
+
+
+
+    {cuotas !== '' ? <>
+
+        <div>
+            <Box
+                sx={{ display: 'flex' }}
+            >
+                <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
+
+                    <Paper
+                        sx={{
+                            cursor: 'pointer',
+                            background: '#eeeeee',
+                            color: '#bdbdbd',
+                            border: '1px dashed #ccc',
+                            width: "38%",
+                            '&:hover': { border: '1px solid #ccc' },
+                            border: "1px solid black",
+                            margin: '3%',
+                            display: 'flex'
+                        }}
+                    >
+
+                        <TableContainer >
+                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
+
+
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {deudaExigible.map((row, index) => (
+                                        <TableRow
+                                            key={row.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+
+                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                            <TableCell align="left" padding="normal">
+                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+
+
+                    <Paper
+                        sx={{
+                            cursor: 'pointer',
+                            background: '#eeeeee',
+                            color: '#bdbdbd',
+                            border: '1px dashed #ccc',
+                            width: "38%",
+                            '&:hover': { border: '1px solid #ccc' },
+                            border: "1px solid black",
+                            margin: '3%',
+                            marginLeft: '-1%',
+                            display: 'flex'
+                        }}
+                    >
+
+                        <TableContainer >
+                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
+
+
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {detallePendiente.map((row, index) => (
+                                        <TableRow
+                                            key={row.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+
+                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                            <TableCell align="left" padding="normal">
+                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+
+                    <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
+                </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/' + idlote) }}  > Imprimir comprobante</Fab>
+            </Box>
+        </div>
+
+
+    </> : <></>}
+</div>
+: <div></div>}
 
 
 
