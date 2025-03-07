@@ -25,7 +25,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-const drawerWidth = 240;
+import Button from '@mui/material/Button';
 const initialWidth = 240; // Ancho inicial del menú
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
@@ -36,6 +36,7 @@ export default function MenuIzq2 ({children}) {
     const [user, setUser] = useState();
     const [drawerWidth, setDrawerWidth] = useState(initialWidth);
     const [resizing, setResizing] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(true);
     ///////////////
 ///Funciones para ajustar el ancho 
 const handleMouseDown = () => {
@@ -224,32 +225,32 @@ useEffect(() => {
          
       
        ];
+
+
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
     return(
       <>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      
-    
-      <Drawer
-       
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: drawerWidth,
-              boxSizing: "border-box",
-            },
-          }}
-          variant="permanent"
-          anchor="left"
-      >
-        <Navbar
-      logout = {{hanleLogout}}/>
-        <Toolbar />
-
-        <Toolbar />
-        <Divider />
-        <List>
+      <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          {menuVisible && (
+              <Drawer
+              sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                "& .MuiDrawer-paper": {
+                  width: drawerWidth,
+                  boxSizing: "border-box",
+                },
+              }}
+              variant="permanent"
+              anchor="left"
+              >
+                  <Navbar />
+                  <Toolbar />
+                  <Divider />
+                  <List>
           {user ? <>
           {user.nivel === 2 ? <> 
             {menuItems.map((item) => (
@@ -281,38 +282,29 @@ useEffect(() => {
           </>}
           </> :  <></>}
         </List>
-        
-        <Divider />
-        {/* Handle para redimensionar */}
-        <div
-            style={{
-              width: "5px",
-              cursor: "ew-resize",
-              height: "100%",
-              position: "absolute",
-              top: 0,
-              right: 0,
-              zIndex: 1,
-              backgroundColor: "transparent",
-            }}
-            onMouseDown={handleMouseDown}
-          />
-      </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-      >
-        <Toolbar />
-      {/*   <AlertaInusual
-      cantidadInusual={cantidadInusual} />
-        <AlertaAprobaciones
-      cantidad={cantidad} /> */}
-   { children}
+                  <Divider />
+              </Drawer>
+          )}
+
+          <Box
+              component="main"
+              sx={{
+                  flexGrow: 1,
+                  bgcolor: 'background.default',
+                  p: 3,
+                 // marginLeft: menuVisible ? `${drawerWidth}px` : '0',
+                  transition: 'margin 0.3s ease-in-out',
+              }}
+          >
+              <Navbar />
+              <Toolbar />
+              <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2 }}>
+                  {menuVisible ? 'Ocultar Menú' : 'Mostrar Menú'}
+              </Button>
+              {children}
+          </Box>
       </Box>
-    </Box>
-    
-   
-    </>
+  </>
   );
 
 }

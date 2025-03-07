@@ -657,9 +657,11 @@ const LotesCliente = (props) => {
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO AL CIERRE</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
+                                                     
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO 360</b></TableCell>
                                                     </TableRow>
@@ -682,10 +684,10 @@ const LotesCliente = (props) => {
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
                                                                 {row.diferencia < 0 ? (
@@ -704,6 +706,10 @@ const LotesCliente = (props) => {
                                                                     </p>
                                                                 )}
                                                             </StyledTableCell>
+                                                            <StyledTableCell component="th" scope="row">
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
+                                                            </StyledTableCell>
+                                                           
 
                                                             <StyledTableCell component="th" scope="row" align="center">
                                                                 <Pagorapido
