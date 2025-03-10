@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Paper, Button, TextField, Dialog, DialogActions, DialogContent, NativeSelect, DialogTitle, Box, CircularProgress } from '@mui/material';
+import { Paper, Button, TextField, Dialog, DialogActions, DialogContent, NativeSelect, DialogTitle, Box, CircularProgress ,Backdrop} from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function FormDialog(props) {
   const [completado, setCompletado] = useState(false);
   const [fileUpload, setFileUpload] = useState(null);
   const [cargando, setCargando] = useState(false);
-
+  const [loadingPdf, setLoadingPdf] = useState(false)
   const [legform, setLegform] = useState({
     cuil_cuit: cuil_cuit,
     tipo: '',
@@ -50,6 +50,7 @@ export default function FormDialog(props) {
   ));
 
   const enviar = async () => {
+    setLoadingPdf(true);
     setCargando(true);
     if (enviarr) {
       enviarr.append('cuil_cuit', legform.cuil_cuit);
@@ -68,6 +69,7 @@ export default function FormDialog(props) {
       alert('No hay archivo para subir');
     }
     setCargando(false);
+    setLoadingPdf(false); 
     setOpen(false);
   };
 
@@ -94,6 +96,12 @@ export default function FormDialog(props) {
 
   return (
     <div>
+            <Backdrop open={loadingPdf} style={{ color: "#fff", zIndex: 1301 }}>
+              <div style={{ textAlign: "center" }}>
+                <CircularProgress color="inherit" />
+                <p>Cargando PDF...</p>
+              </div>
+            </Backdrop>
       <Button variant="outlined" onClick={handleClickOpen}>
         Agregar Legajo
       </Button>
