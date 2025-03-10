@@ -3,8 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from "@mui/material/Button";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import MUIDataTable from "mui-datatables";
-import CircularProgress from "@mui/material/CircularProgress";
-import Backdrop from "@mui/material/Backdrop";
+import Container from '@mui/material/Container';
 import servicioCliente from '../../../services/clientes'
 import serviciousuario1 from '../../../services/usuario1'
 import serviciousuarios from '../../../services/usuarios'
@@ -30,7 +29,7 @@ const LegajoCliente = (props) => {
       const [user, setUser] = useState(null)
       const [cargado, setCargado] = useState(false)
       const [refreshStats, setRefreshStats] = useState(false); // Estado para manejar las actualizaciones de estadísticas
-      const [loadingPdf, setLoadingPdf] = useState(false); 
+
       const actualizarEstadisticas = () => {
         setRefreshStats(prev => !prev); // Cambiar el estado para forzar la actualización
       };
@@ -89,17 +88,18 @@ const LegajoCliente = (props) => {
   
 
   
-      const download = async (index) => {
-        setLoadingPdf(true); // Activar pantalla de carga
-        try {
-          const filename = products[0][index].ubicacion;
-          const link = await serviciousuario1.obtenerurl(filename);
-          window.open(link.data);
-        } catch (error) {
-          console.error("Error al obtener el PDF", error);
-        }
-        setLoadingPdf(false); // Desactivar pantalla de carga
-      };
+          async function download(index, rowIndex, data) {
+              const filename = (products[0][index].ubicacion)
+            
+             
+             const link = await serviciousuario1.obtenerurl(filename)
+             console.log(link)
+              console.log(link.data)            
+              window.open(link.data)
+        
+              setAct(true)
+  
+          }
   
           async function veronline(index, rowIndex, data) {
             const filename = (products[0][index].ubicacion)
@@ -112,26 +112,42 @@ const LegajoCliente = (props) => {
            // var nueva_ventana = window.open('', '_blank');
            // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
         } 
-        function verFile(index) {
-          return (
-            <>
-              {products[0][index].lazo !== undefined ? (
-                <Modalveronlinecbu id={products[0][index].id} />
-              ) : (
-                <Modalveronline id={products[0][index].id} />
-              )}
-            </>
-          );
-        }
-      
+     function verFile(index, rowIndex, data) {
     
-        function downloadFile(index) {
-          return (
-            <Button onClick={() => download(index)} variant="contained" color="primary">
-              Descargar
-            </Button>
-          );
+   
+            return (
+                <>
+{["Cbu personal", "Cbu familiar", "Socio/Gerente/Apoderado", "Propio"].includes(products[0][index]?.tipo) ? (
+  <Modalveronlinecbu id={products[0][index].id} />
+) : (
+  <Modalveronline id={products[0][index].id} />
+)}   
+                  {/*   <Button
+                        onClick={() => veronline(index)}
+                    >Ver online</Button> */}
+    
+    
+                </>
+            );
         }
+    
+       function downloadFile(index, rowIndex, data) {
+  
+  
+          return (
+              <>
+                  
+                    <Button
+                          onClick={() => download(index)}
+                      >   Descargar</Button> 
+  
+  
+              </>
+          );
+      }
+  
+  
+  
   
   
   
@@ -336,22 +352,12 @@ const LegajoCliente = (props) => {
           </ButtonGroup>
              <div    >
              {products ? <>
-              <div>
-      <Backdrop open={loadingPdf} style={{ color: "#fff", zIndex: 1301 }}>
-        <div style={{ textAlign: "center" }}>
-          <CircularProgress color="inherit" />
-          <p>Cargando...</p>
-        </div>
-      </Backdrop>
-
-      {cargado && user ? (
-        <>
-          <MUIDataTable title="Documentación del Cliente" data={products?.[0] || []} columns={columns} />
-        </>
-      ) : (
-        <p>Cargando datos...</p>
-      )}
-    </div>
+           <MUIDataTable
+                  title={"Documentacion del Cliente"}
+                  data={products[0]}
+                  columns={columns}
+                  options={optionss}
+              />
               </>:<></>}
   
                  </div>
