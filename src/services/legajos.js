@@ -109,6 +109,35 @@ const actualizarpagoic3 = async (formData) => {
  
    //  }})
  }
+ 
+ 
+ const modificarcbu = async (formData) => {
+
+  
+
+  const {data} = await axios.post(baseUrl + 'modificarcbu', formData, config)
+  
+  return (data)
+ 
+   //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+ 
+ 
+   //  }})
+ }
+ 
+ const modificarconstancianormal = async (formData) => {
+
+  
+
+  const {data} = await axios.post(baseUrl + 'modificarconstancianormal', formData, config)
+  
+  return (data)
+ 
+   //await axios.post(baseUrl +'subirlegajo', formData, { headers: {'Content-Type': 'multipart/form-data'
+ 
+ 
+   //  }})
+ }
 const borrar = async (id) => {
   await axios.get(baseUrl + 'borrarunlegajo/' + id)
 
@@ -169,4 +198,4 @@ const cantidaddjiva = async (cuil_cuit) => {
   }
 };
 
-export default {actualizarpagoic3,traerPdfConstanciacbu, actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+export default {modificarconstancianormal,modificarcbu,actualizarpagoic3,traerPdfConstanciacbu, actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };

@@ -17,7 +17,7 @@ import Habilitar from './ModalHabiulitar'
 import Deshabilitar from './ModalDeshabilitar'
 import Estadisticas from './Estadisticas'
 import ModalSeguro from './Modalseguroborrar'
-
+import ModalEditarDescripcion from "./modaleditarc";
 
 const LegajoCliente = (props) => {
   const navigate = useNavigate();
@@ -29,7 +29,8 @@ const LegajoCliente = (props) => {
       const [user, setUser] = useState(null)
       const [cargado, setCargado] = useState(false)
       const [refreshStats, setRefreshStats] = useState(false); // Estado para manejar las actualizaciones de estadísticas
-
+      const [openModal, setOpenModal] = useState(false);
+      const [selectedData, setSelectedData] = useState(null);
       const actualizarEstadisticas = () => {
         setRefreshStats(prev => !prev); // Cambiar el estado para forzar la actualización
       };
@@ -52,10 +53,18 @@ const LegajoCliente = (props) => {
         }   */
       }
       
-  
+      const handleOpenModal = (data) => {
+        setSelectedData(data);
+        setOpenModal(true);
+      };
+      
+      const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedData(null);
+      }
       const getData = async () => {
         const  data = await servicioCliente.traerLejagos(cuil_cuit)
-        
+       
           
               setProducts(data)
           
@@ -131,22 +140,7 @@ const LegajoCliente = (props) => {
             );
         }
     
-       function downloadFile(index, rowIndex, data) {
-  
-  
-          return (
-              <>
-                  
-                    <Button
-                          onClick={() => download(index)}
-                      >   Descargar</Button> 
-  
-  
-              </>
-          );
-      }
-  
-  
+       
   
   
   
@@ -170,6 +164,20 @@ const LegajoCliente = (props) => {
             name: "estado",
             label: "estado"
         },
+        {
+          name: "Editar",
+          options: {
+            customBodyRenderLite: (dataIndex, rowIndex) => {
+              const rowData = products[0][dataIndex]; // Obtener los datos de la fila
+              return (
+                <Button variant="contained" color="primary" onClick={() => handleOpenModal(rowData)}>
+                  Editar
+                </Button>
+              );
+            }
+          }
+        },
+        
         {
           name: "ve online",
           options: {
@@ -287,7 +295,18 @@ const LegajoCliente = (props) => {
       //4 - renderizamos la datatable
       return (
           <div>
-           
+          <ModalEditarDescripcion 
+  open={openModal} 
+  handleClose={handleCloseModal} 
+  data={selectedData} 
+  getData={  async () => {
+    const  data = await servicioCliente.traerLejagos(cuil_cuit)
+    
+      
+          setProducts(data)
+      
+  }}
+/>
            {user ?
             <>
            {user.nivel ===2 ? <> 
