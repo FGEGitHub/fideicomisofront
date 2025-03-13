@@ -35,6 +35,7 @@ export default function SelectTextFields(props) {
   const [warning, setWarning] = useState('');
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false);
+  const [descripcionCBU, setDescripcionCBU] = useState('');
   const onDrop = useCallback((files, acceptedFiles) => {
     setLoading(true)
     const formData = new FormData();
@@ -145,10 +146,11 @@ props.traer(props.id_lote)
         }
         handleChange(event)
       };
-  const handleChange = (e) => {
-    console.log(pago)
-    setPagos({ ...pago, [e.target.name]: e.target.value })
-  }
+      const handleChange = (e) => {
+        const selectedCBU = cbus.find((cbu) => cbu.id === e.target.value);
+        setPagos({ ...pago, [e.target.name]: e.target.value });
+        setDescripcionCBU(selectedCBU ? selectedCBU.descripcion : '');
+      };
 
 
   const handleClose = () => {
@@ -213,6 +215,11 @@ props.traer(props.id_lote)
                 </TextField>
                 {   pago.cbu ?  <Modalveronline id={pago.cbu}/>:<></>
               }
+              {descripcionCBU && (
+  <Typography variant="body1" sx={{ mt: 2, fontWeight: 'bold' }}>
+    Ultimos numeros: {descripcionCBU}
+  </Typography>
+)}
                 <Box sx={{ '& > :not(style)': { m: 1 } }}>
 
 
