@@ -392,7 +392,7 @@ const FichaAxios = (props) => {
       <TextField
         label="porcentaje 1"
         id="porcentaje1"
-        value={client.cuilbeneficiario1}
+        value={client.porcentaje1}
         variant="filled"
         sx={{ margin: "10px" }}
         InputProps={{
@@ -444,7 +444,7 @@ const FichaAxios = (props) => {
       <TextField
         label="porcentaje 2"
         id="porcentaje2"
-        value={client.cuilbeneficiario2}
+        value={client.porcentaje2}
         variant="filled"
         sx={{ margin: "10px" }}
         InputProps={{
@@ -495,7 +495,7 @@ const FichaAxios = (props) => {
       <TextField
         label="porcentaje 3"
         id="porcentaje3"
-        value={client.cuilbeneficiario3}
+        value={client.porcentaje3}
         variant="filled"
         sx={{ margin: "10px" }}
         InputProps={{
