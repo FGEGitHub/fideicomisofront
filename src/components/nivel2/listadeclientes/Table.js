@@ -108,10 +108,33 @@ const Lotes = () => {
         name: "observaciones",
         label: "Riesgo",
         options: {
-          customBodyRenderLite: (dataIndex, rowIndex) =>
-            CustomProgressRenderer(dataIndex, rowIndex),
+          customBodyRenderLite: (dataIndex) => {
+            const value = clients[dataIndex]?.porcentaje || 0;
+            let color = "gray";
+            let emoji = "⚪"; // Sin completar
+      
+            if (value > 0 && value <= 58) {
+              color = "green";
+              emoji = "🟢";
+            } else if (value > 59 && value <= 70) {
+              color = "orange";
+              emoji = "🟡";
+            } else if (value > 70) {
+              color = "red";
+              emoji = "🔴";
+            }
+      
+            return (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <span>{emoji}</span>
+                <span>{`${value}%`}</span>
+              </Box>
+            );
+          },
+          sortCompare: (order) => (a, b) => (a - b) * (order === "asc" ? 1 : -1),
         },
       },
+      
        
            {
             name: "cuil_cuit",

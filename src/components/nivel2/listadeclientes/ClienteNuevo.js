@@ -1,23 +1,16 @@
 import * as React from 'react';
 import { useParams } from "react-router-dom";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from "react";
 import servicioCliente from '../../../services/clientes';
-import NativeSelect from '@mui/material/NativeSelect';
-import InputLabel from '@mui/material/InputLabel';
+import {
+  Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText,
+  DialogTitle, NativeSelect, InputLabel, Paper, Backdrop, CircularProgress,
+  Typography
+} from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-import { Paper, Backdrop, CircularProgress } from '@mui/material';
 
-export default function ClienteNuevo(props) {
-  let params = useParams();
-  let cuil_cuit = params.cuil_cuit;
-
+export default function ClienteNuevo({ getClients }) {
+  let { cuil_cuit } = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({});
@@ -26,9 +19,8 @@ export default function ClienteNuevo(props) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleDeterminar = async (event) => {
     event.preventDefault();
@@ -36,70 +28,48 @@ export default function ClienteNuevo(props) {
     try {
       await servicioCliente.crear(form);
       alert('Cliente creado con éxito');
+      getClients();
+      setOpen(false);
     } catch (error) {
       console.error(error);
       alert('Error al crear el cliente');
     }
     setLoading(false);
-    props.getClients();
-    setOpen(false);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        CARGAR CLIENTE NUEVO <PersonAddAlt1Icon />
+      <Button variant="contained" onClick={handleClickOpen} startIcon={<PersonAddAlt1Icon />}
+        sx={{  fontFamily: 'Montserrat, sans-serif' }}>
+        CARGAR CLIENTE NUEVO
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Cliente Nuevo</DialogTitle>
-        <Paper
-          sx={{
-            cursor: 'pointer',
-            background: '#fafafa',
-            color: '#bdbdbd',
-            border: '1px dashed #ccc',
-            '&:hover': { border: '1px solid #ccc' },
-          }}
-        >
+      
+      <Dialog open={open} onClose={handleClose} fullWidth>
+        <DialogTitle sx={{ backgroundColor: "#EDE3D9", fontFamily: 'Montserrat, sans-serif' }}>Cliente Nuevo</DialogTitle>
+        <Paper sx={{ background: "#F5F1E9", padding: 2 }}>
           <DialogContent>
-            <DialogContentText>
-              Datos del Nuevo Cliente
+            <DialogContentText sx={{ fontFamily: 'Montserrat, sans-serif', color: "#555" }}>
+              Complete los datos del nuevo cliente
             </DialogContentText>
             <form onSubmit={handleDeterminar}>
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Nombre"
-                name="Nombre"
-                onChange={handleChange}
-                fullWidth
-                variant="standard"
-              />
-              <InputLabel variant="standard">Razon</InputLabel>
-              <NativeSelect name='razon' onChange={handleChange}>
-                <option value='Empresa'>Elegir</option>
+              <TextField label="Nombre" name="Nombre" onChange={handleChange} fullWidth variant="outlined" margin="dense" />
+              <InputLabel variant="standard">Razón</InputLabel>
+              <NativeSelect name='razon' onChange={handleChange} fullWidth>
+                <option value=''>Elegir</option>
                 <option value='Empresa'>Empresa</option>
                 <option value='Persona'>Persona</option>
               </NativeSelect>
-              <InputLabel variant="standard">Tipo DNI</InputLabel>
-              <NativeSelect name='tipo_dni' onChange={handleChange}>
-                <option value='C.U.I.L.'>Elegir</option>
-                <option value='C.U.I.L.'>CUIL</option>
-                <option value='C.U.I.T.'>CUIT</option>
-              </NativeSelect>
-              <TextField margin="dense" label="Numero (con guiones)" name="cuil_cuit" onChange={handleChange} fullWidth variant="standard" />
-              <TextField margin="dense" label="Domicilio" name="domicilio" onChange={handleChange} fullWidth variant="standard" />
-              <TextField margin="dense" label="Telefono" name="telefono" onChange={handleChange} fullWidth variant="standard" />
-              <TextField margin="dense" label="Observaciones" name="observaciones" onChange={handleChange} fullWidth variant="standard" />
+      
+              <TextField label="Número (con guiones)" name="cuil_cuit" onChange={handleChange} fullWidth variant="outlined" margin="dense" />
+              <TextField label="Domicilio" name="domicilio" onChange={handleChange} fullWidth variant="outlined" margin="dense" />
+              <TextField label="Teléfono" name="telefono" onChange={handleChange} fullWidth variant="outlined" margin="dense" />
+              <TextField label="Observaciones" name="observaciones" onChange={handleChange} fullWidth variant="outlined" margin="dense" multiline rows={3} />
+              
               <DialogActions>
                 {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio && form.tipo_dni && form.Nombre ? (
-                  <Button variant="contained" color="primary" type="submit">Crear</Button>
+                  <Button variant="contained" type="submit" sx={{ backgroundColor: "#6D9F71", color: "white" }}>Crear</Button>
                 ) : (
-                  <h6 style={{ color: "red" }}>Completar todos los campos</h6>
+                  <Typography color="error" sx={{ fontSize: 14 }}>Completar todos los campos</Typography>
                 )}
                 <Button variant="outlined" color="error" onClick={handleClose}>Cancelar</Button>
               </DialogActions>
@@ -107,10 +77,10 @@ export default function ClienteNuevo(props) {
           </DialogContent>
         </Paper>
       </Dialog>
-      {/* Pantalla de carga */}
+      
       <Backdrop sx={{ color: '#fff', zIndex: 9999 }} open={loading}>
         <CircularProgress color="inherit" />
-        <h2 style={{ marginLeft: 20 }}>Guardando y Analizando...</h2>
+        <Typography sx={{ marginLeft: 2 }}>Guardando y Analizando...</Typography>
       </Backdrop>
     </div>
   );
