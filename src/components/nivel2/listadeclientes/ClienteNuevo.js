@@ -66,7 +66,7 @@ export default function ClienteNuevo({ getClients }) {
               <TextField label="Observaciones" name="observaciones" onChange={handleChange} fullWidth variant="outlined" margin="dense" multiline rows={3} />
               
               <DialogActions>
-                {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio && form.tipo_dni && form.Nombre ? (
+                {form.cuil_cuit && form.observaciones && form.telefono && form.domicilio && form.Nombre ? (
                   <Button variant="contained" type="submit" sx={{ backgroundColor: "#6D9F71", color: "white" }}>Crear</Button>
                 ) : (
                   <Typography color="error" sx={{ fontSize: 14 }}>Completar todos los campos</Typography>
