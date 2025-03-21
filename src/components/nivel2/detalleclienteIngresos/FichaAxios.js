@@ -21,7 +21,7 @@ const FichaAxios = (props) => {
   const navigate = useNavigate();
     const [cliente, setCliente] = useState([])
   const apiKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-  const [address, setAddress] = useState(null);
+  const [verMas, setVerMas] = useState(false);
   const [editMode, setEditMode] = useState(false);
   function submitFormHandler(event) {
     event.preventDefault();
@@ -157,9 +157,9 @@ const FichaAxios = (props) => {
                 />
                          </>:<>
                          <TextField
-                  label="Fecha de nacimiento"
-                  id="FechaNacimiento"
-                  value={client.FechaNacimiento}
+                  label="Tipo de cliente"
+                  id="tipoCliente"
+                  value={client.tipoCliente}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -171,13 +171,17 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
+                  
                          </>}
-             
+                         <br/>
+                         <Button     sx={{ color: 'black', borderColor: 'black' }}  onClick={() => setVerMas(!verMas)}>
+            {verMas ? "Ver menos" : "Ver más"}
+          </Button>
                          
               </Box>
                    
 
-                    
+              {verMas && (<>
               <Box>
              
                 <TextField
@@ -284,11 +288,12 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
+                
                 </>:<>
                 <TextField
-                  label="Tipo de cliente"
-                  id="tipoCliente"
-                  value={client.tipoCliente}
+                  label="Fecha de nacimiento"
+                  id="FechaNacimiento"
+                  value={client.FechaNacimiento}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -510,7 +515,19 @@ const FichaAxios = (props) => {
     </>
   )}
 </Box>
-
+<Agregarbenefciarios
+                  id={client.id}
+                  traer={async() => {
+       
+   
+                    const  cliente = await servicioCliente.cliente(props.cuil_cuit)
+                    
+                    setCliente(cliente)
+                
+                   
+                
+                    ;
+                  }}/> </>  )}
               
 
               <Box>
@@ -529,33 +546,23 @@ const FichaAxios = (props) => {
                     </div>
                   ) : (
                     <div className="profile-edit-button">
-                      <Button
-                        variant="outlined"
-                        onClick={() => navigate('/usuario2/legajoscliente/'+props.cuil_cuit)}
-                      >
-                      Ir a legajos
-                      </Button>
+                    <Button
+  variant="outlined"
+  sx={{ marginLeft:"-25%", color: 'black', borderColor: 'black' }}
+  onClick={() => navigate('/usuario2/legajoscliente/' + props.cuil_cuit)}
+>
+  Ir a legajos
+</Button>
                      
                    <Button
                    variant="outlined"
+                   sx={{ color: 'black', borderColor: 'black' }}
                    onClick={() =>  navigate('/usuario2/modificarcliente/'+props.cuil_cuit)}                 >
                 Modificar cliente
                  </Button>
                  { client ? <>
                  
-                  <Agregarbenefciarios
-                  id={client.id}
-                  traer={async() => {
-       
-   
-                    const  cliente = await servicioCliente.cliente(props.cuil_cuit)
-                    
-                    setCliente(cliente)
-                
-                   
-                
-                    ;
-                  }}/>
+                 
                  </>:<></>}
                  
                     </div>
