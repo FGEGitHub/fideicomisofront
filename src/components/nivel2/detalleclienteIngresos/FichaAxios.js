@@ -324,7 +324,7 @@ const FichaAxios = (props) => {
                   label="Ingresos Declarados"
                 
                   defaultValue=""
-                  value={client.ingresos}
+                  value={"$"+client.ingresos}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -392,7 +392,7 @@ const FichaAxios = (props) => {
       <TextField
         label="porcentaje 1"
         id="porcentaje1"
-        value={client.porcentaje1}
+        value={client.porcentaje1+"%"}
         variant="filled"
         sx={{ margin: "10px" }}
         InputProps={{
@@ -444,7 +444,7 @@ const FichaAxios = (props) => {
       <TextField
         label="porcentaje 2"
         id="porcentaje2"
-        value={client.porcentaje2}
+        value={client.porcentaje2+"%"}
         variant="filled"
         sx={{ margin: "10px" }}
         InputProps={{
@@ -460,7 +460,7 @@ const FichaAxios = (props) => {
   )}
 
   {/* Beneficiario 3 */}
-  {client.beneficiario3 !== "No" && (
+  {(client.beneficiario3 !== "No" && client.beneficiario3 !== undefined) && (
     <>
       <TextField
         label="Beneficiario 3"

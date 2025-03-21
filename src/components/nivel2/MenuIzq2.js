@@ -251,6 +251,9 @@ useEffect(() => {
                   <Toolbar />
                   <Divider />
                   <List>
+                  <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2 }}>
+                  {menuVisible ? 'Ocultar Menú' : 'Mostrar Menú'}
+              </Button>
           {user ? <>
           {user.nivel === 2 ? <> 
             {menuItems.map((item) => (
