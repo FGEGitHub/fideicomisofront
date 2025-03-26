@@ -105,6 +105,11 @@ const Lotes = () => {
     // definimos las columnas de la tabla mui de clientes
     const columns = [
       {
+        name: "porcentaje",
+        label:"Riesgo",
+       
+    },
+ /*      {
         name: "observaciones",
         label: "Riesgo",
         options: {
@@ -133,7 +138,7 @@ const Lotes = () => {
           },
           sortCompare: (order) => (a, b) => (a - b) * (order === "asc" ? 1 : -1),
         },
-      },
+      }, */
       
        
            {
@@ -163,6 +168,35 @@ const Lotes = () => {
             }
         
         },   
+        {name: "observaciones",
+        label: "Riesgo",
+        options: {
+          customBodyRenderLite: (dataIndex) => {
+            const value = clients[dataIndex]?.porcentaje || 0;
+            let color = "gray";
+            let emoji = "⚪"; // Sin completar
+      
+            if (value > 0 && value <= 58) {
+              color = "green";
+              emoji = "🟢";
+            } else if (value > 59 && value <= 70) {
+              color = "orange";
+              emoji = "🟡";
+            } else if (value > 70) {
+              color = "red";
+              emoji = "🔴";
+            }
+      
+            return (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <span>{emoji}</span>
+                <span>{`${value}%`}</span>
+              </Box>
+            );
+          },
+          sortCompare: (order) => (a, b) => (a - b) * (order === "asc" ? 1 : -1),
+        },
+      },
     
         {
             name: "razon",
@@ -252,6 +286,9 @@ const Lotes = () => {
     
   };
 // renderiza la data table
+
+
+
 return (
     <>
     {loading ? (<CargaDeTabla/>) 
