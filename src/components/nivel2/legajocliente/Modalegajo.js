@@ -140,6 +140,8 @@ export default function FormDialog(props) {
               <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'red' }}>8- CBU familiar</option>
 
               <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>91- Constancia RePET</option>
+              <option value={'Anticipo'}style={{ color: esTipoExistente('Anticipo') ? 'blue' : 'red' }}>Anticipo </option>
+              <option value={'Boleto comparaventa'}style={{ color: esTipoExistente('Boleto comparaventa') ? 'blue' : 'red' }}>Boleto comparaventa </option>
 
               </NativeSelect>
           </> : <>
@@ -185,6 +187,8 @@ export default function FormDialog(props) {
 
               <option value={'Poder General'}style={{ color: esTipoExistente('Poder General') ? 'blue' : 'red' }}>Poder General</option>
               <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'red' }}>Acta de Entrega </option>
+              <option value={'Anticipo'}style={{ color: esTipoExistente('Anticipo') ? 'blue' : 'red' }}>Anticipo </option>
+              <option value={'Boleto comparaventa'}style={{ color: esTipoExistente('Boleto comparaventa') ? 'blue' : 'red' }}>Boleto comparaventa </option>
 
     
            
