@@ -5,33 +5,41 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import servicioCuotas from '../../../services/cuotas'
+import servicioCuotas from '../../../services/cuotas';
+
 export default function Borrarcuotas(props) {
   const [open, setOpen] = React.useState(false);
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  console.log(props.id)
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setPassword('');
+    setError('');
   };
 
   const borarTodas = async () => {
- 
-    const cuotas = await servicioCuotas.borrarcuotas(props.id)
-    handleClose()
-
-};
+    if (password === 'conpumundohipermegared') {
+      await servicioCuotas.borrarcuotas(props.id);
+      handleClose();
+    } else {
+      setError('Contraseña incorrecta');
+    }
+  };
 
   return (
     <div>
       <Button variant="outlined" color="error" onClick={handleClickOpen}>
-       Borrar todas las cuotas
+        Borrar todas las cuotas
       </Button>
       <Dialog
         fullScreen={fullScreen}
@@ -46,14 +54,20 @@ export default function Borrarcuotas(props) {
           <DialogContentText>
             Se borrarán todas las cuotas del lote
           </DialogContentText>
+          <TextField
+            margin="dense"
+            label="Ingrese la contraseña"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!error}
+            helperText={error}
+          />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-           Cancelar
-          </Button>
-          <Button onClick={borarTodas} autoFocus>
-           Si
-          </Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={borarTodas}>Si</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -578,6 +578,7 @@ const LotesCliente = (props) => {
                         /> */}
                         <AgregaraCuotas
                             id_origen={idlote}
+                            lotes={lotes}
                         />
 
                         <BorrarCuotas

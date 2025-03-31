@@ -7,52 +7,47 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import servicioCuotas from '../../services/cuotas'
+import servicioCuotas from '../../services/cuotas';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 export default function Borrarcuotas(props) {
   const [open, setOpen] = React.useState(false);
-  const [lotess, setLotess] = React.useState();
+  const [selectedLote, setSelectedLote] = React.useState('');
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
- 
-  const handleClickOpen = () => {
-    
-    setOpen(true);
-    traercuotaselcliente()
 
+  const handleClickOpen = () => {
+    setOpen(true);
   };
-  const traercuotaselcliente = async () => {
-    
-    const cuotas = await servicioCuotas.traercuotaselcliente(props.id_origen)
-    console.log(cuotas)
-    setLotess(
-        cuotas)
-    
-};
-const asignar = async (id) => {
-    console.log(id)
-  const datos = {id :id,
-id_origen: props.id_origen}
-    const cuotas = await servicioCuotas.asignarloteacuotas(datos)
-    console.log(cuotas)
-    setLotess(
-        cuotas)
-    
-};
+
   const handleClose = () => {
     setOpen(false);
   };
 
-  const borarTodas = async () => {
- 
-    const cuotas = await servicioCuotas.borrarcuotas(props.id)
-    handleClose()
+  const handleRadioChange = (event) => {
+    setSelectedLote(event.target.value);
+    console.log("Lote seleccionado:", event.target.value);
+  };
 
-};
+  const asignar = async () => {
+    if (!selectedLote) return;
+    console.log(selectedLote);
+    const datos = { id: selectedLote, id_origen: props.id_origen };
+    const cuotas = await servicioCuotas.asignarloteacuotas(datos);
+    console.log(cuotas);
+    handleClose();
+  };
+
+
 
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-       Añadir a cuadro de cuotas 
+        Añadir a cuadro de cuotas
       </Button>
       <Dialog
         fullScreen={fullScreen}
@@ -60,33 +55,35 @@ id_origen: props.id_origen}
         onClose={handleClose}
         aria-labelledby="Estas seguro"
       >
-        <DialogTitle id="responsive-dialog-title">
-          {"Estas seguro?"}
-        </DialogTitle>
+        <DialogTitle id="responsive-dialog-title">{"Estas seguro?"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-        
-            {lotess ?  <>
-                {
-                        lotess.map((item, index) =>
-                            <div>
-
-           <Button key={index} variant="contained" onClick={() => { asignar(item['id_lote']) }}> Asignar {item.zona} - {item.manzana} - {item.parcela}</Button>
-                            </div>
-                        )
-                    }
-            
-            
-            </>:<></>}
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Selecciona un lote</FormLabel>
+              <RadioGroup
+                value={selectedLote}
+                onChange={handleRadioChange}
+              >
+                {props.lotes?.filter(item => item.tiene_cuotas === 'Si').map((item) => (
+                  <FormControlLabel 
+                    key={item.id_lote} 
+                    value={item.id} 
+                    control={<Radio />} 
+                    label={`Zona: ${item.zona}, Manzana: ${item.manzana}${item.zona === 'PIT' ? `, Parcela: ${item.parcela}` : ''} - Tiene cuotas`} 
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-           Cancelar
+            Cancelar
           </Button>
-          <Button onClick={borarTodas} autoFocus>
-           Si
+          <Button onClick={asignar} autoFocus disabled={!selectedLote}>
+            Asignar
           </Button>
+     
         </DialogActions>
       </Dialog>
     </div>
