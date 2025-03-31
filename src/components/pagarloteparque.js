@@ -1,82 +1,119 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [mesSeleccionado, setMesSeleccionado] = React.useState(new Date().getMonth() + 1);
+  const [anioSeleccionado, setAnioSeleccionado] = React.useState(new Date().getFullYear());
 
   const calcularTotales = () => {
     const cuotas = props.cuotas || [];
+    const fechaSeleccionada = new Date(anioSeleccionado, mesSeleccionado - 1);
 
-    const sumatoriaPagos = cuotas.reduce((acc, cuota) => acc + parseFloat(cuota.pago || 0), 0);
+    let sumatoriaPagos = 0;
+    let totalDevengado = 0;
+    let totalFuturo = 0;
+    let cuotaBase = null;
+    let mesesRestantes = 0;
+    let existeFecha = false;
 
-    const totalDevengado = cuotas.reduce((acc, cuota) => {
-      if (parseFloat(cuota.ajuste) !== 0) {
-        return acc + parseFloat(cuota.cuota_con_ajuste || 0);
-      } else {
-        return acc + parseFloat(cuota.amortizacion || 0);
+    cuotas.forEach((cuota) => {
+      const cuotaFecha = new Date(cuota.anio, cuota.mes - 1);
+      const cuotaConAjuste = parseFloat(cuota.cuota_con_ajuste || 0);
+      const pago = parseFloat(cuota.pago || 0);
+
+      if (cuotaFecha < fechaSeleccionada) {
+        sumatoriaPagos += pago;
+        totalDevengado += cuotaConAjuste;
+      } else if (cuotaFecha >= fechaSeleccionada) {
+        if (!cuotaBase) {
+          cuotaBase = cuotaConAjuste;
+        }
+        mesesRestantes++;
+        existeFecha = true;
       }
-    }, 0);
+    });
 
-    const totalAPagar = totalDevengado - sumatoriaPagos;
+    totalFuturo = cuotaBase ? cuotaBase * mesesRestantes : 0;
 
-    return { sumatoriaPagos, totalDevengado, totalAPagar };
+    return {
+      totalHastaFecha: totalDevengado - sumatoriaPagos,
+      totalDesdeFecha: totalFuturo,
+      cuotaBase,
+      existeFecha,
+    };
   };
 
   const formatCurrency = (value) =>
-    new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS',
+    new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value);
 
-  const { sumatoriaPagos, totalDevengado, totalAPagar } = calcularTotales();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { totalHastaFecha, totalDesdeFecha, cuotaBase, existeFecha } = calcularTotales();
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Cancelar lote {props.id_cliente}
-        </DialogTitle>
+
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Cancelar lote</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Seguro que deseas cancelar el lote.
-          </DialogContentText>
-          <DialogContentText>
-            <strong>Sumatoria de pagos:</strong> {formatCurrency(sumatoriaPagos)}
-          </DialogContentText>
-          <DialogContentText>
-            <strong>Total devengado:</strong> {formatCurrency(totalDevengado)}
-          </DialogContentText>
-          <DialogContentText>
-            <strong>Total a pagar:</strong> {formatCurrency(totalAPagar)}
-          </DialogContentText>
+          <DialogContentText>Seleccione el mes y año de referencia.</DialogContentText>
+          <Select
+            value={mesSeleccionado}
+            onChange={(e) => setMesSeleccionado(parseInt(e.target.value, 10))}
+            fullWidth
+          >
+            {[...Array(12).keys()].map((m) => (
+              <MenuItem key={m + 1} value={m + 1}>{`Mes ${m + 1}`}</MenuItem>
+            ))}
+          </Select>
+          <Select
+            value={anioSeleccionado}
+            onChange={(e) => setAnioSeleccionado(parseInt(e.target.value, 10))}
+            fullWidth
+          >
+            {[...Array(5).keys()].map((a) => (
+              <MenuItem key={anioSeleccionado - 2 + a} value={anioSeleccionado - 2 + a}>
+                {anioSeleccionado - 2 + a}
+              </MenuItem>
+            ))}
+          </Select>
+
+          {!existeFecha ? (
+            <DialogContentText style={{ color: "red" }}>
+              No existen cuotas registradas para {mesSeleccionado}/{anioSeleccionado}
+            </DialogContentText>
+          ) : (
+            <>
+              <DialogContentText>
+                <strong>Cuota tomada como base:</strong> {formatCurrency(cuotaBase)}
+              </DialogContentText>
+              <DialogContentText>
+                <strong>Total hasta {mesSeleccionado}/{anioSeleccionado}:</strong> {formatCurrency(totalHastaFecha)}
+              </DialogContentText>
+              <DialogContentText>
+                <strong>Total desde {mesSeleccionado}/{anioSeleccionado} en adelante:</strong> {formatCurrency(totalDesdeFecha)}
+              </DialogContentText>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleClose} autoFocus>
-            Si
+          <Button onClick={() => setOpen(false)}>Cancelar</Button>
+          <Button onClick={() => setOpen(false)} autoFocus>
+            Sí
           </Button>
         </DialogActions>
       </Dialog>
