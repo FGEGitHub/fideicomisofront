@@ -7,8 +7,7 @@ import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 import CancelarLote from './pagarloteparque'
-import Alert from '@mui/material/Alert';
-import Switch from '@mui/material/Switch';
+import { Tooltip } from "@mui/material";import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
@@ -691,22 +690,25 @@ const LotesCliente = (props) => {
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-                                                                {row.diferencia < 0 ? (
-                                                                    row.diferencia == -row.cuota_con_ajuste ? (
-                                                                        <p style={{ color: 'red', whiteSpace: 'nowrap' }}>
-                                                                            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-                                                                        </p>
-                                                                    ) : (
-                                                                        <p style={{ color: 'blue', whiteSpace: 'nowrap' }}>
-                                                                            {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-                                                                        </p>
-                                                                    )
-                                                                ) : (
-                                                                    <p style={{ color: 'green', whiteSpace: 'nowrap' }}>
-                                                                        {new Intl.NumberFormat('de-DE').format(row.diferencia)}
-                                                                    </p>
-                                                                )}
-                                                            </StyledTableCell>
+  <Tooltip
+    title={
+      row.diferencia < 0
+        ? row.diferencia === -row.cuota_con_ajuste
+          ? "La diferencia es exactamente el negativo de la cuota con ajuste"
+          : "La diferencia es negativa pero no coincide con la cuota ajustada"
+        : "La diferencia es positiva"
+    }
+  >
+    <p
+      style={{
+        color: row.diferencia < 0 ? (row.diferencia === -row.cuota_con_ajuste ? "red" : "blue") : "green",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+    </p>
+  </Tooltip>
+</StyledTableCell>;
                                                             <StyledTableCell component="th" scope="row">
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
                                                             </StyledTableCell>
