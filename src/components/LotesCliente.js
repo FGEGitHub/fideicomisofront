@@ -26,8 +26,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import {  MenuItem,  InputLabel } from "@mui/material";
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -511,24 +510,27 @@ const LotesCliente = (props) => {
 
                         <div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </> : <> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
 
-                            <RadioGroup
-                                row
-                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                name="row-radio-buttons-group"
-                                value={selectedValue}
-                                onChange={handleChangeratio}
-                            >
-                                {lotes.map((item, index) => (
-                                    <FormControlLabel
-                                        key={index}
-                                        value={`Fraccion: ${item.fraccion} -  Manzana: ${item.manzana}- Parcela: ${item.parcela}`} // Utilizamos una combinación única para el valor
-                                        control={<Radio />}
-                                        label={"Fraccion: " + item.fraccion + " Manzana: " + item.manzana + " Parcela: " + item.parcela}
-                                        onClick={() => vercuotas(item.id)}
-                                    />
-                                ))}
-                            </RadioGroup>
-                            <b style={{ color: 'green' }}  >Valor seleccionado: {selectedValue}</b>
+                        <FormControl fullWidth>
+  <InputLabel id="lotes-select-label">Seleccionar Lote</InputLabel>
+  <Select
+    labelId="lotes-select-label"
+    value={selectedValue}
+    onChange={handleChangeratio}
+  >
+    {lotes.map((item, index) => (
+      <MenuItem
+        key={index}
+        value={`Fraccion: ${item.fraccion} - Manzana: ${item.manzana} - Parcela: ${item.parcela}${item.tiene_cuotas === "Si" ? " - Cuotas" : ""}`}
+        onClick={() => vercuotas(item.id)}
+      >
+        Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela: {item.parcela}{item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<b style={{ color: 'green' }}>Valor seleccionado: {selectedValue}</b>
+
                         </div>
 
                         <h3>  {cuotas ? <>
