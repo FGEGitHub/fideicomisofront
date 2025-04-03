@@ -35,7 +35,7 @@ const BeneficiariosDialog = (props) => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+      <Button variant="outlined"   sx={{ marginLeft:"-0%", color: 'black', borderColor: 'black' }}onClick={() => setOpen(true)}>
         Agregar Beneficiarios
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)}>

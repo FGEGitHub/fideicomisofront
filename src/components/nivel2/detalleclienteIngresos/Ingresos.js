@@ -81,9 +81,7 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
     }
     setCargando(false);
     setOpen(false);
-
-    
-   setOpen(false);
+props.traer()
 
 
     }
@@ -112,8 +110,9 @@ const { getRootProps, getInputProps, isDragActive, isDragAccept, acceptedFiles }
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Determinar ingresos declarados
+            <Button        variant="outlined"
+                   sx={{ color: 'black', borderColor: 'black' }} onClick={handleClickOpen}>
+                Determinar ingresos
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Completar</DialogTitle>

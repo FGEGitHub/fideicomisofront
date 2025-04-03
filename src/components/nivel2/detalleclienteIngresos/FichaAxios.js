@@ -14,6 +14,7 @@ import servicioCliente from '../../../services/clientes';
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import "../../profile.css";
+import Ingreso from './Ingresos'
 import LinearProgress from "@mui/material/LinearProgress";
 import Agregarbenefciarios from './agregarbeneficiarios'
 
@@ -51,9 +52,7 @@ const FichaAxios = (props) => {
    {cliente.map((client) =>( 
     <div className="profile">
       <Grid Container style={{ direction: "column", alignItems:"left", justifyContent: "left", display: "flex"}}>
-        <Grid item xs={8} style={{ direction: "column", justifyContent: "left", display: "flex" }}>
-        <Avatar sx={{ width: 170, height: 140 }}> <AccountCircle fontSize="large"/> </Avatar>
-        </Grid>
+     
         <Grid item xs={8}style={{ }}>
   
             <Container>
@@ -106,7 +105,8 @@ const FichaAxios = (props) => {
     </Box>  
             </Box>
        
-              <Box>
+              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+                
               <TextField
                   label="CUIL"
                   id="cuil"
@@ -142,8 +142,24 @@ const FichaAxios = (props) => {
                          {client.razon =="Empresa" ? <>
                           <TextField
                   label="Tipo de cliente"
-                  id="tipoCliente"
-                  value={client.tipoCliente}
+                  id="razon"
+                  value={client.razon}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                
+                <TextField
+                  label="Actividad economica"
+                  id="actividadEconomica"
+                  value={client.actividadEconomica}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -158,8 +174,24 @@ const FichaAxios = (props) => {
                          </>:<>
                          <TextField
                   label="Tipo de cliente"
-                  id="tipoCliente"
-                  value={client.tipoCliente}
+                  id="razon"
+                  value={client.razon}
+                  variant="filled"
+                  sx={{ margin: "10px" }}
+                  InputProps={{
+                    readOnly: true,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                
+                <TextField
+                  label="Actividad economica"
+                  id="actividadEconomica"
+                  value={client.actividadEconomica}
                   variant="filled"
                   sx={{ margin: "10px" }}
                   InputProps={{
@@ -217,27 +249,7 @@ const FichaAxios = (props) => {
                 />
 
 
-                <TextField
-                  label="Actividad economica"
-                  id="actividadEconomica"
-                  value={client.actividadEconomica}
-                  variant="filled"
-                  sx={{ margin: "10px" }}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-             
-
-
-              </Box>
-              <Box>
-                <TextField
+<TextField
                   label="Numero de Telefono"
                   id="numero de telefono"
                   defaultValue=""
@@ -272,6 +284,11 @@ const FichaAxios = (props) => {
                 >
                   
                 </TextField>
+
+
+              </Box>
+              <Box>
+          
                 {client.razon =="Empresa" ? <>
                   <TextField
                   label="Antiguedad"
@@ -306,8 +323,6 @@ const FichaAxios = (props) => {
                   }}
                 />
                 </>}
-              </Box>
-              <Box>
                 <TextField
                   label="Razon"
                   id="Razon"
@@ -358,6 +373,9 @@ const FichaAxios = (props) => {
                     )
                   }}
                 />
+              </Box>
+              <Box>
+            
               </Box>
               <Box>
   {/* Beneficiario 1 */}
@@ -546,20 +564,31 @@ const FichaAxios = (props) => {
                     </div>
                   ) : (
                     <div className="profile-edit-button">
-                    <Button
-  variant="outlined"
-  sx={{ marginLeft:"-25%", color: 'black', borderColor: 'black' }}
-  onClick={() => navigate('/usuario2/legajoscliente/' + props.cuil_cuit)}
->
-  Ir a legajos
-</Button>
-                     
-                   <Button
-                   variant="outlined"
-                   sx={{ color: 'black', borderColor: 'black' }}
-                   onClick={() =>  navigate('/usuario2/modificarcliente/'+props.cuil_cuit)}                 >
-                Modificar cliente
-                 </Button>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+  <Button
+    variant="outlined"
+    sx={{ color: "black", borderColor: "black" }}
+    onClick={() => navigate("/usuario2/legajoscliente/" + props.cuil_cuit)}
+  >
+    Ir a legajos
+  </Button>
+
+  <Button
+    variant="outlined"
+    sx={{ color: "black", borderColor: "black" }}
+    onClick={() => navigate("/usuario2/modificarcliente/" + props.cuil_cuit)}
+  >
+    Modificar cliente
+  </Button>
+
+  <Ingreso
+    traer={async () => {
+      const cliente = await servicioCliente.cliente(props.cuil_cuit);
+      setCliente(cliente);
+    }}
+  />
+</Box>
+
                  { client ? <>
                  
                  

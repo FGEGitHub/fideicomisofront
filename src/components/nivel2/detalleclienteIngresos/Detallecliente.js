@@ -6,9 +6,9 @@ import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
 import { Paper } from '@mui/material';
 import PEP from './DeterminarPep'
-import Debitoaut from '../../360/modalcrearadhesiontarjeta'
-import DebitoauCBUt from '../../360/modaladhesiondebito'
-import Listacbus from '../../360/modallistacbu'
+//import Debitoaut from '../../360/modalcrearadhesiontarjeta'
+//import DebitoauCBUt from '../../360/modaladhesiondebito'
+//import Listacbus from '../../360/modallistacbu'
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -107,7 +107,7 @@ const DetalleCliente = () => {
              {habilitado ? <div>
               <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
             
-                <div> <Ingreso/> </div>
+           
       
             {<LotesCliente
                   cuil_cuit={cuil_cuit} />}
@@ -117,7 +117,7 @@ const DetalleCliente = () => {
             </Paper>
           
                       {habilitado ? <>
-                        <Button
+                       {/*  <Button
                         variant="outlined"
                         onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
                       >
@@ -129,7 +129,7 @@ const DetalleCliente = () => {
               cuil_cuit={cuil_cuit}/>
           
     <Listacbus
-              cuil_cuit={cuil_cuit}/>
+              cuil_cuit={cuil_cuit}/> */}
 </>:<><Button
       variant="outlined"
       onClick={() => navigate('/usuario2/legajoscliente/' + cuil_cuit)}

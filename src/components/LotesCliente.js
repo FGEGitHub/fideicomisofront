@@ -511,6 +511,8 @@ const LotesCliente = (props) => {
                         <div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </> : <> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
 
                         <FormControl fullWidth>
+
+
   <InputLabel id="lotes-select-label">Seleccionar Lote</InputLabel>
   <Select
     labelId="lotes-select-label"
@@ -528,8 +530,8 @@ const LotesCliente = (props) => {
     ))}
   </Select>
 </FormControl>
+{selectedValue && <b style={{ color: 'green' }}>Valor seleccionado: {selectedValue}</b> }
 
-<b style={{ color: 'green' }}>Valor seleccionado: {selectedValue}</b>
 
                         </div>
 
@@ -753,7 +755,7 @@ const LotesCliente = (props) => {
                     </> : <> Lote sin cuotas</>}
 
 
-                </div> : <div> Sin lote asignado </div>}
+                </div> : <div> </div>}
 
 
 
