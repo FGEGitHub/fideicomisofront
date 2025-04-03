@@ -7,7 +7,7 @@ import AgregarIcc from './nivel2/Icc_cuota/AgregarICCCuota'
 import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 import CancelarLote from './pagarloteparque'
-import { Tooltip } from "@mui/material";import Switch from '@mui/material/Switch';
+import { Tooltip } from "@mui/material"; import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
@@ -26,7 +26,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {  MenuItem,  InputLabel } from "@mui/material";
+import { MenuItem, InputLabel } from "@mui/material";
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -473,7 +473,14 @@ const LotesCliente = (props) => {
                     <Button
                         fullWidth
                         variant="contained"
-                        color="primary"
+                        sx={{
+                            backgroundColor: "#b0bec5",
+                            color: "black",
+                            borderColor: "black",
+                            "&:hover": {
+                                backgroundColor: "darkgray" // Cambia el color al pasar el mouse
+                            }
+                        }}
                         onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
                     >
                         Asignar lote a usuario
@@ -482,8 +489,8 @@ const LotesCliente = (props) => {
                 <Grid item xs={12} sm={6}>
                     <Button
                         fullWidth
-                        variant="contained"
-                        color="primary"
+                        variant="outlined"
+                        sx={{ color: "black", borderColor: "black" }}
                         onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
                         disabled
                     >
@@ -510,27 +517,27 @@ const LotesCliente = (props) => {
 
                         <div>{selectedValue ? <> <FormLabel id="demo-row-radio-buttons-group-label">Lote</FormLabel> </> : <> <FormLabel id="demo-row-radio-buttons-group-label"> <h3>Seleccionar un lote</h3></FormLabel></>}
 
-                        <FormControl fullWidth>
+                            <FormControl fullWidth>
 
 
-  <InputLabel id="lotes-select-label">Seleccionar Lote</InputLabel>
-  <Select
-    labelId="lotes-select-label"
-    value={selectedValue}
-    onChange={handleChangeratio}
-  >
-    {lotes.map((item, index) => (
-      <MenuItem
-        key={index}
-        value={`Fraccion: ${item.fraccion} - Manzana: ${item.manzana} - Parcela: ${item.parcela}${item.tiene_cuotas === "Si" ? " - Cuotas" : ""}`}
-        onClick={() => vercuotas(item.id)}
-      >
-        Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela: {item.parcela}{item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-{selectedValue && <b style={{ color: 'green' }}>Valor seleccionado: {selectedValue}</b> }
+                                <InputLabel id="lotes-select-label">Seleccionar Lote</InputLabel>
+                                <Select
+                                    labelId="lotes-select-label"
+                                    value={selectedValue}
+                                    onChange={handleChangeratio}
+                                >
+                                    {lotes.map((item, index) => (
+                                        <MenuItem
+                                            key={index}
+                                            value={`Fraccion: ${item.fraccion} - Manzana: ${item.manzana} - Parcela: ${item.parcela}${item.tiene_cuotas === "Si" ? " - Cuotas" : ""}`}
+                                            onClick={() => vercuotas(item.id)}
+                                        >
+                                            Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela: {item.parcela}{item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            {selectedValue && <b style={{ color: 'green' }}>Valor seleccionado: {selectedValue}</b>}
 
 
                         </div>
@@ -591,7 +598,7 @@ const LotesCliente = (props) => {
                             cuotas={cuotas} />
                     </ButtonGroup>
 
-                 
+
 
 
 
@@ -664,10 +671,11 @@ const LotesCliente = (props) => {
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO AL CIERRE</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}></TableCell>
+
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
-                                                     
+
                                                         <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
-                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO 360</b></TableCell>
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
@@ -688,37 +696,39 @@ const LotesCliente = (props) => {
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</b></span>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ {new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
                                                             </StyledTableCell>
                                                             <StyledTableCell component="th" scope="row">
-  <Tooltip
-    title={
-      row.diferencia < 0
-        ? row.diferencia === -row.cuota_con_ajuste
-          ? "La diferencia es exactamente el negativo de la cuota con ajuste"
-          : "La diferencia es negativa pero no coincide con la cuota ajustada"
-        : "La diferencia es positiva"
-    }
-  >
-    <p
-      style={{
-        color: row.diferencia < 0 ? (row.diferencia === -row.cuota_con_ajuste ? "red" : "blue") : "green",
-        whiteSpace: "nowrap",
-      }}
-    >
-      {new Intl.NumberFormat("de-DE").format(row.diferencia)}
-    </p>
-  </Tooltip>
-</StyledTableCell>;
+                                                                <Tooltip
+                                                                    title={
+                                                                        row.diferencia < 0
+                                                                            ? row.diferencia === -row.cuota_con_ajuste
+                                                                                ? "La diferencia es exactamente el negativo de la cuota con ajuste"
+                                                                                : "La diferencia es negativa pero no coincide con la cuota ajustada"
+                                                                            : "La diferencia es positiva"
+                                                                    }
+                                                                >
+                                                                    <p
+                                                                        style={{
+                                                                            color: row.diferencia < 0 ? (row.diferencia === -row.cuota_con_ajuste ? "red" : "blue") : "green",
+                                                                            whiteSpace: "nowrap",
+                                                                        }}
+                                                                    >
+                                                                        {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+                                                                    </p>
+                                                                </Tooltip>
+                                                            </StyledTableCell>;
+
+                                                            
                                                             <StyledTableCell component="th" scope="row">
                                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
                                                             </StyledTableCell>
-                                                           
 
-                                                            <StyledTableCell component="th" scope="row" align="center">
+
+                                                            <StyledTableCell component="th" scope="row" >
                                                                 <Pagorapido
                                                                     id_cuota={row.id}
                                                                     cuota_con_ajuste={row.cuota_con_ajuste}
@@ -736,9 +746,7 @@ const LotesCliente = (props) => {
                                                                 />
                                                                 <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />
                                                             </StyledTableCell>
-                                                            <StyledTableCell component="th" scope="row">
-                                                                {cargalink ? <CircularProgress /> : <Button onClick={() => traerlink360(row.id)}>Pagar 360</Button>}
-                                                            </StyledTableCell>
+
                                                         </StyledTableRow>
                                                     ))}
                                                 </TableBody>
@@ -763,113 +771,113 @@ const LotesCliente = (props) => {
 
             <br />   {act2 ?
 
-<div>
+                <div>
 
 
 
 
 
-    {cuotas !== '' ? <>
+                    {cuotas !== '' ? <>
 
-        <div>
-            <Box
-                sx={{ display: 'flex' }}
-            >
-                <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
+                        <div>
+                            <Box
+                                sx={{ display: 'flex' }}
+                            >
+                                <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} flexDirection="row">
 
-                    <Paper
-                        sx={{
-                            cursor: 'pointer',
-                            background: '#eeeeee',
-                            color: '#bdbdbd',
-                            border: '1px dashed #ccc',
-                            width: "38%",
-                            '&:hover': { border: '1px solid #ccc' },
-                            border: "1px solid black",
-                            margin: '3%',
-                            display: 'flex'
-                        }}
-                    >
+                                    <Paper
+                                        sx={{
+                                            cursor: 'pointer',
+                                            background: '#eeeeee',
+                                            color: '#bdbdbd',
+                                            border: '1px dashed #ccc',
+                                            width: "38%",
+                                            '&:hover': { border: '1px solid #ccc' },
+                                            border: "1px solid black",
+                                            margin: '3%',
+                                            display: 'flex'
+                                        }}
+                                    >
 
-                        <TableContainer >
-                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
-
-
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {deudaExigible.map((row, index) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-
-                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                            <TableCell align="left" padding="normal">
-                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Paper>
+                                        <TableContainer >
+                                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell padding="normal" >Detalles de Deuda Exigible </TableCell>
 
 
-                    <Paper
-                        sx={{
-                            cursor: 'pointer',
-                            background: '#eeeeee',
-                            color: '#bdbdbd',
-                            border: '1px dashed #ccc',
-                            width: "38%",
-                            '&:hover': { border: '1px solid #ccc' },
-                            border: "1px solid black",
-                            margin: '3%',
-                            marginLeft: '-1%',
-                            display: 'flex'
-                        }}
-                    >
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {deudaExigible.map((row, index) => (
+                                                        <TableRow
+                                                            key={row.name}
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        >
 
-                        <TableContainer >
-                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
-
-
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {detallePendiente.map((row, index) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-
-                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
-                                            <TableCell align="left" padding="normal">
-                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Paper>
-
-                    <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
-                </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/' + idlote) }}  > Imprimir comprobante</Fab>
-            </Box>
-        </div>
+                                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                            <TableCell align="left" padding="normal">
+                                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Paper>
 
 
-    </> : <></>}
-</div>
-: <div></div>}
+                                    <Paper
+                                        sx={{
+                                            cursor: 'pointer',
+                                            background: '#eeeeee',
+                                            color: '#bdbdbd',
+                                            border: '1px dashed #ccc',
+                                            width: "38%",
+                                            '&:hover': { border: '1px solid #ccc' },
+                                            border: "1px solid black",
+                                            margin: '3%',
+                                            marginLeft: '-1%',
+                                            display: 'flex'
+                                        }}
+                                    >
+
+                                        <TableContainer >
+                                            <Table sx={{ minWidth: 520 }} aria-label="simple table" >
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell padding="normal" >Detalle de Cuotas Pendientes </TableCell>
+
+
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {detallePendiente.map((row, index) => (
+                                                        <TableRow
+                                                            key={row.name}
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        >
+
+                                                            <TableCell align="left" padding="normal">{row.datoa}</TableCell>
+                                                            <TableCell align="left" padding="normal">
+                                                                {index > 0 ? `$ ${new Intl.NumberFormat('de-DE').format(row.datob)}` : new Intl.NumberFormat('de-DE').format(row.datob)}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Paper>
+
+                                    <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { handleChange2() }}  ><VisibilityOffIcon sx={{ mr: 1 }} /> Ocultar IEF</Fab>
+                                </Grid>  <Fab sx={{ margin: '75px', }} variant="extended" onClick={() => { window.open('/usuario2/comprobanteief/' + idlote) }}  > Imprimir comprobante</Fab>
+                            </Box>
+                        </div>
+
+
+                    </> : <></>}
+                </div>
+                : <div></div>}
 
 
 
