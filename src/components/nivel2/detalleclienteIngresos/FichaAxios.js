@@ -17,6 +17,9 @@ import "../../profile.css";
 import Ingreso from './Ingresos'
 import LinearProgress from "@mui/material/LinearProgress";
 import Agregarbenefciarios from './agregarbeneficiarios'
+import Chip from '@mui/material/Chip';
+import Alert from '@mui/material/Alert';
+
 
 const FichaAxios = (props) => {
   const navigate = useNavigate();
@@ -60,6 +63,16 @@ const FichaAxios = (props) => {
             <h5>
             Datos Personales del Cliente
             </h5>
+            {client.expuesta=="SI" ? <div>
+                  <Alert variant="filled" severity="warning">
+                  Persona PEP
+</Alert>
+               
+                   </div> : 
+                   <div>
+                    <Chip label="Persona no PEP" color="success" />
+                   
+                     </div>}
             <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
       Riesgo
       <LinearProgress

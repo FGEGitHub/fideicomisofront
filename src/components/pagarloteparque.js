@@ -63,7 +63,9 @@ export default function AlertDialog(props) {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={() => setOpen(true)}>
+      <Button   variant="outlined"
+    sx={{ color: "black", borderColor: "black" }}
+    onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
 

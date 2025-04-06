@@ -70,7 +70,7 @@ const DetalleCliente = () => {
               }}
                 /> 
              
-                {expuesta ? <div>
+               {/*  {expuesta ? <div>
                   <Alert variant="filled" severity="warning">
                   Persona PEP
 </Alert>
@@ -79,7 +79,7 @@ const DetalleCliente = () => {
                    <div>
                     <Chip label="Persona no PEP" color="success" />
                    
-                     </div>}
+                     </div>} */}
                 
                </div>
                <Paper
@@ -90,7 +90,11 @@ const DetalleCliente = () => {
           border: '1px dashed #ccc',
           '&:hover': { border: '1px solid #ccc' },
         }}
-      >
+      >    {habilitado ? <div>
+        <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
+      </div>:<div><Alert severity="error"> <b>Cliente no habilitado por {cliente.cuil_cuit}  el dia {cliente.fecha}, (No se puede asignar lote a un cliente no habilitado)</b>. Ir a LEGAJOS para habilitar</Alert></div> 
+      
+      }
              <InfoCliente
                  cuil_cuit={cuil_cuit} />
                  </Paper>
@@ -105,7 +109,6 @@ const DetalleCliente = () => {
         }}
       >
              {habilitado ? <div>
-              <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
             
            
       
@@ -113,7 +116,7 @@ const DetalleCliente = () => {
                   cuil_cuit={cuil_cuit} />}
 
                  
-            </div> : <div><Alert severity="error"> <b>Cliente no habilitado por {cliente.cuil_cuit}  el dia {cliente.fecha}, (No se puede asignar lote a un cliente no habilitado)</b>. Ir a LEGAJOS para habilitar</Alert></div> }
+            </div> : <div></div> }
             </Paper>
           
                       {habilitado ? <>

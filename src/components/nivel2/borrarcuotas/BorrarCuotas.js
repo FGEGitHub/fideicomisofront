@@ -38,7 +38,8 @@ export default function Borrarcuotas(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="error" onClick={handleClickOpen}>
+      <Button   variant="outlined"
+    sx={{ color: "black", borderColor: "black" }} onClick={handleClickOpen}>
         Borrar todas las cuotas
       </Button>
       <Dialog

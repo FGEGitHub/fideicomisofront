@@ -46,7 +46,8 @@ export default function Borrarcuotas(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button   variant="outlined"
+    sx={{ color: "black", borderColor: "black" }} onClick={handleClickOpen}>
         Añadir a cuadro de cuotas
       </Button>
       <Dialog
