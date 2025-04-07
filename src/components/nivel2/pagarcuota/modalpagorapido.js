@@ -180,7 +180,8 @@ props.traer(props.id_lote)
   return (
     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} noValidate autoComplete="off">
       <Tooltip title="Pago rapido (Nuevo)">
-        <CurrencyExchangeIcon variant="outlined" color="success" onClick={handleClickOpen} />
+        <button  onClick={handleClickOpen}  >  Pagar </button>
+       
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>

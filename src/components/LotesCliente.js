@@ -8,7 +8,7 @@ import AgregaraCuotas from './nivel2/Asignarcuotasalote'
 import BorrarCuotas from './nivel2/borrarcuotas/BorrarCuotas'
 import CancelarLote from './pagarloteparque'
 import { Tooltip } from "@mui/material"; import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Pagointeres from './nivel2/pagarcuota/modalpagointeres'
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import SearchIcon from '@mui/icons-material/Search';
@@ -623,7 +623,7 @@ const LotesCliente = (props) => {
                     background: '#eeeeee',
                     color: '#bdbdbd',
                     border: '1px dashed #ccc',
-                    width: "90%",
+                    width: "98%",
                     '&:hover': { border: '1px solid #ccc' },
                     border: "1px solid black",
                     marginLeft: '1%',
@@ -715,7 +715,11 @@ const LotesCliente = (props) => {
                                                     setOpen(false);
                                                 }}
                                             />
-                                            <SearchIcon style={{ cursor: "pointer" }} onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} />
+                                               {verDetalles && (
+                                                 <Pagointeres id_interes={row.id}
+                                               cuil_cuit={cuil_cuit}/>)}
+                                           
+                                           <button onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} >Ver pagos</button> 
                                         </StyledTableCell>
 
                                         {verDetalles && (
