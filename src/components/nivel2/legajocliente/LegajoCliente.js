@@ -259,7 +259,7 @@ const LegajoCliente = (props) => {
 
         textLabels: {
           body: {
-            noMatch: "No se encontraron registros de debito automatico",
+            noMatch: "No se encontraron registros de legajos aun",
             toolTip: "Ordenar",
           },
           pagination: {
