@@ -664,12 +664,12 @@ const LotesCliente = (props) => {
                                             </StyledTableCell>
                                         )}
                                         <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Amortizacion)}</b></span>
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.Amortizacion).toFixed(2))}</b></span>
                                         </StyledTableCell>
                                         <StyledTableCell>{row.ICC}</StyledTableCell>
                                         <StyledTableCell>{row.Ajuste_ICC}</StyledTableCell>
                                         <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.cuota_con_ajuste)}</b></span>
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.cuota_con_ajuste).toFixed(2))}</b></span>
                                         </StyledTableCell>
                                         {verDetalles && (
                                             <StyledTableCell>
