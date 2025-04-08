@@ -717,14 +717,22 @@ const LotesCliente = (props) => {
                                             />
                                                {verDetalles && (
                                                  <Pagointeres id_interes={row.id}
-                                               cuil_cuit={cuil_cuit}/>)}
+                                               cuil_cuit={cuil_cuit}
+                                               traer={async () => {
+                                                const cuotas = await servicioCuotas.vercuotas(idlote);
+                                                setCuotas(cuotas);
+                                                setAct(true);
+                                                verief(idlote);
+                                                setOpen(false);
+                                            }}
+                                            />)}
                                            
                                            <button onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} >Ver pagos</button> 
                                         </StyledTableCell>
 
                                         {verDetalles && (
                                             <StyledTableCell>
-                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.interes)}</b></span>
+                                                <span style={{ whiteSpace: 'nowrap' }}> <b>{  row.pago_interes==undefined ? "$"+new Intl.NumberFormat('de-DE').format(row.interes):row.pago_interes == "diferencia minima"?row.pago_interes:"pagado"}</b></span>
                                             </StyledTableCell>
                                         )}
                                     </StyledTableRow>

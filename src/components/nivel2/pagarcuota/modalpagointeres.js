@@ -41,8 +41,9 @@ const ModalPagos = (props) => {
           // Acá hacés la llamada a tu servicio o API
           // Ejemplo:
           //
-           await serviciopagos.registrarInteres(datosAEnviar);
-      
+          const rta= await serviciopagos.registrarInteres(datosAEnviar);
+          alert(rta)
+      props.traer()
           setModalAbierto(false);
         } 
         
