@@ -26,8 +26,8 @@ export default function ClienteNuevo({ getClients }) {
     event.preventDefault();
     setLoading(true);
     try {
-      await servicioCliente.crear(form);
-      alert('Cliente creado con éxito');
+     const resultado= await servicioCliente.crear(form);
+      alert(resultado);
       getClients();
       setOpen(false);
     } catch (error) {

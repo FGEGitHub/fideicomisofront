@@ -62,7 +62,7 @@ const crear= async  (datos) => {
  
     const {data } = await axios.post(baseURL+'add2',datos,config)
     
-    alert(data)  
+    return(data)  
 }  
 
 ////crear cliente desde legales
