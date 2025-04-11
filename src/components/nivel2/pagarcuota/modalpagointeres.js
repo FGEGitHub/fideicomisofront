@@ -64,6 +64,7 @@ const ModalPagos = (props) => {
     <option value="">-- Seleccioná tipo de operación --</option>
     <option value="pago interes">Pago Interés</option>
     <option value="diferencia minima">Diferencia Mínima</option>
+    <option value="no aplica">No aplica</option>
   </select>
             <h2>Seleccionar pago en el que se realizo</h2>
             <select
