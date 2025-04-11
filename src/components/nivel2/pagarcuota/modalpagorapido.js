@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, Fragment } from "react";
+import React, { useCallback, useState,  Fragment } from "react";
 import Box from '@mui/material/Box';
 import { Button, CircularProgress, Paper, Grid, TextField, InputLabel } from '@mui/material';
 import { Toolbar } from '@mui/material';
@@ -180,7 +180,7 @@ props.traer(props.id_lote)
   return (
     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} noValidate autoComplete="off">
       <Tooltip title="Pago rapido (Nuevo)">
-        <button  onClick={handleClickOpen}  >  Pagar </button>
+        <Button variant="outlined" onClick={handleClickOpen}  >  Pagar </Button>
        
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
