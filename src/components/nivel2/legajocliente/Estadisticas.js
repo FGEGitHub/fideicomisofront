@@ -84,11 +84,11 @@ export default function Legajos(props) {
       }
       {datos[0] ?
         <div>
-          <Featured
+         {/*  <Featured
             porcentaje={datos[0].porccompleto}
             titulo="Completo"
 
-          />
+          /> */}
         </div> : <div><Featured /> </div>}
 
 
