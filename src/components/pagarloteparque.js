@@ -7,11 +7,16 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import serviciocuotas from '../services/cuotas'
+;
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [mesSeleccionado, setMesSeleccionado] = React.useState(new Date().getMonth() + 1);
   const [anioSeleccionado, setAnioSeleccionado] = React.useState(new Date().getFullYear());
+  const [password, setPassword] = React.useState("");
+  const [errorPassword, setErrorPassword] = React.useState(false);
 
   const calcularTotales = () => {
     const cuotas = props.cuotas || [];
@@ -48,6 +53,7 @@ export default function AlertDialog(props) {
       totalDesdeFecha: totalFuturo,
       cuotaBase,
       existeFecha,
+      mesesRestantes,
     };
   };
 
@@ -59,13 +65,36 @@ export default function AlertDialog(props) {
       maximumFractionDigits: 2,
     }).format(value);
 
-  const { totalHastaFecha, totalDesdeFecha, cuotaBase, existeFecha } = calcularTotales();
+  const { totalHastaFecha, totalDesdeFecha, cuotaBase, existeFecha, mesesRestantes } = calcularTotales();
+
+  const handleConfirm = async () => {
+    if (password !== "1234") {
+      setErrorPassword(true);
+      return;
+    }
+
+    setErrorPassword(false);
+
+    const cuotas = props.cuotas || [];
+    const id_lote = cuotas.length > 0 ? cuotas[0].id_lote : null;
+
+    if (props.id_lote) {
+      console.log( mesSeleccionado)
+    const rta =  await serviciocuotas.cancelarlote({
+        mes: mesSeleccionado,
+        anio: anioSeleccionado,
+        id_lote:props.id_lote,
+      });
+      alert(rta)
+    }
+
+    setOpen(false);
+    setPassword("");
+  };
 
   return (
     <React.Fragment>
-      <Button   variant="outlined"
-    sx={{ color: "black", borderColor: "black" }}
-    onClick={() => setOpen(true)}>
+      <Button variant="outlined" sx={{ color: "black", borderColor: "black" }} onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
 
@@ -106,15 +135,32 @@ export default function AlertDialog(props) {
               <DialogContentText>
                 <strong>Total hasta {mesSeleccionado}/{anioSeleccionado}:</strong> {formatCurrency(totalHastaFecha)}
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText style={{ color: mesesRestantes >= 30 ? "red" : "inherit" }}>
                 <strong>Total desde {mesSeleccionado}/{anioSeleccionado} en adelante:</strong> {formatCurrency(totalDesdeFecha)}
+                {totalDesdeFecha && (
+                  <>
+                    <br />
+                    <strong>Cantidad de cuotas: {mesesRestantes}</strong>
+                  </>
+                )}
               </DialogContentText>
             </>
           )}
+
+          <TextField
+            type="password"
+            label="Contraseña"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={errorPassword}
+            helperText={errorPassword ? "Contraseña incorrecta" : ""}
+            sx={{ mt: 2 }}
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancelar</Button>
-          <Button onClick={() => setOpen(false)} autoFocus>
+          <Button onClick={() => { setOpen(false); setPassword(""); setErrorPassword(false); }}>Cancelar</Button>
+          <Button onClick={handleConfirm} autoFocus>
             Sí
           </Button>
         </DialogActions>

@@ -34,10 +34,9 @@ import { Box } from "@material-ui/core";
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import ButtonGroup from '@mui/material/ButtonGroup';
+
 import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
-import CircularProgress from '@mui/material/CircularProgress';
+
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -580,7 +579,7 @@ const LotesCliente = (props) => {
             <BorrarCuotas id={idlote} />
 
             <CancelarLote
-                id_cliente={idlote}
+                id_lote={idlote}
                 cuotas={cuotas}
             />
         </Stack>
@@ -663,23 +662,26 @@ const LotesCliente = (props) => {
                                                 <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
                                             </StyledTableCell>
                                         )}
-                                        <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.Amortizacion))}</b></span>
+                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.Amortizacion))}</b></span></>}
                                         </StyledTableCell>
-                                        <StyledTableCell>{row.ICC}</StyledTableCell>
-                                        <StyledTableCell>{row.Ajuste_ICC}</StyledTableCell>
+                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>{row.ICC}</>}</StyledTableCell>
+                                        <StyledTableCell>      {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>{row.Ajuste_ICC} </>}</StyledTableCell> 
                                         <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.cuota_con_ajuste))}</b></span>
+                                        {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<> 
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.cuota_con_ajuste))}</b></span></>}
                                         </StyledTableCell>
                                         {verDetalles && (
+                                              
                                             <StyledTableCell>
-                                                <span style={{ whiteSpace: 'nowrap' }}>$ {new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</span>
+                                              {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>      <span style={{ whiteSpace: 'nowrap' }}>$ {new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</span></>}
                                             </StyledTableCell>
                                         )}
-                                        <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span>
+                                        <StyledTableCell>  {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span> </>}
                                         </StyledTableCell>
                                         <StyledTableCell>
+                                            {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<> 
                                             <Tooltip title={
                                                 row.diferencia < 0
                                                     ? row.diferencia === -row.cuota_con_ajuste
@@ -695,14 +697,15 @@ const LotesCliente = (props) => {
                                                 }}>
                                                     {new Intl.NumberFormat("de-DE").format(row.diferencia)}
                                                 </p>
-                                            </Tooltip>
+                                            </Tooltip>  </>}
+                                        </StyledTableCell>
+
+                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
+                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span> </>}
                                         </StyledTableCell>
 
                                         <StyledTableCell>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span>
-                                        </StyledTableCell>
-
-                                        <StyledTableCell>
+                                        {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
                                             <Pagorapido
                                                 id_cuota={row.id}
                                                 cuota_con_ajuste={row.cuota_con_ajuste}
@@ -726,7 +729,7 @@ const LotesCliente = (props) => {
                                                 setOpen(false);
                                             }}
                                             />)}
-                                           
+                                            </>}
                                            <button onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} >Ver pagos</button> 
                                         </StyledTableCell>
 
