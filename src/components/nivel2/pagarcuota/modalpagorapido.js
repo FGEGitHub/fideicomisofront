@@ -4,11 +4,8 @@ import { Button, CircularProgress, Paper, Grid, TextField, InputLabel } from '@m
 import { Toolbar } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import servicioPagos from '../../../services/pagos';
 import Modalveronline from './verpdfcbu';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import Tooltip from '@mui/material/Tooltip';
-import NativeSelect from '@mui/material/NativeSelect';
 import BackupIcon from '@material-ui/icons/Backup';
 import Card from '@mui/material/Card';
 import { useParams } from "react-router-dom"

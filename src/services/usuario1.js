@@ -226,6 +226,14 @@ const pagarnivel2= async  (pago) => {////pago desde el usuario 2
    
   } 
   
+  const cancelarlote= async  (pago) => {////pago desde el usuario 2
+
+    const {data } = await axios.post(baseUrl+'cancelarlote',(pago),config)
+  
+      
+       return data
+     
+    } 
   const pagarnivel2ic3= async  (pago) => {////pago desde el usuario 2
 
     const {data } = await axios.post(baseUrl+'pagarnivel2ic3',(pago),config)
@@ -324,4 +332,4 @@ const pagarnivel2= async  (pago) => {////pago desde el usuario 2
         } 
 
     
-export default {pagarnivel2ic3,pagarrapidoic3,obtenerurlonline,lotesCliente2,cliente2,modificarcli2,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};
+export default {cancelarlote,pagarnivel2ic3,pagarrapidoic3,obtenerurlonline,lotesCliente2,cliente2,modificarcli2,usuario1acredingresos,modificarpass,pagarnivel1cuota,mandarconsul,pagarnivel2varios,determinarPep,modificarCliente,cliente,pagarnivel2,constanciasdelpago,cantidadd,traercompleto,constancias,noticliente,cbuscliente,listacbus,lotesCliente,cargarcbu,vercuotas,vertodascuotas,verief,subirprueba,notiId,respuestanoti, obtenerurl,pagarnivel1};

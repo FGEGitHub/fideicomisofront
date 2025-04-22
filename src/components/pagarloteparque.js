@@ -1,27 +1,43 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import serviciocuotas from '../services/cuotas'
-;
+import { useState, useCallback } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Select,
+  MenuItem,
+  TextField,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
+import { useDropzone } from "react-dropzone";
+import serviciocuotas from "../services/cuotas";
+import servicioUsuario1 from "../services/usuario1";
+import { useParams } from "react-router-dom"
+import Modalveronline from './nivel2/pagarcuota/verpdfcbu';
 
-export default function AlertDialog(props) {
-  const [open, setOpen] = React.useState(false);
-  const [mesSeleccionado, setMesSeleccionado] = React.useState(new Date().getMonth() + 1);
-  const [anioSeleccionado, setAnioSeleccionado] = React.useState(new Date().getFullYear());
-  const [password, setPassword] = React.useState("");
-  const [errorPassword, setErrorPassword] = React.useState(false);
+export default function CancelarLoteCompleto(props) {
+  let params = useParams()
+  let id = params.id
+  const [descripcionCBU, setDescripcionCBU] = useState('');
 
+  const [open, setOpen] = useState(false);
+  const [paso, setPaso] = useState(1);
+  const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth() + 1);
+  const [anioSeleccionado, setAnioSeleccionado] = useState(new Date().getFullYear());
+  const [password, setPassword] = useState("");
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [pago, setPago] = useState({});
+  const [fileUpload, setFileUpload] = useState(null);
+  const [enviarr, setEnviarr] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [cbus, setCbus] = useState([''])
   const calcularTotales = () => {
     const cuotas = props.cuotas || [];
     const fechaSeleccionada = new Date(anioSeleccionado, mesSeleccionado - 1);
-
     let sumatoriaPagos = 0;
     let totalDevengado = 0;
     let totalFuturo = 0;
@@ -38,133 +54,195 @@ export default function AlertDialog(props) {
         sumatoriaPagos += pago;
         totalDevengado += cuotaConAjuste;
       } else if (cuotaFecha >= fechaSeleccionada) {
-        if (!cuotaBase) {
-          cuotaBase = cuotaConAjuste;
-        }
+        if (!cuotaBase) cuotaBase = cuotaConAjuste;
         mesesRestantes++;
         existeFecha = true;
       }
     });
 
     totalFuturo = cuotaBase ? cuotaBase * mesesRestantes : 0;
-
-    return {
-      totalHastaFecha: totalDevengado - sumatoriaPagos,
-      totalDesdeFecha: totalFuturo,
-      cuotaBase,
-      existeFecha,
-      mesesRestantes,
-    };
+    return { totalHastaFecha: totalDevengado - sumatoriaPagos, totalDesdeFecha: totalFuturo, cuotaBase, existeFecha, mesesRestantes };
   };
 
-  const formatCurrency = (value) =>
-    new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value);
+  const traercbu = async () => {
+
+
+    const cuot = await servicioUsuario1.listacbus(params.cuil_cuit)
+    setCbus(cuot)
+
+
+  }
+  const formatCurrency = (value) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(value);
 
   const { totalHastaFecha, totalDesdeFecha, cuotaBase, existeFecha, mesesRestantes } = calcularTotales();
 
-  const handleConfirm = async () => {
+  const onDrop = useCallback((files) => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    setFileUpload(files[0]);
+    setEnviarr(formData);
+  }, []);
+
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop, multiple: false, accept: "application/pdf, image/*" });
+
+  const handleConfirm = () => {
     if (password !== "1234") {
       setErrorPassword(true);
       return;
     }
-
     setErrorPassword(false);
-
-    const cuotas = props.cuotas || [];
-    const id_lote = cuotas.length > 0 ? cuotas[0].id_lote : null;
-
-    if (props.id_lote) {
-      console.log( mesSeleccionado)
-    const rta =  await serviciocuotas.cancelarlote({
-        mes: mesSeleccionado,
-        anio: anioSeleccionado,
-        id_lote:props.id_lote,
-      });
-      alert(rta)
-    }
-
-    setOpen(false);
-    setPassword("");
+    traercbu()
+    setPaso(2);
   };
 
+  const enviarFinal = async () => {
+    setLoading(true);
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
+    if (loggedUserJSON) {
+      const usuario = JSON.parse(loggedUserJSON)
+      console.log(usuario.cuil_cuit)
+console.log(mesSeleccionado,anioSeleccionado)
+
+      const formData = enviarr || new FormData();
+      formData.append("mes", mesSeleccionado);
+      formData.append("anio", anioSeleccionado);
+      formData.append("id_lote", props.id_lote);
+      formData.append("cuil_cuit", pago.cuil_cuit);
+      formData.append("cuil_cuit_administrador", usuario.cuil_cuit);
+
+      formData.append("pago", pago.monto);
+      formData.append("fecha", pago.fecha);
+      formData.append("cbu", pago.cbu);
+
+      try {
+        // const cancelacion = await serviciocuotas.cancelarlote({ mes: mesSeleccionado, anio: anioSeleccionado, id_lote: props.id_lote });
+        const pagoRes = await servicioUsuario1.cancelarlote(formData);
+       // alert(cancelacion);
+        alert(pagoRes[0]);
+        setOpen(false);
+        setPaso(1);
+        setPassword("");
+        setPago({});
+        setFileUpload(null);
+        props.traer(props.id_lote);
+      } catch (error) {
+        alert("Error al enviar los datos");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+  const handleChange = (e) => {
+    const selectedCBU = cbus.find((cbu) => cbu.id === e.target.value);
+    setPago({ ...pago, [e.target.name]: e.target.value });
+    setDescripcionCBU(selectedCBU ? selectedCBU.descripcion : '');
+  };
   return (
-    <React.Fragment>
+    <>
       <Button variant="outlined" sx={{ color: "black", borderColor: "black" }} onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
-
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Cancelar lote</DialogTitle>
         <DialogContent>
-          <DialogContentText>Seleccione el mes y año de referencia.</DialogContentText>
-          <Select
-            value={mesSeleccionado}
-            onChange={(e) => setMesSeleccionado(parseInt(e.target.value, 10))}
-            fullWidth
-          >
-            {[...Array(12).keys()].map((m) => (
-              <MenuItem key={m + 1} value={m + 1}>{`Mes ${m + 1}`}</MenuItem>
-            ))}
-          </Select>
-          <Select
-            value={anioSeleccionado}
-            onChange={(e) => setAnioSeleccionado(parseInt(e.target.value, 10))}
-            fullWidth
-          >
-            {[...Array(5).keys()].map((a) => (
-              <MenuItem key={anioSeleccionado - 2 + a} value={anioSeleccionado - 2 + a}>
-                {anioSeleccionado - 2 + a}
-              </MenuItem>
-            ))}
-          </Select>
+          {paso === 1 ? (
+            <>
+              <DialogContentText>Seleccione el mes y año de referencia.</DialogContentText>
+              <Select value={mesSeleccionado} onChange={(e) => setMesSeleccionado(parseInt(e.target.value))} fullWidth>
+                {[...Array(12).keys()].map((m) => (
+                  <MenuItem key={m + 1} value={m + 1}>{`Mes ${m + 1}`}</MenuItem>
+                ))}
+              </Select>
+              <Select value={anioSeleccionado} onChange={(e) => setAnioSeleccionado(parseInt(e.target.value))} fullWidth>
+                {[...Array(5).keys()].map((a) => (
+                  <MenuItem key={anioSeleccionado - 2 + a} value={anioSeleccionado - 2 + a}>
+                    {anioSeleccionado - 2 + a}
+                  </MenuItem>
+                ))}
+              </Select>
 
-          {!existeFecha ? (
-            <DialogContentText style={{ color: "red" }}>
-              No existen cuotas registradas para {mesSeleccionado}/{anioSeleccionado}
-            </DialogContentText>
+              {!existeFecha ? (
+                <DialogContentText style={{ color: "red" }}>
+                  No existen cuotas registradas para {mesSeleccionado}/{anioSeleccionado}
+                </DialogContentText>
+              ) : (
+                <>
+                  <DialogContentText>
+                    <strong>Cuota base:</strong> {formatCurrency(cuotaBase)}
+                  </DialogContentText>
+                  <DialogContentText>
+                    <strong>Total hasta la fecha:</strong> {formatCurrency(totalHastaFecha)}
+                  </DialogContentText>
+                  <DialogContentText>
+                    <strong>Total desde la fecha:</strong> {formatCurrency(totalDesdeFecha)}
+                  </DialogContentText>
+                  <DialogContentText>
+                    <strong>Meses restantes:</strong> {mesesRestantes}
+                  </DialogContentText>
+                </>
+              )}
+
+              <TextField
+                type="password"
+                label="Contraseña"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={errorPassword}
+                helperText={errorPassword ? "Contraseña incorrecta" : ""}
+                sx={{ mt: 2 }}
+              />
+            </>
           ) : (
             <>
-              <DialogContentText>
-                <strong>Cuota tomada como base:</strong> {formatCurrency(cuotaBase)}
-              </DialogContentText>
-              <DialogContentText>
-                <strong>Total hasta {mesSeleccionado}/{anioSeleccionado}:</strong> {formatCurrency(totalHastaFecha)}
-              </DialogContentText>
-              <DialogContentText style={{ color: mesesRestantes >= 30 ? "red" : "inherit" }}>
-                <strong>Total desde {mesSeleccionado}/{anioSeleccionado} en adelante:</strong> {formatCurrency(totalDesdeFecha)}
-                {totalDesdeFecha && (
-                  <>
-                    <br />
-                    <strong>Cantidad de cuotas: {mesesRestantes}</strong>
-                  </>
-                )}
-              </DialogContentText>
+              <TextField fullWidth label="CUIL/CUIT" onChange={(e) => setPago({ ...pago, cuil_cuit: e.target.value })} sx={{ mt: 2 }} />
+              <TextField component="form"
+                sx={{
+                  '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+
+
+                id="outlined-select-currency"
+                select
+                label="Elegir CBU"
+
+                name="cbu"
+                onChange={handleChange}
+                helperText="Por favor ingrese su CBU"
+              >
+                {
+                  cbus.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.lazo}-  {option.numero}
+                    </MenuItem>
+                  ))}
+              </TextField>
+              {pago.cbu ? <Modalveronline id={pago.cbu} /> : <></>
+              }
+              {descripcionCBU && (
+                <Typography variant="body1" sx={{ mt: 2, fontWeight: 'bold' }}>
+                  Ultimos numeros: {descripcionCBU}
+                </Typography>
+              )}
+              <TextField fullWidth type="date" label="Fecha" InputLabelProps={{ shrink: true }} onChange={(e) => setPago({ ...pago, fecha: e.target.value })} sx={{ mt: 2 }} />
+
+              <div {...getRootProps()} style={{ border: "2px dashed gray", padding: 10, textAlign: "center", marginTop: 10 }}>
+                <input {...getInputProps()} />
+                {fileUpload ? <Typography>Archivo: {fileUpload.name}</Typography> : <Typography>Arrastre un PDF o imagen aquí o haga clic para seleccionar</Typography>}
+              </div>
             </>
           )}
-
-          <TextField
-            type="password"
-            label="Contraseña"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={errorPassword}
-            helperText={errorPassword ? "Contraseña incorrecta" : ""}
-            sx={{ mt: 2 }}
-          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setOpen(false); setPassword(""); setErrorPassword(false); }}>Cancelar</Button>
-          <Button onClick={handleConfirm} autoFocus>
-            Sí
-          </Button>
+          <Button onClick={() => { setOpen(false); setPaso(1); setPassword(""); }}>Cancelar</Button>
+          {paso === 1 ? (
+            <Button onClick={handleConfirm} disabled={!existeFecha}>Siguiente</Button>
+          ) : (
+            <Button onClick={enviarFinal} disabled={loading}>{loading ? <CircularProgress size={24} /> : "Enviar"}</Button>
+          )}
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }
