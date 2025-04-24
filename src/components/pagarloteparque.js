@@ -118,7 +118,7 @@ console.log(mesSeleccionado,anioSeleccionado)
         // const cancelacion = await serviciocuotas.cancelarlote({ mes: mesSeleccionado, anio: anioSeleccionado, id_lote: props.id_lote });
         const pagoRes = await servicioUsuario1.cancelarlote(formData);
        // alert(cancelacion);
-        alert(pagoRes[0]);
+        alert(pagoRes);
         setOpen(false);
         setPaso(1);
         setPassword("");
@@ -126,7 +126,7 @@ console.log(mesSeleccionado,anioSeleccionado)
         setFileUpload(null);
         props.traer(props.id_lote);
       } catch (error) {
-        alert("Error al enviar los datos");
+       console.log(error)
       } finally {
         setLoading(false);
       }
@@ -145,7 +145,7 @@ console.log(mesSeleccionado,anioSeleccionado)
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Cancelar lote</DialogTitle>
         <DialogContent>
-          {paso === 1 ? (
+          {paso == 1 ? (
             <>
               <DialogContentText>Seleccione el mes y año de referencia.</DialogContentText>
               <Select value={mesSeleccionado} onChange={(e) => setMesSeleccionado(parseInt(e.target.value))} fullWidth>
@@ -177,7 +177,9 @@ console.log(mesSeleccionado,anioSeleccionado)
                     <strong>Total desde la fecha:</strong> {formatCurrency(totalDesdeFecha)}
                   </DialogContentText>
                   <DialogContentText>
-                    <strong>Meses restantes:</strong> {mesesRestantes}
+                    <strong>Meses restantes:</strong> <span style={{ color: mesesRestantes >= 30 ? 'red' : 'black' }}>
+  {mesesRestantes}
+</span>
                   </DialogContentText>
                 </>
               )}
