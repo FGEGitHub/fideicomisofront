@@ -69,6 +69,7 @@ const PagosInusuales = () => {
         },
         { name: "monto", label: "Monto" },
         { name: "ingresos", label: "Ingresos declarados" },
+        { name: "riesgo", label: "riesgo" },
         {
             name: "Actions",
             options: {
@@ -107,7 +108,7 @@ const PagosInusuales = () => {
                                         <StyledTableCell>Fecha</StyledTableCell>
                                         <StyledTableCell>Cuil/Cuit</StyledTableCell>
                                         <StyledTableCell>Cliente</StyledTableCell>
-
+                                        <StyledTableCell>Riesgo</StyledTableCell>
                                         <StyledTableCell>Monto</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
                                         <StyledTableCell>Descarga</StyledTableCell>
@@ -119,7 +120,7 @@ const PagosInusuales = () => {
                                             <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
                                             <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
                                             <StyledTableCell>{row.Nombre}</StyledTableCell>
-
+                                            <StyledTableCell>{row.riesgo}</StyledTableCell>
                                             <StyledTableCell>${row.monto}</StyledTableCell>
                                             <StyledTableCell>
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
