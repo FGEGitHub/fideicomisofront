@@ -198,4 +198,28 @@ const cantidaddjiva = async (cuil_cuit) => {
   }
 };
 
-export default {modificarconstancianormal,modificarcbu,actualizarpagoic3,traerPdfConstanciacbu, actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };
+const traerPdfConstanciadepagoinusual = async (id) => {
+  try {
+    const config = {
+      responseType: 'blob', // Esto es importante para manejar blobs de archivos
+    };
+    const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepagoinusual/${id}`, config);
+    return data;
+  } catch (error) {
+    console.error('Error al obtener el PDF:', error);
+    throw error;
+  }
+};
+const traerPdfConstanciadepagoinusual2 = async (id) => {
+  try {
+    const config = {
+      responseType: 'blob', // Esto es importante para manejar blobs de archivos
+    };
+    const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepagoinusual/${id}`, config);
+    return data;
+  } catch (error) {
+    console.error('Error al obtener el PDF:', error);
+    throw error;
+  }
+};
+export default {traerPdfConstanciadepagoinusual2,traerPdfConstanciadepagoinusual,modificarconstancianormal,modificarcbu,actualizarpagoic3,traerPdfConstanciacbu, actualizarpago,traerPdfConstancia,determinarIngreso,cantidadbalances,cantidadiibb,cantidaddjiva,subirprueba, borrar, subirlegajode, subirlegajo1 };

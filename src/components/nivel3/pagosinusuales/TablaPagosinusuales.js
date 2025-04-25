@@ -9,7 +9,8 @@ import Button from "@mui/material/Button";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
-
+import Modalveronline from './modalveronline'
+import Modalveronline2 from './modalveronline2'
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -71,6 +72,32 @@ const PagosInusuales = () => {
         { name: "ingresos", label: "Ingresos declarados" },
         { name: "riesgo", label: "riesgo" },
         {
+            name: "ver pago online",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    verFile(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+  
+        },
+        {
+            name: "ver justificacion online",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                    verFile2(
+                        dataIndex,
+                        rowIndex,
+                        // overbookingData,
+                        // handleEditOpen
+                    )
+            }
+  
+        },
+        {
             name: "Actions",
             options: {
                 customBodyRenderLite: (dataIndex) => (
@@ -90,7 +117,38 @@ const PagosInusuales = () => {
             }
         },
     ];
+    function verFile(index, rowIndex, data) {
+    
+   
+        return (
+            <>
 
+<Modalveronline id={pagos[0][index].id} />
+
+              {/*   <Button
+                    onClick={() => veronline(index)}
+                >Ver online</Button> */}
+
+
+            </>
+        );
+    }
+    function verFile2(index, rowIndex, data) {
+    
+   
+        return (
+            <>
+
+<Modalveronline2 id={pagos[0][index].id} />
+
+              {/*   <Button
+                    onClick={() => veronline(index)}
+                >Ver online</Button> */}
+
+
+            </>
+        );
+    }
     return (
         <div>
             <Button variant="contained" onClick={() => setVista(!vista)}>
@@ -110,7 +168,10 @@ const PagosInusuales = () => {
                                         <StyledTableCell>Cliente</StyledTableCell>
                                         <StyledTableCell>Riesgo</StyledTableCell>
                                         <StyledTableCell>Monto</StyledTableCell>
+                                        <StyledTableCell>Constancia pago</StyledTableCell>
+                                        <StyledTableCell>Constancia justificacion</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
+                                        <StyledTableCell>Notificacion/Vencimiento</StyledTableCell>
                                         <StyledTableCell>Descarga</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
@@ -120,7 +181,11 @@ const PagosInusuales = () => {
                                             <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
                                             <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
                                             <StyledTableCell>{row.Nombre}</StyledTableCell>
-                                            <StyledTableCell>{row.riesgo}</StyledTableCell>
+                                            <StyledTableCell>{row.riesgo}%</StyledTableCell>
+                                            <StyledTableCell><Modalveronline2 id={row.id} /></StyledTableCell>
+                                            <StyledTableCell><Modalveronline2 id={row.id} /></StyledTableCell>
+                                            
+
                                             <StyledTableCell>
   {isNaN(Number(row.monto))
     ? `$${row.monto}`
@@ -131,6 +196,7 @@ const PagosInusuales = () => {
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
                                                 {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
                                             </StyledTableCell>
+                                            <StyledTableCell>{row.fechanotificacion} - {row.fechavencimiento}  </StyledTableCell>
                                             <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/nivel3/cuotaic3/${row.id_cuota}` : `/nivel3/cuota/${row.id_cuota}`)}>
                                                 <Button>Ver pagos de cuota</Button>
                                             </StyledTableCell>

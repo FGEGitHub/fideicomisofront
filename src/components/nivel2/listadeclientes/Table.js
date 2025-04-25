@@ -221,6 +221,10 @@ const Lotes = () => {
     ];
 
     const options = {
+      sortOrder: {
+        name: "porcentaje",
+        direction: "desc"
+      },
     
         setTableProps: () => {
             return {

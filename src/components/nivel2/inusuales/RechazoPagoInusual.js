@@ -81,7 +81,7 @@ export default function FormDialog(props) {
         <DialogTitle>Clasificación del pago</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
-            <InputLabel htmlFor="tipo-select">Tipo de pago</InputLabel>
+            <InputLabel htmlFor="tipo-select">Recomendacion</InputLabel>
             <NativeSelect
               id="tipo-select"
               name="tipo"
@@ -90,8 +90,8 @@ export default function FormDialog(props) {
               fullWidth
             >
               <option value="">Seleccione una opción</option>
-              <option value="Inusual">Cerrada sin Ros</option>
-              <option value="Sospechoso">Registrado como Ros</option>
+              <option value="Inusual"> Inusual</option>
+              <option value="Sospechoso">Sospechoso</option>
             </NativeSelect>
 
             <TextField

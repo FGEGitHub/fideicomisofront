@@ -68,7 +68,8 @@ const PagosInusuales = () => {
             }
         },
         { name: "monto", label: "Monto" },
-        { name: "ingresos", label: "Ingresos declarados" },
+        { name: "fechanotificacion", label: "Fecha Notificacion" },
+        { name: "fechavencimiento", label: "Fecha Vencimiento" },
         { name: "riesgo", label: "riesgo" },
         {
             name: "Actions",
@@ -108,6 +109,8 @@ const PagosInusuales = () => {
                                         <StyledTableCell>Fecha</StyledTableCell>
                                         <StyledTableCell>Cuil/Cuit</StyledTableCell>
                                         <StyledTableCell>Cliente</StyledTableCell>
+                                        <StyledTableCell>Fecha Notificacion</StyledTableCell>
+                                        <StyledTableCell>Fecha Vencimiento</StyledTableCell>
                                         <StyledTableCell>Riesgo</StyledTableCell>
                                         <StyledTableCell>Monto</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
@@ -120,6 +123,8 @@ const PagosInusuales = () => {
                                             <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
                                             <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
                                             <StyledTableCell>{row.Nombre}</StyledTableCell>
+                                            <StyledTableCell>{row.fechanotificacion}</StyledTableCell>
+                                            <StyledTableCell>{row.fechavencimiento}</StyledTableCell>
                                             <StyledTableCell>{row.riesgo}</StyledTableCell>
                                             <StyledTableCell>
   {isNaN(Number(row.monto))
