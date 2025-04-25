@@ -197,7 +197,6 @@ console.log(mesSeleccionado,anioSeleccionado)
             </>
           ) : (
             <>
-              <TextField fullWidth label="CUIL/CUIT" onChange={(e) => setPago({ ...pago, cuil_cuit: e.target.value })} sx={{ mt: 2 }} />
               <TextField component="form"
                 sx={{
                   '& > :not(style)': { m: 1, width: '25ch' },

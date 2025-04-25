@@ -131,11 +131,11 @@ useEffect(() => {
 
         
         {
-          text: 'Aprobación de Legajos',
+          text: 'Pagos inusuales',
           icon:<div><Badge badgeContent={notificacioneslegajos} color="error">
           <AccountBoxIcon color="primary" />
         </Badge></div>,
-          path: '/usuario2/aprobaciones'
+          path: '/usuario2/inusuales'
         },
         {
           text: 'Aprobación de CBU',

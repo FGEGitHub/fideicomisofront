@@ -44,7 +44,13 @@ const {data } = await axios.post(baseUrl+'pagos/pagonivel2',(pago),config)
  
 } 
 
+const derivarpagoic3= async  (pago) => {
 
+
+  const {data } = await axios.post(baseUrl+'pagos/derivarpagoic3',(pago),config)
+     return (data)
+   
+  } 
 
 
 
@@ -153,7 +159,12 @@ const pagosinusuales= async  () => {
  return data
 }  
 
+const pagosinusuales2= async  () => {
 
+  const {data } = await axios.get(baseUrl+'pagos/pagosinusuales2',config)
+    
+  return data
+ }  
 const cantidadpendientesadmin= async  () => {
 
   const {data}  = await axios.get(baseUrl+'pagos/cantidadpendientesadmin',config)
@@ -256,4 +267,4 @@ const cantidadpendientes= async  () => {
           throw error;
         }
       };
-export default {registrarInteres,traerpagosdeuncliente,traerPdfConstanciadepagoic3,detallesPagoic3,detallesPagocli,traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};
+export default {derivarpagoic3,pagosinusuales2,registrarInteres,traerpagosdeuncliente,traerPdfConstanciadepagoic3,detallesPagoic3,detallesPagocli,traerPdfConstanciadepago,cantidadpendientesadmin,todoslospagos,traerpago,pagarnivel4lote,pagarnivel4,traerpagodecuota,rechazararpagoniv3,verCoincidencias,listaExtractos,VerExtracto, pagar,pagosinusuales,aprobaciones,aprobarpago,rechazararpago,pagarnivel2,detallespagoscuota,cantidadpendientes,detallesPago};

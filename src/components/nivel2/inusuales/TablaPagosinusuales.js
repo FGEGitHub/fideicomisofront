@@ -39,7 +39,7 @@ const PagosInusuales = () => {
     }, []);
 
     const getPagosi = async () => {
-        const pagos = await servicioPagos.pagosinusuales();
+        const pagos = await servicioPagos.pagosinusuales2();
         setPagos(pagos);
     };
 
@@ -131,7 +131,7 @@ const PagosInusuales = () => {
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
                                                 {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
                                             </StyledTableCell>
-                                            <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/nivel3/cuotaic3/${row.id_cuota}` : `/nivel3/cuota/${row.id_cuota}`)}>
+                                            <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/usuario2/cuotaic3/${row.id_cuota}` : `/usuario2/pagoscuotas/${row.id_cuota}`)}>
                                                 <Button>Ver pagos de cuota</Button>
                                             </StyledTableCell>
                                         </StyledTableRow>

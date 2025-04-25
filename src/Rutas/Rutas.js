@@ -23,6 +23,8 @@ import Agregarcuotas from '../Paginas/Usuario2/AgregarCuotas';
 import Clientesic3 from '../Paginas/Usuario2/clientesic3';
 import DetalleClienteic3 from '../Paginas/Usuario2/detalleclic3';
 import Actualizarcomprobantes from '../Paginas/Usuario2/actualziarcomprobantes';
+import Inusualesniv2 from '../Paginas/Usuario2/inusuales';
+
 
 
 import Navbar from "../components/Navbar";
@@ -218,6 +220,7 @@ const Rutas = [
 	{ path: '/admin/lotes', element: <LotesAdmin /> },
 	{ path: '/admin/detallescliente/:cuil_cuit', element: <Detalleclienteadmin /> },
 	{ path: '/usuario2/actualizarcomporbantes/:id', element: <Actualizarcomprobantes/> },
+	{ path: '/usuario2/inusuales', element: <Inusualesniv2/> },
 
 	
 
