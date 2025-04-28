@@ -29,7 +29,26 @@ const ModificacionC = () => {
     { rango: "MAYOR DE 45 A 60 SMVM", valor: 4 },
     { rango: "MAYOR DE 60 SMVM", valor: 5 },
   ];
+  const SMVM = 296832; // Valor del salario mínimo actualizado
 
+  const calcularRiesgo = (valor) => {
+    const vecesSMVM = valor / SMVM;
+  
+    if (cliente[0].razon === "Persona") {
+      if (vecesSMVM <= 15) return 1;
+      if (vecesSMVM <= 30) return 2;
+      if (vecesSMVM <= 45) return 3;
+      if (vecesSMVM <= 60) return 4;
+      return 5;
+    } else if (cliente[0].razon === "Empresa") {
+      if (vecesSMVM <= 30) return 1;
+      if (vecesSMVM <= 60) return 2;
+      if (vecesSMVM <= 90) return 3;
+      if (vecesSMVM <= 120) return 4;
+      return 5;
+    }
+  };
+  
 
   const filteredOptions = actividades.filter(opcion =>
     opcion.actividad.toLowerCase().includes(search.toLowerCase())
@@ -220,9 +239,9 @@ const ModificacionC = () => {
                           onChange={handleChange}
                           fullWidth
                         >
-                          <MenuItem value="Persona Humana">Persona Humana</MenuItem>
+                          <MenuItem value="Persona Humana">Persona Humana(Riesgo 1)</MenuItem>
                           <MenuItem value="Persona Humana con Actividad Comercial">
-                            Persona Humana con Actividad Comercial
+                            Persona Humana con Actividad Comercial (Riesgo 3)
                           </MenuItem>
                         </TextField>
                       </Grid>
@@ -400,34 +419,46 @@ const ModificacionC = () => {
                       >
                         {filteredOptions3.map((opcion, index) => (
                           <MenuItem key={index} value={opcion.NACIONALIDAD}>
-                            {opcion.NACIONALIDAD} (Riesgo: {opcion.riesgo})
+                            {opcion.NACIONALIDAD} (Riesgo: {opcion["NIVEL DE RIESGO"]})
                           </MenuItem>
                         ))}
                       </TextField>
 
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Volumen Transaccional (en pesos)"
-                        name="volumenTransaccional"
-                        value={modificaciones.volumenTransaccional || ""}
-                        onChange={(e) => {
-                          const valor = e.target.value;
-                          // Validación para permitir solo números
-                          if (/^\d*$/.test(valor)) {
-                            setModificaciones({
-                              ...modificaciones,
-                              volumenTransaccional: valor,
-                            });
-                          }
-                        }}
-                        variant="outlined"
-                        margin="normal"
-                        InputProps={{
-                          inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
-                        }}
-                      /><br /><br/>
+                    <Grid item xs={12}>
+  <p><strong>Salario Mínimo:</strong> ${SMVM.toLocaleString('es-AR')}</p>
+</Grid>
+
+<Grid item xs={12}>
+  <TextField
+    label="Volumen Transaccional"
+    name="volumenTransaccional"
+    value={modificaciones.volumenTransaccional || ""}
+    onChange={(e) => {
+      handleChange(e); // Esto mantiene tu estado general
+      const nuevoValor = e.target.value;
+      if (!isNaN(nuevoValor) && nuevoValor !== "") {
+        const riesgoCalculado = calcularRiesgo(Number(nuevoValor));
+        setModificaciones((prev) => ({
+          ...prev,
+          riesgoCalculado: riesgoCalculado,
+        }));
+      }
+    }}
+    variant="outlined"
+    fullWidth
+  />
+</Grid>
+{ modificaciones.volumenTransaccional && (
+  <>Equivale a {(modificaciones.volumenTransaccional / SMVM).toFixed(2)} SMVM</>
+)}
+{modificaciones.riesgoCalculado && (
+  <Grid item xs={12}>
+    <p><strong>Riesgo Calculado:</strong> Riesgo {modificaciones.riesgoCalculado}</p>
+    
+  </Grid>
+)}<br /><br/>
                       <Grid item xs={12}>
                         <TextField
                           select
