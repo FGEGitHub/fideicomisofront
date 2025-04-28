@@ -12,17 +12,19 @@ import { tableCellClasses } from '@mui/material/TableCell';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
+        backgroundColor: '#326B6B',
+        color: '#FFFFFF',
+        fontWeight: 'bold',
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
+        color: '#000000',
     },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: '#E6F2F2',
     },
     '&:last-child td, &:last-child th': {
         border: 0,
@@ -106,13 +108,21 @@ const PagosInusuales = () => {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <StyledTableCell>Fecha</StyledTableCell>
-                                        <StyledTableCell>Cuil/Cuit</StyledTableCell>
-                                        <StyledTableCell>Cliente</StyledTableCell>
-                                        <StyledTableCell>Fecha Notificacion</StyledTableCell>
+                                    <StyledTableCell>Id</StyledTableCell>
+                                    <StyledTableCell>Nombre y Apellido/Razon Social</StyledTableCell>
+                                    <StyledTableCell>Cuil/Cuit</StyledTableCell>
+                                    <StyledTableCell>Tipologia</StyledTableCell>
+
+                                    <StyledTableCell>Fecha Notificacion</StyledTableCell>
                                         <StyledTableCell>Fecha Vencimiento</StyledTableCell>
+                                        <StyledTableCell>Importe(Pesos)</StyledTableCell>
                                         <StyledTableCell>Riesgo</StyledTableCell>
-                                        <StyledTableCell>Monto</StyledTableCell>
+                              
+                                        <StyledTableCell>Estado</StyledTableCell>
+                                        <StyledTableCell>Fecha</StyledTableCell>
+                                   
+                                     
+                                     
                                         <StyledTableCell>Acciones</StyledTableCell>
                                         <StyledTableCell>Descarga</StyledTableCell>
                                     </TableRow>
@@ -120,17 +130,28 @@ const PagosInusuales = () => {
                                 <TableBody>
                                     {pagos.map((row, index) => (
                                         <StyledTableRow key={index}>
-                                            <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
-                                            <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
-                                            <StyledTableCell>{row.Nombre}</StyledTableCell>
-                                            <StyledTableCell>{row.fechanotificacion}</StyledTableCell>
-                                            <StyledTableCell>{row.fechavencimiento}</StyledTableCell>
-                                            <StyledTableCell>{row.riesgo}</StyledTableCell>
-                                            <StyledTableCell>
+                                              <StyledTableCell>{row.id}</StyledTableCell>
+                                              <StyledTableCell>{row.Nombre}</StyledTableCell>
+                                              <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
+                                              <StyledTableCell>{row.tipologia}</StyledTableCell>
+                                              <StyledTableCell>{row.fechanotificacion}</StyledTableCell>
+                                              <StyledTableCell>{row.fechavencimiento}</StyledTableCell>
+                                              <StyledTableCell>
   {isNaN(Number(row.monto))
     ? `$${row.monto}`
     : `$${Number(row.monto).toFixed(2)}`}
+</StyledTableCell>  <StyledTableCell>{row.riesgo}%</StyledTableCell>
+<StyledTableCell>
+  {row.proceso == 'averificarnivel2' && 'Pendiente carga de documentación'}
+  {row.proceso == 'averificarnivel3' && 'Pendiente clasificación de Gerencia'}
+  {row.proceso == 'Inusual' && 'Cerrado (Sin alerta)'}
+  {row.proceso == 'Sospechoso' && 'Cerrado (Con Alerta)'}
 </StyledTableCell>
+                                            <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
+                                            
+                                         
+                                          
+                                        
 
                                             <StyledTableCell>
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />

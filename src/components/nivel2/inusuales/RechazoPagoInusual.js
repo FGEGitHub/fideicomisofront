@@ -74,7 +74,7 @@ export default function FormDialog(props) {
   return (
     <div>
       <Tooltip title="Clasificar" arrow>
-        <button onClick={handleClickOpen}>Clasificar</button>
+        <button onClick={handleClickOpen}>Atender</button>
       </Tooltip>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">

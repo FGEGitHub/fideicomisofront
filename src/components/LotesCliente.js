@@ -691,7 +691,7 @@ const LotesCliente = (props) => {
                                             }>
                                                 <p style={{
                                                     color: row.diferencia < 0
-                                                        ? (row.diferencia === -row.cuota_con_ajuste ? "red" : "blue")
+                                                        ? (row.diferencia == -row.cuota_con_ajuste ? "red" : "blue")
                                                         : "green",
                                                     whiteSpace: "nowrap",
                                                 }}>
