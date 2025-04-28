@@ -21,6 +21,7 @@ const ModalDetallePago = ({ open, handleClose, data }) => {
           {data.proceso === 'Inusual' && ' Cerrado (Sin alerta)'}
           {data.proceso === 'Sospechoso' && ' Cerrado (Con Alerta)'}
         </Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Detalle:</strong> {data.detalle}</Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">Cerrar</Button>

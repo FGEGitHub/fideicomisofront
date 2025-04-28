@@ -215,7 +215,7 @@ const traerPdfConstanciadepagoinusual2 = async (id) => {
     const config = {
       responseType: 'blob', // Esto es importante para manejar blobs de archivos
     };
-    const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepagoinusual/${id}`, config);
+    const { data } = await axios.get(`${baseUrl}traerPdfConstanciadepagoinusual2/${id}`, config);
     return data;
   } catch (error) {
     console.error('Error al obtener el PDF:', error);
