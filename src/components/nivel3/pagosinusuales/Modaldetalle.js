@@ -1,33 +1,32 @@
-// components/ModalDetalle.js
 import React from 'react';
-import { Modal, Box, Typography, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
-  bgcolor: 'background.paper',
-  borderRadius: 2,
-  boxShadow: 24,
-  p: 4,
+const ModalDetallePago = ({ open, handleClose, data }) => {
+  if (!data) return null; // Si no hay datos, no renderiza nada
+
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      <DialogTitle>Detalle del Pago</DialogTitle>
+      <DialogContent dividers>
+        <Typography variant="subtitle1" gutterBottom><strong>Nombre:</strong> {data.Nombre}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>CUIL/CUIT:</strong> {data.cuil_cuitc}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Tipología:</strong> {data.tipologia}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Fecha Notificación:</strong> {data.fechanotificacion}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Fecha Vencimiento:</strong> {data.fechavencimiento}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Importe:</strong> ${Number(data.monto).toFixed(2)}</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Riesgo:</strong> {data.riesgo}%</Typography>
+        <Typography variant="subtitle1" gutterBottom><strong>Estado:</strong> 
+          {data.proceso === 'averificarnivel2' && ' Pendiente carga de documentación'}
+          {data.proceso === 'averificarnivel3' && ' Pendiente clasificación de Gerencia'}
+          {data.proceso === 'Inusual' && ' Cerrado (Sin alerta)'}
+          {data.proceso === 'Sospechoso' && ' Cerrado (Con Alerta)'}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">Cerrar</Button>
+      </DialogActions>
+    </Dialog>
+  );
 };
 
-export default function ModalDetalle({ open, handleClose, detalle }) {
-  return (
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
-        <Typography variant="h6" component="h2" gutterBottom>
-          Detalles del Pago
-        </Typography>
-        <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-          {detalle || 'Sin detalles disponibles'}
-        </Typography>
-        <Button onClick={handleClose} variant="contained" sx={{ mt: 2 }}>
-          Cerrar
-        </Button>
-      </Box>
-    </Modal>
-  );
-}
+export default ModalDetallePago;

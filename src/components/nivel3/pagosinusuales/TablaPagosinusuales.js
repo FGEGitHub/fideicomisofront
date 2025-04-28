@@ -4,7 +4,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import servicioPagos from '../../../services/pagos';
 import { useNavigate } from "react-router-dom";
 import BotonRechazo from './RechazoPagoInusual';
-//import BotonAprobado from './AprobacionPagoInusual';
+import ModalDetallePago from './Modaldetalle';
+
 import Button from "@mui/material/Button";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -35,8 +36,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const PagosInusuales = () => {
     const [pagos, setPagos] = useState([]);
     const [vista, setVista] = useState(true);
-    const navigate = useNavigate();
-
+ 
+    const [openModal, setOpenModal] = useState(false);
+    const [detalleSeleccionado, setDetalleSeleccionado] = useState(null);
+       const navigate = useNavigate();
+    const handleOpenModal = (row) => {
+        setDetalleSeleccionado(row);
+        setOpenModal(true);
+    };
+    
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setDetalleSeleccionado(null);
+    };
     useEffect(() => {
         getPagosi();
     }, []);
@@ -156,7 +168,7 @@ const PagosInusuales = () => {
             <Button variant="contained" onClick={() => setVista(!vista)}>
                 Cambiar Vista
             </Button>
-            {vista ? (
+            
                 <Paper sx={{
     width: "90%",
     margin: '20px auto',
@@ -185,7 +197,7 @@ const PagosInusuales = () => {
                                         <StyledTableCell>Constancia pago</StyledTableCell>
                                         <StyledTableCell>Constancia justificacion</StyledTableCell>
                                         <StyledTableCell>Acciones</StyledTableCell>
-                                        <StyledTableCell>Ver pagos</StyledTableCell>
+                                        <StyledTableCell>Ver Detalles</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -218,9 +230,11 @@ const PagosInusuales = () => {
                                                 <BotonRechazo id={row.id} getPagosi={getPagosi} />
                                                 {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
                                             </StyledTableCell>
-                                      {/*       <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/nivel3/cuotaic3/${row.id_cuota}` : `/nivel3/cuota/${row.id_cuota}`)}>
-                                                <Button>Ver pago</Button>
-                                            </StyledTableCell> */}
+                                            <StyledTableCell>
+  <Button variant="outlined" onClick={() => handleOpenModal(row)}>
+    Ver Detalles
+  </Button>
+</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -228,16 +242,8 @@ const PagosInusuales = () => {
                         )}
                     </TableContainer>
                 </Paper>
-            ) : (
-                <ThemeProvider theme={StyledTable()}>
-                    <MUIDataTable
-                        title={"Lista de pagos inusuales"}
-                        data={pagos}
-                        columns={columns}
-                        options={{ selectableRows: "none" }}
-                    />
-                </ThemeProvider>
-            )}
+                <ModalDetallePago open={openModal} handleClose={handleCloseModal} data={detalleSeleccionado} />
+
         </div>
     );
 };
