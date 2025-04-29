@@ -229,6 +229,72 @@ export default function DetallesPagos(props) {
             </>
         );
     }
+    const options = {
+     
+      
+          setTableProps: () => {
+              return {
+                style: {
+                  backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
+                },
+              };
+            },
+            customHeadRender: (columnMeta, handleToggleColumn) => ({
+              TableCell: {
+                style: {
+                  backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
+                  color: 'white', // Cambia el color del texto del encabezado
+                },
+              },
+            }),
+          selectableRows: false, // Desactivar la selección de filas
+          stickyHeader: true,
+          selectableRowsHeader: false,
+          selectableRowsOnClick: true,
+          responsive: 'scroll',
+          rowsPerPage: 10,
+          rowsPerPageOptions: [5, 10, 15],
+          downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
+          print: true,
+          filter: true,
+          viewColumns: true,
+          pagination: true,
+  
+          textLabels: {
+            body: {
+              noMatch: "No se encontraron registros",
+              toolTip: "Ordenar",
+            },
+            pagination: {
+              next: "Siguiente",
+              previous: "Anterior",
+              rowsPerPage: "Filas por página:",
+              displayRows: "de",
+            },
+            toolbar: {
+              search: "Buscar",
+              downloadCsv: "Descargar CSV",
+              print: "Imprimir",
+              viewColumns: "Ver columnas",
+              filterTable: "Filtrar tabla",
+            },
+            filter: {
+              all: "Todos",
+              title: "FILTROS",
+              reset: "RESETEAR",
+            },
+            viewColumns: {
+              title: "Mostrar columnas",
+              titleAria: "Mostrar/ocultar columnas de la tabla",
+            },
+            selectedRows: {
+              text: "fila(s) seleccionada(s)",
+              delete: "Eliminar",
+              deleteAria: "Eliminar filas seleccionadas",
+            },
+          },
+      
+    };
     return (
 
         <MUIDataTable
@@ -242,6 +308,7 @@ export default function DetallesPagos(props) {
                     onClick: (event, rowData) => alert("You saved " + rowData.name)
                 }
             ]}
+            options={options}
         />
 
     )
