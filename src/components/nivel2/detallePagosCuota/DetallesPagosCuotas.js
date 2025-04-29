@@ -224,7 +224,20 @@ export default function DetallesPagos(props) {
                     onClick={() => download(index)}
                 >Ver Online</button>
                 <Borrar
-                    id={pagos[index].id} />
+                    id={pagos[index].id} 
+                    traer={async () => {
+                        const aux = {
+                            id: id
+                        }
+                        const pag = await servicioPagos.detallesPago(aux)
+                
+                        setPagos(pag)
+                
+                
+                
+                
+                    }
+                }/>
 
             </>
         );
