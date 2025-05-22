@@ -587,6 +587,13 @@ const LotesCliente = (props) => {
             <Adelantar
                 id_lote={idlote}
                 cuotas={cuotas}
+                 traerr={async () => {
+                                                    const cuotas = await servicioCuotas.vercuotas(idlote);
+                                                    setCuotas(cuotas);
+                                                    setAct(true);
+                                                    verief(idlote);
+                                                    setOpen(false);
+                                                }}
             />}
         </Stack>
     </div>
