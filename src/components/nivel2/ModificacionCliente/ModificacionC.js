@@ -13,6 +13,9 @@ import codigosp from './codigop.json';
 import nacionalidadjson from './nacionalidad.json';
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+
+
 
 const ModificacionC = () => {
   const [cliente, setCliente] = useState([]);
@@ -168,7 +171,9 @@ const ModificacionC = () => {
             </span>
             <br/>
          
-          </Box>   {cliente[0].pep_extranjero =="Si" ? <>
+          </Box>   
+          
+          {cliente[0].pep_extranjero =="Si" ? <>
             <p style={{ color: 'crimson' }} > Pep Extranjero </p><br/>
           </> : <></>}
           {cliente[0].categoria_especial == "Si" ? <>

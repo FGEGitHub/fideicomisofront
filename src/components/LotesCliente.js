@@ -36,6 +36,7 @@ import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
 
 import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
+import Adelantar from './nivel2/pagarcuota/adelantarcuotaparque'
 
 //////
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -582,6 +583,11 @@ const LotesCliente = (props) => {
                 id_lote={idlote}
                 cuotas={cuotas}
             />
+            {cuotas && 
+            <Adelantar
+                id_lote={idlote}
+                cuotas={cuotas}
+            />}
         </Stack>
     </div>
 

@@ -301,9 +301,7 @@ useEffect(() => {
           >
               <Navbar />
               <Toolbar />
-              <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2 }}>
-                  {menuVisible ? 'Ocultar Menú' : 'Mostrar Menú'}
-              </Button>
+           
               {children}
           </Box>
       </Box>

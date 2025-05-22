@@ -6,8 +6,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import NativeSelect from '@mui/material/NativeSelect';
-import InputLabel from '@mui/material/InputLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useDropzone } from 'react-dropzone';
 
@@ -22,6 +20,13 @@ export default function FormDialog(props) {
   });
   const [fileUpload, setFileUpload] = useState(null);
   const [enviarr, setEnviarr] = useState(null);
+  const [wordCount, setWordCount] = useState(0);
+
+  const countWords = (text) => {
+    const trimmed = text.trim();
+    if (trimmed === "") return 0;
+    return trimmed.split(/\s+/).length;
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,12 +37,19 @@ export default function FormDialog(props) {
     setForm({ id: props.id, tipo: '', detalle: '' });
     setFileUpload(null);
     setEnviarr(null);
+    setWordCount(0);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "detalle" && value.length > 256) return;
-    setForm({ ...form, [name]: value });
+    if (name === "detalle") {
+      if (value.length <= 256) {
+        setForm({ ...form, detalle: value });
+        setWordCount(countWords(value));
+      }
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   const onDrop = useCallback((files) => {
@@ -81,19 +93,6 @@ export default function FormDialog(props) {
         <DialogTitle>Clasificación del pago</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
-            <InputLabel htmlFor="tipo-select">Recomendacion</InputLabel>
-            <NativeSelect
-              id="tipo-select"
-              name="tipo"
-              value={form.tipo}
-              onChange={handleChange}
-              fullWidth
-            >
-              <option value="">Seleccione una opción</option>
-              <option value="Inusual"> Inusual</option>
-              <option value="Sospechoso">Sospechoso</option>
-            </NativeSelect>
-
             <TextField
               margin="dense"
               id="detalle"
@@ -108,6 +107,9 @@ export default function FormDialog(props) {
               inputProps={{ maxLength: 256 }}
               variant="outlined"
             />
+            <div style={{ textAlign: "right", fontSize: "0.85rem", color: "#666", marginTop: "4px" }}>
+              Palabras: {wordCount} / 500 &nbsp;|&nbsp; Caracteres: {form.detalle.length} / 256
+            </div>
 
             <div
               {...getRootProps()}
