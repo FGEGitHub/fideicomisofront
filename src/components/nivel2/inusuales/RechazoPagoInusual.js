@@ -108,7 +108,7 @@ export default function FormDialog(props) {
               variant="outlined"
             />
             <div style={{ textAlign: "right", fontSize: "0.85rem", color: "#666", marginTop: "4px" }}>
-              Palabras: {wordCount} / 500 &nbsp;|&nbsp; Caracteres: {form.detalle.length} / 256
+            |&nbsp; Caracteres: {form.detalle.length} / 256
             </div>
 
             <div

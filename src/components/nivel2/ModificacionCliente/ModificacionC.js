@@ -13,8 +13,7 @@ import codigosp from './codigop.json';
 import nacionalidadjson from './nacionalidad.json';
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-
+import Typography from "@mui/material/Typography";
 
 
 const ModificacionC = () => {
@@ -36,7 +35,7 @@ const ModificacionC = () => {
 
   const calcularRiesgo = (valor) => {
     const vecesSMVM = valor / SMVM;
-  
+
     if (cliente[0].razon === "Persona") {
       if (vecesSMVM <= 15) return 1;
       if (vecesSMVM <= 30) return 2;
@@ -51,7 +50,7 @@ const ModificacionC = () => {
       return 5;
     }
   };
-  
+
 
   const filteredOptions = actividades.filter(opcion =>
     opcion.actividad.toLowerCase().includes(search.toLowerCase())
@@ -119,15 +118,26 @@ const ModificacionC = () => {
 
   return (
     <>
+      {cliente.length > 0 && (
+        <Card
+          sx={{
+            mb: 3,
+            backgroundColor: "#d7e8f2",
+            borderRadius: 2,
+            p: 2,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
 
-      {cliente.length > 0 &&
-        <>
-          {cliente[0].razon == 'Persona' ? <>
-            Edad:{cliente[0].edad}
-          </> : <></>}
 
-          <Box sx={{ display: "flex", alignItems: "center", width: "25%" }}>
-            Riesgo
+          <Box sx={{ minWidth: "250px", flex: 1 }}>
+            <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", textTransform: "uppercase" }}>
+              Riesgo
+            </Typography>
             <LinearProgress
               variant="determinate"
               value={cliente[0].riesgo}
@@ -136,7 +146,7 @@ const ModificacionC = () => {
                 marginRight: 8,
                 height: 10,
                 borderRadius: 5,
-                backgroundColor: "#e0e0e0", // Fondo de la barra
+                backgroundColor: "#f3f5f5", // Fondo de la barra
               }}
               sx={{
                 "& .MuiLinearProgress-bar": {
@@ -149,15 +159,20 @@ const ModificacionC = () => {
                 },
               }}
             />
-            <span
-              style={{
+           
+
+            <Typography
+            
+              variant="body2"
+              sx={{
+                mt: 1,
                 fontWeight: "bold",
                 color:
                   cliente[0].riesgo <= 58
                     ? "green"
                     : cliente[0].riesgo <= 70
-                      ? "yellow"
-                      : "red", // Color del texto según el valor
+                      ? "orange"
+                      : "red",
                 textTransform: "uppercase",
               }}
             >
@@ -165,346 +180,355 @@ const ModificacionC = () => {
                 ? "Bajo"
                 : cliente[0].riesgo <= 70
                   ? "Medio"
-                  : "Alto"}{" "}
-                  
-              ({cliente[0].riesgo}%)
-            </span>
-            <br/>
-         
-          </Box>   
-          
-          {cliente[0].pep_extranjero =="Si" ? <>
-            <p style={{ color: 'crimson' }} > Pep Extranjero </p><br/>
-          </> : <></>}
-          {cliente[0].categoria_especial == "Si" ? <>
-            <p style={{ color: 'crimson' }} >    Categoria Especial</p>
-          </> : <></>}
-        </>}
+                  : "Alto"} ( {cliente[0].riesgo}% )
+            </Typography>
+
+            {cliente[0].razon === "Persona" && (
+              <Box sx={{ fontWeight: "bold", fontSize: 16 }}>
+                Edad: <span style={{ fontWeight: "normal" }}>{cliente[0].edad}</span>
+              </Box>
+            )}
+          </Box>
+          {cliente[0].pep_extranjero === "Si" && (
+            <Box sx={{ color: "crimson", fontWeight: "bold" }}>
+              PEP Extranjero
+            </Box>
+          )}
+
+          {cliente[0].categoria_especial === "Si" && (
+            <Box sx={{ color: "crimson", fontWeight: "bold" }}>
+              Categoría Especial
+            </Box>
+          )}
+        </Card>
+      )}
 
       <form onSubmit={handleGuardar}>
         {modificaciones &&
           cliente.map((client) => (
-            <Container key={client.id} maxWidth="sm">
-              <Card sx={{ backgroundColor: "#bdbdbd", borderRadius: 2, p: 2 }}>
+            <Container key={client.id} maxWidth="lg">
+              <Card sx={{ backgroundColor: "#ffff", borderRadius: 2, p: 3 }}>
                 <CardContent>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Nombre"
-                        name="Nombre"
-                        defaultValue={client.Nombre || ""}
-                        onChange={handleChange}
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="CUIL/CUIT"
-                        name="cuil_cuit"
-                        defaultValue={client.cuil_cuit || ""}
-                        onChange={handleChange}
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Email"
-                        name="email"
-                        defaultValue={client.email || ""}
-                        onChange={handleChange}
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </Grid>
+                  <Grid container spacing={2}>
+                    {/* Izquierda */}
+                    <Grid item xs={12} md={8}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <TextField label="Nombre y apellido" name="Nombre" defaultValue={client.Nombre || ""}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth size="small"
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField label="Cuit" name="cuil_cuit" defaultValue={client.cuil_cuit || ""}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth size="small"
+                          />
+                        </Grid>
+
+                        {client.razon == "Persona" ? <>
+                          <Grid item xs={6}>
+                            <TextField label="Fecha nacimiento" name="fechaNacimiento" type="date"
+                              value={fechaNacimiento || "1990-01-01"}
+                              onChange={(e) => handleFechaNacimientoChange(e.target.value)}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              fullWidth size="small"
+                            />
+                            {modificaciones.edad && modificaciones.edad}años
+                          </Grid>
+
+                          <Grid item xs={6}>
+                            <TextField
+                              select
+                              label="Tipo de Cliente"
+                              name="tipoCliente"
+                              value={modificaciones.tipoCliente || ""}
+                              onChange={handleChange}
+                              fullWidth size="small"
+                            >
+                              <MenuItem value="Persona Humana">Persona Humana(Riesgo 1)</MenuItem>
+                              <MenuItem value="Persona Humana con Actividad Comercial">
+                                Persona Humana con Actividad Comercial (Riesgo 3)
+                              </MenuItem>
+                            </TextField>
+                          </Grid>
+                        </> : <>
+                          <Grid item xs={6}>
+                            <TextField
+                              select
+                              label="Tipo de Cliente Empresa"
+                              name="tipoClienteEmpresa"
+                              value={modificaciones.tipoClienteEmpresa || ""}
+                              onChange={(e) =>
+                                setModificaciones({
+                                  ...modificaciones,
+                                  tipoClienteEmpresa: e.target.value,
+                                })
+                              }
+                              fullWidth
+                              variant="outlined"
+                              margin="normal"
+                              size="small"
+                            >
+                              <MenuItem value="Consorcios de Propietarios">Consorcios de Propietarios</MenuItem>
+                              <MenuItem value="Sociedad Anónima">Sociedad Anónima</MenuItem>
+                              <MenuItem value="Sociedad de Hecho">Sociedad de Hecho</MenuItem>
+                              <MenuItem value="Sociedad de Responsabilidad Limitada">
+                                Sociedad de Responsabilidad Limitada
+                              </MenuItem>
+                              <MenuItem value="Sociedad en comandita por acciones">
+                                Sociedad en comandita por acciones
+                              </MenuItem>
+                              <MenuItem value="Sociedad en comandita Simple">Sociedad en comandita Simple</MenuItem>
+                              <MenuItem value="Sociedad Irregular">Sociedad Irregular</MenuItem>
+                              <MenuItem value="Sociedad Unipersonal">Sociedad Unipersonal</MenuItem>
+                              <MenuItem value="Sociedades cooperativas de trabajo">
+                                Sociedades cooperativas de trabajo
+                              </MenuItem>
+                              <MenuItem value="Sociedades de garantía recíproca (SGR)">
+                                Sociedades de garantía recíproca (SGR)
+                              </MenuItem>
+                              <MenuItem value="Asociaciones Civiles">Asociaciones Civiles</MenuItem>
+                              <MenuItem value="Cooperativas">Cooperativas</MenuItem>
+                              <MenuItem value="Embajadas">Embajadas</MenuItem>
+                              <MenuItem value="Entidades sindicales">Entidades sindicales</MenuItem>
+                              <MenuItem value="Fideicomisos">Fideicomisos</MenuItem>
+                              <MenuItem value="Fundación">Fundación</MenuItem>
+                              <MenuItem value="Mutuales">Mutuales</MenuItem>
+                              <MenuItem value="Organizaciones sin fines de lucro - Otros">
+                                Organizaciones sin fines de lucro - Otros
+                              </MenuItem>
+                              <MenuItem value="Sociedad Anónima Simplificada">
+                                Sociedad Anónima Simplificada
+                              </MenuItem>
+                              <MenuItem value="Entes Autarquicos">Entes Autarquicos</MenuItem>
+                              <MenuItem value="La Iglesia Católica">La Iglesia Católica</MenuItem>
+                              <MenuItem value="SAPEM (participación estatal mayoritaria)">
+                                SAPEM (participación estatal mayoritaria)
+                              </MenuItem>
+                              <MenuItem value="Sector Público Nacional, Provincial o Municipal">
+                                Sector Público Nacional, Provincial o Municipal
+                              </MenuItem>
+                            </TextField>
+                          </Grid>
+                        </>}
+
+                        <Grid item xs={6}>
+                          <TextField label="Domicilio" name="domicilio" defaultValue={client.domicilio || ""}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth size="small"
+                          /> </Grid>
+
+                        <Grid item xs={6}>
+                          <TextField label="Correo" name="email" defaultValue={client.email || ""}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth size="small"
+                          />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Teléfono"
+                            name="telefono"
+                            defaultValue={client.telefono || ""}
+                            onChange={handleChange}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                          />
+                        </Grid>
+
+                        {/* Código Postal debajo del teléfono */}
+                        <Grid item xs={12}>
+                          <Grid container spacing={2} alignItems="center">
+                            {/* Código Postal */}
+                            <Grid item xs={6}>
+                              <TextField
+                                select
+                                label="Código Postal"
+                                name="cp"
+                                value={modificaciones.cp || ""}
+                                onChange={handleChange}
+                                size="small"
+                                fullWidth
+                              >
+                                {codigosp.map((opcion, index) => (
+                                  <MenuItem key={index} value={opcion.codigo}>
+                                    {opcion.codigo} (Riesgo: {opcion.riesgo})
+                                  </MenuItem>
+                                ))}
+                                <MenuItem value="OTRAS_ZONAS">
+                                  OTRAS ZONAS RIESGO BAJO - LOCALIDAD RIESGO BAJO
+                                </MenuItem>
+                              </TextField>
+                            </Grid>
+
+                            {/* Categoría especial */}
+                            <Grid item xs="auto">
+                              <TextField
+                                select
+                                label="Categoría especial"
+                                name="categoria_especial"
+                                value={modificaciones.categoria_especial || ""}
+                                onChange={handleChange}
+                                size="small"
+                                sx={{ width: '120px' }}
+                              >
+                                <MenuItem value="Si">Si</MenuItem>
+                                <MenuItem value="No">No</MenuItem>
+                              </TextField>
+                            </Grid>
+
+                            {/* Pep Extranjero */}
+                            <Grid item xs="auto">
+                              <TextField
+                                select
+                                label="Pep Extranjero"
+                                name="pep_extranjero"
+                                value={modificaciones.pep_extranjero || ""}
+                                onChange={handleChange}
+                                size="small"
+                                sx={{ width: '120px' }}
+                              >
+                                <MenuItem value="Si">Si</MenuItem>
+                                <MenuItem value="No">No</MenuItem>
+                              </TextField>
+                            </Grid>
+                          </Grid>
+                        </Grid>
 
 
-                    {client.razon == "Persona" ? <>
-                      <Grid item xs={6}>
-                        <TextField
-                          label="Fecha de Nacimiento"
-                          name="fechaNacimiento"
-                          type="date"
-                          value={fechaNacimiento || "1990-01-01"}
-                          onChange={(e) => handleFechaNacimientoChange(e.target.value)}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          fullWidth
-                        />
-                        {modificaciones.edad && `${modificaciones.edad} años`}
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          select
-                          label="Tipo de Cliente"
-                          name="tipoCliente"
-                          value={modificaciones.tipoCliente || ""}
-                          onChange={handleChange}
-                          fullWidth
-                        >
-                          <MenuItem value="Persona Humana">Persona Humana(Riesgo 1)</MenuItem>
-                          <MenuItem value="Persona Humana con Actividad Comercial">
-                            Persona Humana con Actividad Comercial (Riesgo 3)
-                          </MenuItem>
-                        </TextField>
-                      </Grid>
-                    </> : <>
-                      <Grid item xs={12}>
-                        <TextField
-                          select
-                          label="Tipo de Cliente Empresa"
-                          name="tipoClienteEmpresa"
-                          value={modificaciones.tipoClienteEmpresa || ""}
-                          onChange={(e) =>
-                            setModificaciones({
-                              ...modificaciones,
-                              tipoClienteEmpresa: e.target.value,
-                            })
-                          }
-                          fullWidth
-                          variant="outlined"
-                          margin="normal"
-                        >
-                          <MenuItem value="Consorcios de Propietarios">Consorcios de Propietarios</MenuItem>
-                          <MenuItem value="Sociedad Anónima">Sociedad Anónima</MenuItem>
-                          <MenuItem value="Sociedad de Hecho">Sociedad de Hecho</MenuItem>
-                          <MenuItem value="Sociedad de Responsabilidad Limitada">
-                            Sociedad de Responsabilidad Limitada
-                          </MenuItem>
-                          <MenuItem value="Sociedad en comandita por acciones">
-                            Sociedad en comandita por acciones
-                          </MenuItem>
-                          <MenuItem value="Sociedad en comandita Simple">Sociedad en comandita Simple</MenuItem>
-                          <MenuItem value="Sociedad Irregular">Sociedad Irregular</MenuItem>
-                          <MenuItem value="Sociedad Unipersonal">Sociedad Unipersonal</MenuItem>
-                          <MenuItem value="Sociedades cooperativas de trabajo">
-                            Sociedades cooperativas de trabajo
-                          </MenuItem>
-                          <MenuItem value="Sociedades de garantía recíproca (SGR)">
-                            Sociedades de garantía recíproca (SGR)
-                          </MenuItem>
-                          <MenuItem value="Asociaciones Civiles">Asociaciones Civiles</MenuItem>
-                          <MenuItem value="Cooperativas">Cooperativas</MenuItem>
-                          <MenuItem value="Embajadas">Embajadas</MenuItem>
-                          <MenuItem value="Entidades sindicales">Entidades sindicales</MenuItem>
-                          <MenuItem value="Fideicomisos">Fideicomisos</MenuItem>
-                          <MenuItem value="Fundación">Fundación</MenuItem>
-                          <MenuItem value="Mutuales">Mutuales</MenuItem>
-                          <MenuItem value="Organizaciones sin fines de lucro - Otros">
-                            Organizaciones sin fines de lucro - Otros
-                          </MenuItem>
-                          <MenuItem value="Sociedad Anónima Simplificada">
-                            Sociedad Anónima Simplificada
-                          </MenuItem>
-                          <MenuItem value="Entes Autarquicos">Entes Autarquicos</MenuItem>
-                          <MenuItem value="La Iglesia Católica">La Iglesia Católica</MenuItem>
-                          <MenuItem value="SAPEM (participación estatal mayoritaria)">
-                            SAPEM (participación estatal mayoritaria)
-                          </MenuItem>
-                          <MenuItem value="Sector Público Nacional, Provincial o Municipal">
-                            Sector Público Nacional, Provincial o Municipal
-                          </MenuItem>
-                        </TextField>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          select
-                          label="Antiguedad"
-                          name="antiguedad"
-                          value={modificaciones.antiguedad || ""}
-                          onChange={handleChange}
-                          fullWidth
-                        >
-                          <MenuItem value="Mayor a 21 años">Mayor a 21 años</MenuItem>
-                          <MenuItem value="Entre 11 y 20 años">Entre 11 y 20 años</MenuItem>
-                          <MenuItem value="Entre 6 y 10 años">Entre 6 y 10 años</MenuItem>
-                          <MenuItem value="Entre 2 y 5 años">Entre 2 y 5 años</MenuItem>
-                          <MenuItem value="Menor o igual a 1 años">Menor o igual a 1 años</MenuItem>
 
-                        </TextField>
-                      </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            select
+                            fullWidth
+                            label="Nacionalidad"
+                            name="nacionalidad"
+                            value={modificaciones.nacionalidad || ""}
+                            onChange={(e) =>
+                              setModificaciones({
+                                ...modificaciones,
+                                nacionalidad: e.target.value,
+                              })
+                            }
+                            variant="outlined"
+                            margin="normal" size="small"
+                          >
+                            {filteredOptions3.map((opcion, index) => (
+                              <MenuItem key={index} value={opcion.NACIONALIDAD}>
+                                {opcion.NACIONALIDAD} (Riesgo: {opcion["NIVEL DE RIESGO"]})
+                              </MenuItem>
+                            ))}
+                          </TextField>
 
-                    </>}
+                        </Grid>
 
-                    <Grid item xs={12}>
-                      <TextField
-                        select
-                        fullWidth
-                        label="Seleccionar actividad"
-                        name="actividadEconomica"
-                        value={modificaciones.actividadEconomica || ""}
-                        onChange={(e) =>
-                          setModificaciones({
-                            ...modificaciones,
-                            actividadEconomica: e.target.value,
-                          })
-                        }
-                        variant="outlined"
-                        margin="normal"
-                      >
-                        {filteredOptions.map((opcion, index) => (
-                          <MenuItem key={index} value={opcion.actividad}>
-                            {opcion.actividad} (Riesgo: {opcion.riesgo})
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Domicilio"
-                        name="domicilio"
-                        defaultValue={client.domicilio || ""}
-                        onChange={handleChange}
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </Grid>
 
-                    <Grid item xs={12}>
-                      {client.cp && <>Actual: {client.cp}</>}
-                      <TextField
-                        select
-                        fullWidth
-                        label="Codigo postal"
-                        name="cp"
-                        value={modificaciones.cp || ""}
-                        onChange={(e) => {
-                          setModificaciones({
-                            ...modificaciones,
-                            cp: e.target.value,
-                          });
-                          if (e.target.value !== "OTRAS_ZONAS") {
-                            setCpManual(""); // Limpia el campo manual si no es "OTRAS_ZONAS"
-                          }
-                        }}
-                        variant="outlined"
-                        margin="normal"
-                      >
-                        {codigosp.map((opcion, index) => (
-                          <MenuItem key={index} value={opcion.codigo}>
-                            {opcion.codigo} (Riesgo: {opcion.riesgo})
-                          </MenuItem>
-                        ))}
-                        <MenuItem value="OTRAS_ZONAS">
-                          OTRAS ZONAS RIESGO BAJO - LOCALIDAD RIESGO BAJO
-                        </MenuItem>
-                      </TextField>
-                    </Grid>
 
-                    {modificaciones.cp === "OTRAS_ZONAS" && (
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Ingrese código postal manualmente"
-                          value={cpManual}
-                          onChange={(e) => setCpManual(e.target.value)}
-                          variant="outlined"
-                          margin="normal"
-                        />
-                      </Grid>
-                    )}
+                        <Grid item xs={12}>
+                          <TextField
+                            select
+                            fullWidth
+                            label="Seleccionar actividad"
+                            name="actividadEconomica"
+                            value={modificaciones.actividadEconomica || ""}
+                            onChange={(e) =>
+                              setModificaciones({
+                                ...modificaciones,
+                                actividadEconomica: e.target.value,
+                              })
+                            }
+                            variant="outlined"
+                            margin="normal" size="small"
+                          >
+                            {filteredOptions.map((opcion, index) => (
+                              <MenuItem key={index} value={opcion.actividad}>
+                                {opcion.actividad} (Riesgo: {opcion.riesgo})
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Grid>
 
-                    <Grid item xs={12}>
-                      <TextField
-                        select
-                        fullWidth
-                        label="Nacionalidad"
-                        name="nacionalidad"
-                        value={modificaciones.nacionalidad || ""}
-                        onChange={(e) =>
-                          setModificaciones({
-                            ...modificaciones,
-                            nacionalidad: e.target.value,
-                          })
-                        }
-                        variant="outlined"
-                        margin="normal"
-                      >
-                        {filteredOptions3.map((opcion, index) => (
-                          <MenuItem key={index} value={opcion.NACIONALIDAD}>
-                            {opcion.NACIONALIDAD} (Riesgo: {opcion["NIVEL DE RIESGO"]})
-                          </MenuItem>
-                        ))}
-                      </TextField>
 
-                    </Grid>
-                    <Grid item xs={12}>
-                    <Grid item xs={12}>
-  <p><strong>Salario Mínimo:</strong> ${SMVM.toLocaleString('es-AR')}</p>
-</Grid>
 
-<Grid item xs={12}>
-  <TextField
-    label="Volumen Transaccional"
-    name="volumenTransaccional"
-    value={modificaciones.volumenTransaccional || ""}
-    onChange={(e) => {
-      handleChange(e); // Esto mantiene tu estado general
-      const nuevoValor = e.target.value;
-      if (!isNaN(nuevoValor) && nuevoValor !== "") {
-        const riesgoCalculado = calcularRiesgo(Number(nuevoValor));
-        setModificaciones((prev) => ({
-          ...prev,
-          riesgoCalculado: riesgoCalculado,
-        }));
-      }
-    }}
-    variant="outlined"
-    fullWidth
-  />
-</Grid>
-{ modificaciones.volumenTransaccional && (
-  <>Equivale a {(modificaciones.volumenTransaccional / SMVM).toFixed(2)} SMVM</>
-)}
-{modificaciones.riesgoCalculado && (
-  <Grid item xs={12}>
-    <p><strong>Riesgo Calculado:</strong> Riesgo {modificaciones.riesgoCalculado}</p>
-    
-  </Grid>
-)}<br /><br/>
-                      <Grid item xs={12}>
-                        <TextField
-                          select
-                          label="Pep Extranjero"
-                          name="pep_extranjero"
-                          value={modificaciones.pep_extranjero || ""}
-                          onChange={handleChange}
-                          fullWidth
-                        >
-                          <MenuItem value="Si">Si</MenuItem>
-                          <MenuItem value="No">
-                            No
-                          </MenuItem>
-                        </TextField>
-                      </Grid><br/>
-                      <Grid item xs={12}>
-                        <TextField
-                          select
-                          label="Categoria especial"
-                          name="categoria_especial"
-                          value={modificaciones.categoria_especial || ""}
-                          onChange={handleChange}
-                          fullWidth
-                        >
-                          <MenuItem value="Si">Si</MenuItem>
-                          <MenuItem value="No">
-                            No
-                          </MenuItem>
-                        </TextField>
+                        <Grid item xs={12}>
+                          <Typography variant="subtitle1" fontWeight="bold">SALARIO MINIMO: {SMVM.toLocaleString("es-AR")}</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Volumen Transaccional"
+                            name="volumenTransaccional"
+                            value={modificaciones.volumenTransaccional || ""}
+                            onChange={(e) => {
+                              handleChange(e); // Esto mantiene tu estado general
+                              const nuevoValor = e.target.value;
+                              if (!isNaN(nuevoValor) && nuevoValor !== "") {
+                                const riesgoCalculado = calcularRiesgo(Number(nuevoValor));
+                                setModificaciones((prev) => ({
+                                  ...prev,
+                                  riesgoCalculado: riesgoCalculado,
+                                }));
+                              }
+                            }}
+                            variant="outlined" fullWidth size="small" />
+
+                          {modificaciones.volumenTransaccional && (
+
+                            <Typography>
+                              Equivale a {(modificaciones.volumenTransaccional / SMVM).toFixed(2)} SMVM
+                            </Typography>
+
+                          )} </Grid>
+
+                        {modificaciones.riesgoCalculado && (
+                          <Grid item xs={6}>
+                            <p><strong>Riesgo Calculado:</strong> Riesgo {modificaciones.riesgoCalculado}</p>
+
+                          </Grid>
+                        )}
+
+
+
                       </Grid>
                     </Grid>
 
-                  </Grid>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    sx={{ mt: 3 }}
-                  >
-                    Guardar
-                  </Button>
+                    <Grid item xs={12} md={4}>
+                      <Box sx={{ border: "1px solid #ccc", borderRadius: 2, p: 2, backgroundColor: "#fff" }}>
+                        <Typography variant="h6" gutterBottom>
+                          CLASIFICACION DE RIESGO
+                        </Typography>
+                        <Box display="flex" alignItems="center" gap={1} mb={1}>
+                          <Box width={12} height={12} borderRadius={6} bgcolor="green" />
+                          <Typography fontSize={14}>Bajo <small>(1–58) %</small></Typography>
+                        </Box>
+                        <Box display="flex" alignItems="center" gap={1} mb={1}>
+                          <Box width={12} height={12} borderRadius={6} bgcolor="orange" />
+                          <Typography fontSize={14}>Medio <small>(59–70) %</small></Typography>
+                        </Box>
+                        <Box display="flex" alignItems="center" gap={1}>
+                          <Box width={12} height={12} borderRadius={6} bgcolor="red" />
+                          <Typography fontSize={14}>Alto <small>(71–100) %</small></Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Box display="flex" justifyContent="flex-end">
+                        <Button type="submit" variant="contained" color="success">
+                          GUARDAR
+                        </Button>
+                      </Box>
+                    </Grid>
+                  </Grid> {/* cierre del Grid container spacing={2} */}
+
+
                 </CardContent>
               </Card>
             </Container>
@@ -512,6 +536,7 @@ const ModificacionC = () => {
       </form>
     </>
   );
+
 };
 
 export default ModificacionC;
