@@ -480,7 +480,7 @@ const LotesCliente = (props) => {
                         sx={{
                             backgroundColor: "#b0bec5",
                             color: "black",
-                            borderColor: "black",
+                            borderColor: "black",fontSize: "0.70rem",
                             "&:hover": {
                                 backgroundColor: "darkgray" // Cambia el color al pasar el mouse
                             }
@@ -494,7 +494,7 @@ const LotesCliente = (props) => {
                     <Button
                         fullWidth
                         variant="outlined"
-                        sx={{ color: "black", borderColor: "black" }}
+                        sx={{ color: "black", borderColor: "black", fontSize: "0.70rem",}}
                         onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
                         disabled
                     >
@@ -566,7 +566,7 @@ const LotesCliente = (props) => {
         <Stack direction="row" spacing={2} flexWrap="wrap">
             <Button
              variant="outlined"
-             sx={{ color: "black", borderColor: "black" }}
+             sx={{ color: "black", borderColor: "black",fontSize: "0.70rem", }}
                 onClick={() => navigate('/usuario2/agregarcuotas/' + idlote)}
             >
                 Agregar cuotas al lote

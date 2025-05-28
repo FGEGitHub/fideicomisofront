@@ -139,7 +139,7 @@ console.log(mesSeleccionado,anioSeleccionado)
   };
   return (
     <>
-      <Button variant="outlined" sx={{ color: "black", borderColor: "black" }} onClick={() => setOpen(true)}>
+      <Button variant="outlined" sx={{ color: "black", borderColor: "black",fontSize: "0.70rem" }} onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>

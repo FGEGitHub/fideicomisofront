@@ -120,7 +120,9 @@ const totalAnticipado = anticipadas.reduce((total, cuota) => {
 
     return (
         <>
-            <Button variant="contained" onClick={() => {
+            <Button variant="contained" 
+             sx={{ color: "black", borderColor: "black",fontSize: "0.70rem", }}
+             onClick={() => {
                 setOpen(true);
                 traercbu(true)
             }} disabled={maxCuotas === 0}>

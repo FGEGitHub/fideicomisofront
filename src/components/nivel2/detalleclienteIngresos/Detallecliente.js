@@ -85,7 +85,7 @@ const DetalleCliente = () => {
                <Paper
         sx={{
           cursor: 'pointer',
-          background: '#b0bec5',
+          background: '#f5f5f5',
           color: '#bdbdbd',
           border: '1px dashed #ccc',
           '&:hover': { border: '1px solid #ccc' },

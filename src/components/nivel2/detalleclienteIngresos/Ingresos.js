@@ -111,7 +111,7 @@ props.traer()
     return (
         <div>
             <Button        variant="outlined"
-                   sx={{ color: 'black', borderColor: 'black' }} onClick={handleClickOpen}>
+                   sx={{ color: 'black', borderColor: 'black' , fontSize: "0.65rem"}} onClick={handleClickOpen}>
                 Determinar ingresos
             </Button>
             <Dialog open={open} onClose={handleClose}>
