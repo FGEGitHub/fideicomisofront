@@ -48,6 +48,15 @@ const Lotes = () => {
       }
       //
 
+   function ultimacuota(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+          {  clients[dataIndex].mes + "/" + clients[dataIndex].anio}
+          
+          </>
+        );
+      }
       function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
         return (
           <>
@@ -114,11 +123,19 @@ const Lotes = () => {
         
         },   
     
-        {
-            name: "observaciones",
-            label:"Observaciones",
-           
-        },
+       {
+            name: "Ultima cuota",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                  ultimacuota(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
         {
             name: "Acciones",
             options: {
