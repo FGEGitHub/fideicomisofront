@@ -34,7 +34,7 @@ import { Box } from "@material-ui/core";
 import Grid from '@mui/material/Grid';
 import Fab from '@mui/material/Fab';
 import Stack from '@mui/material/Stack';
-
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Pagorapido from './nivel2/pagarcuota/modalpagorapido'
 import Adelantar from './nivel2/pagarcuota/adelantarcuotaparque'
 
@@ -472,36 +472,7 @@ const LotesCliente = (props) => {
     return (
 
         <Fragment>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{
-                            backgroundColor: "#b0bec5",
-                            color: "black",
-                            borderColor: "black",fontSize: "0.70rem",
-                            "&:hover": {
-                                backgroundColor: "darkgray" // Cambia el color al pasar el mouse
-                            }
-                        }}
-                        onClick={() => navigate('/usuario2/asignarloteausuario/' + cuil_cuit)}
-                    >
-                        Asignar lote a usuario
-                    </Button>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        sx={{ color: "black", borderColor: "black", fontSize: "0.70rem",}}
-                        onClick={() => navigate('/usuario2/agregarviarias/' + cuil_cuit)}
-                        disabled
-                    >
-                        Agregar cuotas a varios lotes
-                    </Button>
-                </Grid>
-            </Grid>
+        
             <br />
             {lotes ? <>
 
@@ -541,12 +512,12 @@ const LotesCliente = (props) => {
                                     ))}
                                 </Select>
                             </FormControl>
-                           {/*  {selectedValue && <b style={{ color: 'black' }}>Valor seleccionado: {selectedValue}</b>} */}
+                            {/*  {selectedValue && <b style={{ color: 'black' }}>Valor seleccionado: {selectedValue}</b>} */}
 
 
                         </div>
 
-                       
+
 
                     </FormControl>
 
@@ -557,46 +528,46 @@ const LotesCliente = (props) => {
 
 
 
- 
+
 
             <div>
 
                 {act ? <div>
                     <div style={{ marginBottom: '1rem' }}>
-        <Stack direction="row" spacing={2} flexWrap="wrap">
-            <Button
-             variant="outlined"
-             sx={{ color: "black", borderColor: "black",fontSize: "0.70rem", }}
-                onClick={() => navigate('/usuario2/agregarcuotas/' + idlote)}
-            >
-                Agregar cuotas al lote
-            </Button>
+                        <Stack direction="row" spacing={2} flexWrap="wrap">
+                            <Button
+                                variant="outlined"
+                                sx={{ color: "black", borderColor: "black", fontSize: "0.70rem", }}
+                                onClick={() => navigate('/usuario2/agregarcuotas/' + idlote)}
+                            >
+                                Agregar cuotas al lote
+                            </Button>
 
-            <AgregaraCuotas
-                id_origen={idlote}
-                lotes={lotes}
-            />
+                            <AgregaraCuotas
+                                id_origen={idlote}
+                                lotes={lotes}
+                            />
 
-            <BorrarCuotas id={idlote} />
+                            <BorrarCuotas id={idlote} />
 
-            <CancelarLote
-                id_lote={idlote}
-                cuotas={cuotas}
-            />
-            {cuotas && 
-            <Adelantar
-                id_lote={idlote}
-                cuotas={cuotas}
-                 traerr={async () => {
-                                                    const cuotas = await servicioCuotas.vercuotas(idlote);
-                                                    setCuotas(cuotas);
-                                                    setAct(true);
-                                                    verief(idlote);
-                                                    setOpen(false);
-                                                }}
-            />}
-        </Stack>
-    </div>
+                            <CancelarLote
+                                id_lote={idlote}
+                                cuotas={cuotas}
+                            />
+                            {cuotas &&
+                                <Adelantar
+                                    id_lote={idlote}
+                                    cuotas={cuotas}
+                                    traerr={async () => {
+                                        const cuotas = await servicioCuotas.vercuotas(idlote);
+                                        setCuotas(cuotas);
+                                        setAct(true);
+                                        verief(idlote);
+                                        setOpen(false);
+                                    }}
+                                />}
+                        </Stack>
+                    </div>
 
 
 
@@ -606,7 +577,7 @@ const LotesCliente = (props) => {
 
                     {cuotas !== '' ? <>
 
-                  
+
 
 
                         {vista1 ? <>
@@ -627,137 +598,155 @@ const LotesCliente = (props) => {
                         </> : <>
 
                             <>
-             
-           
-            <Paper
-                sx={{
-                    cursor: 'pointer',
-                    background: '#eeeeee',
-                    color: '#bdbdbd',
-                    border: '1px dashed #ccc',
-                    width: "98%",
-                    '&:hover': { border: '1px solid #ccc' },
-                    border: "1px solid black",
-                    marginLeft: '1%',
-                }}
-            > <Button variant="outlined"  style={{  marginLeft: '0%', color: "black", borderColor: "black" }} onClick={toggleDetalles}>
-            {verDetalles ? 'Restaurar' : 'Ver mas detalles'}
-        </Button>
-                <TableContainer style={{ height: '80vh' }}>
-                    {!cuotas ? <Skeleton /> : <>
-                        <h1>CUOTAS</h1>
 
-                        <Table stickyHeader>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>FECHA</b></TableCell>
-                                    {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>}
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
-                                    {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO AL CIERRE</b></TableCell>}
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
-                                 
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
-                                    <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
-                                    {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>INTERES</b></TableCell>}
-                                </TableRow>
-                            </TableHead>
 
-                            <TableBody>
-                                {cuotas.map((row) => (
-                                    <StyledTableRow key={row.id}>
-                                        <StyledTableCell>{row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}</StyledTableCell>
-                                        {verDetalles && (
-                                            <StyledTableCell>
-                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
-                                            </StyledTableCell>
-                                        )}
-                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.Amortizacion))}</b></span></>}
-                                        </StyledTableCell>
-                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>{row.ICC}</>}</StyledTableCell>
-                                        <StyledTableCell>      {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>{row.Ajuste_ICC} </>}</StyledTableCell> 
-                                        <StyledTableCell>
-                                        {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<> 
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.cuota_con_ajuste))}</b></span></>}
-                                        </StyledTableCell>
-                                        {verDetalles && (
-                                              
-                                            <StyledTableCell>
-                                              {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>      <span style={{ whiteSpace: 'nowrap' }}>$ {new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</span></>}
-                                            </StyledTableCell>
-                                        )}
-                                        <StyledTableCell>  {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span> </>}
-                                        </StyledTableCell>
-                                        <StyledTableCell>
-                                            {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<> 
-                                            <Tooltip title={
-                                                row.diferencia < 0
-                                                    ? row.diferencia === -row.cuota_con_ajuste
-                                                        ? "La diferencia es exactamente el negativo de la cuota con ajuste"
-                                                        : "La diferencia es negativa pero no coincide con la cuota ajustada"
-                                                    : "La diferencia es positiva"
-                                            }>
-                                                <p style={{
-                                                    color: row.diferencia < 0
-                                                        ? (row.diferencia == -row.cuota_con_ajuste ? "red" : "blue")
-                                                        : "green",
-                                                    whiteSpace: "nowrap",
-                                                }}>
-                                                    {new Intl.NumberFormat("de-DE").format(row.diferencia)}
-                                                </p>
-                                            </Tooltip>  </>}
-                                        </StyledTableCell>
+                                <Paper
+                                    sx={{
+                                        cursor: 'pointer',
+                                        background: '#eeeeee',
+                                        color: '#bdbdbd',
+                                        border: '1px dashed #ccc',
+                                        width: "98%",
+                                        '&:hover': { border: '1px solid #ccc' },
+                                        border: "1px solid black",
+                                        marginLeft: '1%',
+                                    }}
+                                > <Button variant="outlined" style={{ marginLeft: '0%', color: "black", borderColor: "black" }} onClick={toggleDetalles}>
+                                        {verDetalles ? 'Restaurar' : 'Ver mas detalles'}
+                                    </Button>
+                                    <TableContainer style={{ height: '80vh' }}>
+                                        {!cuotas ? <Skeleton /> : <>
+                                            <h1>CUOTAS</h1>
 
-                                        <StyledTableCell> {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
-                                            <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span> </>}
-                                        </StyledTableCell>
+                                            <Table stickyHeader>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>FECHA</b></TableCell>
+                                                        {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO INICIAL</b></TableCell>}
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AMORTIZACION</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>AJUSTE ICC</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>CUOTA CON AJUSTE</b></TableCell>
+                                                        {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO AL CIERRE</b></TableCell>}
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGO</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>DIFERENCIA</b></TableCell>
 
-                                        <StyledTableCell>
-                                        {row.id>=parseInt(row.cuota_cancelada ) ? <>Cancelado</>:<>
-                                            <Pagorapido
-                                                id_cuota={row.id}
-                                                cuota_con_ajuste={row.cuota_con_ajuste}
-                                                id_lote={row.id_lote}
-                                                traer={async () => {
-                                                    const cuotas = await servicioCuotas.vercuotas(idlote);
-                                                    setCuotas(cuotas);
-                                                    setAct(true);
-                                                    verief(idlote);
-                                                    setOpen(false);
-                                                }}
-                                            />
-                                               {verDetalles && (
-                                                 <Pagointeres id_interes={row.id}
-                                               cuil_cuit={cuil_cuit}
-                                               traer={async () => {
-                                                const cuotas = await servicioCuotas.vercuotas(idlote);
-                                                setCuotas(cuotas);
-                                                setAct(true);
-                                                verief(idlote);
-                                                setOpen(false);
-                                            }}
-                                            />)}
-                                            </>}
-                                           <button onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} >Ver pagos</button> 
-                                        </StyledTableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>SALDO REAL</b></TableCell>
+                                                        <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>PAGAR/VER PAGO</b></TableCell>
+                                                        {verDetalles && <TableCell style={{ backgroundColor: "black", color: 'white' }}><b>INTERES</b></TableCell>}
+                                                    </TableRow>
+                                                </TableHead>
 
-                                        {verDetalles && (
-                                            <StyledTableCell>
-                                                <span style={{ whiteSpace: 'nowrap' }}> <b>{  row.pago_interes==undefined ? "$"+new Intl.NumberFormat('de-DE').format(row.interes):row.pago_interes == "diferencia minima"?row.pago_interes:"pagado"}</b></span>
-                                            </StyledTableCell>
-                                        )}
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </>}
-                </TableContainer>
-            </Paper>
+                                                <TableBody>
+                                                    {cuotas.map((row) => (
+                                                        <StyledTableRow key={row.id}>
+                                                            <StyledTableCell>{row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}</StyledTableCell>
+                                                            {verDetalles && (
+                                                                <StyledTableCell>
+                                                                    <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.saldo_inicial)}</b></span>
+                                                                </StyledTableCell>
+                                                            )}
+                                                            <StyledTableCell> {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.Amortizacion))}</b></span></>}
+                                                            </StyledTableCell>
+                                                            <StyledTableCell> {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>{row.ICC}</>}</StyledTableCell>
+                                                            <StyledTableCell>      {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>{row.Ajuste_ICC} </>}</StyledTableCell>
+                                                            <StyledTableCell>
+                                                                {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>
+                                                                    <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format((row.cuota_con_ajuste))}</b></span></>}
+                                                            </StyledTableCell>
+                                                            {verDetalles && (
+
+                                                                <StyledTableCell>
+                                                                    {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>      <span style={{ whiteSpace: 'nowrap' }}>$ {new Intl.NumberFormat('de-DE').format(row.saldo_cierre)}</span></>}
+                                                                </StyledTableCell>
+                                                            )}
+                                                            <StyledTableCell>  {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.pago)}</b></span> </>}
+                                                            </StyledTableCell>
+                                                            <StyledTableCell>
+                                                                {row.id >= parseInt(row.cuota_cancelada) ? (
+                                                                    <>Cancelado</>
+                                                                ) : (
+                                                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                                                                        <Tooltip
+                                                                            title={
+                                                                                row.diferencia < 0
+                                                                                    ? row.diferencia === -row.cuota_con_ajuste
+                                                                                        ? "La diferencia es exactamente el negativo de la cuota con ajuste"
+                                                                                        : "La diferencia es negativa pero no coincide con la cuota ajustada"
+                                                                                    : "La diferencia es positiva"
+                                                                            }
+                                                                        >
+                                                                            <span
+                                                                                style={{
+                                                                                    color:
+                                                                                        row.diferencia < 0
+                                                                                            ? row.diferencia === -row.cuota_con_ajuste
+                                                                                                ? "red"
+                                                                                                : "blue"
+                                                                                            : "green",
+                                                                                }}
+                                                                            >
+                                                                                {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+                                                                            </span>
+                                                                        </Tooltip>
+
+                                                                        {row.comprobante === 'Sin comprobante' && (
+                                                                            <Tooltip title="Pago sin comprobante">
+                                                                                <ErrorOutlineIcon color="warning" fontSize="small" />
+                                                                            </Tooltip>
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                            </StyledTableCell>
+
+
+                                                            <StyledTableCell> {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>
+                                                                <span style={{ whiteSpace: 'nowrap' }}>$ <b>{new Intl.NumberFormat('de-DE').format(row.Saldo_real)}</b></span> </>}
+                                                            </StyledTableCell>
+
+                                                            <StyledTableCell>
+                                                                {row.id >= parseInt(row.cuota_cancelada) ? <>Cancelado</> : <>
+                                                                    <Pagorapido
+                                                                        id_cuota={row.id}
+                                                                        cuota_con_ajuste={row.cuota_con_ajuste}
+                                                                        id_lote={row.id_lote}
+                                                                        traer={async () => {
+                                                                            const cuotas = await servicioCuotas.vercuotas(idlote);
+                                                                            setCuotas(cuotas);
+                                                                            setAct(true);
+                                                                            verief(idlote);
+                                                                            setOpen(false);
+                                                                        }}
+                                                                    />
+                                                                    {verDetalles && (
+                                                                        <Pagointeres id_interes={row.id}
+                                                                            cuil_cuit={cuil_cuit}
+                                                                            traer={async () => {
+                                                                                const cuotas = await servicioCuotas.vercuotas(idlote);
+                                                                                setCuotas(cuotas);
+                                                                                setAct(true);
+                                                                                verief(idlote);
+                                                                                setOpen(false);
+                                                                            }}
+                                                                        />)}
+                                                                </>}
+                                                                <button onClick={() => navigate('/usuario2/pagoscuotas/' + row.id)} >Ver pagos</button>
+                                                            </StyledTableCell>
+
+                                                            {verDetalles && (
+                                                                <StyledTableCell>
+                                                                    <span style={{ whiteSpace: 'nowrap' }}> <b>{row.pago_interes == undefined ? "$" + new Intl.NumberFormat('de-DE').format(row.interes) : row.pago_interes == "diferencia minima" ? row.pago_interes : "pagado"}</b></span>
+                                                                </StyledTableCell>
+                                                            )}
+                                                        </StyledTableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </>}
+                                    </TableContainer>
+                                </Paper>
 
 
                             </>

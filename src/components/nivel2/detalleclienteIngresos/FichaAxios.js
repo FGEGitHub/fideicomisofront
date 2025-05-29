@@ -60,90 +60,90 @@ const FichaAxios = (props) => {
                 <h5>
                   Datos Personales del Cliente
                 </h5>
-               
-          
-          <Card
-          sx={{
-            mb: 3,
-            backgroundColor: "#d7e8f2",
-            borderRadius: 2,
-            p: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 2,
-          }}
-        >
 
 
-          <Box sx={{ minWidth: "250px", flex: 1 }}>
-            <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", textTransform: "uppercase" }}>
-              Riesgo
-            </Typography>
-            <LinearProgress
-              variant="determinate"
-              value={cliente[0].riesgo}
-              style={{
-                width: "100%",
-                marginRight: 8,
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: "#f3f5f5", // Fondo de la barra
-              }}
-              sx={{
-                "& .MuiLinearProgress-bar": {
-                  backgroundColor:
-                    cliente[0].riesgo <= 58
-                      ? "green"
-                      : cliente[0].riesgo <= 70
-                        ? "yellow"
-                        : "red", // Color de la barra según el valor
-                },
-              }}
-            />
-           
+                <Card
+                  sx={{
+                    mb: 3,
+                    backgroundColor: "#d7e8f2",
+                    borderRadius: 2,
+                    p: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    gap: 2,
+                  }}
+                >
 
-            <Typography
-            
-              variant="body2"
-              sx={{
-                mt: 1,
-                fontWeight: "bold",
-                color:
-                  cliente[0].riesgo <= 58
-                    ? "green"
-                    : cliente[0].riesgo <= 70
-                      ? "orange"
-                      : "red",
-                textTransform: "uppercase",
-              }}
-            >
-              {cliente[0].riesgo <= 58
-                ? "Bajo"
-                : cliente[0].riesgo <= 70
-                  ? "Medio"
-                  : "Alto"} ( {cliente[0].riesgo}% )
-            </Typography>
 
-            {cliente[0].razon === "Persona" && (
-              <Box sx={{ fontWeight: "bold", fontSize: 16 }}>
-                Edad: <span style={{ fontWeight: "normal" }}>{cliente[0].edad}</span>
-              </Box>
-            )}
-          </Box>
-          {cliente[0].pep_extranjero === "Si" && (
-            <Box sx={{ color: "crimson", fontWeight: "bold" }}>
-              PEP Extranjero
-            </Box>
-          )}
+                  <Box sx={{ minWidth: "250px", flex: 1 }}>
+                    <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", textTransform: "uppercase" }}>
+                      Riesgo
+                    </Typography>
+                    <LinearProgress
+                      variant="determinate"
+                      value={cliente[0].riesgo}
+                      style={{
+                        width: "100%",
+                        marginRight: 8,
+                        height: 10,
+                        borderRadius: 5,
+                        backgroundColor: "#f3f5f5", // Fondo de la barra
+                      }}
+                      sx={{
+                        "& .MuiLinearProgress-bar": {
+                          backgroundColor:
+                            cliente[0].riesgo <= 58
+                              ? "green"
+                              : cliente[0].riesgo <= 70
+                                ? "yellow"
+                                : "red", // Color de la barra según el valor
+                        },
+                      }}
+                    />
 
-          {cliente[0].categoria_especial === "Si" && (
-            <Box sx={{ color: "crimson", fontWeight: "bold" }}>
-              Categoría Especial
-            </Box>
-          )}
-        </Card></Box>
+
+                    <Typography
+
+                      variant="body2"
+                      sx={{
+                        mt: 1,
+                        fontWeight: "bold",
+                        color:
+                          cliente[0].riesgo <= 58
+                            ? "green"
+                            : cliente[0].riesgo <= 70
+                              ? "orange"
+                              : "red",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {cliente[0].riesgo <= 58
+                        ? "Bajo"
+                        : cliente[0].riesgo <= 70
+                          ? "Medio"
+                          : "Alto"} ( {cliente[0].riesgo}% )
+                    </Typography>
+
+                    {cliente[0].razon === "Persona" && (
+                      <Box sx={{ fontWeight: "bold", fontSize: 16 }}>
+                        Edad: <span style={{ fontWeight: "normal" }}>{cliente[0].edad}</span>
+                      </Box>
+                    )}
+                  </Box>
+                  {cliente[0].pep_extranjero === "Si" && (
+                    <Box sx={{ color: "crimson", fontWeight: "bold" }}>
+                      PEP Extranjero
+                    </Box>
+                  )}
+
+                  {cliente[0].categoria_especial === "Si" && (
+                    <Box sx={{ color: "crimson", fontWeight: "bold" }}>
+                      Categoría Especial
+                    </Box>
+                  )}
+                </Card></Box>
 
               <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
 
@@ -194,7 +194,7 @@ const FichaAxios = (props) => {
                       size="small"
                     />
                   </Grid>
-                   <Grid item xs={2}>
+                  <Grid item xs={2}>
                     <TextField
                       label="Actividad economica"
                       name="otroCampo"
@@ -216,83 +216,83 @@ const FichaAxios = (props) => {
 
               {verMas && (<>
                 <Box>
-<Grid container spacing={2}>
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Codigo postal "
-                      name="Nombre"
-                      defaultValue={client.cp || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
+                  <Grid container spacing={2}>
+                    <Grid item xs={2}>
+                      <TextField
+                        label="Codigo postal "
+                        name="Nombre"
+                        defaultValue={client.cp || ""}
+                        InputProps={{ readOnly: true }}
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                      />
+                    </Grid>
+
+                    <Grid item xs={2}>
+                      {client.razon == "Persona" ? <>
+
+                        <TextField
+                          label="Fecha de nacimiento"
+                          name="cuil_cuit"
+                          defaultValue={client.FechaNacimiento || ""}
+                          InputProps={{ readOnly: true }}
+                          variant="outlined"
+                          fullWidth
+                          size="small"
+                        />
+
+                      </> : <>
+                        <TextField
+                          label="antiguedad"
+                          name="cuil_cuit"
+                          defaultValue={client.antiguedad || ""}
+                          InputProps={{ readOnly: true }}
+                          variant="outlined"
+                          fullWidth
+                          size="small"
+                        />
+
+
+                      </>} </Grid>
+
+                    <Grid item xs={2}>
+                      <TextField
+                        label="Numero de telefono"
+                        name="otroCampo"
+                        defaultValue={client.telefono || ""}
+                        InputProps={{ readOnly: true }}
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <TextField
+                        label="Id"
+                        name="otroCampo"
+                        defaultValue={client.id || ""}
+                        InputProps={{ readOnly: true }}
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <TextField
+                        label="Volumen transaccional"
+                        name="otroCampo"
+                        defaultValue={client.volumenTransaccional || ""}
+                        InputProps={{ readOnly: true }}
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                      />
+                    </Grid>
                   </Grid>
 
-                   <Grid item xs={2}>
-                {client.razon == "Persona" ? <>
-                 
-                    <TextField
-                      label="Fecha de nacimiento"
-                      name="cuil_cuit"
-                      defaultValue={client.FechaNacimiento || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
-               
-</>:<>
-     <TextField
-                      label="antiguedad"
-                      name="cuil_cuit"
-                      defaultValue={client.antiguedad || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
-
-
-</>} </Grid>
-
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Numero de telefono"
-                      name="otroCampo"
-                      defaultValue={client.telefono || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Id"
-                      name="otroCampo"
-                      defaultValue={client.id || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
-                  </Grid>
-                   <Grid item xs={2}>
-                    <TextField
-                      label="Volumen transaccional"
-                      name="otroCampo"
-                      defaultValue={client.volumenTransaccional || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-                 
                 </Box>
-           
+
                 <Box>
                   {/* Beneficiario 1 */}
                   {client.beneficiarios !== "No" && (
@@ -491,7 +491,7 @@ const FichaAxios = (props) => {
 
                         <Button
                           variant="outlined"
-                           size="small"
+                          size="small"
                           sx={{ color: "black", borderColor: "black", fontSize: "0.65rem", }}
                           onClick={() => navigate("/usuario2/modificarcliente/" + props.cuil_cuit)}
                         >
@@ -504,9 +504,16 @@ const FichaAxios = (props) => {
                             setCliente(cliente);
                           }}
                         />
+                        <Button variant="outlined"
+                          size="small"
+                          sx={{ color: "black", borderColor: "black", fontSize: "0.65rem", }}
+                          onClick={() => navigate('/usuario2/asignarloteausuario/' + props.cuil_cuit)}
+                        >
+                          Asignar lote a usuario
+                        </Button>
                       </Box>
 
-        
+
 
                     </div>
                   )}
