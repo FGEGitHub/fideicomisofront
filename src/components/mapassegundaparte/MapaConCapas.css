@@ -1,0 +1,32 @@
+.mapa-contenedor {
+  display: flex;
+  width: 100%;
+}
+
+.panel-lateral {
+  width: 250px;
+  padding: 15px;
+  background: #f5f5f5;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.capa-principal {
+  margin-bottom: 10px;
+}
+
+.subcapas {
+  margin-left: 20px;
+  margin-top: 5px;
+  padding-left: 10px;
+  border-left: 2px solid #ccc;
+}
+
+label {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
+}

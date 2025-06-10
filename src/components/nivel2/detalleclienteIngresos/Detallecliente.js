@@ -70,16 +70,7 @@ const DetalleCliente = () => {
               }}
                 /> 
              
-               {/*  {expuesta ? <div>
-                  <Alert variant="filled" severity="warning">
-                  Persona PEP
-</Alert>
-               
-                   </div> : 
-                   <div>
-                    <Chip label="Persona no PEP" color="success" />
-                   
-                     </div>} */}
+           
                 
                </div>
                <Paper
@@ -120,19 +111,7 @@ const DetalleCliente = () => {
             </Paper>
           
                       {habilitado ? <>
-                       {/*  <Button
-                        variant="outlined"
-                        onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
-                      >
-                      Ir a legajos
-                      </Button>
-            <Debitoaut
-            cuil_cuit={cuil_cuit}/>
-            <DebitoauCBUt
-              cuil_cuit={cuil_cuit}/>
-          
-    <Listacbus
-              cuil_cuit={cuil_cuit}/> */}
+                    
 </>:<><Button
       variant="outlined"
       onClick={() => navigate('/usuario2/legajoscliente/' + cuil_cuit)}

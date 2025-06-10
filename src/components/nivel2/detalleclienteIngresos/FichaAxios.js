@@ -14,8 +14,7 @@ import "../../profile.css";
 import Ingreso from './Ingresos'
 import LinearProgress from "@mui/material/LinearProgress";
 import Agregarbenefciarios from './agregarbeneficiarios'
-import Chip from '@mui/material/Chip';
-import Alert from '@mui/material/Alert';
+
 
 
 const FichaAxios = (props) => {
