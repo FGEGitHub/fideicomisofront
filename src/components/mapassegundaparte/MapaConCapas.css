@@ -30,3 +30,26 @@ label {
 input[type="checkbox"] {
   cursor: pointer;
 }
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.logo-parcas {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Estilo para las nuevas capas en el panel */
+.capa-principal {
+    margin-bottom: 8px;
+}
+
+.capa-principal label {
+    cursor: pointer;
+    margin-left: 5px;
+}

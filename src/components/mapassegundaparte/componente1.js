@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./MapaConCapas.css";
+import parcasLogo from "../../Assets/marcas.png";; // Asegúrate de tener la imagen en tu directorio
 
 const MapaConCapas = () => {
     const [capasActivas, setCapasActivas] = useState({
         "Manzanas": false,
         "Plan Especial": false,
-        "Barrios": false
+        "Barrios": false,
+        "Planificación Sección Sur": false,
+        "Zonificación Sta Catalina": false,
+        "ZRU Predios La Caja": false
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -52,6 +56,22 @@ const MapaConCapas = () => {
                 setGeojsonData(prev => ({ ...prev, "Barrios": data }));
             })
             .catch(console.error);
+
+        // Cargar nuevas capas
+        const nuevasCapas = [
+            { nombre: "Planificación Sección Sur", archivo: "planificacionseccionsur.geojson" },
+            { nombre: "Zonificación Sta Catalina", archivo: "zonificacion_stacatalina.geojson" },
+            { nombre: "ZRU Predios La Caja", archivo: "zru_prediosdelacaja.geojson" }
+        ];
+
+        nuevasCapas.forEach(capa => {
+            fetch(`/${capa.archivo}`)
+                .then((r) => r.json())
+                .then((data) => {
+                    setGeojsonData(prev => ({ ...prev, [capa.nombre]: data }));
+                })
+                .catch(error => console.error(`Error cargando ${capa.nombre}:`, error));
+        });
     }, []);
 
     const toggleCapaPrincipal = (nombre) => {
@@ -80,6 +100,11 @@ const MapaConCapas = () => {
     return (
         <div className="mapa-contenedor">
             <div className="panel-lateral">
+                {/* Logo PARCAS */}
+                <div className="logo-container">
+                    <img src={parcasLogo} alt="Logo PARCAS" className="logo-parcas" />
+                </div>
+
                 <h3>Capas disponibles</h3>
 
                 {/* Capa Manzanas */}
@@ -126,6 +151,36 @@ const MapaConCapas = () => {
                     />
                     <label><strong>Calles</strong></label>
                 </div>
+
+                {/* Nueva Capa: Planificación Sección Sur */}
+                <div className="capa-principal">
+                    <input
+                        type="checkbox"
+                        checked={!!capasActivas["Planificación Sección Sur"]}
+                        onChange={() => toggleCapaPrincipal("Planificación Sección Sur")}
+                    />
+                    <label><strong>Planificación Sección Sur</strong></label>
+                </div>
+
+                {/* Nueva Capa: Zonificación Sta Catalina */}
+                <div className="capa-principal">
+                    <input
+                        type="checkbox"
+                        checked={!!capasActivas["Zonificación Sta Catalina"]}
+                        onChange={() => toggleCapaPrincipal("Zonificación Sta Catalina")}
+                    />
+                    <label><strong>Zonificación Sta Catalina</strong></label>
+                </div>
+
+                {/* Nueva Capa: ZRU Predios La Caja */}
+                <div className="capa-principal">
+                    <input
+                        type="checkbox"
+                        checked={!!capasActivas["ZRU Predios La Caja"]}
+                        onChange={() => toggleCapaPrincipal("ZRU Predios La Caja")}
+                    />
+                    <label><strong>ZRU Predios La Caja</strong></label>
+                </div>
             </div>
 
             <MapContainer
@@ -144,11 +199,11 @@ const MapaConCapas = () => {
                         key="Manzanas"
                         data={geojsonData["Manzanas"]}
                         style={{
-                            fillColor: "transparent",  // Sin relleno
-                            color: "blue",            // Color del borde
-                            weight: 2,                // Grosor del borde
-                            opacity: 1,               // Opacidad del borde
-                            fillOpacity: 0            // Opacidad del relleno (0 = transparente)
+                            fillColor: "transparent",
+                            color: "blue",
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0
                         }}
                     />
                 )}
@@ -177,6 +232,48 @@ const MapaConCapas = () => {
                             color: "green",
                             weight: 3,
                             dashArray: '5, 5'
+                        }}
+                    />
+                )}
+
+                {/* Renderizar Planificación Sección Sur */}
+                {capasActivas["Planificación Sección Sur"] && geojsonData["Planificación Sección Sur"] && (
+                    <GeoJSON
+                        key="Planificación Sección Sur"
+                        data={geojsonData["Planificación Sección Sur"]}
+                        style={{
+                            color: "purple",
+                            weight: 2,
+                            fillOpacity: 0.3,
+                            fillColor: "violet"
+                        }}
+                    />
+                )}
+
+                {/* Renderizar Zonificación Sta Catalina */}
+                {capasActivas["Zonificación Sta Catalina"] && geojsonData["Zonificación Sta Catalina"] && (
+                    <GeoJSON
+                        key="Zonificación Sta Catalina"
+                        data={geojsonData["Zonificación Sta Catalina"]}
+                        style={{
+                            color: "orange",
+                            weight: 2,
+                            fillOpacity: 0.3,
+                            fillColor: "yellow"
+                        }}
+                    />
+                )}
+
+                {/* Renderizar ZRU Predios La Caja */}
+                {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
+                    <GeoJSON
+                        key="ZRU Predios La Caja"
+                        data={geojsonData["ZRU Predios La Caja"]}
+                        style={{
+                            color: "brown",
+                            weight: 2,
+                            fillOpacity: 0.3,
+                            fillColor: "tan"
                         }}
                     />
                 )}
