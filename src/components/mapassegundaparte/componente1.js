@@ -184,8 +184,8 @@ const MapaConCapas = () => {
             </div>
 
             <MapContainer
-                center={[-27.4698, -58.8344]}
-                zoom={13}
+                center={[-27.5198, -58.8144]}
+                zoom={14}
                 style={{ height: "100vh", width: "100%" }}
             >
                 <TileLayer
