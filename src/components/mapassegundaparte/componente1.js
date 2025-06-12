@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./MapaConCapas.css";
-import parcasLogo from "../../Assets/marcas.png";; // Asegúrate de tener la imagen en tu directorio
-
+import parcasLogo from "../../Assets/marcas.png"; // 
+import L from "leaflet";
+import serviciolotes from "../../services/lotes"; // A
 const MapaConCapas = () => {
     const [capasActivas, setCapasActivas] = useState({
         "Manzanas": false,
@@ -15,7 +16,7 @@ const MapaConCapas = () => {
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
-        "planespecial": false,
+        "planespecial11": false,
         "planespecial2": false,
         "planespecial3": false,
         "planespecial4": false,
@@ -23,8 +24,25 @@ const MapaConCapas = () => {
     });
 
     const [geojsonData, setGeojsonData] = useState({});
+    const [modalAbierto, setModalAbierto] = useState(false);
+    const [texto, setTexto] = useState("");
+    const [idSeleccionado, setIdSeleccionado] = useState(null);
+    const [nombreCapaSeleccionada, setNombreCapaSeleccionada] = useState("");
+    const [centroSeleccionado, setCentroSeleccionado] = useState(null);
+    const [poligonosGuardados, setPoligonosGuardados] = useState([]);
+   const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
 
     // Carga inicial de datos
+useEffect(() => {
+    serviciolotes.poligonosguardados()
+        .then(data => {
+            console.log("Polígonos guardados:", data); // 👈 Verifica que tengan campo 'id'
+            setPoligonosGuardados(data);
+        })
+        .catch(console.error);
+}, []);
+
+
     useEffect(() => {
         // Cargar manzanas
         fetch("/manazanasmates.geojson")
@@ -36,7 +54,7 @@ const MapaConCapas = () => {
 
         // Cargar planes especiales
         const planesEspeciales = [
-            "planespecial", "planespecial2", "planespecial3",
+            "planespecial11", "planespecial2", "planespecial3",
             "planespecial4", "planespecial5"
         ];
 
@@ -73,6 +91,38 @@ const MapaConCapas = () => {
                 .catch(error => console.error(`Error cargando ${capa.nombre}:`, error));
         });
     }, []);
+    const handleFeatureClick = (e) => {
+        const id = e.target.feature.properties?.id || null;
+        const layer = e.target;
+        const center = layer.getBounds().getCenter();
+
+        const nombreCapa = Object.entries(geojsonData).find(([_, data]) =>
+            data.features.includes(e.target.feature)
+        )?.[0] || "Desconocido";
+
+        if (id) {
+            // Buscar si el ID coincide con algún dato en la base
+            const datosBase = poligonosGuardados.find(p => p.id === id);
+
+            if (datosBase) {
+                console.log("Datos desde la base:", datosBase);
+                // podés guardar esto también en un estado para mostrarlo
+            }
+
+            setIdSeleccionado(id);
+            setCentroSeleccionado(center);
+            setNombreCapaSeleccionada(nombreCapa);
+            setModalAbierto(true);
+        }
+    };
+
+
+
+    const onEachFeature = (feature, layer) => {
+        layer.on({
+            click: handleFeatureClick
+        });
+    };
 
     const toggleCapaPrincipal = (nombre) => {
         const nuevoEstado = !capasActivas[nombre];
@@ -128,7 +178,7 @@ const MapaConCapas = () => {
 
                     {capasActivas["Plan Especial"] && (
                         <div className="subcapas">
-                            {[1, 2, 3, 4, 5].map(num => (
+                            {[11, 2, 3, 4, 5].map(num => (
                                 <div key={`planespecial${num}`}>
                                     <input
                                         type="checkbox"
@@ -188,10 +238,27 @@ const MapaConCapas = () => {
                 zoom={14}
                 style={{ height: "100vh", width: "100%" }}
             >
+
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {poligonosGuardados.map((p, index) => {
+                    if (typeof p.lat !== "number" || typeof p.lng !== "number") return null;
+
+                    return (
+                        <Marker
+                            key={index}
+                            position={[p.lat, p.lng]}
+                            icon={L.divIcon({
+                                className: 'texto-poligono',
+                                html: `<div style="background:white;padding:2px;border-radius:4px;">${p.dato1}</div>`,
+                            })}
+                        />
+                    );
+                })}
+
+
 
                 {/* Renderizar Manzanas */}
                 {capasActivas["Manzanas"] && geojsonData["Manzanas"] && (
@@ -205,6 +272,7 @@ const MapaConCapas = () => {
                             opacity: 1,
                             fillOpacity: 0
                         }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -214,11 +282,22 @@ const MapaConCapas = () => {
                         <GeoJSON
                             key={nombre}
                             data={geojsonData[nombre]}
-                            style={{
-                                color: "red",
-                                weight: 2,
-                                fillOpacity: 0.5
+                            style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
                             }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
                         />
                     )
                 ))}
@@ -247,6 +326,7 @@ const MapaConCapas = () => {
                             fillOpacity: 0.3,
                             fillColor: "violet"
                         }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -261,6 +341,7 @@ const MapaConCapas = () => {
                             fillOpacity: 0.3,
                             fillColor: "yellow"
                         }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -275,9 +356,31 @@ const MapaConCapas = () => {
                             fillOpacity: 0.3,
                             fillColor: "tan"
                         }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
             </MapContainer>
+            {modalAbierto && (
+                <div className="modal-overlay" onClick={() => setModalAbierto(false)}>
+                    <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
+                        <h3>Ingrese un dato para la zona ID {idSeleccionado}</h3>
+                        <input
+                            type="text"
+                            value={texto}
+                            onChange={(e) => setTexto(e.target.value)}
+                        />
+                        <button onClick={async () => {
+                            await serviciolotes.guardarpoligono({ id_mapa: idSeleccionado, dato1: texto, capa: nombreCapaSeleccionada });
+                            const nuevos = await serviciolotes.poligonosguardados();
+                            setPoligonosGuardados(nuevos);
+                            setModalAbierto(false);
+                            setTexto("");
+                        }}>Guardar</button>
+                        <button onClick={() => setModalAbierto(false)}>Cancelar</button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
