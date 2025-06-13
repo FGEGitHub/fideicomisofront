@@ -30,17 +30,17 @@ const MapaConCapas = () => {
     const [nombreCapaSeleccionada, setNombreCapaSeleccionada] = useState("");
     const [centroSeleccionado, setCentroSeleccionado] = useState(null);
     const [poligonosGuardados, setPoligonosGuardados] = useState([]);
-   const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
-const [mapa, setMapa] = useState(null);
+    const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
+    const [mapa, setMapa] = useState(null);
     // Carga inicial de datos
-useEffect(() => {
-    serviciolotes.poligonosguardados()
-        .then(data => {
-            console.log("Polígonos guardados:", data); // 👈 Verifica que tengan campo 'id'
-            setPoligonosGuardados(data);
-        })
-        .catch(console.error);
-}, []);
+    useEffect(() => {
+        serviciolotes.poligonosguardados()
+            .then(data => {
+                console.log("Polígonos guardados:", data); // 👈 Verifica que tengan campo 'id'
+                setPoligonosGuardados(data);
+            })
+            .catch(console.error);
+    }, []);
 
 
     useEffect(() => {
@@ -68,7 +68,7 @@ useEffect(() => {
         });
 
         // Cargar barrios
-        fetch("/calless.geojson")
+        fetch("/calles.geojson")
             .then((r) => r.json())
             .then((data) => {
                 setGeojsonData(prev => ({ ...prev, "Barrios": data }));
@@ -117,15 +117,15 @@ useEffect(() => {
     };
 
 
-const InstanciaDelMapa = ({ setMapa }) => {
-  const map = useMap();
+    const InstanciaDelMapa = ({ setMapa }) => {
+        const map = useMap();
 
-  useEffect(() => {
-    setMapa(map);
-  }, [map, setMapa]);
+        useEffect(() => {
+            setMapa(map);
+        }, [map, setMapa]);
 
-  return null;
-};
+        return null;
+    };
 
     const onEachFeature = (feature, layer) => {
         layer.on({
@@ -155,6 +155,106 @@ const InstanciaDelMapa = ({ setMapa }) => {
             setCapasActivas(prev => ({ ...prev, "Plan Especial": true }));
         }
     };
+    const EtiquetasPoligonos = ({
+        geojsonData,
+        poligonosGuardados,
+        capasActivas,
+        subCapasActivas
+    }) => {
+        return (
+            <>
+                {Object.entries(geojsonData).map(([nombreCapa, geojson]) => {
+                    // Verificamos si está activa la capa principal o subcapa
+                    const esSubcapa = nombreCapa.startsWith("planespecial");
+                    const estaActiva = esSubcapa
+                        ? subCapasActivas[nombreCapa]
+                        : capasActivas[nombreCapa];
+
+                    if (!estaActiva) return null;
+
+                    return geojson?.features?.map((feature, i) => {
+                        const id = feature.properties?.id;
+                        const poligonoDB = poligonosGuardados.find(p => p.id_mapa === id);
+
+                        if (!poligonoDB || !feature.geometry) return null;
+
+                        try {
+                            const getCentroide = (coordinates) => {
+                                let totalLat = 0;
+                                let totalLng = 0;
+                                let count = 0;
+
+                                coordinates[0].forEach(([lng, lat]) => {
+                                    totalLat += lat;
+                                    totalLng += lng;
+                                    count++;
+                                });
+
+                                return {
+                                    lat: totalLat / count,
+                                    lng: totalLng / count,
+                                };
+                            };
+
+                            const coords = feature.geometry?.coordinates;
+                            if (!coords || !Array.isArray(coords[0])) return null;
+
+                           const center = getCentroideAproximado(feature.geometry);
+if (!center) return null;
+                            return (
+                                <Marker
+                                    key={`etiqueta-${nombreCapa}-${id}`}
+                                    position={center}
+                                    icon={L.divIcon({
+                                        className: 'texto-poligono',
+                                        html: `<div style="background:white;padding:2px 4px;border-radius:4px;font-size:12px;font-weight:bold;">${poligonoDB.dato1}</div>`,
+                                    })}
+                                />
+                            );
+                        } catch (error) {
+                            console.error("Error al calcular centro:", error);
+                            return null;
+                        }
+                    });
+                })}
+            </>
+        );
+    };
+
+const getCentroideAproximado = (geometry) => {
+    try {
+        let puntos = [];
+
+        if (geometry.type === "Polygon") {
+            puntos = geometry.coordinates[0]; // primer anillo exterior
+        } else if (geometry.type === "MultiPolygon") {
+            puntos = geometry.coordinates[0][0]; // primer polígono, primer anillo
+        } else {
+            return null;
+        }
+
+        let totalLat = 0;
+        let totalLng = 0;
+        let count = 0;
+
+        for (const [lng, lat] of puntos) {
+            if (typeof lat !== "number" || typeof lng !== "number") continue;
+            totalLat += lat;
+            totalLng += lng;
+            count++;
+        }
+
+        if (count === 0) return null;
+
+        return {
+            lat: totalLat / count,
+            lng: totalLng / count,
+        };
+    } catch (err) {
+        console.error("Error calculando centroide:", err);
+        return null;
+    }
+};
 
     return (
         <div className="mapa-contenedor">
@@ -247,7 +347,17 @@ const InstanciaDelMapa = ({ setMapa }) => {
                 zoom={14}
                 style={{ height: "100vh", width: "100%" }}
             >
-  <InstanciaDelMapa setMapa={setMapa} />
+
+                {/* etiqueta que marca el texto de fondo de los poligonos */}
+                <EtiquetasPoligonos
+                    geojsonData={geojsonData}
+                    poligonosGuardados={poligonosGuardados}
+                    capasActivas={capasActivas}
+                    subCapasActivas={subCapasActivas}
+                />
+
+
+                <InstanciaDelMapa setMapa={setMapa} />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -316,22 +426,22 @@ const InstanciaDelMapa = ({ setMapa }) => {
                     <GeoJSON
                         key="Barrios"
                         data={geojsonData["Barrios"]}
-                    style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+                        style={(feature) => {
+                            const id = feature.properties?.id;
+                            const existeEnBase = idsDesdeBase.includes(id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "blue",
-                                    weight: 1,
-                                    opacity: 1,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
-                            eventHandlers={{
-                                click: handleFeatureClick,
-                            }}
-                            onEachFeature={onEachFeature}
+                            return {
+                                fillColor: existeEnBase ? "red" : "blue",
+                                weight: 1,
+                                opacity: 1,
+                                color: "black",
+                                fillOpacity: 0.5,
+                            };
+                        }}
+                        eventHandlers={{
+                            click: handleFeatureClick,
+                        }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -340,22 +450,22 @@ const InstanciaDelMapa = ({ setMapa }) => {
                     <GeoJSON
                         key="Planificación Sección Sur"
                         data={geojsonData["Planificación Sección Sur"]}
-                       style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+                        style={(feature) => {
+                            const id = feature.properties?.id;
+                            const existeEnBase = idsDesdeBase.includes(id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "blue",
-                                    weight: 1,
-                                    opacity: 1,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
-                            eventHandlers={{
-                                click: handleFeatureClick,
-                            }}
-                            onEachFeature={onEachFeature}
+                            return {
+                                fillColor: existeEnBase ? "red" : "blue",
+                                weight: 1,
+                                opacity: 1,
+                                color: "black",
+                                fillOpacity: 0.5,
+                            };
+                        }}
+                        eventHandlers={{
+                            click: handleFeatureClick,
+                        }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -364,22 +474,22 @@ const InstanciaDelMapa = ({ setMapa }) => {
                     <GeoJSON
                         key="Zonificación Sta Catalina"
                         data={geojsonData["Zonificación Sta Catalina"]}
-                    style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+                        style={(feature) => {
+                            const id = feature.properties?.id;
+                            const existeEnBase = idsDesdeBase.includes(id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "blue",
-                                    weight: 1,
-                                    opacity: 1,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
-                            eventHandlers={{
-                                click: handleFeatureClick,
-                            }}
-                            onEachFeature={onEachFeature}
+                            return {
+                                fillColor: existeEnBase ? "red" : "blue",
+                                weight: 1,
+                                opacity: 1,
+                                color: "black",
+                                fillOpacity: 0.5,
+                            };
+                        }}
+                        eventHandlers={{
+                            click: handleFeatureClick,
+                        }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -388,22 +498,22 @@ const InstanciaDelMapa = ({ setMapa }) => {
                     <GeoJSON
                         key="ZRU Predios La Caja"
                         data={geojsonData["ZRU Predios La Caja"]}
-                    style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+                        style={(feature) => {
+                            const id = feature.properties?.id;
+                            const existeEnBase = idsDesdeBase.includes(id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "blue",
-                                    weight: 1,
-                                    opacity: 1,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
-                            eventHandlers={{
-                                click: handleFeatureClick,
-                            }}
-                            onEachFeature={onEachFeature}
+                            return {
+                                fillColor: existeEnBase ? "red" : "blue",
+                                weight: 1,
+                                opacity: 1,
+                                color: "black",
+                                fillOpacity: 0.5,
+                            };
+                        }}
+                        eventHandlers={{
+                            click: handleFeatureClick,
+                        }}
+                        onEachFeature={onEachFeature}
                     />
                 )}
             </MapContainer>
