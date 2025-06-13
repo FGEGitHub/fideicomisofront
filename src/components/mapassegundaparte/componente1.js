@@ -32,6 +32,8 @@ const MapaConCapas = () => {
     const [poligonosGuardados, setPoligonosGuardados] = useState([]);
     const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
     const [mapa, setMapa] = useState(null);
+    const [verReferencias, setVerReferencias] = useState(true);
+
     // Carga inicial de datos
     useEffect(() => {
         serviciolotes.poligonosguardados()
@@ -159,8 +161,10 @@ const MapaConCapas = () => {
         geojsonData,
         poligonosGuardados,
         capasActivas,
-        subCapasActivas
+        subCapasActivas,
+        mostrarEtiquetas
     }) => {
+        if (!mostrarEtiquetas) return null;
         return (
             <>
                 {Object.entries(geojsonData).map(([nombreCapa, geojson]) => {
@@ -199,8 +203,8 @@ const MapaConCapas = () => {
                             const coords = feature.geometry?.coordinates;
                             if (!coords || !Array.isArray(coords[0])) return null;
 
-                           const center = getCentroideAproximado(feature.geometry);
-if (!center) return null;
+                            const center = getCentroideAproximado(feature.geometry);
+                            if (!center) return null;
                             return (
                                 <Marker
                                     key={`etiqueta-${nombreCapa}-${id}`}
@@ -221,40 +225,40 @@ if (!center) return null;
         );
     };
 
-const getCentroideAproximado = (geometry) => {
-    try {
-        let puntos = [];
+    const getCentroideAproximado = (geometry) => {
+        try {
+            let puntos = [];
 
-        if (geometry.type === "Polygon") {
-            puntos = geometry.coordinates[0]; // primer anillo exterior
-        } else if (geometry.type === "MultiPolygon") {
-            puntos = geometry.coordinates[0][0]; // primer polígono, primer anillo
-        } else {
+            if (geometry.type === "Polygon") {
+                puntos = geometry.coordinates[0]; // primer anillo exterior
+            } else if (geometry.type === "MultiPolygon") {
+                puntos = geometry.coordinates[0][0]; // primer polígono, primer anillo
+            } else {
+                return null;
+            }
+
+            let totalLat = 0;
+            let totalLng = 0;
+            let count = 0;
+
+            for (const [lng, lat] of puntos) {
+                if (typeof lat !== "number" || typeof lng !== "number") continue;
+                totalLat += lat;
+                totalLng += lng;
+                count++;
+            }
+
+            if (count === 0) return null;
+
+            return {
+                lat: totalLat / count,
+                lng: totalLng / count,
+            };
+        } catch (err) {
+            console.error("Error calculando centroide:", err);
             return null;
         }
-
-        let totalLat = 0;
-        let totalLng = 0;
-        let count = 0;
-
-        for (const [lng, lat] of puntos) {
-            if (typeof lat !== "number" || typeof lng !== "number") continue;
-            totalLat += lat;
-            totalLng += lng;
-            count++;
-        }
-
-        if (count === 0) return null;
-
-        return {
-            lat: totalLat / count,
-            lng: totalLng / count,
-        };
-    } catch (err) {
-        console.error("Error calculando centroide:", err);
-        return null;
-    }
-};
+    };
 
     return (
         <div className="mapa-contenedor">
@@ -340,6 +344,15 @@ const getCentroideAproximado = (geometry) => {
                     />
                     <label><strong>ZRU Predios La Caja</strong></label>
                 </div>
+                <hr />
+                <div className="capa-principal">
+                    <input
+                        type="checkbox"
+                        checked={verReferencias}
+                        onChange={() => setVerReferencias(prev => !prev)}
+                    />
+                    <label><strong>Ver referencias</strong></label>
+                </div>
             </div>
 
             <MapContainer
@@ -354,12 +367,13 @@ const getCentroideAproximado = (geometry) => {
                     poligonosGuardados={poligonosGuardados}
                     capasActivas={capasActivas}
                     subCapasActivas={subCapasActivas}
+                    mostrarEtiquetas={verReferencias}
                 />
 
 
                 <InstanciaDelMapa setMapa={setMapa} />
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <a href="https://fdsantacatalina.ciudaddecorrientes.gov.ar/"> Fideicomiso Santa Catalina</a> Sistemas'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {poligonosGuardados.map((p, index) => {
