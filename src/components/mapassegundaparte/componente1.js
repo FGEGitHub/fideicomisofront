@@ -16,7 +16,7 @@ const MapaConCapas = () => {
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
-        "planespecial11": false,
+        "planespecial1": false,
         "planespecial2": false,
         "planespecial3": false,
         "planespecial4": false,
@@ -31,7 +31,7 @@ const MapaConCapas = () => {
     const [centroSeleccionado, setCentroSeleccionado] = useState(null);
     const [poligonosGuardados, setPoligonosGuardados] = useState([]);
    const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
-
+const [mapa, setMapa] = useState(null);
     // Carga inicial de datos
 useEffect(() => {
     serviciolotes.poligonosguardados()
@@ -54,7 +54,7 @@ useEffect(() => {
 
         // Cargar planes especiales
         const planesEspeciales = [
-            "planespecial11", "planespecial2", "planespecial3",
+            "planespecial1", "planespecial2", "planespecial3",
             "planespecial4", "planespecial5"
         ];
 
@@ -68,7 +68,7 @@ useEffect(() => {
         });
 
         // Cargar barrios
-        fetch("/calles.geojson")
+        fetch("/calless.geojson")
             .then((r) => r.json())
             .then((data) => {
                 setGeojsonData(prev => ({ ...prev, "Barrios": data }));
@@ -117,6 +117,15 @@ useEffect(() => {
     };
 
 
+const InstanciaDelMapa = ({ setMapa }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    setMapa(map);
+  }, [map, setMapa]);
+
+  return null;
+};
 
     const onEachFeature = (feature, layer) => {
         layer.on({
@@ -178,7 +187,7 @@ useEffect(() => {
 
                     {capasActivas["Plan Especial"] && (
                         <div className="subcapas">
-                            {[11, 2, 3, 4, 5].map(num => (
+                            {[1, 2, 3, 4, 5].map(num => (
                                 <div key={`planespecial${num}`}>
                                     <input
                                         type="checkbox"
@@ -238,7 +247,7 @@ useEffect(() => {
                 zoom={14}
                 style={{ height: "100vh", width: "100%" }}
             >
-
+  <InstanciaDelMapa setMapa={setMapa} />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -307,11 +316,22 @@ useEffect(() => {
                     <GeoJSON
                         key="Barrios"
                         data={geojsonData["Barrios"]}
-                        style={{
-                            color: "green",
-                            weight: 3,
-                            dashArray: '5, 5'
-                        }}
+                    style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -320,13 +340,22 @@ useEffect(() => {
                     <GeoJSON
                         key="Planificación Sección Sur"
                         data={geojsonData["Planificación Sección Sur"]}
-                        style={{
-                            color: "purple",
-                            weight: 2,
-                            fillOpacity: 0.3,
-                            fillColor: "violet"
-                        }}
-                        onEachFeature={onEachFeature}
+                       style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -335,13 +364,22 @@ useEffect(() => {
                     <GeoJSON
                         key="Zonificación Sta Catalina"
                         data={geojsonData["Zonificación Sta Catalina"]}
-                        style={{
-                            color: "orange",
-                            weight: 2,
-                            fillOpacity: 0.3,
-                            fillColor: "yellow"
-                        }}
-                        onEachFeature={onEachFeature}
+                    style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
                     />
                 )}
 
@@ -350,13 +388,22 @@ useEffect(() => {
                     <GeoJSON
                         key="ZRU Predios La Caja"
                         data={geojsonData["ZRU Predios La Caja"]}
-                        style={{
-                            color: "brown",
-                            weight: 2,
-                            fillOpacity: 0.3,
-                            fillColor: "tan"
-                        }}
-                        onEachFeature={onEachFeature}
+                    style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
                     />
                 )}
             </MapContainer>
