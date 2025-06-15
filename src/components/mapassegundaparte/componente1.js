@@ -79,7 +79,7 @@ const MapaConCapas = () => {
 
         // Cargar nuevas capas
         const nuevasCapas = [
-            { nombre: "Planificación Sección Sur", archivo: "planificacionseccionsur.geojson" },
+            { nombre: "Planificación Sección Sur", archivo: "planificacionsur4.geojson" },
             { nombre: "Zonificación Sta Catalina", archivo: "zonificacion_stacatalina.geojson" },
             { nombre: "ZRU Predios La Caja", archivo: "zru_prediosdelacaja.geojson" }
         ];
@@ -211,7 +211,7 @@ const MapaConCapas = () => {
                                     position={center}
                                     icon={L.divIcon({
                                         className: 'texto-poligono',
-                                        html: `<div style="background:white;padding:2px 4px;border-radius:4px;font-size:12px;font-weight:bold;">${poligonoDB.dato1}</div>`,
+                                        html: `<div style="padding:2px 4px;border-radius:4px;font-size:12px;font-weight:bold;">${poligonoDB.dato1}</div>`,
                                     })}
                                 />
                             );
@@ -293,12 +293,12 @@ const MapaConCapas = () => {
                         <div className="subcapas">
                             {[1, 2, 3, 4, 5].map(num => (
                                 <div key={`planespecial${num}`}>
-                                    <input
+                                    <label> <input
                                         type="checkbox"
                                         checked={!!subCapasActivas[`planespecial${num > 1 ? num : ''}`]}
                                         onChange={() => toggleSubCapa(`planespecial${num > 1 ? num : ''}`)}
                                     />
-                                    <label>Plan Especial {num > 1 ? num : ''}</label>
+                                   Plan Especial {num > 1 ? num : ''}</label>
                                 </div>
                             ))}
                         </div>
@@ -307,56 +307,56 @@ const MapaConCapas = () => {
 
                 {/* Capa Barrios */}
                 <div className="capa-principal">
-                    <input
+                      <label><input
                         type="checkbox"
                         checked={!!capasActivas["Barrios"]}
                         onChange={() => toggleCapaPrincipal("Barrios")}
                     />
-                    <label><strong>Calles</strong></label>
+                  <strong>Calles</strong></label>
                 </div>
 
                 {/* Nueva Capa: Planificación Sección Sur */}
                 <div className="capa-principal">
-                    <input
+                     <label> <input
                         type="checkbox"
                         checked={!!capasActivas["Planificación Sección Sur"]}
                         onChange={() => toggleCapaPrincipal("Planificación Sección Sur")}
                     />
-                    <label><strong>Planificación Sección Sur</strong></label>
+                  <strong>Planificación Sección Sur</strong></label>
                 </div>
 
                 {/* Nueva Capa: Zonificación Sta Catalina */}
                 <div className="capa-principal">
-                    <input
+                   <label> <input
                         type="checkbox"
                         checked={!!capasActivas["Zonificación Sta Catalina"]}
                         onChange={() => toggleCapaPrincipal("Zonificación Sta Catalina")}
                     />
-                    <label><strong>Zonificación Sta Catalina</strong></label>
+                    <strong>Zonificación Sta Catalina</strong></label>
                 </div>
 
                 {/* Nueva Capa: ZRU Predios La Caja */}
                 <div className="capa-principal">
-                    <input
+                    <label> <input
                         type="checkbox"
                         checked={!!capasActivas["ZRU Predios La Caja"]}
                         onChange={() => toggleCapaPrincipal("ZRU Predios La Caja")}
                     />
-                    <label><strong>ZRU Predios La Caja</strong></label>
+                   <strong>ZRU Predios La Caja</strong></label>
                 </div>
                 <hr />
                 <div className="capa-principal">
-                    <input
+                   <label>  <input
                         type="checkbox"
                         checked={verReferencias}
                         onChange={() => setVerReferencias(prev => !prev)}
                     />
-                    <label><strong>Ver referencias</strong></label>
+                   <strong>Ver referencias</strong></label>
                 </div>
             </div>
 
             <MapContainer
-                center={[-27.5198, -58.8144]}
+                center={[-27.5298, -58.8044]}
                 zoom={14}
                 style={{ height: "100vh", width: "100%" }}
             >
@@ -385,7 +385,7 @@ const MapaConCapas = () => {
                             position={[p.lat, p.lng]}
                             icon={L.divIcon({
                                 className: 'texto-poligono',
-                                html: `<div style="background:white;padding:2px;border-radius:4px;">${p.dato1}</div>`,
+                                html: `<div style="padding:2px;border-radius:4px;">${p.dato1}</div>`,
                             })}
                         />
                     );
@@ -422,7 +422,7 @@ const MapaConCapas = () => {
                                 return {
                                     fillColor: existeEnBase ? "red" : "blue",
                                     weight: 1,
-                                    opacity: 1,
+                                    opacity: 0.5,
                                     color: "black",
                                     fillOpacity: 0.5,
                                 };
