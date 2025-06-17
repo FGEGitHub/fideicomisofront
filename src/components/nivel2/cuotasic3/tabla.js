@@ -206,8 +206,8 @@ const Lotes = (props) => {
       totalPagado: totalPagado.toFixed(2),
       totalCuotas: totalCuotas,
       diferencia: diferencia.toFixed(2),
-      cuotasCalculadas: cuotasCalculadas.toFixed(2),
-      cuotasNoCalculadas: cuotasNoCalculadas.toFixed(2),
+      cuotasCalculadas: cuotasCalculadas,
+      cuotasNoCalculadas: cuotasNoCalculadas,
 
     };
   };

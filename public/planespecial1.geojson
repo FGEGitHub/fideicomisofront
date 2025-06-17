@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "name": "planespecial",
+  "name": "P-E_1",
   "crs": {
     "type": "name",
     "properties": {
@@ -11,6 +11,7 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "plan_especial_1-1",
         "Name": null,
         "description": null,
         "timestamp": null,
@@ -28,8 +29,7 @@
         "Linetype": null,
         "EntityHand": "20000",
         "Text": "SOLID",
-        "ug": "UG3",
-        "id": "planespecial1-1"
+        "ug": "UG3"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -140,6 +140,7 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "plan_especial_1-2",
         "Name": null,
         "description": null,
         "timestamp": null,
@@ -157,8 +158,7 @@
         "Linetype": null,
         "EntityHand": "20001",
         "Text": "SOLID",
-        "ug": "UG2",
-        "id": "planespecial1-2"
+        "ug": "UG2"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -325,6 +325,7 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "plan_especial_1-3",
         "Name": null,
         "description": null,
         "timestamp": null,
@@ -342,8 +343,7 @@
         "Linetype": null,
         "EntityHand": "20002",
         "Text": "SOLID",
-        "ug": "UG1",
-        "id": "planespecial1-3"
+        "ug": "UG1"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -406,6 +406,7 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "plan_especial_1-4",
         "Name": null,
         "description": null,
         "timestamp": null,
@@ -423,8 +424,7 @@
         "Linetype": null,
         "EntityHand": "20003",
         "Text": "SOLID",
-        "ug": "UG4",
-        "id": "planespecial1-4"
+        "ug": "UG4"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -507,6 +507,7 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "plan_especial_1-5",
         "Name": null,
         "description": null,
         "timestamp": null,
@@ -524,8 +525,7 @@
         "Linetype": null,
         "EntityHand": null,
         "Text": null,
-        "ug": "PLAN ESPECIAL 1ER ETAPA",
-        "id": "planespecial1-5"
+        "ug": "PLAN ESPECIAL 1ER ETAPA"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -672,6 +672,394 @@
                 -58.8345026212277,
                 -27.5178367574267
               ]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "plan_especial_1-6",
+        "Name": null,
+        "description": null,
+        "timestamp": null,
+        "begin": null,
+        "end": null,
+        "altitudeMode": null,
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": null,
+        "Layer": null,
+        "PaperSpace": null,
+        "SubClasses": null,
+        "Linetype": null,
+        "EntityHand": null,
+        "Text": null,
+        "ug": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.8345021396856,
+              -27.5178376116261
+            ],
+            [
+              -58.8334081830907,
+              -27.5189014229341
+            ],
+            [
+              -58.8330972106576,
+              -27.519206048991
+            ],
+            [
+              -58.8324657462272,
+              -27.5199898264499
+            ],
+            [
+              -58.8318342817967,
+              -27.5214018951511
+            ],
+            [
+              -58.8315550412446,
+              -27.5224871254787
+            ],
+            [
+              -58.8311869514259,
+              -27.5247210498959
+            ],
+            [
+              -58.8305935652525,
+              -27.5247194633019
+            ],
+            [
+              -58.8209348825739,
+              -27.5262027481686
+            ],
+            [
+              -58.8196783001981,
+              -27.5197421375752
+            ],
+            [
+              -58.8197187583463,
+              -27.5188528516122
+            ],
+            [
+              -58.8197469203906,
+              -27.5177243865968
+            ],
+            [
+              -58.8260663926509,
+              -27.5157968979453
+            ],
+            [
+              -58.8317653764889,
+              -27.5163660575713
+            ],
+            [
+              -58.8334741382767,
+              -27.5171748238863
+            ],
+            [
+              -58.8345026478673,
+              -27.5178368302522
+            ],
+            [
+              -58.8345021396856,
+              -27.5178376116261
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "plan_especial_1-7",
+        "Name": null,
+        "description": null,
+        "timestamp": null,
+        "begin": null,
+        "end": null,
+        "altitudeMode": null,
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": null,
+        "Layer": null,
+        "PaperSpace": null,
+        "SubClasses": null,
+        "Linetype": null,
+        "EntityHand": null,
+        "Text": null,
+        "ug": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.8197468708095,
+              -27.517724095308
+            ],
+            [
+              -58.8196924308013,
+              -27.5197952946733
+            ],
+            [
+              -58.8209348826101,
+              -27.5262027481685
+            ],
+            [
+              -58.8023384039008,
+              -27.5290887322756
+            ],
+            [
+              -58.8045183548225,
+              -27.5407218167383
+            ],
+            [
+              -58.8030917163591,
+              -27.540796801976
+            ],
+            [
+              -58.8013213640373,
+              -27.5308333122355
+            ],
+            [
+              -58.8010242735211,
+              -27.5291487415776
+            ],
+            [
+              -58.8017612483933,
+              -27.5290354981298
+            ],
+            [
+              -58.8012332086739,
+              -27.5260627088813
+            ],
+            [
+              -58.8006735361525,
+              -27.5229083532992
+            ],
+            [
+              -58.8073737652175,
+              -27.521879053903
+            ],
+            [
+              -58.8062371783144,
+              -27.5159917147163
+            ],
+            [
+              -58.8159066460528,
+              -27.5188949685671
+            ],
+            [
+              -58.8197468708095,
+              -27.517724095308
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "plan_especial_1-8",
+        "Name": null,
+        "description": null,
+        "timestamp": null,
+        "begin": null,
+        "end": null,
+        "altitudeMode": null,
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": null,
+        "Layer": null,
+        "PaperSpace": null,
+        "SubClasses": null,
+        "Linetype": null,
+        "EntityHand": null,
+        "Text": null,
+        "ug": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.8006735210765,
+              -27.5229085397703
+            ],
+            [
+              -58.8005946489019,
+              -27.5229191839424
+            ],
+            [
+              -58.8002400004778,
+              -27.5226849480969
+            ],
+            [
+              -58.799527506296,
+              -27.5220704333032
+            ],
+            [
+              -58.7995248252075,
+              -27.5220731797576
+            ],
+            [
+              -58.7986008300702,
+              -27.523020267336
+            ],
+            [
+              -58.7974132613041,
+              -27.5242881576369
+            ],
+            [
+              -58.7958710878362,
+              -27.5260588012482
+            ],
+            [
+              -58.795585500157,
+              -27.52685844675
+            ],
+            [
+              -58.7950524031558,
+              -27.5276390530732
+            ],
+            [
+              -58.7933007987232,
+              -27.5292859420235
+            ],
+            [
+              -58.7918347819698,
+              -27.5305996453479
+            ],
+            [
+              -58.7913564226071,
+              -27.5308971325138
+            ],
+            [
+              -58.7913232527881,
+              -27.5312219884989
+            ],
+            [
+              -58.7964598149375,
+              -27.5298818088167
+            ],
+            [
+              -58.7974879305827,
+              -27.5296676180573
+            ],
+            [
+              -58.7988301926751,
+              -27.5294724664765
+            ],
+            [
+              -58.8017612639969,
+              -27.5290355368499
+            ],
+            [
+              -58.8006735210765,
+              -27.5229085397703
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "plan_especial_1-9",
+        "Name": null,
+        "description": null,
+        "timestamp": null,
+        "begin": null,
+        "end": null,
+        "altitudeMode": null,
+        "tessellate": -1,
+        "extrude": 0,
+        "visibility": -1,
+        "drawOrder": null,
+        "icon": null,
+        "Layer": null,
+        "PaperSpace": null,
+        "SubClasses": null,
+        "Linetype": null,
+        "EntityHand": null,
+        "Text": null,
+        "ug": null
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.8062371443368,
+              -27.5159917286458
+            ],
+            [
+              -58.8056845619262,
+              -27.5158258795508
+            ],
+            [
+              -58.8051843861722,
+              -27.5156755754131
+            ],
+            [
+              -58.8037944538677,
+              -27.5168847503467
+            ],
+            [
+              -58.8013764781835,
+              -27.5192372788544
+            ],
+            [
+              -58.8003507424356,
+              -27.5209936430816
+            ],
+            [
+              -58.800105613011,
+              -27.5213577673727
+            ],
+            [
+              -58.8000508753724,
+              -27.5214529632657
+            ],
+            [
+              -58.7997533882066,
+              -27.521848026222
+            ],
+            [
+              -58.7995225381659,
+              -27.5220717365707
+            ],
+            [
+              -58.8002399284664,
+              -27.5226848576196
+            ],
+            [
+              -58.8005946489383,
+              -27.5229191839787
+            ],
+            [
+              -58.8006740352332,
+              -27.5229084315171
+            ],
+            [
+              -58.8073737675179,
+              -27.5218790550376
+            ],
+            [
+              -58.8062371443368,
+              -27.5159917286458
             ]
           ]
         ]
