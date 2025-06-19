@@ -244,8 +244,18 @@ const MapaConCapas = () => {
                                     position={center}
                                     icon={L.divIcon({
                                         className: 'texto-poligono',
-                                        html: `<div style="padding:2px 4px;border-radius:4px;font-size:12px;font-weight:bold;">${poligonoDB.dato1}</div>`,
-                                    })}
+html: `<div style="
+    padding: 9px 1px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow-wrap: break-word;
+    text-align: center;
+">
+${poligonoDB.dato1}
+</div>`                                    })}
                                 />
                             );
                         } catch (error) {
