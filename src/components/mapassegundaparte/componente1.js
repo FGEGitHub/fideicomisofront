@@ -5,7 +5,7 @@ import "./MapaConCapas.css";
 import parcasLogo from "../../Assets/marcas.png"; // 
 import L from "leaflet";
 import serviciolotes from "../../services/lotes"; // A
-import { pointOnFeature } from '@turf/turf';
+import { centerOfMass, pointOnFeature, booleanPointInPolygon } from '@turf/turf';
 const MapaConCapas = () => {
     const [capasActivas, setCapasActivas] = useState({
         "Manzanas": false,
@@ -259,17 +259,31 @@ const MapaConCapas = () => {
     };
 
 
+
+
 const getCentroideAproximado = (geometry) => {
     try {
-        const centro = pointOnFeature(geometry);
-        const [lng, lat] = centro.geometry.coordinates;
+        // 1. Intentamos usar el centroide visual
+        const centroVisual = centerOfMass(geometry);
+        const [lng, lat] = centroVisual.geometry.coordinates;
 
-        return { lat, lng };
+        // 2. Verificamos si ese punto está adentro del polígono
+        const estaDentro = booleanPointInPolygon(centroVisual, geometry);
+
+        if (estaDentro) {
+            return { lat, lng };
+        }
+
+        // 3. Si está afuera, usamos pointOnFeature como fallback
+        const puntoSeguro = pointOnFeature(geometry).geometry.coordinates;
+        return { lat: puntoSeguro[1], lng: puntoSeguro[0] };
+
     } catch (err) {
-        console.error("Error calculando centro dentro del polígono:", err);
+        console.error("Error calculando centroide:", err);
         return null;
     }
 };
+
     return (
         <div className="mapa-contenedor">
             <div className="panel-lateral">
