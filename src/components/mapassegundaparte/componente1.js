@@ -5,6 +5,7 @@ import "./MapaConCapas.css";
 import parcasLogo from "../../Assets/marcas.png"; // 
 import L from "leaflet";
 import serviciolotes from "../../services/lotes"; // A
+import { pointOnFeature } from '@turf/turf';
 const MapaConCapas = () => {
     const [capasActivas, setCapasActivas] = useState({
         "Manzanas": false,
@@ -33,7 +34,12 @@ const MapaConCapas = () => {
     const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
     const [mapa, setMapa] = useState(null);
     const [verReferencias, setVerReferencias] = useState(true);
-
+    const [subCapasSur, setSubCapasSur] = useState({
+        "PIT": false,
+        "PLC-C": false,
+        "PLC-F": false,
+        "ZPA": false
+    });
     // Carga inicial de datos
     useEffect(() => {
         serviciolotes.poligonosguardados()
@@ -79,11 +85,25 @@ const MapaConCapas = () => {
 
         // Cargar nuevas capas
         const nuevasCapas = [
-            { nombre: "Planificación Sección Sur", archivo: "planificacionsur4.geojson" },
+            /*  { nombre: "Planificación Sección Sur", archivo: "planificacionsur4.geojson" }, */
             { nombre: "Zonificación Sta Catalina", archivo: "zonificacion_stacatalina.geojson" },
             { nombre: "ZRU Predios La Caja", archivo: "zru_prediosdelacaja.geojson" }
         ];
+        const capasSeccionSur = [
+            { nombre: "PIT", archivo: "pitfases.geojson" },
+            { nombre: "PLC-C", archivo: "plc-c.geojson" },
+            { nombre: "PLC-F", archivo: "plc-f.geojson" },
+            { nombre: "ZPA", archivo: "zpa.geojson" }
+        ];
 
+        capasSeccionSur.forEach(capa => {
+            fetch(`/${capa.archivo}`)
+                .then((r) => r.json())
+                .then((data) => {
+                    setGeojsonData(prev => ({ ...prev, [capa.nombre]: data }));
+                })
+                .catch(error => console.error(`Error cargando ${capa.nombre}:`, error));
+        });
         nuevasCapas.forEach(capa => {
             fetch(`/${capa.archivo}`)
                 .then((r) => r.json())
@@ -147,6 +167,13 @@ const MapaConCapas = () => {
             });
             setSubCapasActivas(nuevoEstadoSubcapas);
         }
+        if (nombre === "Planificación Sección Sur") {
+            const nuevoEstadoSubcapasSur = {};
+            Object.keys(subCapasSur).forEach(key => {
+                nuevoEstadoSubcapasSur[key] = nuevoEstado;
+            });
+            setSubCapasSur(nuevoEstadoSubcapasSur);
+        }
     };
 
     const toggleSubCapa = (nombre) => {
@@ -161,7 +188,8 @@ const MapaConCapas = () => {
         geojsonData,
         poligonosGuardados,
         capasActivas,
-        subCapasActivas,
+        subCapasActivas,    
+        subCapasSur,
         mostrarEtiquetas
     }) => {
         if (!mostrarEtiquetas) return null;
@@ -170,9 +198,14 @@ const MapaConCapas = () => {
                 {Object.entries(geojsonData).map(([nombreCapa, geojson]) => {
                     // Verificamos si está activa la capa principal o subcapa
                     const esSubcapa = nombreCapa.startsWith("planespecial");
+                    const esSubcapaSur = ["PIT", "PLC-C", "PLC-F", "ZPA"].includes(nombreCapa);
+
                     const estaActiva = esSubcapa
                         ? subCapasActivas[nombreCapa]
-                        : capasActivas[nombreCapa];
+                        : esSubcapaSur
+                            ? subCapasSur[nombreCapa]
+                            : capasActivas[nombreCapa];
+                    ;
 
                     if (!estaActiva) return null;
 
@@ -225,41 +258,18 @@ const MapaConCapas = () => {
         );
     };
 
-    const getCentroideAproximado = (geometry) => {
-        try {
-            let puntos = [];
 
-            if (geometry.type === "Polygon") {
-                puntos = geometry.coordinates[0]; // primer anillo exterior
-            } else if (geometry.type === "MultiPolygon") {
-                puntos = geometry.coordinates[0][0]; // primer polígono, primer anillo
-            } else {
-                return null;
-            }
+const getCentroideAproximado = (geometry) => {
+    try {
+        const centro = pointOnFeature(geometry);
+        const [lng, lat] = centro.geometry.coordinates;
 
-            let totalLat = 0;
-            let totalLng = 0;
-            let count = 0;
-
-            for (const [lng, lat] of puntos) {
-                if (typeof lat !== "number" || typeof lng !== "number") continue;
-                totalLat += lat;
-                totalLng += lng;
-                count++;
-            }
-
-            if (count === 0) return null;
-
-            return {
-                lat: totalLat / count,
-                lng: totalLng / count,
-            };
-        } catch (err) {
-            console.error("Error calculando centroide:", err);
-            return null;
-        }
-    };
-
+        return { lat, lng };
+    } catch (err) {
+        console.error("Error calculando centro dentro del polígono:", err);
+        return null;
+    }
+};
     return (
         <div className="mapa-contenedor">
             <div className="panel-lateral">
@@ -295,10 +305,10 @@ const MapaConCapas = () => {
                                 <div key={`planespecial${num}`}>
                                     <label> <input
                                         type="checkbox"
-                                        checked={!!subCapasActivas[`planespecial${num > 1 ? num : ''}`]}
-                                        onChange={() => toggleSubCapa(`planespecial${num > 1 ? num : ''}`)}
+                                        checked={!!subCapasActivas[`planespecial${num >= 1 ? num : ''}`]}
+                                        onChange={() => toggleSubCapa(`planespecial${num >= 1 ? num : ''}`)}
                                     />
-                                   Plan Especial {num > 1 ? num : ''}</label>
+                                        Plan Especial {num >= 1 ? num : ''}</label>
                                 </div>
                             ))}
                         </div>
@@ -307,32 +317,50 @@ const MapaConCapas = () => {
 
                 {/* Capa Barrios */}
                 <div className="capa-principal">
-                      <label><input
+                    <label><input
                         type="checkbox"
                         checked={!!capasActivas["Barrios"]}
                         onChange={() => toggleCapaPrincipal("Barrios")}
                     />
-                  <strong>Calles</strong></label>
+                        <strong>Calles</strong></label>
                 </div>
 
                 {/* Nueva Capa: Planificación Sección Sur */}
                 <div className="capa-principal">
-                     <label> <input
+                    <input
                         type="checkbox"
                         checked={!!capasActivas["Planificación Sección Sur"]}
                         onChange={() => toggleCapaPrincipal("Planificación Sección Sur")}
                     />
-                  <strong>Planificación Sección Sur</strong></label>
+                    <label><strong>Planificación Sección Sur</strong></label>
+
+                    {capasActivas["Planificación Sección Sur"] && (
+                        <div className="subcapas">
+                            {Object.keys(subCapasSur).map((nombre) => (
+                                <div key={nombre}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            checked={!!subCapasSur[nombre]}
+                                            onChange={() => setSubCapasSur(prev => ({ ...prev, [nombre]: !prev[nombre] }))}
+                                        />
+                                        {nombre}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
+
 
                 {/* Nueva Capa: Zonificación Sta Catalina */}
                 <div className="capa-principal">
-                   <label> <input
+                    <label> <input
                         type="checkbox"
                         checked={!!capasActivas["Zonificación Sta Catalina"]}
                         onChange={() => toggleCapaPrincipal("Zonificación Sta Catalina")}
                     />
-                    <strong>Zonificación Sta Catalina</strong></label>
+                        <strong>Zonificación Sta Catalina</strong></label>
                 </div>
 
                 {/* Nueva Capa: ZRU Predios La Caja */}
@@ -342,16 +370,16 @@ const MapaConCapas = () => {
                         checked={!!capasActivas["ZRU Predios La Caja"]}
                         onChange={() => toggleCapaPrincipal("ZRU Predios La Caja")}
                     />
-                   <strong>ZRU Predios La Caja</strong></label>
+                        <strong>ZRU Predios La Caja</strong></label>
                 </div>
                 <hr />
                 <div className="capa-principal">
-                   <label>  <input
+                    <label>  <input
                         type="checkbox"
                         checked={verReferencias}
                         onChange={() => setVerReferencias(prev => !prev)}
                     />
-                   <strong>Ver referencias</strong></label>
+                        <strong>Ver referencias</strong></label>
                 </div>
             </div>
 
@@ -367,6 +395,7 @@ const MapaConCapas = () => {
                     poligonosGuardados={poligonosGuardados}
                     capasActivas={capasActivas}
                     subCapasActivas={subCapasActivas}
+                      subCapasSur={subCapasSur}
                     mostrarEtiquetas={verReferencias}
                 />
 
@@ -530,6 +559,31 @@ const MapaConCapas = () => {
                         onEachFeature={onEachFeature}
                     />
                 )}
+                {Object.entries(subCapasSur).map(([nombre, activa]) => (
+                    activa && geojsonData[nombre] && (
+                        <GeoJSON
+                            key={nombre}
+                            data={geojsonData[nombre]}
+                            style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
+
+                                return {
+                                    fillColor: existeEnBase ? "red" : "green",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            eventHandlers={{
+                                click: handleFeatureClick,
+                            }}
+                            onEachFeature={onEachFeature}
+                        />
+                    )
+                ))}
+
             </MapContainer>
             {modalAbierto && (
                 <div className="modal-overlay" onClick={() => setModalAbierto(false)}>
