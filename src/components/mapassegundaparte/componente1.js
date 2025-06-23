@@ -89,32 +89,27 @@ const coloresPorSubclasificacion = {
   "EP-Equipamiento Publico": "#E57373",     // rojo claro
   "EVP-Espacio Verde Publico": "#81C784",   // verde claro
 
-  // PLAN ESPECIAL - ETAPA 1 (tonos violetas)
-  "UG1-Distrito Aministrativo": "#CE93D8",
-  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#AB47BC",
-  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI": "#9C27B0",
-  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#8E24AA",
-
-  // PLAN ESPECIAL - ETAPA 2 (tonos rosas)
-  "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado": "#F8BBD0",
-  "UG2-Areas Residenciales y Mixtas - Parque Metropolitano": "#F48FB1",
-  "UG3-Areas Mixtas y Equipamientos generales - Zona de borde costero del Rio Parana": "#EC407A",
-  "UG4-Areas de actividades productivas y logisticas, vinculadas a residencias de baja densidad": "#E91E63",
-
-  // PLAN ESPECIAL - ETAPA 3 (tonos celeste-violeta)
-  "UG1-Areas Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUI": "#B39DDB",
-  "UG2-Area Residencial Suburbana y de Actividades Agro productivas y Recreativas": "#9575CD",
-  "UG3-Areas de Clubes y Equipamientos Generales": "#7E57C2",
-  "UG4-Reordenamiento Urbano de Asentamientos": "#673AB7",
-
-  // PLAN ESPECIAL - ETAPA 4 (tonos azules)
-  "UG1-Area Residencial Suburbana y de Usos Recreativos, Sociales y Deportivos": "#90CAF9",
-  "UG2-Area Residencial Suburbana de baja densidad y Paseo Publico": "#64B5F6",
-
-  // PLAN ESPECIAL - ETAPA 5 (tonos lila)
-  "UG1-Reordenamiento Urbano y lotes con servicios en zona de interes social; y Parque Lineal Ex Via FF.CC Urquiza": "#D1C4E9",
-  "UG2-Areas Residenciales y Mixtas, Equipamientos Generales y Parque Lineal Ex Via FF.CC Urquiza": "#B39DDB",
-
+  //PLAN ESPECIAL - ETAPA 1
+  "UG1-Distrito Aministrativo": "#b2a792",  //UG: UNIDADES DE GESTION
+  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#dccfb6",
+  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI": "#e8e1d2",
+  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#f5eee0",
+//PLAN ESPECIAL - ETAPA 2
+  "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado": "#c89132",
+  "UG2-Areas Residenciales y Mixtas - Parque Metropolitano": "#e3a53a",
+  "UG3-Areas Mixtas y Equipamientos generales - Zona de borde costero del Rio Parana": "#eeba5f",
+  "UG4-Areas de actividades productivas y logisdticas, vinculadas a residencias de baja densidad": "#eccb78",
+//PLAN ESPECIAL - ETAPA 3
+  "UG1-Areas Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUI": "#8d3774",
+  "UG2-Area Residencial Suburbana y de Actividades Agro productivas y Recreativas": "#b55d9b",
+  "UG3-Areas de Clubes y Equipamientos Generales": "#ca7cb3",
+  "UG4-Reordenamiento Urbano de Asentamientos": "#e0a3ce",
+//PLAN ESPECIAL - ETAPA 4
+  "UG1-Area Residencial Suburbana y de Usos Recreativos, Sociales y Deportivos": "#ee7562",
+  "UG2-Area Residencial Suburbana de baja densidad y Paseo Publico": "#f6b2a7",
+//PLAN ESPECIAL - ETAPA 5
+  "UG1-Reordenamiento Urbano y lotes con servicios en zona de interes social; y Parque Lineal Ex Via FF.CC Urquiza": "#8a8a8a",
+  "UG2-Areas Residenciales y Mixtas, Equipamientos Generales y Parque Lineal Ex Via FF.CC Urquiza": "#c2c1c1",
   // PLANIFICACION SECCION SUR (tonos industriales y naturales)
   "PIT-Parque Industrial Tecnologico - FASE 1": "#A1887F", // marrón
   "PIT-Parque Industrial Tecnologico - FASE 2": "#8D6E63", // marrón oscuro
@@ -725,17 +720,26 @@ ${poligonoDB.dato1}
                             key={nombre}
                             data={geojsonData[nombre]}
                             style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+  const id = feature.properties?.id;
+  const poligono = poligonosGuardados.find(p => p.id_mapa === id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "green",
-                                    weight: 1,
-                                    opacity: 1,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
+  let fillColor = "white"; // color por defecto
+  let fillOpacity = 0.2;   // opacidad por defecto
+
+  if (poligono) {
+    const sub = poligono.subclasificacion;
+    fillColor = coloresPorSubclasificacion[sub] || "gray";
+    fillOpacity = 0.5; // más opaco si está guardado
+  }
+
+  return {
+    fillColor,
+    weight: 1,
+    opacity: 0.5,
+    color: "black",
+    fillOpacity,
+  };
+}}
                             eventHandlers={{
                                 click: handleFeatureClick,
                             }}
