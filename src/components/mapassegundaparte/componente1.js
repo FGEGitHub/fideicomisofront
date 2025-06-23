@@ -23,6 +23,112 @@ const MapaConCapas = () => {
         "planespecial4": false,
         "planespecial5": false
     });
+const opcionesSubclasificacion = [
+  "C1-Corredor de densidad 1",
+  "C2-Corredor de densidad 2",
+  "C3-Corredor comercial, logistico y productivo",
+  "AI1-Area inferior - Densidad media baja",
+  "AI2-Area inferior - Densidad baja",
+  "AI3-Area inferior de densidad media baja",
+  "AIE-Area inferior Especial - Densidad alta",
+  "AM1-Area Mixta 1 - Densidad alta",
+  "AM1-Area Mixta 2 - Densidad alta",
+  "AR-Area Residencial de baja densidad",
+  "ARP-Area Residencial y agroproductiva complementaria",
+  "CC-Corredor comercial mixto",
+  "EDR-Equipamiento Deportivo Recreativo",
+  "EP-Equipamiento Publico",
+  "EVP-Espacio Verde Publico",
+//PLAN ESPECIAL - ETAPA 1
+  "UG1-Distrito Aministrativo", //UG: UNIDADES DE GESTION
+  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal",
+  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI",
+  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo",
+//PLAN ESPECIAL - ETAPA 2
+  "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado",
+  "UG2-Areas Residenciales y Mixtas - Parque Metropolitano",
+  "UG3-Areas Mixtas y Equipamientos generales - Zona de borde costero del Rio Parana",
+  "UG4-Areas de actividades productivas y logisticas, vinculadas a residencias de baja densidad",
+//PLAN ESPECIAL - ETAPA 3
+  "UG1-Areas Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUI",
+  "UG2-Area Residencial Suburbana y de Actividades Agro productivas y Recreativas",
+  "UG3-Areas de Clubes y Equipamientos Generales",
+  "UG4-Reordenamiento Urbano de Asentamientos",
+//PLAN ESPECIAL - ETAPA 4
+  "UG1-Area Residencial Suburbana y de Usos Recreativos, Sociales y Deportivos",
+  "UG2-Area Residencial Suburbana de baja densidad y Paseo Publico",
+//PLAN ESPECIAL - ETAPA 5
+  "UG1-Reordenamiento Urbano y lotes con servicios en zona de interes social; y Parque Lineal Ex Via FF.CC Urquiza",
+  "UG2-Areas Residenciales y Mixtas, Equipamientos Generales y Parque Lineal Ex Via FF.CC Urquiza",
+//PLANIFICACION SECCION SUR
+  "PIT-Parque Industrial Tecnologico - FASE 1",
+  "PIT-Parque Industrial Tecnologico - FASE 2",
+  "PIT-Parque Industrial Tecnologico - FASE 3",
+  "PLC-Planta de Liquidos Cloacales",
+  "PLC-Zona Fuelle",
+  "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina",
+];
+const coloresPorSubclasificacion = {
+  "C1-Corredor de densidad 1": "#4CAF50",           // verde
+  "C2-Corredor de densidad 2": "#66BB6A",           // verde claro
+  "C3-Corredor comercial, logistico y productivo": "#81C784", // verde lima
+
+  "AI1-Area inferior - Densidad media baja": "#FFB74D",  // naranja suave
+  "AI2-Area inferior - Densidad baja": "#FFA726",        // naranja fuerte
+  "AI3-Area inferior de densidad media baja": "#FF9800", // naranja
+
+  "AIE-Area inferior Especial - Densidad alta": "#F57C00",   // naranja oscuro
+  "AM1-Area Mixta 1 - Densidad alta": "#64B5F6",             // azul claro
+  "AM1-Area Mixta 2 - Densidad alta": "#42A5F5",             // azul
+
+  "AR-Area Residencial de baja densidad": "#AED581",         // verde suave
+  "ARP-Area Residencial y agroproductiva complementaria": "#DCE775", // verde lima pastel
+
+  "CC-Corredor comercial mixto": "#BA68C8", // violeta pastel
+  "EDR-Equipamiento Deportivo Recreativo": "#F06292", // rosa fuerte
+  "EP-Equipamiento Publico": "#E57373",     // rojo claro
+  "EVP-Espacio Verde Publico": "#81C784",   // verde claro
+
+  // PLAN ESPECIAL - ETAPA 1 (tonos violetas)
+  "UG1-Distrito Aministrativo": "#CE93D8",
+  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#AB47BC",
+  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI": "#9C27B0",
+  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#8E24AA",
+
+  // PLAN ESPECIAL - ETAPA 2 (tonos rosas)
+  "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado": "#F8BBD0",
+  "UG2-Areas Residenciales y Mixtas - Parque Metropolitano": "#F48FB1",
+  "UG3-Areas Mixtas y Equipamientos generales - Zona de borde costero del Rio Parana": "#EC407A",
+  "UG4-Areas de actividades productivas y logisticas, vinculadas a residencias de baja densidad": "#E91E63",
+
+  // PLAN ESPECIAL - ETAPA 3 (tonos celeste-violeta)
+  "UG1-Areas Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUI": "#B39DDB",
+  "UG2-Area Residencial Suburbana y de Actividades Agro productivas y Recreativas": "#9575CD",
+  "UG3-Areas de Clubes y Equipamientos Generales": "#7E57C2",
+  "UG4-Reordenamiento Urbano de Asentamientos": "#673AB7",
+
+  // PLAN ESPECIAL - ETAPA 4 (tonos azules)
+  "UG1-Area Residencial Suburbana y de Usos Recreativos, Sociales y Deportivos": "#90CAF9",
+  "UG2-Area Residencial Suburbana de baja densidad y Paseo Publico": "#64B5F6",
+
+  // PLAN ESPECIAL - ETAPA 5 (tonos lila)
+  "UG1-Reordenamiento Urbano y lotes con servicios en zona de interes social; y Parque Lineal Ex Via FF.CC Urquiza": "#D1C4E9",
+  "UG2-Areas Residenciales y Mixtas, Equipamientos Generales y Parque Lineal Ex Via FF.CC Urquiza": "#B39DDB",
+
+  // PLANIFICACION SECCION SUR (tonos industriales y naturales)
+  "PIT-Parque Industrial Tecnologico - FASE 1": "#A1887F", // marrón
+  "PIT-Parque Industrial Tecnologico - FASE 2": "#8D6E63", // marrón oscuro
+  "PIT-Parque Industrial Tecnologico - FASE 3": "#6D4C41", // marrón tierra
+
+  "PLC-Planta de Liquidos Cloacales": "#546E7A",   // gris azulado
+  "PLC-Zona Fuelle": "#78909C",                   // gris claro
+  "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina": "#2E7D32", // verde oscuro
+
+  // Default
+  "": "gray",
+  null: "gray",
+  undefined: "gray"
+};
 
     const [geojsonData, setGeojsonData] = useState({});
     const [modalAbierto, setModalAbierto] = useState(false);
@@ -33,6 +139,8 @@ const MapaConCapas = () => {
     const [poligonosGuardados, setPoligonosGuardados] = useState([]);
     const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
     const [mapa, setMapa] = useState(null);
+    const [subclasificacion, setSubclasificacion] = useState("");
+const [descripcion, setDescripcion] = useState("");
     const [verReferencias, setVerReferencias] = useState(true);
     const [subCapasSur, setSubCapasSur] = useState({
         "PIT": false,
@@ -117,7 +225,7 @@ const MapaConCapas = () => {
         const id = e.target.feature.properties?.id || null;
         const layer = e.target;
         const center = layer.getBounds().getCenter();
-
+console.log(id)
         const nombreCapa = Object.entries(geojsonData).find(([_, data]) =>
             data.features.includes(e.target.feature)
         )?.[0] || "Desconocido";
@@ -188,7 +296,7 @@ const MapaConCapas = () => {
         geojsonData,
         poligonosGuardados,
         capasActivas,
-        subCapasActivas,    
+        subCapasActivas,
         subCapasSur,
         mostrarEtiquetas
     }) => {
@@ -244,7 +352,7 @@ const MapaConCapas = () => {
                                     position={center}
                                     icon={L.divIcon({
                                         className: 'texto-poligono',
-html: `<div style="
+                                        html: `<div style="
     padding: 9px 1px;
     border-radius: 4px;
     font-size: 10px;
@@ -271,28 +379,28 @@ ${poligonoDB.dato1}
 
 
 
-const getCentroideAproximado = (geometry) => {
-    try {
-        // 1. Intentamos usar el centroide visual
-        const centroVisual = centerOfMass(geometry);
-        const [lng, lat] = centroVisual.geometry.coordinates;
+    const getCentroideAproximado = (geometry) => {
+        try {
+            // 1. Intentamos usar el centroide visual
+            const centroVisual = centerOfMass(geometry);
+            const [lng, lat] = centroVisual.geometry.coordinates;
 
-        // 2. Verificamos si ese punto está adentro del polígono
-        const estaDentro = booleanPointInPolygon(centroVisual, geometry);
+            // 2. Verificamos si ese punto está adentro del polígono
+            const estaDentro = booleanPointInPolygon(centroVisual, geometry);
 
-        if (estaDentro) {
-            return { lat, lng };
+            if (estaDentro) {
+                return { lat, lng };
+            }
+
+            // 3. Si está afuera, usamos pointOnFeature como fallback
+            const puntoSeguro = pointOnFeature(geometry).geometry.coordinates;
+            return { lat: puntoSeguro[1], lng: puntoSeguro[0] };
+
+        } catch (err) {
+            console.error("Error calculando centroide:", err);
+            return null;
         }
-
-        // 3. Si está afuera, usamos pointOnFeature como fallback
-        const puntoSeguro = pointOnFeature(geometry).geometry.coordinates;
-        return { lat: puntoSeguro[1], lng: puntoSeguro[0] };
-
-    } catch (err) {
-        console.error("Error calculando centroide:", err);
-        return null;
-    }
-};
+    };
 
     return (
         <div className="mapa-contenedor">
@@ -419,7 +527,7 @@ const getCentroideAproximado = (geometry) => {
                     poligonosGuardados={poligonosGuardados}
                     capasActivas={capasActivas}
                     subCapasActivas={subCapasActivas}
-                      subCapasSur={subCapasSur}
+                    subCapasSur={subCapasSur}
                     mostrarEtiquetas={verReferencias}
                 />
 
@@ -468,18 +576,27 @@ const getCentroideAproximado = (geometry) => {
                         <GeoJSON
                             key={nombre}
                             data={geojsonData[nombre]}
-                            style={(feature) => {
-                                const id = feature.properties?.id;
-                                const existeEnBase = idsDesdeBase.includes(id);
+                         style={(feature) => {
+  const id = feature.properties?.id;
+  const poligono = poligonosGuardados.find(p => p.id_mapa === id);
 
-                                return {
-                                    fillColor: existeEnBase ? "red" : "blue",
-                                    weight: 1,
-                                    opacity: 0.5,
-                                    color: "black",
-                                    fillOpacity: 0.5,
-                                };
-                            }}
+  let fillColor = "white"; // color por defecto
+  let fillOpacity = 0.2;   // opacidad por defecto
+
+  if (poligono) {
+    const sub = poligono.subclasificacion;
+    fillColor = coloresPorSubclasificacion[sub] || "gray";
+    fillOpacity = 0.5; // más opaco si está guardado
+  }
+
+  return {
+    fillColor,
+    weight: 1,
+    opacity: 0.5,
+    color: "black",
+    fillOpacity,
+  };
+}}
                             eventHandlers={{
                                 click: handleFeatureClick,
                             }}
@@ -498,7 +615,7 @@ const getCentroideAproximado = (geometry) => {
                             const existeEnBase = idsDesdeBase.includes(id);
 
                             return {
-                                fillColor: existeEnBase ? "red" : "blue",
+                                fillColor: "none",
                                 weight: 1,
                                 opacity: 1,
                                 color: "black",
@@ -517,18 +634,28 @@ const getCentroideAproximado = (geometry) => {
                     <GeoJSON
                         key="Planificación Sección Sur"
                         data={geojsonData["Planificación Sección Sur"]}
-                        style={(feature) => {
-                            const id = feature.properties?.id;
-                            const existeEnBase = idsDesdeBase.includes(id);
+                       style={(feature) => {
+  const id = feature.properties?.id;
+  const poligono = poligonosGuardados.find(p => p.id_mapa === id);
 
-                            return {
-                                fillColor: existeEnBase ? "red" : "blue",
-                                weight: 1,
-                                opacity: 1,
-                                color: "black",
-                                fillOpacity: 0.5,
-                            };
-                        }}
+  let fillColor = "white"; // color por defecto
+  let fillOpacity = 0.2;   // opacidad por defecto
+
+  if (poligono) {
+    const sub = poligono.subclasificacion;
+    fillColor = coloresPorSubclasificacion[sub] || "gray";
+    fillOpacity = 0.5; // más opaco si está guardado
+  }
+
+  return {
+    fillColor,
+    weight: 1,
+    opacity: 0.5,
+    color: "black",
+    fillOpacity,
+  };
+}}
+      
                         eventHandlers={{
                             click: handleFeatureClick,
                         }}
@@ -541,18 +668,27 @@ const getCentroideAproximado = (geometry) => {
                     <GeoJSON
                         key="Zonificación Sta Catalina"
                         data={geojsonData["Zonificación Sta Catalina"]}
-                        style={(feature) => {
-                            const id = feature.properties?.id;
-                            const existeEnBase = idsDesdeBase.includes(id);
+    style={(feature) => {
+  const id = feature.properties?.id;
+  const poligono = poligonosGuardados.find(p => p.id_mapa === id);
 
-                            return {
-                                fillColor: existeEnBase ? "red" : "blue",
-                                weight: 1,
-                                opacity: 1,
-                                color: "black",
-                                fillOpacity: 0.5,
-                            };
-                        }}
+  let fillColor = "white"; // color por defecto
+  let fillOpacity = 0.2;   // opacidad por defecto
+
+  if (poligono) {
+    const sub = poligono.subclasificacion;
+    fillColor = coloresPorSubclasificacion[sub] || "gray";
+    fillOpacity = 0.5; // más opaco si está guardado
+  }
+
+  return {
+    fillColor,
+    weight: 1,
+    opacity: 0.5,
+    color: "black",
+    fillOpacity,
+  };
+}}
                         eventHandlers={{
                             click: handleFeatureClick,
                         }}
@@ -561,7 +697,7 @@ const getCentroideAproximado = (geometry) => {
                 )}
 
                 {/* Renderizar ZRU Predios La Caja */}
-                {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
+             {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
                     <GeoJSON
                         key="ZRU Predios La Caja"
                         data={geojsonData["ZRU Predios La Caja"]}
@@ -613,18 +749,45 @@ const getCentroideAproximado = (geometry) => {
                 <div className="modal-overlay" onClick={() => setModalAbierto(false)}>
                     <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
                         <h3>Ingrese un dato para la zona ID {idSeleccionado}</h3>
+
+                        <label>Dato:</label>
                         <input
                             type="text"
                             value={texto}
                             onChange={(e) => setTexto(e.target.value)}
                         />
+
+<label>Subclasificación:</label>
+<select
+    value={subclasificacion}
+    onChange={(e) => setSubclasificacion(e.target.value)}
+>
+    <option value="">Selecciona una opción</option>
+    {opcionesSubclasificacion.map((opcion, index) => (
+        <option key={index} value={opcion}>{opcion}</option>
+    ))}
+</select>
+  <label>Descripción:</label>
+            <input
+                type="text"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+            />
                         <button onClick={async () => {
-                            await serviciolotes.guardarpoligono({ id_mapa: idSeleccionado, dato1: texto, capa: nombreCapaSeleccionada });
+                            await serviciolotes.guardarpoligono({
+                                id_mapa: idSeleccionado,
+                                dato1: texto,
+                                 descripcion,
+                                subclasificacion, // 
+                                capa: nombreCapaSeleccionada
+                            });
                             const nuevos = await serviciolotes.poligonosguardados();
                             setPoligonosGuardados(nuevos);
                             setModalAbierto(false);
                             setTexto("");
+                            setSubclasificacion(""); // limpiamos
                         }}>Guardar</button>
+
                         <button onClick={() => setModalAbierto(false)}>Cancelar</button>
                     </div>
                 </div>
