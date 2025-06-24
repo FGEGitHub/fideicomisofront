@@ -69,27 +69,22 @@ const opcionesSubclasificacion = [
   "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina",
 ];
 const coloresPorSubclasificacion = {
-  "C1-Corredor de densidad 1": "#4CAF50",           // verde
-  "C2-Corredor de densidad 2": "#66BB6A",           // verde claro
-  "C3-Corredor comercial, logistico y productivo": "#81C784", // verde lima
-
-  "AI1-Area inferior - Densidad media baja": "#FFB74D",  // naranja suave
-  "AI2-Area inferior - Densidad baja": "#FFA726",        // naranja fuerte
-  "AI3-Area inferior de densidad media baja": "#FF9800", // naranja
-
-  "AIE-Area inferior Especial - Densidad alta": "#F57C00",   // naranja oscuro
-  "AM1-Area Mixta 1 - Densidad alta": "#64B5F6",             // azul claro
-  "AM1-Area Mixta 2 - Densidad alta": "#42A5F5",             // azul
-
-  "AR-Area Residencial de baja densidad": "#AED581",         // verde suave
-  "ARP-Area Residencial y agroproductiva complementaria": "#DCE775", // verde lima pastel
-
-  "CC-Corredor comercial mixto": "#BA68C8", // violeta pastel
-  "EDR-Equipamiento Deportivo Recreativo": "#F06292", // rosa fuerte
-  "EP-Equipamiento Publico": "#E57373",     // rojo claro
-  "EVP-Espacio Verde Publico": "#81C784",   // verde claro
-
-  //PLAN ESPECIAL - ETAPA 1
+ "C1-Corredor de densidad 1": "#ffbc8e",
+  "C2-Corredor de densidad 2": "#efc700",
+  "C3-Corredor comercial, logistico y productivo": "#fca24c",
+  "AI1-Area inferior - Densidad media baja": "#6d4692",
+  "AI2-Area inferior - Densidad baja": "#bda7d3",
+  "AI3-Area inferior de densidad media baja": "#d64ebd",
+  "AIE-Area inferior Especial - Densidad alta": "#40a7e9",
+  "AM1-Area Mixta 1 - Densidad alta": "#c14e4e",
+  "AM1-Area Mixta 2 - Densidad alta": "#f0abab",
+  "AR-Area Residencial de baja densidad": "#debf6f",
+  "ARP-Area Residencial y agroproductiva complementaria": "#e4eeb1",
+  "CC-Corredor comercial mixto": "#9bcfed",
+  "EDR-Equipamiento Deportivo Recreativo": "#bfd1f0",
+  "EP-Equipamiento Publico": "#dededf",
+  "EVP-Espacio Verde Publico": "#afd9b7",
+//PLAN ESPECIAL - ETAPA 1
   "UG1-Distrito Aministrativo": "#b2a792",  //UG: UNIDADES DE GESTION
   "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#dccfb6",
   "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI": "#e8e1d2",
@@ -110,15 +105,13 @@ const coloresPorSubclasificacion = {
 //PLAN ESPECIAL - ETAPA 5
   "UG1-Reordenamiento Urbano y lotes con servicios en zona de interes social; y Parque Lineal Ex Via FF.CC Urquiza": "#8a8a8a",
   "UG2-Areas Residenciales y Mixtas, Equipamientos Generales y Parque Lineal Ex Via FF.CC Urquiza": "#c2c1c1",
-  // PLANIFICACION SECCION SUR (tonos industriales y naturales)
-  "PIT-Parque Industrial Tecnologico - FASE 1": "#A1887F", // marrón
-  "PIT-Parque Industrial Tecnologico - FASE 2": "#8D6E63", // marrón oscuro
-  "PIT-Parque Industrial Tecnologico - FASE 3": "#6D4C41", // marrón tierra
-
-  "PLC-Planta de Liquidos Cloacales": "#546E7A",   // gris azulado
-  "PLC-Zona Fuelle": "#78909C",                   // gris claro
-  "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina": "#2E7D32", // verde oscuro
-
+//PLANIFICACION SECCION SUR
+  "PIT-Parque Industrial Tecnologico - FASE 1": "#95acd1",
+  "PIT-Parque Industrial Tecnologico - FASE 2": "#95acd1",
+  "PIT-Parque Industrial Tecnologico - FASE 3": "#95acd1",
+  "PLC-Planta de Liquidos Cloacales": "#c85b01",
+  "PLC-Zona Fuelle": "#f1a465",
+  "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina": "#bfe3b1",
   // Default
   "": "gray",
   null: "gray",
