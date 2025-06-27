@@ -547,13 +547,27 @@ ${poligonoDB.dato1}
                     <GeoJSON
                         key="Manzanas"
                         data={geojsonData["Manzanas"]}
-                        style={{
-                            fillColor: "transparent",
-                            color: "blue",
-                            weight: 2,
-                            opacity: 1,
-                            fillOpacity: 0
-                        }}
+                        style={(feature) => {
+  const id = feature.properties?.id;
+  const poligono = poligonosGuardados.find(p => p.id_mapa === id);
+
+  let fillColor = "white"; // color por defecto
+  let fillOpacity = 0.2;   // opacidad por defecto
+
+  if (poligono) {
+    const sub = poligono.subclasificacion;
+    fillColor = coloresPorSubclasificacion[sub] || "gray";
+    fillOpacity = 0.8; // más opaco si está guardado
+  }
+
+  return {
+    fillColor,
+    weight: 1,
+    opacity: 0.5,
+    color: "black",
+    fillOpacity,
+  };
+}}
                         onEachFeature={onEachFeature}
                     />
                 )}
