@@ -77,193 +77,118 @@ export default function Ingresos() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-       Registrarme
-     
-      </Button>
-      <Dialog maxWidth="md" open={open} onClose={handleClose}>
-      <Paper
-							sx={{
-                px: 40,
-								display: "flex",
-								flexDirection: "row",
-								alignItems: "center",
-                alignContent: "center"
-							}}
-						>
-							<Avatar
-								sx={{
-									m: 1,
-									bgcolor: "darkblue",
-									marginRight: 3
-								}}
-							>
-								<AccountCircleRoundedIcon fontSize="large" />
-							</Avatar>
-							<Typography  component="h1" variant="h4">
-								Registro
-							</Typography>
-						</Paper>
-            <Paper>
-            <Typography align='center' component="h1" variant="h6">Complete con todos sus Datos</Typography>
-
-            </Paper>
-        <DialogContent>
-
-          <form  onSubmit={handleDeterminar}> 
-          <InputLabel  variant="standard" htmlFor="uncontrolled-native">
-                          Cuil/Cuit con guiones
-                        </InputLabel>
-          <TextField className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="CUIT/CUIL"
-            name="cuil_cuit"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
-          <TextField 								
-            className={cardStyles.field}
-            sx={{
-              mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="normal"
-            size="small"
-            id="name"
-            onChange={handleChange}
-            type= "password"
-            label="Contraseña"
-            name="password"
-            variant="standard"
-          />
-          <TextField
-          className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="Nombre Completo"
-            name="nombre"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
-             <TextField
-             className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="Numero de Cliente"
-            name="nro_cliente"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
-          
-          <TextField
-          className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="Email"
-            name="email"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
-          <TextField
-          className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="Email alternativo"
-            name="email2"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
-          <TextField
-          className={cardStyles.field}
-								sx={{
-                  mx: 3, width: '75%'
-								}}
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            label="Numero de Telefono"
-            name="telefono"
-            onChange={handleChange}
-            size="small"
-            variant="standard"
-          />
+     <Button
+  variant="text"
+  onClick={handleClickOpen}
+  sx={{ textTransform: 'none', color: '#1976d2', padding: 0 }}
+>
+  Registrarme
+</Button>
+     <Dialog
+  maxWidth="md"
+  open={open}
+  onClose={handleClose}
+  PaperProps={{
+    sx: {
+      borderRadius: 3,
+      height: '90vh',       // Altura fija del diálogo
+      display: 'flex',
+      overflow: 'hidden'
+    }
+  }}
+>
+  <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+    {/* Panel izquierdo */}
+    <div style={{
+      backgroundColor: '#2E6999',
+      padding: '40px',
+      width: '40%',
+      color: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <Typography variant="h3" sx={{ mt: 2, fontWeight:'bold', color: 'white', textAlign: 'center' }}>
+        ¡BIENVENIDO!
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
+        Sumate a nuestra plataforma completando tus datos.<br></br>
         
-          <DialogActions>
-          <Button 
-          
-          onClick={handleClose}
-          variant="contained"
-								sx={{
-									mt: 3,
-									maxWidth: 130,
-									borderRadius: 2,
-									height: 30,
-									fontWeight: 850,
-									fontSize: 12
-								}}
-							>
-								<span style={{ padding: 10 }}>Cancelar{"     "}</span> 
-               
-                </Button>
-          {loading ? <>  <CircularProgress /></>:<>      
-          <Button
-                  onClick={handleDeterminar}
-  								variant="contained"
-								sx={{
-									mt: 3,
-									maxWidth: 130,
-									borderRadius: 2,
-									height: 30,
-									fontWeight: 850,
-									fontSize: 12
-								}}
-							>
-          
-								<span style={{ padding: 10 }}>Registrar{"     "}</span> 
-								<RegIcon fontSize="small" />
-							</Button>
-             </>}
-        
-        </DialogActions>
-           </form>
-        </DialogContent>
+      </Typography>
+    </div>
+
+    {/* Panel derecho */}
+    <div style={{
+      backgroundColor: '#fffff',
+      width: '60%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '40px',
+      boxSizing: 'border-box',
+      height: '100%'
+    }}>
+      <Typography variant="h4" fontWeight="bold" align="center" sx={{ mb: 1 }}>
+        Crear una cuenta
+      </Typography>
+      <Typography variant="body2" align="center" sx={{ mb: 3 }}>
+        Complete con todos sus datos
+      </Typography>
+
+      {/* Contenido scrollable */}
+      <div style={{ overflowY: 'auto', flexGrow: 1 }}>
+        <form onSubmit={handleDeterminar} id="registro-form">
+          {[
+            { label: "CUIT/CUIL", name: "cuil_cuit" },
+            { label: "Contraseña", name: "password", type: "password" },
+            { label: "Nombre Completo", name: "nombre" },
+            { label: "Número de Cliente", name: "nro_cliente" },
+            { label: "Email", name: "email" },
+            { label: "Email Alternativo", name: "email2" },
+            { label: "Número de Teléfono", name: "telefono" }
+          ].map(({ label, name, type = "text" }, index) => (
+            <TextField
+              key={index}
+              label={label}
+              name={name}
+              type={type}
+              onChange={handleChange}
+              required
+              fullWidth
+              variant="outlined"
+              sx={{ mb: 2 }}
+            />
+          ))}
+        </form>
+      </div>
+
+      {/* Botones siempre visibles */}
+      <div style={{
+        paddingTop: '20px',
+        borderTop: '1px solid rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        justifyContent: 'space-between'
+      }}>
+
+      <Button variant="contained" onClick={handleClickOpen} 
+        sx={{ mb: 2, backgroundColor: 'red', '&:hover': { backgroundColor: '#af0303' } }}>
+        Cancelar
+      </Button>  
       
-        
-        
-      </Dialog>
+
+        {loading ? (
+          <CircularProgress size={24} />
+        ) : (
+          <Button variant="contained" onClick={handleClickOpen} 
+        sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
+        REGISTRARME
+      </Button>  
+        )}
+      </div>
+    </div>
+  </div>
+</Dialog>
+
     </div>
   );
 }

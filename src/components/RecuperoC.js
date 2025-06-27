@@ -94,11 +94,11 @@ export default function Ingresos() {
     const rta = await servicioUsuario.recuperar(
       recupero
     )
-    
+
     if (rta === 'Sin Exito') {
       alert('Error, codigo incorrecto')
-     
-    }else{
+
+    } else {
       alert('Cambio de contraseña exitoso ')
     }
     setVer(true)
@@ -121,19 +121,31 @@ export default function Ingresos() {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-     
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10vh" // o el alto del contenedor
+          }}
+        >
           <Avatar
             sx={{
-              m: 1,
-              bgcolor: "darkblue",
-              marginRight: 3
+              bgcolor: "#002D57",
+              width: 56,
+              height: 56,
             }}
           >
             <LockIcon fontSize="small" />
           </Avatar>
-          <Typography align="center" component="h1" variant="h6">
-            Recuperar Contraseña
-          </Typography>
+        </Box>
+
+
+
+        <Typography align="center" component="h1" variant="h6">
+          Recuperar Contraseña
+        </Typography>
         <DialogContent>
 
           <form onSubmit={handleDeterminar}>
@@ -187,7 +199,7 @@ export default function Ingresos() {
                 size="small"
                 variant="standard"
               />
-               <TextField className={cardStyles.field}
+              <TextField className={cardStyles.field}
                 sx={{
                   mx: 3, width: '75%'
                 }}
@@ -204,19 +216,18 @@ export default function Ingresos() {
 
             </>}
 
+
+
             <DialogActions>
               <Button
 
                 onClick={handleClose}
                 variant="contained"
                 sx={{
-                  mt: 3,
-                  maxWidth: 130,
-                  borderRadius: 2,
-                  height: 30,
-                  fontWeight: 850,
-                  fontSize: 12
-                }}
+                 mt: 3,
+                    maxWidth: 130,
+                    height: 30, backgroundColor: 'red', '&:hover': { backgroundColor: '#af0303'
+                }} }
               >
                 <span style={{ padding: 10 }}>Cancelar{"     "}</span>
 
@@ -229,10 +240,8 @@ export default function Ingresos() {
                   sx={{
                     mt: 3,
                     maxWidth: 130,
-                    borderRadius: 2,
                     height: 30,
-                    fontWeight: 850,
-                    fontSize: 12
+                    backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } 
                   }}
                 >
                   <span style={{ padding: 10 }}>     {loading ? (
@@ -242,24 +251,24 @@ export default function Ingresos() {
                 </Button>
 
               </> : <>
-              {recupero.password === recupero.password2 ? <>
-                <Button
-                  onClick={handleDeterminarr}
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    maxWidth: 130,
-                    borderRadius: 2,
-                    height: 30,
-                    fontWeight: 850,
-                    fontSize: 12
-                  }}
-                >
-                  <span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
-                  <RegIcon fontSize="small" />
-                </Button>
-              </> : <><p>La contraseña no coincide</p></> }
-                
+                {recupero.password === recupero.password2 ? <>
+                  <Button
+                    onClick={handleDeterminarr}
+                    variant="contained"
+                    sx={{
+                      mt: 3,
+                      maxWidth: 130,
+                      borderRadius: 2,
+                      height: 30,
+                      fontWeight: 850,
+                      fontSize: 12
+                    }}
+                  >
+                    <span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
+                    <RegIcon fontSize="small" />
+                  </Button>
+                </> : <><p>La contraseña no coincide</p></>}
+
 
               </>}
             </DialogActions>

@@ -115,7 +115,7 @@ const Login = () => {
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
+                            color="#002d57"
                             disabled={!usuario.cuil_cuit || !usuario.password}
                         >
                             {loading ? (

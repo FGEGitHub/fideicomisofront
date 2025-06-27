@@ -4,6 +4,7 @@ import loginService from '../../services/login'
 import Guardar from '../../components/Guardar';
 import {
   Button,
+  Box,
   Card,
   CardContent,
   Grid,
@@ -23,7 +24,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Menu from "../../components/Navbar";
 import Registro from "../../components/Registro"
 import RecuperoC from "../../components/RecuperoC"
-
+import marcas from '../../Assets/marcas.png'
 
 
 
@@ -140,80 +141,114 @@ const Login = () => {
   const avatarStyle = { backgroundColor: '#2196f3' }
   const btnstyle = { margin: '8px 0' }
 
-  const LoginReturn = () => (
+const LoginReturn = () => (
+  <Grid container component="main" sx={{ height: '100vh' }}>
+    
+    {/* Columna izquierda con fondo y logo 
+    'linear-gradient(to bottom right,hsl(209, 100%, 9%),rgb(0, 34, 66))'*/}
+    <Grid
+      item
+      xs={false}
+      md={6}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        p: 4,
+        textAlign: 'center',
+        background: '#002D57',
+        color: 'white',
+      }}
+    >
+      <Box component="img" src={marcas} alt="Santa Catalina Logo" 
+      sx={{ width: 700, maxWidth: '100%' }} />
+      
+    </Grid>
 
+    {/* Columna derecha con formulario dentro de una Card */}
+    <Grid item xs={12} md={6}  square 
+    sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background:'#002D57'}}>
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: 400,
+          mx: 4,
+        }}
+      >
+        <Card elevation={8} sx={{ p: 4, backgroundColor: '#ffffff', borderRadius: 3}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#002d57' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              BIENVENIDO
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 1, mb: 3, textAlign: 'center' }}>
+             Iniciar Sesión
+            </Typography>
+          </Box>
 
-    <div>
-  
-      <div>
-        <Button></Button>
-      </div>
-    <div>
-        <Grid>
-          <Paper elevation={10} style={paperStyle}>
-            <Grid align='center'>
-              <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
-              <h2>Ingresar</h2>
+          <Box component="form" onSubmit={loginSubmit} noValidate>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Cuil/Cuit"
+              name="cuil_cuit"
+              value={usuario.cuil_cuit}
+              onChange={handleChange}
+              variant="outlined"
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Contraseña"
+              type="password"
+              name="password"
+              value={usuario.password}
+              onChange={handleChange}
+              variant="outlined"
+            />
+            <Link href="#" variant="body2">
+                  <RecuperoC />
+                </Link>
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="Recordarme"
+              sx={{ mt: 1 }}
+            />
+
+            <Button
+              type="submit"
+              
+              variant="contained"
+             
+              sx={{ background:'#148D8D', mt: 2, mb: 2, ml:'auto', display: 'block'}}
+              
+            >
+              {loading ? (
+                <CircularProgress color="#002d57" size={25} />
+              ) : (
+                "Ingresar"
+              )}
+            </Button>
+
+            <Grid container justifyContent="space-between">
+             
+                <Typography variant="body2">
+                  ¿No estás registrado? <Registro />
+                </Typography>
+              
+              
             </Grid>
-            <form onSubmit={loginSubmit}>
-              <TextField
-                variant="outlined"
-                label="Cuil/Cuit"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="cuil_cuit"
-                onChange={handleChange}
-                value={usuario.cuil_cuit}
-                inputProps={{ style: { color: "black" } }}
-                InputLabelProps={{ style: { color: "black" } }}
-              />
-              <TextField
-                variant="outlined"
-                label="Contraseña"
-                type="password"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                }}
-                name="password"
-                onChange={handleChange}
-                value={usuario.password}
-                inputProps={{ style: { color: "black" } }}
-                InputLabelProps={{ style: { color: "black" } }}
-              />
+          </Box>
+        </Card>
+      </Box>
+    </Grid>
+  </Grid>
+);
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-              /*  disabled={!usuario.cuil_cuit || !usuario.password} */
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={25} />
-                ) : (
-                  "Ingresar"
-                )}
-              </Button>
-            </form>
-            <Typography >
-              <Link href="#" >
-              <RecuperoC/>
-              </Link>
-            </Typography>
-            <Typography >¿No estas registrado?
-                <Registro />
-            </Typography>
-          </Paper>
-        </Grid>
-      </div>
-
-
-    </div>
-  )
-
-  /*   const onFinish = (values) => {
+/*   const onFinish = (values) => {
       enviarDatos(urll, values)
     }
   
@@ -224,11 +259,9 @@ const Login = () => {
   return (
 
     <>
-     {  <Menu
-        hanleLogout={hanleLogout}
-      /> }
+    
   
-<br></br><br></br><br></br>
+
   
         {LoginReturn()}
 
@@ -239,4 +272,5 @@ const Login = () => {
     </>
   )
 }
-export default Login
+
+export default Login;
