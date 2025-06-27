@@ -67,7 +67,7 @@ const opcionesSubclasificacion = [
   "PLC-Planta de Liquidos Cloacales",
   "PLC-Zona Fuelle",
   "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina",
-];
+];   
 const coloresPorSubclasificacion = {
  "C1-Corredor de densidad 1": "#ffbc8e",
   "C2-Corredor de densidad 2": "#efc700",
@@ -82,7 +82,7 @@ const coloresPorSubclasificacion = {
   "ARP-Area Residencial y agroproductiva complementaria": "#e4eeb1",
   "CC-Corredor Comercial mixto": "#9bcfed",
   "EDR-Equipamiento Deportivo Recreativo": "#bfd1f0",
-  "EP-Equipamiento Publico": "#dededf",
+  "EP-Equipamiento Publico": "#9c9c9c",
   "EVP-Espacio Verde Publico": "#afd9b7",
 //PLAN ESPECIAL - ETAPA 1
   "UG1-Distrito Administrativo": "#b2a792",  //UG: UNIDADES DE GESTION
