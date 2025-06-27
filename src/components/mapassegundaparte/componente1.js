@@ -40,7 +40,7 @@ const opcionesSubclasificacion = [
   "EP-Equipamiento Publico",
   "EVP-Espacio Verde Publico",
 //PLAN ESPECIAL - ETAPA 1
-  "UG1-Distrito Aministrativo", //UG: UNIDADES DE GESTION
+  "UG1-Distrito Administrativo",  //UG: UNIDADES DE GESTION
   "UG2-Areas Residenciales y Mixtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal",
   "UG3-Areas Residenciales, Mixtas y Paseo de borde del B° PIRAYUI",
   "UG4-Areas Recreativas, Residenciales y Mixtas - Reordenamiento Urbano y Parque de Bosque Nativo",
@@ -85,7 +85,7 @@ const coloresPorSubclasificacion = {
   "EP-Equipamiento Publico": "#dededf",
   "EVP-Espacio Verde Publico": "#afd9b7",
 //PLAN ESPECIAL - ETAPA 1
-  "UG1-Distrito Aministrativo": "#b2a792",  //UG: UNIDADES DE GESTION
+  "UG1-Distrito Administrativo": "#b2a792",  //UG: UNIDADES DE GESTION
   "UG2-Areas Residenciales y Mixtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#dccfb6",
   "UG3-Areas Residenciales, Mixtas y Paseo de borde del B° PIRAYUI": "#e8e1d2",
   "UG4-Areas Recreativas, Residenciales y Mixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#f5eee0",
@@ -113,9 +113,9 @@ const coloresPorSubclasificacion = {
   "PLC-Zona Fuelle": "#f1a465",
   "ZPA-Zona de Proteccion Ambiental-Reserva Natural Santa Catalina": "#bfe3b1",
   // Default
-  "": "gray",
-  null: "gray",
-  undefined: "gray"
+  "": "red",
+  null: "red",
+  undefined: "red"
 };
 
     const [geojsonData, setGeojsonData] = useState({});
