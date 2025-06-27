@@ -680,7 +680,7 @@ ${poligonoDB.dato1}
   if (poligono) {
     const sub = poligono.subclasificacion;
     fillColor = coloresPorSubclasificacion[sub] || "gray";
-    fillOpacity = 0.8; // más opaco si está guardado
+    fillOpacity = 0.95; // más opaco si está guardado
   }
 
   return {
