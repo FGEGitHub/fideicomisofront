@@ -66,7 +66,7 @@ export default function Ingresos() {
      )
     
  
-      
+        
 
    setOpen(false);
   };
