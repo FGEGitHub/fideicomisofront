@@ -35,15 +35,15 @@ const opcionesSubclasificacion = [
   "AM1-Area Mixta 2 - Densidad alta",
   "AR-Area Residencial de baja densidad",
   "ARP-Area Residencial y agroproductiva complementaria",
-  "CC-Corredor comercial mixto",
+  "CC-Corredor Comercial mixto",
   "EDR-Equipamiento Deportivo Recreativo",
   "EP-Equipamiento Publico",
   "EVP-Espacio Verde Publico",
 //PLAN ESPECIAL - ETAPA 1
   "UG1-Distrito Aministrativo", //UG: UNIDADES DE GESTION
-  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal",
-  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI",
-  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo",
+  "UG2-Areas Residenciales y Mixtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal",
+  "UG3-Areas Residenciales, Mixtas y Paseo de borde del B° PIRAYUI",
+  "UG4-Areas Recreativas, Residenciales y Mixtas - Reordenamiento Urbano y Parque de Bosque Nativo",
 //PLAN ESPECIAL - ETAPA 2
   "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado",
   "UG2-Areas Residenciales y Mixtas - Parque Metropolitano",
@@ -80,20 +80,20 @@ const coloresPorSubclasificacion = {
   "AM1-Area Mixta 2 - Densidad alta": "#f0abab",
   "AR-Area Residencial de baja densidad": "#debf6f",
   "ARP-Area Residencial y agroproductiva complementaria": "#e4eeb1",
-  "CC-Corredor comercial mixto": "#9bcfed",
+  "CC-Corredor Comercial mixto": "#9bcfed",
   "EDR-Equipamiento Deportivo Recreativo": "#bfd1f0",
   "EP-Equipamiento Publico": "#dededf",
   "EVP-Espacio Verde Publico": "#afd9b7",
 //PLAN ESPECIAL - ETAPA 1
   "UG1-Distrito Aministrativo": "#b2a792",  //UG: UNIDADES DE GESTION
-  "UG2-Areas Residenciales y MIxtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#dccfb6",
-  "UG3-Areas ResidencialeS, MIxtas y Paseo de borde del B° PIRAYUI": "#e8e1d2",
-  "UG4-Areas Recreativas, Residenciales y MNixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#f5eee0",
+  "UG2-Areas Residenciales y Mixtas/Conjuntos Habitacionales PROCREAR, INVICO y Lotes con Serivicios de oferta municipal": "#dccfb6",
+  "UG3-Areas Residenciales, Mixtas y Paseo de borde del B° PIRAYUI": "#e8e1d2",
+  "UG4-Areas Recreativas, Residenciales y Mixtas - Reordenamiento Urbano y Parque de Bosque Nativo": "#f5eee0",
 //PLAN ESPECIAL - ETAPA 2
   "UG1-Areas Residenciales y Mixtas/Conjuntos Habitacionales del Estado": "#c89132",
   "UG2-Areas Residenciales y Mixtas - Parque Metropolitano": "#e3a53a",
   "UG3-Areas Mixtas y Equipamientos generales - Zona de borde costero del Rio Parana": "#eeba5f",
-  "UG4-Areas de actividades productivas y logisdticas, vinculadas a residencias de baja densidad": "#eccb78",
+  "UG4-Areas de actividades productivas y logisticas, vinculadas a residencias de baja densidad": "#eccb78",
 //PLAN ESPECIAL - ETAPA 3
   "UG1-Areas Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUI": "#8d3774",
   "UG2-Area Residencial Suburbana y de Actividades Agro productivas y Recreativas": "#b55d9b",
