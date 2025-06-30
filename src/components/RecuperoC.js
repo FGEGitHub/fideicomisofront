@@ -17,6 +17,12 @@ import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import PersonIcon from '@mui/icons-material/Person';
+import CloseIcon from '@mui/icons-material/Close';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -116,169 +122,178 @@ export default function Ingresos() {
       <p variant="outlined" onClick={handleClickOpen}>
         ¿Olvidaste la contraseña?
       </p>
-      <Dialog maxWidth="md"
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "10vh" // o el alto del contenedor
+      <Dialog
+  open={open}
+  onClose={handleClose}
+  fullWidth
+  maxWidth="xs"
+  PaperProps={{
+    sx: {
+      borderRadius: '10px',
+      backgroundColor: '#ffffff',
+      boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.2)',
+      px: 2,
+    },
+  }}
+>
+  {/* Icono de cierre arriba a la derecha */}
+  <Box sx={{ display: "flex", justifyContent: "flex-end", pt: 1 }}>
+    <IconButton onClick={handleClose}>
+      <CloseIcon />
+    </IconButton>
+  </Box>
+
+  {/* Avatar */}
+  <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Avatar
+      sx={{
+        bgcolor: "#002D57",
+        width: 56,
+        height: 56,
+      }}
+    >
+      <LockIcon fontSize="small" />
+    </Avatar>
+  </Box>
+
+  {/* Título */}
+  <Typography
+    align="center"
+    component="h1"
+    variant="h6"
+    sx={{ mt: 1, fontWeight: "bold", color: "#002D57" }}
+  >
+    RECUPERAR CONTRASEÑA
+  </Typography>
+
+  {/* Formulario */}
+  <DialogContent>
+    <Box
+      component="form"
+      onSubmit={handleDeterminar}
+      sx={{
+        width: { xs: "90%", sm: "80%" },
+        mx: "auto",
+        mt: 1,
+      }}
+    >
+      {!ver ? (
+        <TextField
+          required
+          fullWidth
+          margin="dense"
+          label="CUIT/CUIL"
+          name="cuil_cuit"
+          onChange={handleChange}
+          size="small"
+          variant="outlined"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PersonIcon />
+              </InputAdornment>
+            ),
           }}
-        >
-          <Avatar
+          sx={{ my: 2 }}
+        />
+      ) : (
+        <>
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Código recibido"
+            name="codigo"
+            onChange={handleChangee}
+            size="small"
+            variant="standard"
+            sx={{ my: 1 }}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Nueva contraseña"
+            name="password"
+            onChange={handleChangee}
+            size="small"
+            variant="standard"
+            sx={{ my: 1 }}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="dense"
+            label="Repetir nueva contraseña"
+            name="password2"
+            onChange={handleChangee}
+            size="small"
+            variant="standard"
+            sx={{ my: 1 }}
+          />
+        </>
+      )}
+
+      {/* Botones */}
+      <DialogActions
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {!ver ? (
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+            <Button
+              onClick={handleDeterminar}
+              type="submit"
+              variant="contained"
+              sx={{
+                backgroundColor: "#148d8d",
+                "&:hover": { backgroundColor: "#4CAF50" },
+                height: 36,
+                minWidth: 100,
+                fontWeight: 600,
+              }}
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={24} />
+              ) : (
+                <>
+                  Enviar&nbsp;
+                  <RegIcon fontSize="small" />
+                </>
+              )}
+            </Button>
+          </Box>
+        ) : recupero.password === recupero.password2 ? (
+          <Button
+            onClick={handleDeterminarr}
+            variant="contained"
+            fullWidth
             sx={{
-              bgcolor: "#002D57",
-              width: 56,
-              height: 56,
+              backgroundColor: "#148d8d",
+              "&:hover": { backgroundColor: "#388e3c" },
+              height: 36,
+              fontWeight: 600,
             }}
           >
-            <LockIcon fontSize="small" />
-          </Avatar>
-        </Box>
+            Enviar código&nbsp;
+            <RegIcon fontSize="small" />
+          </Button>
+        ) : (
+          <Typography variant="body2" color="error">
+            Las contraseñas no coinciden
+          </Typography>
+        )}
+      </DialogActions>
+    </Box>
+  </DialogContent>
+</Dialog>
 
 
-
-        <Typography align="center" component="h1" variant="h6">
-          Recuperar Contraseña
-        </Typography>
-        <DialogContent>
-
-          <form onSubmit={handleDeterminar}>
-
-            {!ver ? <>
-
-              <TextField className={cardStyles.field}
-                sx={{
-                  mx: 4, width: '80%'
-                }}
-                autoFocus
-                required
-                margin="dense"
-                id="name"
-                label="CUIT/CUIL"
-                name="cuil_cuit"
-                onChange={handleChange}
-                size="small"
-                variant="standard"
-              />
-
-
-
-            </> : <>
-
-              <TextField className={cardStyles.field}
-                sx={{
-                  mx: 3, width: '75%'
-                }}
-                autoFocus
-                required
-                margin="dense"
-                id="name"
-                label="Codigo recibido"
-                name="codigo"
-                onChange={handleChangee}
-                size="small"
-                variant="standard"
-              />
-              <TextField className={cardStyles.field}
-                sx={{
-                  mx: 3, width: '75%'
-                }}
-                autoFocus
-                required
-                margin="dense"
-                id="name"
-                label="Nueva contraseña"
-                name="password"
-                onChange={handleChangee}
-                size="small"
-                variant="standard"
-              />
-              <TextField className={cardStyles.field}
-                sx={{
-                  mx: 3, width: '75%'
-                }}
-                autoFocus
-                required
-                margin="dense"
-                id="name"
-                label="Repetir nueva contraseña"
-                name="password2"
-                onChange={handleChangee}
-                size="small"
-                variant="standard"
-              />
-
-            </>}
-
-
-
-            <DialogActions>
-              <Button
-
-                onClick={handleClose}
-                variant="contained"
-                sx={{
-                 mt: 3,
-                    maxWidth: 130,
-                    height: 30, backgroundColor: 'red', '&:hover': { backgroundColor: '#af0303'
-                }} }
-              >
-                <span style={{ padding: 10 }}>Cancelar{"     "}</span>
-
-              </Button>
-              {!ver ? <>
-
-                <Button
-                  onClick={handleDeterminar}
-                  variant="contained"
-                  sx={{
-                    mt: 3,
-                    maxWidth: 130,
-                    height: 30,
-                    backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } 
-                  }}
-                >
-                  <span style={{ padding: 10 }}>     {loading ? (
-                    <CircularProgress color="inherit" size={25} />
-                  ) : <>   Recuperar{"     "}  </>}</span>
-                  <RegIcon fontSize="small" />
-                </Button>
-
-              </> : <>
-                {recupero.password === recupero.password2 ? <>
-                  <Button
-                    onClick={handleDeterminarr}
-                    variant="contained"
-                    sx={{
-                      mt: 3,
-                      maxWidth: 130,
-                      borderRadius: 2,
-                      height: 30,
-                      fontWeight: 850,
-                      fontSize: 12
-                    }}
-                  >
-                    <span style={{ padding: 10 }}>Enviar codigo{"     "}</span>
-                    <RegIcon fontSize="small" />
-                  </Button>
-                </> : <><p>La contraseña no coincide</p></>}
-
-
-              </>}
-            </DialogActions>
-
-          </form>
-        </DialogContent>
-
-
-
-      </Dialog>
     </div>
   );
 }
