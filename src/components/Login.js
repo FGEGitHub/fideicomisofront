@@ -78,7 +78,7 @@ const Login = () => {
                     backgroundColor: "#1E272E",
                     padding: "1rem",
                 }}
-            >
+            > 
                 <Typography variant="h5" textAlign="center" color="white">
                     Ingresar
                 </Typography>
