@@ -134,7 +134,14 @@ const lotesCliente2= async  (cuil_cuit) => {
      return data
  }  
 
+  const poligonosguardados= async  () => {
 
+     let {data}  = await axios.get(baseUrl+'poligonosguardados/',config)
+    
+    
+    
+     return data
+ }  
    const calcular= async  (datos) => {
    
     const {data } = await axios.post(baseUrl+'calcularvalor',datos,config)
@@ -210,4 +217,14 @@ const nuevolote= async  (datos) => {
      
      return data 
  }  
-export default {traersegunmapa1,traersegunmapa2,determinarposecion,determinarmapatodos,determinarmapa1,listausur,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};
+
+ 
+ const guardarpoligono= async  (datos) => {
+    
+     const {data } = await axios.post(baseUrl+'guardarpoligono',datos,config)
+     
+     return data 
+ }  
+
+
+export default {poligonosguardados,guardarpoligono,traersegunmapa1,traersegunmapa2,determinarposecion,determinarmapatodos,determinarmapa1,listausur,determinarmapa2,lista,lista2,nuevamanzana,modificarlote, traermanzanas,desasignarlote,traerlotesleg,nuevolote,lotesCliente,lotesCliente2,listalotes,prueba, lotesClienteUsuario1, calcular};

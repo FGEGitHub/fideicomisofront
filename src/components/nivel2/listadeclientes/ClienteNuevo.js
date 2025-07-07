@@ -40,13 +40,13 @@ export default function ClienteNuevo({ getClients }) {
   return (
     <div>
       <Button variant="contained" onClick={handleClickOpen} startIcon={<PersonAddAlt1Icon />}
-        sx={{  fontFamily: 'Montserrat, sans-serif' }}>
-        CARGAR CLIENTE NUEVO
-      </Button>
+        sx={{ mb: 2, backgroundColor: '#01567c', '&:hover': { backgroundColor: '#4d7d26' } }}>
+        AGREGAR CLIENTE
+      </Button>  
       
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle sx={{ backgroundColor: "#EDE3D9", fontFamily: 'Montserrat, sans-serif' }}>Cliente Nuevo</DialogTitle>
-        <Paper sx={{ background: "#F5F1E9", padding: 2 }}>
+        <DialogTitle sx={{ backgroundColor: "#1a303e", color:'#fffff' }}>NUEVO CLIENTE</DialogTitle>
+        <Paper sx={{ background: "#dcf0f6", padding: 2 }}>
           <DialogContent>
             <DialogContentText sx={{ fontFamily: 'Montserrat, sans-serif', color: "#555" }}>
               Complete los datos del nuevo cliente
@@ -71,7 +71,7 @@ export default function ClienteNuevo({ getClients }) {
                 ) : (
                   <Typography color="error" sx={{ fontSize: 14 }}>Completar todos los campos</Typography>
                 )}
-                <Button variant="outlined" color="error" onClick={handleClose}>Cancelar</Button>
+                <Button variant="contained" color="error" onClick={handleClose}>Cancelar</Button>
               </DialogActions>
             </form>
           </DialogContent>

@@ -78,7 +78,8 @@ export default function SelectTextFields(props) {
             noValidate
             autoComplete="off"
         >
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="contained" sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }} 
+              onClick={handleClickOpen}>
                Detalles
             </Button>
             <Dialog open={open} onClose={handleClose}>
@@ -151,7 +152,8 @@ export default function SelectTextFields(props) {
                  
                 </DialogContent>
                 <DialogActions>
-   <Button onClick={handleClose} size="small" variant="contained" >
+   <Button onClick={handleClose} size="small" variant="contained" 
+   sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
                         Cerrar
                     </Button>
 

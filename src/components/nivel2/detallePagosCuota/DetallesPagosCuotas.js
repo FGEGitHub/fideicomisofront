@@ -3,18 +3,84 @@ import { useParams } from "react-router-dom"
 import MUIDataTable from "mui-datatables";
 import { useState, useEffect } from "react";
 import servicioPagos from '../../../services/pagos'
-import serviciousuario1 from '../../../services/usuario1'
+import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
+import ComprobantePDF from './ComprobantePDF';
 import Borrar from './modalborrar';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Modif from './modalactcomp';
 import Borrarcomp from './modalborrarcomprobante';
+function abrirComprobante(pago) {
+    const win = window.open('', '_blank');
+    const fecha = new Date().toLocaleDateString();
 
+    const contenido = `
+    <html>
+      <head>
+        <title>Comprobante de Pago</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+          }
+          h2 {
+            color: #333;
+            text-align: center;
+          }
+          table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+          }
+          td, th {
+            padding: 10px;
+            border: 1px solid #ddd;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Comprobante de Pago</h2>
+        <table>
+          <tr>
+            <th>Fecha</th>
+            <td>${fecha}</td>
+          </tr>
+          <tr>
+            <th>De</th>
+            <td>________ (emisor)</td>
+          </tr>
+          <tr>
+            <th>Para</th>
+            <td>________ (receptor)</td>
+          </tr>
+          <tr>
+            <th>Monto</th>
+            <td>$ ${pago.monto.toFixed(2)}</td>
+          </tr>
+          <tr>
+            <th>Mes/Año</th>
+            <td>${pago.mes} / ${pago.anio}</td>
+          </tr>
+          <tr>
+            <th>Detalle</th>
+            <td>Pago registrado bajo el ID: ${pago.id}</td>
+          </tr>
+        </table>
+        <p style="margin-top:40px; text-align:center">Gracias por su pago.</p>
+      </body>
+    </html>
+  `;
+
+    win.document.open();
+    win.document.write(contenido);
+    win.document.close();
+}
 export default function DetallesPagos(props) {
     let params = useParams()
     let id = params.id
     const navigate = useNavigate();
-
+    const [pagos, setPagos] = useState([]);
     useEffect(() => {
         console.log(id)
         traer()
@@ -22,8 +88,12 @@ export default function DetallesPagos(props) {
     }, [])
 
 
-    const [pagos, setPagos] = useState([]);
 
+    const generarPDF = async (fila) => {
+        const blob = await pdf(<ComprobantePDF datos={fila} />).toBlob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    };
     const traer = async () => {
         const aux = {
             id: id
@@ -35,6 +105,17 @@ export default function DetallesPagos(props) {
 
 
 
+    }
+    function emitirComprobante(pago) {
+        return (
+            <Button
+                variant="outlined"
+                size="small"
+                onClick={() => abrirComprobante(pago)}
+            >
+                Comprobante
+            </Button>
+        );
     }
 
     const columns = [
@@ -101,6 +182,22 @@ export default function DetallesPagos(props) {
 
         },
         {
+            name: "Emitir comprobante",
+            options: {
+                customBodyRenderLite: (dataIndex) => (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={() => generarPDF(pagos[dataIndex])}
+                    >
+                        PDF
+                    </Button>
+                )
+            }
+        },
+
+        {
             name: "Ver/borrar",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
@@ -132,11 +229,6 @@ export default function DetallesPagos(props) {
 
     function modifa(index, rowIndex, data) {
 
-        /* const filename = (products[index].key)
-        console.log(filename)
-        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-        console.log(link.data)
-        setAct(true) */
         return (
             <>
 
@@ -162,11 +254,6 @@ export default function DetallesPagos(props) {
     }
     function borrarcomp(index, rowIndex, data) {
 
-        /* const filename = (products[index].key)
-        console.log(filename)
-        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-        console.log(link.data)
-        setAct(true) */
         return (
             <>
 
@@ -195,11 +282,7 @@ export default function DetallesPagos(props) {
 
     function monto(index, rowIndex, data) {
 
-        /* const filename = (products[index].key)
-        console.log(filename)
-        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-        console.log(link.data)
-        setAct(true) */
+
         return (
             <>
 
@@ -212,11 +295,7 @@ export default function DetallesPagos(props) {
     }
     function downloadFile(index, rowIndex, data) {
 
-        /* const filename = (products[index].key)
-        console.log(filename)
-        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-        console.log(link.data)
-        setAct(true) */
+
         return (
             <>
                 <button
@@ -224,90 +303,92 @@ export default function DetallesPagos(props) {
                     onClick={() => download(index)}
                 >Ver Online</button>
                 <Borrar
-                    id={pagos[index].id} 
+                    id={pagos[index].id}
                     traer={async () => {
                         const aux = {
                             id: id
                         }
                         const pag = await servicioPagos.detallesPago(aux)
-                
+
                         setPagos(pag)
-                
-                
-                
-                
+
+
+
+
                     }
-                }/>
+                    } />
 
             </>
         );
     }
     const options = {
-     
-      
-          setTableProps: () => {
-              return {
+
+
+        setTableProps: () => {
+            return {
                 style: {
-                  backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
+                    backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
                 },
-              };
+            };
+        },
+        customHeadRender: (columnMeta, handleToggleColumn) => ({
+            TableCell: {
+                style: {
+                    backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
+                    color: 'white', // Cambia el color del texto del encabezado
+                },
             },
-            customHeadRender: (columnMeta, handleToggleColumn) => ({
-              TableCell: {
-                style: {
-                  backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
-                  color: 'white', // Cambia el color del texto del encabezado
-                },
-              },
-            }),
-          selectableRows: false, // Desactivar la selección de filas
-          stickyHeader: true,
-          selectableRowsHeader: false,
-          selectableRowsOnClick: true,
-          responsive: 'scroll',
-          rowsPerPage: 10,
-          rowsPerPageOptions: [5, 10, 15],
-          downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
-          print: true,
-          filter: true,
-          viewColumns: true,
-          pagination: true,
-  
-          textLabels: {
+        }),
+        selectableRows: false, // Desactivar la selección de filas
+        stickyHeader: true,
+        selectableRowsHeader: false,
+        selectableRowsOnClick: true,
+        responsive: 'scroll',
+        rowsPerPage: 10,
+        rowsPerPageOptions: [5, 10, 15],
+        downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
+        print: true,
+        filter: true,
+        viewColumns: true,
+        pagination: true,
+
+        textLabels: {
             body: {
-              noMatch: "No se encontraron registros",
-              toolTip: "Ordenar",
+                noMatch: "No se encontraron registros",
+                toolTip: "Ordenar",
             },
             pagination: {
-              next: "Siguiente",
-              previous: "Anterior",
-              rowsPerPage: "Filas por página:",
-              displayRows: "de",
+                next: "Siguiente",
+                previous: "Anterior",
+                rowsPerPage: "Filas por página:",
+                displayRows: "de",
             },
             toolbar: {
-              search: "Buscar",
-              downloadCsv: "Descargar CSV",
-              print: "Imprimir",
-              viewColumns: "Ver columnas",
-              filterTable: "Filtrar tabla",
+                search: "Buscar",
+                downloadCsv: "Descargar CSV",
+                print: "Imprimir",
+                viewColumns: "Ver columnas",
+                filterTable: "Filtrar tabla",
             },
             filter: {
-              all: "Todos",
-              title: "FILTROS",
-              reset: "RESETEAR",
+                all: "Todos",
+                title: "FILTROS",
+                reset: "RESETEAR",
             },
             viewColumns: {
-              title: "Mostrar columnas",
-              titleAria: "Mostrar/ocultar columnas de la tabla",
+                title: "Mostrar columnas",
+                titleAria: "Mostrar/ocultar columnas de la tabla",
             },
             selectedRows: {
-              text: "fila(s) seleccionada(s)",
-              delete: "Eliminar",
-              deleteAria: "Eliminar filas seleccionadas",
+                text: "fila(s) seleccionada(s)",
+                delete: "Eliminar",
+                deleteAria: "Eliminar filas seleccionadas",
             },
-          },
-      
+        },
+
     };
+
+
     return (
 
         <MUIDataTable

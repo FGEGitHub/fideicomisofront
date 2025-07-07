@@ -73,10 +73,13 @@ const traer = async () => {
     
 
   }
+  //1a303e COLOR AZUL OSCURO DEL NAV
   return (
     <React.Fragment>
-      <AppBar sx={{ background: "#Primary" }}>
+      <AppBar sx={{ background: "#002D57" }}> 
         <Toolbar>
+
+          
             <img style={islogo} src={logo} alt="logo" />
           {isMatch ? (
             <>

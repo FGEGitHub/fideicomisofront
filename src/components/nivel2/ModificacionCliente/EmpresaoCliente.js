@@ -82,7 +82,8 @@ export default function SelectTextFields(props) {
       autoComplete="off"
     >
         <br/> <br/>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="contained" onClick={handleClickOpen} 
+      sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
       Establecer Empresa/Cliente
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -130,8 +131,11 @@ export default function SelectTextFields(props) {
 
 
               <br />
-              <Button variant="contained" color="primary"  onClick={handleDeterminar}>Determinar</Button>
-              <Button  variant="outlined" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}>Cancelar</Button>
+              <Button variant="contained" onClick={handleDeterminar}
+              sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
+                Determinar</Button>
+              <Button  variant="contained" color="error" style={{ marginLeft: "auto" }} onClick={handleClose}sx={{ mb: 2, '&:hover': { backgroundColor: '#810202' } }}>
+                Cancelar</Button>
           </div>
         </DialogContent>
       </Dialog>

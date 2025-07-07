@@ -26,6 +26,11 @@ import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+
 const initialWidth = 240; // Ancho inicial del menú
 export default function MenuIzq2 ({children}) {
     const navigate = useNavigate();
@@ -100,32 +105,32 @@ useEffect(() => {
     const menuItems = [
         { 
           text: 'Ver Clientes', 
-          icon: <GroupIcon color="primary" />, 
+          icon: <GroupIcon style={{ color: "#1a303e" }} />, 
           path: '/usuario2/clientes' 
         },
     
         {
           text: 'Lotes',
-          icon: <NfcIcon color="primary" />,
+          icon: <NfcIcon style={{ color: "#1a303e" }} />,
           path:  '/usuario2/lotes',
         },
         {
           text: 'Aprobación de Pagos',
           icon:<div><Badge badgeContent={notificaciones} color="error">
-          <PaidIcon color="primary" />
+          <PaidIcon style={{ color: "#1a303e" }} />
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
         {
           text: 'Clientes IC3',
           icon:<div><Badge badgeContent={notificaciones} color="error">
-          <PaidIcon color="primary" />
+          <PaidIcon style={{ color: "#1a303e" }} />
         </Badge></div>,
           path: '/usuario2/clientesic3'
         },
        { 
           text: 'Extracto', 
-          icon: <GroupIcon color="primary" />, 
+          icon: <GroupIcon style={{ color: "#1a303e" }} />, 
           path: '/usuario2/extracto' 
         },
 
@@ -133,14 +138,14 @@ useEffect(() => {
         {
           text: 'Pagos inusuales',
           icon:<div><Badge badgeContent={notificacioneslegajos} color="error">
-          <AccountBoxIcon color="primary" />
+          <AccountBoxIcon style={{ color: "#1a303e" }}/>
         </Badge></div>,
           path: '/usuario2/inusuales'
         },
         {
           text: 'Aprobación de CBU',
           icon:<div><Badge badgeContent={notificacionescbus} color="error">
-          <AccountBalanceIcon color="primary" />
+          <AccountBalanceIcon style={{ color: "#1a303e" }} />
         </Badge></div>,
           path: '/usuario2/aprobacioncbu'
         },
@@ -148,14 +153,14 @@ useEffect(() => {
         {
           text: 'Aprobaciones de pagos',
           icon:<div><Badge color="error">
-          <AccountBalanceIcon color="primary" />
+          <AccountBalanceIcon style={{ color: "#1a303e" }}/>
         </Badge></div>,
           path: '/usuario2/aprobacionesdepagos'
         },
         {
           text: 'Mapas',
           icon:<div><Badge color="error">
-          <TravelExploreIcon color="primary" />
+          <TravelExploreIcon style={{ color: "#1a303e" }} />
         </Badge></div>,
           path: '/usuario2/mapas'
         },
@@ -227,7 +232,7 @@ useEffect(() => {
        ];
 
 
-    const toggleMenu = () => {
+    /*const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
     return(
@@ -249,9 +254,9 @@ useEffect(() => {
               >
                   <Navbar />
                   <Toolbar />
-                  <Divider />
+                
                   <List>
-                  <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2 }}>
+                  <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2, backgroundColor: '#114c5f', '&:hover': { backgroundColor: '#0d3a49' } }}>
                   {menuVisible ? 'Ocultar Menú' : 'Mostrar Menú'}
               </Button>
           {user ? <>
@@ -285,7 +290,7 @@ useEffect(() => {
           </>}
           </> :  <></>}
         </List>
-                  <Divider />
+                  
               </Drawer>
           )}
 
@@ -301,13 +306,120 @@ useEffect(() => {
           >
               <Navbar />
               <Toolbar />
-              <Button variant="contained" onClick={toggleMenu} sx={{ mb: 2 }}>
-                  {menuVisible ? 'Ocultar Menú' : 'Mostrar Menú'}
-              </Button>
+           
               {children}
           </Box>
       </Box>
   </>
-  );
+  );*/
+  const toggleMenu = () => {
+  setMenuVisible(!menuVisible);
+};
+
+return (
+  <>
+    <Box sx={{background: '#fffff', display: 'flex'}}>
+      <CssBaseline />
+
+      {/* Drawer lateral */}
+      {menuVisible && (
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+             
+              bgcolor: '#fffff',
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <Navbar />
+          <Toolbar />
+          <Divider />
+          <List sx={{background: '#fffff'}}>
+            {/* Botón solo dentro del Drawer cuando el menú está visible */}
+           <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+  <IconButton
+    onClick={toggleMenu}
+    sx={{
+      color: '#1a303e',
+      '&:hover': {
+        backgroundColor: 'transparent',
+        color: '#0d3a49',
+      },
+    }}
+  >
+    <CloseIcon />
+  </IconButton>
+</Box>
+
+
+            {user ? (
+              user.nivel === 2 ? (
+                menuItems.map((item) => (
+                  <ListItem
+                    button
+                    key={item.text}
+                    onClick={() => handleClick(item.path)}
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))
+              ) : (
+                menuItems2.map((item) => (
+                  <ListItem
+                    button
+                    key={item.text}
+                    onClick={() => handleClick(item.path)}
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))
+              )
+            ) : null}
+          </List>
+          <Divider />
+        </Drawer>
+      )}
+
+      {/* Contenido principal */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: 'background.default',
+          p: 3,
+          transition: 'margin 0.3s ease-in-out',
+        }}
+      >
+        <Navbar />
+        <Toolbar />
+
+        {/* Mostrar botón SOLO cuando el menú está oculto */}
+        {!menuVisible && (
+          <Button
+            variant="contained"
+            onClick={toggleMenu}
+            sx={{
+              mb: 2,
+              backgroundColor: '#1a303e',
+              '&:hover': { backgroundColor: '#0d3a49' },
+            }}
+          >
+            Mostrar Menú
+          </Button>
+        )}
+
+        {children}
+      </Box>
+    </Box>
+  </>
+);
+
 
 }

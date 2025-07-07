@@ -48,6 +48,15 @@ const Lotes = () => {
       }
       //
 
+   function ultimacuota(dataIndex, rowIndex, data, onClick) {
+        return (
+          <>
+          
+          {  clients[dataIndex].mes + "/" + clients[dataIndex].anio}
+          
+          </>
+        );
+      }
       function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
         return (
           <>
@@ -114,11 +123,19 @@ const Lotes = () => {
         
         },   
     
-        {
-            name: "observaciones",
-            label:"Observaciones",
-           
-        },
+       {
+            name: "Ultima cuota",
+            options: {
+                customBodyRenderLite: (dataIndex, rowIndex) =>
+                  ultimacuota(
+                        dataIndex,
+                        rowIndex,
+                       // overbookingData,
+                       // handleEditOpen
+                    )
+            }
+        
+        },   
         {
             name: "Acciones",
             options: {
@@ -148,7 +165,7 @@ const Lotes = () => {
           customHeadRender: (columnMeta, handleToggleColumn) => ({
             TableCell: {
               style: {
-                backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
+                backgroundColor: '#e6f8d7', // Cambia el color de fondo del encabezado
                 color: 'white', // Cambia el color del texto del encabezado
               },
             },
@@ -209,7 +226,8 @@ return (
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
  
- <Alert severity="info">Cantidad de clientes: {clients.length}</Alert>
+ <Alert severity="info"  sx={{ backgroundColor: '#e6f8d7', color: '#1a303e'  }}>
+  Cantidad de clientes: {clients.length}</Alert>
     </Stack>
     <br/>
 {/* componente de cliente nuevo, envio de funcion para actualizar de inmediato */}

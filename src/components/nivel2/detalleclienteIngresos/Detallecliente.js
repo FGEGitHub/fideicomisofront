@@ -4,7 +4,7 @@ import LotesCliente from '../../LotesCliente'
 import InfoCliente from './FichaAxios'
 import servicioCliente from '../../../services/clientes'
 import Ingreso from './Ingresos'
-import { Paper } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import PEP from './DeterminarPep'
 //import Debitoaut from '../../360/modalcrearadhesiontarjeta'
 //import DebitoauCBUt from '../../360/modaladhesiondebito'
@@ -70,25 +70,18 @@ const DetalleCliente = () => {
               }}
                 /> 
              
-               {/*  {expuesta ? <div>
-                  <Alert variant="filled" severity="warning">
-                  Persona PEP
-</Alert>
-               
-                   </div> : 
-                   <div>
-                    <Chip label="Persona no PEP" color="success" />
-                   
-                     </div>} */}
+           
                 
                </div>
-               <Paper
+               <Box
         sx={{
           cursor: 'pointer',
-          background: '#b0bec5',
+
+          background: '#ffffff',
+
           color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
+          
+          
         }}
       >    {habilitado ? <div>
         <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
@@ -97,15 +90,14 @@ const DetalleCliente = () => {
       }
              <InfoCliente
                  cuil_cuit={cuil_cuit} />
-                 </Paper>
+                 </Box>
              </div>
-             <Paper
+             <Box
         sx={{
           cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
+          background: '#ffffff',
+          
+          
         }}
       >
              {habilitado ? <div>
@@ -117,22 +109,10 @@ const DetalleCliente = () => {
 
                  
             </div> : <div></div> }
-            </Paper>
+            </Box>
           
                       {habilitado ? <>
-                       {/*  <Button
-                        variant="outlined"
-                        onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
-                      >
-                      Ir a legajos
-                      </Button>
-            <Debitoaut
-            cuil_cuit={cuil_cuit}/>
-            <DebitoauCBUt
-              cuil_cuit={cuil_cuit}/>
-          
-    <Listacbus
-              cuil_cuit={cuil_cuit}/> */}
+                    
 </>:<><Button
       variant="outlined"
       onClick={() => navigate('/usuario2/legajoscliente/' + cuil_cuit)}

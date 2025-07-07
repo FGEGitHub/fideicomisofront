@@ -107,6 +107,12 @@ import Mapasusuario from '../Paginas/usuariomapas/inicio'
 import NOtFound from '../Paginas/not found'
 import Subirexcell from '../Paginas/subirexcel';
 
+
+import Mapassegundaparte from '../Paginas/mapas'
+
+
+
+
 const Rutas = [
 	 <Navbar/> ,
 	 
@@ -120,7 +126,7 @@ const Rutas = [
 	 {path: '/',element: (<Login />)},
 	{path: '/login',element: (<Login />)},
 
-	
+		{path: '/mapasegundaparte',element: (<Mapassegundaparte />)},
 
 
 	{path: '/',element: (<Login />)},

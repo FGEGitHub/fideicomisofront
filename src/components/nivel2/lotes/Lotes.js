@@ -61,7 +61,7 @@ const Lotes = () => {
     // definimos las columnas
     const columns = [
         {
-            name: "Ver/ir",
+            name: "Ver",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -139,11 +139,14 @@ const Lotes = () => {
                     <div>
                         <Stack spacing={2} sx={{ width: '100%' }}>
 
-                            <Alert severity="info">Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )</Alert>
+                            <Alert severity="info"  sx={{ backgroundColor: '#e6f8d7', color: '#1a303e' }} >
+                                Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )
+                                    
+                            </Alert>
                         </Stack>
                         <MUIDataTable
 
-                            title={"Lista de lotes"}
+                            title={"LISTA DE LOTES"}
                             data={clients[0]}
                             columns={columns}
                             actions={[

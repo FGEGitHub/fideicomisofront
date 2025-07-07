@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
+import { Box } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -100,7 +101,9 @@ const PagosInusuales = () => {
                 Cambiar Vista
             </Button>
             {vista ? (
-                <Paper sx={{ width: "90%", margin: '20px auto', padding: '10px' }}>
+<Box sx={{ overflowX: 'auto', width: '100%' }}>
+  {/* tabla */}
+
                     <TableContainer>
                         {pagos.length === 0 ? (
                             <p style={{ textAlign: 'center', fontSize: '18px', fontWeight: 'bold' }}>No hay elementos</p>
@@ -166,16 +169,16 @@ const PagosInusuales = () => {
                             </Table>
                         )}
                     </TableContainer>
-                </Paper>
+               </Box>
             ) : (
-                <ThemeProvider theme={StyledTable()}>
+                
                     <MUIDataTable
                         title={"Lista de pagos inusuales"}
                         data={pagos}
                         columns={columns}
                         options={{ selectableRows: "none" }}
                     />
-                </ThemeProvider>
+             
             )}
         </div>
     );

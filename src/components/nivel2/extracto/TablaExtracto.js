@@ -107,6 +107,7 @@ const Estracto = () => {
     // renderiza la data table
     return (
         <>
+            
             <TextField component="form"
                 sx={{
                     '& > :not(style)': { m: 1, width: '25ch' },
@@ -129,7 +130,7 @@ const Estracto = () => {
                     ))}
             </TextField>
             {fecha.id != undefined ? <>
-            <Button onClick={getClients}>Ver </Button>
+            <Button onClick={getClients}>Ver </Button> 
             </>: <></>}
             {activo ? <>
 

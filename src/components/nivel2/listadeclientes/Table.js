@@ -92,7 +92,7 @@ const Lotes = () => {
       function CustomProgressRenderer(dataIndex, rowIndex) {
         const value = clients[dataIndex]?.porcentaje || 0; // Suponemos que 'observaciones' es el campo con el porcentaje
         return (
-          <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+          <Box sx={{ display: "flex", alignItems: "center", width: "100%"}}>
             <LinearProgress
               variant="determinate"
               value={value}
@@ -104,11 +104,7 @@ const Lotes = () => {
       }
     // definimos las columnas de la tabla mui de clientes
     const columns = [
-      {
-        name: "porcentaje",
-        label:"Riesgo",
-       
-    },
+ 
  /*      {
         name: "observaciones",
         label: "Riesgo",
@@ -142,7 +138,7 @@ const Lotes = () => {
       
        
            {
-            name: "cuil_cuit",
+            name: "CUIT-CUIL",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                   CutomButtonsRendercuil(
@@ -156,7 +152,7 @@ const Lotes = () => {
         },   
        
          {
-            name: "Nombre",
+            name: "NOMBRE",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderere(
@@ -169,7 +165,7 @@ const Lotes = () => {
         
         },   
         {name: "observaciones",
-        label: "Riesgo",
+        label: "RIESGO",
         options: {
           customBodyRenderLite: (dataIndex) => {
             const value = clients[dataIndex]?.porcentaje || 0;
@@ -199,12 +195,12 @@ const Lotes = () => {
       },
     
         {
-            name: "razon",
-            label:"razon",
+            name: "RAZÓN",
+            label:"RAZÓN",
            
         },
         {
-            name: "Acciones",
+            name: "Ver/Editar",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
                     CutomButtonsRenderer(
@@ -229,14 +225,14 @@ const Lotes = () => {
         setTableProps: () => {
             return {
               style: {
-                backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
+                backgroundColor: "#def2f3", // Cambia el color de fondo de la tabla donde estan todos los nombres de clientes
               },
             };
           },
           customHeadRender: (columnMeta, handleToggleColumn) => ({
             TableCell: {
               style: {
-                backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
+                backgroundColor: '#0799b6', // Cambia el color de fondo del encabezado
                 color: 'white', // Cambia el color del texto del encabezado
               },
             },
@@ -255,6 +251,7 @@ const Lotes = () => {
         pagination: true,
 
         textLabels: {
+          
           body: {
             noMatch: "No se encontraron registros de debito automatico",
             toolTip: "Ordenar",
@@ -300,7 +297,14 @@ return (
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
  
- <Alert severity="info">Cantidad de clientes: {clients.length}</Alert>
+  <Alert 
+  severity="info" 
+  sx={{ 
+    backgroundColor: '#148d8d', // fondo de la alerta de cantidad de clientes
+    color: '#ffffff'            // texto 
+  }}
+>Cantidad de clientes: {clients.length}
+</Alert>
     </Stack>
     <br/>
 {/* componente de cliente nuevo, envio de funcion para actualizar de inmediato */}
@@ -316,7 +320,7 @@ return (
 
         <MUIDataTable
         
-            title={"Lista de Clientes"}
+            title={ <div style={{color: '#114c5f', fontWeight: 'bold'}}>LISTA DE CLIENTES</div>}
             data={clients}
             columns={columns}
             actions={[

@@ -18,7 +18,7 @@ import MuiAlert from '@mui/material/Alert';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 
 
 
@@ -59,7 +59,7 @@ const TablaAprobaciones = () => {
 
 
         const link = await serviciousuario1.obtenerurl(filename)
-  
+
         window.open(link.data)
 
 
@@ -94,9 +94,9 @@ const TablaAprobaciones = () => {
         window.open(link.data)
 
 
-       // var nueva_ventana = window.open('', '_blank');
+        // var nueva_ventana = window.open('', '_blank');
         //nueva_ventana.document.write('<html><head><title>PDF de AWS</title></head><body style="text-align:center;"><embed src="' + link + '" width="100%" height="100%" type="application/pdf" /></body></html>');
-      }
+    }
     function downloadFile(index, rowIndex, data) {
 
         /* const filename = (products[index].key)
@@ -116,23 +116,22 @@ const TablaAprobaciones = () => {
         );
     }
 
-
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
 
         return (
             <>
-    
+
                 <BotonRechazo
                     id={pendientes[dataIndex].id}
                 />
-               
+
                 <Tooltip title="Aprobar">
-                <CheckIcon style={{ cursor: "pointer" }}
-                    onClick={() => {
-                        aprobar(pendientes[dataIndex].id)
-                        /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */
-}}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-                />
+                    <CheckIcon style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            aprobar(pendientes[dataIndex].id)
+                            /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */
+                        }}//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
+                    />
                 </Tooltip>
             </>
         );
@@ -167,7 +166,7 @@ const TablaAprobaciones = () => {
             name: "Ver online",
             options: {
                 customBodyRenderLite: (dataIndex, rowIndex) =>
-                verFile(
+                    verFile(
                         dataIndex,
                         rowIndex,
                         // overbookingData,
@@ -207,22 +206,22 @@ const TablaAprobaciones = () => {
 
     ];
     const options = {
-       
+
         setTableProps: () => {
             return {
-              style: {
-                backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
-              },
+                style: {
+                    backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
+                },
             };
-          },
-          customHeadRender: (columnMeta, handleToggleColumn) => ({
+        },
+        customHeadRender: (columnMeta, handleToggleColumn) => ({
             TableCell: {
-              style: {
-                backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
-                color: 'white', // Cambia el color del texto del encabezado
-              },
+                style: {
+                    backgroundColor: '#e6f8d7', // Cambia el color de fondo del encabezado
+                    color: 'white', // Cambia el color del texto del encabezado
+                },
             },
-          }),
+        }),
         selectableRows: false, // Desactivar la selección de filas
         stickyHeader: true,
         selectableRowsHeader: false,
@@ -237,39 +236,39 @@ const TablaAprobaciones = () => {
         pagination: true,
 
         textLabels: {
-          body: {
-            noMatch: "No se encontraron registros",
-            toolTip: "Ordenar",
-          },
-          pagination: {
-            next: "Siguiente",
-            previous: "Anterior",
-            rowsPerPage: "Filas por página:",
-            displayRows: "de",
-          },
-          toolbar: {
-            search: "Buscar",
-            downloadCsv: "Descargar CSV",
-            print: "Imprimir",
-            viewColumns: "Ver columnas",
-            filterTable: "Filtrar tabla",
-          },
-          filter: {
-            all: "Todos",
-            title: "FILTROS",
-            reset: "RESETEAR",
-          },
-          viewColumns: {
-            title: "Mostrar columnas",
-            titleAria: "Mostrar/ocultar columnas de la tabla",
-          },
-          selectedRows: {
-            text: "fila(s) seleccionada(s)",
-            delete: "Eliminar",
-            deleteAria: "Eliminar filas seleccionadas",
-          },
+            body: {
+                noMatch: "No se encontraron registros",
+                toolTip: "Ordenar",
+            },
+            pagination: {
+                next: "Siguiente",
+                previous: "Anterior",
+                rowsPerPage: "Filas por página:",
+                displayRows: "de",
+            },
+            toolbar: {
+                search: "Buscar",
+                downloadCsv: "Descargar CSV",
+                print: "Imprimir",
+                viewColumns: "Ver columnas",
+                filterTable: "Filtrar tabla",
+            },
+            filter: {
+                all: "Todos",
+                title: "FILTROS",
+                reset: "RESETEAR",
+            },
+            viewColumns: {
+                title: "Mostrar columnas",
+                titleAria: "Mostrar/ocultar columnas de la tabla",
+            },
+            selectedRows: {
+                text: "fila(s) seleccionada(s)",
+                delete: "Eliminar",
+                deleteAria: "Eliminar filas seleccionadas",
+            },
         },
-      };
+    };
     // renderiza la data table
     return (
         <div>
@@ -278,11 +277,17 @@ const TablaAprobaciones = () => {
                 <>
                     <Stack spacing={2} sx={{ width: '100%' }}>
 
-                        <Alert severity="info">Cantidad pendientes: {pendientes.length}</Alert>
+                        <Alert
+                            severity="info"
+                            sx={{
+                                backgroundColor: '#148d8d', color: '#ffffff' }}
+                        >Cantidad pendientes: {pendientes.length}
+                        </Alert>
+
                     </Stack>
                 </>
                 <MUIDataTable
-                    title={"Lista de aprobaciones pendientes"}
+                    title={"LISTA DE APROBACIONES PENDIENTES"}
                     data={pendientes}
                     columns={columns}
                     actions={[
