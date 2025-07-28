@@ -11,17 +11,7 @@ import servicioNotificaciones from '../../../services/notificaciones'
 import Tooltip from '@material-ui/core/Tooltip';
 import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import React, { useEffect, useState, Fragment } from "react";
-const currencies = [
-  {
-    value: 'CBU',
-    label: 'CBU N°1',
-  },
-  {
-    value: 'CBU',
-    label: 'CBU N°2',
-  },
 
-];
 
 
 export default function ModalVer(props) {
