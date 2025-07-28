@@ -164,13 +164,13 @@ useEffect(() => {
         </Badge></div>,
           path: '/usuario2/mapas'
         },
-           /*{
-          text: 'Mapas',
+          {
+          text: 'Mapas 2',
           icon:<div><Badge color="error">
           <TravelExploreIcon style={{ color: "#1a303e" }} />
         </Badge></div>,
-          path: '/components/mapasegundaparte'
-        },*/
+          path: '/mapasegundaparte'
+        },
       ];
 
       const menuItems2 = [
