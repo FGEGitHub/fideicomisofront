@@ -118,7 +118,7 @@ const Rutas = [
 	 
 	 {path: '/consultar',element: (<Consultare />)},
 	 {path: '/home',element: (<Home />)},
-	 {path: '/home/calcular',element: (<HomeCalculo />)},
+	/*  {path: '/home/calcular',element: (<HomeCalculo />)}, */
 	 {path: '/home/maparg',element: (<Mapaarg />)},
 
 	 
