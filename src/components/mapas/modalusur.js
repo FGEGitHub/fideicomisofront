@@ -8,7 +8,6 @@ import DialogActions from '@mui/material/DialogActions';
 import Formulario from './componenteinfo2'
 
 
-
 const DialogComponent = forwardRef((props, ref) => {
   const [open, setOpen] = useState(false);
   const [nivel, setNivel] = useState(false);
