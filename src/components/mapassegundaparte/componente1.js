@@ -573,7 +573,14 @@ ${poligonoDB.dato1}
 
                             let fillColor = "white"; // color por defecto
                             let fillOpacity = 0.2;   // opacidad por defecto
-
+ if (id === 5347) {
+    return {
+      fillColor: "yellow",
+      color: "red",
+      weight: 3,
+      fillOpacity: 1,
+    };
+  }
                             if (poligono) {
                                 const sub = poligono.subclasificacion;
                                 fillColor = coloresPorSubclasificacion[sub] || "gray";
