@@ -36,7 +36,7 @@ const FichaAxios = (props) => {
 
 
     const cliente = await servicioCliente.cliente(props.cuil_cuit)
-
+console.log(cliente)
     setCliente(cliente)
 
 
@@ -132,318 +132,191 @@ const FichaAxios = (props) => {
                   Datos Personales del Cliente
                 </h5></Box>
 
-              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+             
+  <Grid container spacing={2}>
+    <Grid item xs={12} md={6}>
+      <TextField
+        label="Nombre y apellido"
+        fullWidth
+        defaultValue={client.Nombre || ""}
+        InputProps={{ readOnly: true }}
+      />
+    </Grid>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Nombre y apellido"
-                      name="Nombre"
-                      defaultValue={client.Nombre || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                     
-                    />
-                  </Grid>
+    <Grid item xs={12} md={6}>
+      <TextField
+        label="CUIT"
+        fullWidth
+        defaultValue={client.cuil_cuit || ""}
+        InputProps={{ readOnly: true }}
+      />
+    </Grid>
 
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Cuit"
-                      name="cuil_cuit"
-                      defaultValue={client.cuil_cuit || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                     
-                    />
-                  </Grid>
+    <Grid item xs={12} md={6}>
+      <TextField
+        label="Tipo de Cliente"
+        fullWidth
+        defaultValue={client.razon || ""}
+        InputProps={{ readOnly: true }}
+      />
+    </Grid>
 
-                  <Grid item xs={2}>
-                    <TextField
-                      label="tipo de cliente"
-                      name="otroCampo"
-                      defaultValue={client.razon || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                     
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Actividad economica"
-                      name="otroCampo"
-                      defaultValue={client.actividadEconomica || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                     
-                    />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <TextField
-                      label="Actividad economica"
-                      name="otroCampo"
-                      defaultValue={client.actividadEconomica || ""}
-                      InputProps={{ readOnly: true }}
-                      variant="outlined"
-                      fullWidth
-                     
-                    />
-                  </Grid>
-                </Grid>
-                <br />
-                <Button sx={{ color: 'black', borderColor: 'black' }} onClick={() => setVerMas(!verMas)}>
-                  {verMas ? "Ver menos" : "Ver más"}
-                </Button>
+    <Grid item xs={12} md={6}>
+      <TextField
+        label="Actividad Económica"
+        fullWidth
+        defaultValue={client.actividadEconomica || ""}
+        InputProps={{ readOnly: true }}
+      />
+    </Grid>
+  </Grid>
 
-              </Box>
+  <Box sx={{ mt: 2 }}>
+    <Button sx={{ color: "black" }} onClick={() => setVerMas(!verMas)}>
+      {verMas ? "Ver menos" : "Ver más"}
+    </Button>
+  </Box>
 
+  {/* ------------------ SECCIÓN EXTRA ------------------ */}
+  {verMas && (
+    <>
+      <Box sx={{ mt: 4, mb: 2 }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          Información adicional
+        </Typography>
+      </Box>
 
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <TextField
+            label="Código Postal"
+            fullWidth
+            defaultValue={client.cp || ""}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
 
-              {verMas && (<>
-                <Box>
-                  <Grid container spacing={2}>
-                    <Grid item xs={2}>
-                      <TextField
-                        label="Codigo postal "
-                        name="Nombre"
-                        defaultValue={client.cp || ""}
-                        InputProps={{ readOnly: true }}
-                        variant="outlined"
-                        fullWidth
+        <Grid item xs={12} md={6}>
+          {client.razon === "Persona" ? (
+            <TextField
+              label="Fecha de nacimiento"
+              fullWidth
+              defaultValue={client.FechaNacimiento || ""}
+              InputProps={{ readOnly: true }}
+            />
+          ) : (
+            <TextField
+              label="Antigüedad"
+              fullWidth
+              defaultValue={client.antiguedad || ""}
+              InputProps={{ readOnly: true }}
+            />
+          )}
+        </Grid>
 
-                        
+        <Grid item xs={12} md={6}>
+          <TextField
+            label="Teléfono"
+            fullWidth
+            defaultValue={client.telefono || ""}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
 
-                      />
-                    </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
+            label="ID"
+            fullWidth
+            defaultValue={client.id || ""}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
 
-                    <Grid item xs={2}>
-                      {client.razon == "Persona" ? <>
+        <Grid item xs={12}>
+          <TextField
+            label="Volumen Transaccional"
+            fullWidth
+            defaultValue={client.volumenTransaccional || ""}
+            InputProps={{ readOnly: true }}
+          />
+        </Grid>
+      </Grid>
 
-                        <TextField
-                          label="Fecha de nacimiento"
-                          name="cuil_cuit"
-                          defaultValue={client.FechaNacimiento || ""}
-                          InputProps={{ readOnly: true }}
-                          variant="outlined"
-                          fullWidth
+      {/* ------------------ BENEFICIARIOS ------------------ */}
+      <Box sx={{ mt: 4, mb: 2 }}>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          Beneficiarios
+        </Typography>
+      </Box>
 
- 
-                        />
+      {client.beneficiarios !== "No" && (
+        <Grid container spacing={2}>
 
-                      </> : <>
-                        <TextField
-                          label="antiguedad"
-                          name="cuil_cuit"
-                          defaultValue={client.antiguedad || ""}
-                          InputProps={{ readOnly: true }}
-                          variant="outlined"
-                          fullWidth
+          {/* Beneficiario 1 */}
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Beneficiario 1"
+              fullWidth
+              value={client.beneficiario1}
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
 
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="CUIL Beneficiario 1"
+              fullWidth
+              value={client.cuilbeneficiario1}
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
 
-                        />
+          <Grid item xs={12} md={4}>
+            <TextField
+              label="Porcentaje 1"
+              fullWidth
+              value={client.porcentaje1 + "%"}
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
 
+          {/* Beneficiario 2 */}
+          {client.beneficiario2 !== "No" && (
+            <>
+              <Grid item xs={12} md={4}>
+                <TextField label="Beneficiario 2" fullWidth value={client.beneficiario2} />
+              </Grid>
 
-                      </>} </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField label="CUIL Beneficiario 2" fullWidth value={client.cuilbeneficiario2} />
+              </Grid>
 
-                    <Grid item xs={2}>
-                      <TextField
-                        label="Numero de telefono"
-                        name="otroCampo"
-                        defaultValue={client.telefono || ""}
-                        InputProps={{ readOnly: true }}
-                        variant="outlined"
-                        fullWidth
+              <Grid item xs={12} md={4}>
+                <TextField label="Porcentaje 2" fullWidth value={client.porcentaje2 + "%"} />
+              </Grid>
+            </>
+          )}
 
-                        
+          {/* Beneficiario 3 */}
+          {client.beneficiario3 && client.beneficiario3 !== "No" && (
+            <>
+              <Grid item xs={12} md={4}>
+                <TextField label="Beneficiario 3" fullWidth value={client.beneficiario3} />
+              </Grid>
 
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <TextField
-                        label="Id"
-                        name="otroCampo"
-                        defaultValue={client.id || ""}
-                        InputProps={{ readOnly: true }}
-                        variant="outlined"
-                        fullWidth
+              <Grid item xs={12} md={4}>
+                <TextField label="CUIL Beneficiario 3" fullWidth value={client.cuilbeneficiario3} />
+              </Grid>
 
-
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <TextField
-                        label="Volumen transaccional"
-                        name="otroCampo"
-                        defaultValue={client.volumenTransaccional || ""}
-                        InputProps={{ readOnly: true }}
-                        variant="outlined"
-                        fullWidth
-
-                      />
-                    </Grid>
-                  </Grid>
-
-                </Box>
-
-                <Box>
-                  {/* Beneficiario 1 */}
-                  {client.beneficiarios !== "No" && (
-                    <>
-                      <Box>
-                        <TextField
-                          label="Beneficiario 1"
-                          id="beneficiario"
-                          value={client.beneficiario1}
-                          variant="filled"
-                          sx={{ margin: "10px" }}
-                          InputProps={{
-                            readOnly: true,
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <AccountCircle />
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                        <TextField
-                          label="CUIL Beneficiario 1"
-                          id="cuilBeneficiario1"
-                          value={client.cuilbeneficiario1}
-                          variant="filled"
-                          sx={{ margin: "10px" }}
-                          InputProps={{
-                            readOnly: true,
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <AccountCircle />
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                        <TextField
-                          label="porcentaje 1"
-                          id="porcentaje1"
-                          value={client.porcentaje1 + "%"}
-                          variant="filled"
-                          sx={{ margin: "10px" }}
-                          InputProps={{
-                            readOnly: true,
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <AccountCircle />
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </Box>
-                    </>
+              <Grid item xs={12} md={4}>
+                <TextField label="Porcentaje 3" fullWidth value={client.porcentaje3 + "%"} />
+              </Grid>
+            </>
+          )}
+        </Grid>
+                  
                   )}
-
-                  {/* Beneficiario 2 */}
-                  {client.beneficiario2 !== "No" && (
-                    <>   <Box>
-                      <TextField
-                        label="Beneficiario 2"
-                        id="beneficiario2"
-                        value={client.beneficiario2}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      <TextField
-                        label="CUIL Beneficiario 2"
-                        id="cuilBeneficiario2"
-                        value={client.cuilbeneficiario2}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      <TextField
-                        label="porcentaje 2"
-                        id="porcentaje2"
-                        value={client.porcentaje2 + "%"}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      /></Box>
-                    </>
-                  )}
-
-                  {/* Beneficiario 3 */}
-                  {(client.beneficiario3 !== "No" && client.beneficiario3 !== undefined) && (
-                    <>
-                      <TextField
-                        label="Beneficiario 3"
-                        id="beneficiario3"
-                        value={client.beneficiario3}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      <TextField
-                        label="CUIL Beneficiario 3"
-                        id="cuilBeneficiario3"
-                        value={client.cuilbeneficiario3}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      <TextField
-                        label="porcentaje 3"
-                        id="porcentaje3"
-                        value={client.porcentaje3}
-                        variant="filled"
-                        sx={{ margin: "10px" }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AccountCircle />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </>
-                  )}
-                </Box>
+                
                 <Agregarbenefciarios
                   id={client.id}
                   traer={async () => {
