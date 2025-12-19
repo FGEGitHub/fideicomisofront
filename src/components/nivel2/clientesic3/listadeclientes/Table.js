@@ -226,7 +226,7 @@ return (
     <div>
             <Stack spacing={2} sx={{ width: '100%' }}>
  
- <Alert severity="info"  sx={{ backgroundColor: '#e6f8d7', color: '#1a303e'  }}>
+ <Alert severity="info"  sx={{ backgroundColor: '#148d8d', color: '#fffff'  }}>
   Cantidad de clientes: {clients.length}</Alert>
     </Stack>
     <br/>

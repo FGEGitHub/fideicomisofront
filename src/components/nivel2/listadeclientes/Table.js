@@ -39,6 +39,7 @@ const Lotes = () => {
 
   const getClients = async () => {
     const data = await servicioClientes.lista({});
+   
     setClients(data);
     setFilteredClients(data);
     setLoading(false);

@@ -25,9 +25,12 @@ const Navbar = (props) => {
   const theme = useTheme();
 
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  const islogo = {
-                  width: "100px",                  
-                  };
+ const islogo = {
+  width: "100px",
+  marginRight: "16px",
+  filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.5))"
+};
+
   const navigate = useNavigate();
 
 
@@ -76,7 +79,10 @@ const traer = async () => {
   //1a303e COLOR AZUL OSCURO DEL NAV
   return (
     <React.Fragment>
-      <AppBar sx={{ background: "#002D57" }}> 
+      <AppBar    sx={{
+    background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+    boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+  }}> 
         <Toolbar>
 
           

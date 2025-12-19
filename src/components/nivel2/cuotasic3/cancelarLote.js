@@ -138,7 +138,17 @@ console.log(mesSeleccionado,anioSeleccionado)
   };
   return (
     <>
-      <Button variant="outlined" sx={{ color: "black", borderColor: "black" }} onClick={() => setOpen(true)}>
+      <Button variant="contained" sx={{
+          mb: 2,
+          px: 2.2,
+          py: 1.1,
+          borderRadius: 2,
+          textTransform: 'none',
+          fontWeight: 700,
+          backgroundColor: '#01567c',
+          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
+          '&:hover': { backgroundColor: '#014a6b' }
+        }} onClick={() => setOpen(true)}>
         Cancelar lote
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>

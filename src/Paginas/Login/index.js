@@ -30,7 +30,8 @@ import marcas from '../../Assets/marcas.png'
 
 const Login = () => {
 
-  const [loginVisible, setLoginvisible] = useState(false)
+ const [errorCredenciales, setErrorCredenciales] = useState("");
+
   const [usuario, setUsuario] = useState({
     cuil_cuit: "",
     password: "",
@@ -122,10 +123,11 @@ const Login = () => {
 
       }
     } catch (error) {
-      console.error(error);
-      console.log('error credenciales')
-      window.location.reload(true);
-      alert('error credenciales')
+  console.error(error);
+  console.log('Cuil/Cuit y/o contraseña incorrectos');
+
+  setLoading(false);
+  setErrorCredenciales("Cuil/Cuit y/o contraseña incorrectos");
     
     }
 
@@ -190,25 +192,31 @@ const LoginReturn = () => (
           </Box>
 
           <Box component="form" onSubmit={loginSubmit} noValidate>
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Cuil/Cuit"
-              name="cuil_cuit"
-              value={usuario.cuil_cuit}
-              onChange={handleChange}
-              variant="outlined"
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Contraseña"
-              type="password"
-              name="password"
-              value={usuario.password}
-              onChange={handleChange}
-              variant="outlined"
-            />
+          <TextField
+  fullWidth
+  margin="normal"
+  label="Cuil/Cuit"
+  name="cuil_cuit"
+  value={usuario.cuil_cuit}
+  onChange={handleChange}
+  variant="outlined"
+  error={!!errorCredenciales}
+  helperText={" "}
+ />
+
+          <TextField
+  fullWidth
+  margin="normal"
+  label="Contraseña"
+  type="password"
+  name="password"
+  value={usuario.password}
+  onChange={handleChange}
+  variant="outlined"
+  error={!!errorCredenciales}
+  helperText={errorCredenciales || " "}
+ />
+
             <Link href="#" variant="body2">
                   <RecuperoC />
                 </Link>
@@ -226,11 +234,12 @@ const LoginReturn = () => (
               sx={{ background:'#148D8D', mt: 2, mb: 2, ml:'auto', display: 'block'}}
               
             >
-              {loading ? (
-                <CircularProgress color="#002d57" size={25} />
-              ) : (
-                "Ingresar"
-              )}
+            {loading ? (
+  <CircularProgress size={25} sx={{ color: '#002d57' }} />
+) : (
+  "Ingresar"
+)}
+
             </Button>
 
             <Grid container justifyContent="space-between">

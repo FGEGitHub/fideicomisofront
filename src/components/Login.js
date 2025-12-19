@@ -30,32 +30,47 @@ const Login = () => {
 
 
 
-    const loginSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        try {
+ const loginSubmit = async (event) => {
+  event.preventDefault();
+  setLoading(true);
 
-             user = await loginService.login({
-                cuil_cuit: usuario.cuil_cuit,
-                password: usuario.password
-            })
-            
-            window.localStorage.setItem(
-                'loggedNoreAppUser', JSON.stringify(user)
-            )
+  setErrorCredenciales(""); // ✅ limpia el mensaje anterior
 
-            servicioUsuario.setToken(user.token)
-            console.log(user)
+  try {
+    const user = await loginService.login({
+      cuil_cuit: usuario.cuil_cuit,
+      password: usuario.password
+    });
 
+    window.localStorage.setItem('loggedNoteAppUser', JSON.stringify(user));
+    servicioUsuario.setToken(user.token);
+    setUser(user);
 
-            setLoading(false);
-            // navigate("/login");
-        } catch (error) {
-            console.error(error);
-            console.log('error credenciales')
-        }
-     
-    };
+    setLoading(false);
+
+    switch(user.nivel){
+      case 1: navigate('/usuario/menu'); window.location.reload(true); break;
+      case 2: navigate('/usuario2/clientes'); window.location.reload(true); break;
+      case 3: navigate('/nivel3'); window.location.reload(true); break;
+      case 4: navigate('/legales/clientes'); window.location.reload(true); break;
+      case 5: navigate('/usuariomapas/inicio'); break;
+      case 10: navigate('/admin/usuarios'); window.location.reload(true); break;
+      default: break;
+    }
+
+  } catch (error) {
+    console.error(error);
+    console.log('error credenciales');
+
+    setLoading(false);
+
+    // ✅ en vez de alert + reload
+    setErrorCredenciales("error credenciales");
+    // ❌ NO window.location.reload(true);
+    // ❌ NO alert(...)
+  }
+};
+
 
     const pediuser =  (event) =>{
         return(user)

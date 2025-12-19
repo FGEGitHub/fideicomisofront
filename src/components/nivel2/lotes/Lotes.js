@@ -139,7 +139,7 @@ const Lotes = () => {
                     <div>
                         <Stack spacing={2} sx={{ width: '100%' }}>
 
-                            <Alert severity="info"  sx={{ backgroundColor: '#e6f8d7', color: '#1a303e' }} >
+                            <Alert severity="info"  sx={{ backgroundColor: '#148d8d', color: '#fffff' }} >
                                 Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )
                                     
                             </Alert>

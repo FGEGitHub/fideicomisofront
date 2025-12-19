@@ -1,168 +1,284 @@
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import SchemaTwoToneIcon from '@mui/icons-material/SchemaTwoTone';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import ApiIcon from '@mui/icons-material/Api';
-import Divider from '@mui/material/Divider';
-import { Button } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import sercicioCuotas from '../../../services/cuotas'
-import AppsOutageTwoToneIcon from '@mui/icons-material/AppsOutageTwoTone';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState, Fragment } from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+  Paper,
+  Divider,
+  Avatar,
+  Chip,
+} from "@mui/material";
 
-const currencies = [
-    {
-        value: 'CBU',
-        label: 'CBU N°1',
-    },
-    {
-        value: 'CBU',
-        label: 'CBU N°2',
-    },
+import ApiIcon from "@mui/icons-material/Api";
+import AppsOutageTwoToneIcon from "@mui/icons-material/AppsOutageTwoTone";
+import SchemaTwoToneIcon from "@mui/icons-material/SchemaTwoTone";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
-];
-
-export default function SelectTextFields(props) {
-    const navigate = useNavigate();
-    const [open, setOpen] = React.useState(false);
-    //const usuario  = useUser().userContext
-
-    const [rta, setRta] = useState({
-        id_lote: props.idlote,
-    })
-
-    const [habilitado, setHabilitado] = useState(false)
-
-
-
-    //{if(rta.puede=''){ props.setpuede()}}
-
-
-    const preba = JSON.parse(window.localStorage.getItem('loggedNoteAppUser'))
-    const cuil_cuit = preba.cuil_cuit
-
-    const handleChange = (e) => {
-        console.log(rta)
-        setRta({ ...rta, [e.target.name]: e.target.value });
-    }
-
-    const handleClickOpen = () => {
-
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    
-
-    ////
-
-
-    return (
-
-        <Box
-            component="form"
-            sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-        >
-            <Button variant="contained" sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }} 
-              onClick={handleClickOpen}>
-               Detalles
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-            <DialogTitle id="alert-dialog-title">
-            {props.zona =="IC3" ? <>
-         Zona: {props.zona} Fraccion: {props.fraccion} Manzana: {props.manzana} Lote: {props.lote} </>:
-         <>      Zona: {props.zona} Fraccion: {props.fraccion} Manzana: {props.manzana} Parcela: {props.parcela}                         </>}
-        </DialogTitle>
-                <DialogContent>
-                <List
+function InfoRow({ icon, label, value }) {
+  return (
+    <Paper
+      elevation={0}
       sx={{
-        width: '100%',
-        maxWidth: 360,
-        bgcolor: 'background.paper',
+        p: 1.4,
+        borderRadius: 2.2,
+        border: "1px solid #e8eef5",
+        backgroundColor: "#ffffff",
+        display: "flex",
+        alignItems: "center",
+        gap: 1.4,
       }}
     >
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <ApiIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Superficie" secondary={props.superficie} />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <AppsOutageTwoToneIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Adrema" secondary={props.adrema} />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <SchemaTwoToneIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Mensura" secondary= {props.adrema} />
-      </ListItem>
-      {props.cuil_cuit !=0 ? <>
-      
-        <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <SchemaTwoToneIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Titular" secondary= {props.nombre} />
-        <Button   onClick={() => navigate('/usuario2/detallecliente/'+props.cuil_cuit)}>Ver</Button>
-      </ListItem>
-      
-      
-      </>:<>
-      <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <SchemaTwoToneIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Sin titular asignado" secondary= "--" />
-      </ListItem>
-      </>}
-     
-    </List>
-                 
-                </DialogContent>
-                <DialogActions>
-   <Button onClick={handleClose} size="small" variant="contained" 
-   sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
-                        Cerrar
-                    </Button>
+      <Avatar
+        sx={{
+          width: 44,
+          height: 44,
+          bgcolor: "rgba(1,86,124,0.12)",
+          color: "#01567c",
+          border: "1px solid rgba(1,86,124,0.18)",
+        }}
+      >
+        {icon}
+      </Avatar>
 
-                </DialogActions>
-            </Dialog>
-        </Box >
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Typography sx={{ fontWeight: 900, color: "#1f2a33", lineHeight: 1.1 }}>
+          {label}
+        </Typography>
+        <Typography sx={{ mt: 0.2, color: "#5b6b7a", fontWeight: 700 }}>
+          {value ?? "--"}
+        </Typography>
+      </Box>
+    </Paper>
+  );
+}
 
+export default function SelectTextFields(props) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-
+  const titulo =
+    props.zona === "IC3" ? (
+      <>
+        Zona: <b>{props.zona}</b> · Fracción: <b>{props.fraccion}</b> · Manzana:{" "}
+        <b>{props.manzana}</b> · Lote: <b>{props.lote}</b>
+      </>
+    ) : (
+      <>
+        Zona: <b>{props.zona}</b> · Fracción: <b>{props.fraccion}</b> · Manzana:{" "}
+        <b>{props.manzana}</b> · Parcela: <b>{props.parcela}</b>
+      </>
     );
+
+  const tieneTitular = props.cuil_cuit != 0;
+
+  return (
+    <Box>
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        sx={{
+          mb: 2,
+          px: 2.2,
+          py: 1.1,
+          borderRadius: 2,
+          textTransform: "none",
+          fontWeight: 800,
+          backgroundColor: "#01567c",
+          boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
+          "&:hover": { backgroundColor: "#014a6b" },
+        }}
+      >
+        Detalles
+      </Button>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="xs"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            overflow: "hidden",
+            boxShadow: "0 22px 60px rgba(0,0,0,0.35)",
+          },
+        }}
+      >
+        {/* HEADER MODERNO */}
+        <DialogTitle
+          sx={{
+            py: 2,
+            px: 2.2,
+            color: "#fff",
+            background:
+              "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 0.5 }}>
+              
+              {tieneTitular ? (
+                <Chip
+                  size="small"
+                  label="Con titular"
+                  sx={{
+                    color: "#fff",
+                    bgcolor: "rgba(255,255,255,0.14)",
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    fontWeight: 800,
+                  }}
+                />
+              ) : (
+                <Chip
+                  size="small"
+                  label="Sin titular"
+                  sx={{
+                    color: "#fff",
+                    bgcolor: "rgba(255,255,255,0.14)",
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    fontWeight: 800,
+                  }}
+                />
+              )}
+            </Box>
+            
+            <Typography sx={{ opacity: 0.92, fontWeight: 700, fontSize: 19 }}>
+              {titulo}
+            </Typography>
+          </Box>
+        </DialogTitle>
+
+        <DialogContent sx={{ backgroundColor: "#f4f8fb", p: 2.2 }}>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 2,
+              borderRadius: 3,
+              border: "1px solid #e8eef5",
+              backgroundColor: "#ffffff",
+            }}
+          >
+            <Typography sx={{ color: "#445", fontWeight: 800, mb: 1.2 }}>
+              Información general
+            </Typography>
+
+            <Box sx={{ display: "grid", gap: 1.2 }}>
+              <InfoRow
+                icon={<ApiIcon />}
+                label="Superficie"
+                value={props.superficie}
+              />
+              <InfoRow
+                icon={<AppsOutageTwoToneIcon />}
+                label="Adrema"
+                value={props.adrema}
+              />
+              <InfoRow
+                icon={<SchemaTwoToneIcon />}
+                label="Mensura"
+                value={props.mensura ?? props.adrema}
+              />
+
+              <Divider sx={{ my: 0.6 }} />
+
+              {tieneTitular ? (
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 1.4,
+                    borderRadius: 2.2,
+                    border: "1px solid #e8eef5",
+                    backgroundColor: "#fbfdff",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.2,
+                  }}
+                >
+                  <Avatar
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      bgcolor: "rgba(20,141,141,0.12)",
+                      color: "#148D8D",
+                      border: "1px solid rgba(20,141,141,0.20)",
+                    }}
+                  >
+                    <PersonOutlineIcon />
+                  </Avatar>
+
+                  <Box sx={{ flex: 1 }}>
+                    <Typography sx={{ fontWeight: 950, color: "#1f2a33" }}>
+                      Titular
+                    </Typography>
+                    <Typography sx={{ color: "#5b6b7a", fontWeight: 700 }}>
+                      {props.nombre}
+                    </Typography>
+                  </Box>
+
+                  <Button
+                    variant="outlined"
+                    onClick={() =>
+                      navigate("/usuario2/detallecliente/" + props.cuil_cuit)
+                    }
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: "none",
+                      fontWeight: 900,
+                      borderColor: "rgba(1,86,124,0.35)",
+                      color: "#01567c",
+                      "&:hover": {
+                        borderColor: "#01567c",
+                        backgroundColor: "rgba(1,86,124,0.06)",
+                      },
+                    }}
+                  >
+                    Ver
+                  </Button>
+                </Paper>
+              ) : (
+                <InfoRow
+                  icon={<PersonOutlineIcon />}
+                  label="Sin titular asignado"
+                  value="--"
+                />
+              )}
+            </Box>
+          </Paper>
+        </DialogContent>
+
+        <DialogActions
+          sx={{
+            px: 2.2,
+            py: 1.6,
+            backgroundColor: "#f4f8fb",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            sx={{
+              borderRadius: 2,
+              textTransform: "none",
+              fontWeight: 900,
+              px: 2.2,
+              backgroundColor: "#148D8D",
+              "&:hover": { backgroundColor: "#0f7a7a" },
+            }}
+          >
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
 }

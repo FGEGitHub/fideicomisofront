@@ -134,7 +134,16 @@ export default function SelectTextFields(props) {
       noValidate
       autoComplete="off"
     >
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="contained" onClick={handleClickOpen} sx={{
+                      borderRadius: 2,
+                      textTransform: "none",
+                      fontWeight: 900,
+                      px: 2,
+                      backgroundColor: "rgba(255,255,255,0.16)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.25)",
+                      "&:hover": { backgroundColor: "rgba(255,255,255,0.24)" },
+                    }}>
       Establecer PEP
       </Button>
       <Dialog open={open} onClose={handleClose}>
