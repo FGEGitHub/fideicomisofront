@@ -177,7 +177,16 @@ props.traer(props.id_lote)
   return (
     <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }} noValidate autoComplete="off">
       <Tooltip title="Pago rapido (Nuevo)">
-        <Button variant="outlined" onClick={handleClickOpen}  >  Pagar </Button>
+        <Button variant="contained" size="small"  sx={{
+          borderRadius: 2,
+          textTransform: 'none',
+          fontWeight: 900,
+          backgroundColor: '#0799B6',
+          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
+          '&:hover': { backgroundColor: '#014a6b' }
+        }}
+
+ onClick={handleClickOpen}  >  Pagar </Button>
        
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
