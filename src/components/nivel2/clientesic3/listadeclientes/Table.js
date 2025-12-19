@@ -1,268 +1,204 @@
 import { useState, useEffect } from "react";
-import servicioClientes from '../../../../services/clientes'
-import MUIDataTable from "mui-datatables";
-import Nuevo from './ClienteNuevo'
-import CargaDeTabla from "../../../CargaDeTabla"
+import servicioClientes from "../../../../services/clientes";
+import Nuevo from "./ClienteNuevo";
+import CargaDeTabla from "../../../CargaDeTabla";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@material-ui/icons/Edit";
-import SearchIcon from '@mui/icons-material/Search';
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import MuiAlert from '@mui/material/Alert';
-import Tooltip from '@mui/material/Tooltip';
-//import overbookingData from "./overbooking";
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+import SearchIcon from "@mui/icons-material/Search";
+import Stack from "@mui/material/Stack";
+import MuiAlert from "@mui/material/Alert";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  TextField,
+} from "@mui/material";
+
+const Alert = (props) => (
+  <MuiAlert elevation={6} variant="filled" {...props} />
+);
+
 const Lotes = () => {
-    //configuracion de Hooks
-    const [clients, setClients] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+  const [clients, setClients] = useState([]);
+  const [filteredClients, setFilteredClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    getClients();
+  }, []);
 
-        useEffect(() => {
-        getClients()
-    }, [])
-
-    const getClients = async () => {
-        
-        const clients = await servicioClientes.listaic3({}) //////  api/links/infocantidad
-        setClients(clients)
-        setLoading(false);
-    }
-
-
-
-    ///
-//opcionde click en el nombre
-    function CutomButtonsRenderere(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-          
-       
-           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].Nombre}</p>
-          
-          </>
-        );
-      }
-      //
-
-   function ultimacuota(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-          
-          {  clients[dataIndex].mes + "/" + clients[dataIndex].anio}
-          
-          </>
-        );
-      }
-      function CutomButtonsRendercuil(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-          
-       
-           <p  onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)} style={{ marginRight: "10px", cursor: "pointer" }}>{clients[dataIndex].cuil_cuit}</p>
-          
-          </>
-        );
-      }
-
-    function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-              <Tooltip title="Editar">
-            <EditIcon
-             onClick={() =>  navigate('/usuario2/modificarcliente/'+clients[dataIndex].cuil_cuit)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            /></Tooltip>
-             <Tooltip title="Ver">
-             <SearchIcon
-             onClick={() =>  navigate('/usuario2/detalleclic3/'+clients[dataIndex].cuil_cuit)}
-              style={{ marginRight: "10px", cursor: "pointer" }}
-            />
-           </Tooltip>
-          </>
-        );
-      }
-
-
-    // definimos las columnas de la tabla mui de clientes
-    const columns = [
-        {
-            name: "id",
-            label: "ID",
-
-        },
-       
-           {
-            name: "cuil_cuit",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                  CutomButtonsRendercuil(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
-       
-         {
-            name: "Nombre",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderere(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
-    
-       {
-            name: "Ultima cuota",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                  ultimacuota(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
-        {
-            name: "Acciones",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderer(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
- 
-
-    ];
-
-    const options = {
-    
-        setTableProps: () => {
-            return {
-              style: {
-                backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
-              },
-            };
-          },
-          customHeadRender: (columnMeta, handleToggleColumn) => ({
-            TableCell: {
-              style: {
-                backgroundColor: '#e6f8d7', // Cambia el color de fondo del encabezado
-                color: 'white', // Cambia el color del texto del encabezado
-              },
-            },
-          }),
-        selectableRows: false, // Desactivar la selección de filas
-        stickyHeader: true,
-        selectableRowsHeader: false,
-        selectableRowsOnClick: true,
-        responsive: 'scroll',
-        rowsPerPage: 10,
-        rowsPerPageOptions: [5, 10, 15],
-        downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
-        print: true,
-        filter: true,
-        viewColumns: true,
-        pagination: true,
-
-        textLabels: {
-          body: {
-            noMatch: "No se encontraron registros de debito automatico",
-            toolTip: "Ordenar",
-          },
-          pagination: {
-            next: "Siguiente",
-            previous: "Anterior",
-            rowsPerPage: "Filas por página:",
-            displayRows: "de",
-          },
-          toolbar: {
-            search: "Buscar",
-            downloadCsv: "Descargar CSV",
-            print: "Imprimir",
-            viewColumns: "Ver columnas",
-            filterTable: "Filtrar tabla",
-          },
-          filter: {
-            all: "Todos",
-            title: "FILTROS",
-            reset: "RESETEAR",
-          },
-          viewColumns: {
-            title: "Mostrar columnas",
-            titleAria: "Mostrar/ocultar columnas de la tabla",
-          },
-          selectedRows: {
-            text: "fila(s) seleccionada(s)",
-            delete: "Eliminar",
-            deleteAria: "Eliminar filas seleccionadas",
-          },
-        },
-    
+  const getClients = async () => {
+    const data = await servicioClientes.listaic3({});
+    setClients(data);
+    setFilteredClients(data);
+    setLoading(false);
   };
-// renderiza la data table
-return (
-    <>
-    {loading ? (<CargaDeTabla/>) 
-        :(
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+
+    const filtered = clients.filter(
+      (c) =>
+        c.cuil_cuit?.toLowerCase().includes(value) ||
+        c.Nombre?.toLowerCase().includes(value)
+    );
+
+    setFilteredClients(filtered);
+    setPage(0);
+  };
+
+  const handleChangePage = (_, newPage) => setPage(newPage);
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  if (loading) return <CargaDeTabla />;
+
+  return (
     <div>
-            <Stack spacing={2} sx={{ width: '100%' }}>
- 
- <Alert severity="info"  sx={{ backgroundColor: '#148d8d', color: '#fffff'  }}>
-  Cantidad de clientes: {clients.length}</Alert>
-    </Stack>
-    <br/>
-{/* componente de cliente nuevo, envio de funcion para actualizar de inmediato */}
-    <Nuevo  
-    getClients =  { async () => {
-        const clients = await servicioClientes.listaic3({
-        })
-        setClients(clients)
-    }}
-    />
+      {/* ALERT */}
+      <Stack spacing={2} sx={{ width: "100%" }}>
+        <Alert severity="info" sx={{ backgroundColor: "#148d8d" }}>
+          Cantidad de clientes: {clients.length}
+        </Alert>
+      </Stack>
 
+      <br />
 
+      {/* NUEVO CLIENTE */}
+      <Nuevo
+        getClients={async () => {
+          const data = await servicioClientes.listaic3({});
+          setClients(data);
+          setFilteredClients(data);
+        }}
+      />
 
-        <MUIDataTable
-        
-            title={"Lista de Clientes"}
-            data={clients}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
-
-
+      {/* BUSCADOR */}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+        <TextField
+          label="Buscar por CUIL o nombre"
+          size="small"
+          value={search}
+          onChange={handleSearch}
         />
+      </Box>
+
+      {/* TABLA */}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead sx={{ backgroundColor: "#0799b6" }}>
+            <TableRow>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                CUIL / CUIT
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                NOMBRE
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                ÚLTIMA CUOTA
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                ACCIONES
+              </TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {filteredClients
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((client, index) => (
+                <TableRow key={index} hover>
+                  {/* CUIL */}
+                  <TableCell
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/usuario2/detalleclic3/${client.cuil_cuit}`
+                      )
+                    }
+                  >
+                    {client.cuil_cuit}
+                  </TableCell>
+
+                  {/* NOMBRE */}
+                  <TableCell
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(
+                        `/usuario2/detalleclic3/${client.cuil_cuit}`
+                      )
+                    }
+                  >
+                    {client.Nombre}
+                  </TableCell>
+
+                  {/* ULTIMA CUOTA */}
+                  <TableCell>
+                    {client.mes}/{client.anio}
+                  </TableCell>
+
+                  {/* ACCIONES */}
+                  <TableCell>
+                    <Tooltip title="Editar">
+                      <EditIcon
+                        onClick={() =>
+                          navigate(
+                            `/usuario2/modificarcliente/${client.cuil_cuit}`
+                          )
+                        }
+                        sx={{
+                          mr: 1,
+                          cursor: "pointer",
+                          color: "#1e88e5",
+                        }}
+                      />
+                    </Tooltip>
+
+                    <Tooltip title="Ver">
+                      <SearchIcon
+                        onClick={() =>
+                          navigate(
+                            `/usuario2/detalleclic3/${client.cuil_cuit}`
+                          )
+                        }
+                        sx={{ cursor: "pointer", color: "#009688" }}
+                      />
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+
+        {/* PAGINACIÓN */}
+        <TablePagination
+          component="div"
+          count={filteredClients.length}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPageOptions={[5, 10, 15]}
+          labelRowsPerPage="Filas por página:"
+        />
+      </TableContainer>
     </div>
-    )}
-    </>
-
-
-)
-}
+  );
+};
 
 export default Lotes;
