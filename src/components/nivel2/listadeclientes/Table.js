@@ -119,6 +119,9 @@ const Lotes = () => {
                 RAZÓN SOCIAL
               </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+              ULTIMA CUOTA
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                 VER / EDITAR
               </TableCell>
             </TableRow>
@@ -180,7 +183,7 @@ const Lotes = () => {
                     </TableCell>
 
                     <TableCell>{client.razon}</TableCell>
-
+ <TableCell>{client.ultimaCuota}</TableCell>
                     <TableCell>
                       <Tooltip title="Editar">
                         <EditIcon
