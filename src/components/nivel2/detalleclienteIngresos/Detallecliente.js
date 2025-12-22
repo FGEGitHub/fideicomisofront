@@ -153,7 +153,7 @@ const DetalleCliente = () => {
           {/* ESTADO / ALERTA */}
          
            
-            {habilitado ? (
+            {habilitado ? (<>
               <Alert
                 severity="success"
                 sx={{
@@ -163,7 +163,25 @@ const DetalleCliente = () => {
               >
                 <b>Cliente habilitado</b> por {cliente.cuil_cuit}, el día{" "}
                 {cliente.fecha}
+
+             
               </Alert>
+               <Button
+                      variant="contained"
+                      onClick={() =>
+                        navigate("/usuario2/asignarloteausuario/" + cuil_cuit)
+                      }
+                      sx={{
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 950,
+                        px: 2,
+                        backgroundColor: "#093817ff",
+                        "&:hover": { backgroundColor: "#b71c1c" },
+                      }}
+                    >
+                    Asignar lote
+                    </Button></>
             ) : (
               <Alert
                 severity="error"
