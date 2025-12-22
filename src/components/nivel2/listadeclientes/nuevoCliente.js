@@ -46,7 +46,7 @@ export default function ClienteNuevo({ getClients }) {
       setForm({});
     } catch (error) {
       console.error(error);
-      alert('Error al crear el cliente');
+    
     }
     setLoading(false);
   };
