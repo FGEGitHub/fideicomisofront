@@ -195,7 +195,7 @@ const DetalleCliente = () => {
                 habilitado). Ir a LEGAJOS para habilitar.
               </Alert>
             )}
-          
+              
           {/* CARD: DATOS */}
           <Paper
             elevation={0}
