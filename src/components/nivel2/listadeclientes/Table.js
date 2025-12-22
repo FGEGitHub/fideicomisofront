@@ -21,6 +21,7 @@ import {
   TablePagination,
   TextField,
 } from "@mui/material";
+import Button from "@mui/material/Button";
 
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
@@ -86,7 +87,23 @@ const Lotes = () => {
           setFilteredClients(data);
         }}
       />
-
+ <Button
+                  variant="contained"
+                 sx={{
+          mb: 2,
+          px: 2.2,
+          py: 1.1,
+          borderRadius: 2,
+          textTransform: 'none',
+          fontWeight: 700,
+          backgroundColor: '#01567c',
+          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
+          '&:hover': { backgroundColor: '#014a6b' }
+        }}
+                  onClick={() => navigate("/usuario2/nuevocliente/")}
+                >
+                 Nuevo cliente
+                </Button>
       <Box
         sx={{
           display: "flex",
