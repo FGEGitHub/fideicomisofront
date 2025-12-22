@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
-import Button from "@mui/material/Button";
+
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import {
@@ -81,13 +81,13 @@ const Lotes = () => {
 
       <br />
 
-      <Nuevo
+   {/*    <Nuevo
         getClients={async () => {
           const data = await servicioClientes.lista({});
           setClients(data);
           setFilteredClients(data);
         }}
-      />
+      /> */}
  <Button
                   variant="contained"
                  sx={{
