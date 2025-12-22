@@ -103,7 +103,7 @@ const Lotes = () => {
         }}
                   onClick={() => navigate("/usuario2/nuevocliente/")}
                 >
-                 Nuevo cliente
+                 NUEVO CLIENTE
                 </Button>
       <Box
         sx={{
