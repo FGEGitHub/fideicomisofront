@@ -28,8 +28,9 @@ import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
-
+import DescriptionIcon from '@mui/icons-material/Description';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 
 const initialWidth = 240; // Ancho inicial del menú
 export default function MenuIzq2 ({children}) {
@@ -104,42 +105,31 @@ useEffect(() => {
       } 
     const menuItems = [
         { 
-          text: 'Ver Clientes', 
+          text: 'Clientes Parque', 
           icon: <GroupIcon style={{ color: "#1a303e" }} />, 
           path: '/usuario2/clientes' 
         },
-    
+    {
+          text: 'Clientes IC3',
+          icon: <GroupIcon style={{ color: "#1a303e" }} />, 
+          path: '/usuario2/clientesic3'
+        },
         {
           text: 'Lotes',
           icon: <NfcIcon style={{ color: "#1a303e" }} />,
           path:  '/usuario2/lotes',
         },
-        {
-          text: 'Aprobación de Pagos',
-          icon:<div><Badge badgeContent={notificaciones} color="error">
-          <PaidIcon style={{ color: "#1a303e" }} />
-        </Badge></div>,
-          path: '/usuario2/aprobacionesdepagos'
-        },
-        {
-          text: 'Clientes IC3',
-          icon:<div><Badge badgeContent={notificaciones} color="error">
-          <PaidIcon style={{ color: "#1a303e" }} />
-        </Badge></div>,
-          path: '/usuario2/clientesic3'
-        },
+        
        { 
           text: 'Extracto', 
-          icon: <GroupIcon style={{ color: "#1a303e" }} />, 
+          icon: <DescriptionIcon style={{ color: "#1a303e" }} />, 
           path: '/usuario2/extracto' 
         },
 
         
         {
           text: 'Pagos inusuales',
-          icon:<div><Badge badgeContent={notificacioneslegajos} color="error">
-          <AccountBoxIcon style={{ color: "#1a303e" }}/>
-        </Badge></div>,
+          icon: <WarningAmberIcon style={{ color: "#1a303e" }} />,
           path: '/usuario2/inusuales'
         },
         {
@@ -152,9 +142,7 @@ useEffect(() => {
       
         {
           text: 'Aprobaciones de pagos',
-          icon:<div><Badge color="error">
-          <AccountBalanceIcon style={{ color: "#1a303e" }}/>
-        </Badge></div>,
+          icon: <FactCheckIcon style={{ color: "#1a303e" }} />, 
           path: '/usuario2/aprobacionesdepagos'
         },
         {
