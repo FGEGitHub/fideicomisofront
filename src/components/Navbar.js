@@ -80,8 +80,10 @@ const traer = async () => {
   return (
     <React.Fragment>
       <AppBar    sx={{
-    background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
-    boxShadow: "0 3px 10px rgba(0,0,0,0.25)",
+   background:
+  "linear-gradient(90deg, #051821 0%, #051821 30%, #0b2a3a 45%, #01567c 65%, #148D8D 100%)",
+
+    boxShadow: "0 3px 10px rgba(0,0,0,0.35)",
   }}> 
         <Toolbar>
 

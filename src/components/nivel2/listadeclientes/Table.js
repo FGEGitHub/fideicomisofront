@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import {
@@ -140,7 +141,7 @@ const Lotes = () => {
               ULTIMA CUOTA
               </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                VER / EDITAR
+              OPCIONES
               </TableCell>
             </TableRow>
           </TableHead>
@@ -200,34 +201,49 @@ const Lotes = () => {
                       </Box>
                     </TableCell>
 
-                    <TableCell>{client.razon}</TableCell>
- <TableCell>{client.ultimaCuota}</TableCell>
-                    <TableCell>
-                      <Tooltip title="Editar">
-                        <EditIcon
-                          onClick={() =>
-                            navigate(
-                              `/usuario2/modificarcliente/${client.cuil_cuit}`
-                            )
-                          }
-                          sx={{
-                            marginRight: "10px",
-                            cursor: "pointer",
-                            color: "#1e88e5",
-                          }}
-                        />
-                      </Tooltip>
-                      <Tooltip title="Ver">
-                        <SearchIcon
-                          onClick={() =>
-                            navigate(
-                              `/usuario2/detallecliente/${client.cuil_cuit}`
-                            )
-                          }
-                          sx={{ cursor: "pointer", color: "#009688" }}
-                        />
-                      </Tooltip>
-                    </TableCell>
+                   <TableCell>{client.razon}</TableCell>
+<TableCell>{client.ultimaCuota}</TableCell>
+
+<TableCell>
+  <Tooltip title="Editar cliente">
+    <Button
+      variant="contained"
+      size="small"
+      onClick={() =>
+        navigate(`/usuario2/modificarcliente/${client.cuil_cuit}`)
+      }
+      sx={{
+        backgroundColor: "#01567c",
+        marginRight: "8px",
+        textTransform: "none",
+        "&:hover": {
+          backgroundColor: "#01445f",
+        },
+      }}
+    >
+      Editar
+    </Button>
+  </Tooltip>
+
+  <Tooltip title="Ver detalle">
+    <Button
+      variant="contained"
+      size="small"
+      onClick={() =>
+        navigate(`/usuario2/detallecliente/${client.cuil_cuit}`)
+      }
+      sx={{
+        backgroundColor: "#148D8D",
+        textTransform: "none",
+        "&:hover": {
+          backgroundColor: "#0f6f6f",
+        },
+      }}
+    >
+      Ver
+    </Button>
+  </Tooltip>
+</TableCell>
                   </TableRow>
                 );
               })}

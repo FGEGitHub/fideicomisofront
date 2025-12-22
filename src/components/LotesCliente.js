@@ -711,11 +711,11 @@ const LotesCliente = (props) => {
                                           variant="contained"
                                           size="small"
                                           style={{
-                                            borderRadius: 10,
+                                            borderRadius: 8,
                                             textTransform: "none",
                                             fontWeight: 900,
                                             backgroundColor: "#01567c",
-                                            boxShadow: "0 10px 25px rgba(1,86,124,0.20)",
+                                            boxShadow: "0 10px 25px rgba(1,86,124,0.25)", 
                                             color: "#fff",
                                           }}
                                           onClick={() => navigate("/usuario2/pagoscuotas/" + row.id)}

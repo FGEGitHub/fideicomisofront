@@ -8,64 +8,75 @@ const ModalPagos = (props) => {
   const [tipoOperacion, setTipoOperacion] = useState(''); // nuevo estado
 
 
-      const cargarPagos = async () => {
-        try {
-          
-          const data = await serviciopagos.traerpagosdeuncliente(props.cuil_cuit);
-          console.log(data)
-          setPagos(data);
-        } catch (error) {
-          console.error('Error al traer pagos:', error);
-        }
-      };
-      const puedeEnviar = () => {
-        if (tipoOperacion === 'pago interes') {
-          return pagoSeleccionado !== '';
-        } else if (tipoOperacion === 'diferencia minima') {
-          return true;
-        }
-        return false;
-      };
- 
+  const cargarPagos = async () => {
+    try {
 
-      const handleEnviar = async () => {
-      
-          const datosAEnviar = {
-            id_interes: props.id_interes,
-            id_pago: pagoSeleccionado,
-            tipo_operacion: tipoOperacion,
-          };
-      
-          console.log('Datos a enviar:', datosAEnviar);
-          
-          // Acá hacés la llamada a tu servicio o API
-          // Ejemplo:
-          //
-          const rta= await serviciopagos.registrarInteres(datosAEnviar);
-          alert(rta)
-      props.traer()
-          setModalAbierto(false);
-        } 
-        
+      const data = await serviciopagos.traerpagosdeuncliente(props.cuil_cuit);
+      console.log(data)
+      setPagos(data);
+    } catch (error) {
+      console.error('Error al traer pagos:', error);
+    }
+  };
+  const puedeEnviar = () => {
+    if (tipoOperacion === 'pago interes') {
+      return pagoSeleccionado !== '';
+    } else if (tipoOperacion === 'diferencia minima') {
+      return true;
+    }
+    return false;
+  };
+
+
+  const handleEnviar = async () => {
+
+    const datosAEnviar = {
+      id_interes: props.id_interes,
+      id_pago: pagoSeleccionado,
+      tipo_operacion: tipoOperacion,
+    };
+
+    console.log('Datos a enviar:', datosAEnviar);
+
+    // Acá hacés la llamada a tu servicio o API
+    // Ejemplo:
+    //
+    const rta = await serviciopagos.registrarInteres(datosAEnviar);
+    alert(rta)
+    props.traer()
+    setModalAbierto(false);
+  }
+
 
   return (
     <>
-      <button style={{ whiteSpace: 'nowrap' }} onClick={() =>{cargarPagos()
-         setModalAbierto(true)}}>Pagar interes</button>
+      <button variant="contained"
+        size="small"
+        style={{
+          borderRadius: 8,
+          textTransform: "none",
+          fontWeight: 900,
+          backgroundColor: "#148D8D",
+          boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
+          color: "#fff",
+        }} onClick={() => {
+          cargarPagos()
+          setModalAbierto(true)
+        }}>Pagar interes</button>
 
       {modalAbierto && (
         <div style={styles.overlay}>
           <div style={styles.modal}>
-          <h2>Tipo de operación:</h2>
-  <select
-    value={tipoOperacion}
-    onChange={(e) => setTipoOperacion(e.target.value)}
-  >
-    <option value="">-- Seleccioná tipo de operación --</option>
-    <option value="pago interes">Pago Interés</option>
-    <option value="diferencia minima">Diferencia Mínima</option>
-    <option value="no aplica">No aplica</option>
-  </select>
+            <h2>Tipo de operación:</h2>
+            <select
+              value={tipoOperacion}
+              onChange={(e) => setTipoOperacion(e.target.value)}
+            >
+              <option value="">-- Seleccioná tipo de operación --</option>
+              <option value="pago interes">Pago Interés</option>
+              <option value="diferencia minima">Diferencia Mínima</option>
+              <option value="no aplica">No aplica</option>
+            </select>
             <h2>Seleccionar pago en el que se realizo</h2>
             <select
               value={pagoSeleccionado}
@@ -79,10 +90,10 @@ const ModalPagos = (props) => {
               ))}
             </select>
             <div style={{ marginTop: '1rem' }}>
-  
-</div>
+
+            </div>
             <div style={{ marginTop: '1rem' }}>
-            <button onClick={handleEnviar} disabled={!puedeEnviar()}>Enviar</button>              <button onClick={() => setModalAbierto(false)} style={{ marginLeft: '1rem' }}>Cerrar</button>
+              <button onClick={handleEnviar} disabled={!puedeEnviar()}>Enviar</button>              <button onClick={() => setModalAbierto(false)} style={{ marginLeft: '1rem' }}>Cerrar</button>
             </div>
           </div>
         </div>
