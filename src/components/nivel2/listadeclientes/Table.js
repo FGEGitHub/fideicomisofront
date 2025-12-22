@@ -33,6 +33,7 @@ const Lotes = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [search, setSearch] = useState("");
+  const [orderCuota, setOrderCuota] = useState("asc"); // asc | desc
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,7 +60,11 @@ const Lotes = () => {
     setFilteredClients(filtered);
     setPage(0);
   };
-
+const parseCuota = (cuota) => {
+  if (!cuota) return 0;
+  const [mes, anio] = cuota.split("/").map(Number);
+  return anio * 100 + mes; // ej: 202707
+};
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -137,9 +142,28 @@ const Lotes = () => {
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                 RAZÓN SOCIAL
               </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-              ULTIMA CUOTA
-              </TableCell>
+            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+  <Button
+    onClick={() => {
+      const sorted = [...filteredClients].sort((a, b) => {
+        const aVal = parseCuota(a.ultimaCuota);
+        const bVal = parseCuota(b.ultimaCuota);
+
+        return orderCuota === "asc" ? aVal - bVal : bVal - aVal;
+      });
+
+      setFilteredClients(sorted);
+      setOrderCuota(orderCuota === "asc" ? "desc" : "asc");
+    }}
+    sx={{
+      color: "white",
+      fontWeight: "bold",
+      textTransform: "none",
+    }}
+  >
+    ULTIMA CUOTA {orderCuota === "asc" ? "⬆️" : "⬇️"}
+  </Button>
+</TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
               OPCIONES
               </TableCell>
