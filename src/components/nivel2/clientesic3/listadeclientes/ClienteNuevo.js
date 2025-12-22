@@ -13,7 +13,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InputLabel from '@mui/material/InputLabel';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import { Paper } from '@mui/material';
-
+import Box from "@mui/material/Box";
 
 export default function ClienteNuevo(props) {
   let params = useParams()
@@ -53,11 +53,8 @@ export default function ClienteNuevo(props) {
 
   return (
     <div>
-      
-      <Button variant="contained" onClick={handleClickOpen} startIcon={<PersonAddAlt1Icon />}
-        sx={{ mb: 2, backgroundColor: '#148d8d', '&:hover': { backgroundColor: '#4d7d26' } }}>
-        AGREGAR CLIENTE
-      </Button>
+   
+
       <Dialog open={open} onClose={handleClose}>
 
         <DialogTitle>Cliente Nuevo  </DialogTitle>

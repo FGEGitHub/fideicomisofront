@@ -23,6 +23,12 @@ import {
   TextField,
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import InputAdornment from "@mui/material/InputAdornment";
+
+
+
+
 
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
@@ -93,10 +99,16 @@ const parseCuota = (cuota) => {
           setFilteredClients(data);
         }}
       /> */}
- <Button
-                  variant="contained"
-                 sx={{
-          mb: 2,
+
+      <Box
+  sx={{
+    display: "flex",
+    justifyContent: "flex-end",
+    mb: 2,
+  }}>
+ 
+<Button variant="contained" justify-content="flex-end"
+        sx={{
           px: 2.2,
           py: 1.1,
           borderRadius: 2,
@@ -105,26 +117,63 @@ const parseCuota = (cuota) => {
           backgroundColor: '#01567c',
           boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
           '&:hover': { backgroundColor: '#014a6b' }
-        }}
-                  onClick={() => navigate("/usuario2/nuevocliente/")}
-                >
-                 NUEVO CLIENTE
-                </Button>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          mb: 2,
-        }}
-      >
-        <TextField
-          label="Buscar por CUIL, nombre o razón"
-          variant="outlined"
-          size="small"
-          value={search}
-          onChange={handleSearch}
-        />
-      </Box>
+        }}startIcon={<PersonAddAlt1Icon />} onClick={() => navigate("/usuario2/nuevocliente/")}>
+        AGREGAR CLIENTE
+      </Button>  </Box>
+ <Box
+  sx={{
+    display: "flex",
+    mb: 3,
+  }}
+>
+  <TextField
+    label="Buscar por CUIL, nombre o razón"
+    variant="outlined"
+    size="small"
+    value={search}
+    onChange={handleSearch}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon sx={{ color: "#148D8D" }} />
+        </InputAdornment>
+      ),
+    }}
+    sx={{
+      width: "320px",
+      backgroundColor: "#ffffff",
+      borderRadius: "12px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "12px",
+
+        "& fieldset": {
+          borderColor: "#e0e0e0",
+        },
+
+        "&:hover fieldset": {
+          borderColor: "#148D8D",
+        },
+
+        "&.Mui-focused fieldset": {
+          borderColor: "#01567c",
+          borderWidth: "2px",
+        },
+      },
+
+      "& .MuiInputLabel-root": {
+        color: "#666",
+      },
+
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "#01567c",
+      },
+    }}
+  />
+</Box>
+
+
 
       <TableContainer component={Paper}>
         <Table>
@@ -161,7 +210,7 @@ const parseCuota = (cuota) => {
       textTransform: "none",
     }}
   >
-    ULTIMA CUOTA {orderCuota === "asc" ? "⬆️" : "⬇️"}
+    ULTIMA CUOTA {orderCuota === "asc" ? "⬆" : "⬇"}
   </Button>
 </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>

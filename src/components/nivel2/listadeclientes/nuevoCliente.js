@@ -134,10 +134,23 @@ export default function ClienteNuevo({ getClients }) {
 
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
+                   
                   <TextField
                     label="Nombre / Razón Social"
                     name="Nombre"
                     value={form.Nombre || ''}
+                    onChange={handleChange}
+                    fullWidth
+                    required
+                    margin="dense"
+                    sx={sxInput}
+                  />
+                </Grid>
+                  <Grid item xs={12} md={6}>
+                  <TextField
+                    label="CUIL / CUIT"
+                    name="cuil_cuit"
+                    value={form.cuil_cuit || ''}
                     onChange={handleChange}
                     fullWidth
                     required
@@ -159,7 +172,7 @@ export default function ClienteNuevo({ getClients }) {
                       borderRadius: 2,
                       backgroundColor: "#fbfdff",
                       px: 1.2,
-                      py: 0.75,
+                      py: 1.3,
                       "&:focus-within": {
                         borderColor: "#01567c",
                         boxShadow: "0 0 0 3px rgba(1,86,124,0.12)",
@@ -189,20 +202,13 @@ export default function ClienteNuevo({ getClients }) {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    label="CUIL / CUIT"
-                    name="cuil_cuit"
-                    value={form.cuil_cuit || ''}
-                    onChange={handleChange}
-                    fullWidth
-                    required
-                    margin="dense"
-                    sx={sxInput}
-                  />
-                </Grid>
+              
 
                 <Grid item xs={12} md={6}>
+                   <InputLabel
+                    sx={{ fontWeight: 900, color: "#2b3a42" }}
+                  >Telefono
+                  </InputLabel>
                   <TextField
                     label="Teléfono"
                     name="telefono"
