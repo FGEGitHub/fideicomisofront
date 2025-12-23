@@ -9,11 +9,12 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import Modaldetalles from './modalver'
-
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 
 
 
@@ -26,20 +27,20 @@ const Lotes = () => {
     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
         return (
             <>
-              <Modaldetalles
-              zona={clients[0][dataIndex]['zona']}
-              fraccion={clients[0][dataIndex]['fraccion']}
-              manzana={clients[0][dataIndex]['manzana']}
-              lote={clients[0][dataIndex]['lote']}
-              parcela={clients[0][dataIndex]['parcela']}
-              adrema={clients[0][dataIndex]['adrema']}
-              superficie={clients[0][dataIndex]['superficie']}
-              mensura={clients[0][dataIndex]['mensura']}
-              nombre={clients[0][dataIndex]['nombre']}
-              cuil_cuit={clients[0][dataIndex]['cuil_cuit']}
-            
+                <Modaldetalles
+                    zona={clients[0][dataIndex]['zona']}
+                    fraccion={clients[0][dataIndex]['fraccion']}
+                    manzana={clients[0][dataIndex]['manzana']}
+                    lote={clients[0][dataIndex]['lote']}
+                    parcela={clients[0][dataIndex]['parcela']}
+                    adrema={clients[0][dataIndex]['adrema']}
+                    superficie={clients[0][dataIndex]['superficie']}
+                    mensura={clients[0][dataIndex]['mensura']}
+                    nombre={clients[0][dataIndex]['nombre']}
+                    cuil_cuit={clients[0][dataIndex]['cuil_cuit']}
 
-              />
+
+                />
             </>
         );
     }
@@ -67,12 +68,12 @@ const Lotes = () => {
                     CutomButtonsRenderer(
                         dataIndex,
                         rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
+                        // overbookingData,
+                        // handleEditOpen
                     )
             }
-        
-        },   
+
+        },
         {
             name: "zona",
             label: "Zona",
@@ -131,22 +132,99 @@ const Lotes = () => {
     // renderiza la data table
     const options = {
         selectableRows: false, // Deshabilita los checkboxes
-      };
+    };
     return (
         <>
             {loading ? (<CargaDeTabla />)
                 : (
                     <div>
-                        <Stack spacing={2} sx={{ width: '100%' }}>
+                        <Stack spacing={2} sx={{ width: "100%" }}>
+                            <Box
+                                sx={{
+                                    borderRadius: 3,
+                                    px: 2.5,
+                                    py: 2,
+                                    mb: 3,
+                                    background:
+                                        "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                                    boxShadow: "0 14px 35px rgba(15,127,134,0.35)",
+                                    color: "#ffffff",
+                                    display: "flex",
+                                    alignItems: { xs: "flex-start", md: "center" },
+                                    justifyContent: "space-between",
+                                    gap: 2,
+                                    flexWrap: "wrap",
+                                }}
+                            >
+                                {/* IZQUIERDA: TEXTO */}
+                                <Box sx={{ mt: 0.75 }}>
+                                    <Typography
+                                        sx={{
+                                            fontSize: { xs: 16, md: 18 },
+                                            fontWeight: 900,
+                                            letterSpacing: 0.3,
+                                            lineHeight: 1.2,
+                                        }}
+                                    >
+                                        LOTES – Resumen General
+                                    </Typography>
 
-                            <Alert severity="info"  sx={{ backgroundColor: '#148d8d', color: '#fffff' }} >
-                                Lotes: Total:{clients[0].length} Disponibles {clients[1]} ( Parque : {clients[2]}  -  IC3: {clients[3]} )
-                                    
-                            </Alert>
+                                    <Typography
+                                        sx={{
+                                            fontSize: 14,
+                                            fontWeight: 700,
+                                            opacity: 0.9,
+                                            lineHeight: 1.4,
+                                            mt: 1,
+                                        }}
+                                    >
+                                        Total: {clients[0].length}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{
+                                            fontSize: 14,
+                                            fontWeight: 700,
+                                            opacity: 0.9,
+                                            lineHeight: 1.4,
+                                        }}
+                                    >
+                                        Disponibles: {clients[1]}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            mt: 0.5,
+                                            fontSize: 14,
+                                            fontWeight: 600,
+                                            opacity: 0.9,
+                                        }}
+                                    >
+
+                                        · Parque: {clients[2]} · IC3: {clients[3]}
+                                    </Typography>
+                                </Box>
+
+                                {/* DERECHA: BADGE */}
+                                <Box
+                                    sx={{
+                                        px: 2,
+                                        py: 0.75,
+                                        borderRadius: 999,
+                                        background: "rgba(255,255,255,0.16)",
+                                        border: "1px solid rgba(255,255,255,0.35)",
+                                        fontWeight: 900,
+                                        fontSize: 14,
+                                        whiteSpace: "nowrap",
+                                    }}
+                                >
+                                    📊 Lotes disponibles
+                                </Box>
+                            </Box>
                         </Stack>
+
                         <MUIDataTable
 
-                            title={"LISTA DE LOTES"}
+
                             data={clients[0]}
                             columns={columns}
                             actions={[
@@ -156,6 +234,7 @@ const Lotes = () => {
                                     onClick: (event, rowData) => alert("You saved " + rowData.name)
                                 }
                             ]}
+
                             options={options}
 
 

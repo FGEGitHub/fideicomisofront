@@ -24,7 +24,8 @@ import {
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
-
+import Typography from "@mui/material/Typography";
+import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
 const Alert = (props) => (
   <MuiAlert elevation={6} variant="filled" {...props} />
 );
@@ -80,10 +81,56 @@ const parseCuota = (cuota) => {
     <div>
       {/* ALERT */}
       <Stack spacing={2} sx={{ width: "100%" }}>
-        <Alert severity="info" sx={{ backgroundColor: "#148d8d" }}>
-          Cantidad de clientes: {clients.length}
-        </Alert>
-      </Stack>
+  <Box
+    sx={{
+      borderRadius: 3,
+      px: 2.5,
+      py: 2,
+      background:
+        "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+      boxShadow: "0 14px 35px rgba(15,127,134,0.35)",
+      color: "#ffffff",
+      display: "flex",
+      alignItems: "center",
+      gap: 1.5,
+    }}
+  >
+    {/* ICONO */}
+   
+      <PeopleRoundedIcon sx={{ fontSize: 20, color: "#ffffff" }} />
+   
+
+    {/* TEXTO + NUMERO INLINE */}
+    <Typography
+      sx={{
+        fontSize: { xs: 15, md: 16 },
+        fontWeight: 900,
+        letterSpacing: 0.3,
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        flexWrap: "wrap",
+      }}
+    >
+      Cantidad de clientes:
+      <Box
+        component="span"
+        sx={{
+          px: 1.25,
+          py: 0.25,
+          borderRadius: 999,
+          background: "rgba(255,255,255,0.18)",
+          border: "1px solid rgba(255,255,255,0.35)",
+          fontWeight: 900,
+          fontSize: 14,
+          lineHeight: 1,
+        }}
+      >
+        {clients.length}
+      </Box>
+    </Typography>
+  </Box>
+</Stack>
 
       <br />
 
