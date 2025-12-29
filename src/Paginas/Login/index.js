@@ -159,7 +159,7 @@ const LoginReturn = () => (
         alignItems: 'center',
         p: 4,
         textAlign: 'center',
-        background: '#002D57',
+        background: '#051821',
         color: 'white',
       }}
     >
@@ -170,7 +170,7 @@ const LoginReturn = () => (
 
     {/* Columna derecha con formulario dentro de una Card */}
     <Grid item xs={12} md={6}  square 
-    sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background:'#002D57'}}>
+    sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background:'#051821'}}>
       <Box
         sx={{
           width: '100%',

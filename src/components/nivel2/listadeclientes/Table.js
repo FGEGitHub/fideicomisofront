@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
-
+import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import {
@@ -23,6 +23,13 @@ import {
   TextField,
 } from "@mui/material";
 import Button from "@mui/material/Button";
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import InputAdornment from "@mui/material/InputAdornment";
+import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
+
+
+
+
 
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />;
 
@@ -75,14 +82,60 @@ const parseCuota = (cuota) => {
 
   return (
     <div>
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Alert
-          severity="info"
-          sx={{ backgroundColor: "#148d8d", color: "#ffffff" }}
-        >
-          Cantidad de clientes: {clients.length}
-        </Alert>
-      </Stack>
+    <Stack spacing={2} sx={{ width: "100%" }}>
+  <Box
+    sx={{
+      borderRadius: 3,
+      px: 2.5,
+      py: 2,
+      background:
+        "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+      boxShadow: "0 14px 35px rgba(15,127,134,0.35)",
+      color: "#ffffff",
+      display: "flex",
+      alignItems: "center",
+      gap: 1.5,
+    }}
+  >
+    {/* ICONO */}
+   
+      <PeopleRoundedIcon sx={{ fontSize: 20, color: "#ffffff" }} />
+   
+
+    {/* TEXTO + NUMERO INLINE */}
+    <Typography
+      sx={{
+        fontSize: { xs: 15, md: 16 },
+        fontWeight: 900,
+        letterSpacing: 0.3,
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+        flexWrap: "wrap",
+      }}
+    >
+      Cantidad de clientes:
+      <Box
+        component="span"
+        sx={{
+          px: 1.25,
+          py: 0.25,
+          borderRadius: 999,
+          background: "rgba(255,255,255,0.18)",
+          border: "1px solid rgba(255,255,255,0.35)",
+          fontWeight: 900,
+          fontSize: 14,
+          lineHeight: 1,
+        }}
+      >
+        {clients.length}
+      </Box>
+    </Typography>
+  </Box>
+</Stack>
+
+
+
 
       <br />
 
@@ -93,10 +146,16 @@ const parseCuota = (cuota) => {
           setFilteredClients(data);
         }}
       /> */}
- <Button
-                  variant="contained"
-                 sx={{
-          mb: 2,
+
+      <Box
+  sx={{
+    display: "flex",
+    justifyContent: "flex-end",
+    mb: 2,
+  }}>
+ 
+<Button variant="contained" justify-content="flex-end"
+        sx={{
           px: 2.2,
           py: 1.1,
           borderRadius: 2,
@@ -105,26 +164,63 @@ const parseCuota = (cuota) => {
           backgroundColor: '#01567c',
           boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
           '&:hover': { backgroundColor: '#014a6b' }
-        }}
-                  onClick={() => navigate("/usuario2/nuevocliente/")}
-                >
-                 NUEVO CLIENTE
-                </Button>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          mb: 2,
-        }}
-      >
-        <TextField
-          label="Buscar por CUIL, nombre o razón"
-          variant="outlined"
-          size="small"
-          value={search}
-          onChange={handleSearch}
-        />
-      </Box>
+        }}startIcon={<PersonAddAlt1Icon />} onClick={() => navigate("/usuario2/nuevocliente/")}>
+        AGREGAR CLIENTE
+      </Button>  </Box>
+ <Box
+  sx={{
+    display: "flex",
+    mb: 3,
+  }}
+>
+  <TextField
+    label="Buscar por CUIL, nombre o razón"
+    variant="outlined"
+    size="small"
+    value={search}
+    onChange={handleSearch}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon sx={{ color: "#148D8D" }} />
+        </InputAdornment>
+      ),
+    }}
+    sx={{
+      width: "320px",
+      backgroundColor: "#ffffff",
+      borderRadius: "12px",
+      boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "12px",
+
+        "& fieldset": {
+          borderColor: "#e0e0e0",
+        },
+
+        "&:hover fieldset": {
+          borderColor: "#148D8D",
+        },
+
+        "&.Mui-focused fieldset": {
+          borderColor: "#01567c",
+          borderWidth: "2px",
+        },
+      },
+
+      "& .MuiInputLabel-root": {
+        color: "#666",
+      },
+
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "#01567c",
+      },
+    }}
+  />
+</Box>
+
+
 
       <TableContainer component={Paper}>
         <Table>
@@ -161,7 +257,7 @@ const parseCuota = (cuota) => {
       textTransform: "none",
     }}
   >
-    ULTIMA CUOTA {orderCuota === "asc" ? "⬆️" : "⬇️"}
+    ULTIMA CUOTA {orderCuota === "asc" ? "⬆" : "⬇"}
   </Button>
 </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>

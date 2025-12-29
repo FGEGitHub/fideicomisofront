@@ -1,40 +1,16 @@
 import { useState, useEffect } from "react";
-import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import servicioPagos from '../../../services/pagos';
+import servicioPagos from "../../../services/pagos";
 import { useNavigate } from "react-router-dom";
-import BotonRechazo from './RechazoPagoInusual';
-//import BotonAprobado from './AprobacionPagoInusual';
-import Button from "@mui/material/Button";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Skeleton } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { tableCellClasses } from '@mui/material/TableCell';
-import { Box } from '@mui/material';
+import BotonRechazo from "./RechazoPagoInusual";
+import MUIDataTable from "mui-datatables";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: '#326B6B',
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-        color: '#000000',
-    },
-}));
+import { Box, Paper, Typography, alpha, Button, Chip } from "@mui/material";
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: '#E6F2F2',
-    },
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+import ReportProblemRoundedIcon from "@mui/icons-material/ReportProblemRounded";
+import TableRowsRoundedIcon from "@mui/icons-material/TableRowsRounded";
 
 const PagosInusuales = () => {
     const [pagos, setPagos] = useState([]);
-    const [vista, setVista] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,141 +22,356 @@ const PagosInusuales = () => {
         setPagos(pagos);
     };
 
-    const StyledTable = () =>
-        createTheme({
-            overrides: {
-                MUIDataTableBodyRow: {
-                    root: {
-                        backgroundColor: "#f5f5f5",
-                    }
-                }
-            }
-        });
-
+    // ✅ Columnas (misma data, misma lógica)
     const columns = [
-        { name: "cuil_cuit", label: "Cuil/cuit" },
+        { name: "id", label: "Id" },
         {
             name: "Nombre",
+            label: "Nombre y Apellido/Razón Social",
             options: {
                 customBodyRenderLite: (dataIndex) => (
-                    <p onClick={() => navigate('/usuario2/detallecliente/' + pagos[dataIndex].cuil_cuit)}
-                        style={{ marginRight: "10px", cursor: "pointer" }}>
-                        {pagos[dataIndex].Nombre}
-                    </p>
-                )
-            }
+                    <Box sx={{ fontWeight: 800, color: "#0b2b3a" }}>
+                        {pagos[dataIndex]?.Nombre}
+                    </Box>
+                ),
+            },
         },
-        { name: "monto", label: "Monto" },
-        { name: "fechanotificacion", label: "Fecha Notificacion" },
-        { name: "fechavencimiento", label: "Fecha Vencimiento" },
-        { name: "riesgo", label: "riesgo" },
         {
-            name: "Actions",
+            name: "cuil_cuitc",
+            label: "Cuil/Cuit",
             options: {
                 customBodyRenderLite: (dataIndex) => (
-                    <>
-                        <BotonRechazo id={pagos[dataIndex].id} getPagosi={getPagosi} />
-                        {/*     <BotonAprobado id={pagos[dataIndex].id} monto={pagos[dataIndex].monto} getPagosi={getPagosi} /> */}
-                    </>
-                )
-            }
+                    <Box
+                        onClick={() =>
+                            navigate(
+                                "/usuario2/detallecliente/" + pagos[dataIndex]?.cuil_cuitc
+                            )
+                        }
+                        sx={{
+                            cursor: "pointer",
+                            fontWeight: 900,
+                            color: "#01567c",
+                            textDecoration: "underline",
+                            textUnderlineOffset: "3px",
+                            textDecorationColor: alpha("#148D8D", 0.55),
+                            "&:hover": {
+                                color: "#148D8D",
+                                textDecorationColor: alpha("#148D8D", 0.95),
+                            },
+                        }}
+                    >
+                        {pagos[dataIndex]?.cuil_cuitc}
+                    </Box>
+                ),
+            },
+        },
+        { name: "tipologia", label: "Tipología" },
+        { name: "fechanotificacion", label: "Fecha Notificación" },
+        { name: "fechavencimiento", label: "Fecha Vencimiento" },
+        {
+            name: "monto",
+            label: "Importe (Pesos)",
+            options: {
+                customBodyRenderLite: (dataIndex) => {
+                    const v = pagos[dataIndex]?.monto;
+                    return (
+                        <Box sx={{ fontWeight: 900, color: "#0b2b3a" }}>
+                            {isNaN(Number(v)) ? `$${v}` : `$${Number(v).toFixed(2)}`}
+                        </Box>
+                    );
+                },
+            },
+        },
+        {
+            name: "riesgo",
+            label: "Riesgo",
+            options: {
+                customBodyRenderLite: (dataIndex) => (
+                    <Box sx={{ fontWeight: 900, color: "#0b2b3a" }}>
+                        {pagos[dataIndex]?.riesgo}%
+                    </Box>
+                ),
+            },
+        },
+        {
+            name: "proceso",
+            label: "Estado",
+            options: {
+                customBodyRenderLite: (dataIndex) => {
+                    const p = pagos[dataIndex]?.proceso;
+                    return (
+                        <Box sx={{ fontWeight: 800, color: "#0b2b3a" }}>
+                            {p === "averificarnivel2" &&
+                                "Pendiente carga de documentación"}
+                            {p === "averificarnivel3" &&
+                                "Pendiente clasificación de Gerencia"}
+                            {p === "Inusual" && "Cerrado (Sin alerta)"}
+                            {p === "Sospechoso" && "Cerrado (Con Alerta)"}
+                        </Box>
+                    );
+                },
+            },
+        },
+        {
+            name: "fecha",
+            label: "Fecha",
+            options: {
+                customBodyRenderLite: (dataIndex) => (
+                    <Box sx={{ fontWeight: 800, color: "#0b2b3a", whiteSpace: "nowrap" }}>
+                        Pago({pagos[dataIndex]?.fecha}) Cuota({pagos[dataIndex]?.mesc}/
+                        {pagos[dataIndex]?.anioc})
+                    </Box>
+                ),
+            },
+        },
+        {
+            name: "Acciones",
+            options: {
+                customBodyRenderLite: (dataIndex) => (
+                    <BotonRechazo id={pagos[dataIndex]?.id} getPagosi={getPagosi} />
+                ),
+            },
         },
         {
             name: "Descarga",
             options: {
                 customBodyRenderLite: (dataIndex) => (
-                    <Button onClick={() => navigate('/nivel3/cuota/' + pagos[dataIndex].id_cuota)}>Ver pagos de cuota</Button>
-                )
-            }
+                    <Button
+                        onClick={() =>
+                            navigate(
+                                pagos[dataIndex]?.zona === "IC3"
+                                    ? `/usuario2/cuotaic3/${pagos[dataIndex]?.id_cuota}`
+                                    : `/usuario2/pagoscuotas/${pagos[dataIndex]?.id_cuota}`
+                            )
+                        }
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 900,
+                            borderRadius: 999,
+                            px: 2,
+                            color: "#fff",
+                            background: "linear-gradient(90deg, #01567c 0%, #148D8D 100%)",
+                            boxShadow: "0 10px 22px rgba(20,141,141,0.22)",
+                            "&:hover": {
+                                transform: "translateY(-1px)",
+                                boxShadow: "0 14px 30px rgba(20,141,141,0.30)",
+                            },
+                            transition: "0.2s ease",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        Ver pagos de cuota
+                    </Button>
+                ),
+            },
         },
     ];
 
+    // ✅ Opciones (toolbar + iconos)
+    const options = {
+        selectableRows: "none",
+        responsive: "standard",
+        rowsPerPage: 5,
+        rowsPerPageOptions: [5, 10, 15],
+        filter: true,
+        viewColumns: true,
+        download: true,
+        print: true,
+        search: true,
+        pagination: true,
+
+        textLabels: {
+            body: {
+                noMatch: "No se encontraron registros",
+                toolTip: "Ordenar",
+            },
+            pagination: {
+                next: "Siguiente",
+                previous: "Anterior",
+                rowsPerPage: "Filas por página:",
+                displayRows: "de",
+            },
+            toolbar: {
+                search: "Buscar",
+                downloadCsv: "Descargar",
+                print: "Imprimir",
+                viewColumns: "Columnas",
+                filterTable: "Filtrar",
+            },
+            filter: {
+                all: "Todos",
+                title: "FILTROS",
+                reset: "RESETEAR",
+            },
+            viewColumns: {
+                title: "Mostrar columnas",
+                titleAria: "Mostrar/ocultar columnas",
+            },
+        },
+    };
+
     return (
-        <div>
-            <Button variant="contained" onClick={() => setVista(!vista)}>
-                Cambiar Vista
-            </Button>
-            {vista ? (
-<Box sx={{ overflowX: 'auto', width: '100%' }}>
-  {/* tabla */}
+        <Box
+                    sx={{
+                        width: "100%",
+                        maxWidth: "100%",
+                        flex: 1,
+                        minWidth: 0,
+                    }}
+                >
+                    {/* CARD PRINCIPAL */}
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            borderRadius: 4,
+                            overflow: "hidden",
+                            border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                            background: "rgba(255,255,255,0.92)",
+                            backdropFilter: "blur(10px)",
+                            boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
+                        }}
+                    >
+                        {/* HEADER (GRADIENT) */}
+                        <Box
+                            sx={{
+                                px: { xs: 2, md: 3 },
+                                py: { xs: 2, md: 2.5 },
+                                background:
+                                    "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                                color: "#fff",
+                                display: "flex",
+                                alignItems: { xs: "flex-start", md: "center" },
+                                justifyContent: "space-between",
+                                gap: 2,
+                                flexWrap: "wrap",
+        
+                            }}
+                        >
+                            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                                <Box
+                                    sx={{
+                                        width: 44,
+                                        height: 44,
+                                        borderRadius: "14px",
+                                        display: "grid",
+                                        placeItems: "center",
+                                        background: "rgba(255,255,255,0.18)",
+                                        border: "1px solid rgba(255,255,255,0.35)",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                            <ReportProblemRoundedIcon sx={{ color: "#fff" }} />
+                        </Box>
 
-                    <TableContainer>
-                        {pagos.length === 0 ? (
-                            <p style={{ textAlign: 'center', fontSize: '18px', fontWeight: 'bold' }}>No hay elementos</p>
-                        ) : (
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                    <StyledTableCell>Id</StyledTableCell>
-                                    <StyledTableCell>Nombre y Apellido/Razon Social</StyledTableCell>
-                                    <StyledTableCell>Cuil/Cuit</StyledTableCell>
-                                    <StyledTableCell>Tipologia</StyledTableCell>
+                        <Box>
+                            <Typography
+                                sx={{
+                                    fontWeight: 900,
+                                    fontSize: { xs: 18, md: 22 },
+                                    lineHeight: 1.1,
+                                }}
+                            >
+                                Pagos inusuales
+                            </Typography>
+                            <Typography
+                                sx={{ mt: 0.35, fontWeight: 650, opacity: 0.9, fontSize: 14 }}
+                            >
+                                Revisá, filtrá y gestioná pagos inusuales / sospechosos.
+                            </Typography>
+                        </Box>
+                    </Box>
 
-                                    <StyledTableCell>Fecha Notificacion</StyledTableCell>
-                                        <StyledTableCell>Fecha Vencimiento</StyledTableCell>
-                                        <StyledTableCell>Importe(Pesos)</StyledTableCell>
-                                        <StyledTableCell>Riesgo</StyledTableCell>
-                              
-                                        <StyledTableCell>Estado</StyledTableCell>
-                                        <StyledTableCell>Fecha</StyledTableCell>
-                                   
-                                     
-                                     
-                                        <StyledTableCell>Acciones</StyledTableCell>
-                                        <StyledTableCell>Descarga</StyledTableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {pagos.map((row, index) => (
-                                        <StyledTableRow key={index}>
-                                              <StyledTableCell>{row.id}</StyledTableCell>
-                                              <StyledTableCell>{row.Nombre}</StyledTableCell>
-                                              <StyledTableCell onClick={() => navigate('/usuario2/detallecliente/' + row.cuil_cuitc)}>{row.cuil_cuitc}</StyledTableCell>
-                                              <StyledTableCell>{row.tipologia}</StyledTableCell>
-                                              <StyledTableCell>{row.fechanotificacion}</StyledTableCell>
-                                              <StyledTableCell>{row.fechavencimiento}</StyledTableCell>
-                                              <StyledTableCell>
-  {isNaN(Number(row.monto))
-    ? `$${row.monto}`
-    : `$${Number(row.monto).toFixed(2)}`}
-</StyledTableCell>  <StyledTableCell>{row.riesgo}%</StyledTableCell>
-<StyledTableCell>
-  {row.proceso == 'averificarnivel2' && 'Pendiente carga de documentación'}
-  {row.proceso == 'averificarnivel3' && 'Pendiente clasificación de Gerencia'}
-  {row.proceso == 'Inusual' && 'Cerrado (Sin alerta)'}
-  {row.proceso == 'Sospechoso' && 'Cerrado (Con Alerta)'}
-</StyledTableCell>
-                                            <StyledTableCell>Pago({row.fecha}) Cuota({row.mesc}/{row.anioc})</StyledTableCell>
-                                            
-                                         
-                                          
-                                        
+                    <Chip
+                        icon={<TableRowsRoundedIcon />}
+                        label={`Registros: ${pagos.length}`}
+                        sx={{
+                            color: "#fff",
+                            fontWeight: 900,
+                            borderRadius: 999,
+                            background: "rgba(255,255,255,0.18)",
+                            border: "1px solid rgba(255,255,255,0.35)",
+                            "& .MuiChip-icon": { color: "#fff" },
+                        }}
+                    />
+                </Box>
+            </Paper>
+            <Paper
+                            elevation={0}
+                            sx={{
+                                mt: { xs: 2, md: 3 }, // 👈 separación arriba
+                                borderRadius: 4,
+                                overflow: "hidden",
+                                border: `1px solid ${alpha("#01567c", 0.12)}`,
+                                background: "rgba(255,255,255,0.92)",
+                                backdropFilter: "blur(10px)",
+                                boxShadow: "0 22px 55px rgba(20, 141, 141, 0.10)",
+                            }}
+                        >
+                {/* ✅ SOLO TABLA: estilo “como CBU” (toolbar + íconos) */}
+                <Box
+                    sx={{
+                        p: { xs: 1.5, md: 2 },
 
-                                            <StyledTableCell>
-                                                <BotonRechazo id={row.id} getPagosi={getPagosi} />
-                                                {/*  <BotonAprobado id={row.id} monto={row.monto} getPagosi={getPagosi} /> */}
-                                            </StyledTableCell>
-                                            <StyledTableCell onClick={() => navigate(row.zona === "IC3" ? `/usuario2/cuotaic3/${row.id_cuota}` : `/usuario2/pagoscuotas/${row.id_cuota}`)}>
-                                                <Button>Ver pagos de cuota</Button>
-                                            </StyledTableCell>
-                                        </StyledTableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-                    </TableContainer>
-               </Box>
-            ) : (
-                
+                        /* ===== BODY ===== */
+                        "& .MuiTableBody-root .MuiTableCell-root": {
+                            borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
+                            fontWeight: 650,
+                            color: "#0b2b3a",
+                        },
+
+                        /* ===== HEADER ===== */
+                        "& .MuiTableHead-root .MuiTableCell-root": {
+                            borderBottom: "0px",
+                            color: "#01567c",
+                            fontWeight: 800,
+                        },
+
+                        /* ===== TOOLBAR ===== */
+                        "& .MuiToolbar-root": {
+                            px: 2,
+                            color: "#01567c",
+                        },
+                        "& .MuiToolbar-root .MuiInputBase-input": {
+                            color: "#0b2b3a",
+                            fontWeight: 700,
+                        },
+
+                        /* ===== ICONOS ===== */
+                        "& .MuiIconButton-root, & svg": {
+                            color: alpha("#01567c", 0.75),
+                            transition: "all 0.2s ease",
+                        },
+                        "& .MuiIconButton-root:hover, & svg:hover": {
+                            color: "#148D8D",
+                            transform: "translateY(-1px)",
+                        },
+
+                        /* ===== HOVER FILAS ===== */
+                        "& .MuiTableRow-root:hover td": {
+                            backgroundColor: `${alpha("#148D8D", 0.06)} !important`,
+                        },
+
+                        /* ===== PAGINACIÓN ===== */
+                        "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
+                            color: "#01567c",
+                            fontWeight: 700,
+                        },
+
+                        /* (Opcional) “card” interna de la tabla sin sombra extra */
+                        "& .MuiPaper-root": { boxShadow: "none" },
+                    }}
+                >
                     <MUIDataTable
-                        title={"Lista de pagos inusuales"}
+                        title={""}
                         data={pagos}
                         columns={columns}
-                        options={{ selectableRows: "none" }}
+                        options={options}
                     />
-             
-            )}
-        </div>
+                </Box>
+            </Paper>
+
+        </Box>
+
     );
 };
 

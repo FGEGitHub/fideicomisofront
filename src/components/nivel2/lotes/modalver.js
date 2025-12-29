@@ -91,9 +91,9 @@ export default function SelectTextFields(props) {
           borderRadius: 2,
           textTransform: "none",
           fontWeight: 800,
-          backgroundColor: "#01567c",
+          backgroundColor: "#148D8D",
           boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-          "&:hover": { backgroundColor: "#014a6b" },
+          "&:hover": { backgroundColor: "#0c7171ff" },
         }}
       >
         Detalles
