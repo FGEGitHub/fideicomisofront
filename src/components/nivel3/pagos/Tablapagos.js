@@ -1,276 +1,234 @@
 import { useState, useEffect } from "react";
 import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import servicioPagos from '../../../services/pagos'
-import { useNavigate } from "react-router-dom";
-//import overbookingData from "./overbooking";
-import BotonRechazo from './Accion1'
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel
+} from "@mui/material";
 
-import CheckIcon from '@mui/icons-material/Check';
-import serviciousuario1 from '../../../services/usuario1'
-import Button from "@mui/material/Button";
+import PrintIcon from "@mui/icons-material/Print";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+
+import servicioPagos from "../../../services/pagos";
+import serviciousuario1 from "../../../services/usuario1";
+
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const PagosInusuales = () => {
-    //configuracion de Hooks
-    const [pagos, setpagos] = useState([]);
-    const navigate = useNavigate();
+  const [pagos, setPagos] = useState([]);
+  const [filtroMes, setFiltroMes] = useState("");
+  const [filtroAnio, setFiltroAnio] = useState("");
+  const [filtroZona, setFiltroZona] = useState("");
 
+  useEffect(() => {
+    getPagos();
+  }, []);
 
-    
+  const getPagos = async () => {
+    const resp = await servicioPagos.todoslospagos({});
+    setPagos(resp);
+  };
 
-    
+  // =======================
+  // OPCIONES DE FILTROS
+  // =======================
+  const meses = [...new Set(pagos.map(p => p.mes))].filter(Boolean);
+  const anios = [...new Set(pagos.map(p => p.anio))].filter(Boolean);
 
-    useEffect(() => {
-        getPagosi()
-    }, [])
+  // =======================
+  // FILTRADO (ZONA POR ORIGEN)
+  // =======================
+  const pagosFiltrados = pagos.filter(p => {
+    const zonaOk =
+      filtroZona === "" ||
+      (filtroZona === "IC3" && p.origen === "ic3") ||
+      (filtroZona === "PIT" && p.origen === "normal");
 
-    ///
+    return (
+      (filtroMes === "" || p.mes === filtroMes) &&
+      (filtroAnio === "" || p.anio === filtroAnio) &&
+      zonaOk
+    );
+  });
 
-    
+  // =======================
+  // EXPORTAR A EXCEL
+  // =======================
+  const exportarExcel = () => {
+    const data = pagosFiltrados.map(p => ({
+      Mes: p.mes,
+      Año: p.anio,
+      Fecha: p.fecha,
+      Zona: p.origen === "ic3" ? "IC3" : "PIT",
+      "CUIL / CUIT": p.cuil_cuit,
+      Nombre: p.nombre,
+      Estado: p.estado === "A" ? "Aprobado" : "Pendiente",
+      Monto: p.monto
+    }));
 
-const getPagosi = async () => {
-        
-        const pagos = await servicioPagos.todoslospagos({
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Pagos");
 
-        })
-        console.log(pagos)
-        setpagos(pagos)
-    }
-  
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array"
+    });
 
-    const aprobar =async (id)  => {
-        const auxiliarr = {id}
-        await servicioPagos.aprobarpago(auxiliarr)
-      //  setOpen(false)
-      window.location.reload(true);
-   
-     // window.location.reload(true)
-     }
+    const blob = new Blob([excelBuffer], {
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
 
+    saveAs(blob, "pagos_filtrados.xlsx");
+  };
 
-    function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
-     
-        return (
-          <>
-           
-            <BotonRechazo 
-             id= {pagos[dataIndex].id} 
-            />
-            <CheckIcon style={{ cursor: "pointer" }} 
-            onClick={() =>  {aprobar(pagos[dataIndex].id) 
-           /*  navigate('/usuario2/detallecliente/'+pendientes[dataIndex].id) */}  }//Navigate('usuario2/detallecliente'+clients[dataIndex].cuil_cuit)
-            />
-          </>
-        );
+  // =======================
+  // COLUMNAS
+  // =======================
+  const columns = [
+    { name: "mes", label: "Mes" },
+    { name: "anio", label: "Año" },
+    { name: "fecha", label: "Fecha de pago" },
+    {
+      name: "origen",
+      label: "Zona",
+      options: {
+        customBodyRender: value => (value === "ic3" ? "IC3" : "PIT")
       }
-      //Styles de la tabla
-      const StyledTable = () =>
-    createTheme({
-      overrides: {
-        MUIDataTableBodyRow: {
+    },
+    { name: "cuil_cuit", label: "CUIL / CUIT" },
+    { name: "nombre", label: "Nombre" },
+    { name: "monto", label: "Monto" }
+  ];
+
+  // =======================
+  // OPCIONES TABLA
+  // =======================
+  const options = {
+    selectableRows: false,
+    responsive: "standard",
+    rowsPerPage: 10,
+    rowsPerPageOptions: [5, 10, 20],
+    print: false,
+    download: false,
+    filter: false,
+    viewColumns: true,
+    textLabels: {
+      body: { noMatch: "No se encontraron registros" },
+      pagination: {
+        rowsPerPage: "Filas por página:",
+        displayRows: "de"
+      },
+      toolbar: {
+        search: "Buscar",
+        viewColumns: "Ver columnas"
+      }
+    }
+  };
+
+  // =======================
+  // THEME
+  // =======================
+  const theme = createTheme({
+    components: {
+      MuiTableHead: {
+        styleOverrides: {
           root: {
-            backgroundColor: "#f5f5f5",
+            backgroundColor: "#1565c0",
+            color: "#fff"
           }
         }
       }
-    });
-    // definimos las columnas
-
-    function estado(dataIndex, rowIndex, data, onClick) {
-        return (
-            <>
-                {pagos[dataIndex].estado === 'P' ? 'Pendiente'  : <div>{pagos[dataIndex].estado === 'A' ? 'Aprobado'  : <div> {pagos[dataIndex].estado} </div>}</div>}
-
-            </>
-        );
     }
-    const columns = [
-     
-        {
-            name: "mes",
-            label: "Mes",
-        },
-        {
-            name: "anio",
-            label: "Año",
-        },
-        {
-            name: "fecha",
-            label: "fecha de pago",
-        },
-        {
-            name: "cuil_cuit",
-            label: "Cuil/cuit",
-        },
-        {
-            name: "Nombre",
-            label: "nombre",
+  });
 
-        },
-        {
-            name: "Estado",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                estado(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },  
-        {
-            name: "monto",
-            label: "Monto",
-            
-        },
-        {
-            name: "monto_distinto",
-            label: "Monto distinto",
-            
-        },
-        {
-            name: "ingresos",
-            label: "Ingresos declarados",
-            actions: { onClick: (event, rowData) => alert(rowData) }
-        },
-       
-        {
-            name: "Descarga",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                downloadFile(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },    
- 
+  return (
+    <ThemeProvider theme={theme}>
+      {/* BARRA DE FILTROS */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mb: 2,
+          p: 2,
+          backgroundColor: "#f5f5f5",
+          borderRadius: 2,
+          flexWrap: "wrap"
+        }}
+      >
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Mes</InputLabel>
+          <Select value={filtroMes} label="Mes" onChange={e => setFiltroMes(e.target.value)}>
+            <MenuItem value="">Todos</MenuItem>
+            {meses.map(m => (
+              <MenuItem key={m} value={m}>{m}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-    ];
-    async function download(index, rowIndex, data) {
-        const filename = (pagos[index].ubicacion)
-      
-       
-       const link = await serviciousuario1.obtenerurl(filename)
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Año</InputLabel>
+          <Select value={filtroAnio} label="Año" onChange={e => setFiltroAnio(e.target.value)}>
+            <MenuItem value="">Todos</MenuItem>
+            {anios.map(a => (
+              <MenuItem key={a} value={a}>{a}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        console.log(link.data)            
-        window.open(link.data)
-  
-     
-    }
-    function downloadFile(index, rowIndex, data) {
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Zona</InputLabel>
+          <Select value={filtroZona} label="Zona" onChange={e => setFiltroZona(e.target.value)}>
+            <MenuItem value="">Todas</MenuItem>
+            <MenuItem value="IC3">IC3</MenuItem>
+            <MenuItem value="PIT">PIT</MenuItem>
+          </Select>
+        </FormControl>
 
-        /* const filename = (products[index].key)
-        console.log(filename)
-        const link = await axios.get(`http://localhost:4000/usuario1/get-object-url/` + filename)
-        console.log(link.data)
-        setAct(true) */
-        return (
-            <>
-                
-                  <Button
-                        onClick={() => download(index)}
-                    >Descargar</Button> 
-    
-    
-            </>
-        );
-    }
+        <Button
+          variant="contained"
+          startIcon={<FileDownloadIcon />}
+          onClick={exportarExcel}
+        >
+          Excel
+        </Button>
 
-// renderiza la data table
-const options = {
-   
-  
-      setTableProps: () => {
-          return {
-            style: {
-              backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
-            },
-          };
-        },
-        customHeadRender: (columnMeta, handleToggleColumn) => ({
-          TableCell: {
-            style: {
-              backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
-              color: 'white', // Cambia el color del texto del encabezado
-            },
-          },
-        }),
-      selectableRows: false, // Desactivar la selección de filas
-      stickyHeader: true,
-      selectableRowsHeader: false,
-      selectableRowsOnClick: true,
-      responsive: 'scroll',
-      rowsPerPage: 10,
-      rowsPerPageOptions: [5, 10, 15],
-      downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
-      print: true,
-      filter: true,
-      viewColumns: true,
-      pagination: true,
+        <Button
+          variant="outlined"
+          startIcon={<PrintIcon />}
+          onClick={() => window.print()}
+        >
+          Imprimir
+        </Button>
 
-      textLabels: {
-        body: {
-          noMatch: "No se encontraron registros",
-          toolTip: "Ordenar",
-        },
-        pagination: {
-          next: "Siguiente",
-          previous: "Anterior",
-          rowsPerPage: "Filas por página:",
-          displayRows: "de",
-        },
-        toolbar: {
-          search: "Buscar",
-          downloadCsv: "Descargar CSV",
-          print: "Imprimir",
-          viewColumns: "Ver columnas",
-          filterTable: "Filtrar tabla",
-        },
-        filter: {
-          all: "Todos",
-          title: "FILTROS",
-          reset: "RESETEAR",
-        },
-        viewColumns: {
-          title: "Mostrar columnas",
-          titleAria: "Mostrar/ocultar columnas de la tabla",
-        },
-        selectedRows: {
-          text: "fila(s) seleccionada(s)",
-          delete: "Eliminar",
-          deleteAria: "Eliminar filas seleccionadas",
-        },
-      },
-  
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            setFiltroMes("");
+            setFiltroAnio("");
+            setFiltroZona("");
+          }}
+        >
+          Limpiar
+        </Button>
+      </Box>
+
+      {/* TABLA */}
+      <MUIDataTable
+        title="Lista de pagos"
+        data={pagosFiltrados}
+        columns={columns}
+        options={options}
+      />
+    </ThemeProvider>
+  );
 };
-return (
-    
-
-    <div>
-        <ThemeProvider theme={StyledTable()}>
-        <MUIDataTable 
-            title={"Lista de pagos "}
-            data={pagos}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
-
-        />
-        </ThemeProvider>
-    </div>
-)
-}
 
 export default PagosInusuales;
