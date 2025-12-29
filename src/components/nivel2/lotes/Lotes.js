@@ -11,6 +11,8 @@ import MuiAlert from '@mui/material/Alert';
 import Modaldetalles from './modalver'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { alpha } from "@mui/material/styles";
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -221,7 +223,68 @@ const Lotes = () => {
                                 </Box>
                             </Box>
                         </Stack>
+ <Box
+                                    sx={{
+                                        /* =========================
+                                           TEXTO GENERAL (BODY)
+                                        ========================== */
+                                        "& .MuiTableBody-root .MuiTableCell-root": {
+                                            borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
+                                            fontWeight: 650,
+                                            color: "#0b2b3a", // ✅ color letra filas
+                                        },
 
+                                        /* =========================
+                                           TEXTO HEADER
+                                        ========================== */
+                                        "& .MuiTableHead-root .MuiTableCell-root": {
+                                            borderBottom: "0px",
+                                            color: "#01567c", // ✅ texto blanco en header
+                                            fontWeight: 800,
+                                        },
+
+                                        /* =========================
+                                           TOOLBAR (buscar, icons)
+                                        ========================== */
+                                        "& .MuiToolbar-root": {
+                                            px: 2,
+                                            color: "#01567c",
+                                        },
+
+                                        "& .MuiToolbar-root .MuiInputBase-input": {
+                                            color: "#0b2b3a", // texto del buscador
+                                            fontWeight: 700,
+                                        },
+
+                                        /* =========================
+                                           ICONOS (DEFAULT)
+                                        ========================== */
+                                        "& .MuiIconButton-root, & svg": {
+                                            color: alpha("#01567c", 0.75),
+                                            transition: "all 0.2s ease",
+                                        },
+
+                                        /* =========================
+                                           ICONOS HOVER
+                                        ========================== */
+                                        "& .MuiIconButton-root:hover, & svg:hover": {
+                                            color: "#148D8D", // ✅ color hover íconos
+                                            transform: "translateY(-1px)",
+                                        },
+
+                                        /* =========================
+                                           HOVER FILAS
+                                        ========================== */
+
+
+                                        /* =========================
+                                           PAGINACIÓN
+                                        ========================== */
+                                        "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
+                                            color: "#01567c",
+                                            fontWeight: 700,
+                                        },
+                                    }}>
                         <MUIDataTable
 
 
@@ -239,7 +302,7 @@ const Lotes = () => {
 
 
 
-                        />
+                        /></Box>
                     </div>
                 )}
         </>

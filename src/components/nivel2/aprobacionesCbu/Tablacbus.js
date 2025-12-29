@@ -316,50 +316,51 @@ const TablaAprobaciones = () => {
     return (
         <Box
             sx={{
-                p: { xs: 1.5, md: 3 },
-                background:
-                    "radial-gradient(1200px 500px at 10% 0%, rgba(20,141,141,0.18), transparent 60%), radial-gradient(1000px 450px at 95% 20%, rgba(1,86,124,0.20), transparent 55%)",
-                borderRadius: 4,
+                width: "100%",
+                maxWidth: "100%",
+                flex: 1,
+                minWidth: 0,
             }}
         >
-            {/* HEADER / RESUMEN (igual a pagos) */}
+            {/* CARD PRINCIPAL */}
             <Paper
                 elevation={0}
                 sx={{
-                    p: 2.25,
-                    mb: 2,
-                    borderRadius: 3,
+                    borderRadius: 4,
                     overflow: "hidden",
-                    border: "1px solid #e8eef5",
-                   background:
-                        "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
-
-                    boxShadow: "0 18px 45px rgba(10,59,79,0.35)",
-                    position: "relative",
+                    border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
                 }}
             >
+                {/* HEADER (GRADIENT) */}
                 <Box
                     sx={{
+                        px: { xs: 2, md: 3 },
+                        py: { xs: 2, md: 2.5 },
+                        background:
+                            "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                        color: "#fff",
                         display: "flex",
                         alignItems: { xs: "flex-start", md: "center" },
                         justifyContent: "space-between",
                         gap: 2,
                         flexWrap: "wrap",
+
                     }}
                 >
-                    {/* IZQUIERDA */}
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 240 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                         <Box
                             sx={{
                                 width: 44,
                                 height: 44,
-                                borderRadius: 3,
+                                borderRadius: "14px",
                                 display: "grid",
                                 placeItems: "center",
+                                background: "rgba(255,255,255,0.18)",
+                                border: "1px solid rgba(255,255,255,0.35)",
                                 flexShrink: 0,
-                                background: "rgba(255,255,255,0.14)",
-                                border: "1px solid rgba(255,255,255,0.22)",
-                                backdropFilter: "blur(8px)",
                             }}
                         >
                             <DescriptionRoundedIcon sx={{ color: "#fff", fontSize: 22 }} />
@@ -367,7 +368,7 @@ const TablaAprobaciones = () => {
 
                         <Box sx={{ lineHeight: 1.1 }}>
                             <Typography
-                                  sx={{
+                                sx={{
                                     fontSize: { xs: 18, md: 20 },
                                     fontWeight: 900,
                                     color: "#ffffff",
@@ -380,7 +381,7 @@ const TablaAprobaciones = () => {
                             </Typography>
 
                             <Typography
-                               sx={{
+                                sx={{
                                     mt: 0.25,
                                     color: "rgba(255,255,255,0.9)",
                                     fontWeight: 600,
@@ -428,101 +429,103 @@ const TablaAprobaciones = () => {
             </Paper>
 
             {/* TABLA (igual a pagos) */}
-          <Paper
-  elevation={0}
-  sx={{
-    borderRadius: 4,
-    overflow: "hidden",
-    border: `1px solid ${alpha("#01567c", 0.12)}`,
-    background: "rgba(255,255,255,0.92)",
-    backdropFilter: "blur(10px)",
-    boxShadow: "0 22px 55px rgba(20, 141, 141, 0.10)",
-  }}
->
-  {loading ? (
-    <Box sx={{ p: 2 }}>
-      <CargaDeTabla />
-    </Box>
-  ) : (
-    <Box
-      sx={{
-        /* =========================
-           TEXTO GENERAL (BODY)
-        ========================== */
-        "& .MuiTableBody-root .MuiTableCell-root": {
-          borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
-          fontWeight: 650,
-          color: "#0b2b3a", // ✅ color letra filas
-        },
+            <Paper
+                elevation={0}
+                sx={{
+                    mt: { xs: 2, md: 3 }, // 👈 separación arriba
+                    borderRadius: 4,
+                    overflow: "hidden",
+                    border: `1px solid ${alpha("#01567c", 0.12)}`,
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 22px 55px rgba(20, 141, 141, 0.10)",
+                }}
+            >
 
-        /* =========================
-           TEXTO HEADER
-        ========================== */
-        "& .MuiTableHead-root .MuiTableCell-root": {
-          borderBottom: "0px",
-          color: "#01567c", // ✅ texto blanco en header
-          fontWeight: 800,
-        },
+                {loading ? (
+                    <Box sx={{ p: 2 }}>
+                        <CargaDeTabla />
+                    </Box>
+                ) : (
+                    <Box
+                        sx={{
+                            /* =========================
+                               TEXTO GENERAL (BODY)
+                            ========================== */
+                            "& .MuiTableBody-root .MuiTableCell-root": {
+                                borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
+                                fontWeight: 650,
+                                color: "#0b2b3a", // ✅ color letra filas
+                            },
 
-        /* =========================
-           TOOLBAR (buscar, icons)
-        ========================== */
-        "& .MuiToolbar-root": {
-          px: 2,
-          color: "#01567c",
-        },
+                            /* =========================
+                               TEXTO HEADER
+                            ========================== */
+                            "& .MuiTableHead-root .MuiTableCell-root": {
+                                borderBottom: "0px",
+                                color: "#01567c", // ✅ texto blanco en header
+                                fontWeight: 800,
+                            },
 
-        "& .MuiToolbar-root .MuiInputBase-input": {
-          color: "#0b2b3a", // texto del buscador
-          fontWeight: 700,
-        },
+                            /* =========================
+                               TOOLBAR (buscar, icons)
+                            ========================== */
+                            "& .MuiToolbar-root": {
+                                px: 2,
+                                color: "#01567c",
+                            },
 
-        /* =========================
-           ICONOS (DEFAULT)
-        ========================== */
-        "& .MuiIconButton-root, & svg": {
-          color: alpha("#01567c", 0.75),
-          transition: "all 0.2s ease",
-        },
+                            "& .MuiToolbar-root .MuiInputBase-input": {
+                                color: "#0b2b3a", // texto del buscador
+                                fontWeight: 700,
+                            },
 
-        /* =========================
-           ICONOS HOVER
-        ========================== */
-        "& .MuiIconButton-root:hover, & svg:hover": {
-          color: "#148D8D", // ✅ color hover íconos
-          transform: "translateY(-1px)",
-        },
+                            /* =========================
+                               ICONOS (DEFAULT)
+                            ========================== */
+                            "& .MuiIconButton-root, & svg": {
+                                color: alpha("#01567c", 0.75),
+                                transition: "all 0.2s ease",
+                            },
 
-        /* =========================
-           HOVER FILAS
-        ========================== */
-        
+                            /* =========================
+                               ICONOS HOVER
+                            ========================== */
+                            "& .MuiIconButton-root:hover, & svg:hover": {
+                                color: "#148D8D", // ✅ color hover íconos
+                                transform: "translateY(-1px)",
+                            },
 
-        /* =========================
-           PAGINACIÓN
-        ========================== */
-        "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
-          color: "#01567c",
-          fontWeight: 700,
-        },
-      }}
-    >
-      <MUIDataTable
-        title={""}
-        data={pendientes}
-        columns={columns}
-        actions={[
-          {
-            icon: "save",
-            tooltip: "Save User",
-            onClick: (event, rowData) => alert("You saved " + rowData.name),
-          },
-        ]}
-        options={options}
-      />
-    </Box>
-  )}
-</Paper>
+                            /* =========================
+                               HOVER FILAS
+                            ========================== */
+
+
+                            /* =========================
+                               PAGINACIÓN
+                            ========================== */
+                            "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
+                                color: "#01567c",
+                                fontWeight: 700,
+                            },
+                        }}
+                    >
+                        <MUIDataTable
+                            title={""}
+                            data={pendientes}
+                            columns={columns}
+                            actions={[
+                                {
+                                    icon: "save",
+                                    tooltip: "Save User",
+                                    onClick: (event, rowData) => alert("You saved " + rowData.name),
+                                },
+                            ]}
+                            options={options}
+                        />
+                    </Box>
+                )}
+            </Paper>
 
         </Box>
     );

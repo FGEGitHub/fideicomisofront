@@ -85,9 +85,11 @@ const Estracto = () => {
                     boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
                 }}
             >
+
                 {/* HEADER (GRADIENT) */}
                 <Box
                     sx={{
+
                         px: { xs: 2, md: 3 },
                         py: { xs: 2, md: 2.5 },
                         background:
@@ -100,6 +102,7 @@ const Estracto = () => {
                         flexWrap: "wrap",
                     }}
                 >
+
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                         <Box
                             sx={{
@@ -153,258 +156,266 @@ const Estracto = () => {
                         }}
                     />
                 </Box>
+            </Paper>
 
-                {/* CONTENIDO */}
-                <Box sx={{ p: { xs: 2, md: 3 } }}>
-                    {/* PANEL DE FILTRO (CENTRADO Y “GRANDE”) */}
-                    <Paper
-                        elevation={0}
+            {/* CONTENIDO */}
+            <Box sx={{ p: { xs: 2, md: 3 } }}>
+                {/* PANEL DE FILTRO (CENTRADO Y “GRANDE”) */}
+                <Paper
+                    elevation={0}
+                    sx={{
+                        borderRadius: 4,
+                        p: { xs: 2, md: 2.25 },
+                        border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                        background:
+                            "linear-gradient(180deg, rgba(10,59,79,0.06) 0%, rgba(15,127,134,0.04) 50%, rgba(255,255,255,0.92) 100%)",
+                        boxShadow: "0 14px 35px rgba(15,127,134,0.10)",
+                    }}
+                >
+                    <Box
                         sx={{
-                            borderRadius: 4,
-                            p: { xs: 2, md: 2.25 },
-                            border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
-                            background:
-                                "linear-gradient(180deg, rgba(10,59,79,0.06) 0%, rgba(15,127,134,0.04) 50%, rgba(255,255,255,0.92) 100%)",
-                            boxShadow: "0 14px 35px rgba(15,127,134,0.10)",
+                            display: "flex",
+                            alignItems: { xs: "stretch", md: "flex-start" },
+                            gap: 2,
+                            flexWrap: "wrap",
                         }}
                     >
+                        {/* IZQUIERDA: select + tip */}
+                        <Box sx={{ flex: 1, minWidth: { xs: "100%", md: 520 } }}>
+                            <TextField
+                                component="form"
+                                noValidate
+                                id="outlined-select-currency"
+                                select
+                                label="Elegir Fecha"
+                                name="id"
+                                onChange={handleChange}
+                                value={fecha?.id ?? ""} // ✅ queda marcada
+                                helperText={
+                                    fecha?.id != undefined && selectedFechaLabel
+                                        ? `Seleccionada: ${selectedFechaLabel}`
+                                        : "Seleccionar fecha"
+                                }
+                                fullWidth
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        borderRadius: 3,
+                                        backgroundColor: "rgba(255,255,255,0.85)",
+                                    },
+                                    "& .MuiInputLabel-root": { fontWeight: 800 },
+                                    "& .MuiFormHelperText-root": { fontWeight: 700, opacity: 0.85 },
+                                }}
+                            >
+                                {todos.map((option) => (
+                                    <MenuItem
+                                        key={option.id}
+                                        value={option.id}
+                                        sx={{
+                                            fontWeight: 700,
+                                            "&.Mui-selected": {
+                                                backgroundColor: alpha("#0f7f86", 0.14),
+                                            },
+                                            "&.Mui-selected:hover": {
+                                                backgroundColor: alpha("#0f7f86", 0.2),
+                                            },
+                                        }}
+                                    >
+                                        {option.fecha}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+
+                            <Typography
+                                sx={{
+                                    mt: 1,
+                                    fontSize: 13,
+                                    fontWeight: 700,
+                                    color: alpha("#0a3b4f", 0.75),
+                                }}
+                            >
+                                Elegí una fecha, luego tocá <b>“Ver extracto”</b>.
+                            </Typography>
+                        </Box>
+
+                        {/* DERECHA: botón al lado del select */}
                         <Box
                             sx={{
                                 display: "flex",
-                                alignItems: { xs: "stretch", md: "center" },
-                                justifyContent: "space-between",
-                                gap: 2,
-                                flexWrap: "wrap",
+                                alignItems: { xs: "stretch", md: "flex-end" },
+                                justifyContent: { xs: "flex-start", md: "flex-end" },
+                                minWidth: { xs: "100%", md: 220 },
                             }}
                         >
-                            <Box sx={{ flex: 1, minWidth: { xs: "100%", md: 420 } }}>
-                                <TextField
-                                    component="form"
-                                    noValidate
-                                    id="outlined-select-currency"
-                                    select
-                                    label="Elegir Fecha"
-                                    name="id"
-                                    onChange={handleChange}
-                                    value={fecha?.id ?? ""}   // ✅ esto hace que quede marcada
-                                    helperText={
-                                        fecha?.id != undefined && selectedFechaLabel
-                                            ? `Seleccionada: ${selectedFechaLabel}` // ✅ muestra la fecha real elegida
-                                            : "Seleccionar fecha"
-                                    }
-                                    fullWidth
+                            {fecha.id != undefined ? (
+                                <Button
+                                    onClick={getClients}
+                                    startIcon={<VisibilityRoundedIcon />}
                                     sx={{
-                                        "& .MuiOutlinedInput-root": {
-                                            borderRadius: 3,
-                                            backgroundColor: "rgba(255,255,255,0.85)",
+                                        width: { xs: "100%", md: "auto" },
+                                        textTransform: "none",
+                                        fontWeight: 900,
+                                        borderRadius: 999,
+                                        px: 3,
+                                        py: 1.2,
+                                        color: "#fff",
+                                        background:
+                                            "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                                        boxShadow: "0 14px 35px rgba(15,127,134,0.28)",
+                                        "&:hover": {
+                                            transform: "translateY(-1px)",
+                                            boxShadow: "0 18px 40px rgba(15,127,134,0.34)",
                                         },
-                                        "& .MuiInputLabel-root": { fontWeight: 800 },
-                                        "& .MuiFormHelperText-root": { fontWeight: 700, opacity: 0.85 },
+                                        transition: "0.25s ease",
+                                        whiteSpace: "nowrap",
                                     }}
                                 >
-                                    {todos.map((option) => (
-                                        <MenuItem
-                                            key={option.id}
-                                            value={option.id}
-                                            sx={{
-                                                fontWeight: 700,
-                                                "&.Mui-selected": {
-                                                    backgroundColor: alpha("#0f7f86", 0.14), // ✅ marcado visible
-                                                },
-                                                "&.Mui-selected:hover": {
-                                                    backgroundColor: alpha("#0f7f86", 0.20),
-                                                },
-                                            }}
-                                        >
-                                            {option.fecha}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                    Ver extracto
+                                </Button>
+                            ) : (
+                                <Button
+                                    disabled
+                                    sx={{
+                                        width: { xs: "100%", md: "auto" },
+                                        textTransform: "none",
+                                        fontWeight: 900,
+                                        borderRadius: 999,
+                                        px: 3,
+                                        py: 1.2,
+                                        whiteSpace: "nowrap",
+                                    }}
+                                >
+                                    Ver extracto
+                                </Button>
+                            )}
+                        </Box>
+                    </Box>
+                </Paper>
+            </Box>
 
+
+
+            {/* RESULTADO */}
+            {
+                activo ? (
+                    <>
+                        {loading ? (
+                            <Box sx={{ py: 2 }}>
+                                <CargaDeTabla />
                             </Box>
-
-                            <Box
+                        ) : (
+                            <Paper
+                                elevation={0}
                                 sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 1.25,
-                                    justifyContent: { xs: "flex-start", md: "flex-end" },
-                                    minWidth: { xs: "100%", md: 260 },
+                                    borderRadius: 4,
+                                    overflow: "hidden",
+                                    border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                                    background: "rgba(255,255,255,0.92)",
+                                    backdropFilter: "blur(10px)",
+                                    boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
                                 }}
                             >
-                                {fecha.id != undefined ? (
-                                    <Button
-                                        onClick={getClients}
-                                        startIcon={<VisibilityRoundedIcon />}
-                                        sx={{
-                                            width: { xs: "100%", md: "auto" },
-                                            textTransform: "none",
-                                            fontWeight: 900,
-                                            borderRadius: 999,
-                                            px: 3,
-                                            py: 1.2,
-                                            color: "#fff",
-                                            background:
-                                                "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
-                                            boxShadow: "0 14px 35px rgba(15,127,134,0.28)",
-                                            "&:hover": {
-                                                transform: "translateY(-1px)",
-                                                boxShadow: "0 18px 40px rgba(15,127,134,0.34)",
-                                            },
-                                            transition: "0.25s ease",
-                                        }}
-                                    >
-                                        Ver extracto
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        disabled
-                                        sx={{
-                                            width: { xs: "100%", md: "auto" },
-                                            textTransform: "none",
-                                            fontWeight: 900,
-                                            borderRadius: 999,
-                                            px: 3,
-                                            py: 1.2,
-                                        }}
-                                    >
-                                        Ver extracto
-                                    </Button>
-                                )}
-                            </Box>
-                        </Box>
-
-                        {/* Mensajito de ayuda (solo UI, no toca lógica) */}
-                        <Box sx={{ mt: 1.5 }}>
-                            <Typography sx={{ fontSize: 13, fontWeight: 700, color: alpha("#0a3b4f", 0.75) }}>
-                               Elegí una fecha, luego tocá <b>“Ver extracto”</b>.
-                            </Typography>
-                        </Box>
-                    </Paper>
-
-                    {/* SEPARADOR */}
-                    <Divider sx={{ my: 2.25, borderColor: alpha("#0b4f6c", 0.10) }} />
-
-                    {/* RESULTADO */}
-                    {activo ? (
-                        <>
-                            {loading ? (
-                                <Box sx={{ py: 2 }}>
-                                    <CargaDeTabla />
-                                </Box>
-                            ) : (
-                                <Paper
-                                    elevation={0}
+                                <Box
                                     sx={{
-                                        borderRadius: 4,
-                                        overflow: "hidden",
-                                        border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
-                                        background: "rgba(255,255,255,0.92)",
-                                        backdropFilter: "blur(10px)",
-                                        boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
-                                    }}
-                                >
-                                     <Box
-                                                   sx={{
-                                                     /* =========================
-                                                        TEXTO GENERAL (BODY)
-                                                     ========================== */
-                                                     "& .MuiTableBody-root .MuiTableCell-root": {
-                                                       borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
-                                                       fontWeight: 650,
-                                                       color: "#0b2b3a", // ✅ color letra filas
-                                                     },
-                                             
-                                                     /* =========================
-                                                        TEXTO HEADER
-                                                     ========================== */
-                                                     "& .MuiTableHead-root .MuiTableCell-root": {
-                                                       borderBottom: "0px",
-                                                       color: "#01567c", // ✅ texto blanco en header
-                                                       fontWeight: 800,
-                                                     },
-                                             
-                                                     /* =========================
-                                                        TOOLBAR (buscar, icons)
-                                                     ========================== */
-                                                     "& .MuiToolbar-root": {
-                                                       px: 2,
-                                                       color: "#01567c",
-                                                     },
-                                             
-                                                     "& .MuiToolbar-root .MuiInputBase-input": {
-                                                       color: "#0b2b3a", // texto del buscador
-                                                       fontWeight: 700,
-                                                     },
-                                             
-                                                     /* =========================
-                                                        ICONOS (DEFAULT)
-                                                     ========================== */
-                                                     "& .MuiIconButton-root, & svg": {
-                                                       color: alpha("#01567c", 0.75),
-                                                       transition: "all 0.2s ease",
-                                                     },
-                                             
-                                                     /* =========================
-                                                        ICONOS HOVER
-                                                     ========================== */
-                                                     "& .MuiIconButton-root:hover, & svg:hover": {
-                                                       color: "#148D8D", // ✅ color hover íconos
-                                                       transform: "translateY(-1px)",
-                                                     },
-                                             
-                                                     /* =========================
-                                                        HOVER FILAS
-                                                     ========================== */
-                                                     
-                                             
-                                                     /* =========================
-                                                        PAGINACIÓN
-                                                     ========================== */
-                                                     "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
-                                                       color: "#01567c",
-                                                       fontWeight: 700,
-                                                     },
-                                                   }}>
-                                        <MUIDataTable
-                                          
-                                            data={dats}
-                                            columns={columns}
-                                            actions={[
-                                                {
-                                                    icon: "save",
-                                                    tooltip: "Save User",
-                                                    onClick: (event, rowData) => alert("You saved " + rowData.name),
-                                                },
-                                            ]}
-                                            options={options}
-                                        />
-                                    </Box>
-                                </Paper>
-                            )}
-                        </>
-                    ) : (
-                        // Estado vacío “lindo” (solo UI)
-                        <Box
-                            sx={{
-                                borderRadius: 4,
-                                p: { xs: 2, md: 3 },
-                                border: `1px dashed ${alpha("#0b4f6c", 0.22)}`,
-                                background: alpha("#0f7f86", 0.04),
-                                textAlign: "center",
-                            }}
-                        >
-                            <Typography sx={{ fontWeight: 900, color: alpha("#0a3b4f", 0.9) }}>
-                                Elegí una fecha para ver el extracto
-                            </Typography>
-                            <Typography sx={{ mt: 0.5, fontWeight: 650, color: alpha("#0a3b4f", 0.7) }}>
-                                Cuando selecciones una fecha, habilitamos el botón “Ver extracto”.
-                            </Typography>
-                        </Box>
-                    )}
-                </Box>
-            </Paper>
-        </Box>
+                                        /* =========================
+                                           TEXTO GENERAL (BODY)
+                                        ========================== */
+                                        "& .MuiTableBody-root .MuiTableCell-root": {
+                                            borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
+                                            fontWeight: 650,
+                                            color: "#0b2b3a", // ✅ color letra filas
+                                        },
+
+                                        /* =========================
+                                           TEXTO HEADER
+                                        ========================== */
+                                        "& .MuiTableHead-root .MuiTableCell-root": {
+                                            borderBottom: "0px",
+                                            color: "#01567c", // ✅ texto blanco en header
+                                            fontWeight: 800,
+                                        },
+
+                                        /* =========================
+                                           TOOLBAR (buscar, icons)
+                                        ========================== */
+                                        "& .MuiToolbar-root": {
+                                            px: 2,
+                                            color: "#01567c",
+                                        },
+
+                                        "& .MuiToolbar-root .MuiInputBase-input": {
+                                            color: "#0b2b3a", // texto del buscador
+                                            fontWeight: 700,
+                                        },
+
+                                        /* =========================
+                                           ICONOS (DEFAULT)
+                                        ========================== */
+                                        "& .MuiIconButton-root, & svg": {
+                                            color: alpha("#01567c", 0.75),
+                                            transition: "all 0.2s ease",
+                                        },
+
+                                        /* =========================
+                                           ICONOS HOVER
+                                        ========================== */
+                                        "& .MuiIconButton-root:hover, & svg:hover": {
+                                            color: "#148D8D", // ✅ color hover íconos
+                                            transform: "translateY(-1px)",
+                                        },
+
+                                        /* =========================
+                                           HOVER FILAS
+                                        ========================== */
+
+
+                                        /* =========================
+                                           PAGINACIÓN
+                                        ========================== */
+                                        "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
+                                            color: "#01567c",
+                                            fontWeight: 700,
+                                        },
+                                    }}>
+                                    <MUIDataTable
+
+                                        data={dats}
+                                        columns={columns}
+                                        actions={[
+                                            {
+                                                icon: "save",
+                                                tooltip: "Save User",
+                                                onClick: (event, rowData) => alert("You saved " + rowData.name),
+                                            },
+                                        ]}
+                                        options={options}
+                                    />
+                                </Box>
+                            </Paper>
+                        )}
+                    </>
+                ) : (
+                    // Estado vacío “lindo” (solo UI)
+                    <Box
+                        sx={{
+                            borderRadius: 4,
+                            p: { xs: 2, md: 3 },
+                            border: `1px dashed ${alpha("#0b4f6c", 0.22)}`,
+                            background: alpha("#0f7f86", 0.04),
+                            textAlign: "center",
+                        }}
+                    >
+                        <Typography sx={{ fontWeight: 900, color: alpha("#0a3b4f", 0.9) }}>
+                            Elegí una fecha para ver el extracto
+                        </Typography>
+                        <Typography sx={{ mt: 0.5, fontWeight: 650, color: alpha("#0a3b4f", 0.7) }}>
+                            Cuando selecciones una fecha, habilitamos el botón “Ver extracto”.
+                        </Typography>
+                    </Box>
+                )
+            }
+
+        </Box >
+
 
     );
 };
