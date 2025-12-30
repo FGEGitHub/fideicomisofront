@@ -25,6 +25,7 @@ import DetalleClienteic3 from '../Paginas/Usuario2/detalleclic3';
 import Actualizarcomprobantes from '../Paginas/Usuario2/actualziarcomprobantes';
 import Inusualesniv2 from '../Paginas/Usuario2/inusuales';
 import NuevoCliente from '../Paginas/Usuario2/nuevocliente';
+import Pagos2 from '../Paginas/Usuario2/pagos3';
 
 
 import Navbar from "../components/Navbar";
@@ -180,7 +181,7 @@ const Rutas = [
 	{ path: '/usuario2/mapas', element: <Mapaniv2 /> },
 	{ path: '/usuario2/clientesic3', element: <Clientesic3 /> },
 	{ path: '/usuario2/nuevocliente', element: <NuevoCliente /> },
-	
+		{ path: '/usuario2/pagos', element: <Pagos2 /> },
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
 	{ path: '/nivel3/clientes', element: <Clientesniv3 /> },

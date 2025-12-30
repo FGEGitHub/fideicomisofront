@@ -129,7 +129,11 @@ export default function MenuIzq2({ children }) {
       icon: <DescriptionIcon style={{ color: "#1a303e" }} />,
       path: '/usuario2/extracto'
     },
-
+    {
+      text: 'Pagos',
+      icon: <WarningAmberIcon style={{ color: "#1a303e" }} />,
+      path: '/usuario2/pagos'
+    },
 
     {
       text: 'Pagos inusuales',
