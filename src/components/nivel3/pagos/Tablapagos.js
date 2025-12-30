@@ -1,17 +1,24 @@
 import { useState, useEffect, useMemo } from "react";
 import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider, alpha } from "@mui/material/styles";
 import {
   Box,
   Button,
   MenuItem,
   Select,
   FormControl,
-  InputLabel
+  InputLabel,
+  Paper,
+  Typography,
+  Chip,
+  Divider,
+  Tooltip
 } from "@mui/material";
 
 import PrintIcon from "@mui/icons-material/Print";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
 import servicioPagos from "../../../services/pagos";
 
@@ -56,8 +63,7 @@ const PagosInusuales = () => {
   });
 
   // =======================
-  // EXPORTAR A EXCEL
-  // (si querés que el Excel respete lo mismo que la tabla, abajo también lo ajusté)
+  // EXPORTAR A EXCEL (misma lógica que tabla)
   // =======================
   const exportarExcel = () => {
     const data = pagosFiltrados.map((p) => {
@@ -69,28 +75,14 @@ const PagosInusuales = () => {
         p.parcela !== null &&
         p.parcela !== undefined;
 
-      // Si estás filtrando PIT: no exporto Lote
-      const incluirLote = filtroZona !== "PIT";
-      // Si estás filtrando IC3: no exporto Parcela
-      const incluirParcela = filtroZona !== "IC3";
-
-      const base = {
+      return {
         Mes: p.mes,
         Año: p.anio,
         Zona: p.origen === "ic3" ? "IC3" : "PIT",
         Fraccion: p.fraccion ?? "-",
-        Manzana: p.manzana ?? "-"
-      };
-
-      const conLote = incluirLote ? { Lote: p.lote ?? "-" } : {};
-      const conParcela = incluirParcela
-        ? { Parcela: parcelaValida ? p.parcela : (p.lote ?? "-") }
-        : {};
-
-      return {
-        ...base,
-        ...conLote,
-        ...conParcela,
+        Manzana: p.manzana ?? "-",
+        Lote: p.lote ?? "-",
+        Parcela: parcelaValida ? p.parcela : p.lote ?? "-",
         "CUIL / CUIT": p.cuil_cuit,
         Nombre: p.nombre,
         Estado: p.estado === "A" ? "Aprobado" : "Pendiente",
@@ -115,103 +107,99 @@ const PagosInusuales = () => {
   };
 
   // =======================
-  // COLUMNAS DINÁMICAS SEGÚN FILTRO ZONA
+  // COLUMNAS (DINÁMICAS SEGÚN FILTRO ZONA)
   // =======================
   const columns = useMemo(() => {
-    // reglas:
-    const ocultarLote = filtroZona === "PIT";
-    const ocultarParcela = filtroZona === "IC3";
-
-    // ayudita para obtener índices reales en esta configuración de columnas
-    const baseOrder = [];
-
-    baseOrder.push("mes");
-    baseOrder.push("anio");
-    baseOrder.push("fraccion");
-    baseOrder.push("manzana");
-
-    if (!ocultarLote) baseOrder.push("lote");
-    if (!ocultarParcela) baseOrder.push("parcela");
-
-    baseOrder.push("origen");
-    baseOrder.push("cuil_cuit");
-    baseOrder.push("nombre");
-    baseOrder.push("monto");
-
-    const indexOf = (name) => baseOrder.indexOf(name);
-
-    const ORIGEN_INDEX = indexOf("origen");
-    const LOTE_INDEX = indexOf("lote"); // puede ser -1 si está oculto
-
-    const cols = [
+    const base = [
       { name: "mes", label: "Mes" },
       { name: "anio", label: "Año" },
       { name: "fraccion", label: "Fracción" },
       { name: "manzana", label: "Manzana" }
     ];
 
-    // LOTE (solo si corresponde)
-    if (!ocultarLote) {
-      cols.push({
-        name: "lote",
-        label: "Lote",
-        options: {
-          customBodyRender: (value, tableMeta) => {
-            const origen = tableMeta.rowData[ORIGEN_INDEX];
-            // PIT -> no corresponde
-            if (origen === "normal") return "No corresponde";
-            return value ?? "-";
-          }
+    const colLote = {
+      name: "lote",
+      label: "Lote",
+      options: {
+        sort: true,
+        customBodyRender: (value) => value ?? "-"
+      }
+    };
+
+    const colParcela = {
+      name: "parcela",
+      label: "Parcela",
+      options: {
+        sort: true,
+        customBodyRender: (value, tableMeta) => {
+          const LOTE_INDEX = 4; // ojo: esto se usa cuando ambas columnas existen; abajo ajustamos con safe access
+          const row = tableMeta.rowData || [];
+          const lote = row[LOTE_INDEX];
+
+          const esInvalida =
+            value === 0 ||
+            value === "0" ||
+            value === "Sin determinar" ||
+            value === "" ||
+            value === null ||
+            value === undefined;
+
+          return esInvalida ? (lote ?? "-") : value;
         }
-      });
-    }
+      }
+    };
 
-    // PARCELA (solo si corresponde)
-    if (!ocultarParcela) {
-      cols.push({
-        name: "parcela",
-        label: "Parcela",
-        options: {
-          customBodyRender: (value, tableMeta) => {
-            const origen = tableMeta.rowData[ORIGEN_INDEX];
+    // 👉 Si filtroZona === "PIT" → ocultar LOTE
+    if (filtroZona !== "PIT") base.push(colLote);
 
-            // IC3 -> no corresponde
-            if (origen === "ic3") return "No corresponde";
-
-            const esInvalida =
-              value === 0 ||
-              value === "0" ||
-              value === "Sin determinar" ||
-              value === "" ||
-              value === null ||
-              value === undefined;
-
-            // fallback: si parcela no viene, mostrar lote (si existe en esta vista)
-            const lote =
-              LOTE_INDEX >= 0 ? tableMeta.rowData[LOTE_INDEX] : undefined;
-
-            return esInvalida ? (lote ?? "-") : value;
-          }
-        }
-      });
-    }
+    // 👉 Si filtroZona === "IC3" → ocultar PARCELA
+    if (filtroZona !== "IC3") base.push(colParcela);
 
     // ZONA
-    cols.push({
+    base.push({
       name: "origen",
       label: "Zona",
       options: {
-        customBodyRender: (value) => (value === "ic3" ? "IC3" : "PIT")
+        sort: true,
+        customBodyRender: (value) => {
+          const isIC3 = value === "ic3";
+          return (
+            <Chip
+              size="small"
+              label={isIC3 ? "IC3" : "PIT"}
+              sx={{
+                fontWeight: 700,
+                borderRadius: 999,
+                px: 0.5,
+                backgroundColor: isIC3
+                  ? alpha("#7c3aed", 0.14)
+                  : alpha("#0ea5e9", 0.14),
+                color: isIC3 ? "#5b21b6" : "#075985",
+                border: `1px solid ${
+                  isIC3 ? alpha("#7c3aed", 0.25) : alpha("#0ea5e9", 0.25)
+                }`
+              }}
+            />
+          );
+        }
       }
     });
 
-    cols.push(
-      { name: "cuil_cuit", label: "CUIL / CUIT" },
-      { name: "nombre", label: "Nombre" },
-      { name: "monto", label: "Monto" }
-    );
+    base.push({ name: "cuil_cuit", label: "CUIL / CUIT" });
+    base.push({ name: "nombre", label: "Nombre" });
+    base.push({
+      name: "monto",
+      label: "Monto",
+      options: {
+        customBodyRender: (value) => (
+          <Typography sx={{ fontWeight: 800 }}>
+            {value ?? "-"}
+          </Typography>
+        )
+      }
+    });
 
-    return cols;
+    return base;
   }, [filtroZona]);
 
   // =======================
@@ -234,116 +222,266 @@ const PagosInusuales = () => {
   };
 
   // =======================
-  // THEME
+  // THEME (MODERNO)
   // =======================
   const theme = createTheme({
+    typography: {
+      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif'
+    },
     components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            borderRadius: 18
+          }
+        }
+      },
       MuiTableHead: {
         styleOverrides: {
           root: {
-            backgroundColor: "#1565c0",
-            color: "#fff"
+            background: "linear-gradient(90deg, #0b4f6c 0%, #148D8D 100%)"
+          }
+        }
+      },
+      MuiTableCell: {
+        styleOverrides: {
+          head: {
+            color: "#fff",
+            fontWeight: 800,
+            borderBottom: `1px solid ${alpha("#ffffff", 0.18)}`
+          },
+          body: {
+            borderBottom: `1px solid ${alpha("#0b4f6c", 0.08)}`
+          }
+        }
+      },
+      MuiToolbar: {
+        styleOverrides: {
+          root: {
+            paddingLeft: 16,
+            paddingRight: 16
           }
         }
       }
     }
   });
 
+  const total = pagosFiltrados.length;
+
   return (
     <ThemeProvider theme={theme}>
-      {/* BARRA DE FILTROS */}
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          mb: 2,
-          p: 2,
-          backgroundColor: "#f5f5f5",
-          borderRadius: 2,
-          flexWrap: "wrap"
-        }}
-      >
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Mes</InputLabel>
-          <Select
-            value={filtroMes}
-            label="Mes"
-            onChange={(e) => setFiltroMes(e.target.value)}
-          >
-            <MenuItem value="">Todos</MenuItem>
-            {meses.map((m) => (
-              <MenuItem key={m} value={m}>
-                {m}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Año</InputLabel>
-          <Select
-            value={filtroAnio}
-            label="Año"
-            onChange={(e) => setFiltroAnio(e.target.value)}
-          >
-            <MenuItem value="">Todos</MenuItem>
-            {anios.map((a) => (
-              <MenuItem key={a} value={a}>
-                {a}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Zona</InputLabel>
-          <Select
-            value={filtroZona}
-            label="Zona"
-            onChange={(e) => setFiltroZona(e.target.value)}
-          >
-            <MenuItem value="">Todas</MenuItem>
-            <MenuItem value="IC3">IC3</MenuItem>
-            <MenuItem value="PIT">PIT</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Button
-          variant="contained"
-          startIcon={<FileDownloadIcon />}
-          onClick={exportarExcel}
-        >
-          Excel
-        </Button>
-
-        <Button
-          variant="outlined"
-          startIcon={<PrintIcon />}
-          onClick={() => window.print()}
-        >
-          Imprimir
-        </Button>
-
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            setFiltroMes("");
-            setFiltroAnio("");
-            setFiltroZona("");
+      <Box sx={{ p: { xs: 2, md: 3 } }}>
+        {/* HEADER */}
+        <Box
+          sx={{
+            mb: 2,
+            display: "flex",
+            alignItems: { xs: "flex-start", md: "center" },
+            justifyContent: "space-between",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 1.5
           }}
         >
-          Limpiar
-        </Button>
-      </Box>
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 900,
+                letterSpacing: -0.4,
+                color: "#0b4f6c"
+              }}
+            >
+              Reporte de pagos realizados
+            </Typography>
+            <Typography sx={{ color: alpha("#0b4f6c", 0.75), mt: 0.25 }}>
+              Visualizá y exportá los pagos filtrados por mes, año y zona.
+            </Typography>
+          </Box>
 
-      {/* TABLA */}
-      <MUIDataTable
-        title="Lista de pagos"
-        data={pagosFiltrados}
-        columns={columns}
-        options={options}
-      />
+          <Chip
+            label={`${total} registro${total === 1 ? "" : "s"}`}
+            sx={{
+              borderRadius: 999,
+              fontWeight: 800,
+              backgroundColor: alpha("#148D8D", 0.14),
+              color: "#0f766e",
+              border: `1px solid ${alpha("#148D8D", 0.25)}`
+            }}
+          />
+        </Box>
+
+        {/* FILTROS CARD */}
+        <Paper
+          elevation={0}
+          sx={{
+            mb: 2,
+            p: { xs: 2, md: 2.2 },
+            border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+            background:
+              "linear-gradient(180deg, rgba(11,79,108,0.06) 0%, rgba(20,141,141,0.05) 40%, rgba(255,255,255,0.92) 100%)",
+            boxShadow: "0 14px 40px rgba(11,79,108,0.10)"
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+            <FilterAltIcon sx={{ color: "#0b4f6c" }} />
+            <Typography sx={{ fontWeight: 900, color: "#0b4f6c" }}>
+              Filtros
+            </Typography>
+          </Box>
+
+          <Divider sx={{ mb: 2, borderColor: alpha("#0b4f6c", 0.12) }} />
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr 1fr" },
+              gap: 2,
+              alignItems: "end"
+            }}
+          >
+            <FormControl size="small" fullWidth>
+              <InputLabel>Mes</InputLabel>
+              <Select
+                value={filtroMes}
+                label="Mes"
+                onChange={(e) => setFiltroMes(e.target.value)}
+                sx={{
+                  borderRadius: 3,
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuItem value="">Todos</MenuItem>
+                {meses.map((m) => (
+                  <MenuItem key={m} value={m}>
+                    {m}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" fullWidth>
+              <InputLabel>Año</InputLabel>
+              <Select
+                value={filtroAnio}
+                label="Año"
+                onChange={(e) => setFiltroAnio(e.target.value)}
+                sx={{
+                  borderRadius: 3,
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuItem value="">Todos</MenuItem>
+                {anios.map((a) => (
+                  <MenuItem key={a} value={a}>
+                    {a}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" fullWidth>
+              <InputLabel>Zona</InputLabel>
+              <Select
+                value={filtroZona}
+                label="Zona"
+                onChange={(e) => setFiltroZona(e.target.value)}
+                sx={{
+                  borderRadius: 3,
+                  backgroundColor: "#fff"
+                }}
+              >
+                <MenuItem value="">Todas</MenuItem>
+                <MenuItem value="IC3">IC3</MenuItem>
+                <MenuItem value="PIT">PIT</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box
+            sx={{
+              mt: 2.2,
+              display: "flex",
+              gap: 1.25,
+              flexWrap: "wrap",
+              justifyContent: { xs: "stretch", md: "flex-end" }
+            }}
+          >
+            <Button
+              variant="contained"
+              startIcon={<FileDownloadIcon />}
+              onClick={exportarExcel}
+              sx={{
+                borderRadius: 999,
+                px: 2.2,
+                fontWeight: 900,
+                textTransform: "none",
+                background: "linear-gradient(90deg, #0b4f6c 0%, #148D8D 100%)",
+                boxShadow: "0 12px 28px rgba(11,79,108,0.22)"
+              }}
+            >
+              Exportar Excel
+            </Button>
+
+            <Button
+              variant="outlined"
+              startIcon={<PrintIcon />}
+              onClick={() => window.print()}
+              sx={{
+                borderRadius: 999,
+                px: 2.2,
+                fontWeight: 900,
+                textTransform: "none",
+                borderColor: alpha("#0b4f6c", 0.28),
+                color: "#0b4f6c",
+                backgroundColor: "#fff",
+                "&:hover": {
+                  borderColor: alpha("#0b4f6c", 0.45),
+                  backgroundColor: alpha("#0b4f6c", 0.04)
+                }
+              }}
+            >
+              Imprimir
+            </Button>
+
+            <Tooltip title="Restablecer filtros">
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<RestartAltIcon />}
+                onClick={() => {
+                  setFiltroMes("");
+                  setFiltroAnio("");
+                  setFiltroZona("");
+                }}
+                sx={{
+                  borderRadius: 999,
+                  px: 2.2,
+                  fontWeight: 900,
+                  textTransform: "none",
+                  backgroundColor: "#fff"
+                }}
+              >
+                Limpiar
+              </Button>
+            </Tooltip>
+          </Box>
+        </Paper>
+
+        {/* TABLA */}
+        <Paper
+          elevation={0}
+          sx={{
+            boxShadow: "0 12px 34px rgba(20,141,141,0.10)"
+          }}
+        >
+          <MUIDataTable
+           
+            data={pagosFiltrados}
+            columns={columns}
+            options={options}
+          />
+        </Paper>
+      </Box>
     </ThemeProvider>
   );
 };
