@@ -340,8 +340,12 @@ const parseCuota = (cuota) => {
       variant="contained"
       size="small"
       onClick={() =>
-        navigate(`/usuario2/detallecliente/${client.cuil_cuit}`)
-      }
+                        navigate(
+                          client.zona == "IC3"
+                            ? `/usuario2/detalleclic3/${client.cuil_cuit}`
+                            : `/usuario2/detallecliente/${client.cuil_cuit}`
+                        )
+                      }
       sx={{
         backgroundColor: "#148D8D",
         textTransform: "none",
