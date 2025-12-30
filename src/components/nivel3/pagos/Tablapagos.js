@@ -23,7 +23,7 @@ const PagosInusuales = () => {
   const [pagos, setPagos] = useState([]);
   const [filtroMes, setFiltroMes] = useState("");
   const [filtroAnio, setFiltroAnio] = useState("");
-  const [filtroZona, setFiltroZona] = useState("");
+  const [filtroZona, setFiltroZona] = useState("PIT");
 
   useEffect(() => {
     getPagos();
@@ -94,7 +94,7 @@ const PagosInusuales = () => {
   const columns = [
     { name: "mes", label: "Mes" },
     { name: "anio", label: "Año" },
-    { name: "fecha", label: "Fecha de pago" },
+/*     { name: "fecha", label: "Fecha de pago" }, */
     {
       name: "origen",
       label: "Zona",
