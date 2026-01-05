@@ -32,7 +32,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import { useLocation } from "react-router-dom";
-
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 
 const initialWidth = 240; // Ancho inicial del menú
@@ -130,8 +130,8 @@ export default function MenuIzq2({ children }) {
       path: '/usuario2/extracto'
     },
     {
-      text: 'Pagos',
-      icon: <WarningAmberIcon style={{ color: "#1a303e" }} />,
+      text: 'Reporte de Pagos',
+      icon: <AssessmentIcon style={{ color: "#1a303e" }} />,
       path: '/usuario2/pagos'
     },
 

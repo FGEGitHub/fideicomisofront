@@ -19,6 +19,7 @@
     "antd": "^4.20.6",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
+    "file-saver": "^2.0.5",
     "leaflet": "^1.9.4",
     "markdown-to-jsx": "^7.1.8",
     "material-table": "^2.0.3",
@@ -34,7 +35,8 @@
     "react-scripts": "5.0.1",
     "react-zoom-pan-pinch": "^3.3.0",
     "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
