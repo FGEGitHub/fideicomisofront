@@ -94,7 +94,27 @@ const PagosInusuales = () => {
   const columns = [
     { name: "mes", label: "Mes" },
     { name: "anio", label: "Año" },
+        { name: "fraccion", label: "fraccion" },
+                { name: "manzana", label: "manzana" },
 /*     { name: "fecha", label: "Fecha de pago" }, */
+
+  {
+    name: "parcela",
+    label: "Parcela",
+    options: {
+      customBodyRender: (value, tableMeta) => {
+        const LOTE_INDEX =  tableMeta.rowData.length - 1; 
+        // ⚠️ ajustamos abajo
+
+        const lote = tableMeta.rowData[LOTE_INDEX];
+
+        return value === 0 || value === "0" || value === "Sin determinar"
+          ? lote
+          : value;
+      }
+    }
+  },
+
     {
       name: "origen",
       label: "Zona",
