@@ -109,54 +109,31 @@ const PagosInusuales = () => {
   // =======================
   // COLUMNAS (DINÁMICAS SEGÚN FILTRO ZONA)
   // =======================
-  const columns = useMemo(() => {
-    const base = [
-      { name: "mes", label: "Mes" },
-      { name: "anio", label: "Año" },
-      { name: "fraccion", label: "Fracción" },
-      { name: "manzana", label: "Manzana" }
-    ];
+  const columns = [
+    { name: "mes", label: "Mes" },
+    { name: "anio", label: "Año" },
+        { name: "fraccion", label: "fraccion" },
+                { name: "manzana", label: "manzana" },
+/*     { name: "fecha", label: "Fecha de pago" }, */
 
-    const colLote = {
-      name: "lote",
-      label: "Lote",
-      options: {
-        sort: true,
-        customBodyRender: (value) => value ?? "-"
+  {
+    name: "parcela",
+    label: "Parcela",
+    options: {
+      customBodyRender: (value, tableMeta) => {
+        const LOTE_INDEX =  tableMeta.rowData.length - 1; 
+        // ⚠️ ajustamos abajo
+
+        const lote = tableMeta.rowData[LOTE_INDEX];
+
+        return value === 0 || value === "0" || value === "Sin determinar"
+          ? lote
+          : value;
       }
-    };
+    }
+  },
 
-    const colParcela = {
-      name: "parcela",
-      label: "Parcela",
-      options: {
-        sort: true,
-        customBodyRender: (value, tableMeta) => {
-          const LOTE_INDEX = 4; // ojo: esto se usa cuando ambas columnas existen; abajo ajustamos con safe access
-          const row = tableMeta.rowData || [];
-          const lote = row[LOTE_INDEX];
-
-          const esInvalida =
-            value === 0 ||
-            value === "0" ||
-            value === "Sin determinar" ||
-            value === "" ||
-            value === null ||
-            value === undefined;
-
-          return esInvalida ? (lote ?? "-") : value;
-        }
-      }
-    };
-
-    // 👉 Si filtroZona === "PIT" → ocultar LOTE
-    if (filtroZona !== "PIT") base.push(colLote);
-
-    // 👉 Si filtroZona === "IC3" → ocultar PARCELA
-    if (filtroZona !== "IC3") base.push(colParcela);
-
-    // ZONA
-    base.push({
+    {
       name: "origen",
       label: "Zona",
       options: {
