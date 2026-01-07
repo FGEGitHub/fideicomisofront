@@ -1,162 +1,215 @@
-import React, { useEffect, useState, Fragment } from "react";
-import { useParams } from "react-router-dom"
-import LotesCliente from '../../LotesCliente'
-import InfoCliente from '../detalleclienteIngresos/FichaAxios'
-import servicioCliente from '../../../services/clientes'
-import Ingreso from '../detalleclienteIngresos/Ingresos'
-import { Paper } from '@mui/material';
-import PEP from '../detalleclienteIngresos/DeterminarPep'
-import Cuotas from '../cuotasic3/tabla'
-import Alert from '@mui/material/Alert';
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  Alert,
+  Button,
+  Chip,
+  Stack,
+  Typography,
+  Divider,
+} from "@mui/material";
 
-import Chip from '@mui/material/Chip';
+import LotesCliente from "../../LotesCliente";
+import InfoCliente from "../detalleclienteIngresos/FichaAxios";
+import servicioCliente from "../../../services/clientes";
+import Ingreso from "../detalleclienteIngresos/Ingresos";
+import PEP from "../detalleclienteIngresos/DeterminarPep";
+import Cuotas from "../cuotasic3/tabla";
+import { alpha } from "@mui/material/styles";
+
+
 const DetalleCliente = () => {
   const navigate = useNavigate();
-    let params = useParams()
-    let cuil_cuit = params.cuil_cuit
-    const [cliente, setCliente] = useState()
-    const [idd, setIdd] = useState()
-     const [habilitado, sethabilitado] = useState(false)
-     const [carga, setCarga] = useState(true)
-     const [expuesta, setExpuesta] = useState(false)
-     useEffect(() => {
+  const { cuil_cuit } = useParams();
 
-        traer()
+  const [cliente, setCliente] = useState();
+  const [idd, setIdd] = useState();
+  const [habilitado, setHabilitado] = useState(false);
+  const [carga, setCarga] = useState(true);
+  const [expuesta, setExpuesta] = useState(false);
 
-    }, [])
-     const traer = async () => {
-      
-        const clientee = await servicioCliente.clientehabilitadoic3(cuil_cuit) ////api/links/clientehabilitado
-      console.log(clientee[0][clientee[0].length-1])
-        setIdd(clientee[0][clientee[0].length-1])
-         setCliente(clientee[1])
-        /// veridicacion de cliente segun posibilidad de gestionarlo
-         if (clientee[0][0].habilitado =='Si'){
-             sethabilitado(true)
-         }
-           /// veridicacion de cliente segun PEP
-         if (clientee[0][0].expuesta =='SI'){
-          setExpuesta(true)
-      }
+  useEffect(() => {
+    traer();
+  }, []);
 
-      setCarga(false)    ;
-    };
-  
+  const traer = async () => {
+    const clientee = await servicioCliente.clientehabilitadoic3(cuil_cuit);
 
-    return (
+    setIdd(clientee[0][clientee[0].length - 1]);
+    setCliente(clientee[1]);
 
+    if (clientee[0][0].habilitado === "Si") setHabilitado(true);
+    if (clientee[0][0].expuesta === "SI") setExpuesta(true);
 
-        <div> 
-            {!carga ? <>
-               <div>   
-                <div> 
-                <PEP
-                cuil_cuit = {cuil_cuit}
-                /> 
-             
-                {expuesta ? <div>
-                  <Alert variant="filled" severity="warning">
-                  Persona PEP
-</Alert>
-               
-                   </div> : 
-                   <div>
-                    <Chip label="Persona no PEP" color="success" />
-                   
-                     </div>}
-                
-               </div>
-               <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#b0bec5',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-             <InfoCliente
-                 cuil_cuit={cuil_cuit} />
-                 </Paper>
-             </div>
-             <Paper
-        sx={{
-          cursor: 'pointer',
-          background: '#fafafa',
-          color: '#bdbdbd',
-          border: '1px dashed #ccc',
-          '&:hover': { border: '1px solid #ccc' },
-        }}
-      >
-        {idd &&  
-           <Button
-                        variant="outlined"
-                        onClick={() => navigate('/usuario2/actualizarcomporbantes/'+idd.id)}
-                      >
-                   ACTUALIZAR COMPROBANTES
-                      </Button>}
-             {habilitado ? <div>
-              <Alert severity="success">  <b>  Cliente habilitado por {cliente.cuil_cuit}  , el dia {cliente.fecha}</b></Alert>
-            
-                <div> <Ingreso/> </div>
-      
-            {<LotesCliente
-                  cuil_cuit={cuil_cuit} />}
+    setCarga(false);
+  };
 
-                 
-            </div> : <div><Alert severity="error"> <b>Cliente no habilitado por {cliente.cuil_cuit}  el dia {cliente.fecha}, (No se puede asignar lote a un cliente no habilitado)</b>. Ir a LEGAJOS para habilitar</Alert></div> }
-            </Paper>
-          
-                      {habilitado ? <>
-                        <Button
-                        variant="outlined"
-                        onClick={() => navigate('/usuario2/legajoscliente/'+cuil_cuit)}
-                      >
-                      Ir a legajos
-                      </Button>
-        
-</>:<><Button
-      variant="outlined"
-      onClick={() => navigate('/usuario2/legajoscliente/' + cuil_cuit)}
+  if (carga) return <>Cargando</>;
+
+  return (
+    <Box
       sx={{
-        position: 'relative',
-        border: '2px solid #ff0000', // Borde rojo
-        color: '#f50057', // Texto rojo
-        fontWeight: 'bold', // Texto en negrita
-        backgroundColor: '#fff0f0', // Fondo ligeramente rojo
-        transition: 'transform 0.2s', // Transición para el efecto de zoom
-        '&:hover': {
-          transform: 'scale(1.1)', // Efecto de zoom al pasar el cursor
-        },
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: '-10px',
-          right: '-10px',
-          width: '20px',
-          height: '20px',
-          background: 'url("path-to-your-arrow-image.png") no-repeat center center', // Puedes usar una imagen de flecha para señalar
-          backgroundSize: 'contain',
-        },
+        p: { xs: 2, md: 3 },
+        background:
+          "linear-gradient(180deg, rgba(10,59,79,0.05) 0%, rgba(255,255,255,1) 100%)",
       }}
     >
-      Ir a legajos
-    </Button></>}
+      {/* HEADER CLIENTE (igual a la 2da imagen) */}
+      <Paper
+        elevation={0}
+        sx={{
+          borderRadius: 3,
+          overflow: "hidden",
+          border: "1px solid #e8eef5",
+          background:
+            "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+          mb: 2,
+        }}
+      >
+        <Box sx={{ p: { xs: 2, md: 2.5 }, color: "#fff" }}>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={1.5}
+            alignItems={{ md: "center" }}
+            justifyContent="space-between"
+          >
+            <Box>
+              <Typography sx={{ fontWeight: 950, letterSpacing: 0.2 }}>
+                Cliente
+              </Typography>
+              <Typography
+                sx={{
+                  opacity: 0.92,
+                  fontWeight: 700,
+                  fontSize: 13,
+                  mt: 0.2,
+                }}
+              >
+                CUIT/CUIL: <b>{cuil_cuit}</b>
+              </Typography>
+            </Box>
 
-</>:<>Cargando</>}
+            {/* ACCIONES ARRIBA A LA DERECHA (como la 2da imagen) */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1.25,
+                justifyContent: { xs: "flex-start", md: "flex-end" },
+                flexWrap: "wrap",
+              }}
+            >
+              {/* PEP (NO TOCO NADA, solo lo ubico como botón en el header) */}
+              <Box
+                sx={{
+                  "& .MuiButton-root": {
+                    borderRadius: 2,
+                    px: 2.2,
+                    py: 1.05,
+                    textTransform: "none",
+                    fontWeight: 900,
+                    backgroundColor: "rgba(255,255,255,0.18)",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                    boxShadow: "0 10px 20px rgba(0,0,0,0.12)",
+                    color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "rgba(255,255,255,0.24)",
+                    },
+                  },
+                }}
+              >
+                <PEP cuil_cuit={cuil_cuit} />
+              </Box>
 
-{cuil_cuit ? <>
-  <Cuotas
-  cuil_cuit={cuil_cuit}
-  />
-  
-  </>:<></>}
-  
-        </div>
+              {/* ACTUALIZAR COMPROBANTES */}
+              {idd && (
+                <Button
+                  variant="contained"
+                  onClick={() =>
+                    navigate("/usuario2/actualizarcomporbantes/" + cuil_cuit)
+                  }
+                  sx={{
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: 900,
+                    px: 2,
+                    backgroundColor: "rgba(255,255,255,0.16)",
+                    color: "#fff",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.24)" },
+                  }}
+                >
+                  ACTUALIZAR COMPROBANTES
+                </Button>
+              )}
+            </Box> </Stack>
+        </Box>
+
+      </Paper>
+
+      <Paper
+        elevation={0}
+        sx={{
+          p: 1,
+          background: "transparent",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+          {expuesta ? (
+            <Alert severity="warning" variant="filled">
+              Persona PEP
+            </Alert>
+          ) : (
+            <Chip label="Persona no PEP" color="success" />
+          )}
+        </Box>
+      </Paper>
+
+      {habilitado ? (
+        <>
+          <Alert severity="success" sx={{ mb: 2 }}>
+            <b>
+              Cliente habilitado por {cliente.cuil_cuit}, el día{" "}
+              {cliente.fecha}
+            </b>
+          </Alert>
+
+          <Ingreso />
+
+          <Divider sx={{ my: 2 }} />
+
+          <LotesCliente cuil_cuit={cuil_cuit} />
+        </>
+      ) : (
+        <Alert severity="error">
+          <b>
+            Cliente no habilitado por {cliente.cuil_cuit}, el día{" "}
+            {cliente.fecha}
+          </b>
+          . No se puede asignar lote.
+        </Alert>
+      )}
+
+      {/* CHIP PEP ABAJO (opcional, prolijo) */}
 
 
-    )
-}
-export default DetalleCliente
+
+      {/* INFO CLIENTE */}
+      <Paper sx={{ borderRadius: 3, p: 2.5, mb: 2 }}>
+        <InfoCliente cuil_cuit={cuil_cuit} />
+      </Paper>
+
+
+
+      {/* CUOTAS */}
+      {cuil_cuit && (
+        <Paper sx={{ borderRadius: 3, p: 2 }}>
+          <Cuotas cuil_cuit={cuil_cuit} />
+        </Paper>
+      )}
+    </Box>
+  );
+};
+
+export default DetalleCliente;

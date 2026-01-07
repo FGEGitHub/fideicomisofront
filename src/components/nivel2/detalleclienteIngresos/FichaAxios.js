@@ -77,8 +77,8 @@ const FichaAxios = (props) => {
                         (cliente[0]?.riesgo ?? 0) <= 58
                           ? "green"
                           : (cliente[0]?.riesgo ?? 0) <= 70
-                          ? "orange"
-                          : "red",
+                            ? "orange"
+                            : "red",
                       borderRadius: 99,
                     },
                   }}
@@ -93,8 +93,8 @@ const FichaAxios = (props) => {
                       (cliente[0]?.riesgo ?? 0) <= 58
                         ? "green"
                         : (cliente[0]?.riesgo ?? 0) <= 70
-                        ? "orange"
-                        : "red",
+                          ? "orange"
+                          : "red",
                     textTransform: "uppercase",
                   }}
                 >
@@ -102,8 +102,8 @@ const FichaAxios = (props) => {
                   {(cliente[0]?.riesgo ?? 0) <= 58
                     ? " BAJO"
                     : (cliente[0]?.riesgo ?? 0) <= 70
-                    ? " MEDIO"
-                    : " ALTO"}{" "}
+                      ? " MEDIO"
+                      : " ALTO"}{" "}
                   ( {cliente[0]?.riesgo}% )
                 </Typography>
 
@@ -389,62 +389,81 @@ const FichaAxios = (props) => {
                       Enviar
                     </Button>
                   </Box>
-               ) : (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "flex-end", // ✅ derecha
-      alignItems: "center",
-      gap: 1.2,
-      flexWrap: "wrap",
-      width: "100%", // ✅ ocupa todo el ancho para poder alinear
-    }}
-  >
-    <Button
-      variant="contained"
-      sx={{
-        mb: 2,
-        px: 2.2,
-        py: 1.1,
-        borderRadius: 2,
-        textTransform: "none",
-        fontWeight: 700,
-        backgroundColor: "#01567c",
-        boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-        "&:hover": { backgroundColor: "#014a6b" },
-      }}
-      onClick={() => navigate("/usuario2/legajoscliente/" + props.cuil_cuit)}
-    >
-      Ir a legajos
-    </Button>
+                ) : (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end", // ✅ derecha
+                      alignItems: "center",
+                      gap: 1.2,
+                      flexWrap: "wrap",
+                      width: "100%", // ✅ ocupa todo el ancho para poder alinear
+                    }}
+                  >
+                    <Button
+                       variant="contained"
+                      sx={{
+                        mb: 2,
+                        px: 2.2,
+                        py: 1.1,
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 700,
+                        backgroundColor: "#01567c",
+                        boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
+                        "&:hover": { backgroundColor: "#014a6b" },
+                      }}  onClick={() =>
+                        navigate("/usuario2/asignarloteausuario/" + props.cuil_cuit)
+                      }
+                    >
+                      Asignar lote
+                    </Button>
 
-    <Button
-      variant="contained"
-      sx={{
-        mb: 2,
-        px: 2.2,
-        py: 1.1,
-        borderRadius: 2,
-        textTransform: "none",
-        fontWeight: 700,
-        backgroundColor: "#01567c",
-        boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-        "&:hover": { backgroundColor: "#014a6b" },
-      }}
-      onClick={() => navigate("/usuario2/modificarcliente/" + props.cuil_cuit)}
-    >
-      Modificar cliente
-    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mb: 2,
+                        px: 2.2,
+                        py: 1.1,
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 700,
+                        backgroundColor: "#01567c",
+                        boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
+                        "&:hover": { backgroundColor: "#014a6b" },
+                      }}
+                      onClick={() => navigate("/usuario2/legajoscliente/" + props.cuil_cuit)}
+                    >
+                      Ir a legajos
+                    </Button>
 
-    <Ingreso
-      traer={async () => {
-        const cliente = await servicioCliente.cliente(props.cuil_cuit);
-        setCliente(cliente);
-      }}
-    />
-  </Box>
-)
-}
+                    <Button
+                      variant="contained"
+                      sx={{
+                        mb: 2,
+                        px: 2.2,
+                        py: 1.1,
+                        borderRadius: 2,
+                        textTransform: "none",
+                        fontWeight: 700,
+                        backgroundColor: "#01567c",
+                        boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
+                        "&:hover": { backgroundColor: "#014a6b" },
+                      }}
+                      onClick={() => navigate("/usuario2/modificarcliente/" + props.cuil_cuit)}
+                    >
+                      Modificar cliente
+                    </Button>
+
+                    <Ingreso
+                      traer={async () => {
+                        const cliente = await servicioCliente.cliente(props.cuil_cuit);
+                        setCliente(cliente);
+                      }}
+                    />
+                  </Box>
+                )
+                }
               </Box>
             </Paper>
           </Container>
