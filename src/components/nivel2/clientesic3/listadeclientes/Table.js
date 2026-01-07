@@ -270,11 +270,7 @@ const parseCuota = (cuota) => {
                     <TableCell
                       sx={{ cursor: "pointer" }}
                       onClick={() =>
-                        navigate(
-                          client.zona === "IC3"
-                            ? `/usuario2/detalleclic3/${client.cuil_cuit}`
-                            : `/usuario2/detallecliente/${client.cuil_cuit}`
-                        )
+                        navigate(`/usuario2/detalleclic3/${client.cuil_cuit}`)
                       }
                     >
                       {client.cuil_cuit}
@@ -283,11 +279,7 @@ const parseCuota = (cuota) => {
                     <TableCell
                       sx={{ cursor: "pointer" }}
                       onClick={() =>
-                        navigate(
-                          client.zona === "IC3"
-                            ? `/usuario2/detalleclic3/${client.cuil_cuit}`
-                            : `/usuario2/detallecliente/${client.cuil_cuit}`
-                        )
+                        navigate(`/usuario2/detalleclic3/${client.cuil_cuit}`)
                       }
                     >
                       {client.Nombre}
@@ -340,12 +332,7 @@ const parseCuota = (cuota) => {
       variant="contained"
       size="small"
       onClick={() =>
-                        navigate(
-                          client.zona == "IC3"
-                            ? `/usuario2/detalleclic3/${client.cuil_cuit}`
-                            : `/usuario2/detallecliente/${client.cuil_cuit}`
-                        )
-                      }
+                        navigate(`/usuario2/detalleclic3/${client.cuil_cuit}`)}
       sx={{
         backgroundColor: "#148D8D",
         textTransform: "none",
