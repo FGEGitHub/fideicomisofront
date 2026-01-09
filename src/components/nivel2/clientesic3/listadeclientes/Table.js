@@ -329,7 +329,7 @@ const Lotes = () => {
               {filteredClients
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((client, index) => {
-                  const value = client.porcentaje || 0;
+                  const value = client.riesgo || 0;
 
                   let emoji = "⚪";
                   let barColor = "#bdbdbd";
