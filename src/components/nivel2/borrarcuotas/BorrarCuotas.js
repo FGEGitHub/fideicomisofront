@@ -52,7 +52,7 @@ export default function Borrarcuotas(props) {
     borderRadius: 3,
     overflow: 'hidden',
     boxShadow: '0 20px 60px rgba(10,59,79,0.22)',
-    border: '1px solid rgba(1,86,124,0.10)',
+   
   };
 
   const sxDialogTitle = {
@@ -118,7 +118,7 @@ export default function Borrarcuotas(props) {
           py: 1.1,
           borderRadius: 2,
           textTransform: 'none',
-          fontWeight: 700,
+          fontWeight: 700, 
           backgroundColor: '#01567c',
           boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
           '&:hover': { backgroundColor: '#014a6b' }

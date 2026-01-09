@@ -27,7 +27,7 @@ const PagosInusuales = () => {
         { name: "id", label: "Id" },
         {
             name: "Nombre",
-            label: "Nombre y Apellido/Razón Social",
+            label: "Nombre/Razón Social",
             options: {
                 customBodyRenderLite: (dataIndex) => (
                     <Box sx={{ fontWeight: 800, color: "#0b2b3a" }}>

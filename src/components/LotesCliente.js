@@ -31,7 +31,8 @@ import { MenuItem, InputLabel } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Box } from "@material-ui/core";
+import Box from "@mui/material/Box";
+import { alpha } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
@@ -40,38 +41,43 @@ import Pagorapido from "./nivel2/pagarcuota/modalpagorapido";
 import Adelantar from "./nivel2/pagarcuota/adelantarcuotaparque";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
 
 ////// TABLA CUOTAS (azul fijo)
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#014A6B",
-    color: "#ffffff",
-    fontWeight: 800,
-    fontSize: "0.75rem",
-    textTransform: "uppercase",
-    letterSpacing: "0.04em",
-    borderBottom: "none",
+    backgroundColor: "#064B63",
+    color: "#fff",
+    fontWeight: 900,
+    fontSize: 12.5,
+    letterSpacing: 0.35,
+    borderBottom: "0px",
+    whiteSpace: "nowrap",
+    paddingTop: 14,
+    paddingBottom: 14,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: "0.78rem",
-    color: "#1f2a33",
+    fontSize: 13.5,
+    fontWeight: 650,
+    color: "#0b2b3a",
+    borderBottom: `1px solid ${alpha("#01567c", 0.10)}`,
+    paddingTop: 14,
+    paddingBottom: 14,
   },
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "#f7fbfd",
-  },
   "&:nth-of-type(even)": {
-    backgroundColor: "#ffffff",
+    backgroundColor: alpha("#148D8D", 0.04),
   },
-  "&:hover": {
-    backgroundColor: "#e6f4f8",
+  "&:hover td": {
+    backgroundColor: `${alpha("#148D8D", 0.08)} !important`,
   },
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
+
 
 const LotesCliente = (props) => {
   let params = useParams();
@@ -347,635 +353,577 @@ const LotesCliente = (props) => {
     },
   ];
 
+
+  const sxCard = {
+    borderRadius: 4,
+    overflow: "hidden",
+    border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+    background: "rgba(255,255,255,0.92)",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
+  };
+
+  const sxHeader = {
+    px: { xs: 2, md: 3 },
+    py: { xs: 2, md: 2.5 },
+    background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+    color: "#fff",
+    display: "flex",
+    alignItems: { xs: "flex-start", md: "center" },
+    justifyContent: "space-between",
+    gap: 2,
+    flexWrap: "wrap",
+  };
+
+  const sxTitle = { fontWeight: 900, fontSize: { xs: 18, md: 22 }, lineHeight: 1.1 };
+  const sxSub = { mt: 0.35, fontWeight: 650, opacity: 0.9, fontSize: 13.5 };
+
+  const sxBody = {
+    px: { xs: 2, md: 3 },
+    py: 2,
+    background:
+      "linear-gradient(180deg, rgba(20,141,141,0.06) 0%, rgba(255,255,255,0.95) 55%, #fff 100%)",
+  };
+
+  const sxSelect = {
+    minWidth: 260,
+    borderRadius: 2,
+    backgroundColor: "rgba(255,255,255,0.92)",
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: alpha("#0b4f6c", 0.20) },
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: alpha("#0b4f6c", 0.35) },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#148D8D",
+      boxShadow: "0 0 0 3px rgba(20,141,141,0.12)",
+    },
+  };
+
+  const sxMiniHeader = {
+    px: 2.2,
+    py: 1.4,
+    backgroundColor: "#014A6B",
+    color: "#fff",
+    fontWeight: 900,
+    fontSize: 14.5,
+    letterSpacing: "0.02em",
+  };
+
+  const sxInnerCard = {
+    borderRadius: 3,
+    overflow: "hidden",
+    border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
+    background: "#fff",
+    boxShadow: "0 18px 45px rgba(10,59,79,0.10)",
+  };
+
+  const sxBtnPrimary = {
+    mb: 2,
+    px: 2.2,
+    py: 1.1,
+    borderRadius: 2,
+    textTransform: 'none',
+    fontWeight: 700,
+    backgroundColor: '#01567c',
+    boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
+    '&:hover': { backgroundColor: '#014a6b' }
+  };
+
+  const sxBtnAccent = {
+    px: 2.2,
+    py: 1.1,
+    borderRadius: 2,
+    textTransform: "none",
+    fontWeight: 900,
+    backgroundColor: "#148D8D",
+    boxShadow: "0 10px 25px rgba(20,141,141,0.22)",
+    "&:hover": { backgroundColor: "#0f7a7a" },
+  };
+
+
   return (
     <Fragment>
-      <br />
+      <Box sx={{ width: "100%", maxWidth: "100%", minWidth: 0 }}>
+        {/* =========================
+          PAPER 1: CUADRO DE CUOTAS + SELECT LOTE
+      ========================== */}
+        <Paper elevation={0} sx={sxCard}>
+          <Box sx={sxHeader}>
+            <Box>
+              <Typography sx={sxTitle}>CUADRO DE CUOTAS</Typography>
+              <Typography sx={sxSub}>
+                Seleccioná un lote para ver sus cuotas.
+              </Typography>
+            </Box>
 
-      {lotes ? (
-        <>
-          {lotes.length > 0 ? (
-            <>
-              {/* dejo sx acá porque es @mui/material y no rompe; si querés lo paso a style también */}
-              <FormControl sx={{ m: 1, minWidth: 140 }}>
-                <div>
-                  {selectedValue ? (
-                    <>
-                      <FormLabel id="demo-row-radio-buttons-group-label">
-                        Lote
-                      </FormLabel>
-                    </>
-                  ) : (
-                    <>
-                      <FormLabel id="demo-row-radio-buttons-group-label">
-                        <h3>Seleccionar un lote</h3>
-                      </FormLabel>
-                    </>
-                  )}
+            {/* (Opcional) chip registros, no agrega info extra */}
+            <Chip
+              label={`Registros: ${Array.isArray(cuotas) && cuotas.length > 0 && cuotas[0] !== ""
+                ? cuotas.length
+                : 0
+                }`}
+              sx={{
+                fontWeight: 900,
+                borderRadius: 999,
+                background: "rgba(255,255,255,0.18)",
+                border: "1px solid rgba(255,255,255,0.35)",
+                color: "#fff",
+              }}
+            />
+          </Box>
 
-                  <FormControl fullWidth>
-                    <InputLabel id="lotes-select-label">
-                      Seleccionar Lote
-                    </InputLabel>
-                    <Select
-                      labelId="lotes-select-label"
-                      value={selectedValue}
-                      onChange={handleChangeratio}
-                    >
-                      {lotes.map((item, index) => (
-                        <MenuItem
-                          key={index}
-                          value={`Fraccion: ${item.fraccion} - Manzana: ${item.manzana} - Parcela: ${item.parcela}${
-                            item.tiene_cuotas === "Si" ? " - Cuotas" : ""
+          <Box sx={sxBody}>
+            {lotes && lotes.length > 0 ? (
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}>
+                <FormControl size="small" sx={{ minWidth: 280 }}>
+                  <InputLabel id="lotes-select-label">Lote</InputLabel>
+                  <Select
+                    labelId="lotes-select-label"
+                    label="Lote"
+                    value={selectedValue || ""}
+                    onChange={handleChangeratio}
+                    sx={sxSelect}
+                  >
+                    {lotes.map((item, index) => (
+                      <MenuItem
+                        key={index}
+                        value={`Fraccion: ${item.fraccion} - Manzana: ${item.manzana} - Parcela: ${item.parcela}${item.tiene_cuotas === "Si" ? " - Cuotas" : ""
                           }`}
-                          onClick={() => vercuotas(item.id)}
-                        >
-                          Fraccion: {item.fraccion} - Manzana: {item.manzana} -
-                          Parcela: {item.parcela}
-                          {item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-              </FormControl>
-            </>
-          ) : (
-            <></>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
+                        onClick={() => vercuotas(item.id)}
+                      >
+                        Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela:{" "}
+                        {item.parcela}
+                        {item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-      <div>
+                <Box sx={{ flex: 1 }} />
+
+                {/* Botón que YA EXISTE en tu vista */}
+                {act ? (
+                  <Button variant="contained" sx={sxBtnPrimary} onClick={toggleDetalles}>
+                    {verDetalles ? "Restaurar" : "Ver interés"}
+                  </Button>
+                ) : null}
+              </Box>
+            ) : null}
+
+            <Box
+              sx={{
+                mt: 2,
+                height: 1,
+                background: alpha("#0b4f6c", 0.10),
+                borderRadius: 99,
+              }}
+            />
+          </Box>
+        </Paper>
+
+        {/* =========================
+          PAPER 2: 2 CUADROS + BOTONES (misma vista)
+      ========================== */}
         {act ? (
-          <div>
-            {/* BOTONES ARRIBA */}
-            <div style={{ marginBottom: "1rem" }}>
-              <Stack direction="row" spacing={2} flexWrap="wrap">
+          <Paper elevation={0} sx={{ ...sxCard, mt: { xs: 2, md: 3 } }}>
+            <Box sx={sxHeader}>
+              <Box>
+                <Typography sx={sxTitle} style={{ fontSize: 18 }}>
+                  Resumen y acciones
+                </Typography>
+                <Typography sx={sxSub}>
+                  {selectedValue ? selectedValue : "Seleccioná un lote para ver datos."}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box sx={sxBody}>
+              {/* Cuadros (solo si act2 y hay data) */}
+              {act2 && cuotas !== "" ? (
+                <Grid container spacing={2.5} sx={{ mb: 2 }}>
+                  <Grid item xs={12} md={6}>
+                    <Paper elevation={0} sx={sxInnerCard}>
+                      <Box sx={sxMiniHeader}>Detalles de Deuda Exigible</Box>
+
+                      <TableContainer>
+                        <Table>
+                          <TableBody>
+                            {deudaExigible.map((row, index) => (
+                              <TableRow key={row.name || index}>
+                                <TableCell
+                                  align="left"
+                                  sx={{
+                                    fontWeight: 800,
+                                    color: "#0a3b4f",
+                                    borderBottom: "1px solid #eef3f7",
+                                    py: 1.6,
+                                    fontSize: 13.5,
+                                  }}
+                                >
+                                  {row.datoa}
+                                </TableCell>
+
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    borderBottom: "1px solid #eef3f7",
+                                    py: 1.6,
+                                    fontSize: 13.5,
+                                    fontWeight: 900,
+                                    color: "#01567c",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {index > 0
+                                    ? `$ ${new Intl.NumberFormat("de-DE").format(row.datob)}`
+                                    : new Intl.NumberFormat("de-DE").format(row.datob)}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <Paper elevation={0} sx={sxInnerCard}>
+                      <Box sx={sxMiniHeader}>Detalle de Cuotas Pendientes</Box>
+
+                      <TableContainer>
+                        <Table>
+                          <TableBody>
+                            {detallePendiente.map((row, index) => (
+                              <TableRow key={row.name || index}>
+                                <TableCell
+                                  align="left"
+                                  sx={{
+                                    fontWeight: 800,
+                                    color: "#0a3b4f",
+                                    borderBottom: "1px solid #eef3f7",
+                                    py: 1.6,
+                                    fontSize: 13.5,
+                                  }}
+                                >
+                                  {row.datoa}
+                                </TableCell>
+
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    borderBottom: "1px solid #eef3f7",
+                                    py: 1.6,
+                                    fontSize: 13.5,
+                                    fontWeight: 900,
+                                    color: "#148D8D",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  {index > 0
+                                    ? `$ ${new Intl.NumberFormat("de-DE").format(row.datob)}`
+                                    : new Intl.NumberFormat("de-DE").format(row.datob)}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              ) : null}
+
+              {/* BOTONES (todos acá adentro, como pediste) */}
+              <Divider sx={{ my: 2, borderColor: alpha("#0b4f6c", 0.12) }} />
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1.5,
+                  justifyContent: "flex-end",
+                  flexWrap: "wrap",
+                  pt: 1,
+                }}
+              >
+
                 <Button
                   variant="contained"
-                 sx={{
-          mb: 2,
-          px: 2.2,
-          py: 1.1,
-          borderRadius: 2,
-          textTransform: 'none',
-          fontWeight: 700,
-          backgroundColor: '#01567c',
-          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
-          '&:hover': { backgroundColor: '#014a6b' }
-        }}
+                  sx={sxBtnPrimary}
                   onClick={() => navigate("/usuario2/agregarcuotas/" + idlote)}
                 >
                   Agregar cuotas al lote
                 </Button>
 
-                <AgregaraCuotas id_origen={idlote} lotes={lotes} />
-                <BorrarCuotas id={idlote} />
-                <CancelarLote id_lote={idlote} cuotas={cuotas} />
+                {/* Estos componentes ya existen: no se cambia lógica */}
+                <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+                  <AgregaraCuotas id_origen={idlote} lotes={lotes} />
+                  <BorrarCuotas id={idlote} />
+                  <CancelarLote id_lote={idlote} cuotas={cuotas} />
 
-                {cuotas && (
-                  <Adelantar
-                    id_lote={idlote}
-                    cuotas={cuotas}
-                    traerr={async () => {
-                      const cuotas = await servicioCuotas.vercuotas(idlote);
-                      setCuotas(cuotas);
-                      setAct(true);
-                      verief(idlote);
-                      setOpen(false);
-                    }}
-                  />
-                )}
-              </Stack>
-            </div>
-
-            {cuotas !== "" ? (
-              <>
-                {vista1 ? (
-                  <>
-                    <MUIDataTable
-                      title={"Lista de cuotas"}
-                      data={cuotas}
-                      columns={columns}
-                      actions={[
-                        {
-                          icon: "save",
-                          tooltip: "Save User",
-                          onClick: (event, rowData) =>
-                            alert("You saved " + rowData.name),
-                        },
-                      ]}
+                  {cuotas && (
+                    <Adelantar
+                      id_lote={idlote}
+                      cuotas={cuotas}
+                      traerr={async () => {
+                        const cuotas = await servicioCuotas.vercuotas(idlote);
+                        setCuotas(cuotas);
+                        setAct(true);
+                        verief(idlote);
+                        setOpen(false);
+                      }}
                     />
-                  </>
-                ) : (
-                  <>
-                    {/* HEADER CUADRO CUOTAS + BOTÓN DERECHA */}
-                    <Box
-                      style={{
-                        padding: "16px 20px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: "16px",
-                        borderBottom: "1px solid #e8eef5",
-                        backgroundColor: "#ffffff",
-                        width: "100%",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      {/* Izquierda */}
-                      <Box style={{ minWidth: 260, flex: "1 1 520px" }}>
-                        <Typography
-                          style={{
-                            fontWeight: 900,
-                            fontSize: 25,
-                            lineHeight: 1.15,
-                            color: "#0a3b4f",
-                            marginBottom: 4,
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          CUADRO DE CUOTAS
-                        </Typography>
+                  )}
 
-                        <Typography
-                          style={{
-                            fontSize: 18,
-                            fontWeight: 700,
-                            color: "#0a3b4f",
-                            lineHeight: 1.3,
-                            whiteSpace: "normal",
-                            wordBreak: "break-word",
-                          }}
-                        >
-                          {selectedValue
-                            ? selectedValue
-                            : "Seleccione un lote para ver las cuotas"}
-                        </Typography>
-                      </Box>
 
-                      {/* Derecha (SIEMPRE a la derecha) */}
-                      <Box
-                        style={{
-                          marginLeft: "auto",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          flex: "0 0 auto",
-                          width: "auto",
-                        }}
-                      >
-                        <Button
-                          variant="contained"
-                          onClick={toggleDetalles}
-                          style={{
-                            padding: "10px 18px",
-                            borderRadius: 10,
-                            textTransform: "none",
-                            fontWeight: 800,
-                            backgroundColor: "#01567c",
-                            boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-                            color: "#ffffff",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {verDetalles ? "Restaurar" : "Ver más detalles"}
-                        </Button>
-                      </Box>
-                    </Box>
-
-                    {/* TABLA */}
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        width: "100%",
-                        borderRadius: 3,
-                        border: "1px solid #e8eef5",
-                        overflow: "hidden",
-                        background: "#ffffff",
-                        boxShadow: "0 18px 45px rgba(10,59,79,0.10)",
-                      }}
-                    >
-                      <TableContainer
-                        sx={{
-                          height: "80vh",
-                          backgroundColor: "#ffffff",
-                        }}
-                      >
-                        {!cuotas ? (
-                          <Skeleton />
-                        ) : (
-                          <Table stickyHeader sx={{ minWidth: 1200 }}>
-                            <TableHead>
-                              <TableRow>
-                                <StyledTableCell>Fecha</StyledTableCell>
-                                {verDetalles && (
-                                  <StyledTableCell>Saldo inicial</StyledTableCell>
-                                )}
-                                <StyledTableCell>Amortización</StyledTableCell>
-                                <StyledTableCell>ICC</StyledTableCell>
-                                <StyledTableCell>Ajuste ICC</StyledTableCell>
-                                <StyledTableCell>Cuota con ajuste</StyledTableCell>
-                                {verDetalles && (
-                                  <StyledTableCell>Saldo al cierre</StyledTableCell>
-                                )}
-                                <StyledTableCell>Pago</StyledTableCell>
-                                <StyledTableCell>Diferencia</StyledTableCell>
-                                <StyledTableCell>Saldo real</StyledTableCell>
-                                <StyledTableCell>Pagar / Ver pago</StyledTableCell>
-                                {verDetalles && <StyledTableCell>Interés</StyledTableCell>}
-                              </TableRow>
-                            </TableHead>
-
-                            <TableBody>
-                              {cuotas.map((row) => (
-                                <StyledTableRow key={row.id}>
-                                  <StyledTableCell>
-                                    {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
-                                  </StyledTableCell>
-
-                                  {verDetalles && (
-                                    <StyledTableCell>
-                                      <span style={{ whiteSpace: "nowrap" }}>
-                                        $ <b>{new Intl.NumberFormat("de-DE").format(row.saldo_inicial)}</b>
-                                      </span>
-                                    </StyledTableCell>
-                                  )}
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? (
-                                      <Chip
-                                        label="Cancelado"
-                                        size="small"
-                                        sx={{
-                                          fontWeight: 800,
-                                          bgcolor: "rgba(20,141,141,0.12)",
-                                          color: "#0f7a7a",
-                                          border: "1px solid rgba(20,141,141,0.25)",
-                                        }}
-                                      />
-                                    ) : (
-                                      <span style={{ whiteSpace: "nowrap" }}>
-                                        $ <b>{new Intl.NumberFormat("de-DE").format(row.Amortizacion)}</b>
-                                      </span>
-                                    )}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? "—" : row.ICC}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? "—" : row.Ajuste_ICC}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? (
-                                      "—"
-                                    ) : (
-                                      <span style={{ whiteSpace: "nowrap" }}>
-                                        $ <b>{new Intl.NumberFormat("de-DE").format(row.cuota_con_ajuste)}</b>
-                                      </span>
-                                    )}
-                                  </StyledTableCell>
-
-                                  {verDetalles && (
-                                    <StyledTableCell>
-                                      {row.id >= parseInt(row.cuota_cancelada)
-                                        ? "—"
-                                        : `$ ${new Intl.NumberFormat("de-DE").format(row.saldo_cierre)}`}
-                                    </StyledTableCell>
-                                  )}
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada)
-                                      ? "—"
-                                      : `$ ${new Intl.NumberFormat("de-DE").format(row.pago)}`}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? (
-                                      "—"
-                                    ) : (
-                                      <span
-                                        style={{
-                                          fontWeight: 900,
-                                          color:
-                                            row.diferencia < 0
-                                              ? row.diferencia === -row.cuota_con_ajuste
-                                                ? "#d32f2f"
-                                                : "#0a3b4f"
-                                              : "#148D8D",
-                                        }}
-                                      >
-                                        {new Intl.NumberFormat("de-DE").format(row.diferencia)}
-                                        {row.comprobante === "Sin comprobante" && (
-                                          <Tooltip title="Pago sin comprobante">
-                                            <ErrorOutlineIcon
-                                              style={{ marginLeft: 8 }}
-                                              color="warning"
-                                              fontSize="small"
-                                            />
-                                          </Tooltip>
-                                        )}
-                                      </span>
-                                    )}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada)
-                                      ? "—"
-                                      : `$ ${new Intl.NumberFormat("de-DE").format(row.Saldo_real)}`}
-                                  </StyledTableCell>
-
-                                  <StyledTableCell>
-                                    {row.id >= parseInt(row.cuota_cancelada) ? (
-                                      "—"
-                                    ) : (
-                                      <Box style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                                        <Pagorapido
-                                          id_cuota={row.id}
-                                          cuota_con_ajuste={row.cuota_con_ajuste}
-                                          id_lote={row.id_lote}
-                                          traer={async () => {
-                                            const cuotas = await servicioCuotas.vercuotas(idlote);
-                                            setCuotas(cuotas);
-                                            setAct(true);
-                                            verief(idlote);
-                                            setOpen(false);
-                                          }}
-                                        />
-
-                                        <Button
-                                          variant="contained"
-                                          size="small"
-                                          style={{
-                                            borderRadius: 8,
-                                            textTransform: "none",
-                                            fontWeight: 900,
-                                            backgroundColor: "#01567c",
-                                            boxShadow: "0 10px 25px rgba(1,86,124,0.25)", 
-                                            color: "#fff",
-                                          }}
-                                          onClick={() => navigate("/usuario2/pagoscuotas/" + row.id)}
-                                        >
-                                          Ver pagos
-                                        </Button>
-
-                                        {verDetalles && (
-                                          <Pagointeres
-                                            id_interes={row.id}
-                                            cuil_cuit={cuil_cuit}
-                                            traer={async () => {
-                                              const cuotas = await servicioCuotas.vercuotas(idlote);
-                                              setCuotas(cuotas);
-                                              setAct(true);
-                                              verief(idlote);
-                                              setOpen(false);
-                                            }}
-                                          />
-                                        )}
-                                      </Box>
-                                    )}
-                                  </StyledTableCell>
-
-                                  {verDetalles && (
-                                    <StyledTableCell>
-                                      <b>
-                                        {row.pago_interes == undefined
-                                          ? "$" + new Intl.NumberFormat("de-DE").format(row.interes)
-                                          : row.pago_interes == "diferencia minima"
-                                          ? row.pago_interes
-                                          : "pagado"}
-                                      </b>
-                                    </StyledTableCell>
-                                  )}
-                                </StyledTableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        )}
-                      </TableContainer>
-                    </Paper>
-                  </>
-                )}
-              </>
-            ) : (
-              <>Lote sin cuotas</>
-            )}
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
-
-      {/* IEF (deudaExigible / detallePendiente) - MODERNO */}
-      <br />
-      {act2 ? (
-        <div>
-          {cuotas !== "" ? (
-            <>
-              <div>
-                <Box style={{ width: "100%" }}>
-                  <Grid
-                    container
-                    spacing={3}
-                    style={{ padding: "18px 18px 8px", alignItems: "stretch" }}
-                  >
-                    <Grid item xs={12} md={6}>
-                      <Paper
-                        elevation={0}
-                        style={{
-                          width: "100%",
-                          borderRadius: 14,
-                          border: "1px solid #e8eef5",
-                          background: "#ffffff",
-                          boxShadow: "0 18px 45px rgba(10,59,79,0.10)",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <div
-                          style={{
-                            padding: "14px 18px",
-                            backgroundColor: "#014A6B",
-                            color: "#fff",
-                            fontWeight: 900,
-                            fontSize: 15,
-                            letterSpacing: "0.02em",
-                          }}
-                        >
-                          Detalles de Deuda Exigible
-                        </div>
-
-                        <TableContainer style={{ width: "100%" }}>
-                          <Table aria-label="simple table">
-                            <TableBody>
-                              {deudaExigible.map((row, index) => (
-                                <TableRow key={row.name || index}>
-                                  <TableCell
-                                    align="left"
-                                    style={{
-                                      fontWeight: 800,
-                                      color: "#0a3b4f",
-                                      borderBottom: "1px solid #eef3f7",
-                                      padding: "14px 16px",
-                                      fontSize: 13.5,
-                                    }}
-                                  >
-                                    {row.datoa}
-                                  </TableCell>
-                                  <TableCell
-                                    align="right"
-                                    style={{
-                                      borderBottom: "1px solid #eef3f7",
-                                      padding: "14px 16px",
-                                      fontSize: 13.5,
-                                      fontWeight: 900,
-                                      color: "#01567c",
-                                      whiteSpace: "nowrap",
-                                    }}
-                                  >
-                                    {index > 0
-                                      ? `$ ${new Intl.NumberFormat("de-DE").format(row.datob)}`
-                                      : new Intl.NumberFormat("de-DE").format(row.datob)}
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Paper>
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <Paper
-                        elevation={0}
-                        style={{
-                          width: "100%",
-                          borderRadius: 14,
-                          border: "1px solid #e8eef5",
-                          background: "#ffffff",
-                          boxShadow: "0 18px 45px rgba(10,59,79,0.10)",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <div
-                          style={{
-                            padding: "14px 18px",
-                            backgroundColor: "#014A6B",
-                            color: "#fff",
-                            fontWeight: 900,
-                            fontSize: 15,
-                            letterSpacing: "0.02em",
-                          }}
-                        >
-                          Detalle de Cuotas Pendientes
-                        </div>
-
-                        <TableContainer style={{ width: "100%" }}>
-                          <Table aria-label="simple table">
-                            <TableBody>
-                              {detallePendiente.map((row, index) => (
-                                <TableRow key={row.name || index}>
-                                  <TableCell
-                                    align="left"
-                                    style={{
-                                      fontWeight: 800,
-                                      color: "#0a3b4f",
-                                      borderBottom: "1px solid #eef3f7",
-                                      padding: "14px 16px",
-                                      fontSize: 13.5,
-                                    }}
-                                  >
-                                    {row.datoa}
-                                  </TableCell>
-                                  <TableCell
-                                    align="right"
-                                    style={{
-                                      borderBottom: "1px solid #eef3f7",
-                                      padding: "14px 16px",
-                                      fontSize: 13.5,
-                                      fontWeight: 900,
-                                      color: "#148D8D",
-                                      whiteSpace: "nowrap",
-                                    }}
-                                  >
-                                    {index > 0
-                                      ? `$ ${new Intl.NumberFormat("de-DE").format(row.datob)}`
-                                      : new Intl.NumberFormat("de-DE").format(row.datob)}
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Paper>
-                    </Grid>
-
-                    {/* BOTONES ABAJO A LA DERECHA */}
-                    <Grid item xs={12}>
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          gap: 12,
-                          padding: "10px 4px 6px",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <Fab
-                          variant="extended"
-                          onClick={() => {
-                            handleChange2();
-                          }}
-                          style={{
-                            borderRadius: 12,
-                            padding: "10px 18px",
-                            textTransform: "none",
-                            fontWeight: 900,
-                            backgroundColor: "#01567c",
-                            color: "#fff",
-                            boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-                          }}
-                        >
-                          <VisibilityOffIcon style={{ marginRight: 10 }} /> Ocultar
-                          IEF
-                        </Fab>
-
-                        <Fab
-                          variant="extended"
-                          onClick={() => {
-                            window.open("/usuario2/comprobanteief/" + idlote);
-                          }}
-                          style={{
-                            borderRadius: 12,
-                            padding: "10px 18px",
-                            textTransform: "none",
-                            fontWeight: 900,
-                            backgroundColor: "#148D8D",
-                            color: "#fff",
-                            boxShadow: "0 10px 25px rgba(20,141,141,0.22)",
-                          }}
-                        >
-                          Imprimir comprobante
-                        </Fab>
-                      </div>
-                    </Grid>
-                  </Grid>
                 </Box>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
-        </div>
-      ) : (
-        <div></div>
-      )}
+
+              </Box>
+              <Fab
+                variant="extended"
+                onClick={() => {
+                  window.open("/usuario2/comprobanteief/" + idlote);
+                }}
+                sx={{
+                  borderRadius: 2,
+                  px: 2,
+                  textTransform: "none",
+                  fontWeight: 900,
+                  backgroundColor: "#148D8D",
+                  color: "#fff",
+                  boxShadow: "0 10px 25px rgba(20,141,141,0.22)",
+                  "&:hover": { backgroundColor: "#0f7a7a" },
+                }}
+              >
+                Imprimir comprobante
+              </Fab>
+            </Box>
+
+          </Paper>
+        ) : null}
+
+        {/* =========================
+          TABLA (Paper separado, luego de los botones)
+      ========================== */}
+        {act ? (
+          <Paper
+            elevation={0}
+            sx={{
+              mt: { xs: 2, md: 3 },
+              width: "100%",
+              borderRadius: 4,
+              overflow: "hidden",
+              border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
+              background: "#ffffff",
+              boxShadow: "0 18px 45px rgba(10,59,79,0.10)",
+            }}
+          >
+            <TableContainer
+              sx={{
+                height: "80vh",
+                backgroundColor: "#ffffff",
+                "&::-webkit-scrollbar": { height: 10, width: 10 },
+                "&::-webkit-scrollbar-thumb": {
+                  background: alpha("#0b4f6c", 0.25),
+                  borderRadius: 999,
+                },
+              }}
+            >
+              {!cuotas ? (
+                <Skeleton />
+              ) : (
+                <Table stickyHeader sx={{ minWidth: 1200 }}>
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Fecha</StyledTableCell>
+                      {verDetalles && <StyledTableCell>Saldo inicial</StyledTableCell>}
+                      <StyledTableCell>Amortización</StyledTableCell>
+                      <StyledTableCell>ICC</StyledTableCell>
+                      <StyledTableCell>Ajuste ICC</StyledTableCell>
+                      <StyledTableCell>Cuota con ajuste</StyledTableCell>
+                      {verDetalles && <StyledTableCell>Saldo al cierre</StyledTableCell>}
+                      <StyledTableCell>Pago</StyledTableCell>
+                      <StyledTableCell>Diferencia</StyledTableCell>
+                      <StyledTableCell>Saldo real</StyledTableCell>
+                      <StyledTableCell>Pagar / Ver pago</StyledTableCell>
+                      {verDetalles && <StyledTableCell>Interés</StyledTableCell>}
+                    </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {cuotas.map((row) => (
+                      <StyledTableRow key={row.id}>
+                        {/* --- TU MISMA LÓGICA DE CELDAS (no la toqué) --- */}
+                        <StyledTableCell>
+                          {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
+                        </StyledTableCell>
+
+                        {verDetalles && (
+                          <StyledTableCell>
+                            <span style={{ whiteSpace: "nowrap" }}>
+                              $ <b>{new Intl.NumberFormat("de-DE").format(row.saldo_inicial)}</b>
+                            </span>
+                          </StyledTableCell>
+                        )}
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            <Chip
+                              label="Cancelado"
+                              size="small"
+                              sx={{
+                                fontWeight: 800,
+                                bgcolor: "rgba(20,141,141,0.12)",
+                                color: "#0f7a7a",
+                                border: "1px solid rgba(20,141,141,0.25)",
+                              }}
+                            />
+                          ) : (
+                            <span style={{ whiteSpace: "nowrap" }}>
+                              $ <b>{new Intl.NumberFormat("de-DE").format(row.Amortizacion)}</b>
+                            </span>
+                          )}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? "—" : row.ICC}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? "—" : row.Ajuste_ICC}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            "—"
+                          ) : (
+                            <span style={{ whiteSpace: "nowrap" }}>
+                              $ <b>{new Intl.NumberFormat("de-DE").format(row.cuota_con_ajuste)}</b>
+                            </span>
+                          )}
+                        </StyledTableCell>
+
+                        {verDetalles && (
+                          <StyledTableCell>
+                            {row.id >= parseInt(row.cuota_cancelada)
+                              ? "—"
+                              : `$ ${new Intl.NumberFormat("de-DE").format(row.saldo_cierre)}`}
+                          </StyledTableCell>
+                        )}
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada)
+                            ? "—"
+                            : `$ ${new Intl.NumberFormat("de-DE").format(row.pago)}`}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            "—"
+                          ) : (
+                            <span
+                              style={{
+                                fontWeight: 900,
+                                color:
+                                  row.diferencia < 0
+                                    ? row.diferencia === -row.cuota_con_ajuste
+                                      ? "#d32f2f"
+                                      : "#0a3b4f"
+                                    : "#148D8D",
+                              }}
+                            >
+                              {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+                              {row.comprobante === "Sin comprobante" && (
+                                <Tooltip title="Pago sin comprobante">
+                                  <ErrorOutlineIcon
+                                    style={{ marginLeft: 8 }}
+                                    color="warning"
+                                    fontSize="small"
+                                  />
+                                </Tooltip>
+                              )}
+                            </span>
+                          )}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada)
+                            ? "—"
+                            : `$ ${new Intl.NumberFormat("de-DE").format(row.Saldo_real)}`}
+                        </StyledTableCell>
+
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            "—"
+                          ) : (
+                            <Box sx={{ display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap" }}>
+                              <Pagorapido
+                                id_cuota={row.id}
+                                cuota_con_ajuste={row.cuota_con_ajuste}
+                                id_lote={row.id_lote}
+                                traer={async () => {
+                                  const cuotas = await servicioCuotas.vercuotas(idlote);
+                                  setCuotas(cuotas);
+                                  setAct(true);
+                                  verief(idlote);
+                                  setOpen(false);
+                                }}
+                              />
+
+                              <Button
+                                variant="contained"
+                                size="small"
+                                sx={{
+                                  borderRadius: 2,
+                                  textTransform: "none",
+                                  fontWeight: 900,
+                                  bgcolor: "#0b4f6c",
+                                  boxShadow: "0 10px 25px rgba(11,79,108,0.18)",
+                                  "&:hover": { bgcolor: "#0a3b4f" },
+                                }}
+                                onClick={() => navigate("/usuario2/pagoscuotas/" + row.id)}
+                              >
+                                Ver pagos
+                              </Button>
+
+                              {verDetalles && (
+                                <Pagointeres
+                                  id_interes={row.id}
+                                  cuil_cuit={cuil_cuit}
+                                  traer={async () => {
+                                    const cuotas = await servicioCuotas.vercuotas(idlote);
+                                    setCuotas(cuotas);
+                                    setAct(true);
+                                    verief(idlote);
+                                    setOpen(false);
+                                  }}
+                                />
+                              )}
+                            </Box>
+                          )}
+                        </StyledTableCell>
+
+                        {verDetalles && (
+                          <StyledTableCell>
+                            <b>
+                              {row.pago_interes == undefined
+                                ? "$" + new Intl.NumberFormat("de-DE").format(row.interes)
+                                : row.pago_interes == "diferencia minima"
+                                  ? row.pago_interes
+                                  : "pagado"}
+                            </b>
+                          </StyledTableCell>
+                        )}
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+
+              )}
+
+            </TableContainer>
+
+          </Paper>
+        ) : null}
+      </Box>
+
     </Fragment>
   );
 };
-
 export default LotesCliente;

@@ -172,7 +172,7 @@ export default function MenuUsuario2() {
   return (
     <div>
       {logueado ? (
-        <div>
+        <div> 
           <MenuIzq2>
             <Box sx={sxPage}>
               {/* Header */}

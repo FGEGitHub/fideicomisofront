@@ -5,14 +5,19 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Select,
   MenuItem,
   TextField,
   CircularProgress,
   Typography,
+  Box,
+  Divider,
+  Paper,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useDropzone } from "react-dropzone";
 import serviciocuotas from "../services/cuotas";
 import servicioUsuario1 from "../services/usuario1";
@@ -89,7 +94,7 @@ export default function CancelarLoteCompleto(props) {
     setEnviarr(formData);
   }, []);
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
     accept: "application/pdf, image/*",
@@ -125,9 +130,7 @@ export default function CancelarLoteCompleto(props) {
       formData.append("cbu", pago.cbu);
 
       try {
-        // const cancelacion = await serviciocuotas.cancelarlote({ mes: mesSeleccionado, anio: anioSeleccionado, id_lote: props.id_lote });
         const pagoRes = await servicioUsuario1.cancelarlote(formData);
-        // alert(cancelacion);
         alert(pagoRes);
         setOpen(false);
         setPaso(1);
@@ -149,393 +152,365 @@ export default function CancelarLoteCompleto(props) {
     setDescripcionCBU(selectedCBU ? selectedCBU.descripcion : "");
   };
 
-  // =======================
-  // 🎨 SOLO ESTILO (FRONT)
-  // =======================
-  const sxPrimaryBtn = {
+  // ======== Estilos (idénticos al otro modal) ========
+  const inputSx = {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 2,
+      background: "rgba(255,255,255,0.92)",
+      "& fieldset": { borderColor: alpha("#0b4f6c", 0.18) },
+      "&:hover fieldset": { borderColor: alpha("#0b4f6c", 0.30) },
+      "&.Mui-focused fieldset": { borderColor: "#148D8D", borderWidth: 2 },
+    },
+    "& .MuiInputLabel-root": { fontWeight: 800, color: alpha("#0b4f6c", 0.9) },
+  };
+
+  const sxBtnOpen = {
     mb: 2,
     px: 2.2,
     py: 1.1,
     borderRadius: 2,
     textTransform: "none",
     fontWeight: 900,
-    backgroundColor: "#01567c",
-    boxShadow: "0 10px 25px rgba(1,86,124,0.25)",
-    "&:hover": { backgroundColor: "#014a6b" },
+    backgroundColor: "#0b4f6c",
+    boxShadow: "0 10px 25px rgba(11,79,108,0.25)",
+    "&:hover": { backgroundColor: "#0a3b4f" },
   };
 
-  const sxDialogPaper = {
-    borderRadius: 3,
-    overflow: "hidden",
-    boxShadow: "0 22px 70px rgba(10,59,79,0.25)",
-    border: "1px solid rgba(1,86,124,0.10)",
-  };
-
-  const sxDialogHeader = {
-    px: 2.6,
-    py: 2.1,
-    color: "#fff",
-    background: "linear-gradient(135deg, #0b2a3a 0%, #01567c 60%, #148D8D 100%)",
-  };
-
-  const sxContent = {
-    p: 2.6,
-    background:
-      "radial-gradient(900px 420px at 10% 0%, rgba(1,86,124,0.10), transparent 55%), radial-gradient(800px 380px at 90% 10%, rgba(20,141,141,0.08), transparent 45%), #ffffff",
-  };
-
-const sxBlock = {
- 
-  p: 2.2,              // ⬅ más padding interno
-  mt: 1.8,             // ⬅ separa del contenido de arriba
-  mx: 0.5,             // ⬅ separa de los bordes laterales
-  
-};
-
-  const sxWarn = {
+  const sxBtnCancel = {
     borderRadius: 2,
-    p: 1.2,
-    backgroundColor: "rgba(211,47,47,0.06)",
-    border: "1px solid rgba(211,47,47,0.18)",
-  };
-
-  const sxSelect = {
-    mt: 1.4,
-    borderRadius: 2,
-    backgroundColor: "#fbfdff",
-    "& .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(1,86,124,0.18)" },
-    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "rgba(1,86,124,0.35)" },
-    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#01567c",
-      boxShadow: "0 0 0 3px rgba(1,86,124,0.12)",
-    },
-  };
-
-  const sxInput = {
-    mt: 2,
-    "& .MuiOutlinedInput-root": {
-      borderRadius: 2,
-      backgroundColor: "#fbfdff",
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "rgba(1,86,124,0.18)",
-    },
-    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "rgba(1,86,124,0.35)",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#01567c",
-      boxShadow: "0 0 0 3px rgba(1,86,124,0.12)",
-    },
-    "& .MuiInputLabel-root": { fontWeight: 800, color: "#2b3a42" },
-  };
-
-  const sxActionBar = {
-    px: 2.6,
-    py: 1.6,
-    borderTop: "1px solid rgba(1,86,124,0.10)",
-    backgroundColor: "#fff",
-  };
-
-  const sxBtnGhost = {
+    px: 2.2,
+    py: 1,
     textTransform: "none",
     fontWeight: 900,
-    borderRadius: 2,
-    px: 2,
-    color: "rgba(10,59,79,0.88)",
-    backgroundColor: "rgba(1,86,124,0.06)",
-    border: "1px solid rgba(1,86,124,0.10)",
-    "&:hover": { backgroundColor: "rgba(1,86,124,0.10)" },
+    background: alpha("#0b4f6c", 0.10),
+    color: "#0b4f6c",
+    "&:hover": { background: alpha("#0b4f6c", 0.14) },
   };
 
   const sxBtnNext = {
-    textTransform: "none",
-    fontWeight: 900,
     borderRadius: 2,
     px: 2.2,
-    backgroundColor: "#148D8D",
-    boxShadow: "0 10px 25px rgba(20,141,141,0.22)",
-    "&:hover": { backgroundColor: "#0f7a7a" },
-  };
-
-  const sxDropzone = {
-    mt: 2,
-    borderRadius: 2,
-    p: 2,
-    textAlign: "center",
-    cursor: "pointer",
-    backgroundColor: fileUpload ? "rgba(20,141,141,0.08)" : "#fbfdff",
-    border: fileUpload ? "1px solid rgba(20,141,141,0.35)" : "1px dashed rgba(1,86,124,0.30)",
-    transition: "0.18s ease",
-    "&:hover": {
-      borderColor: "rgba(1,86,124,0.45)",
-      backgroundColor: "rgba(1,86,124,0.04)",
+    py: 1,
+    textTransform: "none",
+    fontWeight: 900,
+    background: "#0b4f6c",
+    boxShadow: "0 12px 26px rgba(11,79,108,0.22)",
+    "&:hover": { background: "#0a3b4f" },
+    "&.Mui-disabled": {
+      background: alpha("#0b4f6c", 0.18),
+      color: alpha("#0b2b3a", 0.45),
     },
   };
 
-  const sxStatRow = {
-    display: "flex",
-    justifyContent: "space-between",
-    gap: 2,
-    mt: 0.9,
-    flexWrap: "wrap",
+  const sxBtnEnviar = {
+    borderRadius: 2,
+    px: 2.2,
+    py: 1,
+    textTransform: "none",
+    fontWeight: 900,
+    background: "#148D8D",
+    boxShadow: "0 12px 26px rgba(20,141,141,0.22)",
+    "&:hover": { background: "#0f7f86" },
+    "&.Mui-disabled": {
+      background: alpha("#148D8D", 0.18),
+      color: alpha("#0b2b3a", 0.45),
+    },
   };
-
-  const sxStatLabel = { fontWeight: 900, color: "rgba(10,59,79,0.88)" };
-  const sxStatValue = { fontWeight: 900, color: "#01567c" };
 
   return (
     <>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button
-          variant="contained"
-          sx={sxPrimaryBtn}
-          onClick={() => setOpen(true)}
-        >
+        <Button variant="contained" sx={sxBtnOpen} onClick={() => setOpen(true)}>
           Cancelar lote
         </Button>
       </div>
 
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setPaso(1);
+          setPassword("");
+        }}
         maxWidth="sm"
         fullWidth
-        PaperProps={{ sx: sxDialogPaper }}
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            overflow: "hidden",
+            boxShadow: "0 24px 70px rgba(0,0,0,0.22)",
+            
+          },
+        }}
       >
-        {/* Header moderno */}
-        <DialogTitle sx={sxDialogHeader}>
-          <Typography sx={{ fontWeight: 900, letterSpacing: 0.2, fontSize: 16 }}>
-            Cancelar lote
-          </Typography>
-          <Typography sx={{ opacity: 0.92, mt: 0.6, fontSize: 13, fontWeight: 700 }}>
-            {paso === 1
-              ? "Seleccioná el mes/año de referencia y confirmá con contraseña."
-              : "Seleccioná CBU, fecha y adjuntá documentación (PDF/imagen)."}
-          </Typography>
+        {/* Header sin borde blanco */}
+        <DialogTitle sx={{ p: 0 }}>
+          <Box
+            sx={{
+              px: 3,
+              py: 2,
+              background:
+                "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+              color: "#fff",
+            }}
+          >
+            <Typography sx={{ fontWeight: 900, fontSize: 18, lineHeight: 1.1 }}>
+              Cancelar lote
+            </Typography>
+            <Typography sx={{ mt: 0.4, opacity: 0.92, fontWeight: 650, fontSize: 13.5 }}>
+              {paso === 1
+                ? "Seleccioná el mes/año de referencia y confirmá con contraseña."
+                : "Seleccioná CBU, fecha y adjuntá documentación (PDF/imagen)."}
+            </Typography>
+          </Box>
         </DialogTitle>
 
-        <DialogContent sx={sxContent}>
+        <DialogContent
+          sx={{
+            pt: 2.5,
+            pb: 2.5,
+            px: 3,
+            background:
+              "linear-gradient(180deg, rgba(20,141,141,0.06) 0%, rgba(255,255,255,0.95) 55%, #fff 100%)",
+          }}
+        >
           {paso == 1 ? (
             <>
-              
+              <Typography sx={{ fontWeight: 900, color: "#0b2b3a", mb: 1 }}>
+                Período
+              </Typography>
 
-              {/* Bloque selección */}
-              <div style={{ marginTop: 12 }}>
-                <Typography sx={{ fontWeight: 900, color: "#0a3b4f", fontSize: 13.5, mb: 0.8 }}>
-                  Período
-                </Typography>
+              <Box sx={{ display: "grid", gap: 1.6 }}>
+                <FormControl fullWidth size="small" sx={inputSx}>
+                  <InputLabel id="mes-label">Mes</InputLabel>
+                  <Select
+                    labelId="mes-label"
+                    label="Mes"
+                    value={mesSeleccionado}
+                    onChange={(e) => setMesSeleccionado(parseInt(e.target.value))}
+                  >
+                    {[...Array(12).keys()].map((m) => (
+                      <MenuItem key={m + 1} value={m + 1}>{`Mes ${m + 1}`}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-                <Select
-                  value={mesSeleccionado}
-                  onChange={(e) => setMesSeleccionado(parseInt(e.target.value))}
-                  fullWidth
-                  sx={sxSelect}
-                  displayEmpty
-                >
-                  {[...Array(12).keys()].map((m) => (
-                    <MenuItem key={m + 1} value={m + 1}>{`Mes ${m + 1}`}</MenuItem>
-                  ))}
-                </Select>
+                <FormControl fullWidth size="small" sx={inputSx}>
+                  <InputLabel id="anio-label">Año</InputLabel>
+                  <Select
+                    labelId="anio-label"
+                    label="Año"
+                    value={anioSeleccionado}
+                    onChange={(e) => setAnioSeleccionado(parseInt(e.target.value))}
+                  >
+                    {[...Array(5).keys()].map((a) => (
+                      <MenuItem key={anioSeleccionado - 2 + a} value={anioSeleccionado - 2 + a}>
+                        {anioSeleccionado - 2 + a}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
-                <Select
-                  value={anioSeleccionado}
-                  onChange={(e) => setAnioSeleccionado(parseInt(e.target.value))}
-                  fullWidth
-                  sx={sxSelect}
-                  displayEmpty
-                >
-                  {[...Array(5).keys()].map((a) => (
-                    <MenuItem key={anioSeleccionado - 2 + a} value={anioSeleccionado - 2 + a}>
-                      {anioSeleccionado - 2 + a}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </div>
+              <Divider sx={{ my: 2, borderColor: alpha("#0b4f6c", 0.12) }} />
 
-              {/* Totales */}
+              <Typography sx={{ fontWeight: 900, color: "#0b2b3a", mb: 1 }}>
+                Resumen
+              </Typography>
+
               {!existeFecha ? (
-                <div style={{ marginTop: 14 }}>
-                  <div style={sxWarn}>
-                    <Typography sx={{ fontWeight: 900, color: "#b71c1c", fontSize: 13.5 }}>
-                      No existen cuotas registradas
-                    </Typography>
-                    <Typography sx={{ mt: 0.4, color: "rgba(130,0,0,0.80)", fontSize: 13 }}>
-                      No existen cuotas registradas para {mesSeleccionado}/{anioSeleccionado}
-                    </Typography>
-                  </div>
-                </div>
+                <Box
+                  sx={{
+                    borderRadius: 2,
+                    p: 1.2,
+                    backgroundColor: "rgba(211,47,47,0.06)",
+                    border: "1px solid rgba(211,47,47,0.18)",
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 900, color: "#b71c1c", fontSize: 13.5 }}>
+                    No existen cuotas registradas
+                  </Typography>
+                  <Typography sx={{ mt: 0.4, color: "rgba(130,0,0,0.80)", fontSize: 13 }}>
+                    No existen cuotas registradas para {mesSeleccionado}/{anioSeleccionado}
+                  </Typography>
+                </Box>
               ) : (
-                <div style={{ marginTop: 14 }}>
-                  <div style={sxBlock}>
-                    <Typography sx={{ fontWeight: 900, color: "#0a3b4f", fontSize: 13.5, mb: 0.6 }}>
-                      Resumen
+                <Box sx={{ display: "grid", gap: 0.9 }}>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>Cuota base</Typography>
+                    <Typography sx={{ fontWeight: 900, color: "#0b4f6c" }}>
+                      {formatCurrency(cuotaBase)}
                     </Typography>
+                  </Box>
 
-                    <div style={sxStatRow}>
-                      <Typography sx={sxStatLabel}>Cuota base</Typography>
-                      <Typography sx={sxStatValue}>{formatCurrency(cuotaBase)}</Typography>
-                    </div>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
+                      Total hasta la fecha
+                    </Typography>
+                    <Typography sx={{ fontWeight: 900, color: "#0b4f6c" }}>
+                      {formatCurrency(totalHastaFecha)}
+                    </Typography>
+                  </Box>
 
-                    <div style={sxStatRow}>
-                      <Typography sx={sxStatLabel}>Total hasta la fecha</Typography>
-                      <Typography sx={sxStatValue}>{formatCurrency(totalHastaFecha)}</Typography>
-                    </div>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
+                      Total desde la fecha
+                    </Typography>
+                    <Typography sx={{ fontWeight: 900, color: "#0b4f6c" }}>
+                      {formatCurrency(totalDesdeFecha)}
+                    </Typography>
+                  </Box>
 
-                    <div style={sxStatRow}>
-                      <Typography sx={sxStatLabel}>Total desde la fecha</Typography>
-                      <Typography sx={sxStatValue}>{formatCurrency(totalDesdeFecha)}</Typography>
-                    </div>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
+                      Meses restantes
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 900,
+                        color: mesesRestantes >= 30 ? "crimson" : "#0b4f6c",
+                      }}
+                    >
+                      {mesesRestantes}
+                    </Typography>
+                  </Box>
 
-                    <div style={sxStatRow}>
-                      <Typography sx={sxStatLabel}>Meses restantes</Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: 900,
-                          color: mesesRestantes >= 30 ? "#b71c1c" : "#01567c",
-                        }}
-                      >
-                        {mesesRestantes}
-                      </Typography>
-                    </div>
-
-                    {mesesRestantes >= 30 && (
-                      <Typography sx={{ mt: 0.9, fontSize: 12.5, fontWeight: 800, color: "rgba(130,0,0,0.78)" }}>
-                        Aviso: la cantidad de meses restantes es alta.
-                      </Typography>
-                    )}
-                  </div>
-                </div>
+                  {mesesRestantes >= 30 ? (
+                    <Typography sx={{ mt: 0.5, color: "crimson", fontWeight: 800, fontSize: 12.5 }}>
+                      Aviso: la cantidad de meses restantes es alta.
+                    </Typography>
+                  ) : null}
+                </Box>
               )}
 
-              {/* Password */}
-              <TextField
-                type="password"
-                label="Contraseña"
-                fullWidth
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={errorPassword}
-                helperText={errorPassword ? "Contraseña incorrecta" : ""}
-                sx={sxInput}
-              />
+              <Paper
+                elevation={0}
+                sx={{
+                  mt: 2,
+                  p: 1.6,
+                  borderRadius: 2,
+                  border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
+                  background: "rgba(255,255,255,0.9)",
+                }}
+              >
+                <TextField
+                  type="password"
+                  label="Contraseña"
+                  fullWidth
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={errorPassword}
+                  helperText={errorPassword ? "Contraseña incorrecta" : ""}
+                  size="small"
+                  sx={inputSx}
+                />
+              </Paper>
             </>
           ) : (
             <>
-              {/* CBU */}
-              <Typography sx={{ fontWeight: 900, color: "#0a3b4f", fontSize: 13.5, mb: 1 }}>
+              <Typography sx={{ fontWeight: 900, color: "#0b2b3a", mb: 1 }}>
                 Datos de cancelación
               </Typography>
 
-              <TextField
-                component="form"
-                sx={{
-                  ...sxInput,
-                  mt: 0,
-                  "& > :not(style)": { m: 1, width: "25ch" },
-                }}
-                noValidate
-                id="outlined-select-currency"
-                select
-                label="Elegir CBU"
-                name="cbu"
-                onChange={handleChange}
-                helperText="Por favor ingrese su CBU"
-              >
-                {cbus.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>
-                    {option.lazo}- {option.numero}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormControl fullWidth size="small" sx={inputSx}>
+                <InputLabel id="cbu-label">Elegir CBU</InputLabel>
+                <Select
+                  labelId="cbu-label"
+                  label="Elegir CBU"
+                  name="cbu"
+                  onChange={handleChange}
+                  value={pago.cbu || ""}
+                >
+                  {cbus.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.lazo}- {option.numero}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
-              {pago.cbu ? <Modalveronline id={pago.cbu} /> : <></>}
+              <Box sx={{ mt: 1.5 }}>
+                {pago.cbu ? <Modalveronline id={pago.cbu} /> : <></>}
+              </Box>
 
               {descripcionCBU && (
-                <Typography variant="body1" sx={{ mt: 1.6, fontWeight: 900, color: "#01567c" }}>
+                <Typography variant="body2" sx={{ mt: 1.5, fontWeight: 800, color: "#0b2b3a" }}>
                   Ultimos numeros: {descripcionCBU}
                 </Typography>
               )}
 
-              {/* Fecha */}
               <TextField
                 fullWidth
                 type="date"
                 label="Fecha"
                 InputLabelProps={{ shrink: true }}
                 onChange={(e) => setPago({ ...pago, fecha: e.target.value })}
-                sx={sxInput}
+                size="small"
+                sx={{ ...inputSx, mt: 2 }}
               />
 
-              {/* Dropzone */}
-              <div {...getRootProps()} style={{ marginTop: 4 }}>
-                <input {...getInputProps()} />
-                <div style={sxDropzone}>
+              <Paper
+                elevation={0}
+                sx={{
+                  mt: 2,
+                  borderRadius: 2,
+                  border: `1px dashed ${alpha("#0b4f6c", 0.35)}`,
+                  background: "rgba(255,255,255,0.85)",
+                }}
+              >
+                <Box
+                  {...getRootProps()}
+                  sx={{
+                    p: 2,
+                    textAlign: "center",
+                    cursor: "pointer",
+                    "&:hover": { background: alpha("#148D8D", 0.06) },
+                  }}
+                >
+                  <input {...getInputProps()} />
                   {fileUpload ? (
-                    <>
-                      <Typography sx={{ fontWeight: 900, color: "#0f7a7a" }}>
-                        Archivo seleccionado
-                      </Typography>
-                      <Typography sx={{ mt: 0.4, color: "rgba(10,59,79,0.75)", fontWeight: 700 }}>
-                        {fileUpload.name}
-                      </Typography>
-                    </>
+                    <Typography sx={{ fontWeight: 800, color: "#0b2b3a" }}>
+                      Archivo: {fileUpload.name}
+                    </Typography>
                   ) : (
-                    <>
-                      <Typography sx={{ fontWeight: 900, color: "#0a3b4f" }}>
-                        Arrastrá un PDF o imagen aquí
-                      </Typography>
-                      <Typography sx={{ mt: 0.4, color: "rgba(10,59,79,0.70)", fontSize: 13 }}>
-                        o hacé click para seleccionar el archivo.
-                      </Typography>
-                    </>
+                    <Typography sx={{ fontWeight: 750, color: alpha("#0b2b3a", 0.9) }}>
+                      Arrastrá un PDF o imagen aquí o hacé clic para seleccionar
+                    </Typography>
                   )}
-                </div>
-              </div>
+                </Box>
+              </Paper>
             </>
           )}
         </DialogContent>
 
-        <DialogActions sx={sxActionBar}>
+        <DialogActions
+          sx={{
+            px: 3,
+            py: 2,
+            borderTop: `1px solid ${alpha("#0b4f6c", 0.10)}`,
+            background: "#fff",
+            justifyContent: "flex-end",
+            gap: 1.2,
+          }}
+        >
           <Button
             onClick={() => {
               setOpen(false);
               setPaso(1);
               setPassword("");
-            }} variant="contained"
-             sx={{
-          mb: 2,
-          px: 2.2,
-          py: 1.1,
-          borderRadius: 2,
-          textTransform: 'none',
-          fontWeight: 700,
-          backgroundColor: '#148D8D',
-          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
-          '&:hover': { backgroundColor: '#0e7070ff' }
-        }}
-            disabled={loading}
+            }}
+            sx={sxBtnCancel}
           >
             Cancelar
           </Button>
 
           {paso === 1 ? (
-            <Button onClick={handleConfirm} disabled={!existeFecha}  sx={{
-          mb: 2,
-          px: 2.2,
-          py: 1.1,
-          borderRadius: 2,
-          textTransform: 'none',
-          fontWeight: 700,
-          backgroundColor: '#01567c',
-          boxShadow: '0 10px 25px rgba(1,86,124,0.25)',
-          '&:hover': { backgroundColor: '#014a6b' }
-        }} variant="contained">
+            <Button onClick={handleConfirm} disabled={!existeFecha} variant="contained" sx={sxBtnNext}>
               Siguiente
             </Button>
           ) : (
-            <Button onClick={enviarFinal} disabled={loading} sx={sxBtnNext} variant="contained">
-              {loading ? <CircularProgress size={22} sx={{ color: "#fff" }} /> : "Enviar"}
+            <Button onClick={enviarFinal} disabled={loading} variant="contained" sx={sxBtnEnviar}>
+              {loading ? <CircularProgress size={24} /> : "Enviar"}
             </Button>
           )}
         </DialogActions>
