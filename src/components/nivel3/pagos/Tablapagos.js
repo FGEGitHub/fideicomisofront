@@ -16,7 +16,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-
+import logo from "../../../Assets/marcas.png";
 import PrintIcon from "@mui/icons-material/Print";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -48,7 +48,10 @@ const PagosInusuales = () => {
   // =======================
   // OPCIONES DE FILTROS
   // =======================
-  const meses = [...new Set(pagos.map((p) => p.mes))].filter(Boolean);
+const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
+  .filter((m) => !isNaN(m))      // solo números válidos
+  .sort((a, b) => a - b);        // orden 1 → 12
+
   const anios = [...new Set(pagos.map((p) => p.anio))].filter(Boolean);
 
   // =======================
@@ -61,7 +64,7 @@ const PagosInusuales = () => {
       (filtroZona === "PIT" && p.origen === "normal");
 
     return (
-      (filtroMes === "" || p.mes === filtroMes) &&
+      (filtroMes === "" || Number(p.mes) === Number(filtroMes)) &&
       (filtroAnio === "" || p.anio === filtroAnio) &&
       zonaOk
     );
@@ -329,7 +332,7 @@ const PagosInusuales = () => {
   const registros = pagosFiltrados?.length || 0;
 
   return (
-   
+   <>
       <Box 
                     sx={{
                         width: "100%",
@@ -574,7 +577,76 @@ const PagosInusuales = () => {
           
         </Paper>
       </Box>
-   
+   {/* ===== VISTA SOLO IMPRESIÓN ===== */}
+<div id="print-area" style={{ display: "none" }}>
+
+  <Box sx={{ padding: "30px", fontFamily: "Arial" }}>
+
+    {/* HEADER */}
+    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+      <img
+        src={logo}
+        alt="logo"
+        style={{ height: 70, marginRight: 20 }}
+      />
+      <Box>
+        <Typography variant="h5" fontWeight="bold">
+          Informe de Pagos Inusuales
+        </Typography>
+        <Typography variant="body2">
+          Municipalidad de Corrientes
+        </Typography>
+        <Typography variant="body2">
+          Fecha de emisión: {new Date().toLocaleDateString()}
+        </Typography>
+      </Box>
+    </Box>
+
+    <Divider sx={{ mb: 2 }} />
+
+    {/* FILTROS */}
+    <Typography variant="subtitle2" fontWeight="bold">
+      Filtros aplicados:
+    </Typography>
+    <Typography variant="body2" mb={2}>
+      Mes: {filtroMes || "Todos"} | 
+      Año: {filtroAnio || "Todos"} | 
+      Zona: {filtroZona || "Todas"}
+    </Typography>
+
+    {/* TABLA */}
+    <table width="100%" border="1" cellSpacing="0" style={{ borderCollapse: "collapse", fontSize: "12px" }}>
+      <thead style={{ background: "#0b4f6c", color: "white" }}>
+        <tr>
+          <th>Mes</th>
+          <th>Año</th>
+          <th>Zona</th>
+          <th>CUIL/CUIT</th>
+          <th>Nombre</th>
+          <th>Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pagosFiltrados.map((p, i) => (
+          <tr key={i}>
+            <td>{p.mes}</td>
+            <td>{p.anio}</td>
+            <td>{p.origen === "ic3" ? "IC3" : "PIT"}</td>
+            <td>{p.cuil_cuit}</td>
+            <td>{p.nombre}</td>
+            <td>${p.monto}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <Typography variant="body2" mt={2}>
+      Total de registros: {pagosFiltrados.length}
+    </Typography>
+
+  </Box>
+</div>
+</>
   );
 };
 

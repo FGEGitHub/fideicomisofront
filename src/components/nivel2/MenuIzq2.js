@@ -146,13 +146,13 @@ export default function MenuIzq2({ children }) {
         <AccountBalanceIcon style={{ color: "#1a303e" }} />
       </Badge></div>,
       path: '/usuario2/aprobacioncbu'
-    }, */
+    }, 
 
     {
       text: 'Aprobaciones de pagos',
       icon: <FactCheckIcon style={{ color: "#1a303e" }} />,
       path: '/usuario2/aprobacionesdepagos'
-    },
+    },*/
     {
       text: 'Mapas',
       icon: <div><Badge color="error">
