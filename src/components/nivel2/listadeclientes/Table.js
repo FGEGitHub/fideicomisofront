@@ -128,7 +128,7 @@ const Lotes = () => {
 
             <Box>
               <Typography sx={{ fontWeight: 900, fontSize: 18, lineHeight: 1.1 }}>
-                Clientes (IC3)
+                Clientes (parque)
               </Typography>
               <Typography sx={{ opacity: 0.9, fontSize: 13 }}>
                 Listado y acceso rápido a detalle / edición
