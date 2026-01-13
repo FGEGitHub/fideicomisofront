@@ -21,7 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Lotes = () => {
     //configuracion de Hooks
-    const [mapa, setMapa] = useState();
+    const [mapa, setMapa] = useState("3");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -45,10 +45,10 @@ inputProps={{
 }}
 
 > <option value={''}>Elegir</option>
-<option value={0}>Todo</option>
+<option value={3}>Uso de suelo</option>
 <option value={1}>IC3</option>
 <option value={2}>Parque</option>
-<option value={3}>Otro</option>
+
 
 
 
