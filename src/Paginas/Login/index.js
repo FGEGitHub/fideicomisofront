@@ -116,6 +116,8 @@ const Login = () => {
           break;
           case 5:
             navigate('/usuariomapas/inicio')
+          window.location.reload(true);
+
           break;
           case 10:navigate('/admin/usuarios')
           window.location.reload(true);

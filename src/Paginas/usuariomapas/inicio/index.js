@@ -18,50 +18,36 @@ const drawerWidth = 240;
 
 export default function DetalleCliente() {
   const navigate = useNavigate();
+const [logueado, setLogueado] = useState(false)
+const [checking, setChecking] = useState(true)
 
- 
-  const [ingreso, setIngreso] = useState({
-    ingreso: "",
-   
-  });
-  const [logueado, setLogueado] = useState(false) 
-  useEffect(() => {
-    
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-   if (loggedUserJSON) {
+useEffect(() => {
+  const loggedUserJSON = localStorage.getItem('loggedNoteAppUser')
+
+  if (!loggedUserJSON) {
+    navigate('/login')
+    return
+  }
+
   const user = JSON.parse(loggedUserJSON)
 
   if (user.nivel !== 5) {
-    navigate('/login') 
-  } else {
-    setLogueado(true)
+    navigate('/login')
+    return
   }
-} else {
-  navigate('/login')
-      //servicioUsuario.setToken(user.token)  
-     
-      
-    }
-   
-  }, []) 
 
-  
+  setLogueado(true)
+  setChecking(false)
+}, [])
 
+ 
 
-  ////////
-
-  return (
-
-    <div> 
-  { logueado ? <div> 
-
-    <Navbar
-       />
-<br/><br/><br/>
-      <DetallesPagos
-       />
-
- </div>   :<div></div> } </div>
-  );
-}
+   return (
+  logueado && (
+    <>
+      <Navbar />
+      <br/><br/><br/>
+      <DetallesPagos />
+    </>
+  )
+)}
