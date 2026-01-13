@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Ic3 from "./soloic3"
 import PIT from "./soloparque"
-import Usuar from "./usur"
+import Usuar from "../mapassegundaparte/componente1"
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
