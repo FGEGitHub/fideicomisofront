@@ -39,7 +39,7 @@ const Lotes = () => {
   defaultValue={30}
   onChange={handleChange}
   sx={{
-    fontSize: "1.9rem",   // tamaño de "Elegir"
+    fontSize: "1.6rem",   // tamaño de "Elegir"
     fontWeight: "500",
   }}
   inputProps={{
@@ -56,7 +56,7 @@ const Lotes = () => {
 
 
 { mapa === "2" ? <><PIT/></>:<>
-<br/><br/><br/><br/>
+<br/><br/>
 { mapa === "3" ? <><Usuar/></>:<>
 <br/>
 Sin seleccion
