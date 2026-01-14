@@ -40,7 +40,7 @@ const referencias = [
 ];
 
 const TablaReferencias = () => {
-  return (
+  return (<><br /><br />
     <div className="cuadro-referencias">
       {referencias.map((ref, index) => (
         <div className="item-referencia" key={index}>
@@ -48,7 +48,7 @@ const TablaReferencias = () => {
           {ref.texto}
         </div>
       ))}
-    </div>
+    </div></>
   );
 };
 
