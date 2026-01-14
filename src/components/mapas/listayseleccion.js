@@ -35,23 +35,22 @@ const Lotes = () => {
     }
     return (
         <>
-            <NativeSelect
-defaultValue={30}
-onChange={handleChange}
-inputProps={{
+           <NativeSelect
+  defaultValue={30}
+  onChange={handleChange}
+  sx={{
+    fontSize: "1.9rem",   // tamaño de "Elegir"
+    fontWeight: "500",
+  }}
+  inputProps={{
     name: 'anio',
     id: 'uncontrolled-native',
-
-}}
-
-> <option value={''}>Elegir</option>
-<option value={3}>Uso de suelo</option>
-<option value={1}>IC3</option>
-<option value={2}>Parque</option>
-
-
-
-
+  }}
+>
+  <option value="" style={{ fontSize: "1.2rem" }}>Elegir</option>
+  <option value={3} style={{ fontSize: "1.2rem" }}>Uso de suelo</option>
+  <option value={1} style={{ fontSize: "1.2rem" }}>IC3</option>
+  <option value={2} style={{ fontSize: "1.2rem" }}>Parque</option>
 </NativeSelect>
 { mapa === "1" ? <><Ic3/></>:<>
 
@@ -59,7 +58,7 @@ inputProps={{
 { mapa === "2" ? <><PIT/></>:<>
 <br/><br/><br/><br/>
 { mapa === "3" ? <><Usuar/></>:<>
-<br/><br/><br/><br/>
+<br/>
 Sin seleccion
 
 

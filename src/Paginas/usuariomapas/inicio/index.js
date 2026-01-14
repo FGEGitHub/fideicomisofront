@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 
 
-//import DetallesPagos from '../../../components/mapas/listayseleccion';
-import DetallesPagos from '../../../components/mapassegundaparte/componente1';
+import DetallesPagos from '../../../components/mapas/listayseleccion';
+//import DetallesPagos from '../../../components/mapassegundaparte/componente1';
 import { useNavigate } from "react-router-dom";
 import BarraLAteral from '../../../components/nivel2/MenuIzq2'
 import servicioUsuario from '../../../services/usuarios'
