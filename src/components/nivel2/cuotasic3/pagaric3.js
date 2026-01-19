@@ -97,8 +97,7 @@ export default function SelectTextFields(props) {
 
   const sxBtnPrimary = {
     borderRadius: 2,
-    px: 2.2,
-    py: 1.05,
+
     textTransform: "none",
     fontWeight: 900,
     backgroundColor: "#01567c",
@@ -257,22 +256,21 @@ export default function SelectTextFields(props) {
   // =========================
   return (
     <Box
-      component="form"
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 1,
-      }}
-      noValidate
-      autoComplete="off"
+      component="form" sx={{ display: "inline-flex", alignItems: "center" }} noValidate autoComplete="off"
     >
       <Tooltip title="Pago rapido (Nuevo)">
-        <CurrencyExchangeIcon
-          variant="outlined"
-          color="success"
-          onClick={handleClickOpen}
-          style={{ cursor: "pointer" }}
-        />
+         <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    ...sxBtnAccent,
+                    backgroundColor: "#0799B6",
+                    "&:hover": { backgroundColor: "#014a6b" },
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  Pagar
+                </Button>
       </Tooltip>
 
       <Dialog
