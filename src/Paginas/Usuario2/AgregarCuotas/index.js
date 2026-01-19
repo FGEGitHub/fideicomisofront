@@ -254,8 +254,8 @@ export default function MenuUsuario2() {
                             onChange={handleChange}
                             inputProps={{ name: 'anioanticipo', id: 'uncontrolled-native' }}
                             sx={sxNativeSelect}
-                            
-                          >
+
+                           >
                             <option value={''}>Elegir</option>
                             <option value={'2015'}>2015</option>
                             <option value={'2016'}>2016</option>
