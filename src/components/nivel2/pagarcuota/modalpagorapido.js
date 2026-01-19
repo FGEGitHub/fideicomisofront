@@ -107,8 +107,7 @@ export default function SelectTextFields(props) {
 
   const sxBtnAccent = {
     borderRadius: 2,
-    px: 2.2,
-    py: 1.05,
+   
     textTransform: "none",
     fontWeight: 900,
     backgroundColor: "#148D8D",

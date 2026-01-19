@@ -320,7 +320,7 @@ const Lotes = (props) => {
             {showCuotas ? (
               <>
                 {/* Mantengo tu componente tal cual */}
-               
+
 
                 {/* Tu recuadro de estado financiero (mismos cálculos, solo diseño) */}
                 <Box sx={{ px: { xs: 2, md: 3 }, pt: 2 }}>
@@ -410,20 +410,20 @@ const Lotes = (props) => {
                             >
                               ${resumen.diferencia}
                             </Typography>
-                          </Box> 
+                          </Box>
                         </Box>
                       </Paper>
                     );
                   })()}<Box
-  sx={{
-    px: { xs: 2, md: 3 },
-    pt: 2,
-    display: "flex",
-    justifyContent: "flex-end",
-  }}
->
-  <CancelarLote id_cliente={selectedClient} cuotas={filteredCuotas} />
-</Box>
+                    sx={{
+                      px: { xs: 2, md: 3 },
+                      pt: 2,
+                      display: "flex",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <CancelarLote id_cliente={selectedClient} cuotas={filteredCuotas} />
+                  </Box>
 
                 </Box>
 
@@ -566,11 +566,11 @@ const Lotes = (props) => {
 
                                   <Button
                                     variant="contained"
+                                    size="small"
                                     onClick={() => navigate("/usuario2/pagoscuotasic3/" + row.id)}
                                     sx={{
                                       borderRadius: 2,
-                                      px: 2,
-                                      py: 0.9,
+                                      
                                       textTransform: "none",
                                       fontWeight: 900,
                                       background: "#0b4f6c",
