@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider, alpha } from "@mui/material/styles";
+import { createTheme, alpha } from "@mui/material/styles";
 import {
   Box,
   Button,
@@ -13,19 +13,16 @@ import {
   Chip,
   Stack,
   Divider,
-  IconButton,
-  Tooltip,
 } from "@mui/material";
+
 import logo from "../../../Assets/marcas.png";
 import PrintIcon from "@mui/icons-material/Print";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import ViewColumnRoundedIcon from "@mui/icons-material/ViewColumnRounded";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 
 import servicioPagos from "../../../services/pagos";
 import serviciousuario1 from "../../../services/usuario1"; // (no lo uso, pero lo dejo como lo tenés)
+import servicioLotes from "../../../services/lotes"; // ✅ NUEVO: para completar datos IC3 desde tabla lotes
 
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -40,17 +37,113 @@ const PagosInusuales = () => {
     getPagos();
   }, []);
 
-  const getPagos = async () => {
-    const resp = await servicioPagos.todoslospagos({});
-    setPagos(resp);
-  };
+  // helper
+  const esVacio = (v) =>
+    v === null ||
+    v === undefined ||
+    v === "" ||
+    v === "-" ||
+    v === "Sin determinar";
+
+  // arma una key consistente para matchear IC3 (zona + manzana + lote)
+  const keyIC3 = (zona, manzana, lote) =>
+    `${String(zona || "").toUpperCase()}|${String(manzana || "").trim()}|${String(lote || "").trim()}`;
+
+  // ✅ FIX: Traer pagos y completar fraccion/manzana/lote para IC3 sin tocar backend
+ const getPagos = async () => {
+  const resp = await servicioPagos.todoslospagos({});
+
+  const lotesResp = await servicioLotes.lista({});
+  const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
+
+  const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
+
+  const normNombre = (s) =>
+    String(s ?? "")
+      .toUpperCase()
+      .replace(/\(\s*\d+\s*\)/g, "") // saca (3), (4), etc
+      .replace(/\s+/g, " ")
+      .trim();
+
+  // Index IC3 por CUIT, por DNI y por NOMBRE
+  const idxIC3ByCuit = new Map();
+  const idxIC3ByDni = new Map();
+  const idxIC3ByNombre = new Map();
+
+  lotes
+    .filter((l) => String(l.zona ?? "").trim().toUpperCase() === "IC3")
+    .forEach((l) => {
+      const c = normDigits(l.cuil_cuit);
+      const nombreLote = normNombre(l.nombre); // viene del join en listadeTodos
+
+      // Index por nombre (si existe)
+      if (nombreLote && !idxIC3ByNombre.has(nombreLote)) {
+        idxIC3ByNombre.set(nombreLote, l);
+      }
+
+      // Si no hay cuil o es "0", no indexamos por cuil/dni
+      if (!c || c === "0") return;
+
+      if (!idxIC3ByCuit.has(c)) idxIC3ByCuit.set(c, l);
+
+      // Si parece CUIT (11), DNI son los 8 del medio
+      if (c.length === 11) {
+        const dni = c.slice(2, 10);
+        if (!idxIC3ByDni.has(dni)) idxIC3ByDni.set(dni, l);
+      }
+
+      // Si el cuil guardado fuera DNI directo
+      if (c.length <= 8) {
+        if (!idxIC3ByDni.has(c)) idxIC3ByDni.set(c, l);
+      }
+    });
+
+  const pagosFix = resp.map((p) => {
+    if (p.origen !== "ic3") return p;
+
+    // Si ya viene bien, no tocamos
+    const yaTieneDatos =
+      !esVacio(p.fraccion) || !esVacio(p.manzana) || !esVacio(p.lote);
+    if (yaTieneDatos) return p;
+
+    const c = normDigits(p.cuil_cuit);
+
+    // 1) por CUIT
+    let loteReal = idxIC3ByCuit.get(c);
+
+    // 2) por DNI
+    if (!loteReal) {
+      const dni = c.length === 11 ? c.slice(2, 10) : c; // si vino CUIT saco dni, si vino dni lo uso
+      loteReal = idxIC3ByDni.get(dni);
+    }
+
+    // 3) por NOMBRE (fallback)
+    if (!loteReal) {
+      const nombrePago = normNombre(p.nombre);
+      loteReal = idxIC3ByNombre.get(nombrePago);
+    }
+
+    if (!loteReal) return p;
+
+    return {
+      ...p,
+      fraccion: esVacio(p.fraccion) ? loteReal.fraccion : p.fraccion,
+      manzana: esVacio(p.manzana) ? loteReal.manzana : p.manzana,
+      lote: esVacio(p.lote) ? loteReal.lote : p.lote,
+    };
+  });
+
+  setPagos(pagosFix);
+};
+
+
 
   // =======================
   // OPCIONES DE FILTROS
   // =======================
-const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
-  .filter((m) => !isNaN(m))      // solo números válidos
-  .sort((a, b) => a - b);        // orden 1 → 12
+  const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
+    .filter((m) => !isNaN(m))
+    .sort((a, b) => a - b);
 
   const anios = [...new Set(pagos.map((p) => p.anio))].filter(Boolean);
 
@@ -70,14 +163,8 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
     );
   });
 
-  // helper
-  const esVacio = (v) =>
-    v === null || v === undefined || v === "" || v === "-" || v === "Sin determinar";
-
   // =======================
   // COLUMNAS (BASE)
-  // - OJO: agrego "lote" como columna real
-  // - FIX: el índice de lote es fijo por el ORDEN de columns
   // =======================
   const columnsBase = useMemo(() => {
     // Índices por el orden DE ESTE ARRAY:
@@ -97,8 +184,8 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
     return [
       { name: "mes", label: "Mes" },
       { name: "anio", label: "Año" },
-      { name: "fraccion", label: "fraccion" },
-      { name: "manzana", label: "manzana" },
+      { name: "fraccion", label: "Fracción" },
+      { name: "manzana", label: "Manzana" },
 
       // ✅ LOTE (PIT => "No corresponde")
       {
@@ -107,18 +194,13 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
         options: {
           customBodyRender: (value, tableMeta) => {
             const origen = tableMeta.rowData[ORIGEN_INDEX]; // "normal" o "ic3"
-
-            // PIT => no corresponde
             if (origen === "normal") return "No corresponde";
-
-            // IC3 => lote real
             return esVacio(value) ? "-" : value;
           },
         },
       },
 
       // ✅ PARCELA (IC3 => "No corresponde")
-      // FIX: si parcela viene 0/"0"/Sin determinar, NO usamos monto, usamos LOTE (index correcto)
       {
         name: "parcela",
         label: "Parcela",
@@ -127,10 +209,8 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
             const origen = tableMeta.rowData[ORIGEN_INDEX];
             const lote = tableMeta.rowData[LOTE_INDEX];
 
-            // IC3 => no corresponde (y NO debe mostrar número ni nada)
             if (origen === "ic3") return "No corresponde";
 
-            // PIT => parcela válida
             const invalida =
               value === 0 ||
               value === "0" ||
@@ -139,7 +219,6 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
               value === null ||
               value === undefined;
 
-            // Si no hay parcela, caemos al lote (como querías originalmente)
             return invalida ? (esVacio(lote) ? "-" : lote) : value;
           },
         },
@@ -157,7 +236,7 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
       { name: "nombre", label: "Nombre" },
       { name: "monto", label: "Monto" },
     ];
-  }, []); // 👈 no toco tu lógica: queda fijo
+  }, []); // 👈 queda fijo
 
   // =======================
   // COLUMNAS VISIBLES SEGÚN FILTRO ZONA
@@ -177,7 +256,6 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
 
   // =======================
   // EXPORTAR A EXCEL
-  // (mantiene lógica de "no corresponde" + respeta columnas visibles)
   // =======================
   const exportarExcel = () => {
     const visibles = columns.map((c) => c.name);
@@ -196,7 +274,6 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
         Monto: p.monto,
       };
 
-      // agrego solo si están visibles
       if (visibles.includes("fraccion")) row.fraccion = p.fraccion ?? "-";
       if (visibles.includes("manzana")) row.manzana = p.manzana ?? "-";
 
@@ -253,7 +330,7 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
   };
 
   // =======================
-  // THEME (solo estética, misma funcionalidad)
+  // THEME (solo estética)
   // =======================
   const theme = createTheme({
     typography: {
@@ -332,17 +409,16 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
   const registros = pagosFiltrados?.length || 0;
 
   return (
-   <>
-      <Box 
-                    sx={{
-                        width: "100%",
-                        maxWidth: "100%",
-                        flex: 1,
-                        minWidth: 0,
-                    }}>
-        {/* =======================
-            HEADER (igual a la vista)
-           ======================= */}
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "100%",
+          flex: 1,
+          minWidth: 0,
+        }}
+      >
+        {/* HEADER */}
         <Paper
           elevation={0}
           sx={{
@@ -428,9 +504,7 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
           </Stack>
         </Paper>
 
-        {/* =======================
-            PANEL DE FILTROS (moderno, como tu captura)
-           ======================= */}
+        {/* PANEL DE FILTROS */}
         <Paper
           elevation={0}
           sx={{
@@ -449,7 +523,11 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
             justifyContent="space-between"
             spacing={1.25}
           >
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.25} sx={{ flexWrap: "wrap" }}>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={1.25}
+              sx={{ flexWrap: "wrap" }}
+            >
               <FormControl size="small" sx={{ minWidth: 140 }}>
                 <InputLabel>Mes</InputLabel>
                 <Select
@@ -502,10 +580,12 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
                 startIcon={<FileDownloadIcon />}
                 onClick={exportarExcel}
                 sx={{
-                  background: "linear-gradient(90deg, #0b4f6c 0%, #148D8D 100%)",
+                  background:
+                    "linear-gradient(90deg, #0b4f6c 0%, #148D8D 100%)",
                   boxShadow: "0 16px 28px rgba(11,79,108,0.18)",
                   "&:hover": {
-                    background: "linear-gradient(90deg, #0a415a 0%, #117777 100%)",
+                    background:
+                      "linear-gradient(90deg, #0a415a 0%, #117777 100%)",
                   },
                 }}
               >
@@ -530,14 +610,13 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
 
               <Button
                 variant="outlined"
-                
                 onClick={() => {
                   setFiltroMes("");
                   setFiltroAnio("");
                   setFiltroZona("");
                 }}
                 sx={{
-                   borderColor: alpha("#0b4f6c", 0.35),
+                  borderColor: alpha("#0b4f6c", 0.35),
                   color: "#0b4f6c",
                   "&:hover": {
                     borderColor: alpha("#148D8D", 0.6),
@@ -551,9 +630,7 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
           </Stack>
         </Paper>
 
-        {/* =======================
-            CONTENEDOR TABLA + TOOLBAR ICONOS (como tu captura)
-           ======================= */}
+        {/* TABLA */}
         <Paper
           elevation={0}
           sx={{
@@ -566,87 +643,77 @@ const meses = [...new Set(pagos.map((p) => Number(p.mes)))]
             overflow: "hidden",
           }}
         >
-          
-         
-            <MUIDataTable
-             
-              data={pagosFiltrados}
-              columns={columns}
-              options={options}
-            />
-          
+          <MUIDataTable data={pagosFiltrados} columns={columns} options={options} />
         </Paper>
       </Box>
-   {/* ===== VISTA SOLO IMPRESIÓN ===== */}
-<div id="print-area" style={{ display: "none" }}>
 
-  <Box sx={{ padding: "30px", fontFamily: "Arial" }}>
+      {/* ===== VISTA SOLO IMPRESIÓN ===== */}
+      <div id="print-area" style={{ display: "none" }}>
+        <Box sx={{ padding: "30px", fontFamily: "Arial" }}>
+          {/* HEADER */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+            <img src={logo} alt="logo" style={{ height: 70, marginRight: 20 }} />
+            <Box>
+              <Typography variant="h5" fontWeight="bold">
+                Informe de Pagos Inusuales
+              </Typography>
+              <Typography variant="body2">
+                Municipalidad de Corrientes
+              </Typography>
+              <Typography variant="body2">
+                Fecha de emisión: {new Date().toLocaleDateString()}
+              </Typography>
+            </Box>
+          </Box>
 
-    {/* HEADER */}
-    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-      <img
-        src={logo}
-        alt="logo"
-        style={{ height: 70, marginRight: 20 }}
-      />
-      <Box>
-        <Typography variant="h5" fontWeight="bold">
-          Informe de Pagos Inusuales
-        </Typography>
-        <Typography variant="body2">
-          Municipalidad de Corrientes
-        </Typography>
-        <Typography variant="body2">
-          Fecha de emisión: {new Date().toLocaleDateString()}
-        </Typography>
-      </Box>
-    </Box>
+          <Divider sx={{ mb: 2 }} />
 
-    <Divider sx={{ mb: 2 }} />
+          {/* FILTROS */}
+          <Typography variant="subtitle2" fontWeight="bold">
+            Filtros aplicados:
+          </Typography>
+          <Typography variant="body2" mb={2}>
+            Mes: {filtroMes || "Todos"} | Año: {filtroAnio || "Todos"} | Zona:{" "}
+            {filtroZona || "Todas"}
+          </Typography>
 
-    {/* FILTROS */}
-    <Typography variant="subtitle2" fontWeight="bold">
-      Filtros aplicados:
-    </Typography>
-    <Typography variant="body2" mb={2}>
-      Mes: {filtroMes || "Todos"} | 
-      Año: {filtroAnio || "Todos"} | 
-      Zona: {filtroZona || "Todas"}
-    </Typography>
+          {/* TABLA */}
+          <table
+            width="100%"
+            border="1"
+            cellSpacing="0"
+            style={{ borderCollapse: "collapse", fontSize: "12px" }}
+          >
+            <thead style={{ background: "#0b4f6c", color: "white" }}>
+              <tr>
+                <th>Mes</th>
+                <th>Año</th>
+                <th>Zona</th>
+                <th>CUIL/CUIT</th>
+                <th>Nombre</th>
+                <th>Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pagosFiltrados.map((p, i) => (
+                <tr key={i}>
+                  <td>{p.mes}</td>
+                  <td>{p.anio}</td>
+                  <td>{p.origen === "ic3" ? "IC3" : "PIT"}</td>
+                  <td>{p.cuil_cuit}</td>
+                  <td>{p.nombre}</td>
+                  <td>${p.monto}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-    {/* TABLA */}
-    <table width="100%" border="1" cellSpacing="0" style={{ borderCollapse: "collapse", fontSize: "12px" }}>
-      <thead style={{ background: "#0b4f6c", color: "white" }}>
-        <tr>
-          <th>Mes</th>
-          <th>Año</th>
-          <th>Zona</th>
-          <th>CUIL/CUIT</th>
-          <th>Nombre</th>
-          <th>Monto</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pagosFiltrados.map((p, i) => (
-          <tr key={i}>
-            <td>{p.mes}</td>
-            <td>{p.anio}</td>
-            <td>{p.origen === "ic3" ? "IC3" : "PIT"}</td>
-            <td>{p.cuil_cuit}</td>
-            <td>{p.nombre}</td>
-            <td>${p.monto}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-
-    <Typography variant="body2" mt={2}>
-      Total de registros: {pagosFiltrados.length}
-    </Typography>
-
-  </Box>
-</div>
-</>
+          <Typography variant="body2" mt={2}>
+            Total de registros: {pagosFiltrados.length}
+          </Typography>
+        </Box>
+      </div>
+    </>
   );
 };
 
