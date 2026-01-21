@@ -33,110 +33,105 @@ const PagosInusuales = () => {
   const [filtroAnio, setFiltroAnio] = useState("");
   const [filtroZona, setFiltroZona] = useState("PIT");
 
-  useEffect(() => {
-    getPagos();
-  }, []);
-
   // helper
   const esVacio = (v) =>
-    v === null ||
-    v === undefined ||
-    v === "" ||
-    v === "-" ||
-    v === "Sin determinar";
+    v === null || v === undefined || v === "" || v === "-" || v === "Sin determinar";
 
-  // arma una key consistente para matchear IC3 (zona + manzana + lote)
-  const keyIC3 = (zona, manzana, lote) =>
-    `${String(zona || "").toUpperCase()}|${String(manzana || "").trim()}|${String(lote || "").trim()}`;
-
-  // ✅ FIX: Traer pagos y completar fraccion/manzana/lote para IC3 sin tocar backend
- const getPagos = async () => {
-  const resp = await servicioPagos.todoslospagos({});
-
-  const lotesResp = await servicioLotes.lista({});
-  const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
-
-  const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
-
-  const normNombre = (s) =>
-    String(s ?? "")
-      .toUpperCase()
-      .replace(/\(\s*\d+\s*\)/g, "") // saca (3), (4), etc
-      .replace(/\s+/g, " ")
-      .trim();
-
-  // Index IC3 por CUIT, por DNI y por NOMBRE
-  const idxIC3ByCuit = new Map();
-  const idxIC3ByDni = new Map();
-  const idxIC3ByNombre = new Map();
-
-  lotes
-    .filter((l) => String(l.zona ?? "").trim().toUpperCase() === "IC3")
-    .forEach((l) => {
-      const c = normDigits(l.cuil_cuit);
-      const nombreLote = normNombre(l.nombre); // viene del join en listadeTodos
-
-      // Index por nombre (si existe)
-      if (nombreLote && !idxIC3ByNombre.has(nombreLote)) {
-        idxIC3ByNombre.set(nombreLote, l);
-      }
-
-      // Si no hay cuil o es "0", no indexamos por cuil/dni
-      if (!c || c === "0") return;
-
-      if (!idxIC3ByCuit.has(c)) idxIC3ByCuit.set(c, l);
-
-      // Si parece CUIT (11), DNI son los 8 del medio
-      if (c.length === 11) {
-        const dni = c.slice(2, 10);
-        if (!idxIC3ByDni.has(dni)) idxIC3ByDni.set(dni, l);
-      }
-
-      // Si el cuil guardado fuera DNI directo
-      if (c.length <= 8) {
-        if (!idxIC3ByDni.has(c)) idxIC3ByDni.set(c, l);
-      }
+  const formatMoney = (v) =>
+    Number(v || 0).toLocaleString("es-AR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
 
-  const pagosFix = resp.map((p) => {
-    if (p.origen !== "ic3") return p;
+  // ✅ Traer pagos y completar fraccion/manzana/lote para IC3 sin tocar backend
+  const getPagos = async () => {
+    const resp = await servicioPagos.todoslospagos({});
 
-    // Si ya viene bien, no tocamos
-    const yaTieneDatos =
-      !esVacio(p.fraccion) || !esVacio(p.manzana) || !esVacio(p.lote);
-    if (yaTieneDatos) return p;
+    const lotesResp = await servicioLotes.lista({});
+    const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
 
-    const c = normDigits(p.cuil_cuit);
+    const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
 
-    // 1) por CUIT
-    let loteReal = idxIC3ByCuit.get(c);
+    const normNombre = (s) =>
+      String(s ?? "")
+        .toUpperCase()
+        .replace(/\(\s*\d+\s*\)/g, "") // saca (3), (4), etc
+        .replace(/\s+/g, " ")
+        .trim();
 
-    // 2) por DNI
-    if (!loteReal) {
-      const dni = c.length === 11 ? c.slice(2, 10) : c; // si vino CUIT saco dni, si vino dni lo uso
-      loteReal = idxIC3ByDni.get(dni);
-    }
+    // Index IC3 por CUIT, por DNI y por NOMBRE
+    const idxIC3ByCuit = new Map();
+    const idxIC3ByDni = new Map();
+    const idxIC3ByNombre = new Map();
 
-    // 3) por NOMBRE (fallback)
-    if (!loteReal) {
-      const nombrePago = normNombre(p.nombre);
-      loteReal = idxIC3ByNombre.get(nombrePago);
-    }
+    lotes
+      .filter((l) => String(l.zona ?? "").trim().toUpperCase() === "IC3")
+      .forEach((l) => {
+        const c = normDigits(l.cuil_cuit);
+        const nombreLote = normNombre(l.nombre); // viene del join en listadeTodos
 
-    if (!loteReal) return p;
+        if (nombreLote && !idxIC3ByNombre.has(nombreLote)) {
+          idxIC3ByNombre.set(nombreLote, l);
+        }
 
-    return {
-      ...p,
-      fraccion: esVacio(p.fraccion) ? loteReal.fraccion : p.fraccion,
-      manzana: esVacio(p.manzana) ? loteReal.manzana : p.manzana,
-      lote: esVacio(p.lote) ? loteReal.lote : p.lote,
-    };
-  });
+        // Si no hay cuil o es "0", no indexamos por cuil/dni
+        if (!c || c === "0") return;
 
-  setPagos(pagosFix);
-};
+        if (!idxIC3ByCuit.has(c)) idxIC3ByCuit.set(c, l);
 
+        // Si parece CUIT (11), DNI son los 8 del medio
+        if (c.length === 11) {
+          const dni = c.slice(2, 10);
+          if (!idxIC3ByDni.has(dni)) idxIC3ByDni.set(dni, l);
+        }
 
+        // Si el cuil guardado fuera DNI directo
+        if (c.length <= 8) {
+          if (!idxIC3ByDni.has(c)) idxIC3ByDni.set(c, l);
+        }
+      });
+
+    const pagosFix = resp.map((p) => {
+      if (p.origen !== "ic3") return p;
+
+      const yaTieneDatos =
+        !esVacio(p.fraccion) || !esVacio(p.manzana) || !esVacio(p.lote);
+      if (yaTieneDatos) return p;
+
+      const c = normDigits(p.cuil_cuit);
+
+      // 1) por CUIT
+      let loteReal = idxIC3ByCuit.get(c);
+
+      // 2) por DNI
+      if (!loteReal) {
+        const dni = c.length === 11 ? c.slice(2, 10) : c;
+        loteReal = idxIC3ByDni.get(dni);
+      }
+
+      // 3) por NOMBRE (fallback)
+      if (!loteReal) {
+        const nombrePago = normNombre(p.nombre);
+        loteReal = idxIC3ByNombre.get(nombrePago);
+      }
+
+      if (!loteReal) return p;
+
+      return {
+        ...p,
+        fraccion: esVacio(p.fraccion) ? loteReal.fraccion : p.fraccion,
+        manzana: esVacio(p.manzana) ? loteReal.manzana : p.manzana,
+        lote: esVacio(p.lote) ? loteReal.lote : p.lote,
+      };
+    });
+
+    setPagos(pagosFix);
+  };
+
+  useEffect(() => {
+    getPagos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // =======================
   // OPCIONES DE FILTROS
@@ -234,15 +229,20 @@ const PagosInusuales = () => {
 
       { name: "cuil_cuit", label: "CUIL / CUIT" },
       { name: "nombre", label: "Nombre" },
-      { name: "monto", label: "Monto" },
+
+      // ✅ MONTO con formato
+      {
+        name: "monto",
+        label: "Monto",
+        options: {
+          customBodyRender: (value) => formatMoney(value),
+        },
+      },
     ];
-  }, []); // 👈 queda fijo
+  }, [formatMoney]); // ✅ important: cierro el useMemo BIEN
 
   // =======================
   // COLUMNAS VISIBLES SEGÚN FILTRO ZONA
-  // PIT => ocultar Lote
-  // IC3 => ocultar Parcela
-  // Todas => mostrar ambas
   // =======================
   const columns = useMemo(() => {
     if (filtroZona === "PIT") {
@@ -271,11 +271,11 @@ const PagosInusuales = () => {
         "CUIL / CUIT": p.cuil_cuit,
         Nombre: p.nombre,
         Estado: p.estado === "A" ? "Aprobado" : "Pendiente",
-        Monto: p.monto,
+        Monto: Number(p.monto || 0).toFixed(2),
       };
 
-      if (visibles.includes("fraccion")) row.fraccion = p.fraccion ?? "-";
-      if (visibles.includes("manzana")) row.manzana = p.manzana ?? "-";
+      if (visibles.includes("fraccion")) row.Fracción = p.fraccion ?? "-";
+      if (visibles.includes("manzana")) row.Manzana = p.manzana ?? "-";
 
       if (visibles.includes("lote")) {
         row.Lote = esPIT ? "No corresponde" : p.lote ?? "-";
@@ -292,10 +292,7 @@ const PagosInusuales = () => {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Pagos");
 
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
 
     const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -328,7 +325,6 @@ const PagosInusuales = () => {
       },
     },
   };
-
   // =======================
   // THEME (solo estética)
   // =======================
@@ -655,7 +651,7 @@ const PagosInusuales = () => {
             <img src={logo} alt="logo" style={{ height: 70, marginRight: 20 }} />
             <Box>
               <Typography variant="h5" fontWeight="bold">
-                Informe de Pagos Inusuales
+                Informe de Pagos Registrados
               </Typography>
               <Typography variant="body2">
                 Municipalidad de Corrientes
