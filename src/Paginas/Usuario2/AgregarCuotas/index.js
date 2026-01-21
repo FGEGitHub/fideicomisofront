@@ -254,7 +254,8 @@ export default function MenuUsuario2() {
                             onChange={handleChange}
                             inputProps={{ name: 'anioanticipo', id: 'uncontrolled-native' }}
                             sx={sxNativeSelect}
-                          >
+
+                           >
                             <option value={''}>Elegir</option>
                             <option value={'2015'}>2015</option>
                             <option value={'2016'}>2016</option>
@@ -266,7 +267,8 @@ export default function MenuUsuario2() {
                             <option value={'2022'}>2022</option>
                             <option value={'2023'}>2023</option>
                             <option value={'2024'}>2024</option>
-                            <option value={'2024'}>2025</option>
+                            <option value={'2025'}>2025</option>
+                              <option value={'2026'}>2026</option>
                           </NativeSelect>
                         </Box>
                       </Grid>
@@ -329,6 +331,7 @@ export default function MenuUsuario2() {
                             <option value={'2023'}>2023</option>
                             <option value={'2024'}>2024</option>
                             <option value={'2025'}>2025</option>
+                            <option value={'2026'}>2026</option>
                           </NativeSelect>
                         </Box>
                       </Grid>
