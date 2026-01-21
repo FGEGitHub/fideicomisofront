@@ -305,7 +305,7 @@ const Lotes = () => {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                {["CUIL / CUIT", "NOMBRE", "RIESGO", "RAZÓN SOCIAL", "ULTIMA CUOTA", "OPCIONES"].map(
+                {["CUIL / CUIT", "NOMBRE", "RIESGO", "ULTIMA CUOTA", "OPCIONES"].map(
                   (h) => (
                     <TableCell
                       key={h}
@@ -416,10 +416,10 @@ const Lotes = () => {
                           />
                         </Box>
                       </TableCell>
-
+{/* 
                       <TableCell sx={{ color: "rgba(0,0,0,0.75)" }}>
                         {client.razon}
-                      </TableCell>
+                      </TableCell> */}
 
                       <TableCell sx={{ fontWeight: 800, color: "#01567c" }}>
                         {client.ultimaCuota}
