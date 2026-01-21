@@ -26,7 +26,7 @@ import Actualizarcomprobantes from '../Paginas/Usuario2/actualziarcomprobantes';
 import Inusualesniv2 from '../Paginas/Usuario2/inusuales';
 import NuevoCliente from '../Paginas/Usuario2/nuevocliente';
 import Pagos2 from '../Paginas/Usuario2/pagos3';
-
+import Deudores from '../Paginas/Usuario2/deudores';
 
 import Navbar from "../components/Navbar";
 import Usuario1 from "../Paginas/usuario1/menuusuario1";
@@ -182,6 +182,9 @@ const Rutas = [
 	{ path: '/usuario2/clientesic3', element: <Clientesic3 /> },
 	{ path: '/usuario2/nuevocliente', element: <NuevoCliente /> },
 		{ path: '/usuario2/pagos', element: <Pagos2 /> },
+			{ path: '/usuario2/deudores', element: <Deudores /> },
+
+
 
 	{ path: '/nivel3/pagosinusuales', element: <PagosInusuales /> },
 	{ path: '/nivel3/clientes', element: <Clientesniv3 /> },
