@@ -58,21 +58,18 @@ const Arg = () => {
   const InformativeChip = ({ label, color }) => {
     return (
       <Chip
-        icon={<DoneIcon />}
-        label={label}
-        style={{
-          position: 'fixed',
-          //top: '50%',  // Centra verticalmente
-          left: '50%', // Centra horizontalmente
-          transform: 'translate(-50%, -50%)', // Ajusta el centro en ambos ejes
-          backgroundColor: color,
-          color: 'white',
-          padding: '10px', // Puedes ajustar el valor del padding según tus necesidades
-          zIndex: 1,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      />
+      icon={<DoneIcon />}
+      label={label}
+      style={{
+        position: 'fixed',
+        top: "top",        // posición vertical variable
+        right: 500,       // 👈 pegado a la derecha
+        backgroundColor: color,
+        color: 'white',
+        padding: '10px',
+        zIndex: 3
+      }}
+    />
     );
   };
   return (
@@ -93,25 +90,29 @@ const Arg = () => {
                 {imagenDeFondoActivada ? 'Desactivar' : 'Activar'} GPS
               </Button>
               <br />
-              <Divider
-                width={"12%"}
-                height={"10px"}
-                texto1={"Vendido"}
-                texto2={"Reservado"}
-                texto3={"Libre"}
-                color1={"#90caf9"}
-                color2={"#ffeb3b"}
-                color3={"#43a047"}
-                color4={"#ef6c00"}
-                texto4={"Total: " + estadisticas[2]}
-                texto5={""}
-                texto6={"Total: " + estadisticas[0]}
-                texto7={"Canje"}
-                texto8={"Equipamiento del parque"}
-                texto9={"Area verde"}
-                color5={"#8d6e63"}
-                color6={"#81c784"}
-              />
+    <div style={{ display: "flex" }}>
+  <div style={{ marginLeft: "auto" }}>
+    <Divider
+      width={"12%"}
+      height={"10px"}
+      texto1={"Vendido"}
+      texto2={"Reservado"}
+      texto3={"Libre"}
+      color1={"#90caf9"}
+      color2={"#ffeb3b"}
+      color3={"#43a047"}
+      color4={"#ef6c00"}
+      texto4={"Total: " + estadisticas[2]}
+      texto5={""}
+      texto6={"Total: " + estadisticas[0]}
+      texto7={"Canje"}
+      texto8={"Equipamiento del parque"}
+      texto9={"Area verde"}
+      color5={"#8d6e63"}
+      color6={"#81c784"}
+    />
+  </div>
+</div>
               <br />
               <InformativeChip label={"Cantidad libres" + estadisticas[0]} color="#76ff03" />
               <InformativeChip label={"Cantidad vendidos" + estadisticas[2]} color="#00bcd4" />
@@ -132,7 +133,7 @@ const Arg = () => {
 
                     <svg position="absolute" width="400mm"  version="1.2" baseProfile="tiny" viewBox="0 0 3507 2480" fillOpacity={0.5}>
                       <title>Mapa </title>
-                      <desc>pipo's mapa</desc>
+                      <desc> mapa</desc>
                       <defs />
                       <g stroke="black" stroke-linejoin="bevel" fill="none" stroke-linecap="square" fill-rule="evenodd" stroke-width="1">
                         <g stroke="#000000" stroke-linejoin="bevel" fill="none" stroke-linecap="square" font-family="MS Shell Dlg 2" font-weight="400" stroke-opacity="1" font-size="32.5" transform="matrix(1,0,0,1,0,0)" font-style="normal" stroke-width="1" />
