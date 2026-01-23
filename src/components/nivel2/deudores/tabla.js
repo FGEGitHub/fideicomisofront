@@ -42,7 +42,7 @@ const Deudores = () => {
 
   const getData = async () => {
     const data = await servicioClientes.deudores();
-    
+
     // data = [ detalleClientes, resumenGeneral ]
     setClientes(data[0]);
     setFiltered(data[0]);
@@ -154,11 +154,16 @@ const Deudores = () => {
                 {[
                   "CUIL/CUIT",
                   "NOMBRE",
+                     "TOTAL CUOTAS",
+                      "LIQUIDADAS",
                   "DEBE",
                   "PAGADAS",
-                  "TOTAL",
+                  "TOTAL FINAL",
+               
+                 
                   "% DEBE",
-                  "% PAGADAS"
+                  "% PAGADAS",
+                  "% AVANCE"
                 ].map((h) => (
                   <TableCell
                     key={h}
@@ -199,7 +204,12 @@ const Deudores = () => {
                     <TableCell>
                       {c.nombre} {c.apellido}
                     </TableCell>
-
+  <TableCell fontWeight={700}>
+                      {c.total_cuotas}
+                    </TableCell>
+                        <TableCell sx={{ color: "#1565c0", fontWeight: 700 }}>
+                      {c.liquidadas}
+                    </TableCell>
                     <TableCell sx={{ color: "#c62828", fontWeight: 700 }}>
                       {c.debe}
                     </TableCell>
@@ -211,13 +221,20 @@ const Deudores = () => {
                     <TableCell fontWeight={700}>
                       {c.total}
                     </TableCell>
+                  
 
+                
                     <TableCell sx={{ color: "#c62828" }}>
                       {c.porcentajeDebe}%
                     </TableCell>
 
                     <TableCell sx={{ color: "#2e7d32" }}>
                       {c.porcentajePagadas}%
+                    </TableCell>
+                    <TableCell sx={{ color: "#1565c0", fontWeight: 700 }}>
+                      {c.total_cuotas > 0
+                        ? ((c.liquidadas / c.total_cuotas) * 100).toFixed(1)
+                        : 0}%
                     </TableCell>
                   </TableRow>
                 ))}
