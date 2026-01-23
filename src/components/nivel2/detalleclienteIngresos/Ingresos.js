@@ -110,7 +110,7 @@ export default function FormDialog(props) {
     borderRadius: 3,
     overflow: 'hidden',
     boxShadow: '0 20px 60px rgba(10,59,79,0.22)',
-    border: '1px solid rgba(1,86,124,0.10)',
+    
   };
 
   const sxDialogHeader = {
