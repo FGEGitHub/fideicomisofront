@@ -259,7 +259,7 @@ const [openRow, setOpenRow] = useState(null);
       </Collapse>
     </>
   ) : (
-    <Chip label="Sin deuda" size="small" color="success" />
+    <Chip label="Sin deuda" size="small" color="success" />  
   )}
 </TableCell>
                     <TableCell fontWeight={700}>
