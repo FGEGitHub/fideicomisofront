@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import servicioClientes from "../../../services/clientes";
 import CargaDeTabla from "../../CargaDeTabla";
 import { useNavigate } from "react-router-dom";
+import {
+  Collapse,
+  IconButton,
+  Tooltip
+} from "@mui/material";
 
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
   Box,
   Paper,
@@ -29,7 +36,7 @@ const Deudores = () => {
   const [resumen, setResumen] = useState(null);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
-
+const [openRow, setOpenRow] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [search, setSearch] = useState("");
@@ -158,9 +165,11 @@ const Deudores = () => {
                       "LIQUIDADAS",
                   "DEBE",
                   "PAGADAS",
+                  "DETALLE",
                   "TOTAL FINAL",
-               
-                 
+               "TOTAL devengado",
+               "TOTAL PAGADO",
+                   "DEUDA",
                   "% DEBE",
                   "% PAGADAS",
                   "% AVANCE"
@@ -217,13 +226,73 @@ const Deudores = () => {
                     <TableCell sx={{ color: "#2e7d32", fontWeight: 700 }}>
                       {c.pagadas}
                     </TableCell>
+<TableCell>
+  {c.cuotasquedebe.length > 0 ? (
+    <>
+      <Tooltip title="Ver cuotas adeudadas">
+        <IconButton
+          size="small"
+          onClick={() =>
+            setOpenRow(openRow === c.id ? null : c.id)
+          }
+        >
+          {openRow === c.id ? (
+            <KeyboardArrowUpIcon />
+          ) : (
+            <KeyboardArrowDownIcon />
+          )}
+        </IconButton>
+      </Tooltip>
 
+      <Collapse in={openRow === c.id} timeout="auto" unmountOnExit>
+        <Box sx={{ mt: 1 }}>
+          {c.cuotasquedebe.map((q, i) => (
+            <Chip
+              key={i}
+              label={q}
+              size="small"
+              color="error"
+              sx={{ mr: 0.5, mb: 0.5 }}
+            />
+          ))}
+        </Box>
+      </Collapse>
+    </>
+  ) : (
+    <Chip label="Sin deuda" size="small" color="success" />
+  )}
+</TableCell>
                     <TableCell fontWeight={700}>
                       {c.total}
                     </TableCell>
                   
+<TableCell fontWeight={700}>
+  {Number(c.total_devengado).toLocaleString('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })}
+</TableCell>
 
-                
+<TableCell fontWeight={700}>
+  {Number(c.pagado).toLocaleString('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })}
+</TableCell>
+
+<TableCell fontWeight={700}>
+  {(Number(c.total_devengado) - Number(c.pagado))
+    .toLocaleString('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}
+</TableCell>
                     <TableCell sx={{ color: "#c62828" }}>
                       {c.porcentajeDebe}%
                     </TableCell>
