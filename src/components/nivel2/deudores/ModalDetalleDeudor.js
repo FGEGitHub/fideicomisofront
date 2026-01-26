@@ -83,8 +83,19 @@ export default function ModalDetalleDeudor({
     const parcela = pickFirstTruthy(detalle?.parcela, detalle?.Parcela, detalle?.nro_parcela, detalle?.parc);
     const lote = pickFirstTruthy(detalle?.lote, detalle?.Lote, detalle?.nro_lote);
 
-    const cuotasAdeudadas = (detalle?.cuotasquedebe ?? clienteBase?.cuotasquedebe ?? []).filter(Boolean);
+let cuotasAdeudadas = [];
 
+try {
+  const raw = detalle?.cuotasquedebe ?? clienteBase?.cuotasquedebe;
+  if (raw) {
+    const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+    cuotasAdeudadas = Array.isArray(parsed)
+      ? parsed.filter(q => q && Number(q.monto) > 0) // opcional: filtra montos 0
+      : [];
+  }
+} catch (e) {
+  cuotasAdeudadas = [];
+}
     const showInmueble =
         fraccion || manzana || parcela || lote || loading; // si está cargando mostramos skeleton
 
@@ -286,19 +297,19 @@ const moneyARS = (v) =>
 
                 {cuotasAdeudadas.length > 0 ? (
                     <Stack direction="row" flexWrap="wrap" gap={1}>
-                        {cuotasAdeudadas.map((q, i) => (
-                            <Chip
-                                key={`${q}-${i}`}
-                                label={q}
-                                color="error"
-                                variant="outlined"
-                                sx={{
-                                    fontWeight: 900,
-                                    borderWidth: 2,
-                                    backgroundColor: alpha("#c62828", 0.06),
-                                }}
-                            />
-                        ))}
+                       {cuotasAdeudadas.map((q, i) => (
+  <Chip
+    key={i}
+    label={`${q.fecha} — ${moneyARS(q.monto)}`}
+    color="error"
+    variant="outlined"
+    sx={{
+      fontWeight: 900,
+      borderWidth: 2,
+      backgroundColor: alpha("#c62828", 0.06),
+    }}
+  />
+))}
                     </Stack>
                 ) : (
                     <Chip label="Sin deuda" color="success" />
