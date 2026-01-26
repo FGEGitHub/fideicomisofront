@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import servicioClientes from "../../../services/clientes";
+import servicioLotes from "../../../services/lotes";
 import CargaDeTabla from "../../CargaDeTabla";
 import { useNavigate } from "react-router-dom";
-import servicioLotes from "../../../services/lotes";
 
 import { IconButton, Tooltip } from "@mui/material";
 import {
@@ -27,7 +27,7 @@ import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
 import { alpha } from "@mui/material/styles";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 
-// ✅ tu modal aparte
+
 import ModalDetalleDeudor from "./ModalDetalleDeudor";
 
 const Deudores = () => {
@@ -36,7 +36,6 @@ const Deudores = () => {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Modal detalle (solo control desde acá)
   const [openDetalle, setOpenDetalle] = useState(false);
   const [detalleCliente, setDetalleCliente] = useState(null);
 
@@ -44,41 +43,64 @@ const Deudores = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [search, setSearch] = useState("");
 
+  const navigate = useNavigate();
+
+
   const esVacio = (v) =>
-    v === null || v === undefined || v === "" || v === "-" || v === "Sin determinar";
+    v === null ||
+    v === undefined ||
+    v === "" ||
+    v === "-" ||
+    v === "Sin determinar";
 
   const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
 
   const normNombre = (s) =>
     String(s ?? "")
       .toUpperCase()
-      .replace(/\(\s*\d+\s*\)/g, "") // saca (3), (4), etc
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\(\s*\d+\s*\)/g, "")
       .replace(/\s+/g, " ")
       .trim();
 
+  const normalizeText = (s) =>
+    String(s ?? "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
 
-  const navigate = useNavigate();
+  const onlyDigits = (s) => String(s ?? "").replace(/\D/g, "");
+
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {
+    setLoading(true);
+
     const data = await servicioClientes.deudores();
-    const detalleClientes = data[0] || [];
-    const resumenGeneral = data[1] || null;
+    const detalleClientes = data?.[0] || [];
+    const resumenGeneral = data?.[1] || null;
 
-    // ✅ Traigo lotes para completar datos sin tocar backend
+    //  Lotes para completar terreno SIN romper casos multi-lote
     const lotesResp = await servicioLotes.lista({});
-    const lotes = Array.isArray(lotesResp) ? (lotesResp[0] || []) : [];
+    const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
 
-    // Index por zona + (CUIT / DNI / NOMBRE)
-    const idxByZonaCuit = new Map();   // key: ZONA|CUIT
-    const idxByZonaDni = new Map();    // key: ZONA|DNI
-    const idxByZonaNombre = new Map(); // key: ZONA|NOMBRE
+    // Índices por zona
+    const idxByZonaDni = new Map();     // ZONA|DNI -> lote (primero)
+    const idxByZonaNombre = new Map();  // ZONA|NOMBRE -> lote (primero)
+
+    //  CUIT SOLO si es ÚNICO (si tiene más de 1 terreno, NO autocompletamos por CUIT)
+    const idxByZonaCuitSingle = new Map(); // ZONA|CUIT -> lote
+    const countByZonaCuit = new Map();     // ZONA|CUIT -> count
 
     lotes.forEach((l) => {
-      const zona = String(l.zona ?? "").trim().toUpperCase(); // "PIT" / "IC3"
+      const zona = String(l.zona ?? "").trim().toUpperCase();
       if (!zona) return;
 
       const c = normDigits(l.cuil_cuit);
@@ -89,30 +111,34 @@ const Deudores = () => {
         if (!idxByZonaNombre.has(kNom)) idxByZonaNombre.set(kNom, l);
       }
 
-      // Si no hay cuil o es "0", no indexamos por cuit/dni
       if (!c || c === "0") return;
 
       const kCuit = `${zona}|${c}`;
-      if (!idxByZonaCuit.has(kCuit)) idxByZonaCuit.set(kCuit, l);
+      countByZonaCuit.set(kCuit, (countByZonaCuit.get(kCuit) ?? 0) + 1);
+      if (!idxByZonaCuitSingle.has(kCuit)) idxByZonaCuitSingle.set(kCuit, l);
 
-      // Si parece CUIT (11), DNI son los 8 del medio
+      // DNI si CUIT 11
       if (c.length === 11) {
         const dni = c.slice(2, 10);
         const kDni = `${zona}|${dni}`;
         if (!idxByZonaDni.has(kDni)) idxByZonaDni.set(kDni, l);
       }
 
-      // Si guardaron DNI directo
+      // DNI directo
       if (c.length <= 8) {
         const kDni = `${zona}|${c}`;
         if (!idxByZonaDni.has(kDni)) idxByZonaDni.set(kDni, l);
       }
     });
 
-    // ✅ Completo cada cliente
+    // invalidamos CUIT con más de 1 terreno
+    for (const [k, cnt] of countByZonaCuit.entries()) {
+      if (cnt > 1) idxByZonaCuitSingle.delete(k);
+    }
+
+    // Completar terreno (solo si falta) cuando hay multi-lote
     const clientesFix = detalleClientes.map((c) => {
-      // en tu pantalla dice "Zona PIT", pero igual lo dejo robusto:
-      const zona = String(c.zona ?? "PIT").trim().toUpperCase(); // si no viene, asumimos PIT
+      const zona = String(c.zona ?? "PIT").trim().toUpperCase();
 
       const yaTieneDatos =
         !esVacio(c.fraccion) ||
@@ -125,16 +151,16 @@ const Deudores = () => {
       const cuil = normDigits(c.cuil_cuit);
       const keyCuit = `${zona}|${cuil}`;
 
-      // 1) Por CUIT
-      let loteReal = idxByZonaCuit.get(keyCuit);
+      // 1) por CUIT (solo si es único)
+      let loteReal = idxByZonaCuitSingle.get(keyCuit);
 
-      // 2) Por DNI
+      // 2) por DNI (fallback)
       if (!loteReal) {
         const dni = cuil.length === 11 ? cuil.slice(2, 10) : cuil;
         loteReal = idxByZonaDni.get(`${zona}|${dni}`);
       }
 
-      // 3) Por NOMBRE (fallback)
+      // 3) por NOMBRE (último recurso; puede traer falsos positivos si hay homónimos)
       if (!loteReal) {
         const nombre = normNombre(`${c.nombre ?? ""} ${c.apellido ?? ""}`);
         loteReal = idxByZonaNombre.get(`${zona}|${nombre}`);
@@ -146,7 +172,6 @@ const Deudores = () => {
         ...c,
         fraccion: esVacio(c.fraccion) ? loteReal.fraccion : c.fraccion,
         manzana: esVacio(c.manzana) ? loteReal.manzana : c.manzana,
-        // PIT suele usar parcela (y si no, a veces usan lote). IC3 suele usar lote.
         parcela: esVacio(c.parcela) ? loteReal.parcela : c.parcela,
         lote: esVacio(c.lote) ? loteReal.lote : c.lote,
       };
@@ -158,23 +183,32 @@ const Deudores = () => {
     setLoading(false);
   };
 
-
+ 
   const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearch(value);
+    const raw = e.target.value;
+    setSearch(raw);
 
-    const filteredData = clientes.filter(
-      (c) =>
-        c.cuil_cuit.toLowerCase().includes(value) ||
-        `${c.nombre} ${c.apellido}`.toLowerCase().includes(value)
-    );
+    const qText = normalizeText(raw);
+    const qDigits = onlyDigits(raw);
+    const tokens = qText.split(" ").filter(Boolean);
+
+    const filteredData = clientes.filter((c) => {
+      const cuilDigits = onlyDigits(c.cuil_cuit);
+      const nombreCompleto = normalizeText(`${c.nombre} ${c.apellido}`);
+
+      if (qDigits.length > 0) return cuilDigits.includes(qDigits);
+      if (tokens.length === 0) return true;
+
+      // exige que todas las palabras estén
+      return tokens.every((t) => nombreCompleto.includes(t));
+    });
 
     setFiltered(filteredData);
     setPage(0);
   };
 
   const handleOpenDetalle = (cliente) => {
-    setDetalleCliente(cliente); // base
+    setDetalleCliente(cliente);
     setOpenDetalle(true);
   };
 
@@ -183,10 +217,7 @@ const Deudores = () => {
     setDetalleCliente(null);
   };
 
-  // ✅ Conectá acá tu endpoint real que trae fraccion/manzana/lote/parcela
-  // (cambiá SOLO el nombre del método si en tu service se llama distinto)
   const getDetalleCliente = async (cuil) => {
-    // ejemplo:
     return await servicioClientes.detalle(cuil);
   };
 
@@ -194,7 +225,7 @@ const Deudores = () => {
 
   return (
     <Box sx={{ p: { xs: 2, md: 3 } }}>
-      {/* ===== HEADER ===== */}
+    
       <Paper
         elevation={0}
         sx={{
@@ -217,7 +248,6 @@ const Deudores = () => {
         </Box>
       </Paper>
 
-      {/* ===== RESUMEN ===== */}
       {resumen && (
         <Paper
           elevation={0}
@@ -237,7 +267,6 @@ const Deudores = () => {
         </Paper>
       )}
 
-      {/* ===== BUSCADOR ===== */}
       <Paper sx={{ mt: 2, p: 2, borderRadius: 3 }}>
         <TextField
           fullWidth
@@ -255,7 +284,7 @@ const Deudores = () => {
         />
       </Paper>
 
-      {/* ===== TABLA ===== */}
+      
       <Paper
         elevation={0}
         sx={{
@@ -296,80 +325,81 @@ const Deudores = () => {
               </TableRow>
             </TableHead>
 
-
             <TableBody>
               {filtered
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((c) => (
-                  <TableRow
-                    key={c.id}
-                    hover
-                    sx={{
-                      "&:nth-of-type(odd)": {
-                        backgroundColor: alpha("#0f7f86", 0.03),
-                      },
-                    }}
-                  >
-                    <TableCell
-                      sx={{ fontWeight: 700, color: "#063a52", cursor: "pointer" }}
-                      onClick={() => navigate(`/usuario2/detalleclic3/${c.cuil_cuit}`)}
+                .map((c) => {
+                  const rowKey = `${normDigits(c.cuil_cuit)}|${c.fraccion ?? ""}|${c.manzana ?? ""}|${c.parcela ?? ""}|${c.lote ?? ""}|${c.total_devengado ?? ""}|${c.pagado ?? ""}`;
+
+                  return (
+                    <TableRow
+                      key={rowKey}
+                      hover
+                      sx={{
+                        "&:nth-of-type(odd)": {
+                          backgroundColor: alpha("#0f7f86", 0.03),
+                        },
+                      }}
                     >
-                      {c.cuil_cuit}
-                    </TableCell>
+                      <TableCell
+                        sx={{ fontWeight: 700, color: "#063a52", cursor: "pointer" }}
+                        onClick={() => navigate(`/usuario2/detalleclic3/${c.cuil_cuit}`)}
+                      >
+                        {c.cuil_cuit}
+                      </TableCell>
 
-                    <TableCell>
-                      {c.nombre} {c.apellido}
-                    </TableCell>
+                      <TableCell>
+                        {c.nombre} {c.apellido}
+                      </TableCell>
 
-                    <TableCell sx={{ color: "#1565c0", fontWeight: 700 }}>
-                      {c.liquidadas}
-                    </TableCell>
+                      <TableCell sx={{ color: "#1565c0", fontWeight: 700 }}>
+                        {c.liquidadas}
+                      </TableCell>
 
-                    <TableCell sx={{ color: "#c62828", fontWeight: 700 }}>
-                      {c.debe}
-                    </TableCell>
+                      <TableCell sx={{ color: "#c62828", fontWeight: 700 }}>
+                        {c.debe}
+                      </TableCell>
 
-                    <TableCell sx={{ color: "#2e7d32", fontWeight: 700 }}>
-                      {c.pagadas}
-                    </TableCell>
+                      <TableCell sx={{ color: "#2e7d32", fontWeight: 700 }}>
+                        {c.pagadas}
+                      </TableCell>
 
-                    <TableCell sx={{ fontWeight: 700 }}>
-                      {Number(c.total_devengado).toLocaleString("es-AR", {
-                        style: "currency",
-                        currency: "ARS",
-                      })}
-                    </TableCell>
+                      <TableCell sx={{ fontWeight: 700 }}>
+                        {Number(c.total_devengado).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                        })}
+                      </TableCell>
 
-                    <TableCell sx={{ fontWeight: 700 }}>
-                      {Number(c.pagado).toLocaleString("es-AR", {
-                        style: "currency",
-                        currency: "ARS",
-                      })}
-                    </TableCell>
+                      <TableCell sx={{ fontWeight: 700 }}>
+                        {Number(c.pagado).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                        })}
+                      </TableCell>
 
-                    <TableCell sx={{ fontWeight: 700 }}>
-                      {(Number(c.total_devengado) - Number(c.pagado)).toLocaleString("es-AR", {
-                        style: "currency",
-                        currency: "ARS",
-                      })}
-                    </TableCell>
+                      <TableCell sx={{ fontWeight: 700 }}>
+                        {(Number(c.total_devengado) - Number(c.pagado)).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                        })}
+                      </TableCell>
 
-                    {/* ✅ DETALLE AL FINAL */}
-                    <TableCell>
-                      {c.cuotasquedebe?.length > 0 ? (
-                        <Tooltip title="Ver cuotas adeudadas">
-                          <IconButton size="small" onClick={() => handleOpenDetalle(c)}>
-                            <ReceiptLongRoundedIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      ) : (
-                        <Chip label="Sin deuda" size="small" color="success" />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      <TableCell>
+                        {c.cuotasquedebe?.length > 0 ? (
+                          <Tooltip title="Ver cuotas adeudadas">
+                            <IconButton size="small" onClick={() => handleOpenDetalle(c)}>
+                              <ReceiptLongRoundedIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        ) : (
+                          <Chip label="Sin deuda" size="small" color="success" />
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
-
           </Table>
         </TableContainer>
 
@@ -388,7 +418,7 @@ const Deudores = () => {
         />
       </Paper>
 
-      {/* ✅ MODAL APARTE */}
+   
       <ModalDetalleDeudor
         open={openDetalle}
         onClose={handleCloseDetalle}
