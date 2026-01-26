@@ -29,12 +29,9 @@ const PagosInusuales = () => {
             name: "Nombre",
             label: "Nombre/Razón Social",
             options: {
-                customBodyRenderLite: (dataIndex) => (
-                    <Box sx={{ fontWeight: 800, color: "#0b2b3a" }}>
-                        {pagos[dataIndex]?.Nombre}
-                    </Box>
-                ),
+                display: "excluded", // 👈 no aparece en la tabla ni en "Columnas"
             },
+
         },
         {
             name: "cuil_cuitc",
@@ -118,7 +115,7 @@ const PagosInusuales = () => {
             options: {
                 customBodyRenderLite: (dataIndex) => (
                     <Box sx={{ fontWeight: 800, color: "#0b2b3a", whiteSpace: "nowrap" }}>
-                        Pago({pagos[dataIndex]?.fecha}) Cuota({pagos[dataIndex]?.mesc}/
+                        Pago({pagos[dataIndex]?.fecha}) <br />Cuota({pagos[dataIndex]?.mesc}/
                         {pagos[dataIndex]?.anioc})
                     </Box>
                 ),
@@ -128,7 +125,15 @@ const PagosInusuales = () => {
             name: "Acciones",
             options: {
                 customBodyRenderLite: (dataIndex) => (
-                    <BotonRechazo id={pagos[dataIndex]?.id} getPagosi={getPagosi} />
+                    <BotonRechazo id={pagos[dataIndex]?.id} getPagosi={getPagosi}  sx={{
+                              px: 1.6,
+                              borderRadius: 2,
+                              textTransform: "none",
+                              fontWeight: 900,
+                              backgroundColor: "#148D8D",
+                              boxShadow: "0 10px 20px rgba(20,141,141,0.18)",
+                              "&:hover": { backgroundColor: "#0f6f6f" },
+                            }} />
                 ),
             },
         },
@@ -212,54 +217,54 @@ const PagosInusuales = () => {
 
     return (
         <Box
+            sx={{
+                width: "100%",
+                maxWidth: "100%",
+                flex: 1,
+                minWidth: 0,
+            }}
+        >
+            {/* CARD PRINCIPAL */}
+            <Paper
+                elevation={0}
+                sx={{
+                    borderRadius: 4,
+                    overflow: "hidden",
+                    border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
+                }}
+            >
+                {/* HEADER (GRADIENT) */}
+                <Box
                     sx={{
-                        width: "100%",
-                        maxWidth: "100%",
-                        flex: 1,
-                        minWidth: 0,
+                        px: { xs: 2, md: 3 },
+                        py: { xs: 2, md: 2.5 },
+                        background:
+                            "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: { xs: "flex-start", md: "center" },
+                        justifyContent: "space-between",
+                        gap: 2,
+                        flexWrap: "wrap",
+
                     }}
                 >
-                    {/* CARD PRINCIPAL */}
-                    <Paper
-                        elevation={0}
-                        sx={{
-                            borderRadius: 4,
-                            overflow: "hidden",
-                            border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
-                            background: "rgba(255,255,255,0.92)",
-                            backdropFilter: "blur(10px)",
-                            boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
-                        }}
-                    >
-                        {/* HEADER (GRADIENT) */}
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                         <Box
                             sx={{
-                                px: { xs: 2, md: 3 },
-                                py: { xs: 2, md: 2.5 },
-                                background:
-                                    "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
-                                color: "#fff",
-                                display: "flex",
-                                alignItems: { xs: "flex-start", md: "center" },
-                                justifyContent: "space-between",
-                                gap: 2,
-                                flexWrap: "wrap",
-        
+                                width: 44,
+                                height: 44,
+                                borderRadius: "14px",
+                                display: "grid",
+                                placeItems: "center",
+                                background: "rgba(255,255,255,0.18)",
+                                border: "1px solid rgba(255,255,255,0.35)",
+                                flexShrink: 0,
                             }}
                         >
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                                <Box
-                                    sx={{
-                                        width: 44,
-                                        height: 44,
-                                        borderRadius: "14px",
-                                        display: "grid",
-                                        placeItems: "center",
-                                        background: "rgba(255,255,255,0.18)",
-                                        border: "1px solid rgba(255,255,255,0.35)",
-                                        flexShrink: 0,
-                                    }}
-                                >
                             <ReportProblemRoundedIcon sx={{ color: "#fff" }} />
                         </Box>
 
@@ -296,17 +301,17 @@ const PagosInusuales = () => {
                 </Box>
             </Paper>
             <Paper
-                            elevation={0}
-                            sx={{
-                                mt: { xs: 2, md: 3 }, // 👈 separación arriba
-                                borderRadius: 4,
-                                overflow: "hidden",
-                                border: `1px solid ${alpha("#01567c", 0.12)}`,
-                                background: "rgba(255,255,255,0.92)",
-                                backdropFilter: "blur(10px)",
-                                boxShadow: "0 22px 55px rgba(20, 141, 141, 0.10)",
-                            }}
-                        >
+                elevation={0}
+                sx={{
+                    mt: { xs: 2, md: 3 }, // 👈 separación arriba
+                    borderRadius: 4,
+                    overflow: "hidden",
+                    border: `1px solid ${alpha("#01567c", 0.12)}`,
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 22px 55px rgba(20, 141, 141, 0.10)",
+                }}
+            >
                 {/* ✅ SOLO TABLA: estilo “como CBU” (toolbar + íconos) */}
                 <Box
                     sx={{

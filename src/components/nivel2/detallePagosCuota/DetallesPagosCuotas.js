@@ -10,11 +10,21 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Modif from './modalactcomp';
 import Borrarcomp from './modalborrarcomprobante';
+import { Box, Paper, Typography, Chip } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+
+import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
+import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import TableRowsRoundedIcon from "@mui/icons-material/TableRowsRounded";
+
+
+
 function abrirComprobante(pago) {
     const win = window.open('', '_blank');
     const fecha = new Date().toLocaleDateString();
 
-    const contenido = `
+    const contenido = ` 
     <html>
       <head>
         <title>Comprobante de Pago</title>
@@ -137,17 +147,14 @@ export default function DetallesPagos(props) {
         {
             name: "Monto",
             options: {
+                setCellHeaderProps: () => ({
+                    style: { textAlign: "right" },
+                }),
                 customBodyRenderLite: (dataIndex, rowIndex) =>
-                    monto(
-                        dataIndex,
-                        rowIndex,
-                        // overbookingData,
-                        // handleEditOpen
-                    )
-            }
-
-
+                    monto(dataIndex, rowIndex),
+            },
         },
+
 
         {
             name: "cuil_cuit_administrador",
@@ -182,17 +189,32 @@ export default function DetallesPagos(props) {
 
         },
         {
-            name: "Emitir comprobante",
+            name: "comprobante",
             options: {
                 customBodyRenderLite: (dataIndex) => (
                     <Button
-                        variant="contained"
-                        color="primary"
                         size="small"
+                        startIcon={<PictureAsPdfRoundedIcon style={{ color: "#fff" }} />}
                         onClick={() => generarPDF(pagos[dataIndex])}
+                        sx={{
+                            textTransform: "none",
+                            fontWeight: 900,
+                            borderRadius: 999,
+                            px: 1.6,
+                            color: "#fff",
+                            background: "linear-gradient(90deg, #b71c1c 0%, #ef5350 100%)",
+                            boxShadow: "0 10px 22px rgba(239,83,80,0.20)",
+                            "&:hover": {
+                                transform: "translateY(-1px)",
+                                boxShadow: "0 14px 30px rgba(239,83,80,0.28)",
+                            },
+                            transition: "0.2s ease",
+                            whiteSpace: "nowrap",
+                        }}
                     >
                         PDF
                     </Button>
+
                 )
             }
         },
@@ -279,84 +301,86 @@ export default function DetallesPagos(props) {
     }
 
 
-
     function monto(index, rowIndex, data) {
+        const v = pagos[index]?.monto;
 
+        const montoFormateado = new Intl.NumberFormat("es-AR", {
+            style: "currency",
+            currency: "ARS",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(Number(v) || 0);
+
+        const esDistinto = pagos[index]?.monto_distinto === "Si";
 
         return (
-            <>
-
-
-
-                {pagos[index].monto_distinto == "Si" ? <p style={{ color: 'crimson' }} >{(pagos[index].monto).toFixed(2)}</p> : (pagos[index].monto).toFixed(2)}
-
-            </>
+            <Box
+                sx={{
+                    fontWeight: 900,
+                    textAlign: "right",
+                    whiteSpace: "nowrap",
+                    width: "100%",
+                    color: esDistinto ? "crimson" : "#0b2b3a",
+                }}
+            >
+                {montoFormateado}
+            </Box>
         );
     }
+
     function downloadFile(index, rowIndex, data) {
-
-
         return (
-            <>
-                <button
-
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                <Button
+                    size="small"
+                    variant="contained"
+                    startIcon={<VisibilityRoundedIcon style={{ color: "#fff" }} />}
                     onClick={() => download(index)}
-                >Ver Online</button>
+                    sx={{
+                        textTransform: "none",
+                        fontWeight: 900,
+                        borderRadius: 999,
+                        px: 1.6,
+                        color: "#fff",
+                        background: "linear-gradient(90deg, #01567c 0%, #148D8D 100%)",
+                        boxShadow: "0 10px 22px rgba(20,141,141,0.18)",
+                        "&:hover": {
+                            transform: "translateY(-1px)",
+                            boxShadow: "0 14px 30px rgba(20,141,141,0.28)",
+                        },
+                        transition: "0.2s ease",
+                        whiteSpace: "nowrap",
+                    }}
+                >
+                    Ver online
+                </Button>
+
                 <Borrar
                     id={pagos[index].id}
                     traer={async () => {
-                        const aux = {
-                            id: id
-                        }
-                        const pag = await servicioPagos.detallesPago(aux)
-
-                        setPagos(pag)
-
-
-
-
-                    }
-                    } />
-
-            </>
+                        const aux = { id: id };
+                        const pag = await servicioPagos.detallesPago(aux);
+                        setPagos(pag);
+                    }}
+                />
+            </Box>
         );
     }
+
     const options = {
-
-
-        setTableProps: () => {
-            return {
-                style: {
-                    backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
-                },
-            };
-        },
-        customHeadRender: (columnMeta, handleToggleColumn) => ({
-            TableCell: {
-                style: {
-                    backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
-                    color: 'white', // Cambia el color del texto del encabezado
-                },
-            },
-        }),
-        selectableRows: false, // Desactivar la selección de filas
-        stickyHeader: true,
-        selectableRowsHeader: false,
-        selectableRowsOnClick: true,
-        responsive: 'scroll',
+        selectableRows: "none",
+        responsive: "standard",
         rowsPerPage: 10,
         rowsPerPageOptions: [5, 10, 15],
-        downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
+        downloadOptions: { filename: "tableDownload.csv", separator: "," },
         print: true,
         filter: true,
         viewColumns: true,
+        search: true,
         pagination: true,
 
         textLabels: {
-            body: {
-                noMatch: "No se encontraron registros",
-                toolTip: "Ordenar",
-            },
+            body: { noMatch: "No se encontraron registros", toolTip: "Ordenar" },
             pagination: {
                 next: "Siguiente",
                 previous: "Anterior",
@@ -370,40 +394,157 @@ export default function DetallesPagos(props) {
                 viewColumns: "Ver columnas",
                 filterTable: "Filtrar tabla",
             },
-            filter: {
-                all: "Todos",
-                title: "FILTROS",
-                reset: "RESETEAR",
-            },
-            viewColumns: {
-                title: "Mostrar columnas",
-                titleAria: "Mostrar/ocultar columnas de la tabla",
-            },
+            filter: { all: "Todos", title: "FILTROS", reset: "RESETEAR" },
+            viewColumns: { title: "Mostrar columnas", titleAria: "Mostrar/ocultar columnas de la tabla" },
             selectedRows: {
                 text: "fila(s) seleccionada(s)",
                 delete: "Eliminar",
                 deleteAria: "Eliminar filas seleccionadas",
             },
         },
-
     };
 
 
+
     return (
+        <Box sx={{ width: "100%", maxWidth: "100%", flex: 1, minWidth: 0 }}>
+            {/* CARD PRINCIPAL */}
+            <Paper
+                elevation={0}
+                sx={{
+                    borderRadius: 4,
+                    overflow: "hidden",
+                    border: `1px solid ${alpha("#0b4f6c", 0.14)}`,
+                    background: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 22px 55px rgba(15, 127, 134, 0.10)",
+                }}
+            >
+                {/* HEADER (GRADIENT) */}
+                <Box
+                    sx={{
+                        px: { xs: 2, md: 3 },
+                        py: { xs: 2, md: 2.5 },
+                        background:
+                            "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: { xs: "flex-start", md: "center" },
+                        justifyContent: "space-between",
+                        gap: 2,
+                        flexWrap: "wrap",
+                    }}
+                >
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        <Box
+                            sx={{
+                                width: 44,
+                                height: 44,
+                                borderRadius: "14px",
+                                display: "grid",
+                                placeItems: "center",
+                                background: "rgba(255,255,255,0.18)",
+                                border: "1px solid rgba(255,255,255,0.35)",
+                                flexShrink: 0,
+                            }}
+                        >
+                            <ReceiptLongRoundedIcon sx={{ color: "#fff" }} />
+                        </Box>
 
-        <MUIDataTable
-            title={"Lista de Pagos"}
-            data={pagos}
-            columns={columns}
-            actions={[
-                {
-                    icon: 'save',
-                    tooltip: 'Save User',
-                    onClick: (event, rowData) => alert("You saved " + rowData.name)
-                }
-            ]}
-            options={options}
-        />
+                        <Box>
+                            <Typography
+                                sx={{
+                                    fontWeight: 900,
+                                    fontSize: { xs: 18, md: 22 },
+                                    lineHeight: 1.1,
+                                }}
+                            >
+                                Lista de pagos
+                            </Typography>
+                            <Typography sx={{ mt: 0.35, fontWeight: 650, opacity: 0.9, fontSize: 14 }}>
+                                Detalle, comprobantes y acciones sobre cada pago.
+                            </Typography>
+                        </Box>
+                    </Box>
 
-    )
+                    <Chip
+                        icon={<TableRowsRoundedIcon />}
+                        label={`Registros: ${pagos.length}`}
+                        sx={{
+                            color: "#fff",
+                            fontWeight: 900,
+                            borderRadius: 999,
+                            background: "rgba(255,255,255,0.18)",
+                            border: "1px solid rgba(255,255,255,0.35)",
+                            "& .MuiChip-icon": { color: "#fff" },
+                        }}
+                    />
+                </Box>
+
+                {/* CONTENEDOR TABLA */}
+                <Box
+                    sx={{
+                        p: { xs: 1.5, md: 2 },
+
+                        /* ===== HEADER TABLE ===== */
+                        "& .MuiTableHead-root .MuiTableCell-root": {
+                            borderBottom: "0px",
+                            color: "#01567c",
+                            fontWeight: 900,
+                            background: "transparent",
+                        },
+
+                        /* ===== BODY ===== */
+                        "& .MuiTableBody-root .MuiTableCell-root": {
+                            borderBottom: `1px solid ${alpha("#01567c", 0.08)}`,
+                            fontWeight: 650,
+                            color: "#0b2b3a",
+                        },
+
+                        /* ===== TOOLBAR ===== */
+                        "& .MuiToolbar-root": {
+                            px: 2,
+                            color: "#01567c",
+                        },
+                        "& .MuiToolbar-root .MuiInputBase-input": {
+                            color: "#0b2b3a",
+                            fontWeight: 700,
+                        },
+
+                        /* ===== ICONOS ===== */
+                        "& .MuiIconButton-root, & svg": {
+                            color: alpha("#01567c", 0.75),
+                            transition: "all 0.2s ease",
+                        },
+                        "& .MuiIconButton-root:hover, & svg:hover": {
+                            color: "#148D8D",
+                            transform: "translateY(-1px)",
+                        },
+
+                        /* ===== HOVER FILAS ===== */
+                        "& .MuiTableRow-root:hover td": {
+                            backgroundColor: `${alpha("#148D8D", 0.06)} !important`,
+                        },
+
+                        /* ===== PAGINACIÓN ===== */
+                        "& .MuiTablePagination-root, & .MuiTablePagination-root *": {
+                            color: "#01567c",
+                            fontWeight: 700,
+                        },
+
+                        /* ===== “Paper” interno de MUIDataTable ===== */
+                        "& .MuiPaper-root": { boxShadow: "none" },
+                    }}
+                >
+                    <MUIDataTable
+                        title={""}
+                        data={pagos}
+                        columns={columns}
+                        options={options}
+                    />
+                </Box>
+            </Paper>
+        </Box>
+    );
+
 }
