@@ -7,7 +7,11 @@ import Pagorapido from "./pagaric3";
 import { useNavigate } from "react-router-dom";
 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import Stack from "@mui/material/Stack";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import { Paper, Button, Box, Typography, Divider } from "@mui/material";
@@ -70,6 +74,9 @@ const Lotes = (props) => {
   const [uniqueClients, setUniqueClients] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [showCuotas, setShowCuotas] = useState(false);
+  const [openCompensar, setOpenCompensar] = useState(false);
+const [cuotaOrigen, setCuotaOrigen] = useState(null);
+const [cuotaCompensada, setCuotaCompensada] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,6 +92,42 @@ const Lotes = (props) => {
     setUniqueClients(clients);
     setLoading(false);
   };
+const abrirCompensar = (id_cuota) => {
+  setCuotaOrigen(id_cuota);
+  setCuotaCompensada("");
+  setOpenCompensar(true);
+};
+
+const cerrarCompensar = () => {
+  setOpenCompensar(false);
+};
+const confirmarCompensar = async () => {
+  if (!cuotaCompensada) return alert("Seleccione una cuota");
+
+  const rta = await servicioCuotas.compensaric3({
+    id_compensada: cuotaCompensada,
+    id_dedonde: cuotaOrigen
+  });
+
+  alert(rta);
+
+  // 🔄 refrescar tabla
+  const response = await servicioCuotas.traercuotasic3(props.cuil_cuit);
+  setCuotas(response);
+
+  if (selectedClient === null) {
+    setFilteredCuotas(response);
+  } else {
+    const nuevas = response.filter(c => c.id_cliente === selectedClient);
+    setFilteredCuotas(nuevas);
+  }
+
+  setOpenCompensar(false);
+};
+const obtenerCuotaCompensadora = (idCompensada) => {
+  if (!idCompensada || idCompensada === "No") return null;
+  return cuotas?.find((c) => c.id === Number(idCompensada));
+};
 
   const handleClientFilter = (id_cliente) => {
     console.log("Filtrando por id_cliente:", id_cliente);
@@ -508,17 +551,73 @@ const Lotes = (props) => {
                                 </span>
                               </StyledTableCell>
 
-                              <StyledTableCell>
-                                {row.excedente < 0 ? (
-                                  <Typography sx={{ m: 0, fontWeight: 900, color: "crimson", whiteSpace: "nowrap" }}>
-                                    {new Intl.NumberFormat("de-DE").format(row.excedente)}
-                                  </Typography>
-                                ) : (
-                                  <Typography sx={{ m: 0, fontWeight: 900, color: "#148D8D", whiteSpace: "nowrap" }}>
-                                    {new Intl.NumberFormat("de-DE").format(row.excedente)}
-                                  </Typography>
-                                )}
-                              </StyledTableCell>
+                             <StyledTableCell>
+  {row.excedente < 0 ? (
+    <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
+      
+      {/* Número negativo */}
+      <Typography
+        sx={{
+          m: 0,
+          fontWeight: 900,
+          color: "crimson",
+          whiteSpace: "nowrap"
+        }}
+      >
+        {new Intl.NumberFormat("de-DE").format(row.excedente)}
+      </Typography>
+
+      {/* Texto compensada si corresponde */}
+      {row.compensada && row.compensada !== "No" && (() => {
+
+  const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
+
+  return (
+    <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
+      
+      {/* Línea 1: Compensada + cuota */}
+     <Typography
+            sx={{
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              color: "#555",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Pagada
+            {cuotaOrigen &&
+              ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
+          </Typography>
+
+      {/* Línea 2: Fecha */}
+      {row.fecha_compensada && (
+        <Typography
+          sx={{
+            fontSize: "0.68rem",
+            color: "#888",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
+        </Typography>
+      )}
+    </Box>
+  );
+})()}
+    </Box>
+  ) : (
+    <Typography
+      sx={{
+        m: 0,
+        fontWeight: 900,
+        color: "#148D8D",
+        whiteSpace: "nowrap"
+      }}
+    >
+      {new Intl.NumberFormat("de-DE").format(row.excedente)}
+    </Typography>
+  )}
+</StyledTableCell>
 
                               <StyledTableCell align="center">
                                 <Box
@@ -579,6 +678,15 @@ const Lotes = (props) => {
                                   >
                                     Ver pagos
                                   </Button>
+                                  <Button
+  variant="outlined"
+  size="small"
+  sx={{ fontWeight: 900, textTransform: "none" }}
+  onClick={() => abrirCompensar(row.id)}
+>
+  Compensar
+</Button>
+
                                 </Box>
                               </StyledTableCell>
                             </StyledTableRow>
@@ -597,6 +705,39 @@ const Lotes = (props) => {
           </>
         )}
       </Paper>
+      <Dialog open={openCompensar} onClose={cerrarCompensar} maxWidth="sm" fullWidth>
+  <DialogTitle>Compensar cuota IC3</DialogTitle>
+
+  <DialogContent dividers>
+    <FormControl fullWidth size="small">
+      <InputLabel>Seleccione cuota destino</InputLabel>
+
+      <Select
+        label="Seleccione cuota destino"
+        value={cuotaCompensada}
+        onChange={(e) => setCuotaCompensada(e.target.value)}
+      >
+        {Array.isArray(filteredCuotas) &&
+          filteredCuotas
+            .filter(c => c && c.id !== cuotaOrigen)
+            .map(c => (
+              <MenuItem key={c.id} value={c.id}>
+                {`${String(c.mes).padStart(2,"0")}/${c.anio} - Diferencia: ${new Intl.NumberFormat("de-DE").format(c.excedente)}`}
+              </MenuItem>
+            ))
+        }
+      </Select>
+    </FormControl>
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={cerrarCompensar}>Cancelar</Button>
+    <Button variant="contained" onClick={confirmarCompensar} sx={{ fontWeight: 900 }}>
+      Aceptar
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </Box>
   );
 };

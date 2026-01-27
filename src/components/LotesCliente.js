@@ -8,7 +8,10 @@ import AgregaraCuotas from "./nivel2/Asignarcuotasalote";
 import BorrarCuotas from "./nivel2/borrarcuotas/BorrarCuotas";
 import CancelarLote from "./pagarloteparque";
 import { Tooltip } from "@mui/material";
-import Switch from "@mui/material/Switch";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 import Pagointeres from "./nivel2/pagarcuota/modalpagointeres";
 import React, { useEffect, useState, Fragment } from "react";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
@@ -101,7 +104,9 @@ const LotesCliente = (props) => {
   const [vista1, setVista1] = useState(false);
   const [cargalink, setCargalink] = useState(false);
   const [verDetalles, setVerDetalles] = useState(false);
-
+const [openCompensar, setOpenCompensar] = useState(false);
+const [cuotaOrigen, setCuotaOrigen] = useState(null);
+const [cuotaCompensada, setCuotaCompensada] = useState("");
   const toggleDetalles = () => setVerDetalles(!verDetalles);
 
   const vercuotas = async (index) => {
@@ -113,13 +118,32 @@ const LotesCliente = (props) => {
     setOpen(false);
   };
 
-  const handleClose = () => setOpen(false);
-  const handleOpen = () => setOpen(true);
+const abrirCompensar = (id_cuota) => {
+  setCuotaOrigen(id_cuota);
+  setCuotaCompensada("");
+  setOpenCompensar(true);
+};
 
-  const handleChange = () => setAct(!act);
-  const handleChange2 = () => setAct2(!act2);
-  const Vista1 = () => setVista1(!vista1);
+const cerrarCompensar = () => {
+  setOpenCompensar(false);
+};
+const confirmarCompensar = async () => {
+  if (!cuotaCompensada) return alert("Seleccione una cuota");
 
+  const rta = await servicioCuotas.compensar({
+    id_compensada: cuotaCompensada,
+    id_dedonde: cuotaOrigen
+  });
+
+  alert(rta);
+
+  // refresca tabla
+  const cuotasActualizadas = await servicioCuotas.vercuotas(idlote);
+  setCuotas(cuotasActualizadas);
+  verief(idlote);
+
+  setOpenCompensar(false);
+};
   const handleChangeratio = (event) => setSelectedValue(event.target.value);
 
   const verief = async (index) => {
@@ -156,6 +180,10 @@ const LotesCliente = (props) => {
     const dde = await servicio360.crearsolicituddebito({ id_cuota: index });
     alert(dde);
   };
+const obtenerCuotaCompensadora = (idCompensada) => {
+  if (!idCompensada || idCompensada === "No") return null;
+  return cuotas?.find((c) => c.id === Number(idCompensada));
+};
 
   function saldoReal(dataIndex) {
     return (
@@ -814,33 +842,81 @@ const LotesCliente = (props) => {
                         </StyledTableCell>
 
                         <StyledTableCell>
-                          {row.id >= parseInt(row.cuota_cancelada) ? (
-                            "—"
-                          ) : (
-                            <span
-                              style={{
-                                fontWeight: 900,
-                                color:
-                                  row.diferencia < 0
-                                    ? row.diferencia === -row.cuota_con_ajuste
-                                      ? "#d32f2f"
-                                      : "#0a3b4f"
-                                    : "#148D8D",
-                              }}
-                            >
-                              {new Intl.NumberFormat("de-DE").format(row.diferencia)}
-                              {row.comprobante === "Sin comprobante" && (
-                                <Tooltip title="Pago sin comprobante">
-                                  <ErrorOutlineIcon
-                                    style={{ marginLeft: 8 }}
-                                    color="warning"
-                                    fontSize="small"
-                                  />
-                                </Tooltip>
-                              )}
-                            </span>
-                          )}
-                        </StyledTableCell>
+  {row.id >= parseInt(row.cuota_cancelada) ? (
+    "—"
+  ) : (
+    <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
+
+      {/* Número principal */}
+      <Typography
+        component="span"
+        sx={{
+          fontWeight: 900,
+          whiteSpace: "nowrap",
+          color:
+            row.diferencia < 0
+              ? row.diferencia === -row.cuota_con_ajuste
+                ? "#d32f2f"
+                : "#0a3b4f"
+              : "#148D8D",
+        }}
+      >
+        {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+      </Typography>
+
+      {/* Texto (Compensada) */}
+{row.diferencia < 0 && row.compensada && row.compensada !== "No" && (() => {
+
+  const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
+
+  return (
+    <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
+      
+      {/* Línea 1: Compensada + cuota */}
+      <Typography
+        sx={{
+          fontSize: "0.72rem",
+          fontWeight: 700,
+          color: "#555",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Pagada
+        {cuotaOrigen &&
+          ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
+      </Typography>
+
+      {/* Línea 2: Fecha */}
+      {row.fecha_compensada && (
+        <Typography
+          sx={{
+            fontSize: "0.68rem",
+            color: "#888",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
+        </Typography>
+      )}
+    </Box>
+  );
+})()}
+
+
+      {/* Ícono comprobante */}
+      {row.comprobante === "Sin comprobante" && (
+        <Tooltip title="Pago sin comprobante">
+          <ErrorOutlineIcon
+            sx={{ ml: 0.7 }}
+            color="warning"
+            fontSize="small"
+          />
+        </Tooltip>
+      )}
+    </Box>
+  )}
+</StyledTableCell>
+
 
                         <StyledTableCell>
                           {row.id >= parseInt(row.cuota_cancelada)
@@ -881,7 +957,18 @@ const LotesCliente = (props) => {
                               >
                                 Ver pagos
                               </Button>
-
+<Button
+  variant="outlined"
+  size="small"
+  sx={{
+    borderRadius: 2,
+    fontWeight: 800,
+    textTransform: "none"
+  }}
+  onClick={() => abrirCompensar(row.id)}
+>
+  Compensar
+</Button> 
                               {verDetalles && (
                                 <Pagointeres
                                   id_interes={row.id}
@@ -922,6 +1009,45 @@ const LotesCliente = (props) => {
           </Paper>
         ) : null}
       </Box>
+<Dialog open={openCompensar} onClose={cerrarCompensar} maxWidth="sm" fullWidth>
+  <DialogTitle>Compensar cuota</DialogTitle>
+
+  <DialogContent dividers>
+
+    <FormControl fullWidth size="small">
+      <InputLabel>Seleccione cuota destino</InputLabel>
+
+      <Select
+        label="Seleccione cuota destino"
+        value={cuotaCompensada}
+        onChange={(e) => setCuotaCompensada(e.target.value)}
+      >
+        {Array.isArray(cuotas) &&
+  cuotas
+    .filter(c => c && c.id && c.id !== cuotaOrigen) 
+    .map((c) => (
+      <MenuItem key={c.id} value={c.id}>
+        {`${String(c.mes).padStart(2, "0")}/${c.anio}  -  Diferencia: ${new Intl.NumberFormat("de-DE").format(c.diferencia)}`}
+      </MenuItem>
+    ))
+}
+      </Select>
+    </FormControl>
+
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={cerrarCompensar}>Cancelar</Button>
+
+    <Button
+      variant="contained"
+      sx={{ fontWeight: 900 }}
+      onClick={confirmarCompensar}
+    >
+      Aceptar
+    </Button>
+  </DialogActions>
+</Dialog>
 
     </Fragment>
   );

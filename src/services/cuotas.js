@@ -298,4 +298,21 @@ const cancelarlote = async (datos) => {
     return data
 }
 
-export default {cancelarlote,traercuotasic3,vercuotas4,iefgralleg, traercuotasdisponiblesporlote,asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
+
+const compensar = async (datos) => {
+
+    console.log(datos)
+    const { data } = await axios.post(baseUrl + 'compensar/', datos, config)
+
+
+    return data
+}
+const compensaric3 = async (datos) => {
+
+    console.log(datos)
+    const { data } = await axios.post(baseUrl + 'compensaric3/', datos, config)
+
+
+    return data
+}
+export default {compensaric3, compensar, cancelarlote,traercuotasic3,vercuotas4,iefgralleg, traercuotasdisponiblesporlote,asignarloteacuotas,vercuotas2,modificarmontotal,borrarpago,agregarCuotasleg, traercuotaselcliente, agregarCuotasVarios,actualizarcuota,traercuota, listavarios, asignarICC, traercuotasdisponibles, vercuotas, agregarCuotas, cuotasDeUnLote, borrarcuota, verief,verief2, borrarcuotas };
