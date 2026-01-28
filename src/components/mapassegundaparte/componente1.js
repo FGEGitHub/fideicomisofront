@@ -9,6 +9,34 @@ import { centerOfMass, pointOnFeature, booleanPointInPolygon } from "@turf/turf"
 import TablaReferencias from "./tablaReferencias";
 
 const MapaConCapas = () => {
+  // ✅ Helper: inyecta properties.id si no existe (para area1..4 y cualquier capa que venga sin id)
+  const normalizarGeojsonConIds = (data, nombreCapa) => {
+    if (!data?.features) return data;
+
+    return {
+      ...data,
+      features: data.features.map((f, idx) => {
+        const yaTieneId =
+          f?.properties?.id ??
+          f?.properties?.ID ??
+          f?.properties?.Id ??
+          f?.properties?.id_mapa ??
+          f?.id ??
+          null;
+
+        const idGenerado = `${nombreCapa}-${idx + 1}`;
+
+        return {
+          ...f,
+          properties: {
+            ...f.properties,
+            id: yaTieneId ?? idGenerado,
+          },
+        };
+      }),
+    };
+  };
+
   const [capasActivas, setCapasActivas] = useState({
     Manzanas: false,
     "Plan Especial": false,
@@ -30,7 +58,6 @@ const MapaConCapas = () => {
     planespecial5: false,
   });
 
-  
   const opcionesSubclasificacion = [
     "C1-Corredor de densidad 1",
     "C2-Corredor de densidad 2",
@@ -128,8 +155,8 @@ const MapaConCapas = () => {
   };
 
   const [geojsonData, setGeojsonData] = useState({});
-  const [modalDetalleAbierto, setModalDetalleAbierto] = useState(false); // ✅ NUEVO (detalle)
-  const [modalAbierto, setModalAbierto] = useState(false); // ✅ edición (tu modal)
+  const [modalDetalleAbierto, setModalDetalleAbierto] = useState(false); // detalle
+  const [modalAbierto, setModalAbierto] = useState(false); // edición
   const [texto, setTexto] = useState("");
   const [idSeleccionado, setIdSeleccionado] = useState(null);
   const [nombreCapaSeleccionada, setNombreCapaSeleccionada] = useState("");
@@ -141,7 +168,7 @@ const MapaConCapas = () => {
   const [descripcion, setDescripcion] = useState("");
   const [verReferencias, setVerReferencias] = useState(true);
   const [verReferenciasTabla, setVerReferenciasTabla] = useState(true);
-  const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null); // ✅ NUEVO
+  const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null);
 
   const [subCapasSur, setSubCapasSur] = useState({
     PIT: false,
@@ -150,7 +177,7 @@ const MapaConCapas = () => {
     ZPA: false,
   });
 
-  // Carga inicial de datos
+  // Carga inicial de datos guardados desde backend
   useEffect(() => {
     serviciolotes
       .poligonosguardados()
@@ -161,56 +188,73 @@ const MapaConCapas = () => {
       .catch(console.error);
   }, []);
 
+  // Carga de geojson
   useEffect(() => {
-    // Cargar manzanas
+    // Manzanas
     fetch("/manazanasmates.geojson")
       .then((r) => r.json())
       .then((data) => {
-        setGeojsonData((prev) => ({ ...prev, Manzanas: data }));
+        // manzanas normalmente ya trae id; igual no molesta normalizar
+        const normalizado = normalizarGeojsonConIds(data, "Manzanas");
+        setGeojsonData((prev) => ({ ...prev, Manzanas: normalizado }));
       })
       .catch(console.error);
 
-    // Cargar planes especiales
+    // Planes especiales
     const planesEspeciales = ["planespecial1", "planespecial2", "planespecial3", "planespecial4", "planespecial5"];
     planesEspeciales.forEach((plan) => {
       fetch(`/${plan}.geojson`)
         .then((r) => r.json())
         .then((data) => {
-          setGeojsonData((prev) => ({ ...prev, [plan]: data }));
+          const normalizado = normalizarGeojsonConIds(data, plan);
+          setGeojsonData((prev) => ({ ...prev, [plan]: normalizado }));
         })
         .catch((error) => console.error(`Error cargando ${plan}:`, error));
     });
 
-    // Cargar barrios (calles)
+    // Barrios / Calles
     fetch("/calles.geojson")
       .then((r) => r.json())
       .then((data) => {
-        setGeojsonData((prev) => ({ ...prev, Barrios: data }));
+        const normalizado = normalizarGeojsonConIds(data, "Barrios");
+        setGeojsonData((prev) => ({ ...prev, Barrios: normalizado }));
       })
       .catch(console.error);
 
-    // Cargar areas nuevas
+    // ✅ Areas nuevas (NO traen properties.id: lo inyectamos)
     fetch("/area1.geojson")
       .then((r) => r.json())
-      .then((data) => setGeojsonData((prev) => ({ ...prev, area1: data })))
+      .then((data) => {
+        const normalizado = normalizarGeojsonConIds(data, "area1");
+        setGeojsonData((prev) => ({ ...prev, area1: normalizado }));
+      })
       .catch(console.error);
 
     fetch("/area2.geojson")
       .then((r) => r.json())
-      .then((data) => setGeojsonData((prev) => ({ ...prev, area2: data })))
+      .then((data) => {
+        const normalizado = normalizarGeojsonConIds(data, "area2");
+        setGeojsonData((prev) => ({ ...prev, area2: normalizado }));
+      })
       .catch(console.error);
 
     fetch("/area3.geojson")
       .then((r) => r.json())
-      .then((data) => setGeojsonData((prev) => ({ ...prev, area3: data })))
+      .then((data) => {
+        const normalizado = normalizarGeojsonConIds(data, "area3");
+        setGeojsonData((prev) => ({ ...prev, area3: normalizado }));
+      })
       .catch(console.error);
 
     fetch("/area4.geojson")
       .then((r) => r.json())
-      .then((data) => setGeojsonData((prev) => ({ ...prev, area4: data })))
+      .then((data) => {
+        const normalizado = normalizarGeojsonConIds(data, "area4");
+        setGeojsonData((prev) => ({ ...prev, area4: normalizado }));
+      })
       .catch(console.error);
 
-    // Cargar nuevas capas
+    // Otras capas
     const nuevasCapas = [
       { nombre: "Zonificación Sta Catalina", archivo: "zonificacion_stacatalina.geojson" },
       { nombre: "ZRU Predios La Caja", archivo: "zru_prediosdelacaja.geojson" },
@@ -226,62 +270,78 @@ const MapaConCapas = () => {
     capasSeccionSur.forEach((capa) => {
       fetch(`/${capa.archivo}`)
         .then((r) => r.json())
-        .then((data) => setGeojsonData((prev) => ({ ...prev, [capa.nombre]: data })))
+        .then((data) => {
+          const normalizado = normalizarGeojsonConIds(data, capa.nombre);
+          setGeojsonData((prev) => ({ ...prev, [capa.nombre]: normalizado }));
+        })
         .catch((error) => console.error(`Error cargando ${capa.nombre}:`, error));
     });
 
     nuevasCapas.forEach((capa) => {
       fetch(`/${capa.archivo}`)
         .then((r) => r.json())
-        .then((data) => setGeojsonData((prev) => ({ ...prev, [capa.nombre]: data })))
+        .then((data) => {
+          const normalizado = normalizarGeojsonConIds(data, capa.nombre);
+          setGeojsonData((prev) => ({ ...prev, [capa.nombre]: normalizado }));
+        })
         .catch((error) => console.error(`Error cargando ${capa.nombre}:`, error));
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ✅ CLICK: abre DETALLE primero; y precarga form con lo guardado (si existe)
+  // Click en polígono → abre detalle (si no hay datos, muestra “sin información”)
   const handleFeatureClick = (e) => {
-    const id = e.target.feature.properties?.id ?? null;
-    const layer = e.target;
-    const center = layer.getBounds().getCenter();
+  const feature = e.target.feature;
+  const layer = e.target;
+  const center = layer.getBounds().getCenter();
 
-    const nombreCapa =
-      Object.entries(geojsonData).find(([_, data]) => data.features.includes(e.target.feature))?.[0] || "Desconocido";
+  const nombreCapa =
+    Object.entries(geojsonData).find(([_, data]) => data?.features?.includes(feature))?.[0] ||
+    "Desconocido";
 
-    if (!id) return;
+  // ✅ BLOQUEO: estas capas NO deben abrir detalle
+  if (nombreCapa === "Manzanas" || nombreCapa === "Barrios") {
+    return;
+  }
 
-    const datosBase =
-      poligonosGuardados.find((p) => String(p.id_mapa) === String(id)) || null;
+  const id =
+    feature?.properties?.id ??
+    feature?.properties?.ID ??
+    feature?.properties?.Id ??
+    feature?.properties?.id_mapa ??
+    feature?.id ??
+    null;
 
-    setIdSeleccionado(id);
-    setCentroSeleccionado(center);
-    setNombreCapaSeleccionada(nombreCapa);
+  if (id == null) return;
 
-    setDatosZonaSeleccionada(datosBase);
+  const datosBase =
+    poligonosGuardados.find((p) => String(p.id_mapa) === String(id)) || null;
 
-    // precargar campos para editar
-    setTexto(datosBase?.dato1 ?? "");
-    setSubclasificacion(datosBase?.subclasificacion ?? "");
-    setDescripcion(datosBase?.descripcion ?? "");
+  setIdSeleccionado(id);
+  setCentroSeleccionado(center);
+  setNombreCapaSeleccionada(nombreCapa);
 
-    // abrir detalle primero
-    setModalDetalleAbierto(true);
-    setModalAbierto(false);
-  };
+  setDatosZonaSeleccionada(datosBase);
+
+  setTexto(datosBase?.dato1 ?? "");
+  setSubclasificacion(datosBase?.subclasificacion ?? "");
+  setDescripcion(datosBase?.descripcion ?? "");
+
+  setModalDetalleAbierto(true);
+  setModalAbierto(false);
+};
+
 
   const InstanciaDelMapa = ({ setMapa }) => {
     const map = useMap();
-
     useEffect(() => {
       setMapa(map);
     }, [map, setMapa]);
-
     return null;
   };
 
   const onEachFeature = (feature, layer) => {
-    layer.on({
-      click: handleFeatureClick,
-    });
+    layer.on({ click: handleFeatureClick });
   };
 
   const toggleCapaPrincipal = (nombre) => {
@@ -310,6 +370,22 @@ const MapaConCapas = () => {
 
     if (Object.values(subCapasActivas).every((val) => val)) {
       setCapasActivas((prev) => ({ ...prev, "Plan Especial": true }));
+    }
+  };
+
+  const getCentroideAproximado = (geometry) => {
+    try {
+      const centroVisual = centerOfMass(geometry);
+      const [lng, lat] = centroVisual.geometry.coordinates;
+
+      const estaDentro = booleanPointInPolygon(centroVisual, geometry);
+      if (estaDentro) return { lat, lng };
+
+      const puntoSeguro = pointOnFeature(geometry).geometry.coordinates;
+      return { lat: puntoSeguro[1], lng: puntoSeguro[0] };
+    } catch (err) {
+      console.error("Error calculando centroide:", err);
+      return null;
     }
   };
 
@@ -344,9 +420,6 @@ const MapaConCapas = () => {
             if (!poligonoDB || !feature.geometry) return null;
 
             try {
-              const coords = feature.geometry?.coordinates;
-              if (!coords || !Array.isArray(coords[0])) return null;
-
               const center = getCentroideAproximado(feature.geometry);
               if (!center) return null;
 
@@ -379,22 +452,6 @@ const MapaConCapas = () => {
     );
   };
 
-  const getCentroideAproximado = (geometry) => {
-    try {
-      const centroVisual = centerOfMass(geometry);
-      const [lng, lat] = centroVisual.geometry.coordinates;
-
-      const estaDentro = booleanPointInPolygon(centroVisual, geometry);
-      if (estaDentro) return { lat, lng };
-
-      const puntoSeguro = pointOnFeature(geometry).geometry.coordinates;
-      return { lat: puntoSeguro[1], lng: puntoSeguro[0] };
-    } catch (err) {
-      console.error("Error calculando centroide:", err);
-      return null;
-    }
-  };
-
   return (
     <div className="mapa-contenedor">
       <div className="panel-lateral">
@@ -405,11 +462,7 @@ const MapaConCapas = () => {
         <h3>Capas disponibles</h3>
 
         <div className="capa-principal">
-          <input
-            type="checkbox"
-            checked={!!capasActivas["Manzanas"]}
-            onChange={() => toggleCapaPrincipal("Manzanas")}
-          />
+          <input type="checkbox" checked={!!capasActivas.Manzanas} onChange={() => toggleCapaPrincipal("Manzanas")} />
           <label>
             <strong>Manzanas</strong>
           </label>
@@ -445,11 +498,7 @@ const MapaConCapas = () => {
 
         <div className="capa-principal">
           <label>
-            <input
-              type="checkbox"
-              checked={!!capasActivas["Barrios"]}
-              onChange={() => toggleCapaPrincipal("Barrios")}
-            />
+            <input type="checkbox" checked={!!capasActivas.Barrios} onChange={() => toggleCapaPrincipal("Barrios")} />
             <strong>Calles</strong>
           </label>
         </div>
@@ -472,9 +521,7 @@ const MapaConCapas = () => {
                     <input
                       type="checkbox"
                       checked={!!subCapasSur[nombre]}
-                      onChange={() =>
-                        setSubCapasSur((prev) => ({ ...prev, [nombre]: !prev[nombre] }))
-                      }
+                      onChange={() => setSubCapasSur((prev) => ({ ...prev, [nombre]: !prev[nombre] }))}
                     />
                     {nombre}
                   </label>
@@ -509,11 +556,7 @@ const MapaConCapas = () => {
         {["area1", "area2", "area3", "area4"].map((a) => (
           <div className="capa-principal" key={a}>
             <label>
-              <input
-                type="checkbox"
-                checked={!!capasActivas[a]}
-                onChange={() => toggleCapaPrincipal(a)}
-              />
+              <input type="checkbox" checked={!!capasActivas[a]} onChange={() => toggleCapaPrincipal(a)} />
               <strong>{a}</strong>
             </label>
           </div>
@@ -530,11 +573,7 @@ const MapaConCapas = () => {
 
         <div className="capa-principal">
           <label>
-            <input
-              type="checkbox"
-              checked={verReferenciasTabla}
-              onChange={() => setVerReferenciasTabla((p) => !p)}
-            />
+            <input type="checkbox" checked={verReferenciasTabla} onChange={() => setVerReferenciasTabla((p) => !p)} />
             <strong>Ver referencias en tabla</strong>
           </label>
         </div>
@@ -578,10 +617,11 @@ const MapaConCapas = () => {
           );
         })}
 
-        {capasActivas["Manzanas"] && geojsonData["Manzanas"] && (
+        {/* Manzanas */}
+        {capasActivas.Manzanas && geojsonData.Manzanas && (
           <GeoJSON
             key="Manzanas"
-            data={geojsonData["Manzanas"]}
+            data={geojsonData.Manzanas}
             style={(feature) => {
               const id = feature.properties?.id;
               const poligono = poligonosGuardados.find((p) => String(p.id_mapa) === String(id));
@@ -605,6 +645,7 @@ const MapaConCapas = () => {
           />
         )}
 
+        {/* Plan Especial */}
         {Object.entries(subCapasActivas).map(
           ([nombre, activa]) =>
             activa &&
@@ -632,10 +673,11 @@ const MapaConCapas = () => {
             )
         )}
 
-        {capasActivas["Barrios"] && geojsonData["Barrios"] && (
+        {/* Barrios / Calles */}
+        {capasActivas.Barrios && geojsonData.Barrios && (
           <GeoJSON
             key="Barrios"
-            data={geojsonData["Barrios"]}
+            data={geojsonData.Barrios}
             style={() => ({
               fillColor: "none",
               weight: 1,
@@ -647,6 +689,7 @@ const MapaConCapas = () => {
           />
         )}
 
+        {/* Zonificación Sta Catalina */}
         {capasActivas["Zonificación Sta Catalina"] && geojsonData["Zonificación Sta Catalina"] && (
           <GeoJSON
             key="Zonificación Sta Catalina"
@@ -670,6 +713,7 @@ const MapaConCapas = () => {
           />
         )}
 
+        {/* ZRU Predios La Caja */}
         {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
           <GeoJSON
             key="ZRU Predios La Caja"
@@ -690,6 +734,7 @@ const MapaConCapas = () => {
           />
         )}
 
+        {/* Sección Sur (subcapas) */}
         {Object.entries(subCapasSur).map(
           ([nombre, activa]) =>
             activa &&
@@ -717,6 +762,7 @@ const MapaConCapas = () => {
             )
         )}
 
+        {/* ✅ Areas nuevas (clickeables + id garantizado) */}
         {["area1", "area2", "area3", "area4"].map(
           (nombre) =>
             capasActivas[nombre] &&
@@ -724,202 +770,194 @@ const MapaConCapas = () => {
               <GeoJSON
                 key={nombre}
                 data={geojsonData[nombre]}
-                style={{ fillColor: "transparent", color: "purple", weight: 2, fillOpacity: 0.2 }}
+                style={() => ({
+                  fillColor: "#000",
+                  fillOpacity: 0.01, // casi invisible pero asegura área clickeable
+                  color: "purple",
+                  weight: 2,
+                  opacity: 1,
+                })}
                 onEachFeature={onEachFeature}
               />
             )
         )}
       </MapContainer>
 
-      {/* ✅ MODAL DETALLE (primero) */}
-   {/* ✅ MODAL DETALLE (primero) */}
-{modalDetalleAbierto && (
-  <div className="sc-modalOverlay" onClick={() => setModalDetalleAbierto(false)}>
-    <div className="sc-modalCard" onClick={(e) => e.stopPropagation()}>
-      <div className="sc-modalHeader">
-        <div>
-          <div className="sc-modalTitle">Detalle de zona</div>
-          <div className="sc-modalSubtitle">
-            <span className="sc-badge">ID {idSeleccionado}</span>
-            <span className="sc-dot">•</span>
-            <span className="sc-muted">{nombreCapaSeleccionada || "Capa"}</span>
+      {/* ✅ MODAL DETALLE (primero) - ESTÉTICO */}
+      {modalDetalleAbierto && (
+        <div className="sc-modalOverlay" onClick={() => setModalDetalleAbierto(false)}>
+          <div className="sc-modalCard" onClick={(e) => e.stopPropagation()}>
+            <div className="sc-modalHeader">
+              <div>
+                <div className="sc-modalTitle">Detalle de zona</div>
+                <div className="sc-modalSubtitle">
+                  <span className="sc-badge">ID {idSeleccionado}</span>
+                  <span className="sc-dot">•</span>
+                  <span className="sc-muted">{nombreCapaSeleccionada || "Capa"}</span>
+                </div>
+              </div>
+
+              <button
+                className="sc-iconBtn"
+                onClick={() => setModalDetalleAbierto(false)}
+                aria-label="Cerrar"
+                title="Cerrar"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="sc-modalBody">
+              {datosZonaSeleccionada ? (
+                <div className="sc-grid2">
+                  <div className="sc-infoItem">
+                    <div className="sc-infoLabel">Dato</div>
+                    <div className="sc-infoValue">{datosZonaSeleccionada.dato1 || "-"}</div>
+                  </div>
+
+                  <div className="sc-infoItem">
+                    <div className="sc-infoLabel">Subclasificación</div>
+                    <div className="sc-infoValue">{datosZonaSeleccionada.subclasificacion || "-"}</div>
+                  </div>
+
+                  <div className="sc-infoItem sc-span2">
+                    <div className="sc-infoLabel">Descripción</div>
+                    <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
+                  </div>
+
+                  <div className="sc-infoItem sc-span2">
+                    <div className="sc-infoLabel">Capa</div>
+                    <div className="sc-infoValue">
+                      {datosZonaSeleccionada.capa || nombreCapaSeleccionada || "-"}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="sc-emptyState">
+                  <div className="sc-emptyTitle">Sin información cargada</div>
+                  <div className="sc-emptyText">Todavía no hay datos guardados para esta zona.</div>
+                </div>
+              )}
+            </div>
+
+            <div className="sc-modalFooter">
+              <button className="sc-btn sc-btnGhost" onClick={() => setModalDetalleAbierto(false)}>
+                Cerrar
+              </button>
+
+              <button
+                className="sc-btn sc-btnPrimary"
+                onClick={() => {
+                  setModalDetalleAbierto(false);
+                  setModalAbierto(true);
+                }}
+              >
+                Agregar / Editar
+              </button>
+            </div>
           </div>
         </div>
+      )}
 
-        <button
-          className="sc-iconBtn"
-          onClick={() => setModalDetalleAbierto(false)}
-          aria-label="Cerrar"
-          title="Cerrar"
-        >
-          ✕
-        </button>
-      </div>
+      {/* ✅ MODAL EDICIÓN - ESTÉTICO */}
+      {modalAbierto && (
+        <div className="sc-modalOverlay" onClick={() => setModalAbierto(false)}>
+          <div className="sc-modalCard" onClick={(e) => e.stopPropagation()}>
+            <div className="sc-modalHeader">
+              <div>
+                <div className="sc-modalTitle">Agregar / Editar información</div>
+                <div className="sc-modalSubtitle">
+                  <span className="sc-badge">ID {idSeleccionado}</span>
+                  <span className="sc-dot">•</span>
+                  <span className="sc-muted">{nombreCapaSeleccionada || "Capa"}</span>
+                </div>
+              </div>
 
-      <div className="sc-modalBody">
-        {datosZonaSeleccionada ? (
-          <div className="sc-grid2">
-            <div className="sc-infoItem">
-              <div className="sc-infoLabel">Dato</div>
-              <div className="sc-infoValue">{datosZonaSeleccionada.dato1 || "-"}</div>
+              <button className="sc-iconBtn" onClick={() => setModalAbierto(false)} aria-label="Cerrar" title="Cerrar">
+                ✕
+              </button>
             </div>
 
-            <div className="sc-infoItem">
-              <div className="sc-infoLabel">Subclasificación</div>
-              <div className="sc-infoValue">{datosZonaSeleccionada.subclasificacion || "-"}</div>
-            </div>
+            <div className="sc-modalBody">
+              <div className="sc-formGrid">
+                <div className="sc-field">
+                  <label className="sc-label">Dato</label>
+                  <input
+                    className="sc-input"
+                    type="text"
+                    value={texto}
+                    onChange={(e) => setTexto(e.target.value)}
+                    placeholder="Ej: Hípico"
+                  />
+                </div>
 
-            <div className="sc-infoItem sc-span2">
-              <div className="sc-infoLabel">Descripción</div>
-              <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
-            </div>
+                <div className="sc-field">
+                  <label className="sc-label">Subclasificación</label>
+                  <select className="sc-select" value={subclasificacion} onChange={(e) => setSubclasificacion(e.target.value)}>
+                    <option value="">Selecciona una opción</option>
+                    {opcionesSubclasificacion.map((opcion, index) => (
+                      <option key={index} value={opcion}>
+                        {opcion}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div className="sc-infoItem sc-span2">
-              <div className="sc-infoLabel">Capa</div>
-              <div className="sc-infoValue">
-                {datosZonaSeleccionada.capa || nombreCapaSeleccionada || "-"}
+                <div className="sc-field sc-span2">
+                  <label className="sc-label">Descripción</label>
+                  <input
+                    className="sc-input"
+                    type="text"
+                    value={descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                    placeholder="Breve descripción…"
+                  />
+                </div>
+              </div>
+
+              <div className="sc-hint">
+                Se guardará asociado a <b>{nombreCapaSeleccionada}</b> con ID <b>{idSeleccionado}</b>.
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="sc-emptyState">
-            <div className="sc-emptyTitle">Sin información cargada</div>
-            <div className="sc-emptyText">
-              Todavía no hay datos guardados para esta zona.
+
+            <div className="sc-modalFooter">
+              <button
+                className="sc-btn sc-btnGhost"
+                onClick={() => {
+                  setModalAbierto(false);
+                  setModalDetalleAbierto(true);
+                }}
+              >
+                Volver
+              </button>
+
+              <button
+                className="sc-btn sc-btnPrimary"
+                onClick={async () => {
+                  await serviciolotes.guardarpoligono({
+                    id_mapa: idSeleccionado,
+                    dato1: texto,
+                    descripcion,
+                    subclasificacion,
+                    capa: nombreCapaSeleccionada,
+                  });
+
+                  const nuevos = await serviciolotes.poligonosguardados();
+                  setPoligonosGuardados(nuevos);
+
+                  const actualizado = nuevos.find((p) => String(p.id_mapa) === String(idSeleccionado)) || null;
+                  setDatosZonaSeleccionada(actualizado);
+
+                  setModalAbierto(false);
+                  setModalDetalleAbierto(true);
+                }}
+              >
+                Guardar cambios
+              </button>
             </div>
           </div>
-        )}
-      </div>
-
-      <div className="sc-modalFooter">
-        <button className="sc-btn sc-btnGhost" onClick={() => setModalDetalleAbierto(false)}>
-          Cerrar
-        </button>
-
-        <button
-          className="sc-btn sc-btnPrimary"
-          onClick={() => {
-            setModalDetalleAbierto(false);
-            setModalAbierto(true);
-          }}
-        >
-          Agregar / Editar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-{/* ✅ MODAL EDICIÓN (tu modal original, pero más lindo) */}
-{modalAbierto && (
-  <div className="sc-modalOverlay" onClick={() => setModalAbierto(false)}>
-    <div className="sc-modalCard" onClick={(e) => e.stopPropagation()}>
-      <div className="sc-modalHeader">
-        <div>
-          <div className="sc-modalTitle">Agregar / Editar información</div>
-          <div className="sc-modalSubtitle">
-            <span className="sc-badge">ID {idSeleccionado}</span>
-            <span className="sc-dot">•</span>
-            <span className="sc-muted">{nombreCapaSeleccionada || "Capa"}</span>
-          </div>
         </div>
-
-        <button
-          className="sc-iconBtn"
-          onClick={() => setModalAbierto(false)}
-          aria-label="Cerrar"
-          title="Cerrar"
-        >
-          ✕
-        </button>
-      </div>
-
-      <div className="sc-modalBody">
-        <div className="sc-formGrid">
-          <div className="sc-field">
-            <label className="sc-label">Dato</label>
-            <input
-              className="sc-input"
-              type="text"
-              value={texto}
-              onChange={(e) => setTexto(e.target.value)}
-              placeholder="Ej: Hípico"
-            />
-          </div>
-
-          <div className="sc-field">
-            <label className="sc-label">Subclasificación</label>
-            <select
-              className="sc-select"
-              value={subclasificacion}
-              onChange={(e) => setSubclasificacion(e.target.value)}
-            >
-              <option value="">Selecciona una opción</option>
-              {opcionesSubclasificacion.map((opcion, index) => (
-                <option key={index} value={opcion}>
-                  {opcion}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="sc-field sc-span2">
-            <label className="sc-label">Descripción</label>
-            <input
-              className="sc-input"
-              type="text"
-              value={descripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
-              placeholder="Breve descripción…"
-            />
-          </div>
-        </div>
-
-        <div className="sc-hint">
-          Se guardará asociado a <b>{nombreCapaSeleccionada}</b> con ID <b>{idSeleccionado}</b>.
-        </div>
-      </div>
-
-      <div className="sc-modalFooter">
-        <button
-          className="sc-btn sc-btnGhost"
-          onClick={() => {
-            setModalAbierto(false);
-            setModalDetalleAbierto(true);
-          }}
-        >
-          Volver
-        </button>
-
-        <button
-          className="sc-btn sc-btnPrimary"
-          onClick={async () => {
-            await serviciolotes.guardarpoligono({
-              id_mapa: idSeleccionado,
-              dato1: texto,
-              descripcion,
-              subclasificacion,
-              capa: nombreCapaSeleccionada,
-            });
-
-            const nuevos = await serviciolotes.poligonosguardados();
-            setPoligonosGuardados(nuevos);
-
-            const actualizado =
-              nuevos.find((p) => String(p.id_mapa) === String(idSeleccionado)) || null;
-            setDatosZonaSeleccionada(actualizado);
-
-            setModalAbierto(false);
-            setModalDetalleAbierto(true);
-          }}
-        >
-          Guardar cambios
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 };
