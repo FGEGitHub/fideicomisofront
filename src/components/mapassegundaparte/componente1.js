@@ -15,7 +15,12 @@ const MapaConCapas = () => {
         "Barrios": false,
         "Planificación Sección Sur": false,
         "Zonificación Sta Catalina": false,
-        "ZRU Predios La Caja": false
+        "ZRU Predios La Caja": false,
+        "area1": false,
+        "area2": false,
+        "area3": false,
+        "area4": false,
+
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -179,6 +184,37 @@ const MapaConCapas = () => {
             .then((r) => r.json())
             .then((data) => {
                 setGeojsonData(prev => ({ ...prev, "Barrios": data }));
+            })
+            .catch(console.error);
+//////cargar areas nuevas
+        // Cargar barrios
+        fetch("/area1.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                setGeojsonData(prev => ({ ...prev, "area1": data }));
+            })
+            .catch(console.error);
+
+
+ fetch("/area2.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                setGeojsonData(prev => ({ ...prev, "area2": data }));
+            })
+            .catch(console.error);
+
+
+ fetch("/area3.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                setGeojsonData(prev => ({ ...prev, "area3": data }));
+            })
+            .catch(console.error);
+
+             fetch("/area4.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                setGeojsonData(prev => ({ ...prev, "area4": data }));
             })
             .catch(console.error);
 
@@ -495,6 +531,38 @@ ${poligonoDB.dato1}
                     />
                         <strong>ZRU Predios La Caja</strong></label>
                 </div>
+                    <div className="capa-principal">
+                    <label> <input
+                        type="checkbox"
+                        checked={!!capasActivas["area1"]}
+                        onChange={() => toggleCapaPrincipal("area1")}
+                    />
+                        <strong>area1</strong></label>
+                </div>
+                 <div className="capa-principal">
+                    <label> <input
+                        type="checkbox"
+                        checked={!!capasActivas["area2"]}
+                        onChange={() => toggleCapaPrincipal("area2")}
+                    />
+                        <strong>area2</strong></label>
+                </div>
+                 <div className="capa-principal">
+                    <label> <input
+                        type="checkbox"
+                        checked={!!capasActivas["area3"]}
+                        onChange={() => toggleCapaPrincipal("area3")}
+                    />
+                        <strong>area3</strong></label>
+                </div>
+                 <div className="capa-principal">
+                    <label> <input
+                        type="checkbox"
+                        checked={!!capasActivas["area4"]}
+                        onChange={() => toggleCapaPrincipal("area4")}
+                    />
+                        <strong>area4</strong></label>
+                </div>
                 <hr />
                 <div className="capa-principal">
                     <label>  <input
@@ -573,14 +641,14 @@ ${poligonoDB.dato1}
 
                             let fillColor = "white"; // color por defecto
                             let fillOpacity = 0.2;   // opacidad por defecto
- if (id === 5347) {
-    return {
-      fillColor: "yellow",
-      color: "red",
-      weight: 3,
-      fillOpacity: 1,
-    };
-  }
+                            if (id === 5347) {
+                                return {
+                                    fillColor: "yellow",
+                                    color: "red",
+                                    weight: 3,
+                                    fillOpacity: 1,
+                                };
+                            }
                             if (poligono) {
                                 const sub = poligono.subclasificacion;
                                 fillColor = coloresPorSubclasificacion[sub] || "gray";
@@ -781,7 +849,22 @@ ${poligonoDB.dato1}
                         />
                     )
                 ))}
-
+{/* Renderizar Areas nuevas */}
+{["area1", "area2", "area3", "area4"].map(nombre => (
+  capasActivas[nombre] && geojsonData[nombre] && (
+    <GeoJSON
+      key={nombre}
+      data={geojsonData[nombre]}
+      style={{
+        fillColor: "transparent",
+        color: "purple",
+        weight: 2,
+        fillOpacity: 0.2
+      }}
+      onEachFeature={onEachFeature}
+    />
+  )
+))}
             </MapContainer>
             {modalAbierto && (
                 <div className="modal-overlay" onClick={() => setModalAbierto(false)}>
