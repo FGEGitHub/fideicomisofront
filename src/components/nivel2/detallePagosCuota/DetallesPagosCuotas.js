@@ -17,6 +17,8 @@ import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
 import PictureAsPdfRoundedIcon from "@mui/icons-material/PictureAsPdfRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import TableRowsRoundedIcon from "@mui/icons-material/TableRowsRounded";
+import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
+import Tooltip from "@mui/material/Tooltip";
 
 
 
@@ -275,30 +277,38 @@ export default function DetallesPagos(props) {
         );
     }
     function borrarcomp(index, rowIndex, data) {
-
         return (
             <>
-
-                {pagos[index].ubicacion == null ? "Sin comprobante" : <Borrarcomp
-                    id={pagos[index].id}
-                    getData={async () => {
-                        const aux = {
-                            id: id
-                        }
-                        const pag = await servicioPagos.detallesPago(aux)
-
-                        setPagos(pag)
-
-
-
-
-                    }} />}
-
-
-
+                {pagos[index].ubicacion == null ? (
+                    <Tooltip title="Pago sin comprobante">
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                            <ErrorOutlineRoundedIcon style={{ color: "#f9a825" }} />
+                            <Typography
+                                sx={{
+                                    fontWeight: 800,
+                                    color: "#f9a825",
+                                    fontSize: 13,
+                                    whiteSpace: "nowrap",
+                                }}
+                            >
+                                Sin comprobante
+                            </Typography>
+                        </Box>
+                    </Tooltip>
+                ) : (
+                    <Borrarcomp
+                        id={pagos[index].id}
+                        getData={async () => {
+                            const aux = { id: id };
+                            const pag = await servicioPagos.detallesPago(aux);
+                            setPagos(pag);
+                        }}
+                    />
+                )}
             </>
         );
     }
+
 
 
     function monto(index, rowIndex, data) {

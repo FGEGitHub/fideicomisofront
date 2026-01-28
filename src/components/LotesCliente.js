@@ -104,9 +104,9 @@ const LotesCliente = (props) => {
   const [vista1, setVista1] = useState(false);
   const [cargalink, setCargalink] = useState(false);
   const [verDetalles, setVerDetalles] = useState(false);
-const [openCompensar, setOpenCompensar] = useState(false);
-const [cuotaOrigen, setCuotaOrigen] = useState(null);
-const [cuotaCompensada, setCuotaCompensada] = useState("");
+  const [openCompensar, setOpenCompensar] = useState(false);
+  const [cuotaOrigen, setCuotaOrigen] = useState(null);
+  const [cuotaCompensada, setCuotaCompensada] = useState("");
   const toggleDetalles = () => setVerDetalles(!verDetalles);
 
   const vercuotas = async (index) => {
@@ -118,32 +118,32 @@ const [cuotaCompensada, setCuotaCompensada] = useState("");
     setOpen(false);
   };
 
-const abrirCompensar = (id_cuota) => {
-  setCuotaOrigen(id_cuota);
-  setCuotaCompensada("");
-  setOpenCompensar(true);
-};
+  const abrirCompensar = (id_cuota) => {
+    setCuotaOrigen(id_cuota);
+    setCuotaCompensada("");
+    setOpenCompensar(true);
+  };
 
-const cerrarCompensar = () => {
-  setOpenCompensar(false);
-};
-const confirmarCompensar = async () => {
-  if (!cuotaCompensada) return alert("Seleccione una cuota");
+  const cerrarCompensar = () => {
+    setOpenCompensar(false);
+  };
+  const confirmarCompensar = async () => {
+    if (!cuotaCompensada) return alert("Seleccione una cuota");
 
-  const rta = await servicioCuotas.compensar({
-    id_compensada: cuotaCompensada,
-    id_dedonde: cuotaOrigen
-  });
+    const rta = await servicioCuotas.compensar({
+      id_compensada: cuotaCompensada,
+      id_dedonde: cuotaOrigen
+    });
 
-  alert(rta);
+    alert(rta);
 
-  // refresca tabla
-  const cuotasActualizadas = await servicioCuotas.vercuotas(idlote);
-  setCuotas(cuotasActualizadas);
-  verief(idlote);
+    // refresca tabla
+    const cuotasActualizadas = await servicioCuotas.vercuotas(idlote);
+    setCuotas(cuotasActualizadas);
+    verief(idlote);
 
-  setOpenCompensar(false);
-};
+    setOpenCompensar(false);
+  };
   const handleChangeratio = (event) => setSelectedValue(event.target.value);
 
   const verief = async (index) => {
@@ -180,10 +180,10 @@ const confirmarCompensar = async () => {
     const dde = await servicio360.crearsolicituddebito({ id_cuota: index });
     alert(dde);
   };
-const obtenerCuotaCompensadora = (idCompensada) => {
-  if (!idCompensada || idCompensada === "No") return null;
-  return cuotas?.find((c) => c.id === Number(idCompensada));
-};
+  const obtenerCuotaCompensadora = (idCompensada) => {
+    if (!idCompensada || idCompensada === "No") return null;
+    return cuotas?.find((c) => c.id === Number(idCompensada));
+  };
 
   function saldoReal(dataIndex) {
     return (
@@ -455,6 +455,7 @@ const obtenerCuotaCompensadora = (idCompensada) => {
     '&:hover': { backgroundColor: '#014a6b' }
   };
 
+
   const sxBtnAccent = {
     px: 2.2,
     py: 1.1,
@@ -466,7 +467,16 @@ const obtenerCuotaCompensadora = (idCompensada) => {
     "&:hover": { backgroundColor: "#0f7a7a" },
   };
 
-
+  const sxBtnDanger = {
+    px: 2.2,
+    py: 1.1,
+    borderRadius: 2,
+    textTransform: "none",
+    fontWeight: 900,
+    backgroundColor: "#d32f2f",
+    boxShadow: "0 10px 25px rgba(211,47,47,0.22)",
+    "&:hover": { backgroundColor: "#b71c1c" },
+  };
   return (
     <Fragment>
       <Box sx={{ width: "100%", maxWidth: "100%", minWidth: 0 }}>
@@ -477,16 +487,11 @@ const obtenerCuotaCompensadora = (idCompensada) => {
           <Box sx={sxHeader}>
             <Box>
               <Typography sx={sxTitle}>CUADRO DE CUOTAS</Typography>
-              <Typography sx={sxSub}>
-                Seleccioná un lote para ver sus cuotas.
-              </Typography>
+              <Typography sx={sxSub}>Seleccioná un lote para ver sus cuotas.</Typography>
             </Box>
 
-            {/* (Opcional) chip registros, no agrega info extra */}
             <Chip
-              label={`Registros: ${Array.isArray(cuotas) && cuotas.length > 0 && cuotas[0] !== ""
-                ? cuotas.length
-                : 0
+              label={`Registros: ${Array.isArray(cuotas) && cuotas.length > 0 && cuotas[0] !== "" ? cuotas.length : 0
                 }`}
               sx={{
                 fontWeight: 900,
@@ -517,8 +522,7 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                           }`}
                         onClick={() => vercuotas(item.id)}
                       >
-                        Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela:{" "}
-                        {item.parcela}
+                        Fraccion: {item.fraccion} - Manzana: {item.manzana} - Parcela: {item.parcela}
                         {item.tiene_cuotas === "Si" ? " - Cuotas" : ""}
                       </MenuItem>
                     ))}
@@ -527,12 +531,7 @@ const obtenerCuotaCompensadora = (idCompensada) => {
 
                 <Box sx={{ flex: 1 }} />
 
-                {/* Botón que YA EXISTE en tu vista */}
-                {act ? (
-                  <Button variant="contained" sx={sxBtnPrimary} onClick={toggleDetalles}>
-                    {verDetalles ? "Restaurar" : "Ver interés"}
-                  </Button>
-                ) : null}
+                {/* ✅ BOTÓN MOVIDO: ya NO va acá */}
               </Box>
             ) : null}
 
@@ -670,7 +669,6 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                   pt: 1,
                 }}
               >
-
                 <Button
                   variant="contained"
                   sx={sxBtnPrimary}
@@ -698,11 +696,9 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                       }}
                     />
                   )}
-
-
                 </Box>
-
               </Box>
+
               <Fab
                 variant="extended"
                 onClick={() => {
@@ -721,8 +717,16 @@ const obtenerCuotaCompensadora = (idCompensada) => {
               >
                 Imprimir comprobante
               </Fab>
-            </Box>
 
+              {/* ✅✅ BOTÓN REUBICADO: abajo de imprimir comprobante y arriba de la tabla */}
+              {act ? (
+                <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+                  <Button variant="contained" sx={sxBtnDanger} onClick={toggleDetalles}>
+                    {verDetalles ? "Restaurar" : "Ver interés"}
+                  </Button>
+                </Box>
+              ) : null}
+            </Box>
           </Paper>
         ) : null}
 
@@ -759,25 +763,26 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                 <Table stickyHeader sx={{ minWidth: 1200 }}>
                   <TableHead>
                     <TableRow>
-                      <StyledTableCell>Fecha</StyledTableCell>
-                      {verDetalles && <StyledTableCell>Saldo inicial</StyledTableCell>}
-                      <StyledTableCell>Amortización</StyledTableCell>
+                      <StyledTableCell>FECHA</StyledTableCell>
+                      {verDetalles && <StyledTableCell>SALDO INICIAL</StyledTableCell>}
+                      <StyledTableCell>AMORTIZACIÓN</StyledTableCell>
                       <StyledTableCell>ICC</StyledTableCell>
-                      <StyledTableCell>Ajuste ICC</StyledTableCell>
-                      <StyledTableCell>Cuota con ajuste</StyledTableCell>
-                      {verDetalles && <StyledTableCell>Saldo al cierre</StyledTableCell>}
-                      <StyledTableCell>Pago</StyledTableCell>
-                      <StyledTableCell>Diferencia</StyledTableCell>
-                      <StyledTableCell>Saldo real</StyledTableCell>
-                      <StyledTableCell>Pagar / Ver pago</StyledTableCell>
-                      {verDetalles && <StyledTableCell>Interés</StyledTableCell>}
+                      <StyledTableCell>AJUSTE ICC</StyledTableCell>
+                      <StyledTableCell>CUOTA CON AJUSTE</StyledTableCell>
+                      {verDetalles && <StyledTableCell>SALDO AL CIERRE</StyledTableCell>}
+                      <StyledTableCell>PAGO</StyledTableCell>
+                      <StyledTableCell>DIFERENCIA</StyledTableCell>
+                      <StyledTableCell>SALDO REAL</StyledTableCell>
+                      <StyledTableCell>PAGAR</StyledTableCell>
+                      <StyledTableCell>DETALLE DE PAGOS</StyledTableCell>
+                      {verDetalles && <StyledTableCell>INTERÉS</StyledTableCell>}
+
                     </TableRow>
                   </TableHead>
 
                   <TableBody>
                     {cuotas.map((row) => (
                       <StyledTableRow key={row.id}>
-                        {/* --- TU MISMA LÓGICA DE CELDAS (no la toqué) --- */}
                         <StyledTableCell>
                           {row.mes < 10 ? `0${row.mes}` : row.mes}/{row.anio}
                         </StyledTableCell>
@@ -841,82 +846,73 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                             : `$ ${new Intl.NumberFormat("de-DE").format(row.pago)}`}
                         </StyledTableCell>
 
+                        {/* --- tu bloque de diferencia completo --- */}
                         <StyledTableCell>
-  {row.id >= parseInt(row.cuota_cancelada) ? (
-    "—"
-  ) : (
-    <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            "—"
+                          ) : (
+                            <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
+                              <Typography
+                                component="span"
+                                sx={{
+                                  fontWeight: 900,
+                                  whiteSpace: "nowrap",
+                                  color:
+                                    row.diferencia < 0
+                                      ? row.diferencia === -row.cuota_con_ajuste
+                                        ? "#d32f2f"
+                                        : "#0a3b4f"
+                                      : "#148D8D",
+                                }}
+                              >
+                                {new Intl.NumberFormat("de-DE").format(row.diferencia)}
+                              </Typography>
 
-      {/* Número principal */}
-      <Typography
-        component="span"
-        sx={{
-          fontWeight: 900,
-          whiteSpace: "nowrap",
-          color:
-            row.diferencia < 0
-              ? row.diferencia === -row.cuota_con_ajuste
-                ? "#d32f2f"
-                : "#0a3b4f"
-              : "#148D8D",
-        }}
-      >
-        {new Intl.NumberFormat("de-DE").format(row.diferencia)}
-      </Typography>
+                              {row.diferencia < 0 &&
+                                row.compensada &&
+                                row.compensada !== "No" &&
+                                (() => {
+                                  const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
 
-      {/* Texto (Compensada) */}
-{row.diferencia < 0 && row.compensada && row.compensada !== "No" && (() => {
+                                  return (
+                                    <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
+                                      <Typography
+                                        sx={{
+                                          fontSize: "0.72rem",
+                                          fontWeight: 700,
+                                          color: "#555",
+                                          whiteSpace: "nowrap",
+                                        }}
+                                      >
+                                        Pagada
+                                        {cuotaOrigen &&
+                                          ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio
+                                          }`}
+                                      </Typography>
 
-  const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
+                                      {row.fecha_compensada && (
+                                        <Typography
+                                          sx={{
+                                            fontSize: "0.68rem",
+                                            color: "#888",
+                                            whiteSpace: "nowrap",
+                                          }}
+                                        >
+                                          {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
+                                        </Typography>
+                                      )}
+                                    </Box>
+                                  );
+                                })()}
 
-  return (
-    <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
-      
-      {/* Línea 1: Compensada + cuota */}
-      <Typography
-        sx={{
-          fontSize: "0.72rem",
-          fontWeight: 700,
-          color: "#555",
-          whiteSpace: "nowrap",
-        }}
-      >
-        Pagada
-        {cuotaOrigen &&
-          ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
-      </Typography>
-
-      {/* Línea 2: Fecha */}
-      {row.fecha_compensada && (
-        <Typography
-          sx={{
-            fontSize: "0.68rem",
-            color: "#888",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
-        </Typography>
-      )}
-    </Box>
-  );
-})()}
-
-
-      {/* Ícono comprobante */}
-      {row.comprobante === "Sin comprobante" && (
-        <Tooltip title="Pago sin comprobante">
-          <ErrorOutlineIcon
-            sx={{ ml: 0.7 }}
-            color="warning"
-            fontSize="small"
-          />
-        </Tooltip>
-      )}
-    </Box>
-  )}
-</StyledTableCell>
-
+                              {row.comprobante === "Sin comprobante" && (
+                                <Tooltip title="Pago sin comprobante">
+                                  <ErrorOutlineIcon sx={{ ml: 0.7 }} color="warning" fontSize="small" />
+                                </Tooltip>
+                              )}
+                            </Box>
+                          )}
+                        </StyledTableCell>
 
                         <StyledTableCell>
                           {row.id >= parseInt(row.cuota_cancelada)
@@ -942,34 +938,79 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                                 }}
                               />
 
+
+
+
                               <Button
                                 variant="contained"
                                 size="small"
                                 sx={{
+                                  px: 1.6,
                                   borderRadius: 2,
                                   textTransform: "none",
                                   fontWeight: 900,
-                                  bgcolor: "#0b4f6c",
-                                  boxShadow: "0 10px 25px rgba(11,79,108,0.18)",
-                                  "&:hover": { bgcolor: "#0a3b4f" },
+                                  backgroundColor: "#0f7f86",
+                                  boxShadow: "0 10px 20px rgba(20,141,141,0.18)",
+                                  "&:hover": { backgroundColor: "#0c6b71" },
                                 }}
-                                onClick={() => navigate("/usuario2/pagoscuotas/" + row.id)}
+                                onClick={() => abrirCompensar(row.id)}
                               >
-                                Ver pagos
+                                Compensar
                               </Button>
-<Button
-  variant="outlined"
-  size="small"
-  sx={{
-    borderRadius: 2,
-    fontWeight: 800,
-    textTransform: "none"
-  }}
-  onClick={() => abrirCompensar(row.id)}
->
-  Compensar
-</Button> 
-                              {verDetalles && (
+
+                            </Box>
+                          )}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {row.id >= parseInt(row.cuota_cancelada) ? (
+                            "—"
+                          ) : (
+                            <Button
+                              variant="contained"
+                              size="small"
+                              sx={{
+                                borderRadius: 2,
+                                textTransform: "none",
+                                fontWeight: 900,
+                                bgcolor: "#0b4f6c",
+                                boxShadow: "0 10px 25px rgba(11,79,108,0.18)",
+                                "&:hover": { bgcolor: "#0a3b4f" },
+                              }}
+                              onClick={() => navigate("/usuario2/pagoscuotas/" + row.id)}
+                            >
+                              Ver pagos
+                            </Button>
+                          )}
+                        </StyledTableCell>
+
+                        {verDetalles && (
+                          <StyledTableCell>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                gap: 1,
+                              }}
+                            >
+                              {/* Texto/valor como lo tenías */}
+                              <Typography
+                                component="b"
+                                sx={{
+                                  fontWeight: 900,
+                                  color: "#0b2b3a",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {row.pago_interes == undefined
+                                  ? "$" + new Intl.NumberFormat("de-DE").format(row.interes)
+                                  : row.pago_interes == "diferencia minima"
+                                    ? row.pago_interes
+                                    : "pagado"}
+                              </Typography>
+
+                              {/* ✅ Botón SOLO cuando corresponde pagar interés */}
+                              {row.pago_interes == undefined && (
                                 <Pagointeres
                                   id_interes={row.id}
                                   cuil_cuit={cuil_cuit}
@@ -983,65 +1024,186 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                                 />
                               )}
                             </Box>
-                          )}
-                        </StyledTableCell>
-
-                        {verDetalles && (
-                          <StyledTableCell>
-                            <b>
-                              {row.pago_interes == undefined
-                                ? "$" + new Intl.NumberFormat("de-DE").format(row.interes)
-                                : row.pago_interes == "diferencia minima"
-                                  ? row.pago_interes
-                                  : "pagado"}
-                            </b>
                           </StyledTableCell>
                         )}
+
                       </StyledTableRow>
                     ))}
                   </TableBody>
                 </Table>
-
               )}
-
             </TableContainer>
-
           </Paper>
         ) : null}
       </Box>
-<Dialog open={openCompensar} onClose={cerrarCompensar} maxWidth="sm" fullWidth>
-  <DialogTitle>Compensar cuota</DialogTitle>
 
-  <DialogContent dividers>
+     <Dialog
+  open={openCompensar}
+  onClose={cerrarCompensar}
+  maxWidth="sm"
+  fullWidth
+  PaperProps={{
+    sx: {
+      borderRadius: 4,
+      overflow: "hidden",
+      
+      background: "rgba(255,255,255,0.94)",
+      backdropFilter: "blur(10px)",
+      boxShadow: "0 28px 80px rgba(0,0,0,0.28)",
+    },
+  }}
+  BackdropProps={{
+    sx: {
+      backgroundColor: "rgba(0,0,0,0.55)",
+      backdropFilter: "blur(6px)",
+    },
+  }}
+>
+  <DialogTitle
+    sx={{
+      px: 3,
+      py: 2.2,
+      color: "#fff",
+      fontWeight: 900,
+      letterSpacing: 0.2,
+      background:
+        "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+      textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+    }}
+  >
+    Compensar cuota
+  </DialogTitle>
 
-    <FormControl fullWidth size="small">
+  <DialogContent
+    dividers
+    sx={{
+      px: 3,
+      py: 2.5,
+      background:
+        "linear-gradient(180deg, rgba(20,141,141,0.06) 0%, rgba(255,255,255,0.96) 55%, #fff 100%)",
+      borderColor: alpha("#0b4f6c", 0.10),
+    }}
+  >
+    <FormControl
+      fullWidth
+      size="small"
+      sx={{
+        "& .MuiInputLabel-root": {
+          color: alpha("#0b4f6c", 0.85),
+          fontWeight: 900,
+        },
+        "& .MuiOutlinedInput-root": {
+          borderRadius: 2,
+          background: "rgba(255,255,255,0.92)",
+          boxShadow: "0 12px 22px rgba(11,79,108,0.10)",
+          "& fieldset": { borderColor: alpha("#0b4f6c", 0.18) },
+          "&:hover fieldset": { borderColor: alpha("#0b4f6c", 0.35) },
+          "&.Mui-focused fieldset": {
+            borderColor: "#148D8D",
+            borderWidth: 2,
+          },
+        },
+      }}
+    >
       <InputLabel>Seleccione cuota destino</InputLabel>
 
       <Select
         label="Seleccione cuota destino"
         value={cuotaCompensada}
         onChange={(e) => setCuotaCompensada(e.target.value)}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              borderRadius: 2,
+              mt: 1,
+              border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
+              boxShadow: "0 18px 45px rgba(0,0,0,0.14)",
+              overflow: "hidden",
+            },
+          },
+        }}
       >
         {Array.isArray(cuotas) &&
-  cuotas
-    .filter(c => c && c.id && c.id !== cuotaOrigen) 
-    .map((c) => (
-      <MenuItem key={c.id} value={c.id}>
-        {`${String(c.mes).padStart(2, "0")}/${c.anio}  -  Diferencia: ${new Intl.NumberFormat("de-DE").format(c.diferencia)}`}
-      </MenuItem>
-    ))
-}
+          cuotas
+            .filter((c) => c && c.id && c.id !== cuotaOrigen)
+            .map((c) => (
+              <MenuItem
+                key={c.id}
+                value={c.id}
+                sx={{
+                  fontWeight: 850,
+                  color: "#0b2b3a",
+                  "&.Mui-selected": {
+                    backgroundColor: alpha("#148D8D", 0.12),
+                  },
+                  "&.Mui-selected:hover": {
+                    backgroundColor: alpha("#148D8D", 0.16),
+                  },
+                }}
+              >
+                {`${String(c.mes).padStart(2, "0")}/${c.anio}  -  Diferencia: ${new Intl.NumberFormat(
+                  "de-DE"
+                ).format(c.diferencia)}`}
+              </MenuItem>
+            ))}
       </Select>
-    </FormControl>
 
+      <Typography
+        sx={{
+          mt: 1.2,
+          fontSize: 12.5,
+          fontWeight: 750,
+          color: alpha("#0b4f6c", 0.75),
+        }}
+      >
+        Seleccioná la cuota destino para compensar la cuota elegida.
+      </Typography>
+    </FormControl>
   </DialogContent>
 
-  <DialogActions>
-    <Button onClick={cerrarCompensar}>Cancelar</Button>
+  <DialogActions
+    sx={{
+      px: 3,
+      py: 2,
+      backgroundColor: "rgba(255,255,255,0.92)",
+      borderTop: `1px solid ${alpha("#0b4f6c", 0.10)}`,
+      gap: 1,
+    }}
+  >
+    <Button
+      onClick={cerrarCompensar}
+      variant="outlined"
+      sx={{
+        borderRadius: 2,
+        textTransform: "none",
+        fontWeight: 900,
+        px: 2.2,
+        py: 1.05,
+        borderColor: alpha("#0b4f6c", 0.35),
+        color: "#0b4f6c",
+        "&:hover": {
+          borderColor: alpha("#0b4f6c", 0.55),
+          backgroundColor: alpha("#0b4f6c", 0.06),
+        },
+      }}
+    >
+      Cancelar
+    </Button>
 
     <Button
       variant="contained"
-      sx={{ fontWeight: 900 }}
+      sx={{
+        fontWeight: 900,
+        borderRadius: 2,
+        textTransform: "none",
+        px: 2.2,
+        py: 1.05,
+        background: "linear-gradient(135deg, #148D8D 0%, #01567c 100%)",
+        boxShadow: "0 12px 26px rgba(1,86,124,0.22)",
+        "&:hover": {
+          background: "linear-gradient(135deg, #0f7a7a 0%, #014a6b 100%)",
+        },
+      }}
       onClick={confirmarCompensar}
     >
       Aceptar
@@ -1051,5 +1213,6 @@ const obtenerCuotaCompensadora = (idCompensada) => {
 
     </Fragment>
   );
+
 };
 export default LotesCliente;

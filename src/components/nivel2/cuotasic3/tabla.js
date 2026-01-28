@@ -75,8 +75,8 @@ const Lotes = (props) => {
   const [selectedClient, setSelectedClient] = useState(null);
   const [showCuotas, setShowCuotas] = useState(false);
   const [openCompensar, setOpenCompensar] = useState(false);
-const [cuotaOrigen, setCuotaOrigen] = useState(null);
-const [cuotaCompensada, setCuotaCompensada] = useState("");
+  const [cuotaOrigen, setCuotaOrigen] = useState(null);
+  const [cuotaCompensada, setCuotaCompensada] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,42 +92,42 @@ const [cuotaCompensada, setCuotaCompensada] = useState("");
     setUniqueClients(clients);
     setLoading(false);
   };
-const abrirCompensar = (id_cuota) => {
-  setCuotaOrigen(id_cuota);
-  setCuotaCompensada("");
-  setOpenCompensar(true);
-};
+  const abrirCompensar = (id_cuota) => {
+    setCuotaOrigen(id_cuota);
+    setCuotaCompensada("");
+    setOpenCompensar(true);
+  };
 
-const cerrarCompensar = () => {
-  setOpenCompensar(false);
-};
-const confirmarCompensar = async () => {
-  if (!cuotaCompensada) return alert("Seleccione una cuota");
+  const cerrarCompensar = () => {
+    setOpenCompensar(false);
+  };
+  const confirmarCompensar = async () => {
+    if (!cuotaCompensada) return alert("Seleccione una cuota");
 
-  const rta = await servicioCuotas.compensaric3({
-    id_compensada: cuotaCompensada,
-    id_dedonde: cuotaOrigen
-  });
+    const rta = await servicioCuotas.compensaric3({
+      id_compensada: cuotaCompensada,
+      id_dedonde: cuotaOrigen
+    });
 
-  alert(rta);
+    alert(rta);
 
-  // 🔄 refrescar tabla
-  const response = await servicioCuotas.traercuotasic3(props.cuil_cuit);
-  setCuotas(response);
+    // 🔄 refrescar tabla
+    const response = await servicioCuotas.traercuotasic3(props.cuil_cuit);
+    setCuotas(response);
 
-  if (selectedClient === null) {
-    setFilteredCuotas(response);
-  } else {
-    const nuevas = response.filter(c => c.id_cliente === selectedClient);
-    setFilteredCuotas(nuevas);
-  }
+    if (selectedClient === null) {
+      setFilteredCuotas(response);
+    } else {
+      const nuevas = response.filter(c => c.id_cliente === selectedClient);
+      setFilteredCuotas(nuevas);
+    }
 
-  setOpenCompensar(false);
-};
-const obtenerCuotaCompensadora = (idCompensada) => {
-  if (!idCompensada || idCompensada === "No") return null;
-  return cuotas?.find((c) => c.id === Number(idCompensada));
-};
+    setOpenCompensar(false);
+  };
+  const obtenerCuotaCompensadora = (idCompensada) => {
+    if (!idCompensada || idCompensada === "No") return null;
+    return cuotas?.find((c) => c.id === Number(idCompensada));
+  };
 
   const handleClientFilter = (id_cliente) => {
     console.log("Filtrando por id_cliente:", id_cliente);
@@ -505,7 +505,9 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                             <StyledTableCell sx={{ width: "10%" }}><b>SALDO FINAL</b></StyledTableCell>
                             <StyledTableCell sx={{ width: "10%" }}><b>SALDO REAL</b></StyledTableCell>
                             <StyledTableCell sx={{ width: "10%" }}><b>DIFERENCIA</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>PAGAR / VER PAGO</b></StyledTableCell>
+                            <StyledTableCell sx={{ width: "12%" }}><b>PAGAR</b></StyledTableCell>
+                            <StyledTableCell sx={{ width: "10%" }}><b>DETALLE DE PAGOS</b></StyledTableCell>
+
                           </TableRow>
                         </TableHead>
 
@@ -551,74 +553,75 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                                 </span>
                               </StyledTableCell>
 
-                             <StyledTableCell>
-  {row.excedente < 0 ? (
-    <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
-      
-      {/* Número negativo */}
-      <Typography
-        sx={{
-          m: 0,
-          fontWeight: 900,
-          color: "crimson",
-          whiteSpace: "nowrap"
-        }}
-      >
-        {new Intl.NumberFormat("de-DE").format(row.excedente)}
-      </Typography>
+                              <StyledTableCell>
+                                {row.excedente < 0 ? (
+                                  <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
 
-      {/* Texto compensada si corresponde */}
-      {row.compensada && row.compensada !== "No" && (() => {
+                                    {/* Número negativo */}
+                                    <Typography
+                                      sx={{
+                                        m: 0,
+                                        fontWeight: 900,
+                                        color: "crimson",
+                                        whiteSpace: "nowrap"
+                                      }}
+                                    >
+                                      {new Intl.NumberFormat("de-DE").format(row.excedente)}
+                                    </Typography>
 
-  const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
+                                    {/* Texto compensada si corresponde */}
+                                    {row.compensada && row.compensada !== "No" && (() => {
 
-  return (
-    <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
-      
-      {/* Línea 1: Compensada + cuota */}
-     <Typography
-            sx={{
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              color: "#555",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Pagada
-            {cuotaOrigen &&
-              ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
-          </Typography>
+                                      const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
 
-      {/* Línea 2: Fecha */}
-      {row.fecha_compensada && (
-        <Typography
-          sx={{
-            fontSize: "0.68rem",
-            color: "#888",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
-        </Typography>
-      )}
-    </Box>
-  );
-})()}
-    </Box>
-  ) : (
-    <Typography
-      sx={{
-        m: 0,
-        fontWeight: 900,
-        color: "#148D8D",
-        whiteSpace: "nowrap"
-      }}
-    >
-      {new Intl.NumberFormat("de-DE").format(row.excedente)}
-    </Typography>
-  )}
-</StyledTableCell>
+                                      return (
+                                        <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
 
+                                          {/* Línea 1: Compensada + cuota */}
+                                          <Typography
+                                            sx={{
+                                              fontSize: "0.72rem",
+                                              fontWeight: 700,
+                                              color: "#555",
+                                              whiteSpace: "nowrap",
+                                            }}
+                                          >
+                                            Pagada
+                                            {cuotaOrigen &&
+                                              ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
+                                          </Typography>
+
+                                          {/* Línea 2: Fecha */}
+                                          {row.fecha_compensada && (
+                                            <Typography
+                                              sx={{
+                                                fontSize: "0.68rem",
+                                                color: "#888",
+                                                whiteSpace: "nowrap",
+                                              }}
+                                            >
+                                              {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
+                                            </Typography>
+                                          )}
+                                        </Box>
+                                      );
+                                    })()}
+                                  </Box>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      m: 0,
+                                      fontWeight: 900,
+                                      color: "#148D8D",
+                                      whiteSpace: "nowrap"
+                                    }}
+                                  >
+                                    {new Intl.NumberFormat("de-DE").format(row.excedente)}
+                                  </Typography>
+                                )}
+                              </StyledTableCell>
+
+                              {/* ✅ Columna 1: PAGAR / COMPENSAR */}
                               <StyledTableCell align="center">
                                 <Box
                                   sx={{
@@ -634,11 +637,14 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                                     sx={{
                                       "& .MuiButtonBase-root": {
                                         borderRadius: 2,
-                                        px: 2,
-                                        py: 0.9,
+                                        px: 1.6,
+                                        py: 0.55,          // ✅ más bajo
+                                        minHeight: 30,     // ✅ altura fija como los otros
+                                        fontSize: "0.82rem",
                                         fontWeight: 900,
                                         textTransform: "none",
                                         boxShadow: "0 10px 18px rgba(0,0,0,0.08)",
+                                        whiteSpace: "nowrap",
                                       },
                                     }}
                                   >
@@ -649,46 +655,52 @@ const obtenerCuotaCompensadora = (idCompensada) => {
                                         const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit);
                                         setCuotas(clients);
                                         setLoading(false);
-                                        if (selectedClient === null) {
-                                          setFilteredCuotas(clients);
-                                        } else {
-                                          console.log("Cuotas antes del filtro:", clients);
-                                          const nuevasCuotas = clients.filter(
-                                            (cuota) => cuota.id_cliente === selectedClient
-                                          );
-                                          console.log("Cuotas después del filtro:", nuevasCuotas);
-                                          setFilteredCuotas(nuevasCuotas);
-                                        }
+                                        if (selectedClient === null) setFilteredCuotas(clients);
+                                        else setFilteredCuotas(clients.filter((cuota) => cuota.id_cliente === selectedClient));
                                       }}
                                     />
                                   </Box>
 
+
                                   <Button
                                     variant="contained"
                                     size="small"
-                                    onClick={() => navigate("/usuario2/pagoscuotasic3/" + row.id)}
                                     sx={{
+                                      px: 1.6,
                                       borderRadius: 2,
-                                      
                                       textTransform: "none",
                                       fontWeight: 900,
-                                      background: "#0b4f6c",
-                                      "&:hover": { background: "#0a3b4f" },
+                                      backgroundColor: "#0f7f86",
+                                      boxShadow: "0 10px 20px rgba(20,141,141,0.18)",
+                                      "&:hover": { backgroundColor: "#0c6b71" },
                                     }}
+                                    onClick={() => abrirCompensar(row.id)}
                                   >
-                                    Ver pagos
+                                    Compensar
                                   </Button>
-                                  <Button
-  variant="outlined"
-  size="small"
-  sx={{ fontWeight: 900, textTransform: "none" }}
-  onClick={() => abrirCompensar(row.id)}
->
-  Compensar
-</Button>
-
                                 </Box>
                               </StyledTableCell>
+
+                              {/* ✅ Columna 2: DETALLE DE PAGOS (solo Ver pagos) */}
+                              <StyledTableCell align="center">
+                                <Button
+                                  variant="contained"
+                                  size="small"
+                                  onClick={() => navigate("/usuario2/pagoscuotasic3/" + row.id)}
+                                  sx={{
+                                    borderRadius: 2,
+                                    textTransform: "none",
+                                    fontWeight: 900,
+                                    background: "#0b4f6c",
+                                    boxShadow: "0 10px 18px rgba(11,79,108,0.16)",
+                                    whiteSpace: "nowrap",
+                                    "&:hover": { background: "#0a3b4f" },
+                                  }}
+                                >
+                                  Ver pagos
+                                </Button>
+                              </StyledTableCell>
+
                             </StyledTableRow>
                           ))}
                         </TableBody>
@@ -705,38 +717,178 @@ const obtenerCuotaCompensadora = (idCompensada) => {
           </>
         )}
       </Paper>
-      <Dialog open={openCompensar} onClose={cerrarCompensar} maxWidth="sm" fullWidth>
-  <DialogTitle>Compensar cuota IC3</DialogTitle>
-
-  <DialogContent dividers>
-    <FormControl fullWidth size="small">
-      <InputLabel>Seleccione cuota destino</InputLabel>
-
-      <Select
-        label="Seleccione cuota destino"
-        value={cuotaCompensada}
-        onChange={(e) => setCuotaCompensada(e.target.value)}
+      <Dialog
+        open={openCompensar}
+        onClose={cerrarCompensar}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            overflow: "hidden",
+           
+            background: "rgba(255,255,255,0.94)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 28px 80px rgba(0,0,0,0.28)",
+          },
+        }}
+        BackdropProps={{
+          sx: {
+            backgroundColor: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(6px)",
+          },
+        }}
       >
-        {Array.isArray(filteredCuotas) &&
-          filteredCuotas
-            .filter(c => c && c.id !== cuotaOrigen)
-            .map(c => (
-              <MenuItem key={c.id} value={c.id}>
-                {`${String(c.mes).padStart(2,"0")}/${c.anio} - Diferencia: ${new Intl.NumberFormat("de-DE").format(c.excedente)}`}
-              </MenuItem>
-            ))
-        }
-      </Select>
-    </FormControl>
-  </DialogContent>
+        <DialogTitle
+          sx={{
+            px: 3,
+            py: 2.2,
+            color: "#fff",
+            fontWeight: 900,
+            letterSpacing: 0.2,
+            background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+            textShadow: "0 2px 10px rgba(0,0,0,0.35)",
+          }}
+        >
+          Compensar cuota IC3
+        </DialogTitle>
 
-  <DialogActions>
-    <Button onClick={cerrarCompensar}>Cancelar</Button>
-    <Button variant="contained" onClick={confirmarCompensar} sx={{ fontWeight: 900 }}>
-      Aceptar
-    </Button>
-  </DialogActions>
-</Dialog>
+        <DialogContent
+          dividers
+          sx={{
+            px: 3,
+            py: 2.5,
+            background:
+              "linear-gradient(180deg, rgba(20,141,141,0.06) 0%, rgba(255,255,255,0.96) 55%, #fff 100%)",
+            borderColor: alpha("#0b4f6c", 0.10),
+          }}
+        >
+          <FormControl
+            fullWidth
+            size="small"
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: alpha("#0b4f6c", 0.85),
+                fontWeight: 900,
+              },
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 2,
+                background: "rgba(255,255,255,0.92)",
+                boxShadow: "0 12px 22px rgba(11,79,108,0.10)",
+                "& fieldset": { borderColor: alpha("#0b4f6c", 0.18) },
+                "&:hover fieldset": { borderColor: alpha("#0b4f6c", 0.35) },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#148D8D",
+                  borderWidth: 2,
+                },
+              },
+            }}
+          >
+            <InputLabel>Seleccione cuota destino</InputLabel>
+
+            <Select
+              label="Seleccione cuota destino"
+              value={cuotaCompensada}
+              onChange={(e) => setCuotaCompensada(e.target.value)}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    borderRadius: 2,
+                    mt: 1,
+                    border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
+                    boxShadow: "0 18px 45px rgba(0,0,0,0.14)",
+                    overflow: "hidden",
+                  },
+                },
+              }}
+            >
+              {Array.isArray(filteredCuotas) &&
+                filteredCuotas
+                  .filter((c) => c && c.id !== cuotaOrigen)
+                  .map((c) => (
+                    <MenuItem
+                      key={c.id}
+                      value={c.id}
+                      sx={{
+                        fontWeight: 850,
+                        color: "#0b2b3a",
+                        "&.Mui-selected": {
+                          backgroundColor: alpha("#148D8D", 0.12),
+                        },
+                        "&.Mui-selected:hover": {
+                          backgroundColor: alpha("#148D8D", 0.16),
+                        },
+                      }}
+                    >
+                      {`${String(c.mes).padStart(2, "0")}/${c.anio} - Diferencia: ${new Intl.NumberFormat(
+                        "de-DE"
+                      ).format(c.excedente)}`}
+                    </MenuItem>
+                  ))}
+            </Select>
+
+            <Typography
+              sx={{
+                mt: 1.2,
+                fontSize: 12.5,
+                fontWeight: 750,
+                color: alpha("#0b4f6c", 0.75),
+              }}
+            >
+              Elegí la cuota destino para compensar la cuota seleccionada.
+            </Typography>
+          </FormControl>
+        </DialogContent>
+
+        <DialogActions
+          sx={{
+            px: 3,
+            py: 2,
+            backgroundColor: "rgba(255,255,255,0.92)",
+            borderTop: `1px solid ${alpha("#0b4f6c", 0.10)}`,
+            gap: 1,
+          }}
+        >
+          <Button
+            onClick={cerrarCompensar}
+            variant="outlined"
+            sx={{
+              borderRadius: 2,
+              textTransform: "none",
+              fontWeight: 900,
+              px: 2.2,
+              py: 1.05,
+              borderColor: alpha("#0b4f6c", 0.35),
+              color: "#0b4f6c",
+              "&:hover": {
+                borderColor: alpha("#0b4f6c", 0.55),
+                backgroundColor: alpha("#0b4f6c", 0.06),
+              },
+            }}
+          >
+            Cancelar
+          </Button>
+
+          <Button
+            variant="contained"
+            onClick={confirmarCompensar}
+            sx={{
+              borderRadius: 2,
+              textTransform: "none",
+              fontWeight: 900,
+              px: 2.2,
+              py: 1.05,
+              background: "linear-gradient(135deg, #148D8D 0%, #01567c 100%)",
+              boxShadow: "0 12px 26px rgba(1,86,124,0.22)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #0f7a7a 0%, #014a6b 100%)",
+              },
+            }}
+          >
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </Box>
   );
