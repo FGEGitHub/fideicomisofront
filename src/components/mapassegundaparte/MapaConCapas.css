@@ -94,44 +94,25 @@ input[type="checkbox"] {
   border-radius: 8px;
 }
 
-.cuadro-referencias {
-  max-height: 400px;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 13px;
-}
 
-.item-referencia {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
-.color-box {
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-  border: 1px solid #000;
-}
-
-.tabla-referencias-flotante {
+.tabla-referencias-flotante{
   position: fixed;
-  top: 20px; /* Subida respecto al top anterior */
+  top: 20px;
   right: 20px;
-  max-height: 85vh;
-  overflow-y: auto;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-size: 13px;
-  width: 340px; /* Más ancho para mostrar los textos */
-  line-height: 1.4;
+
+  /* ✅ NO encierres la card */
+  width: auto;
+  max-height: none;
+
+  /* ✅ dejá que el contenido sea la card */
+  overflow: visible;
+
+  /* un look más limpio */
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 
@@ -361,4 +342,138 @@ input[type="checkbox"] {
     grid-template-columns: 1fr;
   }
   .sc-span2{ grid-column: auto; }
+}
+
+/* =========================
+   REFERENCIAS - CARD MODERNA
+========================= */
+
+.refCard{
+  width: 340px;
+  max-height: 420px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 14px;
+  box-shadow: 0 16px 35px rgba(0,0,0,0.18);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.refCard.isExpanded{
+  width: min(720px, calc(100vw - 320px)); /* 320px para no chocar con panel izquierdo */
+  max-height: 75vh;
+}
+
+.refHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.refHeaderLeft{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.refTitle{
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.refSubtitle{
+  font-size: 11px;
+  color: rgba(0,0,0,0.6);
+}
+
+.refBtn{
+  border: none;
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  white-space: nowrap;
+}
+
+.refBody{
+  padding: 10px;
+  overflow-y: auto;      /* ✅ scroll vertical */
+  overflow-x: hidden;    /* ✅ NUNCA horizontal */
+}
+
+.refRow{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.refRow:hover{
+  background: rgba(0,0,0,0.04);
+}
+
+.refSwatch{
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.35);
+  flex-shrink: 0;        /* ✅ NO se aplasta */
+  margin-top: 2px;
+}
+
+.refText{
+  font-size: 12px;
+  line-height: 1.35;
+
+  /* ✅ wrap real */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
+  /* ✅ CLAVE para que flex pueda achicarse sin cortar feo */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.refSectionTitle{
+  margin-top: 12px;
+  margin-bottom: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.25);
+
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: rgba(0,0,0,0.78);
+}
+.texto-poligono {
+  pointer-events: none; /* no tapa clicks en polígonos */
+}
+
+/* Para que el divIcon no herede estilos viejos */
+.sc-labelIcon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* La burbuja */
+.sc-labelBubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%); /* ✅ centra exacto en el punto */
+  border-radius: 20px;
+  font-weight: 800;
+  white-space: nowrap;
+ 
+  color: #111;
+  pointer-events: none; /* ✅ no molesta el click del polígono */
 }
