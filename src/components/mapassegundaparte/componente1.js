@@ -214,14 +214,20 @@ const MapaConCapas = () => {
     const [verReferencias, setVerReferencias] = useState(true);
     const [verReferenciasTabla, setVerReferenciasTabla] = useState(true);
     const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null);
-
+const [cuilCuit, setCuilCuit] = useState("");
+const [adrema, setAdrema] = useState("");
+const [superficie, setSuperficie] = useState("");
+const [nombre, setNombre] = useState("");
+const [mensura, setMensura] = useState("");
     const [subCapasSur, setSubCapasSur] = useState({
         PIT: false,
         "PLC-C": false,
         "PLC-F": false,
         ZPA: false,
     });
-
+const esAreaEspecial = ["area1", "area2", "area3", "area4"].includes(
+  nombreCapaSeleccionada
+);
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
         serviciolotes
@@ -384,7 +390,11 @@ const MapaConCapas = () => {
         setTexto(datosBase?.dato1 ?? "");
         setSubclasificacion(datosBase?.subclasificacion ?? "");
         setDescripcion(datosBase?.descripcion ?? "");
-
+setCuilCuit(datosBase?.cuil_cuit ?? "");
+setAdrema(datosBase?.adrema ?? "");
+setSuperficie(datosBase?.superficie ?? "");
+setNombre(datosBase?.nombre ?? "");
+setMensura(datosBase?.mensura ?? "");
         setModalDetalleAbierto(true);
         setModalAbierto(false);
     };
@@ -938,7 +948,44 @@ const MapaConCapas = () => {
                                         <div className="sc-infoLabel">Descripción</div>
                                         <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
                                     </div>
+{esAreaEspecial && (
+  <>
+    <div className="sc-infoItem">
+      <div className="sc-infoLabel">CUIL / CUIT</div>
+      <div className="sc-infoValue">
+        {datosZonaSeleccionada.cuil_cuit || "-"}
+      </div>
+    </div>
 
+    <div className="sc-infoItem">
+      <div className="sc-infoLabel">Adrema</div>
+      <div className="sc-infoValue">
+        {datosZonaSeleccionada.adrema || "-"}
+      </div>
+    </div>
+
+    <div className="sc-infoItem">
+      <div className="sc-infoLabel">Superficie</div>
+      <div className="sc-infoValue">
+        {datosZonaSeleccionada.superficie || "-"}
+      </div>
+    </div>
+
+    <div className="sc-infoItem">
+      <div className="sc-infoLabel">Nombre</div>
+      <div className="sc-infoValue">
+        {datosZonaSeleccionada.nombre || "-"}
+      </div>
+    </div>
+
+    <div className="sc-infoItem">
+      <div className="sc-infoLabel">Mensura</div>
+      <div className="sc-infoValue">
+        {datosZonaSeleccionada.mensura || "-"}
+      </div>
+    </div>
+  </>
+)}
                                     <div className="sc-infoItem sc-span2">
                                         <div className="sc-infoLabel">Capa</div>
                                         <div className="sc-infoValue">
@@ -1027,7 +1074,50 @@ const MapaConCapas = () => {
                                     />
                                 </div>
                             </div>
+<div className="sc-field">
+  <label className="sc-label">CUIL / CUIT</label>
+  <input
+    className="sc-input"
+    value={cuilCuit}
+    onChange={(e) => setCuilCuit(e.target.value)}
+  />
+</div>
 
+<div className="sc-field">
+  <label className="sc-label">Adrema</label>
+  <input
+    className="sc-input"
+    value={adrema}
+    onChange={(e) => setAdrema(e.target.value)}
+  />
+</div>
+
+<div className="sc-field">
+  <label className="sc-label">Superficie</label>
+  <input
+    className="sc-input"
+    value={superficie}
+    onChange={(e) => setSuperficie(e.target.value)}
+  />
+</div>
+
+<div className="sc-field">
+  <label className="sc-label">Nombre</label>
+  <input
+    className="sc-input"
+    value={nombre}
+    onChange={(e) => setNombre(e.target.value)}
+  />
+</div>
+
+<div className="sc-field">
+  <label className="sc-label">Mensura</label>
+  <input
+    className="sc-input"
+    value={mensura}
+    onChange={(e) => setMensura(e.target.value)}
+  />
+</div>
                             <div className="sc-hint">
                                 Se guardará asociado a <b>{nombreCapaSeleccionada}</b> con ID <b>{idSeleccionado}</b>.
                             </div>
@@ -1056,13 +1146,20 @@ const MapaConCapas = () => {
                                             capa: nombreCapaSeleccionada,
                                         });
 
-                                        await serviciolotes.guardarpoligono({
-                                            id_mapa: String(idSeleccionado),         // ✅ siempre texto
-                                            dato1: texto,
-                                            descripcion,
-                                            subclasificacion,
-                                            capa: nombreCapaSeleccionada,            // ✅ tu tabla lo tiene
-                                        });
+                                      await serviciolotes.guardarpoligono({
+  id_mapa: String(idSeleccionado),
+  dato1: texto,
+  descripcion,
+  subclasificacion,
+  capa: nombreCapaSeleccionada,
+
+  cuil_cuit: cuilCuit,
+  adrema,
+  superficie,
+  nombre,
+  mensura,
+});
+
 
 
                                         const nuevos = await serviciolotes.poligonosguardados();
