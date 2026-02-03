@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "name": "area2",
+  "name": "area2nueva",
   "crs": {
     "type": "name",
     "properties": {
@@ -11,6 +11,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 1,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -60,6 +61,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 2,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -109,6 +111,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 3,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -158,6 +161,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 4,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -207,6 +211,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 5,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -256,6 +261,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 6,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -305,6 +311,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 7,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -354,6 +361,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 8,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -403,6 +411,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 9,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -452,6 +461,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 10,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -501,6 +511,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 11,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -550,6 +561,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 12,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -599,6 +611,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 13,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -648,6 +661,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 14,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -697,6 +711,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 15,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -746,6 +761,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 16,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -795,6 +811,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 17,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -844,6 +861,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 18,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -893,6 +911,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 19,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -942,6 +961,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 20,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -991,6 +1011,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 21,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1040,6 +1061,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 22,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1089,6 +1111,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 23,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1138,6 +1161,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 24,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1187,6 +1211,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 25,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1236,6 +1261,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 26,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1285,6 +1311,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 27,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1334,6 +1361,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 28,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1383,6 +1411,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 29,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1432,6 +1461,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 30,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1481,6 +1511,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 31,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1530,6 +1561,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 32,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1579,6 +1611,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 33,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1628,6 +1661,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 34,
         "Name": null,
         "description": "MODIFICACIONPARCELAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1677,6 +1711,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 35,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1726,6 +1761,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 36,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1775,6 +1811,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 37,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1824,6 +1861,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 38,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1873,6 +1911,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 39,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1922,6 +1961,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 40,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -1971,6 +2011,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 41,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2020,6 +2061,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 42,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2069,6 +2111,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 43,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2118,6 +2161,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 44,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2167,6 +2211,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 45,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2216,6 +2261,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 46,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2265,6 +2311,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 47,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2314,6 +2361,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 48,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2363,6 +2411,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 49,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2412,6 +2461,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 50,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2461,6 +2511,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 51,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2510,6 +2561,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 52,
         "Name": null,
         "description": "EXPANCION_POLIGONOS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2559,6 +2611,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 53,
         "Name": null,
         "description": "UN_TODO_SOLO<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2788,6 +2841,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 54,
         "Name": null,
         "description": "COTAS_LOTEO<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2847,6 +2901,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 55,
         "Name": null,
         "description": "COTAS_MANZANAS<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -2926,6 +2981,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 56,
         "Name": null,
         "description": "UN_TODO_SOLO<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3155,6 +3211,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 57,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3209,6 +3266,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 58,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3258,6 +3316,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 59,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3317,6 +3376,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 60,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3366,6 +3426,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 61,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3420,6 +3481,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 62,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3469,6 +3531,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 63,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3523,6 +3586,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 64,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3572,6 +3636,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 65,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3621,6 +3686,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 66,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3670,6 +3736,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 67,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3719,6 +3786,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 68,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3768,6 +3836,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 69,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3822,6 +3891,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 70,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3881,6 +3951,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 71,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -3980,6 +4051,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 72,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4034,6 +4106,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 73,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4093,6 +4166,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 74,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4147,6 +4221,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 75,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4211,6 +4286,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 76,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4260,6 +4336,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 77,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4314,6 +4391,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 78,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4363,6 +4441,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 79,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4422,6 +4501,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 80,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4491,6 +4571,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 81,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4550,6 +4631,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 82,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4614,6 +4696,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 83,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4663,6 +4746,7 @@
     {
       "type": "Feature",
       "properties": {
+        "fid": 84,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
         "timestamp": null,
@@ -4703,6 +4787,61 @@
             [
               -58.7792643177,
               -27.543542623,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 85,
+        "Name": null,
+        "description": null,
+        "timestamp": null,
+        "begin": null,
+        "end": null,
+        "altitudeMode": null,
+        "tessellate": null,
+        "extrude": null,
+        "visibility": null,
+        "drawOrder": null,
+        "icon": null,
+        "id": "areasnuevas2-85"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.77643252058691,
+              -27.543890408861767,
+              0
+            ],
+            [
+              -58.7763460018642,
+              -27.544904626108057,
+              0
+            ],
+            [
+              -58.77642616350586,
+              -27.544905143544884,
+              0
+            ],
+            [
+              -58.777272380102126,
+              -27.544966130250817,
+              0
+            ],
+            [
+              -58.77738049975872,
+              -27.54377404820613,
+              0
+            ],
+            [
+              -58.77643252058691,
+              -27.543890408861767,
               0
             ]
           ]
