@@ -214,20 +214,20 @@ const MapaConCapas = () => {
     const [verReferencias, setVerReferencias] = useState(true);
     const [verReferenciasTabla, setVerReferenciasTabla] = useState(true);
     const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null);
-const [cuilCuit, setCuilCuit] = useState("");
-const [adrema, setAdrema] = useState("");
-const [superficie, setSuperficie] = useState("");
-const [nombre, setNombre] = useState("");
-const [mensura, setMensura] = useState("");
+    const [cuilCuit, setCuilCuit] = useState("");
+    const [adrema, setAdrema] = useState("");
+    const [superficie, setSuperficie] = useState("");
+    const [nombre, setNombre] = useState("");
+    const [mensura, setMensura] = useState("");
     const [subCapasSur, setSubCapasSur] = useState({
         PIT: false,
         "PLC-C": false,
         "PLC-F": false,
         ZPA: false,
     });
-const esAreaEspecial = ["area1", "area2", "area3", "area4"].includes(
-  nombreCapaSeleccionada
-);
+    const esAreaEspecial = ["area1", "area2", "area3", "area4"].includes(
+        nombreCapaSeleccionada
+    );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
         serviciolotes
@@ -344,15 +344,15 @@ const esAreaEspecial = ["area1", "area2", "area3", "area4"].includes(
     // helper (pegalo arriba de handleFeatureClick, dentro del componente)
 
     // match recomendado: id_mapa + capa
-  const buscarPoligonoDB = (arr, id, capa) => {
-  const matchExacto = (arr || []).find(
-    (p) => String(p.id_mapa) === String(id) && String(p.capa || "") === String(capa || "")
-  );
-  if (matchExacto) return matchExacto;
+    const buscarPoligonoDB = (arr, id, capa) => {
+        const matchExacto = (arr || []).find(
+            (p) => String(p.id_mapa) === String(id) && String(p.capa || "") === String(capa || "")
+        );
+        if (matchExacto) return matchExacto;
 
-  const fallback = (arr || []).find((p) => String(p.id_mapa) === String(id));
-  return fallback || null;
-};
+        const fallback = (arr || []).find((p) => String(p.id_mapa) === String(id));
+        return fallback || null;
+    };
 
 
 
@@ -390,11 +390,11 @@ const esAreaEspecial = ["area1", "area2", "area3", "area4"].includes(
         setTexto(datosBase?.dato1 ?? "");
         setSubclasificacion(datosBase?.subclasificacion ?? "");
         setDescripcion(datosBase?.descripcion ?? "");
-setCuilCuit(datosBase?.cuil_cuit ?? "");
-setAdrema(datosBase?.adrema ?? "");
-setSuperficie(datosBase?.superficie ?? "");
-setNombre(datosBase?.nombre ?? "");
-setMensura(datosBase?.mensura ?? "");
+        setCuilCuit(datosBase?.cuil_cuit ?? "");
+        setAdrema(datosBase?.adrema ?? "");
+        setSuperficie(datosBase?.superficie ?? "");
+        setNombre(datosBase?.nombre ?? "");
+        setMensura(datosBase?.mensura ?? "");
         setModalDetalleAbierto(true);
         setModalAbierto(false);
     };
@@ -948,40 +948,42 @@ setMensura(datosBase?.mensura ?? "");
                                         <div className="sc-infoLabel">Descripción</div>
                                         <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
                                     </div>
-{esAreaEspecial && (
+                                    {esAreaEspecial && (
   <>
-    <div className="sc-infoItem">
-      <div className="sc-infoLabel">CUIL / CUIT</div>
-      <div className="sc-infoValue">
-        {datosZonaSeleccionada.cuil_cuit || "-"}
-      </div>
-    </div>
-
-    <div className="sc-infoItem">
-      <div className="sc-infoLabel">Adrema</div>
-      <div className="sc-infoValue">
-        {datosZonaSeleccionada.adrema || "-"}
-      </div>
-    </div>
-
-    <div className="sc-infoItem">
-      <div className="sc-infoLabel">Superficie</div>
-      <div className="sc-infoValue">
-        {datosZonaSeleccionada.superficie || "-"}
-      </div>
-    </div>
-
+    {/* Fila 1: Nombre + CUIL/CUIT (en sc-grid2 = 2 cols) */}
     <div className="sc-infoItem">
       <div className="sc-infoLabel">Nombre</div>
-      <div className="sc-infoValue">
-        {datosZonaSeleccionada.nombre || "-"}
-      </div>
+      <div className="sc-infoValue">{datosZonaSeleccionada.nombre || "-"}</div>
     </div>
 
     <div className="sc-infoItem">
-      <div className="sc-infoLabel">Mensura</div>
-      <div className="sc-infoValue">
-        {datosZonaSeleccionada.mensura || "-"}
+      <div className="sc-infoLabel">CUIL / CUIT</div>
+      <div className="sc-infoValue">{datosZonaSeleccionada.cuil_cuit || "-"}</div>
+    </div>
+
+    {/* Fila 2: 3 columnas dentro de una fila que ocupa 2 columnas del grid principal */}
+    <div className="sc-span2" style={{ width: "100%" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+          gap: 12,
+        }}
+      >
+        <div className="sc-infoItem" style={{ margin: 0 }}>
+          <div className="sc-infoLabel">Superficie</div>
+          <div className="sc-infoValue">{datosZonaSeleccionada.superficie || "-"}</div>
+        </div>
+
+        <div className="sc-infoItem" style={{ margin: 0 }}>
+          <div className="sc-infoLabel">Mensura</div>
+          <div className="sc-infoValue">{datosZonaSeleccionada.mensura || "-"}</div>
+        </div>
+
+        <div className="sc-infoItem" style={{ margin: 0 }}>
+          <div className="sc-infoLabel">Adrema</div>
+          <div className="sc-infoValue">{datosZonaSeleccionada.adrema || "-"}</div>
+        </div>
       </div>
     </div>
   </>
@@ -1074,50 +1076,60 @@ setMensura(datosBase?.mensura ?? "");
                                     />
                                 </div>
                             </div>
-<div className="sc-field">
-  <label className="sc-label">CUIL / CUIT</label>
-  <input
-    className="sc-input"
-    value={cuilCuit}
-    onChange={(e) => setCuilCuit(e.target.value)}
-  />
-</div>
+                            {/* ✅ REORDENADO SOLO FRONTEND (layout) */}
+                            <div className="sc-formGrid">
+                                {/* Fila 1: Nombre + CUIL/CUIT (2 columnas) */}
+                                <div className="sc-field">
+                                    <label className="sc-label">Nombre</label>
+                                    <input
+                                        className="sc-input"
+                                        value={nombre}
+                                        onChange={(e) => setNombre(e.target.value)}
+                                    />
+                                </div>
 
-<div className="sc-field">
-  <label className="sc-label">Adrema</label>
-  <input
-    className="sc-input"
-    value={adrema}
-    onChange={(e) => setAdrema(e.target.value)}
-  />
-</div>
+                                <div className="sc-field">
+                                    <label className="sc-label">CUIL / CUIT</label>
+                                    <input
+                                        className="sc-input"
+                                        value={cuilCuit}
+                                        onChange={(e) => setCuilCuit(e.target.value)}
+                                    />
+                                </div>
+                            </div>
 
-<div className="sc-field">
-  <label className="sc-label">Superficie</label>
-  <input
-    className="sc-input"
-    value={superficie}
-    onChange={(e) => setSuperficie(e.target.value)}
-  />
-</div>
+                            {/* Fila 2: Superficie + Mensura + Adrema (3 columnas) */}
+                            <div
+                                className="sc-formGrid"
+                                style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
+                            >
+                                <div className="sc-field">
+                                    <label className="sc-label">Superficie</label>
+                                    <input
+                                        className="sc-input"
+                                        value={superficie}
+                                        onChange={(e) => setSuperficie(e.target.value)}
+                                    />
+                                </div>
 
-<div className="sc-field">
-  <label className="sc-label">Nombre</label>
-  <input
-    className="sc-input"
-    value={nombre}
-    onChange={(e) => setNombre(e.target.value)}
-  />
-</div>
+                                <div className="sc-field">
+                                    <label className="sc-label">Mensura</label>
+                                    <input
+                                        className="sc-input"
+                                        value={mensura}
+                                        onChange={(e) => setMensura(e.target.value)}
+                                    />
+                                </div>
 
-<div className="sc-field">
-  <label className="sc-label">Mensura</label>
-  <input
-    className="sc-input"
-    value={mensura}
-    onChange={(e) => setMensura(e.target.value)}
-  />
-</div>
+                                <div className="sc-field">
+                                    <label className="sc-label">Adrema</label>
+                                    <input
+                                        className="sc-input"
+                                        value={adrema}
+                                        onChange={(e) => setAdrema(e.target.value)}
+                                    />
+                                </div>
+                            </div>
                             <div className="sc-hint">
                                 Se guardará asociado a <b>{nombreCapaSeleccionada}</b> con ID <b>{idSeleccionado}</b>.
                             </div>
@@ -1146,19 +1158,19 @@ setMensura(datosBase?.mensura ?? "");
                                             capa: nombreCapaSeleccionada,
                                         });
 
-                                      await serviciolotes.guardarpoligono({
-  id_mapa: String(idSeleccionado),
-  dato1: texto,
-  descripcion,
-  subclasificacion,
-  capa: nombreCapaSeleccionada,
+                                        await serviciolotes.guardarpoligono({
+                                            id_mapa: String(idSeleccionado),
+                                            dato1: texto,
+                                            descripcion,
+                                            subclasificacion,
+                                            capa: nombreCapaSeleccionada,
 
-  cuil_cuit: cuilCuit,
-  adrema,
-  superficie,
-  nombre,
-  mensura,
-});
+                                            cuil_cuit: cuilCuit,
+                                            adrema,
+                                            superficie,
+                                            nombre,
+                                            mensura,
+                                        });
 
 
 
