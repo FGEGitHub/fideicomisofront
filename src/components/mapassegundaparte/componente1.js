@@ -321,6 +321,13 @@ const MapaConCapas = () => {
             })
             .catch(console.error);
         // Otras capas
+         fetch("/rutas1.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "rutas1");
+                setGeojsonData((prev) => ({ ...prev, rutas1: normalizado }));
+            })
+            .catch(console.error);
         const nuevasCapas = [
             { nombre: "Zonificación Sta Catalina", archivo: "zonificacion_stacatalina.geojson" },
             { nombre: "ZRU Predios La Caja", archivo: "zru_prediosdelacaja.geojson" },
@@ -654,6 +661,8 @@ const MapaConCapas = () => {
                     { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
                     { key: "area5", label: "Area 5 nueva fran" },
                         { key: "area6", label: "Area 6 nueva agos" },
+  { key: "rutas1", label: "Rutas 1" },
+                        
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
                         <label>
@@ -859,7 +868,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1"].map(
                     (nombre) =>
                         capasActivas[nombre] &&
                         geojsonData[nombre] && {
@@ -937,6 +946,21 @@ const MapaConCapas = () => {
                                 <GeoJSON
                                     key="area6"
                                     data={geojsonData.area6}
+                                    style={() => ({
+                                        fillColor: "red",
+                                        fillOpacity: 0.15,
+                                        color: "red",
+                                        weight: 2,
+                                        opacity: 1,
+                                    })}
+                                    onEachFeature={onEachFeature}
+                                />
+                            ),
+                            
+                             rutas1: (
+                                <GeoJSON
+                                    key="rutas1"
+                                    data={geojsonData.rutas1}
                                     style={() => ({
                                         fillColor: "red",
                                         fillOpacity: 0.15,
