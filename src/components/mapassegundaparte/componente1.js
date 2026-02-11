@@ -67,6 +67,7 @@ const MapaConCapas = () => {
         area3: false,
         area4: false,
          area5: false,
+         area6: false,
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -226,7 +227,7 @@ const MapaConCapas = () => {
         "PLC-F": false,
         ZPA: false,
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5"].includes(
+    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6"].includes(
         nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
@@ -310,6 +311,13 @@ const MapaConCapas = () => {
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "area5");
                 setGeojsonData((prev) => ({ ...prev, area5: normalizado }));
+            })
+            .catch(console.error);
+            fetch("/area6.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "area6");
+                setGeojsonData((prev) => ({ ...prev, area6: normalizado }));
             })
             .catch(console.error);
         // Otras capas
@@ -645,6 +653,7 @@ const MapaConCapas = () => {
 
                     { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
                     { key: "area5", label: "Area 5 nueva fran" },
+                        { key: "area6", label: "Area 6 nueva agos" },
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
                         <label>
@@ -850,7 +859,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6"].map(
                     (nombre) =>
                         capasActivas[nombre] &&
                         geojsonData[nombre] && {
@@ -924,8 +933,23 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
+                             area6: (
+                                <GeoJSON
+                                    key="area6"
+                                    data={geojsonData.area6}
+                                    style={() => ({
+                                        fillColor: "red",
+                                        fillOpacity: 0.15,
+                                        color: "red",
+                                        weight: 2,
+                                        opacity: 1,
+                                    })}
+                                    onEachFeature={onEachFeature}
+                                />
+                            ),
                         }[nombre]
-                )}
+                )},
+                
 
             </MapContainer>
 
