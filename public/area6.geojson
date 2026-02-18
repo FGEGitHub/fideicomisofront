@@ -11,8 +11,46 @@
     {
       "type": "Feature",
       "properties": {
-        "fid": 1,
+        "fid": null,
+        "layer": "area",
+        "path": "area.geojson",
         "id": "areasnuevas6-1"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.80492109769512,
+              -27.519997764401158
+            ],
+            [
+              -58.806733272308975,
+              -27.519738329146612
+            ],
+            [
+              -58.80715921078658,
+              -27.521689901807687
+            ],
+            [
+              -58.80530444232497,
+              -27.521960953566172
+            ],
+            [
+              -58.80492109769512,
+              -27.519997764401158
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 1,
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-2"
       },
       "geometry": {
         "type": "Polygon",
@@ -50,7 +88,9 @@
       "type": "Feature",
       "properties": {
         "fid": 2,
-        "id": "areasnuevas6-2"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-3"
       },
       "geometry": {
         "type": "Polygon",
@@ -88,7 +128,9 @@
       "type": "Feature",
       "properties": {
         "fid": 3,
-        "id": "areasnuevas6-3"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-4"
       },
       "geometry": {
         "type": "Polygon",
@@ -130,7 +172,9 @@
       "type": "Feature",
       "properties": {
         "fid": 4,
-        "id": "areasnuevas6-4"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-5"
       },
       "geometry": {
         "type": "Polygon",
@@ -164,7 +208,9 @@
       "type": "Feature",
       "properties": {
         "fid": 5,
-        "id": "areasnuevas6-5"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-6"
       },
       "geometry": {
         "type": "Polygon",
@@ -202,7 +248,9 @@
       "type": "Feature",
       "properties": {
         "fid": 6,
-        "id": "areasnuevas6-6"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-7"
       },
       "geometry": {
         "type": "Polygon",
@@ -236,7 +284,9 @@
       "type": "Feature",
       "properties": {
         "fid": 7,
-        "id": "areasnuevas6-7"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-8"
       },
       "geometry": {
         "type": "Polygon",
@@ -270,7 +320,9 @@
       "type": "Feature",
       "properties": {
         "fid": 8,
-        "id": "areasnuevas6-8"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-9"
       },
       "geometry": {
         "type": "Polygon",
@@ -304,7 +356,9 @@
       "type": "Feature",
       "properties": {
         "fid": 9,
-        "id": "areasnuevas6-9"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-10"
       },
       "geometry": {
         "type": "Polygon",
@@ -338,7 +392,9 @@
       "type": "Feature",
       "properties": {
         "fid": 10,
-        "id": "areasnuevas6-10"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-11"
       },
       "geometry": {
         "type": "Polygon",
@@ -372,7 +428,9 @@
       "type": "Feature",
       "properties": {
         "fid": 11,
-        "id": "areasnuevas6-11"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-12"
       },
       "geometry": {
         "type": "Polygon",
@@ -406,7 +464,9 @@
       "type": "Feature",
       "properties": {
         "fid": 12,
-        "id": "areasnuevas6-12"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-13"
       },
       "geometry": {
         "type": "Polygon",
@@ -440,7 +500,9 @@
       "type": "Feature",
       "properties": {
         "fid": 13,
-        "id": "areasnuevas6-13"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-14"
       },
       "geometry": {
         "type": "Polygon",
@@ -474,7 +536,9 @@
       "type": "Feature",
       "properties": {
         "fid": 14,
-        "id": "areasnuevas6-14"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-15"
       },
       "geometry": {
         "type": "Polygon",
@@ -508,7 +572,9 @@
       "type": "Feature",
       "properties": {
         "fid": 15,
-        "id": "areasnuevas6-15"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-16"
       },
       "geometry": {
         "type": "Polygon",
@@ -542,7 +608,9 @@
       "type": "Feature",
       "properties": {
         "fid": 16,
-        "id": "areasnuevas6-16"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-17"
       },
       "geometry": {
         "type": "Polygon",
@@ -576,7 +644,9 @@
       "type": "Feature",
       "properties": {
         "fid": 17,
-        "id": "areasnuevas6-17"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-18"
       },
       "geometry": {
         "type": "Polygon",
@@ -610,7 +680,9 @@
       "type": "Feature",
       "properties": {
         "fid": 18,
-        "id": "areasnuevas6-18"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-19"
       },
       "geometry": {
         "type": "Polygon",
@@ -644,7 +716,9 @@
       "type": "Feature",
       "properties": {
         "fid": 19,
-        "id": "areasnuevas6-19"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-20"
       },
       "geometry": {
         "type": "Polygon",
@@ -678,7 +752,9 @@
       "type": "Feature",
       "properties": {
         "fid": 20,
-        "id": "areasnuevas6-20"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-21"
       },
       "geometry": {
         "type": "Polygon",
@@ -712,7 +788,9 @@
       "type": "Feature",
       "properties": {
         "fid": 21,
-        "id": "areasnuevas6-21"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-22"
       },
       "geometry": {
         "type": "Polygon",
@@ -746,7 +824,9 @@
       "type": "Feature",
       "properties": {
         "fid": 22,
-        "id": "areasnuevas6-22"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-23"
       },
       "geometry": {
         "type": "Polygon",
@@ -780,7 +860,9 @@
       "type": "Feature",
       "properties": {
         "fid": 23,
-        "id": "areasnuevas6-23"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-24"
       },
       "geometry": {
         "type": "Polygon",
@@ -814,7 +896,9 @@
       "type": "Feature",
       "properties": {
         "fid": 24,
-        "id": "areasnuevas6-24"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-25"
       },
       "geometry": {
         "type": "Polygon",
@@ -848,7 +932,9 @@
       "type": "Feature",
       "properties": {
         "fid": 25,
-        "id": "areasnuevas6-25"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-26"
       },
       "geometry": {
         "type": "Polygon",
@@ -882,7 +968,9 @@
       "type": "Feature",
       "properties": {
         "fid": 26,
-        "id": "areasnuevas6-26"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-27"
       },
       "geometry": {
         "type": "Polygon",
@@ -916,7 +1004,9 @@
       "type": "Feature",
       "properties": {
         "fid": 27,
-        "id": "areasnuevas6-27"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-28"
       },
       "geometry": {
         "type": "Polygon",
@@ -950,7 +1040,9 @@
       "type": "Feature",
       "properties": {
         "fid": 28,
-        "id": "areasnuevas6-28"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-29"
       },
       "geometry": {
         "type": "Polygon",
@@ -984,7 +1076,9 @@
       "type": "Feature",
       "properties": {
         "fid": 29,
-        "id": "areasnuevas6-29"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-30"
       },
       "geometry": {
         "type": "Polygon",
@@ -1018,7 +1112,9 @@
       "type": "Feature",
       "properties": {
         "fid": 30,
-        "id": "areasnuevas6-30"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-31"
       },
       "geometry": {
         "type": "Polygon",
@@ -1052,7 +1148,9 @@
       "type": "Feature",
       "properties": {
         "fid": 31,
-        "id": "areasnuevas6-31"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-32"
       },
       "geometry": {
         "type": "Polygon",
@@ -1086,7 +1184,9 @@
       "type": "Feature",
       "properties": {
         "fid": 32,
-        "id": "areasnuevas6-32"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-33"
       },
       "geometry": {
         "type": "Polygon",
@@ -1120,7 +1220,9 @@
       "type": "Feature",
       "properties": {
         "fid": 33,
-        "id": "areasnuevas6-33"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-34"
       },
       "geometry": {
         "type": "Polygon",
@@ -1154,7 +1256,9 @@
       "type": "Feature",
       "properties": {
         "fid": 34,
-        "id": "areasnuevas6-34"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-35"
       },
       "geometry": {
         "type": "Polygon",
@@ -1188,7 +1292,9 @@
       "type": "Feature",
       "properties": {
         "fid": 35,
-        "id": "areasnuevas6-35"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-36"
       },
       "geometry": {
         "type": "Polygon",
@@ -1222,7 +1328,9 @@
       "type": "Feature",
       "properties": {
         "fid": 36,
-        "id": "areasnuevas6-36"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-37"
       },
       "geometry": {
         "type": "Polygon",
@@ -1256,7 +1364,9 @@
       "type": "Feature",
       "properties": {
         "fid": 37,
-        "id": "areasnuevas6-37"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-38"
       },
       "geometry": {
         "type": "Polygon",
@@ -1290,7 +1400,9 @@
       "type": "Feature",
       "properties": {
         "fid": 38,
-        "id": "areasnuevas6-38"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-39"
       },
       "geometry": {
         "type": "Polygon",
@@ -1324,7 +1436,9 @@
       "type": "Feature",
       "properties": {
         "fid": 39,
-        "id": "areasnuevas6-39"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-40"
       },
       "geometry": {
         "type": "Polygon",
@@ -1358,7 +1472,9 @@
       "type": "Feature",
       "properties": {
         "fid": 40,
-        "id": "areasnuevas6-40"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-41"
       },
       "geometry": {
         "type": "Polygon",
@@ -1392,7 +1508,9 @@
       "type": "Feature",
       "properties": {
         "fid": 41,
-        "id": "areasnuevas6-41"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-42"
       },
       "geometry": {
         "type": "Polygon",
@@ -1426,7 +1544,9 @@
       "type": "Feature",
       "properties": {
         "fid": 42,
-        "id": "areasnuevas6-42"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-43"
       },
       "geometry": {
         "type": "Polygon",
@@ -1460,7 +1580,9 @@
       "type": "Feature",
       "properties": {
         "fid": 43,
-        "id": "areasnuevas6-43"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-44"
       },
       "geometry": {
         "type": "Polygon",
@@ -1494,7 +1616,9 @@
       "type": "Feature",
       "properties": {
         "fid": 44,
-        "id": "areasnuevas6-44"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-45"
       },
       "geometry": {
         "type": "Polygon",
@@ -1528,7 +1652,9 @@
       "type": "Feature",
       "properties": {
         "fid": 45,
-        "id": "areasnuevas6-45"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-46"
       },
       "geometry": {
         "type": "Polygon",
@@ -1562,7 +1688,9 @@
       "type": "Feature",
       "properties": {
         "fid": 46,
-        "id": "areasnuevas6-46"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-47"
       },
       "geometry": {
         "type": "Polygon",
@@ -1596,7 +1724,9 @@
       "type": "Feature",
       "properties": {
         "fid": 47,
-        "id": "areasnuevas6-47"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-48"
       },
       "geometry": {
         "type": "Polygon",
@@ -1630,7 +1760,9 @@
       "type": "Feature",
       "properties": {
         "fid": 48,
-        "id": "areasnuevas6-48"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-49"
       },
       "geometry": {
         "type": "Polygon",
@@ -1664,7 +1796,9 @@
       "type": "Feature",
       "properties": {
         "fid": 49,
-        "id": "areasnuevas6-49"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-50"
       },
       "geometry": {
         "type": "Polygon",
@@ -1698,7 +1832,9 @@
       "type": "Feature",
       "properties": {
         "fid": 50,
-        "id": "areasnuevas6-50"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-51"
       },
       "geometry": {
         "type": "Polygon",
@@ -1732,7 +1868,9 @@
       "type": "Feature",
       "properties": {
         "fid": 51,
-        "id": "areasnuevas6-51"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-52"
       },
       "geometry": {
         "type": "Polygon",
@@ -1766,7 +1904,9 @@
       "type": "Feature",
       "properties": {
         "fid": 52,
-        "id": "areasnuevas6-52"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-53"
       },
       "geometry": {
         "type": "Polygon",
@@ -1800,7 +1940,9 @@
       "type": "Feature",
       "properties": {
         "fid": 53,
-        "id": "areasnuevas6-53"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-54"
       },
       "geometry": {
         "type": "Polygon",
@@ -1834,7 +1976,9 @@
       "type": "Feature",
       "properties": {
         "fid": 54,
-        "id": "areasnuevas6-54"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-55"
       },
       "geometry": {
         "type": "Polygon",
@@ -1868,7 +2012,9 @@
       "type": "Feature",
       "properties": {
         "fid": 55,
-        "id": "areasnuevas6-55"
+        "layer": "area6",
+        "path": "C:/Users/Agos/Downloads/area6.geojson",
+        "id": "areasnuevas6-56"
       },
       "geometry": {
         "type": "Polygon",
