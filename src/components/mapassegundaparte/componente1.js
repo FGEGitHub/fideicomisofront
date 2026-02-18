@@ -68,6 +68,7 @@ const MapaConCapas = () => {
         area4: false,
          area5: false,
          area6: false,
+           ic3: false,
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -226,8 +227,9 @@ const MapaConCapas = () => {
         "PLC-C": false,
         "PLC-F": false,
         ZPA: false,
+        ic3: false,
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6"].includes(
+    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3"].includes(
         nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
@@ -321,6 +323,15 @@ const MapaConCapas = () => {
             })
             .catch(console.error);
         // Otras capas
+     fetch("/ic3.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "ic3");
+                setGeojsonData((prev) => ({ ...prev, ic3: normalizado }));
+            })
+            .catch(console.error);
+
+        
          fetch("/rutas1.geojson")
             .then((r) => r.json())
             .then((data) => {
@@ -662,6 +673,8 @@ const MapaConCapas = () => {
                     { key: "area5", label: "Area 5 nueva fran" },
                         { key: "area6", label: "Area 6 nueva agos" },
   { key: "rutas1", label: "Rutas 1" },
+  
+    { key: "ic3", label: "Ic3" },
                         
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
@@ -868,7 +881,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3"].map(
                     (nombre) =>
                         capasActivas[nombre] &&
                         geojsonData[nombre] && {
@@ -971,6 +984,20 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
+                            ic3: (
+  <GeoJSON
+    key="ic3"
+    data={geojsonData.ic3}
+    style={() => ({
+      fillColor: "cyan",
+      fillOpacity: 0.2,
+      color: "blue",
+      weight: 3,
+      opacity: 1,
+    })}
+    onEachFeature={onEachFeature}
+  />
+),
                         }[nombre]
                 )},
                 
