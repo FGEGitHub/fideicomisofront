@@ -666,15 +666,15 @@ const MapaConCapas = () => {
                 </div>
 
                 {[
-                    { key: "area1", label: "Zona Hípico" },
+                    { key: "ic3", label: "IC3" }, { key: "area5", label: "IB4" },
+                        { key: "area6", label: "IB6" },{ key: "area1", label: "Zona Hípico" },
                     { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
 
-                    { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
-                    { key: "area5", label: "Area 5 nueva fran" },
-                        { key: "area6", label: "Area 6 nueva agos" },
-  { key: "rutas1", label: "Rutas 1" },
+                   
+                   
+  { key: "rutas1", label: "Rutas + Traza Seg. Pte Chaco-Ctes" },
   
-    { key: "ic3", label: "Ic3" },
+     { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
                         
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
