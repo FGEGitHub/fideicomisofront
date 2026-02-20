@@ -66,9 +66,9 @@ const MapaConCapas = () => {
         area2: false,
         area3: false,
         area4: false,
-         area5: false,
-         area6: false,
-           ic3: false,
+        area5: false,
+        area6: false,
+        ic3: false,
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -229,7 +229,7 @@ const MapaConCapas = () => {
         ZPA: false,
         ic3: false,
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3"].includes(
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3"].includes(
         nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
@@ -308,14 +308,14 @@ const MapaConCapas = () => {
                 setGeojsonData((prev) => ({ ...prev, area4: normalizado }));
             })
             .catch(console.error);
-   fetch("/area5.geojson")
+        fetch("/area5.geojson")
             .then((r) => r.json())
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "area5");
                 setGeojsonData((prev) => ({ ...prev, area5: normalizado }));
             })
             .catch(console.error);
-            fetch("/area6.geojson")
+        fetch("/area6.geojson")
             .then((r) => r.json())
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "area6");
@@ -323,7 +323,7 @@ const MapaConCapas = () => {
             })
             .catch(console.error);
         // Otras capas
-     fetch("/ic3.geojson")
+        fetch("/ic3.geojson")
             .then((r) => r.json())
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "ic3");
@@ -331,8 +331,8 @@ const MapaConCapas = () => {
             })
             .catch(console.error);
 
-        
-         fetch("/rutas1.geojson")
+
+        fetch("/rutas1.geojson")
             .then((r) => r.json())
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "rutas1");
@@ -423,10 +423,10 @@ const MapaConCapas = () => {
         setTexto(datosBase?.dato1 ?? "");
         setSubclasificacion(datosBase?.subclasificacion ?? "");
         setDescripcion(datosBase?.descripcion ?? "");
-        setCuilCuit(datosBase?.cuil_cuit ?? "");
+      
         setAdrema(datosBase?.adrema ?? "");
         setSuperficie(datosBase?.superficie ?? "");
-        setNombre(datosBase?.nombre ?? "");
+       
         setMensura(datosBase?.mensura ?? "");
         setModalDetalleAbierto(true);
         setModalAbierto(false);
@@ -667,15 +667,15 @@ const MapaConCapas = () => {
 
                 {[
                     { key: "ic3", label: "IC3" }, { key: "area5", label: "IB4" },
-                        { key: "area6", label: "IB6" },{ key: "area1", label: "Zona Hípico" },
+                    { key: "area6", label: "IB6" }, { key: "area1", label: "Zona Hípico" },
                     { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
 
-                   
-                   
-  { key: "rutas1", label: "Rutas + Traza Seg. Pte Chaco-Ctes" },
-  
-     { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
-                        
+
+
+                    { key: "rutas1", label: "Rutas + Traza Seg. Pte Chaco-Ctes" },
+
+                    { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
+
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
                         <label>
@@ -881,7 +881,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3"].map(
                     (nombre) =>
                         capasActivas[nombre] &&
                         geojsonData[nombre] && {
@@ -941,7 +941,7 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
-                             area5: (
+                            area5: (
                                 <GeoJSON
                                     key="area5"
                                     data={geojsonData.area5}
@@ -955,7 +955,7 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
-                             area6: (
+                            area6: (
                                 <GeoJSON
                                     key="area6"
                                     data={geojsonData.area6}
@@ -969,8 +969,8 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
-                            
-                             rutas1: (
+
+                            rutas1: (
                                 <GeoJSON
                                     key="rutas1"
                                     data={geojsonData.rutas1}
@@ -985,22 +985,22 @@ const MapaConCapas = () => {
                                 />
                             ),
                             ic3: (
-  <GeoJSON
-    key="ic3"
-    data={geojsonData.ic3}
-    style={() => ({
-      fillColor: "cyan",
-      fillOpacity: 0.2,
-      color: "blue",
-      weight: 3,
-      opacity: 1,
-    })}
-    onEachFeature={onEachFeature}
-  />
-),
+                                <GeoJSON
+                                    key="ic3"
+                                    data={geojsonData.ic3}
+                                    style={() => ({
+                                        fillColor: "cyan",
+                                        fillOpacity: 0.2,
+                                        color: "blue",
+                                        weight: 3,
+                                        opacity: 1,
+                                    })}
+                                    onEachFeature={onEachFeature}
+                                />
+                            ),
                         }[nombre]
                 )},
-                
+
 
             </MapContainer>
 
@@ -1046,45 +1046,37 @@ const MapaConCapas = () => {
                                         <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
                                     </div>
                                     {esAreaEspecial && (
-  <>
-    {/* Fila 1: Nombre + CUIL/CUIT (en sc-grid2 = 2 cols) */}
-    <div className="sc-infoItem">
-      <div className="sc-infoLabel">Nombre</div>
-      <div className="sc-infoValue">{datosZonaSeleccionada.nombre || "-"}</div>
-    </div>
+                                        <>
+                                            {/* Fila 1: Nombre + CUIL/CUIT (en sc-grid2 = 2 cols) */}
 
-    <div className="sc-infoItem">
-      <div className="sc-infoLabel">CUIL / CUIT</div>
-      <div className="sc-infoValue">{datosZonaSeleccionada.cuil_cuit || "-"}</div>
-    </div>
 
-    {/* Fila 2: 3 columnas dentro de una fila que ocupa 2 columnas del grid principal */}
-    <div className="sc-span2" style={{ width: "100%" }}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-          gap: 12,
-        }}
-      >
-        <div className="sc-infoItem" style={{ margin: 0 }}>
-          <div className="sc-infoLabel">Superficie</div>
-          <div className="sc-infoValue">{datosZonaSeleccionada.superficie || "-"}</div>
-        </div>
+                                            {/* Fila 2: 3 columnas dentro de una fila que ocupa 2 columnas del grid principal */}
+                                            <div className="sc-span2" style={{ width: "100%" }}>
+                                                <div
+                                                    style={{
+                                                        display: "grid",
+                                                        gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                                                        gap: 12,
+                                                    }}
+                                                >
+                                                    <div className="sc-infoItem" style={{ margin: 0 }}>
+                                                        <div className="sc-infoLabel">Superficie</div>
+                                                        <div className="sc-infoValue">{datosZonaSeleccionada.superficie || "-"}</div>
+                                                    </div>
 
-        <div className="sc-infoItem" style={{ margin: 0 }}>
-          <div className="sc-infoLabel">Mensura</div>
-          <div className="sc-infoValue">{datosZonaSeleccionada.mensura || "-"}</div>
-        </div>
+                                                    <div className="sc-infoItem" style={{ margin: 0 }}>
+                                                        <div className="sc-infoLabel">Mensura</div>
+                                                        <div className="sc-infoValue">{datosZonaSeleccionada.mensura || "-"}</div>
+                                                    </div>
 
-        <div className="sc-infoItem" style={{ margin: 0 }}>
-          <div className="sc-infoLabel">Adrema</div>
-          <div className="sc-infoValue">{datosZonaSeleccionada.adrema || "-"}</div>
-        </div>
-      </div>
-    </div>
-  </>
-)}
+                                                    <div className="sc-infoItem" style={{ margin: 0 }}>
+                                                        <div className="sc-infoLabel">Adrema</div>
+                                                        <div className="sc-infoValue">{datosZonaSeleccionada.adrema || "-"}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                     <div className="sc-infoItem sc-span2">
                                         <div className="sc-infoLabel">Capa</div>
                                         <div className="sc-infoValue">
@@ -1174,26 +1166,6 @@ const MapaConCapas = () => {
                                 </div>
                             </div>
                             {/* ✅ REORDENADO SOLO FRONTEND (layout) */}
-                            <div className="sc-formGrid">
-                                {/* Fila 1: Nombre + CUIL/CUIT (2 columnas) */}
-                                <div className="sc-field">
-                                    <label className="sc-label">Nombre</label>
-                                    <input
-                                        className="sc-input"
-                                        value={nombre}
-                                        onChange={(e) => setNombre(e.target.value)}
-                                    />
-                                </div>
-
-                                <div className="sc-field">
-                                    <label className="sc-label">CUIL / CUIT</label>
-                                    <input
-                                        className="sc-input"
-                                        value={cuilCuit}
-                                        onChange={(e) => setCuilCuit(e.target.value)}
-                                    />
-                                </div>
-                            </div>
 
                             {/* Fila 2: Superficie + Mensura + Adrema (3 columnas) */}
                             <div
@@ -1254,7 +1226,6 @@ const MapaConCapas = () => {
                                             subclasificacion,
                                             capa: nombreCapaSeleccionada,
                                         });
-
                                         await serviciolotes.guardarpoligono({
                                             id_mapa: String(idSeleccionado),
                                             dato1: texto,
@@ -1262,10 +1233,8 @@ const MapaConCapas = () => {
                                             subclasificacion,
                                             capa: nombreCapaSeleccionada,
 
-                                            cuil_cuit: cuilCuit,
                                             adrema,
                                             superficie,
-                                            nombre,
                                             mensura,
                                         });
 
