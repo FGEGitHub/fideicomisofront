@@ -228,8 +228,9 @@ const MapaConCapas = () => {
         "PLC-F": false,
         ZPA: false,
         ic3: false,
+        ic4: false,
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3"].includes(
+    const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3","ic4"].includes(
         nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
@@ -330,7 +331,13 @@ const MapaConCapas = () => {
                 setGeojsonData((prev) => ({ ...prev, ic3: normalizado }));
             })
             .catch(console.error);
-
+     fetch("/ic4.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "ic4");
+                setGeojsonData((prev) => ({ ...prev, ic4: normalizado }));
+            })
+            .catch(console.error);
         
          fetch("/rutas1.geojson")
             .then((r) => r.json())
@@ -675,6 +682,7 @@ const MapaConCapas = () => {
   { key: "rutas1", label: "Rutas 1" },
   
     { key: "ic3", label: "Ic3" },
+        { key: "ic4", label: "ic4" },
                         
                 ].map(({ key, label }) => (
                     <div className="capa-principal" key={key}>
@@ -881,7 +889,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3", "ic4"].map(
                     (nombre) =>
                         capasActivas[nombre] &&
                         geojsonData[nombre] && {
@@ -988,6 +996,20 @@ const MapaConCapas = () => {
   <GeoJSON
     key="ic3"
     data={geojsonData.ic3}
+    style={() => ({
+      fillColor: "cyan",
+      fillOpacity: 0.2,
+      color: "blue",
+      weight: 3,
+      opacity: 1,
+    })}
+    onEachFeature={onEachFeature}
+  />
+),
+                           ic4: (
+  <GeoJSON
+    key="ic4"
+    data={geojsonData.ic4}
     style={() => ({
       fillColor: "cyan",
       fillOpacity: 0.2,
