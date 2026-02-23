@@ -674,7 +674,7 @@ const MapaConCapas = () => {
                 </div>
 
                 {[
-                    { key: "ic3", label: "IC3" }, { key: "area5", label: "IB4" },
+                    { key: "ic3", label: "IC3" },     { key: "ic4", label: "IC4" },{ key: "area5", label: "IB4" },
                     { key: "area6", label: "IB6" }, { key: "area1", label: "Zona Hípico" },
                     { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
 
@@ -684,12 +684,8 @@ const MapaConCapas = () => {
 
                     { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
 
-                    { key: "area5", label: "Area 5 nueva fran" },
-                        { key: "area6", label: "Area 6 nueva agos" },
-  { key: "rutas1", label: "Rutas 1" },
-  
-    { key: "ic3", label: "Ic3" },
-        { key: "ic4", label: "ic4" },
+    
+    
                         
 
                 ].map(({ key, label }) => (
