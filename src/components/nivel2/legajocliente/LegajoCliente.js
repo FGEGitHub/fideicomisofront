@@ -179,7 +179,7 @@ const LegajoCliente = (props) => {
         },
         
         {
-          name: "ve online",
+          name: "ver online",
           options: {
               customBodyRenderLite: (dataIndex, rowIndex) =>
                   verFile(
@@ -209,24 +209,33 @@ const LegajoCliente = (props) => {
           
       ]
 
-      function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
-        return (
-          <>
-    <div>
-            < ModalSeguro
-            id = {products[0][dataIndex].id}
-            getData = { async () => {
-              const  data = await servicioCliente.traerLejagos(cuil_cuit)
-                   
-                    setProducts(data)
-                }} />
-            
-          
-            </div>
-          </>
-        );
-      }
-      
+     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
+
+  const item = products[0][dataIndex];
+
+  return (
+    <>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        
+        <ModalSeguro
+          id={item.id}
+          getData={async () => {
+            const data = await servicioCliente.traerLejagos(cuil_cuit);
+            setProducts(data);
+          }}
+        />
+
+        {/* 🔴 Mostrar ! solo si no tiene comprobante */}
+        {item.comprobanteok === "No" && (
+          <span style={{ color: "red", fontWeight: "bold" }}>
+            !
+          </span>
+        )}
+
+      </div>
+    </>
+  );
+}
       const optionss = {
     
         setTableProps: () => {
