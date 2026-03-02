@@ -16,7 +16,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import { Paper, Button, Box, Typography, Divider } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Skeleton from "@mui/material/Skeleton";
@@ -29,8 +28,6 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,6 +48,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     borderBottom: `1px solid ${alpha("#01567c", 0.10)}`,
     paddingTop: 14,
     paddingBottom: 14,
+
+    // ✅ clave: que no empuje el layout
+    minWidth: 0,
+    maxWidth: 140,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
 }));
 
@@ -92,6 +96,7 @@ const Lotes = (props) => {
     setUniqueClients(clients);
     setLoading(false);
   };
+
   const abrirCompensar = (id_cuota) => {
     setCuotaOrigen(id_cuota);
     setCuotaCompensada("");
@@ -101,12 +106,13 @@ const Lotes = (props) => {
   const cerrarCompensar = () => {
     setOpenCompensar(false);
   };
+
   const confirmarCompensar = async () => {
     if (!cuotaCompensada) return alert("Seleccione una cuota");
 
     const rta = await servicioCuotas.compensaric3({
       id_compensada: cuotaCompensada,
-      id_dedonde: cuotaOrigen
+      id_dedonde: cuotaOrigen,
     });
 
     alert(rta);
@@ -118,12 +124,13 @@ const Lotes = (props) => {
     if (selectedClient === null) {
       setFilteredCuotas(response);
     } else {
-      const nuevas = response.filter(c => c.id_cliente === selectedClient);
+      const nuevas = response.filter((c) => c.id_cliente === selectedClient);
       setFilteredCuotas(nuevas);
     }
 
     setOpenCompensar(false);
   };
+
   const obtenerCuotaCompensadora = (idCompensada) => {
     if (!idCompensada || idCompensada === "No") return null;
     return cuotas?.find((c) => c.id === Number(idCompensada));
@@ -138,7 +145,9 @@ const Lotes = (props) => {
       setFilteredCuotas(cuotas);
     } else {
       console.log("Cuotas antes del filtro:", cuotas);
-      const nuevasCuotas = cuotas.filter((cuota) => cuota.id_cliente === id_cliente);
+      const nuevasCuotas = cuotas.filter(
+        (cuota) => cuota.id_cliente === id_cliente
+      );
       console.log("Cuotas después del filtro:", nuevasCuotas);
       setFilteredCuotas(nuevasCuotas);
     }
@@ -149,13 +158,17 @@ const Lotes = (props) => {
       <>
         <Tooltip title="Editar">
           <EditIcon
-            onClick={() => navigate("/usuario2/modificarcliente/" + clients[dataIndex].cuil_cuit)}
+            onClick={() =>
+              navigate("/usuario2/modificarcliente/" + clients[dataIndex].cuil_cuit)
+            }
             style={{ marginRight: "10px", cursor: "pointer" }}
           />
         </Tooltip>
         <Tooltip title="Ver">
           <SearchIcon
-            onClick={() => navigate("/usuario2/detallecliente/" + clients[dataIndex].cuil_cuit)}
+            onClick={() =>
+              navigate("/usuario2/detallecliente/" + clients[dataIndex].cuil_cuit)
+            }
             style={{ marginRight: "10px", cursor: "pointer" }}
           />
         </Tooltip>
@@ -173,8 +186,10 @@ const Lotes = (props) => {
       0
     );
     const diferencia = totalCuotas - totalPagado;
-    const cuotasCalculadas = filteredCuotas.filter((fila) => !isNaN(fila.ajuste)).length;
-    const cuotasNoCalculadas = filteredCuotas.filter((fila) => isNaN(fila.ajuste)).length;
+    const cuotasCalculadas = filteredCuotas.filter((fila) => !isNaN(fila.ajuste))
+      .length;
+    const cuotasNoCalculadas = filteredCuotas.filter((fila) => isNaN(fila.ajuste))
+      .length;
 
     return {
       totalPagado: totalPagado.toFixed(2),
@@ -192,9 +207,15 @@ const Lotes = (props) => {
         width: "100%",
         maxWidth: "100%",
         minWidth: 0,
+
+        // ✅ NADA de scroll horizontal en página
+        overflowX: "hidden",
+
+        // ✅ permite que los hijos se encojan (evita “empujes” raros de MUI)
+        "& *": { minWidth: 0 },
       }}
     >
-      {/* ===== HEADER CARD (como imagen) ===== */}
+      {/* ===== HEADER CARD ===== */}
       <Paper
         elevation={0}
         sx={{
@@ -210,7 +231,8 @@ const Lotes = (props) => {
           sx={{
             px: { xs: 2, md: 3 },
             py: { xs: 2, md: 2.5 },
-            background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+            background:
+              "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
             color: "#fff",
             display: "flex",
             alignItems: { xs: "flex-start", md: "center" },
@@ -240,14 +262,12 @@ const Lotes = (props) => {
                 textShadow: "0 1px 6px rgba(0,0,0,0.25)",
               }}
             >
-              {/* No invento datos: solo texto UI */}
               Seleccioná un cliente para ver sus cuotas.
             </Typography>
           </Box>
-
         </Box>
 
-        {/* BOTONES FILTRO (como imagen) */}
+        {/* FILTRO */}
         <Box sx={{ px: { xs: 2, md: 3 }, py: 2 }}>
           <Box
             sx={{
@@ -260,7 +280,11 @@ const Lotes = (props) => {
             <FormControl
               size="small"
               sx={{
-                minWidth: 260,
+                width: 260, // ✅ fijo: no agranda con el valor
+                maxWidth: "100%",
+                flexShrink: 0,
+                minWidth: 0,
+
                 "& .MuiInputLabel-root": {
                   color: alpha("#0b4f6c", 0.85),
                   fontWeight: 800,
@@ -292,6 +316,35 @@ const Lotes = (props) => {
                   const v = e.target.value;
                   handleClientFilter(v === "ALL" ? null : v);
                 }}
+                // ✅ NO agranda: trunca el valor seleccionado
+                renderValue={(val) => {
+                  const label = val === "ALL" ? "Todos" : `Cliente ${val}`;
+                  return (
+                    <Box sx={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+                      <Box
+                        component="span"
+                        sx={{
+                          minWidth: 0,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          display: "block",
+                        }}
+                      >
+                        {label}
+                      </Box>
+                    </Box>
+                  );
+                }}
+                sx={{
+                  width: "100%",
+                  "& .MuiSelect-select": {
+                    minWidth: 0,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  },
+                }}
                 MenuProps={{
                   PaperProps: {
                     sx: {
@@ -299,6 +352,8 @@ const Lotes = (props) => {
                       mt: 1,
                       border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
                       boxShadow: "0 18px 40px rgba(0,0,0,0.12)",
+                      maxWidth: 360, // ✅ evita menú gigante
+                      overflowX: "hidden",
                     },
                   },
                 }}
@@ -308,14 +363,17 @@ const Lotes = (props) => {
                 </MenuItem>
 
                 {uniqueClients.map((id_cliente) => (
-                  <MenuItem key={id_cliente} value={id_cliente} sx={{ fontWeight: 750 }}>
+                  <MenuItem
+                    key={id_cliente}
+                    value={id_cliente}
+                    sx={{ fontWeight: 750 }}
+                  >
                     Cliente {id_cliente}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
-            {/* Chip informativo opcional (ya existía algo similar) */}
             <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
               <Box
                 sx={{
@@ -333,7 +391,6 @@ const Lotes = (props) => {
               </Box>
             </Box>
           </Box>
-
 
           <Divider sx={{ mt: 2, borderColor: alpha("#0b4f6c", 0.12) }} />
         </Box>
@@ -362,10 +419,7 @@ const Lotes = (props) => {
           <>
             {showCuotas ? (
               <>
-                {/* Mantengo tu componente tal cual */}
-
-
-                {/* Tu recuadro de estado financiero (mismos cálculos, solo diseño) */}
+                {/* RESUMEN */}
                 <Box sx={{ px: { xs: 2, md: 3 }, pt: 2 }}>
                   {(() => {
                     const resumen = calcularResumenFinanciero();
@@ -393,14 +447,14 @@ const Lotes = (props) => {
                           </Typography>
                         </Box>
 
-                        <Box
-                          sx={{
-                            p: 2,
-                            display: "grid",
-                            gap: 1.2,
-                          }}
-                        >
-                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Box sx={{ p: 2, display: "grid", gap: 1.2 }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: 2,
+                            }}
+                          >
                             <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
                               Cuotas calculadas
                             </Typography>
@@ -409,7 +463,13 @@ const Lotes = (props) => {
                             </Typography>
                           </Box>
 
-                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: 2,
+                            }}
+                          >
                             <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
                               Cuotas no calculadas
                             </Typography>
@@ -420,7 +480,13 @@ const Lotes = (props) => {
 
                           <Divider sx={{ borderColor: alpha("#01567c", 0.12) }} />
 
-                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: 2,
+                            }}
+                          >
                             <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
                               Total Pagado
                             </Typography>
@@ -429,16 +495,31 @@ const Lotes = (props) => {
                             </Typography>
                           </Box>
 
-                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: 2,
+                            }}
+                          >
                             <Typography sx={{ fontWeight: 700, color: "#0b2b3a" }}>
                               Total Cuotas con Ajuste
                             </Typography>
                             <Typography sx={{ fontWeight: 900, color: "#148D8D" }}>
-                              ${new Intl.NumberFormat("de-DE").format(resumen.totalCuotas)}
+                              $
+                              {new Intl.NumberFormat("de-DE").format(
+                                resumen.totalCuotas
+                              )}
                             </Typography>
                           </Box>
 
-                          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              gap: 2,
+                            }}
+                          >
                             <Typography sx={{ fontWeight: 800, color: "#0b2b3a" }}>
                               Diferencia
                             </Typography>
@@ -457,20 +538,24 @@ const Lotes = (props) => {
                         </Box>
                       </Paper>
                     );
-                  })()}<Box
+                  })()}
+
+                  <Box
                     sx={{
-                      px: { xs: 2, md: 3 },
+                      px: { xs: 0, md: 0 },
                       pt: 2,
                       display: "flex",
                       justifyContent: "flex-end",
                     }}
                   >
-                    <CancelarLote id_cliente={selectedClient} cuotas={filteredCuotas} />
+                    <CancelarLote
+                      id_cliente={selectedClient}
+                      cuotas={filteredCuotas}
+                    />
                   </Box>
-
                 </Box>
 
-                {/* TABLA (como imagen) */}
+                {/* TABLA */}
                 <Box sx={{ px: { xs: 1.5, md: 2 }, pt: 2, pb: 2 }}>
                   <Box
                     sx={{
@@ -484,6 +569,7 @@ const Lotes = (props) => {
                       sx={{
                         maxHeight: "56vh",
                         overflowY: "auto",
+                        overflowX: "hidden", // ✅ nada de scroll horizontal en el cuadro
                         "&::-webkit-scrollbar": { width: 10 },
                         "&::-webkit-scrollbar-thumb": {
                           background: alpha("#0b4f6c", 0.28),
@@ -491,121 +577,208 @@ const Lotes = (props) => {
                         },
                       }}
                     >
-                      <Table stickyHeader>
+                      <Table stickyHeader sx={{ tableLayout: "fixed", width: "100%" }}>
                         <TableHead>
                           <TableRow>
-                            <StyledTableCell sx={{ width: "7%" }}><b>ID</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "7%" }}><b>CUOTA</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "7%" }}><b>FECHA</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>SALDO INICIAL</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "8%" }}><b>ICC</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "8%" }}><b>AJUSTE</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>CUOTA CON AJUSTE</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>PAGO</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>SALDO FINAL</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>SALDO REAL</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>DIFERENCIA</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "12%" }}><b>PAGAR</b></StyledTableCell>
-                            <StyledTableCell sx={{ width: "10%" }}><b>DETALLE DE PAGOS</b></StyledTableCell>
-
+                            <StyledTableCell sx={{ width: "7%" }}>
+                              <b>ID</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "7%" }}>
+                              <b>CUOTA</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "8%" }}>
+                              <b>FECHA</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "10%" }}>
+                              <b>SALDO INICIAL</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "7%" }}>
+                              <b>ICC</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "7%" }}>
+                              <b>AJUSTE</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "10%" }}>
+                              <b>CUOTA CON AJUSTE</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "9%" }}>
+                              <b>PAGO</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "9%" }}>
+                              <b>SALDO FINAL</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "9%" }}>
+                              <b>SALDO REAL</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "9%" }}>
+                              <b>DIFERENCIA</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "12%" }}>
+                              <b>PAGAR</b>
+                            </StyledTableCell>
+                            <StyledTableCell sx={{ width: "11%" }}>
+                              <b>DETALLE</b>
+                            </StyledTableCell>
                           </TableRow>
                         </TableHead>
 
                         <TableBody>
                           {filteredCuotas.map((row) => (
-                            <StyledTableRow key={row.name}>
+                            <StyledTableRow key={row.id}>
                               <StyledTableCell>{row.id_cliente}</StyledTableCell>
                               <StyledTableCell>{row.cuota}</StyledTableCell>
                               <StyledTableCell>
-                                {row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/{row.anio}
+                                {row.mes < 10 ? <>0{row.mes}</> : <>{row.mes}</>}/
+                                {row.anio}
                               </StyledTableCell>
 
                               <StyledTableCell>
-                                <span style={{ whiteSpace: "nowrap" }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "block",
+                                    minWidth: 0,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   $ <b>{new Intl.NumberFormat("de-DE").format(row.saldo_inicial)}</b>
-                                </span>
+                                </Box>
                               </StyledTableCell>
 
-                              <StyledTableCell>{parseFloat(row.ajuste_icc).toFixed(3)}</StyledTableCell>
+                              <StyledTableCell>
+                                {parseFloat(row.ajuste_icc).toFixed(3)}
+                              </StyledTableCell>
+
                               <StyledTableCell>{row.ajuste}</StyledTableCell>
 
                               <StyledTableCell>
-                                <span style={{ whiteSpace: "nowrap" }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "block",
+                                    minWidth: 0,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   $ <b>{new Intl.NumberFormat("de-DE").format(row.cuota_con_ajuste)}</b>
-                                </span>
+                                </Box>
                               </StyledTableCell>
 
                               <StyledTableCell>
-                                <span style={{ whiteSpace: "nowrap" }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "block",
+                                    minWidth: 0,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   $ <b>{new Intl.NumberFormat("de-DE").format(row.pago)}</b>
-                                </span>
+                                </Box>
                               </StyledTableCell>
 
                               <StyledTableCell>
-                                <span style={{ whiteSpace: "nowrap" }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "block",
+                                    minWidth: 0,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   $ <b>{new Intl.NumberFormat("de-DE").format(row.saldo_final)}</b>
-                                </span>
+                                </Box>
                               </StyledTableCell>
 
                               <StyledTableCell>
-                                <span style={{ whiteSpace: "nowrap" }}>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "block",
+                                    minWidth: 0,
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
                                   $ <b>{new Intl.NumberFormat("de-DE").format(row.saldo_real)}</b>
-                                </span>
+                                </Box>
                               </StyledTableCell>
 
                               <StyledTableCell>
                                 {row.excedente < 0 ? (
-                                  <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.5 }}>
-
-                                    {/* Número negativo */}
+                                  <Box
+                                    sx={{
+                                      display: "flex",
+                                      alignItems: "baseline",
+                                      gap: 0.5,
+                                      minWidth: 0,
+                                      overflow: "hidden",
+                                    }}
+                                  >
                                     <Typography
                                       sx={{
                                         m: 0,
                                         fontWeight: 900,
                                         color: "crimson",
-                                        whiteSpace: "nowrap"
+                                        whiteSpace: "nowrap",
                                       }}
                                     >
                                       {new Intl.NumberFormat("de-DE").format(row.excedente)}
                                     </Typography>
 
-                                    {/* Texto compensada si corresponde */}
-                                    {row.compensada && row.compensada !== "No" && (() => {
-
-                                      const cuotaOrigen = obtenerCuotaCompensadora(row.compensada);
-
-                                      return (
-                                        <Box sx={{ lineHeight: 1.1, mt: 0.3 }}>
-
-                                          {/* Línea 1: Compensada + cuota */}
-                                          <Typography
-                                            sx={{
-                                              fontSize: "0.72rem",
-                                              fontWeight: 700,
-                                              color: "#555",
-                                              whiteSpace: "nowrap",
-                                            }}
-                                          >
-                                            Pagada
-                                            {cuotaOrigen &&
-                                              ` ${String(cuotaOrigen.mes).padStart(2, "0")}/${cuotaOrigen.anio}`}
-                                          </Typography>
-
-                                          {/* Línea 2: Fecha */}
-                                          {row.fecha_compensada && (
+                                    {row.compensada &&
+                                      row.compensada !== "No" &&
+                                      (() => {
+                                        const cuotaOrigen2 = obtenerCuotaCompensadora(
+                                          row.compensada
+                                        );
+                                        return (
+                                          <Box sx={{ lineHeight: 1.1, mt: 0.3, minWidth: 0 }}>
                                             <Typography
                                               sx={{
-                                                fontSize: "0.68rem",
-                                                color: "#888",
+                                                fontSize: "0.72rem",
+                                                fontWeight: 700,
+                                                color: "#555",
                                                 whiteSpace: "nowrap",
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
                                               }}
                                             >
-                                              {new Date(row.fecha_compensada).toLocaleDateString("es-AR")}
+                                              Pagada
+                                              {cuotaOrigen2 &&
+                                                ` ${String(cuotaOrigen2.mes).padStart(
+                                                  2,
+                                                  "0"
+                                                )}/${cuotaOrigen2.anio}`}
                                             </Typography>
-                                          )}
-                                        </Box>
-                                      );
-                                    })()}
+
+                                            {row.fecha_compensada && (
+                                              <Typography
+                                                sx={{
+                                                  fontSize: "0.68rem",
+                                                  color: "#888",
+                                                  whiteSpace: "nowrap",
+                                                  overflow: "hidden",
+                                                  textOverflow: "ellipsis",
+                                                }}
+                                              >
+                                                {new Date(
+                                                  row.fecha_compensada
+                                                ).toLocaleDateString("es-AR")}
+                                              </Typography>
+                                            )}
+                                          </Box>
+                                        );
+                                      })()}
                                   </Box>
                                 ) : (
                                   <Typography
@@ -613,7 +786,9 @@ const Lotes = (props) => {
                                       m: 0,
                                       fontWeight: 900,
                                       color: "#148D8D",
-                                      whiteSpace: "nowrap"
+                                      whiteSpace: "nowrap",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
                                     }}
                                   >
                                     {new Intl.NumberFormat("de-DE").format(row.excedente)}
@@ -621,7 +796,7 @@ const Lotes = (props) => {
                                 )}
                               </StyledTableCell>
 
-                              {/* ✅ Columna 1: PAGAR / COMPENSAR */}
+                              {/* PAGAR / COMPENSAR */}
                               <StyledTableCell align="center">
                                 <Box
                                   sx={{
@@ -632,14 +807,13 @@ const Lotes = (props) => {
                                     flexWrap: "wrap",
                                   }}
                                 >
-                                  {/* NO toco lógica del componente Pagorapido */}
                                   <Box
                                     sx={{
                                       "& .MuiButtonBase-root": {
                                         borderRadius: 2,
                                         px: 1.6,
-                                        py: 0.55,          // ✅ más bajo
-                                        minHeight: 30,     // ✅ altura fija como los otros
+                                        py: 0.55,
+                                        minHeight: 30,
                                         fontSize: "0.82rem",
                                         fontWeight: 900,
                                         textTransform: "none",
@@ -652,15 +826,21 @@ const Lotes = (props) => {
                                       id_cuota={row.id}
                                       cuota_con_ajuste={row.cuota_con_ajuste}
                                       traer={async () => {
-                                        const clients = await servicioCuotas.traercuotasic3(props.cuil_cuit);
-                                        setCuotas(clients);
+                                        const clients2 = await servicioCuotas.traercuotasic3(
+                                          props.cuil_cuit
+                                        );
+                                        setCuotas(clients2);
                                         setLoading(false);
-                                        if (selectedClient === null) setFilteredCuotas(clients);
-                                        else setFilteredCuotas(clients.filter((cuota) => cuota.id_cliente === selectedClient));
+                                        if (selectedClient === null) setFilteredCuotas(clients2);
+                                        else
+                                          setFilteredCuotas(
+                                            clients2.filter(
+                                              (cuota) => cuota.id_cliente === selectedClient
+                                            )
+                                          );
                                       }}
                                     />
                                   </Box>
-
 
                                   <Button
                                     variant="contained"
@@ -673,6 +853,7 @@ const Lotes = (props) => {
                                       backgroundColor: "#0f7f86",
                                       boxShadow: "0 10px 20px rgba(20,141,141,0.18)",
                                       "&:hover": { backgroundColor: "#0c6b71" },
+                                      whiteSpace: "nowrap",
                                     }}
                                     onClick={() => abrirCompensar(row.id)}
                                   >
@@ -681,12 +862,14 @@ const Lotes = (props) => {
                                 </Box>
                               </StyledTableCell>
 
-                              {/* ✅ Columna 2: DETALLE DE PAGOS (solo Ver pagos) */}
+                              {/* DETALLE */}
                               <StyledTableCell align="center">
                                 <Button
                                   variant="contained"
                                   size="small"
-                                  onClick={() => navigate("/usuario2/pagoscuotasic3/" + row.id)}
+                                  onClick={() =>
+                                    navigate("/usuario2/pagoscuotasic3/" + row.id)
+                                  }
                                   sx={{
                                     borderRadius: 2,
                                     textTransform: "none",
@@ -700,7 +883,6 @@ const Lotes = (props) => {
                                   Ver pagos
                                 </Button>
                               </StyledTableCell>
-
                             </StyledTableRow>
                           ))}
                         </TableBody>
@@ -711,12 +893,15 @@ const Lotes = (props) => {
               </>
             ) : (
               <Box sx={{ p: 3 }}>
-                Debes seleccionar el cliente, para poder acceder a su cuadro de cuotas correspondiente.
+                Debes seleccionar el cliente, para poder acceder a su cuadro de cuotas
+                correspondiente.
               </Box>
             )}
           </>
         )}
       </Paper>
+
+      {/* DIALOG COMPENSAR */}
       <Dialog
         open={openCompensar}
         onClose={cerrarCompensar}
@@ -726,7 +911,6 @@ const Lotes = (props) => {
           sx: {
             borderRadius: 4,
             overflow: "hidden",
-           
             background: "rgba(255,255,255,0.94)",
             backdropFilter: "blur(10px)",
             boxShadow: "0 28px 80px rgba(0,0,0,0.28)",
@@ -746,7 +930,8 @@ const Lotes = (props) => {
             color: "#fff",
             fontWeight: 900,
             letterSpacing: 0.2,
-            background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
+            background:
+              "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
             textShadow: "0 2px 10px rgba(0,0,0,0.35)",
           }}
         >
@@ -798,8 +983,40 @@ const Lotes = (props) => {
                     border: `1px solid ${alpha("#0b4f6c", 0.12)}`,
                     boxShadow: "0 18px 45px rgba(0,0,0,0.14)",
                     overflow: "hidden",
+                    maxWidth: "100%",
                   },
                 },
+              }}
+              sx={{
+                "& .MuiSelect-select": {
+                  minWidth: 0,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                },
+              }}
+              renderValue={(val) => {
+                const c = filteredCuotas?.find((x) => x?.id === Number(val));
+                if (!val || !c) return "";
+                const label = `${String(c.mes).padStart(2, "0")}/${c.anio} - Diferencia: ${new Intl.NumberFormat(
+                  "de-DE"
+                ).format(c.excedente)}`;
+                return (
+                  <Box sx={{ minWidth: 0, overflow: "hidden" }}>
+                    <Box
+                      component="span"
+                      sx={{
+                        display: "block",
+                        minWidth: 0,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {label}
+                    </Box>
+                  </Box>
+                );
               }}
             >
               {Array.isArray(filteredCuotas) &&
@@ -889,7 +1106,6 @@ const Lotes = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-
     </Box>
   );
 };
