@@ -229,8 +229,9 @@ const MapaConCapas = () => {
         ZPA: false,
         ic3: false,
         ic4: false,
+        ic42: false,
     });
-  const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3","ic4"].includes(  nombreCapaSeleccionada
+  const esAreaEspecial = ["area1", "area2", "area3", "area4","area5","area6", "ic3","ic4", "ic42"].includes(  nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
@@ -338,7 +339,13 @@ const MapaConCapas = () => {
                 setGeojsonData((prev) => ({ ...prev, ic4: normalizado }));
             })
             .catch(console.error);
-        
+             fetch("/ic42.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "ic42");
+                setGeojsonData((prev) => ({ ...prev, ic42: normalizado }));
+            })
+            .catch(console.error);
          fetch("/rutas1.geojson")
 
             .then((r) => r.json())
@@ -674,7 +681,7 @@ const MapaConCapas = () => {
                 </div>
 
                 {[
-                    { key: "ic3", label: "IC3" },     { key: "ic4", label: "IC4" },{ key: "area5", label: "IB4" },
+                    { key: "ic3", label: "IC3" },     { key: "ic4", label: "IC4" }, { key: "ic42", label: "IC42" },{ key: "area5", label: "IB4" },
                     { key: "area6", label: "IB6" }, { key: "area1", label: "Zona Hípico" },
                     { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
 
@@ -894,7 +901,7 @@ const MapaConCapas = () => {
 
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3", "ic4"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1","ic3", "ic4", "ic42"].map(
 
                     (nombre) =>
                         capasActivas[nombre] &&
@@ -983,7 +990,20 @@ const MapaConCapas = () => {
                                     onEachFeature={onEachFeature}
                                 />
                             ),
-
+ ic42: (
+                                <GeoJSON
+                                    key="ic42"
+                                    data={geojsonData.ic42}
+                                    style={() => ({
+                                        fillColor: "red",
+                                        fillOpacity: 0.15,
+                                        color: "red",
+                                        weight: 2,
+                                        opacity: 1,
+                                    })}
+                                    onEachFeature={onEachFeature}
+                                />
+                            ),
                             rutas1: (
                                 <GeoJSON
                                     key="rutas1"
