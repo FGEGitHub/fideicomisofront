@@ -249,8 +249,8 @@ export default function ModalDetalleDeudor({
   const esIC3 = Boolean(
     clienteBase?.esIC3 ||
       clienteBase?.es_ic3 ||
-      (String(clienteBase?.tipo ?? "").toLowerCase() === "ic3") ||
-      (String(clienteBase?.sistema ?? "").toLowerCase() === "ic3")
+      (String(clienteBase?.tipo ?? "").toLowerCase() == "ic3") ||
+      (String(clienteBase?.zona ?? "").toLowerCase() == "ic3")
   );
 
   // ✅ Rutas EXACTAS como vos las usás en el resto del sistema (SIN encodeURIComponent)
