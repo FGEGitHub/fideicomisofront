@@ -468,6 +468,39 @@ const ModificacionC = () => {
                                     Sector Público Nacional, Provincial o Municipal
                                   </MenuItem>
                                 </TextField>
+                                 <TextField
+    select
+    label="Antigüedad"
+    name="antiguedad"
+    value={modificaciones.antiguedad || ""}
+    onChange={(e) =>
+      setModificaciones({
+        ...modificaciones,
+        antiguedad: e.target.value,
+      })
+    }
+    fullWidth
+    variant="outlined"
+    margin="normal"
+    size="small"
+    sx={{ ...sxInput, mt: 0 }}
+  >
+    <MenuItem value="Mayor a 21 años">
+      Mayor a 21 años
+    </MenuItem>
+    <MenuItem value="Entre 11 y 20 años">
+      Entre 11 y 20 años
+    </MenuItem>
+    <MenuItem value="Entre 6 y 10 años">
+      Entre 6 y 10 años
+    </MenuItem>
+    <MenuItem value="Entre 2 y 5 años">
+      Entre 2 y 5 años
+    </MenuItem>
+    <MenuItem value="Menor o igual a 1 años">
+      Menor o igual a 1 años
+    </MenuItem>
+  </TextField>
                               </Grid>
                             )}
 
