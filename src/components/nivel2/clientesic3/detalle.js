@@ -17,8 +17,6 @@ import servicioCliente from "../../../services/clientes";
 import Ingreso from "../detalleclienteIngresos/Ingresos";
 import PEP from "../detalleclienteIngresos/DeterminarPep";
 import Cuotas from "../cuotasic3/tabla";
-import { alpha } from "@mui/material/styles";
-
 
 const DetalleCliente = () => {
   const navigate = useNavigate();
@@ -51,12 +49,21 @@ const DetalleCliente = () => {
   return (
     <Box
       sx={{
-        p: { xs: 2, md: 3 },
+        // ✅ evita “cortes” por altura y permite scroll vertical
+        minHeight: "100vh",
+        width: "100%",
+        boxSizing: "border-box",
+        overflowX: "hidden",
+        overflowY: "auto",
+
+        // ✅ paddings más “notebook friendly”
+        p: { xs: 1.25, sm: 2, md: 2.5 },
+
         background:
           "linear-gradient(180deg, rgba(10,59,79,0.05) 0%, rgba(255,255,255,1) 100%)",
       }}
     >
-      {/* HEADER CLIENTE (igual a la 2da imagen) */}
+      {/* HEADER CLIENTE */}
       <Paper
         elevation={0}
         sx={{
@@ -65,10 +72,10 @@ const DetalleCliente = () => {
           border: "1px solid #e8eef5",
           background:
             "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #0f7f86 100%)",
-          mb: 2,
+          mb: { xs: 1.25, md: 2 },
         }}
       >
-        <Box sx={{ p: { xs: 2, md: 2.5 }, color: "#fff" }}>
+        <Box sx={{ p: { xs: 1.5, md: 2.5 }, color: "#fff" }}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={1.5}
@@ -91,7 +98,7 @@ const DetalleCliente = () => {
               </Typography>
             </Box>
 
-            {/* ACCIONES ARRIBA A LA DERECHA (como la 2da imagen) */}
+            {/* ACCIONES */}
             <Box
               sx={{
                 display: "flex",
@@ -100,7 +107,7 @@ const DetalleCliente = () => {
                 flexWrap: "wrap",
               }}
             >
-              {/* PEP (NO TOCO NADA, solo lo ubico como botón en el header) */}
+              {/* PEP */}
               <Box
                 sx={{
                   "& .MuiButton-root": {
@@ -143,19 +150,20 @@ const DetalleCliente = () => {
                   ACTUALIZAR COMPROBANTES
                 </Button>
               )}
-            </Box> </Stack>
+            </Box>
+          </Stack>
         </Box>
-
       </Paper>
 
-      <Paper
-        elevation={0}
-        sx={{
-          p: 1,
-          background: "transparent",
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+      <Paper elevation={0} sx={{ p: 0.5, background: "transparent", mb: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexWrap: "wrap",
+            justifyContent: "flex-end",
+          }}
+        >
           {expuesta ? (
             <Alert severity="warning" variant="filled">
               Persona PEP
@@ -170,8 +178,7 @@ const DetalleCliente = () => {
         <>
           <Alert severity="success" sx={{ mb: 2 }}>
             <b>
-              Cliente habilitado por {cliente.cuil_cuit}, el día{" "}
-              {cliente.fecha}
+              Cliente habilitado por {cliente.cuil_cuit}, el día {cliente.fecha}
             </b>
           </Alert>
 
@@ -184,28 +191,33 @@ const DetalleCliente = () => {
       ) : (
         <Alert severity="error">
           <b>
-            Cliente no habilitado por {cliente.cuil_cuit}, el día{" "}
-            {cliente.fecha}
+            Cliente no habilitado por {cliente.cuil_cuit}, el día {cliente.fecha}
           </b>
           . No se puede asignar lote.
         </Alert>
       )}
 
-      {/* CHIP PEP ABAJO (opcional, prolijo) */}
-
-
-
       {/* INFO CLIENTE */}
-      <Paper sx={{ borderRadius: 3, p: 2.5, mb: 2 }}>
+      <Paper sx={{ borderRadius: 3, p: { xs: 1.5, md: 2.5 }, mb: 2 }}>
         <InfoCliente cuil_cuit={cuil_cuit} />
       </Paper>
 
-
-
       {/* CUOTAS */}
       {cuil_cuit && (
-        <Paper sx={{ borderRadius: 3, p: 2 }}>
-          <Cuotas cuil_cuit={cuil_cuit} />
+        <Paper
+          sx={{
+            borderRadius: 3,
+            p: { xs: 1, md: 2 },
+            overflow: "hidden", // ✅ evita que “rompa” el paper
+          }}
+        >
+          {/* ✅ este wrapper hace que la tabla NO se corte: scrollea horizontal */}
+          <Box sx={{ width: "100%", overflowX: "auto" }}>
+            {/* ✅ minWidth para que en notebook se mantenga la tabla completa */}
+            <Box sx={{ minWidth: 1100 }}>
+              <Cuotas cuil_cuit={cuil_cuit} />
+            </Box>
+          </Box>
         </Paper>
       )}
     </Box>
