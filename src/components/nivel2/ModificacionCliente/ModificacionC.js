@@ -498,7 +498,7 @@ const ModificacionC = () => {
       Entre 2 y 5 años
     </MenuItem>
     <MenuItem value="Menor o igual a 1 años">
-      Menor o igual a 1 años
+      Menor o igual a 1 años   
     </MenuItem>
   </TextField>
                               </Grid>
