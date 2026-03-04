@@ -1155,13 +1155,38 @@ console.log(poligono.privado)
                                 <GeoJSON
                                     key="ic3"
                                     data={geojsonData.ic3}
-                                    style={() => ({
-                                        fillColor: "cyan",
-                                        fillOpacity: 0.2,
-                                        color: "blue",
-                                        weight: 3,
-                                        opacity: 1,
-                                    })}
+                                   style={(feature) => {
+    const id = feature?.properties?.id;
+
+    const poligono = poligonosGuardados.find(
+        (p) => String(p.id_mapa) === String(id)
+    );
+
+    // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
+    if (verPublicoPrivado && poligono) {
+        let colorBase = "#9e9e9e"; // gris por defecto
+
+        if (poligono.privado === "privado") colorBase = "#d32f2f";
+        if (poligono.privado === "publico") colorBase = "#2e7d32";
+
+        return {
+            fillColor: colorBase,
+            fillOpacity: 0.9,
+            color: "black", // 👈 borde negro como pediste
+            weight: 3,
+            opacity: 1,
+        };
+    }
+
+    // 🎨 MODO NORMAL (como lo tenías)
+    return {
+        fillColor: "cyan",
+        fillOpacity: 0.2,
+        color: "blue",
+        weight: 3,
+        opacity: 1,
+    };
+}}
                                     onEachFeature={onEachFeature}
                                 />
                             ),
@@ -1169,13 +1194,38 @@ console.log(poligono.privado)
                                 <GeoJSON
                                     key="ic4"
                                     data={geojsonData.ic4}
-                                    style={() => ({
-                                        fillColor: "cyan",
-                                        fillOpacity: 0.2,
-                                        color: "blue",
-                                        weight: 3,
-                                        opacity: 1,
-                                    })}
+                                   style={(feature) => {
+    const id = feature?.properties?.id;
+
+    const poligono = poligonosGuardados.find(
+        (p) => String(p.id_mapa) === String(id)
+    );
+
+    // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
+    if (verPublicoPrivado && poligono) {
+        let colorBase = "#9e9e9e"; // gris por defecto
+
+        if (poligono.privado === "privado") colorBase = "#d32f2f";
+        if (poligono.privado === "publico") colorBase = "#2e7d32";
+
+        return {
+            fillColor: colorBase,
+            fillOpacity: 0.9,
+            color: "black", // 👈 borde negro como pediste
+            weight: 3,
+            opacity: 1,
+        };
+    }
+
+    // 🎨 MODO NORMAL (como lo tenías)
+    return {
+        fillColor: "cyan",
+        fillOpacity: 0.2,
+        color: "blue",
+        weight: 3,
+        opacity: 1,
+    };
+}}
                                     onEachFeature={onEachFeature}
                                 />
                             ),
