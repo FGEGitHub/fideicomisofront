@@ -217,8 +217,9 @@ const MapaConCapas = () => {
     const [verReferencias, setVerReferencias] = useState(true);
     const [verReferenciasTabla, setVerReferenciasTabla] = useState(true);
     const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null);
-    const [cuilCuit, setCuilCuit] = useState("");
+    const [judicializado, setJudicializado] = useState("");
     const [adrema, setAdrema] = useState("");
+     const [privado, setPrivado] = useState("");
     const [superficie, setSuperficie] = useState("");
     const [nombre, setNombre] = useState("");
     const [mensura, setMensura] = useState("");
@@ -438,10 +439,10 @@ const MapaConCapas = () => {
         setTexto(datosBase?.dato1 ?? "");
         setSubclasificacion(datosBase?.subclasificacion ?? "");
         setDescripcion(datosBase?.descripcion ?? "");
-      
+      setPrivado(datosBase?.privado ?? "");
         setAdrema(datosBase?.adrema ?? "");
         setSuperficie(datosBase?.superficie ?? "");
-       
+           setJudicializado(datosBase?.judicializado ?? "");
         setMensura(datosBase?.mensura ?? "");
         setModalDetalleAbierto(true);
         setModalAbierto(false);
@@ -1095,6 +1096,10 @@ const MapaConCapas = () => {
                                         <div className="sc-infoLabel">Descripción</div>
                                         <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
                                     </div>
+                                                <div className="sc-infoItem">
+                                        <div className="sc-infoLabel">Privado/Publico</div>
+                                        <div className="sc-infoValue">{datosZonaSeleccionada.privado || "-"}</div>
+                                    </div>
                                     {esAreaEspecial && (
                                         <>
                                             {/* Fila 1: Nombre + CUIL/CUIT (en sc-grid2 = 2 cols) */}
@@ -1203,7 +1208,32 @@ const MapaConCapas = () => {
                                         ))}
                                     </select>
                                 </div>
-
+  <div className="sc-field">
+                                    <label className="sc-label">Privado/publico</label>
+                                    <select className="sc-select" value={privado} onChange={(e) => setPrivado(e.target.value)}>
+                                        <option value="">Selecciona una opción</option>
+                                       
+                                            <option value={"publico"}>
+                                                Publico
+                                            </option>
+                                      <option  value={"privado"}>
+                                               Privado
+                                            </option>
+                                    </select>
+                                </div>
+                                  <div className="sc-field">
+                                    <label className="sc-label">Judicializado</label>
+                                    <select className="sc-select" value={judicializado } onChange={(e) => setJudicializado(e.target.value)}>
+                                        <option value="">Selecciona una opción</option>
+                                       
+                                            <option value={"No"}>
+                                                No
+                                            </option>
+                                      <option  value={"Si"}>
+                                               Si
+                                            </option>
+                                    </select>
+                                </div>
                                 <div className="sc-field sc-span2">
                                     <label className="sc-label">Descripción</label>
                                     <input
@@ -1282,9 +1312,10 @@ const MapaConCapas = () => {
                                             descripcion,
                                             subclasificacion,
                                             capa: nombreCapaSeleccionada,
-
+                                            privado,
                                             adrema,
                                             superficie,
+                                            judicializado,
                                             mensura,
                                         });
 
