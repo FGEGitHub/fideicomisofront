@@ -1271,7 +1271,7 @@ const MapaConCapas = () => {
             return {
               fillColor: "#d32f2f",
               fillOpacity: 0.85,
-              color: "black",
+              color: "red",
               weight: 3,
               opacity: 1,
             };
@@ -1280,9 +1280,9 @@ const MapaConCapas = () => {
           // 🔴 privado
           if (poligono.privado === "privado") {
             return {
-              fillColor: "#d32f2f",
+              fillColor: "#f04e4e",
               fillOpacity: 0.9,
-              color: "black",
+              color: "red",
               weight: 3,
               opacity: 1,
             };
@@ -1291,9 +1291,9 @@ const MapaConCapas = () => {
           // 🟢 publico
           if (poligono.privado === "publico") {
             return {
-              fillColor: "#2e7d32",
+              fillColor: "#61e268",
               fillOpacity: 0.9,
-              color: "black",
+              color: "green",
               weight: 3,
               opacity: 1,
             };
