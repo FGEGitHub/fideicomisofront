@@ -1183,7 +1183,7 @@ console.log(poligono.privado)
         fillColor: "cyan",
         fillOpacity: 0.2,
         color: "blue",
-        weight: 3,
+        weight: 1,
         opacity: 1,
     };
 }}
@@ -1203,13 +1203,13 @@ console.log(poligono.privado)
 
     // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
     if (verPublicoPrivado && poligono) {
-        let colorBase = "#9e9e9e"; // gris por defecto
+        let colorBase = "#2e7d32"; // gris por defecto
 
         if (poligono.privado === "privado") colorBase = "#d32f2f";
         if (poligono.privado === "publico") colorBase = "#2e7d32";
 
         return {
-            fillColor: colorBase,
+            fillColor: "#2e7d32",
             fillOpacity: 0.9,
             color: "black", // 👈 borde negro como pediste
             weight: 3,
@@ -1218,13 +1218,13 @@ console.log(poligono.privado)
     }
 
     // 🎨 MODO NORMAL (como lo tenías)
-    return {
-        fillColor: "cyan",
-        fillOpacity: 0.2,
-        color: "blue",
-        weight: 3,
-        opacity: 1,
-    };
+    return{
+  fillColor: "#2e7d32",
+  fillOpacity: 0.9,
+  color: "blue",
+  weight: 1,   // borde más fino
+  opacity: 1
+}
 }}
                                     onEachFeature={onEachFeature}
                                 />
