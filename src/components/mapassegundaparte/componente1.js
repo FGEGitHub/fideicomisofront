@@ -73,7 +73,7 @@ const MapaConCapas = () => {
         ic3: false,
         ic4: false,
         ic42: false,
-
+mensura31548Unuevo: false,
         rutas1: false,
     });
 
@@ -235,7 +235,7 @@ const MapaConCapas = () => {
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42","mensura31548Unuevo"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
@@ -350,6 +350,17 @@ const MapaConCapas = () => {
                 setGeojsonData((prev) => ({ ...prev, ic42: normalizado }));
             })
             .catch(console.error);
+                    fetch("/mensura31548Unuevo.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "mensura31548Unuevo");
+                setGeojsonData((prev) => ({ ...prev, mensura31548Unuevo: normalizado }));
+            })
+            .catch(console.error);
+            
+
+
+
         fetch("/rutas1.geojson")
 
             .then((r) => r.json())
@@ -634,7 +645,7 @@ const MapaConCapas = () => {
 
         const poligono = buscarPoligonoDB(poligonosGuardados, id, nombreCapa);
 
-        const pesoBorde = ["ic3", "ic4", "ic42"].includes(nombreCapa) ? 3 : 2;
+        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo"].includes(nombreCapa) ? 3 : 2;
 
         // SIN datos en base
         if (!poligono) {
@@ -725,7 +736,8 @@ const MapaConCapas = () => {
                         { key: "area1", label: "Zona Hípico" },
                         { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
                         { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
-                        { key: "area3", label: "Sin definir" }
+                        { key: "area3", label: "Sin definir" },
+                        { key: "mensura31548Unuevo", label: "Mensura 31548 Unuevo" }
                     ].map(({ key, label }) => (
 
                         <div className="capa-item" key={key}>
@@ -1232,7 +1244,7 @@ const MapaConCapas = () => {
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42"].map(
+                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo"].map(
   (nombre) => {
     if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
