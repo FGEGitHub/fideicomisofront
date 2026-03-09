@@ -1233,30 +1233,85 @@ const MapaConCapas = () => {
                 )}
 
 
-
                 {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42"].map(
-                    (nombre) =>
-                        capasActivas[nombre] &&
-                        geojsonData[nombre] && (
+                    (nombre) => {
+                        if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
+
+                        // 🔵 CASO ESPECIAL ic4
+                        if (nombre === "ic4") {
+                            return (
+                                <GeoJSON
+                                    key="ic4"
+                                    data={geojsonData.ic4}
+                                    style={(feature) => {
+                                        const id = feature?.properties?.id;
+
+                                        const poligono = poligonosGuardados.find(
+                                            (p) => String(p.id_mapa) === String(id)
+                                        );
+
+                                        if (verPublicoPrivado && poligono) {
+                                            let colorBase = "#9e9e9e";
+
+                                            if (poligono.privado === "privado") colorBase = "#d32f2f";
+                                            if (poligono.privado === "publico") colorBase = "#2e7d32";
+
+                                            return {
+                                                fillColor: colorBase,
+                                                fillOpacity: 0.9,
+                                                color: "black",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        return {
+                                            fillColor: "#D64141",
+                                            fillOpacity: 0.2,
+                                            color: "red",
+                                            weight: 3,
+                                            opacity: 1,
+                                        };
+                                    }}
+                                    onEachFeature={onEachFeature}
+                                />
+                            );
+                        }
+
+                        // 🔴 CASO rutas
+                        if (nombre === "rutas1") {
+                            return (
+                                <GeoJSON
+                                    key={nombre}
+                                    data={geojsonData[nombre]}
+                                    style={{
+                                        fillColor: "red",
+                                        fillOpacity: 0.15,
+                                        color: "red",
+                                        weight: 2,
+                                        opacity: 1,
+                                    }}
+                                    onEachFeature={onEachFeature}
+                                />
+                            );
+                        }
+
+                        // 🎨 RESTO DE CAPAS
+                        return (
                             <GeoJSON
                                 key={nombre}
                                 data={geojsonData[nombre]}
-                                style={(feature) => {
-                                    if (nombre === "rutas1") {
-                                        return {
-                                            fillColor: "red",
-                                            fillOpacity: 0.15,
-                                            color: "red",
-                                            weight: 2,
-                                            opacity: 1,
-                                        };
-                                    }
-
-                                    return getStyleAreaEspecial(feature, nombre);
+                                style={{
+                                    fillColor: "red",
+                                    fillOpacity: 0.2,
+                                    color: "red",
+                                    weight: 3,
+                                    opacity: 1,
                                 }}
                                 onEachFeature={onEachFeature}
                             />
-                        )
+                        );
+                    }
                 )}
 
 
