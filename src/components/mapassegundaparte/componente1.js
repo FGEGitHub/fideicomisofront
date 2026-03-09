@@ -1182,7 +1182,7 @@ console.log(poligono.privado)
     return {
         fillColor: "cyan",
         fillOpacity: 0.2,
-        color: "blue",
+        color: "black",
         weight: 1,
         opacity: 1,
     };
@@ -1190,45 +1190,47 @@ console.log(poligono.privado)
                                     onEachFeature={onEachFeature}
                                 />
                             ),
-                            ic4: (
-                                <GeoJSON
-                                    key="ic4"
-                                    data={geojsonData.ic4}
-                                   style={(feature) => {
-    const id = feature?.properties?.id;
+                         ic4: (
+  <GeoJSON
+    key="ic4"
+    data={geojsonData.ic4}
+    style={(feature) => {
+      const id = feature?.properties?.id;
 
-    const poligono = poligonosGuardados.find(
+      const poligono = poligonosGuardados.find(
         (p) => String(p.id_mapa) === String(id)
-    );
+      );
 
-    // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
-    if (verPublicoPrivado && poligono) {
-        let colorBase = "#2e7d32"; // gris por defecto
+      // 🔴🟢 MODO PUBLICO / PRIVADO ACTIVADO
+      if (verPublicoPrivado) {
+        let colorBase = "#2e7d32"; // verde por defecto
 
-        if (poligono.privado === "privado") colorBase = "#d32f2f";
-        if (poligono.privado === "publico") colorBase = "#2e7d32";
+        if (poligono) {
+          if (poligono.privado === "privado") colorBase = "#d32f2f";
+          if (poligono.privado === "publico") colorBase = "#2e7d32";
+        }
 
         return {
-            fillColor: "#2e7d32",
-            fillOpacity: 0.9,
-            color: "black", // 👈 borde negro como pediste
-            weight: 3,
-            opacity: 1,
+          fillColor: colorBase,
+          fillOpacity: 0.9,
+          color: "black",
+          weight: 1,
+          opacity: 1,
         };
-    }
+      }
 
-    // 🎨 MODO NORMAL (como lo tenías)
-    return{
-  fillColor: "#2e7d32",
-  fillOpacity: 0.9,
-  color: "blue",
-  weight: 1,   // borde más fino
-  opacity: 1
-}
-}}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
+      // 🎨 MODO NORMAL
+      return {
+        fillColor: "#2e7d32",
+        fillOpacity: 0.9,
+        color: "black",
+        weight: 1,
+        opacity: 1,
+      };
+    }}
+    onEachFeature={onEachFeature}
+  />
+)
 
                         }[nombre]
                 )},
