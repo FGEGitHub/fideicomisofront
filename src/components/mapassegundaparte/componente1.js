@@ -1111,49 +1111,48 @@ const MapaConCapas = () => {
 
                 {/* Zonificación Sta Catalina */}
                 {capasActivas["Zonificación Sta Catalina"] && geojsonData["Zonificación Sta Catalina"] && (
-                    <GeoJSON
-                        key="Zonificación Sta Catalina"
-                        data={geojsonData["Zonificación Sta Catalina"]}
-                        style={(feature) => {
-                            const id = feature.properties?.id;
+                   <GeoJSON
+  key="Zonificación Sta Catalina"
+  data={geojsonData["Zonificación Sta Catalina"]}
+  style={(feature) => {
+    const id = feature.properties?.id;
 
-                            const poligono = poligonosGuardados.find(
-                                (p) => String(p.id_mapa) === String(id)
-                            );
+    const poligono = poligonosGuardados.find(
+      (p) => String(p.id_mapa) === String(id)
+    );
 
-                            let fillColor = "white";
-                            let fillOpacity = 0.2;
-                            let borderColor = "black";
-                            let borderOpacity = 0.5;
+    let fillColor = "#d32f2f"; // 🔴 rojo por defecto
+    let fillOpacity = 0.9;
+    let borderColor = "black";
+    let borderOpacity = 1;
 
-                            if (poligono) {
-                                if (verPublicoPrivado) {
-                                    let colorBase = "#9e9e9e";
+    if (verPublicoPrivado) {
 
-                                    if (poligono.privado === "privado") colorBase = "#d32f2f";
-                                    if (poligono.privado === "publico") colorBase = "#2e7d32";
+      // 🟢 SOLO SI EXISTE Y ES PUBLICO
+      if (poligono && poligono.privado === "publico") {
+        fillColor = "#2e7d32";
+      }
 
-                                    fillColor = colorBase;
-                                    borderColor = colorBase;
-                                    fillOpacity = 0.9;
-                                    borderOpacity = 1;
-                                } else {
-                                    const sub = poligono.subclasificacion;
-                                    fillColor = coloresPorSubclasificacion[sub] || "gray";
-                                    fillOpacity = 0.95;
-                                }
-                            }
+      // 🔴 si no existe o es privado queda rojo
+    } 
+    else {
+      if (poligono) {
+        const sub = poligono.subclasificacion;
+        fillColor = coloresPorSubclasificacion[sub] || "gray";
+        fillOpacity = 0.95;
+      }
+    }
 
-                            return {
-                                fillColor,
-                                color: borderColor,
-                                weight: 1,
-                                opacity: borderOpacity,
-                                fillOpacity,
-                            };
-                        }}
-                        onEachFeature={onEachFeature}
-                    />
+    return {
+      fillColor,
+      color: borderColor,
+      weight: 1,
+      opacity: borderOpacity,
+      fillOpacity,
+    };
+  }}
+  onEachFeature={onEachFeature}
+/>
                 )}
 
                 {/* ZRU Predios La Caja */}
@@ -1234,85 +1233,85 @@ const MapaConCapas = () => {
 
 
                 {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42"].map(
-                    (nombre) => {
-                        if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
+  (nombre) => {
+    if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
-                        // 🔵 CASO ESPECIAL ic4
-                        if (nombre === "ic4") {
-                            return (
-                                <GeoJSON
-                                    key="ic4"
-                                    data={geojsonData.ic4}
-                                    style={(feature) => {
-                                        const id = feature?.properties?.id;
+    // 🔴 CASO ESPECIAL rutas
+    if (nombre === "rutas1") {
+      return (
+        <GeoJSON
+          key={nombre}
+          data={geojsonData[nombre]}
+          style={{
+            fillColor: "red",
+            fillOpacity: 0.15,
+            color: "red",
+            weight: 2,
+            opacity: 1,
+          }}
+          onEachFeature={onEachFeature}
+        />
+      );
+    }
 
-                                        const poligono = poligonosGuardados.find(
-                                            (p) => String(p.id_mapa) === String(id)
-                                        );
+    // 🟢🔴 TODAS LAS DEMÁS CAPAS
+    return (
+      <GeoJSON
+        key={nombre}
+        data={geojsonData[nombre]}
+        style={(feature) => {
+          const id = feature?.properties?.id;
 
-                                        if (verPublicoPrivado && poligono) {
-                                            let colorBase = "#9e9e9e";
+          const poligono = poligonosGuardados.find(
+            (p) => String(p.id_mapa) === String(id)
+          );
 
-                                            if (poligono.privado === "privado") colorBase = "#d32f2f";
-                                            if (poligono.privado === "publico") colorBase = "#2e7d32";
+          // 🔴 no existe
+          if (!poligono) {
+            return {
+              fillColor: "#d32f2f",
+              fillOpacity: 0.85,
+              color: "black",
+              weight: 3,
+              opacity: 1,
+            };
+          }
 
-                                            return {
-                                                fillColor: colorBase,
-                                                fillOpacity: 0.9,
-                                                color: "black",
-                                                weight: 3,
-                                                opacity: 1,
-                                            };
-                                        }
+          // 🔴 privado
+          if (poligono.privado === "privado") {
+            return {
+              fillColor: "#d32f2f",
+              fillOpacity: 0.9,
+              color: "black",
+              weight: 3,
+              opacity: 1,
+            };
+          }
 
-                                        return {
-                                            fillColor: "#D64141",
-                                            fillOpacity: 0.2,
-                                            color: "red",
-                                            weight: 3,
-                                            opacity: 1,
-                                        };
-                                    }}
-                                    onEachFeature={onEachFeature}
-                                />
-                            );
-                        }
+          // 🟢 publico
+          if (poligono.privado === "publico") {
+            return {
+              fillColor: "#2e7d32",
+              fillOpacity: 0.9,
+              color: "black",
+              weight: 3,
+              opacity: 1,
+            };
+          }
 
-                        // 🔴 CASO rutas
-                        if (nombre === "rutas1") {
-                            return (
-                                <GeoJSON
-                                    key={nombre}
-                                    data={geojsonData[nombre]}
-                                    style={{
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    }}
-                                    onEachFeature={onEachFeature}
-                                />
-                            );
-                        }
-
-                        // 🎨 RESTO DE CAPAS
-                        return (
-                            <GeoJSON
-                                key={nombre}
-                                data={geojsonData[nombre]}
-                                style={{
-                                    fillColor: "red",
-                                    fillOpacity: 0.2,
-                                    color: "red",
-                                    weight: 3,
-                                    opacity: 1,
-                                }}
-                                onEachFeature={onEachFeature}
-                            />
-                        );
-                    }
-                )}
+          return {
+            fillColor: "#9e9e9e",
+            fillOpacity: 0.9,
+            color: "black",
+            weight: 3,
+            opacity: 1,
+          };
+        }}
+        onEachFeature={onEachFeature}
+      />
+    );
+  }
+)}
 
 
             </MapContainer>
