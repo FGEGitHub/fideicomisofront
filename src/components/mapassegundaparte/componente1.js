@@ -62,13 +62,19 @@ const MapaConCapas = () => {
         "Planificación Sección Sur": false,
         "Zonificación Sta Catalina": false,
         "ZRU Predios La Caja": false,
+
         area1: false,
         area2: false,
         area3: false,
         area4: false,
         area5: false,
         area6: false,
+
         ic3: false,
+        ic4: false,
+        ic42: false,
+
+        rutas1: false,
     });
 
     const [subCapasActivas, setSubCapasActivas] = useState({
@@ -227,10 +233,7 @@ const MapaConCapas = () => {
         PIT: false,
         "PLC-C": false,
         "PLC-F": false,
-        ZPA: false,
-        ic3: false,
-        ic4: false,
-        ic42: false,
+        ZPA: false
     });
     const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42"].includes(nombreCapaSeleccionada
     );
@@ -626,162 +629,360 @@ const MapaConCapas = () => {
         };
     };
 
+    const getStyleAreaEspecial = (feature, nombreCapa) => {
+        const id = feature?.properties?.id;
 
+        const poligono = buscarPoligonoDB(poligonosGuardados, id, nombreCapa);
+
+        const pesoBorde = ["ic3", "ic4", "ic42"].includes(nombreCapa) ? 3 : 2;
+
+        // SIN datos en base
+        if (!poligono) {
+            return {
+                fillColor: "grey",
+                fillOpacity: 0.15,
+                color: "black",
+                weight: pesoBorde,
+                opacity: 1,
+            };
+        }
+
+        // MODO PÚBLICO / PRIVADO
+        if (verPublicoPrivado) {
+            let colorBase = "#9e9e9e";
+
+            if (poligono.privado === "privado") colorBase = "#d32f2f";
+            if (poligono.privado === "publico") colorBase = "#2e7d32";
+
+            return {
+                fillColor: colorBase,
+                fillOpacity: 0.35,
+                color: colorBase, // borde también rojo/verde
+                weight: pesoBorde,
+                opacity: 1,
+            };
+        }
+
+        // MODO NORMAL
+        return {
+            fillColor: "grey",
+            fillOpacity: 0.15,
+            color: "black",
+            weight: pesoBorde,
+            opacity: 1,
+        };
+    };
 
     return (
         <div className="mapa-contenedor">
             <div className="panel-lateral">
+
+                {/* LOGO */}
+
                 <div className="logo-container">
                     <img src={parcasLogo} alt="Logo PARCAS" className="logo-parcas" />
                 </div>
-                <div className="capa-principal">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={verPublicoPrivado}
-                            onChange={() => setVerPublicoPrivado((p) => !p)}
-                        />
-                        <strong>Ver Público / Privado</strong>
-                    </label>
-                </div>
-                <h3>Capas disponibles</h3>
-
-                <div className="capa-principal">
-                    <input type="checkbox" checked={!!capasActivas.Manzanas} onChange={() => toggleCapaPrincipal("Manzanas")} />
-                    <label>
-                        <strong>Manzanas</strong>
-                    </label>
-                </div>
-
-                <div className="capa-principal">
-                    <input
-                        type="checkbox"
-                        checked={!!capasActivas["Plan Especial"]}
-                        onChange={() => toggleCapaPrincipal("Plan Especial")}
-                    />
-                    <label>
-                        <strong>Plan Especial</strong>
-                    </label>
-
-                    {capasActivas["Plan Especial"] && (
-                        <div className="subcapas">
-                            {[1, 2, 3, 4, 5].map((num) => (
-                                <div key={`planespecial${num}`}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={!!subCapasActivas[`planespecial${num}`]}
-                                            onChange={() => toggleSubCapa(`planespecial${num}`)}
-                                        />
-                                        Plan Especial {num}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                <div className="capa-principal">
-                    <label>
-                        <input type="checkbox" checked={!!capasActivas.Barrios} onChange={() => toggleCapaPrincipal("Barrios")} />
-                        <strong>Calles</strong>
-                    </label>
-                </div>
-
-                <div className="capa-principal">
-                    <input
-                        type="checkbox"
-                        checked={!!capasActivas["Planificación Sección Sur"]}
-                        onChange={() => toggleCapaPrincipal("Planificación Sección Sur")}
-                    />
-                    <label>
-                        <strong>Planificación Sección Sur</strong>
-                    </label>
-
-                    {capasActivas["Planificación Sección Sur"] && (
-                        <div className="subcapas">
-                            {Object.keys(subCapasSur).map((nombre) => (
-                                <div key={nombre}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={!!subCapasSur[nombre]}
-                                            onChange={() => setSubCapasSur((prev) => ({ ...prev, [nombre]: !prev[nombre] }))}
-                                        />
-                                        {nombre}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                <div className="capa-principal">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={!!capasActivas["Zonificación Sta Catalina"]}
-                            onChange={() => toggleCapaPrincipal("Zonificación Sta Catalina")}
-                        />
-                        <strong>Zonificación Sta Catalina</strong>
-                    </label>
-                </div>
-
-                <div className="capa-principal">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={!!capasActivas["ZRU Predios La Caja"]}
-                            onChange={() => toggleCapaPrincipal("ZRU Predios La Caja")}
-                        />
-                        <strong>ZRU Predios La Caja</strong>
-                    </label>
-                </div>
-
-                {[
-                    { key: "ic3", label: "IC3" }, { key: "ic4", label: "IC4" }, { key: "ic42", label: "IC42" }, { key: "area5", label: "IB4" },
-                    { key: "area6", label: "IB6" }, { key: "area1", label: "Zona Hípico" },
-                    { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
 
 
+                {/* VISUALIZACION */}
 
-                    { key: "rutas1", label: "Rutas + Traza Seg. Pte Chaco-Ctes" },
+                <div className="grupo-capas">
 
-                    { key: "area4", label: "Zona Clubes/Gremio S/Traza" }, { key: "area3", label: "Sin definir" },
+                    <div className="grupo-titulo">VISUALIZACIÓN</div>
 
-
-
-
-
-                ].map(({ key, label }) => (
-                    <div className="capa-principal" key={key}>
+                    <div className="capa-item">
                         <label>
+
                             <input
                                 type="checkbox"
-                                checked={!!capasActivas[key]}
-                                onChange={() => toggleCapaPrincipal(key)}
+                                checked={verPublicoPrivado}
+                                onChange={() => setVerPublicoPrivado(p => !p)}
                             />
-                            <strong>{label}</strong>
+
+                            <strong>Disponibles / No disponibles</strong>
+
                         </label>
                     </div>
-                ))}
+
+                </div>
+
+
+                <h3 className="panel-titulo"></h3>
+
+
+                {/* ZONAS */}
+
+                <div className="grupo-capas">
+
+                    <div className="grupo-titulo">ZONAS</div>
+
+                    {[
+                        { key: "ic3", label: "IC3" },
+                        { key: "ic4", label: "IC4" },
+                        { key: "ic42", label: "IC42" },
+                        { key: "area5", label: "IB4" },
+                        { key: "area6", label: "IB6" },
+                        { key: "area1", label: "Zona Hípico" },
+                        { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
+                        { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
+                        { key: "area3", label: "Sin definir" }
+                    ].map(({ key, label }) => (
+
+                        <div className="capa-item" key={key}>
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    checked={!!capasActivas[key]}
+                                    onChange={() => toggleCapaPrincipal(key)}
+                                />
+
+                                {label}
+
+                            </label>
+
+                        </div>
+
+                    ))}
+
+                </div>
+
+
+                {/* PLAN ESPECIAL */}
+
+                <div className="grupo-capas">
+
+                    <div className="grupo-titulo">PLAN ESPECIAL</div>
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas["Plan Especial"]}
+                                onChange={() => toggleCapaPrincipal("Plan Especial")}
+                            />
+
+                            <strong>Plan Especial</strong>
+
+                        </label>
+
+                        {capasActivas["Plan Especial"] && (
+
+                            <div className="subcapas">
+
+                                {[1, 2, 3, 4, 5].map(num => (
+
+                                    <div key={`planespecial${num}`}>
+
+                                        <label>
+
+                                            <input
+                                                type="checkbox"
+                                                checked={!!subCapasActivas[`planespecial${num}`]}
+                                                onChange={() => toggleSubCapa(`planespecial${num}`)}
+                                            />
+
+                                            Plan Especial {num}
+
+                                        </label>
+
+                                    </div>
+
+                                ))}
+
+                            </div>
+
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                {/* OTROS */}
+
+                <div className="grupo-capas">
+
+                    <div className="grupo-titulo">OTROS</div>
+
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas.Barrios}
+                                onChange={() => toggleCapaPrincipal("Barrios")}
+                            />
+
+                            Calles
+
+                        </label>
+
+                    </div>
+
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas.Manzanas}
+                                onChange={() => toggleCapaPrincipal("Manzanas")}
+                            />
+
+                            Manzanas
+
+                        </label>
+
+                    </div>
+
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas["Zonificación Sta Catalina"]}
+                                onChange={() => toggleCapaPrincipal("Zonificación Sta Catalina")}
+                            />
+
+                            Zonificación
+
+                        </label>
+
+                    </div>
+
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas["ZRU Predios La Caja"]}
+                                onChange={() => toggleCapaPrincipal("ZRU Predios La Caja")}
+                            />
+
+                            ZRU
+
+                        </label>
+
+                    </div>
+
+
+                    {/* PLANIFICACION SECCION SUR */}
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas["Planificación Sección Sur"]}
+                                onChange={() => toggleCapaPrincipal("Planificación Sección Sur")}
+                            />
+
+                            Planificación Sección Sur
+
+                        </label>
+
+
+                        {capasActivas["Planificación Sección Sur"] && (
+
+                            <div className="subcapas">
+
+                                {Object.keys(subCapasSur).map(nombre => (
+
+                                    <div key={nombre}>
+
+                                        <label>
+
+                                            <input
+                                                type="checkbox"
+                                                checked={!!subCapasSur[nombre]}
+                                                onChange={() => setSubCapasSur(prev => ({ ...prev, [nombre]: !prev[nombre] }))}
+                                            />
+
+                                            {nombre}
+
+                                        </label>
+
+                                    </div>
+
+                                ))}
+
+                            </div>
+
+                        )}
+
+                    </div>
+
+
+                    <div className="capa-item">
+
+                        <label>
+
+                            <input
+                                type="checkbox"
+                                checked={!!capasActivas.rutas1}
+                                onChange={() => toggleCapaPrincipal("rutas1")}
+                            />
+
+                            Rutas + Traza Segundo Puente Chaco-Ctes
+
+                        </label>
+
+                    </div>
+
+
+                </div>
 
 
                 <hr />
 
-                <div className="capa-principal">
+
+                {/* REFERENCIAS */}
+
+                <div className="capa-item">
+
                     <label>
-                        <input type="checkbox" checked={verReferencias} onChange={() => setVerReferencias((p) => !p)} />
-                        <strong>Ver referencias en mapa</strong>
+
+                        <input
+                            type="checkbox"
+                            checked={verReferencias}
+                            onChange={() => setVerReferencias(p => !p)}
+                        />
+
+                        Ver referencias en mapa
+
                     </label>
+
                 </div>
 
-                <div className="capa-principal">
+
+                <div className="capa-item">
+
                     <label>
-                        <input type="checkbox" checked={verReferenciasTabla} onChange={() => setVerReferenciasTabla((p) => !p)} />
-                        <strong>Ver referencias en tabla</strong>
+
+                        <input
+                            type="checkbox"
+                            checked={verReferenciasTabla}
+                            onChange={() => setVerReferenciasTabla(p => !p)}
+                        />
+
+                        Ver referencias en tabla
+
                     </label>
+
                 </div>
+
             </div>
 
             {verReferenciasTabla && (
@@ -818,22 +1019,22 @@ const MapaConCapas = () => {
                         key="Manzanas"
                         data={geojsonData.Manzanas}
                         style={(feature) => {
-    const id = feature?.properties?.id;
+                            const id = feature?.properties?.id;
 
-    // ✅ Excepción especial SIEMPRE primero
-    if (String(id) === "5347") {
-        return {
-            fillColor: "yellow",
-            color: "red",
-            weight: 3,
-            opacity: 1,
-            fillOpacity: 1,
-        };
-    }
+                            // ✅ Excepción especial SIEMPRE primero
+                            if (String(id) === "5347") {
+                                return {
+                                    fillColor: "yellow",
+                                    color: "red",
+                                    weight: 3,
+                                    opacity: 1,
+                                    fillOpacity: 1,
+                                };
+                            }
 
-    // 🔄 Resto de polígonos usan la función general
-    return getStylePoligono(feature, "Manzanas");
-}}
+                            // 🔄 Resto de polígonos usan la función general
+                            return getStylePoligono(feature, "Manzanas");
+                        }}
                         onEachFeature={onEachFeature}
                     />
                 )}
@@ -857,7 +1058,7 @@ const MapaConCapas = () => {
                                     let fillOpacity = 0.2;
 
                                     if (poligono) {
-console.log(poligono.privado)
+                                        console.log(poligono.privado)
                                         // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
                                         if (verPublicoPrivado) {
                                             if (poligono.privado == "privado") {
@@ -914,43 +1115,43 @@ console.log(poligono.privado)
                         key="Zonificación Sta Catalina"
                         data={geojsonData["Zonificación Sta Catalina"]}
                         style={(feature) => {
-                const id = feature.properties?.id;
+                            const id = feature.properties?.id;
 
-                const poligono = poligonosGuardados.find(
-                    (p) => String(p.id_mapa) === String(id)
-                );
+                            const poligono = poligonosGuardados.find(
+                                (p) => String(p.id_mapa) === String(id)
+                            );
 
-                let fillColor = "white";
-                let fillOpacity = 0.2;
-                let borderColor = "black";
-                let borderOpacity = 0.5;
+                            let fillColor = "white";
+                            let fillOpacity = 0.2;
+                            let borderColor = "black";
+                            let borderOpacity = 0.5;
 
-                if (poligono) {
-                    if (verPublicoPrivado) {
-                        let colorBase = "#9e9e9e";
+                            if (poligono) {
+                                if (verPublicoPrivado) {
+                                    let colorBase = "#9e9e9e";
 
-                        if (poligono.privado === "privado") colorBase = "#d32f2f";
-                        if (poligono.privado === "publico") colorBase = "#2e7d32";
+                                    if (poligono.privado === "privado") colorBase = "#d32f2f";
+                                    if (poligono.privado === "publico") colorBase = "#2e7d32";
 
-                        fillColor = colorBase;
-                        borderColor = colorBase;
-                        fillOpacity = 0.9;
-                        borderOpacity = 1;
-                    } else {
-                        const sub = poligono.subclasificacion;
-                        fillColor = coloresPorSubclasificacion[sub] || "gray";
-                        fillOpacity = 0.95;
-                    }
-                }
+                                    fillColor = colorBase;
+                                    borderColor = colorBase;
+                                    fillOpacity = 0.9;
+                                    borderOpacity = 1;
+                                } else {
+                                    const sub = poligono.subclasificacion;
+                                    fillColor = coloresPorSubclasificacion[sub] || "gray";
+                                    fillOpacity = 0.95;
+                                }
+                            }
 
-                return {
-                    fillColor,
-                    color: borderColor,
-                    weight: 1,
-                    opacity: borderOpacity,
-                    fillOpacity,
-                };
-            }}
+                            return {
+                                fillColor,
+                                color: borderColor,
+                                weight: 1,
+                                opacity: borderOpacity,
+                                fillOpacity,
+                            };
+                        }}
                         onEachFeature={onEachFeature}
                     />
                 )}
@@ -999,9 +1200,9 @@ console.log(poligono.privado)
                                         // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
                                         if (verPublicoPrivado) {
 
-                                            if (poligono.privado === "privado") {
+                                            if (poligono.privado === "No disponible") {
                                                 fillColor = "#d32f2f";
-                                            } else if (poligono.privado === "publico") {
+                                            } else if (poligono.privado === "Disponible") {
                                                 fillColor = "#2e7d32";
                                             } else {
                                                 fillColor = "#9e9e9e";
@@ -1034,204 +1235,29 @@ console.log(poligono.privado)
 
 
                 {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42"].map(
-
                     (nombre) =>
                         capasActivas[nombre] &&
-                        geojsonData[nombre] && {
-                            area1: (
-                                <GeoJSON
-                                    key="area1"
-                                    data={geojsonData.area1}
-                                    style={() => ({
-                                        fillColor: "purple",
-                                        fillOpacity: 0.15,
-                                        color: "purple",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            area2: (
-                                <GeoJSON
-                                    key="area2"
-                                    data={geojsonData.area2}
-                                    style={() => ({
-                                        fillColor: "orange",
-                                        fillOpacity: 0.15,
-                                        color: "orange",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            area3: (
-                                <GeoJSON
-                                    key="area3"
-                                    data={geojsonData.area3}
-                                    style={() => ({
-                                        fillColor: "green",
-                                        fillOpacity: 0.15,
-                                        color: "green",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            area4: (
-                                <GeoJSON
-                                    key="area4"
-                                    data={geojsonData.area4}
-                                    style={() => ({
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            area5: (
-                                <GeoJSON
-                                    key="area5"
-                                    data={geojsonData.area5}
-                                    style={() => ({
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            area6: (
-                                <GeoJSON
-                                    key="area6"
-                                    data={geojsonData.area6}
-                                    style={() => ({
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            ic42: (
-                                <GeoJSON
-                                    key="ic42"
-                                    data={geojsonData.ic42}
-                                    style={() => ({
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            rutas1: (
-                                <GeoJSON
-                                    key="rutas1"
-                                    data={geojsonData.rutas1}
-                                    style={() => ({
-                                        fillColor: "red",
-                                        fillOpacity: 0.15,
-                                        color: "red",
-                                        weight: 2,
-                                        opacity: 1,
-                                    })}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            ic3: (
+                        geojsonData[nombre] && (
+                            <GeoJSON
+                                key={nombre}
+                                data={geojsonData[nombre]}
+                                style={(feature) => {
+                                    if (nombre === "rutas1") {
+                                        return {
+                                            fillColor: "red",
+                                            fillOpacity: 0.15,
+                                            color: "red",
+                                            weight: 2,
+                                            opacity: 1,
+                                        };
+                                    }
 
-                                <GeoJSON
-                                    key="ic3"
-                                    data={geojsonData.ic3}
-                                   style={(feature) => {
-    const id = feature?.properties?.id;
-
-    const poligono = poligonosGuardados.find(
-        (p) => String(p.id_mapa) === String(id)
-    );
-
-    // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
-    if (verPublicoPrivado && poligono) {
-        let colorBase = "#9e9e9e"; // gris por defecto
-
-        if (poligono.privado === "privado") colorBase = "#d32f2f";
-        if (poligono.privado === "publico") colorBase = "#2e7d32";
-
-        return {
-            fillColor: colorBase,
-            fillOpacity: 0.9,
-            color: "black", // 👈 borde negro como pediste
-            weight: 3,
-            opacity: 1,
-        };
-    }
-
-    // 🎨 MODO NORMAL (como lo tenías)
-    return {
-        fillColor: "cyan",
-        fillOpacity: 0.2,
-        color: "blue",
-        weight: 3,
-        opacity: 1,
-    };
-}}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-                            ic4: (
-                                <GeoJSON
-                                    key="ic4"
-                                    data={geojsonData.ic4}
-                                   style={(feature) => {
-    const id = feature?.properties?.id;
-
-    const poligono = poligonosGuardados.find(
-        (p) => String(p.id_mapa) === String(id)
-    );
-
-    // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
-    if (verPublicoPrivado && poligono) {
-        let colorBase = "#9e9e9e"; // gris por defecto
-
-        if (poligono.privado === "privado") colorBase = "#d32f2f";
-        if (poligono.privado === "publico") colorBase = "#2e7d32";
-
-        return {
-            fillColor: colorBase,
-            fillOpacity: 0.9,
-            color: "black", // 👈 borde negro como pediste
-            weight: 3,
-            opacity: 1,
-        };
-    }
-
-    // 🎨 MODO NORMAL (como lo tenías)
-    return {
-        fillColor: "cyan",
-        fillOpacity: 0.2,
-        color: "blue",
-        weight: 3,
-        opacity: 1,
-    };
-}}
-                                    onEachFeature={onEachFeature}
-                                />
-                            ),
-
-                        }[nombre]
-                )},
+                                    return getStyleAreaEspecial(feature, nombre);
+                                }}
+                                onEachFeature={onEachFeature}
+                            />
+                        )
+                )}
 
 
             </MapContainer>
@@ -1278,8 +1304,14 @@ console.log(poligono.privado)
                                         <div className="sc-infoValue">{datosZonaSeleccionada.descripcion || "-"}</div>
                                     </div>
                                     <div className="sc-infoItem">
-                                        <div className="sc-infoLabel">Privado/Publico</div>
-                                        <div className="sc-infoValue">{datosZonaSeleccionada.privado || "-"}</div>
+                                        <div className="sc-infoLabel">Estado</div>
+                                        <div className="sc-infoValue">
+                                            {datosZonaSeleccionada.privado === "publico"
+                                                ? "Disponible"
+                                                : datosZonaSeleccionada.privado === "privado"
+                                                    ? "No disponible"
+                                                    : "-"}
+                                        </div>
                                     </div>
                                     {esAreaEspecial && (
                                         <>
@@ -1390,15 +1422,15 @@ console.log(poligono.privado)
                                     </select>
                                 </div>
                                 <div className="sc-field">
-                                    <label className="sc-label">Privado/publico</label>
+                                    <label className="sc-label">Disponible/No disponible</label>
                                     <select className="sc-select" value={privado} onChange={(e) => setPrivado(e.target.value)}>
                                         <option value="">Selecciona una opción</option>
 
                                         <option value={"publico"}>
-                                            Publico
+                                            Disponible
                                         </option>
                                         <option value={"privado"}>
-                                            Privado
+                                            No disponible
                                         </option>
                                     </select>
                                 </div>

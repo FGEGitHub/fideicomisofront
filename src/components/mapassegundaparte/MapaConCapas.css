@@ -3,12 +3,22 @@
   width: 100%;
 }
 
-.panel-lateral {
-  width: 250px;
-  padding: 15px;
-  background: #f5f5f5;
-  overflow-y: auto;
-  height: 100vh;
+.panel-lateral{
+
+width:260px;
+height:100vh;
+
+background:#ffffff;
+
+border-right:1px solid #e5e7eb;
+
+padding:18px;
+
+overflow-y:auto;
+
+box-shadow:
+4px 0 10px rgba(0,0,0,0.05);
+
 }
 
 .capa-principal {
@@ -477,3 +487,427 @@ input[type="checkbox"] {
   color: #111;
   pointer-events: none; /* ✅ no molesta el click del polígono */
 }
+
+
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+
+.mapa-contenedor{
+display:flex;
+width:100%;
+height:100vh;
+position:relative;
+font-family:Segoe UI, Roboto, sans-serif;
+}
+
+
+/* =========================
+   PANEL LATERAL
+========================= */
+
+.panel-lateral{
+width:270px;
+height:100vh;
+background:#f7f9fb;
+padding:18px;
+overflow-y:auto;
+border-right:1px solid #dcdcdc;
+box-shadow:2px 0 8px rgba(0,0,0,0.05);
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-container{
+display:flex;
+justify-content:center;
+align-items:center;
+margin-bottom:18px;
+}
+
+.logo-parcas{
+width:140px;
+object-fit:contain;
+}
+
+
+/* =========================
+   TITULOS
+========================= */
+
+.panel-titulo{
+font-size:14px;
+font-weight:600;
+margin-top:10px;
+margin-bottom:10px;
+color:#333;
+}
+
+.grupo-titulo{
+
+font-size:12px;
+font-weight:800;
+
+letter-spacing:.5px;
+
+color:#1e88e5;
+
+margin-top:14px;
+margin-bottom:8px;
+
+text-transform:uppercase;
+
+}
+
+
+/* =========================
+   GRUPOS
+========================= */
+
+.grupo-capas{
+margin-bottom:16px;
+}
+
+
+/* =========================
+   ITEMS
+========================= */
+
+.capa-item{
+
+font-size:13px;
+
+padding:6px 4px;
+
+border-radius:6px;
+
+transition:.15s;
+
+}
+
+.capa-item:hover{
+
+background:#f3f4f6;
+
+}
+
+.capa-item label{
+display:flex;
+align-items:center;
+gap:6px;
+cursor:pointer;
+}
+
+.capa-item input{
+cursor:pointer;
+}
+
+
+input[type="checkbox"]{
+
+accent-color:#0f7f86;
+
+cursor:pointer;
+
+}
+
+/* =========================
+   SUBCAPAS
+========================= */
+
+.subcapas{
+
+margin-left:16px;
+padding-left:10px;
+
+border-left:2px solid #e5e7eb;
+
+margin-top:6px;
+
+}
+
+.subcapas label{
+font-size:13px;
+}
+
+
+/* =========================
+   SEPARADOR
+========================= */
+
+.panel-lateral hr{
+margin:14px 0;
+border:none;
+border-top:1px solid #dcdcdc;
+}
+
+
+/* =========================
+   SCROLL DEL PANEL
+========================= */
+
+.panel-lateral::-webkit-scrollbar{
+width:6px;
+}
+
+.panel-lateral::-webkit-scrollbar-thumb{
+background:#c0c0c0;
+border-radius:4px;
+}
+
+.panel-lateral::-webkit-scrollbar-thumb:hover{
+background:#a0a0a0;
+}
+
+
+/* =========================
+   REFERENCIAS FLOTANTES
+========================= */
+
+.tabla-referencias-flotante{
+position:absolute;
+bottom:20px;
+right:20px;
+z-index:1000;
+}
+
+
+/* =========================
+   ETIQUETAS DE POLIGONOS
+========================= */
+
+.sc-labelIcon{
+background:transparent;
+border:none;
+}
+
+
+
+/* =========================
+   MODAL SISTEMA
+========================= */
+
+.modal-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.modal-content{
+
+width:720px;
+max-width:92%;
+
+background:#ffffff;
+border-radius:14px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,0.25),
+0 2px 10px rgba(0,0,0,0.08);
+
+overflow:hidden;
+
+animation:modalFade .18s ease;
+}
+
+@keyframes modalFade{
+from{
+opacity:0;
+transform:translateY(12px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+
+/* =========================
+   HEADER MODAL
+========================= */
+
+.modal-header{
+
+background:linear-gradient(135deg,#0b3c49,#1c7a82);
+
+color:white;
+
+padding:16px 20px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+font-weight:700;
+font-size:15px;
+}
+
+.modal-close{
+
+cursor:pointer;
+font-size:18px;
+opacity:.8;
+}
+
+.modal-close:hover{
+opacity:1;
+}
+
+
+/* =========================
+   BODY MODAL
+========================= */
+
+.modal-body{
+
+padding:22px;
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+
+}
+
+
+/* =========================
+   CAMPOS
+========================= */
+
+.modal-field{
+
+display:flex;
+flex-direction:column;
+gap:4px;
+
+font-size:12px;
+font-weight:600;
+color:#374151;
+
+}
+
+.modal-field input,
+.modal-field select{
+
+padding:9px 10px;
+
+border-radius:8px;
+
+border:1px solid #d1d5db;
+
+font-size:13px;
+
+outline:none;
+
+transition:.15s;
+
+}
+
+.modal-field input:focus,
+.modal-field select:focus{
+
+border-color:#0f7f86;
+
+box-shadow:0 0 0 3px rgba(15,127,134,.15);
+
+}
+
+
+/* =========================
+   FOOTER MODAL
+========================= */
+
+.modal-footer{
+
+padding:14px 20px;
+
+display:flex;
+justify-content:flex-end;
+gap:10px;
+
+border-top:1px solid #e5e7eb;
+
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.btn-primary{
+
+background:linear-gradient(135deg,#0f7f86,#1c7a82);
+
+color:white;
+
+border:none;
+
+padding:9px 16px;
+
+border-radius:8px;
+
+font-weight:600;
+
+cursor:pointer;
+
+box-shadow:0 6px 14px rgba(0,0,0,0.2);
+
+}
+
+.btn-primary:hover{
+
+transform:translateY(-1px);
+
+box-shadow:0 8px 18px rgba(0,0,0,0.25);
+
+}
+
+
+.btn-secondary{
+
+background:#e5e7eb;
+
+border:none;
+
+padding:9px 16px;
+
+border-radius:8px;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+/* =========================
+   BADGE
+========================= */
+
+.sc-badge{
+background:#e3f2fd;
+color:#1565c0;
+padding:2px 8px;
+border-radius:4px;
+font-size:12px;
+}
+
+.sc-dot{
+margin:0 6px;
+color:#999;
+}
+
+.sc-muted{
+color:#777;
+}
+
+
+
