@@ -229,7 +229,7 @@ mensura31548Unuevo: false,
     const [adrema, setAdrema] = useState("");
     const [privado, setPrivado] = useState("");
     const [superficie, setSuperficie] = useState("");
-    const [nombre, setNombre] = useState("");
+  const [tipoMapa, setTipoMapa] = useState("normal");
     const [mensura, setMensura] = useState("");
     const [subCapasSur, setSubCapasSur] = useState({
         PIT: false,
@@ -723,7 +723,15 @@ mensura31548Unuevo: false,
                 <div className="grupo-capas">
 
                     <div className="grupo-titulo">VISUALIZACIÓN</div>
-
+<div className="capa-item">
+  <button
+    onClick={() =>
+      setTipoMapa(tipoMapa === "normal" ? "satelite" : "normal")
+    }
+  >
+    {tipoMapa === "normal" ? "Ver Satélite" : "Ver Mapa"}
+  </button>
+</div>
                     <div className="capa-item">
                         <label>
 
@@ -1045,10 +1053,15 @@ mensura31548Unuevo: false,
 
                 <InstanciaDelMapa setMapa={setMapa} />
 
-                <TileLayer
-                    attribution='&copy; <a href="https://fdsantacatalina.ciudaddecorrientes.gov.ar/"> Fideicomiso Santa Catalina</a> Sistemas'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+              <TileLayer
+  attribution="Map data"
+  url={
+    tipoMapa === "normal"
+      ? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      : "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+  }
+  subdomains={tipoMapa === "normal" ? undefined : ["mt0", "mt1", "mt2", "mt3"]}
+/>
 
 
 
