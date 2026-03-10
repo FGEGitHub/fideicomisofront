@@ -74,6 +74,8 @@ invicoresidencial: false,
         ic4: false,
         ic42: false,
             restante: false,
+            zonapirayui: false,
+             Mensura30922U: false,
 mensura31548Unuevo: false,
  ib5: false,
         rutas1: false,
@@ -237,7 +239,7 @@ mensura31548Unuevo: false,
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42","mensura31548Unuevo","ib5", "invicoresidencial","restante"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42","mensura31548Unuevo","ib5", "invicoresidencial","zonapirayui","Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
@@ -377,11 +379,18 @@ mensura31548Unuevo: false,
             .catch(console.error);
 
 
-        fetch("/restante.geojson")
+        fetch("/Mensura30922U.geojson")
             .then((r) => r.json())
             .then((data) => {
-                const normalizado = normalizarGeojsonConIds(data, "restante");
-                setGeojsonData((prev) => ({ ...prev, restante: normalizado }));
+                const normalizado = normalizarGeojsonConIds(data, "Mensura30922U");
+                setGeojsonData((prev) => ({ ...prev, "Mensura30922U": normalizado }));
+            })
+            .catch(console.error);
+              fetch("/zonapirayui.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "zonapirayui");
+                setGeojsonData((prev) => ({ ...prev, "zonapirayui": normalizado }));
             })
             .catch(console.error);
         fetch("/rutas1.geojson")
@@ -772,7 +781,12 @@ mensura31548Unuevo: false,
                         { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
                         { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
                         { key: "area3", label: "Sin definir" },
-                        { key: "mensura31548Unuevo", label: "Mensura 31548 Unuevo" }
+                        { key: "mensura31548Unuevo", label: "Mensura 31548 Unuevo" },
+                                { key: "zonapirayui", label: "zonapirayui" },
+                                        { key: "Mensura30922U", label: "Mensura30922U" }
+                        
+
+
                     ].map(({ key, label }) => (
 
                         <div className="capa-item" key={key}>
@@ -1283,7 +1297,7 @@ mensura31548Unuevo: false,
                         )
                 )}
 
-{["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5","restante"].map(
+{["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5","Mensura30922U","zonapirayui"].map(
   (nombre) => {
     if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
