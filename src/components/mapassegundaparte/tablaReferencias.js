@@ -18,47 +18,45 @@ const referencias = [
   { color: "#debf6f", texto: "AR - Área Residencial de baja densidad" },
   { color: "#e4eeb1", texto: "ARP - Área Residencial y agroproductiva complementaria" },
 
- { tipo: "titulo", texto: "EQUIPAMIENTO / ESPACIOS" },
+  { tipo: "titulo", texto: "EQUIPAMIENTO / ESPACIOS" },
   { color: "#bfd1f0", texto: "EDR - Equipamiento Deportivo Recreativo" },
   { color: "#9c9c9c", texto: "EP - Equipamiento Público" },
   { color: "#afd9b7", texto: "EVP - Espacio Verde Público" },
 
- { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 1" },
+  { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 1" },
   { color: "#b2a792", texto: "UG1 - Distrito Administrativo" },
   { color: "#dccfb6", texto: "UG2 - Áreas Residenciales y Mixtas / Conjuntos Habitacionales PROCREAR, INVICO..." },
   { color: "#e8e1d2", texto: "UG3 - Áreas Residenciales, Mixtas y Paseo de borde del B° PIRAYUÍ" },
   { color: "#f5eee0", texto: "UG4 - Áreas Recreativas, Residenciales y Mixtas - Reordenamiento Urbano..." },
 
-   { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 2" },
+  { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 2" },
   { color: "#c89132", texto: "UG1 - Áreas Residenciales y Mixtas / Conjuntos Habitacionales del Estado" },
   { color: "#e3a53a", texto: "UG2 - Áreas Residenciales y Mixtas - Parque Metropolitano" },
   { color: "#eeba5f", texto: "UG3 - Áreas Mixtas y Equipamientos generales - Borde costero del Río Paraná" },
   { color: "#eccb78", texto: "UG4 - Actividades productivas y logísticas vinculadas a residencias" },
 
- { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 3" },
+  { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 3" },
   { color: "#8d3774", texto: "UG1 - Residenciales, Mixtas y Paseo de borde del Arroyo PIRAYUÍ" },
   { color: "#b55d9b", texto: "UG2 - Residencial Suburbana y Agro productivas" },
   { color: "#ca7cb3", texto: "UG3 - Clubes y Equipamientos Generales" },
   { color: "#e0a3ce", texto: "UG4 - Reordenamiento Urbano de Asentamientos" },
 
- { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 4" },
+  { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 4" },
   { color: "#ee7562", texto: "UG1 - Suburbana y Usos Recreativos, Sociales y Deportivos" },
   { color: "#f6b2a7", texto: "UG2 - Suburbana baja densidad y Paseo Público" },
 
-   { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 5" },
+  { tipo: "titulo", texto: "PLAN ESPECIAL - ETAPA 5" },
   { color: "#8a8a8a", texto: "UG1 - Reordenamiento Urbano y Lotes con servicios / Parque Lineal FF.CC" },
   { color: "#c2c1c1", texto: "UG2 - Residenciales, Mixtas, Equipamientos y Parque Lineal FF.CC" },
 
-   { tipo: "titulo", texto: "PARQUE INDUSTRIAL TECNOLOGICO" },
+  { tipo: "titulo", texto: "PARQUE INDUSTRIAL TECNOLOGICO" },
   { color: "#2c73e6ff", texto: "PIT - (FASE 1 - FASE 2 - FASE 3)" },
-   { tipo: "titulo", texto: "PLANTA DE LIQUIDOS CLOACALES" },
-  { color: "#c85b01", texto: "PLC " },
-   { tipo: "titulo", texto: "ZONA FUELLE" },
+  { tipo: "titulo", texto: "PLANTA DE LIQUIDOS CLOACALES" },
+  { color: "#c85b01", texto: "PLC" },
+  { tipo: "titulo", texto: "ZONA FUELLE" },
   { color: "#f1a465", texto: "PLC - Z. Fuelle" },
-   { tipo: "titulo", texto: "ZONA DE PROTECCIÓN AMBIENTAL - Santa Catalina" },
-  { color: "#034F04", texto: "ZPA " },
-
-
+  { tipo: "titulo", texto: "ZONA DE PROTECCIÓN AMBIENTAL - Santa Catalina" },
+  { color: "#034F04", texto: "ZPA" },
 ];
 
 const TablaReferencias = () => {
