@@ -1270,8 +1270,7 @@ mensura31548Unuevo: false,
                         )
                 )}
 
-
-  {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5","restante"].map(
+{["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5","restante"].map(
   (nombre) => {
     if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
@@ -1327,6 +1326,28 @@ mensura31548Unuevo: false,
             };
           }
 
+          // 🔵 reserva municipal
+          if (poligono.privado === "reserva municipal") {
+            return {
+              fillColor: "#2196f3",
+              fillOpacity: 0.9,
+              color: "#0d47a1",
+              weight: 3,
+              opacity: 1,
+            };
+          }
+
+          // ⚫ equipamiento publico
+          if (poligono.privado === "equipamiento publico") {
+            return {
+              fillColor: "#424242",
+              fillOpacity: 0.9,
+              color: "#212121",
+              weight: 3,
+              opacity: 1,
+            };
+          }
+
           // 🔴 privado
           if (poligono.privado === "privado") {
             return {
@@ -1362,7 +1383,6 @@ mensura31548Unuevo: false,
     );
   }
 )}
-
 
             </MapContainer>
 
@@ -1526,18 +1546,32 @@ mensura31548Unuevo: false,
                                     </select>
                                 </div>
                                 <div className="sc-field">
-                                    <label className="sc-label">Disponible/No disponible</label>
-                                    <select className="sc-select" value={privado} onChange={(e) => setPrivado(e.target.value)}>
-                                        <option value="">Selecciona una opción</option>
+  <label className="sc-label">Disponible/No disponible</label>
+  <select
+    className="sc-select"
+    value={privado}
+    onChange={(e) => setPrivado(e.target.value)}
+  >
+    <option value="">Selecciona una opción</option>
 
-                                        <option value={"publico"}>
-                                            Disponible
-                                        </option>
-                                        <option value={"privado"}>
-                                            No disponible
-                                        </option>
-                                    </select>
-                                </div>
+    <option value="publico">
+      Disponible
+    </option>
+
+    <option value="privado">
+      No disponible
+    </option>
+
+    <option value="reserva municipal">
+      Reserva municipal
+    </option>
+
+    <option value="equipamiento publico">
+      Equipamiento público
+    </option>
+
+  </select>
+</div>
                                 <div className="sc-field">
                                     <label className="sc-label">Judicializado</label>
                                     <select className="sc-select" value={judicializado} onChange={(e) => setJudicializado(e.target.value)}>
