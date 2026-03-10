@@ -1,6 +1,6 @@
 {
   "type": "FeatureCollection",
-  "name": "a2222222",
+  "name": "area2",
   "crs": {
     "type": "name",
     "properties": {
@@ -2611,236 +2611,6 @@
     {
       "type": "Feature",
       "properties": {
-        "fid": 53,
-        "Name": null,
-        "description": "UN_TODO_SOLO<BR><BR><B>ELEVATION</B> = 0",
-        "timestamp": null,
-        "begin": null,
-        "end": null,
-        "altitudeMode": "relativeToGround",
-        "tessellate": -1,
-        "extrude": 1,
-        "visibility": -1,
-        "drawOrder": null,
-        "icon": null,
-        "id": "areasnuevas2-53"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -58.7807589125,
-              -27.5464245672,
-              0
-            ],
-            [
-              -58.7808475465,
-              -27.5454956236,
-              0
-            ],
-            [
-              -58.7820495451,
-              -27.5455822037,
-              0
-            ],
-            [
-              -58.7818714941,
-              -27.5475461721,
-              0
-            ],
-            [
-              -58.7814679138,
-              -27.5475169439,
-              0
-            ],
-            [
-              -58.7813945149,
-              -27.5483265032,
-              0
-            ],
-            [
-              -58.78138646959999,
-              -27.5484152386,
-              0
-            ],
-            [
-              -58.7811383468,
-              -27.5483145311,
-              0
-            ],
-            [
-              -58.7805775273,
-              -27.5482643482,
-              0
-            ],
-            [
-              -58.7794339511,
-              -27.5492132752,
-              0
-            ],
-            [
-              -58.7789769817,
-              -27.5491474546,
-              0
-            ],
-            [
-              -58.7788491058,
-              -27.5491903706,
-              0
-            ],
-            [
-              -58.7788477758,
-              -27.549184421,
-              0
-            ],
-            [
-              -58.7787900324,
-              -27.5490366478,
-              0
-            ],
-            [
-              -58.7787125917,
-              -27.5489078811,
-              0
-            ],
-            [
-              -58.7786335986,
-              -27.5487984343,
-              0
-            ],
-            [
-              -58.77857040180001,
-              -27.5487030002,
-              0
-            ],
-            [
-              -58.7785207376,
-              -27.5485821627,
-              0
-            ],
-            [
-              -58.7785258519,
-              -27.5484468413,
-              0
-            ],
-            [
-              -58.778554389,
-              -27.548336486,
-              0
-            ],
-            [
-              -58.7785655436,
-              -27.5482769045,
-              0
-            ],
-            [
-              -58.7785557684,
-              -27.5481311619,
-              0
-            ],
-            [
-              -58.7785295979,
-              -27.5479639224,
-              0
-            ],
-            [
-              -58.77847413770001,
-              -27.5478434431,
-              0
-            ],
-            [
-              -58.7784154896,
-              -27.5477009288,
-              0
-            ],
-            [
-              -58.7783979868,
-              -27.5475755016,
-              0
-            ],
-            [
-              -58.7783925711,
-              -27.5474917858,
-              0
-            ],
-            [
-              -58.7785102972,
-              -27.5474031945,
-              0
-            ],
-            [
-              -58.77862650539999,
-              -27.5473131048,
-              0
-            ],
-            [
-              -58.7787408473,
-              -27.5472218677,
-              0
-            ],
-            [
-              -58.77884967789999,
-              -27.5471331392,
-              0
-            ],
-            [
-              -58.778964953,
-              -27.5470383365,
-              0
-            ],
-            [
-              -58.7790758038,
-              -27.546947172,
-              0
-            ],
-            [
-              -58.779186665,
-              -27.5468572118,
-              0
-            ],
-            [
-              -58.77929870049999,
-              -27.5467685794,
-              0
-            ],
-            [
-              -58.7794137124,
-              -27.5466800263,
-              0
-            ],
-            [
-              -58.7795305348,
-              -27.5465899111,
-              0
-            ],
-            [
-              -58.779647429,
-              -27.5464965031,
-              0
-            ],
-            [
-              -58.77976253029999,
-              -27.5463980481,
-              0
-            ],
-            [
-              -58.7798073279,
-              -27.5463556413,
-              0
-            ],
-            [
-              -58.7807589125,
-              -27.5464245672,
-              0
-            ]
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "fid": 54,
         "Name": null,
         "description": "COTAS_LOTEO<BR><BR><B>ELEVATION</B> = 0",
@@ -2853,7 +2623,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-54"
+        "id": "areasnuevas2-53"
       },
       "geometry": {
         "type": "Polygon",
@@ -2913,7 +2683,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-55"
+        "id": "areasnuevas2-54"
       },
       "geometry": {
         "type": "Polygon",
@@ -2981,236 +2751,6 @@
     {
       "type": "Feature",
       "properties": {
-        "fid": 56,
-        "Name": null,
-        "description": "UN_TODO_SOLO<BR><BR><B>ELEVATION</B> = 0",
-        "timestamp": null,
-        "begin": null,
-        "end": null,
-        "altitudeMode": "relativeToGround",
-        "tessellate": -1,
-        "extrude": 1,
-        "visibility": -1,
-        "drawOrder": null,
-        "icon": null,
-        "id": "areasnuevas2-56"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -58.7807589125,
-              -27.5464245672,
-              0
-            ],
-            [
-              -58.7808475465,
-              -27.5454956236,
-              0
-            ],
-            [
-              -58.7820495451,
-              -27.5455822037,
-              0
-            ],
-            [
-              -58.7818714941,
-              -27.5475461721,
-              0
-            ],
-            [
-              -58.7814679138,
-              -27.5475169439,
-              0
-            ],
-            [
-              -58.7813945149,
-              -27.5483265032,
-              0
-            ],
-            [
-              -58.78138646959999,
-              -27.5484152386,
-              0
-            ],
-            [
-              -58.7811383468,
-              -27.5483145311,
-              0
-            ],
-            [
-              -58.7805775273,
-              -27.5482643482,
-              0
-            ],
-            [
-              -58.7794339511,
-              -27.5492132752,
-              0
-            ],
-            [
-              -58.7789769817,
-              -27.5491474546,
-              0
-            ],
-            [
-              -58.7788491058,
-              -27.5491903706,
-              0
-            ],
-            [
-              -58.7788477758,
-              -27.549184421,
-              0
-            ],
-            [
-              -58.7787900324,
-              -27.5490366478,
-              0
-            ],
-            [
-              -58.7787125917,
-              -27.5489078811,
-              0
-            ],
-            [
-              -58.7786335986,
-              -27.5487984343,
-              0
-            ],
-            [
-              -58.77857040180001,
-              -27.5487030002,
-              0
-            ],
-            [
-              -58.7785207376,
-              -27.5485821627,
-              0
-            ],
-            [
-              -58.7785258519,
-              -27.5484468413,
-              0
-            ],
-            [
-              -58.778554389,
-              -27.548336486,
-              0
-            ],
-            [
-              -58.7785655436,
-              -27.5482769045,
-              0
-            ],
-            [
-              -58.7785557684,
-              -27.5481311619,
-              0
-            ],
-            [
-              -58.7785295979,
-              -27.5479639224,
-              0
-            ],
-            [
-              -58.77847413770001,
-              -27.5478434431,
-              0
-            ],
-            [
-              -58.7784154896,
-              -27.5477009288,
-              0
-            ],
-            [
-              -58.7783979868,
-              -27.5475755016,
-              0
-            ],
-            [
-              -58.7783925711,
-              -27.5474917858,
-              0
-            ],
-            [
-              -58.7785102972,
-              -27.5474031945,
-              0
-            ],
-            [
-              -58.77862650539999,
-              -27.5473131048,
-              0
-            ],
-            [
-              -58.7787408473,
-              -27.5472218677,
-              0
-            ],
-            [
-              -58.77884967789999,
-              -27.5471331392,
-              0
-            ],
-            [
-              -58.778964953,
-              -27.5470383365,
-              0
-            ],
-            [
-              -58.7790758038,
-              -27.546947172,
-              0
-            ],
-            [
-              -58.779186665,
-              -27.5468572118,
-              0
-            ],
-            [
-              -58.77929870049999,
-              -27.5467685794,
-              0
-            ],
-            [
-              -58.7794137124,
-              -27.5466800263,
-              0
-            ],
-            [
-              -58.7795305348,
-              -27.5465899111,
-              0
-            ],
-            [
-              -58.779647429,
-              -27.5464965031,
-              0
-            ],
-            [
-              -58.77976253029999,
-              -27.5463980481,
-              0
-            ],
-            [
-              -58.7798073279,
-              -27.5463556413,
-              0
-            ],
-            [
-              -58.7807589125,
-              -27.5464245672,
-              0
-            ]
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "fid": 57,
         "Name": null,
         "description": "MANZANASV4<BR><BR><B>ELEVATION</B> = 0",
@@ -3223,7 +2763,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-57"
+        "id": "areasnuevas2-55"
       },
       "geometry": {
         "type": "Polygon",
@@ -3278,7 +2818,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-58"
+        "id": "areasnuevas2-56"
       },
       "geometry": {
         "type": "Polygon",
@@ -3328,7 +2868,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-59"
+        "id": "areasnuevas2-57"
       },
       "geometry": {
         "type": "Polygon",
@@ -3388,7 +2928,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-60"
+        "id": "areasnuevas2-58"
       },
       "geometry": {
         "type": "Polygon",
@@ -3438,7 +2978,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-61"
+        "id": "areasnuevas2-59"
       },
       "geometry": {
         "type": "Polygon",
@@ -3493,7 +3033,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-62"
+        "id": "areasnuevas2-60"
       },
       "geometry": {
         "type": "Polygon",
@@ -3543,7 +3083,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-63"
+        "id": "areasnuevas2-61"
       },
       "geometry": {
         "type": "Polygon",
@@ -3598,7 +3138,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-64"
+        "id": "areasnuevas2-62"
       },
       "geometry": {
         "type": "Polygon",
@@ -3648,7 +3188,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-65"
+        "id": "areasnuevas2-63"
       },
       "geometry": {
         "type": "Polygon",
@@ -3698,7 +3238,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-66"
+        "id": "areasnuevas2-64"
       },
       "geometry": {
         "type": "Polygon",
@@ -3748,7 +3288,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-67"
+        "id": "areasnuevas2-65"
       },
       "geometry": {
         "type": "Polygon",
@@ -3798,7 +3338,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-68"
+        "id": "areasnuevas2-66"
       },
       "geometry": {
         "type": "Polygon",
@@ -3848,7 +3388,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-69"
+        "id": "areasnuevas2-67"
       },
       "geometry": {
         "type": "Polygon",
@@ -3903,7 +3443,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-70"
+        "id": "areasnuevas2-68"
       },
       "geometry": {
         "type": "Polygon",
@@ -3963,7 +3503,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-71"
+        "id": "areasnuevas2-69"
       },
       "geometry": {
         "type": "Polygon",
@@ -4063,7 +3603,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-72"
+        "id": "areasnuevas2-70"
       },
       "geometry": {
         "type": "Polygon",
@@ -4118,7 +3658,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-73"
+        "id": "areasnuevas2-71"
       },
       "geometry": {
         "type": "Polygon",
@@ -4178,7 +3718,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-74"
+        "id": "areasnuevas2-72"
       },
       "geometry": {
         "type": "Polygon",
@@ -4233,7 +3773,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-75"
+        "id": "areasnuevas2-73"
       },
       "geometry": {
         "type": "Polygon",
@@ -4298,7 +3838,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-76"
+        "id": "areasnuevas2-74"
       },
       "geometry": {
         "type": "Polygon",
@@ -4348,7 +3888,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-77"
+        "id": "areasnuevas2-75"
       },
       "geometry": {
         "type": "Polygon",
@@ -4403,7 +3943,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-78"
+        "id": "areasnuevas2-76"
       },
       "geometry": {
         "type": "Polygon",
@@ -4453,7 +3993,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-79"
+        "id": "areasnuevas2-77"
       },
       "geometry": {
         "type": "Polygon",
@@ -4513,7 +4053,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-80"
+        "id": "areasnuevas2-78"
       },
       "geometry": {
         "type": "Polygon",
@@ -4583,7 +4123,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-81"
+        "id": "areasnuevas2-79"
       },
       "geometry": {
         "type": "Polygon",
@@ -4643,7 +4183,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-82"
+        "id": "areasnuevas2-80"
       },
       "geometry": {
         "type": "Polygon",
@@ -4708,7 +4248,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-83"
+        "id": "areasnuevas2-81"
       },
       "geometry": {
         "type": "Polygon",
@@ -4758,7 +4298,7 @@
         "visibility": -1,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-84"
+        "id": "areasnuevas2-82"
       },
       "geometry": {
         "type": "Polygon",
@@ -4808,7 +4348,7 @@
         "visibility": null,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-85"
+        "id": "areasnuevas2-83"
       },
       "geometry": {
         "type": "Polygon",
@@ -4863,7 +4403,7 @@
         "visibility": null,
         "drawOrder": null,
         "icon": null,
-        "id": "areasnuevas2-86"
+        "id": "areasnuevas2-84"
       },
       "geometry": {
         "type": "Polygon",
