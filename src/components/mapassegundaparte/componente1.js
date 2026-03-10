@@ -73,6 +73,7 @@ invicoresidencial: false,
         ic3: false,
         ic4: false,
         ic42: false,
+            restante: false,
 mensura31548Unuevo: false,
  ib5: false,
         rutas1: false,
@@ -236,7 +237,7 @@ mensura31548Unuevo: false,
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42","mensura31548Unuevo","ib5", "invicoresidencial"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42","mensura31548Unuevo","ib5", "invicoresidencial","restante"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
@@ -375,6 +376,14 @@ mensura31548Unuevo: false,
             })
             .catch(console.error);
 
+
+        fetch("/restante.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "restante");
+                setGeojsonData((prev) => ({ ...prev, restante: normalizado }));
+            })
+            .catch(console.error);
         fetch("/rutas1.geojson")
 
             .then((r) => r.json())
@@ -659,7 +668,7 @@ mensura31548Unuevo: false,
 
         const poligono = buscarPoligonoDB(poligonosGuardados, id, nombreCapa);
 
-        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial"].includes(nombreCapa) ? 3 : 2;
+        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "restante"].includes(nombreCapa) ? 3 : 2;
 
         // SIN datos en base
         if (!poligono) {
@@ -749,6 +758,8 @@ mensura31548Unuevo: false,
                          { key: "ib5", label: "IB5" },
                         { key: "area6", label: "IB6" },
                            { key: "invicoresidencial", label: "invico-residencial" },
+                           { key: "restante", label: "Restante" },
+
                         { key: "area1", label: "Zona Hípico" },
                         { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
                         { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
@@ -1260,7 +1271,7 @@ mensura31548Unuevo: false,
                 )}
 
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5"].map(
+  {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42","mensura31548Unuevo","invicoresidencial","ib5","restante"].map(
   (nombre) => {
     if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
@@ -1282,12 +1293,23 @@ mensura31548Unuevo: false,
       );
     }
 
-    // 🟢🔴 TODAS LAS DEMÁS CAPAS
     return (
       <GeoJSON
         key={nombre}
         data={geojsonData[nombre]}
         style={(feature) => {
+
+          // ⚪ si verPublicoPrivado es false todo blanco
+          if (!verPublicoPrivado) {
+            return {
+              fillColor: "white",
+              fillOpacity: 1,
+              color: "black",
+              weight: 1,
+              opacity: 1,
+            };
+          }
+
           const id = feature?.properties?.id;
 
           const poligono = poligonosGuardados.find(
