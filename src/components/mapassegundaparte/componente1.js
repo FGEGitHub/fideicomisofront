@@ -1059,8 +1059,8 @@ mensura31548Unuevo: false,
     tipoMapa === "normal"
       ? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       : "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-  }
-  subdomains={tipoMapa === "normal" ? undefined : ["mt0", "mt1", "mt2", "mt3"]}
+  
+ }
 />
 
 
