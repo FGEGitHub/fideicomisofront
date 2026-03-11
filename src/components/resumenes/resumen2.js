@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
+ 
 const datosFinancieros = {
   egresos: [
     { concepto: "Honorarios Profesionales", monto: 13978748 },

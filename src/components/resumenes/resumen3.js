@@ -9,7 +9,7 @@ ingresos:111300,
 gastos:81000,
 ganancia:30300,
 rentabilidad:27
-},
+}, 
 
 flujoCaja:[
 {concepto:"Ingresos",valor:111300},

@@ -152,10 +152,10 @@ export default function PanelFinanciero() {
             background: "white",
             border: "1px solid #ccc",
             padding: 10
-          }}
+          }} 
         >
 
-          <div
+          <div 
             id="graficoBarras"
             style={{ width: "100%", height: 320 }}
           />

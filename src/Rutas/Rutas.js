@@ -71,7 +71,7 @@ import Resumenes from '../Paginas/Administracion/resumenes';
 import Resumenes2 from '../Paginas/Administracion/resumenes2';
 import Resumenes3 from '../Paginas/Administracion/resumenes3';
 
-
+ 
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
 import Estadisticas1 from '../Paginas/Nivel4/Relevamiento';
