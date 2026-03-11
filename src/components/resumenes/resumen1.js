@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const datos = {
   mes: "Marzo 2026",
@@ -20,10 +20,20 @@ const datos = {
 
 export default function PanelFinanciero() {
 
+  const [ingresosAnim,setIngresosAnim]=useState(0);
+  const [egresosAnim,setEgresosAnim]=useState(0);
+
+  const resultado = datos.ingresos - datos.egresos;
+  const proporcion = ((datos.egresos / datos.ingresos) * 100).toFixed(2);
+
   useEffect(() => {
+
+    animarNumero(datos.ingresos,setIngresosAnim);
+    animarNumero(datos.egresos,setEgresosAnim);
 
     const script = document.createElement("script");
     script.src = "https://www.gstatic.com/charts/loader.js";
+
     script.onload = () => {
       window.google.charts.load("current", { packages: ["corechart"] });
       window.google.charts.setOnLoadCallback(dibujarGraficos);
@@ -32,6 +42,26 @@ export default function PanelFinanciero() {
     document.body.appendChild(script);
 
   }, []);
+
+  function animarNumero(valor,setter){
+
+    let actual=0;
+    const incremento=valor/60;
+
+    const timer=setInterval(()=>{
+
+      actual+=incremento;
+
+      if(actual>=valor){
+        actual=valor;
+        clearInterval(timer);
+      }
+
+      setter(actual);
+
+    },20)
+
+  }
 
   const dibujarGraficos = () => {
 
@@ -45,11 +75,10 @@ export default function PanelFinanciero() {
     ]);
 
     const optionsBar = {
-      title: "Total Ingresos / Egresos / Resultado Neto",
-      is3D: true,
-      legend: { position: "bottom" },
-      chartArea: { width: "75%", height: "65%" },
-      colors: ["#8bc34a"]
+      legend:{position:"none"},
+      animation:{startup:true,duration:900},
+      chartArea:{width:"80%",height:"70%"},
+      colors:["#4caf50"]
     };
 
     const chartBar = new window.google.visualization.ColumnChart(
@@ -62,11 +91,11 @@ export default function PanelFinanciero() {
       window.google.visualization.arrayToDataTable(datos.saldo);
 
     const optionsLine = {
-      title: "Saldo anual del banco",
-      legend: "none",
-      curveType: "function",
-      chartArea: { width: "85%", height: "70%" },
-      colors: ["#4caf50"]
+      legend:"none",
+      curveType:"function",
+      animation:{startup:true,duration:900},
+      chartArea:{width:"85%",height:"70%"},
+      colors:["#2e7d32"]
     };
 
     const chartLine = new window.google.visualization.LineChart(
@@ -76,110 +105,142 @@ export default function PanelFinanciero() {
     chartLine.draw(dataLine, optionsLine);
   };
 
-  const resultado = datos.ingresos - datos.egresos;
-  const proporcion = ((datos.egresos / datos.ingresos) * 100).toFixed(2);
-
   return (
-    <div
-      style={{
-        fontFamily: "Arial",
-        padding: 20,
-        background: "#f3f3f3"
-      }}
-    >
 
-      <h2 style={{ textAlign: "center", marginBottom: 20 }}>
-        PANEL FINANCIERO 2026
-      </h2>
+<div style={styles.dashboard}>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "280px 1fr",
-          gap: 20
-        }}
-      >
+<h2 style={styles.titulo}>Panel Financiero</h2>
 
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #ccc",
-            padding: 15,
-            fontSize: 14,
-            lineHeight: 1.8
-          }}
-        >
+{/* SECCION RESUMEN */}
 
-          <div style={{ marginBottom: 10 }}>
-            <b>Mes analizado:</b>
-            <div>{datos.mes}</div>
-          </div>
+<div style={styles.seccion}>
 
-          <div>
-            <b>Total ingresos del mes</b>
-            <div>
-              ${datos.ingresos.toLocaleString()}
-            </div>
-          </div>
+<h3 style={styles.subtitulo}>Resumen del Mes</h3>
 
-          <div>
-            <b>Total egresos del mes</b>
-            <div>
-              ${datos.egresos.toLocaleString()}
-            </div>
-          </div>
+<div style={styles.kpis}>
 
-          <div>
-            <b>Resultado neto</b>
-            <div
-              style={{
-                color: resultado < 0 ? "red" : "green"
-              }}
-            >
-              ${resultado.toLocaleString()}
-            </div>
-          </div>
+<Card titulo="Ingresos" valor={ingresosAnim} color="#4caf50"/>
 
-          <div>
-            <b>Proporción egreso / ingreso</b>
-            <div>{proporcion}%</div>
-          </div>
+<Card titulo="Egresos" valor={egresosAnim} color="#e53935"/>
 
-        </div>
+<Card titulo="Resultado"
+valor={resultado}
+color={resultado<0?"#e53935":"#4caf50"}
+/>
 
-        <div
-          style={{
-            background: "white",
-            border: "1px solid #ccc",
-            padding: 10
-          }} 
-        >
+<Card titulo="Egreso / Ingreso"
+valor={proporcion+"%"}
+color="#607d8b"
+/>
 
-          <div 
-            id="graficoBarras"
-            style={{ width: "100%", height: 320 }}
-          />
+</div>
 
-        </div>
+</div>
 
-      </div>
 
-      <div
-        style={{
-          marginTop: 25,
-          background: "white",
-          border: "1px solid #ccc",
-          padding: 10
-        }}
-      >
+{/* SECCION GRAFICOS */}
 
-        <div
-          id="graficoLinea"
-          style={{ width: "100%", height: 350 }}
-        />
+<div style={styles.seccion}>
 
-      </div>
+<h3 style={styles.subtitulo}>Análisis Financiero</h3>
 
-    </div>
+<div style={styles.graficos}>
+
+<div style={styles.cardGrafico}>
+<div id="graficoBarras" style={{height:300}}/>
+</div>
+
+<div style={styles.cardGrafico}>
+<div id="graficoLinea" style={{height:300}}/>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
   );
+}
+
+
+function Card({titulo,valor,color}){
+
+return(
+
+<div style={{
+background:"#fff",
+borderLeft:`5px solid ${color}`,
+padding:16,
+borderRadius:8,
+boxShadow:"0 2px 6px rgba(0,0,0,0.08)",
+flex:1
+}}>
+
+<div style={{fontSize:13,color:"#666"}}>
+{titulo}
+</div>
+
+<div style={{
+fontSize:22,
+fontWeight:"bold",
+marginTop:4
+}}>
+{
+typeof valor==="number"
+?"$"+Math.round(valor).toLocaleString()
+:valor
+}
+</div>
+
+</div>
+
+)
+
+}
+
+
+const styles={
+
+dashboard:{
+fontFamily:"Segoe UI",
+background:"#f5f7fb",
+padding:25,
+minHeight:"100vh"
+},
+
+titulo:{
+textAlign:"center",
+marginBottom:25
+},
+
+seccion:{
+background:"#fff",
+padding:20,
+borderRadius:10,
+marginBottom:25,
+boxShadow:"0 4px 12px rgba(0,0,0,0.05)"
+},
+
+subtitulo:{
+marginBottom:15
+},
+
+kpis:{
+display:"flex",
+gap:15
+},
+
+graficos:{
+display:"grid",
+gridTemplateColumns:"1fr 1fr",
+gap:20
+},
+
+cardGrafico:{
+background:"#fafafa",
+borderRadius:8,
+padding:10
+}
+
 }

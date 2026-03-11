@@ -8,7 +8,7 @@ import  Pagos from '../../../components/resumenes/resumen3'
 import  Subir from '../../../components/Administracion/Extracto/Subir'
 import  useUser from '../../../hooks/useUser'
 //import BarraLAteral from '../../../components/Administracion/MenuizqAdmin'
-
+ 
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';

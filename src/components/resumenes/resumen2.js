@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
- 
+
 const datosFinancieros = {
   egresos: [
     { concepto: "Honorarios Profesionales", monto: 13978748 },
@@ -40,45 +40,65 @@ export default function DashboardFinanciero() {
   const canvasSaldo = useRef(null);
 
   useEffect(() => {
-    dibujarEgresos();
-    dibujarSaldo();
+
+    animarEgresos();
+    animarSaldo();
+
   }, []);
 
-  const dibujarEgresos = () => {
+  /* ---------------- BARRAS GASTOS ---------------- */
+
+  function animarEgresos(){
 
     const canvas = canvasEgresos.current;
     const ctx = canvas.getContext("2d");
 
     const data = datosFinancieros.egresos;
 
-    const max = Math.max(...data.map(d => d.monto));
+    const max = Math.max(...data.map(d=>d.monto));
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let progreso = 0;
 
-    data.forEach((item,i)=>{
+    function frame(){
 
-      const y = 30 + i*28;
-      const width = (item.monto/max)*400;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      ctx.fillStyle="#7FB77E";
-      ctx.fillRect(220,y,width,18);
+      data.forEach((item,i)=>{
 
-      ctx.fillStyle="#000";
-      ctx.font="12px Arial";
+        const y = 40 + i*28;
+        const width = (item.monto/max)*420*progreso;
 
-      ctx.fillText(item.concepto,10,y+13);
+        ctx.fillStyle="#4CAF50";
+        ctx.fillRect(240,y,width,18);
 
-      ctx.fillText(
-        "$"+item.monto.toLocaleString(),
-        230+width,
-        y+13
-      );
+        ctx.fillStyle="#333";
+        ctx.font="12px Arial";
 
-    });
+        ctx.fillText(item.concepto,10,y+13);
 
-  };
+        ctx.fillText(
+          "$"+item.monto.toLocaleString(),
+          250+width,
+          y+13
+        );
 
-  const dibujarSaldo = () => {
+      });
+
+      progreso += 0.03;
+
+      if(progreso<=1){
+        requestAnimationFrame(frame);
+      }
+
+    }
+
+    frame();
+
+  }
+
+  /* ---------------- LINEA SALDO ---------------- */
+
+  function animarSaldo(){
 
     const canvas = canvasSaldo.current;
     const ctx = canvas.getContext("2d");
@@ -88,107 +108,173 @@ export default function DashboardFinanciero() {
     const max = Math.max(...data.map(d=>d.saldo));
     const min = Math.min(...data.map(d=>d.saldo));
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let progreso = 0;
 
-    ctx.beginPath();
+    function frame(){
 
-    data.forEach((p,i)=>{
+      ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      const x = 60 + i*70;
+      ctx.beginPath();
 
-      const y =
-        220 -
-        ((p.saldo-min)/(max-min))*160;
+      data.forEach((p,i)=>{
 
-      if(i===0) ctx.moveTo(x,y);
-      else ctx.lineTo(x,y);
+        const x = 70 + i*70;
 
-      ctx.fillText(p.fecha,x-10,240);
+        const y =
+          220 -
+          ((p.saldo-min)/(max-min))*160*progreso;
 
-    });
+        if(i===0) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
 
-    ctx.strokeStyle="#6BA368";
-    ctx.lineWidth=3;
-    ctx.stroke();
+        ctx.fillStyle="#555";
+        ctx.fillText(p.fecha,x-10,240);
 
-    ctx.lineTo(60+(data.length-1)*70,220);
-    ctx.lineTo(60,220);
-    ctx.closePath();
+      });
 
-    ctx.fillStyle="rgba(107,163,104,0.3)";
-    ctx.fill();
+      ctx.strokeStyle="#2E7D32";
+      ctx.lineWidth=3;
+      ctx.stroke();
 
-  };
+      progreso += 0.03;
+
+      if(progreso<=1){
+        requestAnimationFrame(frame);
+      }
+
+    }
+
+    frame();
+
+  }
 
   return (
 
-    <div style={{fontFamily:"Arial",padding:20}}>
+<div style={styles.dashboard}>
 
-      <h2 style={{textAlign:"center"}}>
-      PRINCIPALES GASTOS ANUAL
-      </h2>
+<h2 style={styles.titulo}>
+Dashboard Financiero
+</h2>
 
-      <div style={{
-        display:"grid",
-        gridTemplateColumns:"400px 1fr",
-        gap:30
-      }}>
+{/* ---------- SECCION GASTOS ---------- */}
 
-        <table
-        style={{
-          borderCollapse:"collapse",
-          width:"100%",
-          fontSize:13
-        }}
-        >
+<div style={styles.section}>
 
-          <thead>
-            <tr>
-              <th style={{border:"1px solid #999",padding:6}}>
-              Concepto
-              </th>
-              <th style={{border:"1px solid #999",padding:6}}>
-              Monto
-              </th>
-            </tr>
-          </thead>
+<h3 style={styles.subtitulo}>
+Principales Gastos Anuales
+</h3>
 
-          <tbody>
+<div style={styles.grid}>
 
-          {datosFinancieros.egresos.map((e,i)=>(
-            <tr key={i}>
-              <td style={{border:"1px solid #ccc",padding:6}}>
-              {e.concepto}
-              </td>
-              <td style={{border:"1px solid #ccc",padding:6}}>
-              ${e.monto.toLocaleString()}
-              </td>
-            </tr>
-          ))}
+<div style={styles.cardTabla}>
 
-          </tbody>
+<table style={styles.table}>
 
-        </table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Monto</th>
+</tr>
+</thead>
 
-        <canvas
-        ref={canvasEgresos}
-        width={700}
-        height={450}
-        />
+<tbody>
 
-      </div>
+{datosFinancieros.egresos.map((e,i)=>(
+<tr key={i}>
+<td>{e.concepto}</td>
+<td>${e.monto.toLocaleString()}</td>
+</tr>
+))}
 
-      <h2 style={{marginTop:50}}>
-      EVOLUCIÓN SALDO BANCO MENSUAL
-      </h2>
+</tbody>
 
-      <canvas
-      ref={canvasSaldo}
-      width={900}
-      height={300}
-      />
+</table>
 
-    </div>
+</div>
+
+<div style={styles.cardGrafico}>
+<canvas ref={canvasEgresos} width={700} height={420}/>
+</div>
+
+</div>
+
+</div>
+
+{/* ---------- SECCION EVOLUCION ---------- */}
+
+<div style={styles.section}>
+
+<h3 style={styles.subtitulo}>
+Evolución Saldo Banco
+</h3>
+
+<div style={styles.cardGraficoGrande}>
+
+<canvas ref={canvasSaldo} width={900} height={300}/>
+
+</div>
+
+</div>
+
+</div>
 
   );
+}
+
+/* ---------------- ESTILOS UX ---------------- */
+
+const styles={
+
+dashboard:{
+fontFamily:"Segoe UI",
+background:"#f5f7fb",
+padding:30,
+minHeight:"100vh"
+},
+
+titulo:{
+textAlign:"center",
+marginBottom:30
+},
+
+section:{
+background:"#fff",
+padding:20,
+borderRadius:10,
+marginBottom:30,
+boxShadow:"0 4px 12px rgba(0,0,0,0.05)"
+},
+
+subtitulo:{
+marginBottom:15
+},
+
+grid:{
+display:"grid",
+gridTemplateColumns:"400px 1fr",
+gap:25
+},
+
+cardTabla:{
+overflow:"auto"
+},
+
+cardGrafico:{
+background:"#fafafa",
+padding:10,
+borderRadius:8
+},
+
+cardGraficoGrande:{
+background:"#fafafa",
+padding:15,
+borderRadius:8
+},
+
+table:{
+width:"100%",
+borderCollapse:"collapse",
+fontSize:13
+}
+
 }
