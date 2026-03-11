@@ -63,7 +63,7 @@ const TablaReferencias = () => {
   const [expandido, setExpandido] = useState(false);
 
   const titulo = useMemo(
-    () => (expandido ? "Referencias (expandido)" : "Referencias"),
+    () => (expandido ? "Referencias (expandido)" : "Referencias de Zonificación"),
     [expandido]
   );
 
@@ -72,7 +72,7 @@ const TablaReferencias = () => {
       <div className="refHeader">
         <div className="refHeaderLeft">
           <span className="refTitle">{titulo}</span>
-          <span className="refSubtitle">Leyenda de zonificación</span>
+         
         </div>
 
         <div className="refHeaderRight">
