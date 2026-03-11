@@ -231,7 +231,7 @@ mensura31548Unuevo: false,
     const [adrema, setAdrema] = useState("");
     const [privado, setPrivado] = useState("");
     const [superficie, setSuperficie] = useState("");
-  const [tipoMapa, setTipoMapa] = useState("normal");
+  const [tipoMapa, setTipoMapa] = useState("satelite");
     const [mensura, setMensura] = useState("");
     const [subCapasSur, setSubCapasSur] = useState({
         PIT: false,
@@ -734,6 +734,7 @@ mensura31548Unuevo: false,
                     <div className="grupo-titulo">VISUALIZACIÓN</div>
 <div className="capa-item">
   <button
+    className="btn-tipo-mapa"
     onClick={() =>
       setTipoMapa(tipoMapa === "normal" ? "satelite" : "normal")
     }
@@ -750,7 +751,7 @@ mensura31548Unuevo: false,
                                 onChange={() => setVerPublicoPrivado(p => !p)}
                             />
 
-                            <strong>Disponibles / No disponibles</strong>
+                            <strong>Ver Disponibilidad</strong>
 
                         </label>
                     </div>
@@ -770,22 +771,22 @@ mensura31548Unuevo: false,
                     {[
                         { key: "ic3", label: "IC3" },
                         { key: "ic4", label: "IC4" },
-                        { key: "ic42", label: "IC42" },
+                        { key: "ic42", label: "IC4.2" },
                         { key: "area5", label: "IB4" },
                          { key: "ib5", label: "IB5" },
                         { key: "area6", label: "IB6" },
-                           { key: "invicoresidencial", label: "invico-residencial" },
-                           { key: "restante", label: "Restante" },
+                           { key: "invicoresidencial", label: "Invico - Residencial" },
+                         
 
                         { key: "area1", label: "Zona Hípico" },
                         { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
                         { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
-                        { key: "area3", label: "Sin definir" },
-                        { key: "mensura31548Unuevo", label: "Mensura 31548 Unuevo" },
-                                { key: "zonapirayui", label: "zonapirayui" },
-                                        { key: "Mensura30922U", label: "Mensura30922U" }
-                        
-
+                       
+                        { key: "mensura31548Unuevo", label: "Mensura 31548-U" },
+                                
+                                        { key: "Mensura30922U", label: "Mensura 30922-U" },
+                         { key: "zonapirayui", label: "Zona Pirayui" },
+ { key: "area3", label: "Sin definir" },
 
                     ].map(({ key, label }) => (
 
@@ -1356,9 +1357,9 @@ mensura31548Unuevo: false,
           // 🔵 reserva municipal
           if (poligono.privado === "reserva municipal") {
             return {
-              fillColor: "#2196f3",
+              fillColor: "#f38c26",
               fillOpacity: 0.9,
-              color: "#0d47a1",
+              color: "#c26a06",
               weight: 3,
               opacity: 1,
             };
@@ -1367,9 +1368,9 @@ mensura31548Unuevo: false,
           // ⚫ equipamiento publico
           if (poligono.privado === "equipamiento publico") {
             return {
-              fillColor: "#424242",
+              fillColor: "#faf63bea",
               fillOpacity: 0.9,
-              color: "#212121",
+              color: "#beb208",
               weight: 3,
               opacity: 1,
             };

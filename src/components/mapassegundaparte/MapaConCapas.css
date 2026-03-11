@@ -911,3 +911,26 @@ color:#777;
 
 
 
+.btn-tipo-mapa {
+  width: 100%;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #0a3b4f, #148d8d);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-tipo-mapa:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.btn-tipo-mapa:active {
+  transform: scale(0.98);
+}
+
