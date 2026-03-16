@@ -28,6 +28,12 @@ if (loggedUserJSON) {
     }
 }
 
+const enviarmovimiento= async  (datos) => {
+   ///activo
+    const {data } = await axios.post(baseUrl+'enviarmovimiento',datos,config)
+    alert(data)
+   
+} 
 
 const agregariccgral= async  (datos) => {
    ///activo
@@ -120,4 +126,23 @@ const borrarhistorial= async  () => {
  
      return data 
  }  
-export default {enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+
+ const subirexceldemovimientos = async (archivo) => {
+
+  const { data } = await axios.post(
+    baseUrl + 'subirexceldemovimientos',
+    archivo,
+    {
+      ...config,
+      headers: {
+        ...config.headers,
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+
+  return data;
+
+}
+
+export default {subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

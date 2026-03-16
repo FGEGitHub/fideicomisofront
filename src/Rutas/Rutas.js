@@ -70,7 +70,7 @@ import Niv3CuotaIc3 from '../Paginas/Nivel3/cuotaic3';
 import Resumenes from '../Paginas/Administracion/resumenes';
 import Resumenes2 from '../Paginas/Administracion/resumenes2';
 import Resumenes3 from '../Paginas/Administracion/resumenes3';
-
+import Carga1 from '../Paginas/Administracion/carga';
  
 import Menu4 from '../Paginas/Nivel4/Menu';
 import DetalleExp from '../Paginas/Nivel4/DetalleExp';
@@ -185,8 +185,8 @@ const Rutas = [
 	{ path: '/usuario2/mapas', element: <Mapaniv2 /> },
 	{ path: '/usuario2/clientesic3', element: <Clientesic3 /> },
 	{ path: '/usuario2/nuevocliente', element: <NuevoCliente /> },
-		{ path: '/usuario2/pagos', element: <Pagos2 /> },
-			{ path: '/usuario2/deudores', element: <Deudores /> },
+	{ path: '/usuario2/pagos', element: <Pagos2 /> },
+	{ path: '/usuario2/deudores', element: <Deudores /> },
 
 
 
@@ -209,6 +209,9 @@ const Rutas = [
 { path: '/nivel3/resumenes', element: <Resumenes /> },
 { path: '/nivel3/resumenes2', element: <Resumenes2 /> },
 { path: '/nivel3/resumenes3', element: <Resumenes3 /> },
+{ path: '/nivel3/carga1', element: <Carga1 /> },
+
+
 	{ path: '/legales/menu', element: <Menu4 /> },
 	{ path: '/legales/detalleexp/:id', element: <DetalleExp /> },
 	{ path: '/legales/estadisticas1', element: <Estadisticas1 /> },
