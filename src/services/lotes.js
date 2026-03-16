@@ -221,7 +221,7 @@ const nuevolote= async  (datos) => {
  
  const guardarpoligono= async  (datos) => {
     console.log(datos)
-     const {data } = await axios.post(baseUrl+'guardarpoligono',datos,config)
+     const {data } = await axios.post(baseUrl+'guardarpoligonoo',datos,config)
      
      return data 
  }  
