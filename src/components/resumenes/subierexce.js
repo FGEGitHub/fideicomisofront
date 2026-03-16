@@ -26,9 +26,18 @@ try{
 const formData = new FormData();
 formData.append("file",archivo);
 
-await servicionivel3.subirexceldemovimientos(formData);
+const resp = await servicionivel3.subirexceldemovimientos(formData);
 
-alert("Excel cargado correctamente");
+let mensaje = `Archivo procesado\n\n`;
+mensaje += `Filas encontradas: ${resp.filas}\n`;
+mensaje += `Movimientos cargados: ${resp.insertados}\n`;
+
+if(resp.duplicados > 0){
+mensaje += `Duplicados omitidos: ${resp.duplicados}\n`;
+}
+
+alert(mensaje);
+
 setArchivo(null);
 
 }catch(err){
@@ -73,7 +82,7 @@ gap:12
 
 <input
 type="file"
-accept=".xlsx,.xls"
+accept=".xlsx,.xls,.csv"
 onChange={handleFileChange}
 />
 
