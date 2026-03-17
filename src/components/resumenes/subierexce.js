@@ -3,112 +3,166 @@ import servicionivel3 from "../../services/nivel3";
 
 export default function SubirExcelMovimientos(){
 
-const [archivo,setArchivo] = useState(null);
-const [loading,setLoading] = useState(false);
+  const [archivo,setArchivo] = useState(null);
+  const [loading,setLoading] = useState(false);
 
-const handleFileChange = (e)=>{
-setArchivo(e.target.files[0]);
-};
+  // 👉 NUEVO: resultado del backend
+  const [resultado,setResultado] = useState(null);
 
-const handleSubmit = async (e)=>{
+  const handleFileChange = (e)=>{
+    setArchivo(e.target.files[0]);
+  };
 
-e.preventDefault();
+  const handleSubmit = async (e)=>{
 
-if(!archivo){
-alert("Seleccione un archivo Excel");
-return;
-}
+    e.preventDefault();
 
-setLoading(true);
+    if(!archivo){
+      alert("Seleccione un archivo Excel");
+      return;
+    }
 
-try{
+    setLoading(true);
 
-const formData = new FormData();
-formData.append("file",archivo);
+    try{
 
-const resp = await servicionivel3.subirexceldemovimientos(formData);
+      const formData = new FormData();
+      formData.append("file",archivo);
 
-let mensaje = `Archivo procesado\n\n`;
-mensaje += `Filas encontradas: ${resp.filas}\n`;
-mensaje += `Movimientos cargados: ${resp.insertados}\n`;
+      const resp = await servicionivel3.subirexceldemovimientos(formData);
 
-if(resp.duplicados > 0){
-mensaje += `Duplicados omitidos: ${resp.duplicados}\n`;
-}
+      // 👉 guardamos TODO el resultado
+      setResultado(resp);
 
-alert(mensaje);
+      let mensaje = `Archivo procesado\n\n`;
+      mensaje += `Filas: ${resp.filas}\n`;
+      mensaje += `Insertados: ${resp.insertados}\n`;
+      mensaje += `Duplicados: ${resp.duplicados}\n`;
+      mensaje += `Errores: ${resp.errores}\n`;
+      mensaje += `Ignorados: ${resp.ignoradas}\n`;
 
-setArchivo(null);
+      alert(mensaje);
 
-}catch(err){
+      setArchivo(null);
 
-console.error(err);
-alert("Error al subir el archivo");
+    }catch(err){
+      console.error(err);
+      alert("Error al subir el archivo");
+    }
 
-}
+    setLoading(false);
+  };
 
-setLoading(false);
+  return(
 
-};
+    <div style={{
+      maxWidth:600,
+      margin:"40px auto",
+      padding:25,
+      borderRadius:10,
+      border:"1px solid #ddd",
+      background:"#fafafa"
+    }}>
 
-return(
+      <h2 style={{ marginBottom:20, fontWeight:600 }}>
+        Subir Excel de Movimientos
+      </h2>
 
-<div style={{
-maxWidth:420,
-margin:"40px auto",
-padding:25,
-borderRadius:10,
-border:"1px solid #ddd",
-background:"#fafafa"
-}}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display:"flex",
+          flexDirection:"column",
+          gap:12
+        }}
+      >
 
-<h2 style={{
-marginBottom:20,
-fontWeight:600
-}}>
-Subir Excel de Movimientos
-</h2>
+        <label>Archivo Excel</label>
 
-<form
-onSubmit={handleSubmit}
-style={{
-display:"flex",
-flexDirection:"column",
-gap:12
-}}
->
+        <input
+          type="file"
+          accept=".xlsx,.xls,.csv"
+          onChange={handleFileChange}
+        />
 
-<label>Archivo Excel</label>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            marginTop:10,
+            padding:10,
+            borderRadius:6,
+            border:"none",
+            background:"#2c3e50",
+            color:"white",
+            fontWeight:600,
+            cursor:"pointer"
+          }}
+        >
+          {loading ? "Subiendo..." : "Subir Excel"}
+        </button>
 
-<input
-type="file"
-accept=".xlsx,.xls,.csv"
-onChange={handleFileChange}
-/>
+      </form>
 
-<button
-type="submit"
-disabled={loading}
-style={{
-marginTop:10,
-padding:10,
-borderRadius:6,
-border:"none",
-background:"#2c3e50",
-color:"white",
-fontWeight:600,
-cursor:"pointer"
-}}
->
+      {/* 🔥 RESULTADO EN PANTALLA */}
+      {resultado && (
+        <div style={{ marginTop:30 }}>
 
-{loading ? "Subiendo..." : "Subir Excel"}
+          <h3>Resultado</h3>
 
-</button>
+          <p>✔ Filas: {resultado.filas}</p>
+          <p>✅ Insertados: {resultado.insertados}</p>
+          <p>🔁 Duplicados: {resultado.duplicados}</p>
+          <p>❌ Errores: {resultado.errores}</p>
+          <p>⚠ Ignorados: {resultado.ignoradas}</p>
 
-</form>
+          {/* 🔴 ERRORES */}
+          {resultado.detalle?.errores?.length > 0 && (
+            <>
+              <h4 style={{ color:"red" }}>Filas con error</h4>
+              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
+                {resultado.detalle.errores.map((e,i)=>(
+                  <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
+                    <strong>Error:</strong> {e.error} <br/>
+                    <small>{JSON.stringify(e.fila)}</small>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
-</div>
+          {/* 🟡 IGNORADOS */}
+          {resultado.detalle?.ignoradas?.length > 0 && (
+            <>
+              <h4 style={{ color:"orange" }}>Filas ignoradas</h4>
+              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
+                {resultado.detalle.ignoradas.map((e,i)=>(
+                  <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
+                    <strong>Motivo:</strong> {e.motivo} <br/>
+                    <small>{JSON.stringify(e.fila)}</small>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
-);
+          {/* 🔵 DUPLICADOS */}
+          {resultado.detalle?.duplicadas?.length > 0 && (
+            <>
+              <h4 style={{ color:"blue" }}>Filas duplicadas</h4>
+              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
+                {resultado.detalle.duplicadas.map((e,i)=>(
+                  <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
+                    {e.FECHA} - {e.DESCRIPCION}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
+        </div>
+      )}
+
+    </div>
+  );
 }

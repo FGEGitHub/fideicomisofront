@@ -127,6 +127,15 @@ const borrarhistorial= async  () => {
      return data 
  }  
 
+
+  const traermovimientos= async  () => {
+  
+     const {data } =await axios.get(baseUrl+'traermovimientos',config)
+ 
+     return data 
+ }  
+
+
  const subirexceldemovimientos = async (archivo) => {
 
   const { data } = await axios.post(
@@ -145,4 +154,4 @@ const borrarhistorial= async  () => {
 
 }
 
-export default {subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+export default {traermovimientos, subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

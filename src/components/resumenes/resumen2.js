@@ -1,59 +1,92 @@
-import React, { useEffect, useRef } from "react";
-
-const datosFinancieros = {
-  egresos: [
-    { concepto: "Honorarios Profesionales", monto: 13978748 },
-    { concepto: "Servicios de Seguridad", monto: 9872749 },
-    { concepto: "Servicio Seguridad Adicional", monto: 7628320 },
-    { concepto: "Reintegro de Sueldos", monto: 2420000 },
-    { concepto: "Reparación mantenimiento", monto: 196800 },
-    { concepto: "Alquileres Oficinas", monto: 1828000 },
-    { concepto: "Cobranza SC Parque", monto: 1680000 },
-    { concepto: "Servicios personales", monto: 972745 },
-    { concepto: "Otros egresos", monto: 851170 },
-    { concepto: "Baños químicos", monto: 477343 },
-    { concepto: "Compra muebles", monto: 368185 },
-    { concepto: "Impuestos DGR", monto: 270172 },
-    { concepto: "Impuestos AFIP", monto: 248555 },
-    { concepto: "Comisiones bancarias", monto: 31900 }
-  ],
-
-  saldoMensual: [
-    { fecha: "Ene", saldo: 15000000 },
-    { fecha: "Feb", saldo: 14700000 },
-    { fecha: "Mar", saldo: 15100000 },
-    { fecha: "Abr", saldo: 17000000 },
-    { fecha: "May", saldo: 17500000 },
-    { fecha: "Jun", saldo: 17400000 },
-    { fecha: "Jul", saldo: 16800000 },
-    { fecha: "Ago", saldo: 16200000 },
-    { fecha: "Sep", saldo: 15900000 },
-    { fecha: "Oct", saldo: 15500000 },
-    { fecha: "Nov", saldo: 15200000 },
-    { fecha: "Dic", saldo: 15100000 }
-  ]
-};
+import React, { useEffect, useRef, useState } from "react";
+import servicionivel3 from "../../services/nivel3";
 
 export default function DashboardFinanciero() {
 
   const canvasEgresos = useRef(null);
   const canvasSaldo = useRef(null);
 
+  const [egresos,setEgresos] = useState([]);
+  const [saldoMensual,setSaldoMensual] = useState([]);
+
   useEffect(() => {
-
-    animarEgresos();
-    animarSaldo();
-
+    traerDatos();
   }, []);
+
+  const traerDatos = async () => {
+    try {
+
+      const resp = await servicionivel3.traermovimientos();
+
+      const egresosMap = {};
+      const saldoPorMes = {};
+
+      resp.forEach(mov => {
+
+        const fecha = new Date(mov.fecha);
+        const mes = fecha.toLocaleString("es-AR",{month:"short"});
+
+        const debito = Number(mov.debito) || 0;
+        const credito = Number(mov.credito) || 0;
+
+        const concepto = mov.concepto || "Sin categoría";
+
+        // 👉 EGRESOS POR CONCEPTO
+        if(debito > 0){
+          if(!egresosMap[concepto]){
+            egresosMap[concepto] = 0;
+          }
+          egresosMap[concepto] += debito;
+        }
+
+        // 👉 SALDO POR MES
+        const saldo = credito - debito;
+
+        if(!saldoPorMes[mes]){
+          saldoPorMes[mes] = 0;
+        }
+
+        saldoPorMes[mes] += saldo;
+
+      });
+
+      // transformar egresos
+      const egresosArray = Object.keys(egresosMap).map(key => ({
+        concepto: key,
+        monto: egresosMap[key]
+      }))
+      .sort((a,b)=>b.monto-a.monto)
+      .slice(0,10); // top 10
+
+      // transformar saldo
+      const saldoArray = [];
+      let acumulado = 0;
+
+      Object.keys(saldoPorMes).forEach(mes=>{
+        acumulado += saldoPorMes[mes];
+        saldoArray.push({fecha:mes,saldo:acumulado});
+      });
+
+      setEgresos(egresosArray);
+      setSaldoMensual(saldoArray);
+
+      // 👉 dibujar
+      setTimeout(()=>{
+        animarEgresos(egresosArray);
+        animarSaldo(saldoArray);
+      },100);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   /* ---------------- BARRAS GASTOS ---------------- */
 
-  function animarEgresos(){
+  function animarEgresos(data){
 
     const canvas = canvasEgresos.current;
     const ctx = canvas.getContext("2d");
-
-    const data = datosFinancieros.egresos;
 
     const max = Math.max(...data.map(d=>d.monto));
 
@@ -77,7 +110,7 @@ export default function DashboardFinanciero() {
         ctx.fillText(item.concepto,10,y+13);
 
         ctx.fillText(
-          "$"+item.monto.toLocaleString(),
+          "$"+Math.round(item.monto).toLocaleString(),
           250+width,
           y+13
         );
@@ -98,12 +131,10 @@ export default function DashboardFinanciero() {
 
   /* ---------------- LINEA SALDO ---------------- */
 
-  function animarSaldo(){
+  function animarSaldo(data){
 
     const canvas = canvasSaldo.current;
     const ctx = canvas.getContext("2d");
-
-    const data = datosFinancieros.saldoMensual;
 
     const max = Math.max(...data.map(d=>d.saldo));
     const min = Math.min(...data.map(d=>d.saldo));
@@ -156,12 +187,10 @@ export default function DashboardFinanciero() {
 Dashboard Financiero
 </h2>
 
-{/* ---------- SECCION GASTOS ---------- */}
-
 <div style={styles.section}>
 
 <h3 style={styles.subtitulo}>
-Principales Gastos Anuales
+Principales Gastos
 </h3>
 
 <div style={styles.grid}>
@@ -179,10 +208,10 @@ Principales Gastos Anuales
 
 <tbody>
 
-{datosFinancieros.egresos.map((e,i)=>(
+{egresos.map((e,i)=>(
 <tr key={i}>
 <td>{e.concepto}</td>
-<td>${e.monto.toLocaleString()}</td>
+<td>${Math.round(e.monto).toLocaleString()}</td>
 </tr>
 ))}
 
@@ -200,8 +229,6 @@ Principales Gastos Anuales
 
 </div>
 
-{/* ---------- SECCION EVOLUCION ---------- */}
-
 <div style={styles.section}>
 
 <h3 style={styles.subtitulo}>
@@ -209,9 +236,7 @@ Evolución Saldo Banco
 </h3>
 
 <div style={styles.cardGraficoGrande}>
-
 <canvas ref={canvasSaldo} width={900} height={300}/>
-
 </div>
 
 </div>
@@ -221,37 +246,40 @@ Evolución Saldo Banco
   );
 }
 
-/* ---------------- ESTILOS UX ---------------- */
-
 const styles={
 
 dashboard:{
-fontFamily:"Segoe UI",
-background:"#f5f7fb",
+fontFamily:"Inter, Segoe UI",
+background:"#F9FAFB",
 padding:30,
 minHeight:"100vh"
 },
 
 titulo:{
 textAlign:"center",
-marginBottom:30
+marginBottom:30,
+color:"#111827",
+fontWeight:"600"
 },
 
 section:{
-background:"#fff",
+background:"#ffffff",
 padding:20,
-borderRadius:10,
+borderRadius:12,
 marginBottom:30,
-boxShadow:"0 4px 12px rgba(0,0,0,0.05)"
+boxShadow:"0 10px 25px rgba(0,0,0,0.06)",
+border:"1px solid #E5E7EB"
 },
 
 subtitulo:{
-marginBottom:15
+marginBottom:15,
+color:"#374151",
+fontWeight:"600"
 },
 
 grid:{
 display:"grid",
-gridTemplateColumns:"400px 1fr",
+gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))",
 gap:25
 },
 
@@ -260,21 +288,22 @@ overflow:"auto"
 },
 
 cardGrafico:{
-background:"#fafafa",
+background:"#F3F4F6",
 padding:10,
-borderRadius:8
+borderRadius:10
 },
 
 cardGraficoGrande:{
-background:"#fafafa",
+background:"#F3F4F6",
 padding:15,
-borderRadius:8
+borderRadius:10
 },
 
 table:{
 width:"100%",
 borderCollapse:"collapse",
-fontSize:13
+fontSize:13,
+color:"#111827"
 }
 
 }
