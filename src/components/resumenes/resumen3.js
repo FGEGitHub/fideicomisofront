@@ -1,6 +1,6 @@
 import React,{useEffect,useRef,useState} from "react";
 import servicionivel3 from "../../services/nivel3";
-
+import Tabla from "./tablamovimientos";
 export default function DashboardFinanciero(){
 
 const flujoRef = useRef(null);
@@ -269,7 +269,7 @@ Dashboard Financiero
 </Section>
 
 </div>
-
+<Tabla/>
 </div>
 
 )

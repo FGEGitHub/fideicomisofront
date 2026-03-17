@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
-
+import Tabla from "./tablamovimientos";
 const styles = {
   dashboard:{
     fontFamily:"Segoe UI",
@@ -175,7 +175,7 @@ export default function PanelFinanciero() {
     : 0;
 
   return (
-
+<>
 <div style={styles.dashboard}>
 
 <h2 style={styles.titulo}>Panel Financiero</h2>
@@ -219,7 +219,7 @@ color="#607d8b"
 </div>
 
 </div>
-
+  </>
   );
 }
 
@@ -228,7 +228,7 @@ color="#607d8b"
 function Card({titulo,valor,color}){
 
   return(
-
+<>
     <div style={{
       background:"#fff",
       borderLeft:`5px solid ${color}`,
@@ -254,8 +254,8 @@ function Card({titulo,valor,color}){
           : valor
         }
       </div>
-
     </div>
-
+  
+</>
   )
 }

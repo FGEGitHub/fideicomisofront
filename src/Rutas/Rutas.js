@@ -115,7 +115,10 @@ import Subirexcell from '../Paginas/subirexcel';
 
 import Mapassegundaparte from '../Paginas/mapas'
 
-
+import Cargaa1 from '../Paginas/nivel6/carga'
+import Resumeness from '../Paginas/nivel6/resumen1'
+import Resumeness2 from '../Paginas/nivel6/resumen2'
+import Resumeness3 from '../Paginas/nivel6/resumen3'
 
 
 const Rutas = [
@@ -210,6 +213,16 @@ const Rutas = [
 { path: '/nivel3/resumenes2', element: <Resumenes2 /> },
 { path: '/nivel3/resumenes3', element: <Resumenes3 /> },
 { path: '/nivel3/carga1', element: <Carga1 /> },
+
+
+
+
+{ path: '/nivel6/resumen1', element: <Resumeness /> },
+{ path: '/nivel6/resumen2', element: <Resumeness2 /> },
+{ path: '/nivel6/resumen3', element: <Resumeness3 /> },
+{ path: '/nivel6/carga', element: <Cargaa1 /> },
+
+
 
 
 	{ path: '/legales/menu', element: <Menu4 /> },

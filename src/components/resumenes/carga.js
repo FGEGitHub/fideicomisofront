@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import servicionivel3 from "../../services/nivel3";
 import SubirExcelMovimientos from "./subierexce";
+import Tabla from "./tablamovimientos";
 const categoriasEgresos = [
 "Honorarios Profesionales",
 "Servicios de Seguridad",
@@ -92,7 +93,7 @@ setLoading(false);
 
 
 return(
-
+<>
 <div style={{
 maxWidth:420,
 margin:"40px auto",
@@ -209,7 +210,8 @@ cursor:"pointer"
 </form>
 
 </div>
-
+<Tabla/>
+</>
 )
 
 }

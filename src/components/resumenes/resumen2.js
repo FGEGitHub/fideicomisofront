@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
-
+import Tabla from "./tablamovimientos";
 export default function DashboardFinanciero() {
 
   const canvasEgresos = useRef(null);
@@ -240,7 +240,7 @@ Evolución Saldo Banco
 </div>
 
 </div>
-
+<Tabla/>
 </div>
 
   );

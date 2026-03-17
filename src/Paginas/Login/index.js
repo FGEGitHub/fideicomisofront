@@ -66,6 +66,9 @@ const Login = () => {
           case 5:
             navigate('/usuariomapas/inicio')
           break;
+          case 6:
+            navigate('/nivel6/carga')
+          break;
         default:
           
           break;
@@ -118,6 +121,9 @@ const Login = () => {
             navigate('/usuariomapas/inicio')
           window.location.reload(true);
 
+          break;
+               case 6:navigate('/nivel6/carga')
+          window.location.reload(true);
           break;
           case 10:navigate('/admin/usuarios')
           window.location.reload(true);
