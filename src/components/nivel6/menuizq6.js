@@ -128,20 +128,7 @@ useEffect(() => {
       icon: <FactCheckIcon style={{ color: "#1a303e" }} />,
       path: '/usuario2/aprobacionesdepagos'
     },*/
-    {
-      text: 'Mapas',
-      icon: <div><Badge color="error">
-        <TravelExploreIcon style={{ color: "#1a303e" }} />
-      </Badge></div>,
-      path: '/usuario2/mapas'
-    },
-    {
-      text: 'Mapas 2',
-      icon: <div><Badge color="error">
-        <TravelExploreIcon style={{ color: "#1a303e" }} />
-      </Badge></div>,
-      path: '/mapasegundaparte'
-    },
+   
   ];
 
   const toggleMenu = () => {
