@@ -114,7 +114,16 @@ useEffect(() => {
       icon: <DescriptionIcon style={{ color: "#1a303e" }} />,
       path: '/nivel6/resumen3'
     },
-    
+       {
+      text: 'Resumen 4',
+      icon: <DescriptionIcon style={{ color: "#1a303e" }} />,
+      path: '/nivel6/resumen4'
+    },
+         {
+      text: 'Resumen 5',
+      icon: <DescriptionIcon style={{ color: "#1a303e" }} />,
+      path: '/nivel6/resumen5'
+    },
    /*  {
       text: 'Aprobación de CBU',
       icon: <div><Badge badgeContent={notificacionescbus} color="error">

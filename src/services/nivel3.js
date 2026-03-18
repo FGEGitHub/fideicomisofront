@@ -154,4 +154,18 @@ const borrarhistorial= async  () => {
 
 }
 
-export default {traermovimientos, subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+
+
+ const mofificarmconcepto = async (datos) => {
+    
+  
+ console.log(datos)
+      const {data} = await axios.post(baseUrl+'mofificarmconcepto', datos,config)
+ 
+         return(data)
+    
+ 
+       
+  }
+
+export default {mofificarmconcepto, traermovimientos, subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

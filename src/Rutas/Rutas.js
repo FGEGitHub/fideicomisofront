@@ -119,7 +119,8 @@ import Cargaa1 from '../Paginas/nivel6/carga'
 import Resumeness from '../Paginas/nivel6/resumen1'
 import Resumeness2 from '../Paginas/nivel6/resumen2'
 import Resumeness3 from '../Paginas/nivel6/resumen3'
-
+import Resumeness4 from '../Paginas/nivel6/resumen4'
+import Resumeness5 from '../Paginas/nivel6/resumen5'
 
 const Rutas = [
 	 <Navbar/> ,
@@ -220,6 +221,9 @@ const Rutas = [
 { path: '/nivel6/resumen1', element: <Resumeness /> },
 { path: '/nivel6/resumen2', element: <Resumeness2 /> },
 { path: '/nivel6/resumen3', element: <Resumeness3 /> },
+{ path: '/nivel6/resumen4', element: <Resumeness4 /> },
+{ path: '/nivel6/resumen5', element: <Resumeness5 /> },
+
 { path: '/nivel6/carga', element: <Cargaa1 /> },
 
 
