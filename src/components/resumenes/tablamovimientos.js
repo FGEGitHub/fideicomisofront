@@ -10,6 +10,8 @@ import {
   TableHead, TableRow, Paper,
   Box, Typography, TextField, Chip, MenuItem
 } from "@mui/material";
+import { Autocomplete } from "@mui/material";
+
 
 const CONCEPTOS = [
   "Cobranzas SC - Fracción IC3",
@@ -278,18 +280,16 @@ const formatearFechaHora = (fecha) => {
           placeholder="dd/mm/aaaa"
         />
 
-        <TextField
-          select
-          label="Concepto"
-          size="small"
-          value={conceptoFiltro}
-          onChange={(e) => setConceptoFiltro(e.target.value)}
-        >
-          <MenuItem value="">Todos</MenuItem>
-          {CONCEPTOS.map(c => (
-            <MenuItem key={c} value={c}>{c}</MenuItem>
-          ))}
-        </TextField>
+ <Autocomplete
+  size="small"
+  options={CONCEPTOS}
+  value={conceptoFiltro || null}
+  onChange={(e, newValue) => setConceptoFiltro(newValue || "")}
+  sx={{ minWidth: 250 }}
+  renderInput={(params) => (
+    <TextField {...params} label="Concepto" />
+  )}
+/>
       </Box>
 
       {/* TABLA */}
@@ -385,16 +385,15 @@ const formatearFechaHora = (fecha) => {
         <DialogTitle>Editar Concepto</DialogTitle>
 
         <DialogContent>
-          <TextField
-            select
-            fullWidth
-            value={nuevoConcepto}
-            onChange={(e) => setNuevoConcepto(e.target.value)}
-          >
-            {CONCEPTOS.map(c => (
-              <MenuItem key={c} value={c}>{c}</MenuItem>
-            ))}
-          </TextField>
+    <Autocomplete
+  fullWidth
+  options={CONCEPTOS}
+  value={nuevoConcepto || null}
+  onChange={(e, newValue) => setNuevoConcepto(newValue || "")}
+  renderInput={(params) => (
+    <TextField {...params} label="Seleccionar concepto" />
+  )}
+/>
         </DialogContent>
 
         <DialogActions>
