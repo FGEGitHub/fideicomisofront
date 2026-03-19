@@ -310,6 +310,9 @@ const formatearFechaHora = (fecha) => {
               <TableCell align="right"><b>Crédito</b></TableCell>
               <TableCell><b>Concepto</b></TableCell>
               <TableCell><b>Categoría</b></TableCell>
+              <TableCell><b>Subcategoría</b></TableCell>
+{/* <TableCell><b>Proyecto</b></TableCell> */}
+<TableCell><b>Tipo Gasto</b></TableCell>
             </TableRow>
           </TableHead>
 
@@ -359,7 +362,17 @@ const formatearFechaHora = (fecha) => {
                 <TableCell>
                   <Chip label={row.categoria_general || "SIN CLASIFICAR"} size="small" />
                 </TableCell>
+<TableCell>
+  <Chip label={row.subcategoria || "SIN CLASIFICAR"} size="small" />
+</TableCell>
+{/* 
+<TableCell>
+  <Chip label={row.proyecto || "SIN CLASIFICAR"} size="small" />
+</TableCell> */}
 
+<TableCell>
+  <Chip label={row.tipo_gasto || "SIN CLASIFICAR"} size="small" />
+</TableCell>
               </TableRow>
             ))}
           </TableBody>
