@@ -5,8 +5,6 @@ export default function SubirExcelMovimientos(){
 
   const [archivo,setArchivo] = useState(null);
   const [loading,setLoading] = useState(false);
-
-  // 👉 NUEVO: resultado del backend
   const [resultado,setResultado] = useState(null);
 
   const handleFileChange = (e)=>{
@@ -14,7 +12,6 @@ export default function SubirExcelMovimientos(){
   };
 
   const handleSubmit = async (e)=>{
-
     e.preventDefault();
 
     if(!archivo){
@@ -25,23 +22,19 @@ export default function SubirExcelMovimientos(){
     setLoading(true);
 
     try{
-
       const formData = new FormData();
       formData.append("file",archivo);
 
       const resp = await servicionivel3.subirexceldemovimientos(formData);
 
-      // 👉 guardamos TODO el resultado
       setResultado(resp);
 
-      let mensaje = `Archivo procesado\n\n`;
-      mensaje += `Filas: ${resp.filas}\n`;
-      mensaje += `Insertados: ${resp.insertados}\n`;
-      mensaje += `Duplicados: ${resp.duplicados}\n`;
-      mensaje += `Errores: ${resp.errores}\n`;
-      mensaje += `Ignorados: ${resp.ignoradas}\n`;
-
-      alert(mensaje);
+      alert(
+        `Archivo procesado\n\n` +
+        `Total: ${resp.total}\n` +
+        `Insertados: ${resp.insertados}\n` +
+        `Duplicados: ${resp.duplicados}`
+      );
 
       setArchivo(null);
 
@@ -53,10 +46,13 @@ export default function SubirExcelMovimientos(){
     setLoading(false);
   };
 
-  return(
+  // 🔥 separar duplicados
+  const duplicadosExcel = resultado?.duplicados_detalle?.filter(d => d.tipo === "EXCEL") || [];
+  const duplicadosBD = resultado?.duplicados_detalle?.filter(d => d.tipo === "BD") || [];
 
+  return(
     <div style={{
-      maxWidth:600,
+      maxWidth:700,
       margin:"40px auto",
       padding:25,
       borderRadius:10,
@@ -64,17 +60,11 @@ export default function SubirExcelMovimientos(){
       background:"#fafafa"
     }}>
 
-      <h2 style={{ marginBottom:20, fontWeight:600 }}>
-        Subir Excel de Movimientos
-      </h2>
+      <h2 style={{ marginBottom:20 }}>Subir Excel de Movimientos</h2>
 
       <form
         onSubmit={handleSubmit}
-        style={{
-          display:"flex",
-          flexDirection:"column",
-          gap:12
-        }}
+        style={{ display:"flex", flexDirection:"column", gap:12 }}
       >
 
         <label>Archivo Excel</label>
@@ -89,7 +79,6 @@ export default function SubirExcelMovimientos(){
           type="submit"
           disabled={loading}
           style={{
-            marginTop:10,
             padding:10,
             borderRadius:6,
             border:"none",
@@ -104,56 +93,67 @@ export default function SubirExcelMovimientos(){
 
       </form>
 
-      {/* 🔥 RESULTADO EN PANTALLA */}
+      {/* 🔥 RESULTADO */}
       {resultado && (
         <div style={{ marginTop:30 }}>
 
-          <h3>Resultado</h3>
+          <h3>Resumen</h3>
 
-          <p>✔ Filas: {resultado.filas}</p>
-          <p>✅ Insertados: {resultado.insertados}</p>
-          <p>🔁 Duplicados: {resultado.duplicados}</p>
-          <p>❌ Errores: {resultado.errores}</p>
-          <p>⚠ Ignorados: {resultado.ignoradas}</p>
+          <div style={{
+            display:"grid",
+            gridTemplateColumns:"repeat(3,1fr)",
+            gap:10,
+            marginBottom:20
+          }}>
+            <div>📄 Total: <strong>{resultado.total}</strong></div>
+            <div>✅ Insertados: <strong>{resultado.insertados}</strong></div>
+            <div>🔁 Duplicados: <strong>{resultado.duplicados}</strong></div>
+          </div>
 
-          {/* 🔴 ERRORES */}
-          {resultado.detalle?.errores?.length > 0 && (
+          {/* 🔵 DUPLICADOS BD */}
+          {duplicadosBD.length > 0 && (
             <>
-              <h4 style={{ color:"red" }}>Filas con error</h4>
-              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
-                {resultado.detalle.errores.map((e,i)=>(
+              <h4 style={{ color:"#2980b9" }}>
+                🔵 Duplicados en Base de Datos ({duplicadosBD.length})
+              </h4>
+
+              <div style={{
+                maxHeight:200,
+                overflow:"auto",
+                background:"#fff",
+                padding:10,
+                border:"1px solid #eee"
+              }}>
+                {duplicadosBD.map((d,i)=>(
                   <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
-                    <strong>Error:</strong> {e.error} <br/>
-                    <small>{JSON.stringify(e.fila)}</small>
+                    <strong>{d.fecha}</strong> | {d.cuit} | ${d.monto}
+                    <br/>
+                    <small>{d.descripcion}</small>
                   </div>
                 ))}
               </div>
             </>
           )}
 
-          {/* 🟡 IGNORADOS */}
-          {resultado.detalle?.ignoradas?.length > 0 && (
+          {/* 🟣 DUPLICADOS EXCEL */}
+          {duplicadosExcel.length > 0 && (
             <>
-              <h4 style={{ color:"orange" }}>Filas ignoradas</h4>
-              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
-                {resultado.detalle.ignoradas.map((e,i)=>(
-                  <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
-                    <strong>Motivo:</strong> {e.motivo} <br/>
-                    <small>{JSON.stringify(e.fila)}</small>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+              <h4 style={{ color:"#8e44ad", marginTop:20 }}>
+                🟣 Duplicados dentro del Excel ({duplicadosExcel.length})
+              </h4>
 
-          {/* 🔵 DUPLICADOS */}
-          {resultado.detalle?.duplicadas?.length > 0 && (
-            <>
-              <h4 style={{ color:"blue" }}>Filas duplicadas</h4>
-              <div style={{ maxHeight:150, overflow:"auto", background:"#fff", padding:10 }}>
-                {resultado.detalle.duplicadas.map((e,i)=>(
+              <div style={{
+                maxHeight:200,
+                overflow:"auto",
+                background:"#fff",
+                padding:10,
+                border:"1px solid #eee"
+              }}>
+                {duplicadosExcel.map((d,i)=>(
                   <div key={i} style={{ borderBottom:"1px solid #eee", padding:5 }}>
-                    {e.FECHA} - {e.DESCRIPCION}
+                    <strong>{d.fecha}</strong> | {d.cuit} | ${d.monto}
+                    <br/>
+                    <small>{d.descripcion}</small>
                   </div>
                 ))}
               </div>
