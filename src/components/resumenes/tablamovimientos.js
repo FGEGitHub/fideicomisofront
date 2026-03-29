@@ -50,7 +50,7 @@ const CONCEPTOS = [
   "Pagos Obras y Trabajos varios",
   "Otros Egresos",
   "Proyectos Ejecutivos",
-  "Reintegro de Sueldos pagados x CMP",
+  "Reintegro de sueldos y movilidad",
   "Pagos por Compra de Rodados",
   "Reparación y mantenimiento Rodados",
   "Reparación y mantenimiento Otros bienes",
@@ -58,7 +58,8 @@ const CONCEPTOS = [
   "Servicio de Seguridad - Adicional de Policias",
   "Servicios de Seguridad",
   "Tasas y Gastos Judiciales",
-  "Gastos de Expensas Consorcio PIT"
+  "Gastos de Expensas Consorcio PIT",
+  "Seguridad - Empresa de Seguridad"
 ];
 
 export default function MovimientosTabla() {
