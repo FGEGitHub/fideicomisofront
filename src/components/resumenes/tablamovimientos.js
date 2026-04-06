@@ -71,7 +71,8 @@ export default function MovimientosTabla() {
   const [anioFiltro, setAnioFiltro] = useState("");
   const [cuitFiltro, setCuitFiltro] = useState("");
   const [conceptoFiltro, setConceptoFiltro] = useState("");
-
+const [ordenCampo, setOrdenCampo] = useState("fecha");
+const [ordenDireccion, setOrdenDireccion] = useState("desc");
   // 🔥 NUEVO
   const [fechaCargaFiltro, setFechaCargaFiltro] = useState("");
 
@@ -124,7 +125,31 @@ export default function MovimientosTabla() {
     const { dia, mes, anio } = parseFecha(fecha);
     return `${dia}/${mes}/${anio}`;
   };
+const ordenarPor = (campo) => {
+  if (ordenCampo === campo) {
+    setOrdenDireccion(prev => (prev === "asc" ? "desc" : "asc"));
+  } else {
+    setOrdenCampo(campo);
+    setOrdenDireccion("asc");
+  }
+};
 
+const valorFecha = (fecha) => {
+  if (!fecha) return 0;
+
+  const limpia = fecha.replace("T", " ").split(".")[0];
+
+  if (limpia.includes("-")) {
+    return new Date(limpia).getTime();
+  }
+
+  if (limpia.includes("/")) {
+    const [dia, mes, anio] = limpia.split("/");
+    return new Date(`${anio}-${mes}-${dia}`).getTime();
+  }
+
+  return 0;
+};
   const getMes = (fecha) => parseFecha(fecha).mes;
   const getAnio = (fecha) => parseFecha(fecha).anio;
 
@@ -181,8 +206,8 @@ const parseFechaHora = (fecha) => {
   return { dia: "-", mes: "-", anio: "-", hora: "" };
 };
   // 🔍 FILTROS
-  const filtered = movimientos.filter((row) => {
-
+const filtered = movimientos
+  .filter((row) => {
     const texto = `
       ${row.descripcion || ""}
       ${row.concepto || ""}
@@ -191,30 +216,58 @@ const parseFechaHora = (fecha) => {
     `.toLowerCase();
 
     if (search && !texto.includes(search.toLowerCase())) return false;
+
     if (tipoFiltro && row.tipo_operacion !== tipoFiltro) return false;
-    if (mesFiltro && getMes(row.fecha) !== mesFiltro) return false;
-    if (anioFiltro && getAnio(row.fecha) !== anioFiltro) return false;
-    if (cuitFiltro && !(row.cuil_cuit || "").includes(cuitFiltro)) return false;
-    if (conceptoFiltro && row.concepto !== conceptoFiltro) return false;
 
-    // 🔥 FILTRO NUEVO
-if (fechaCargaFiltro) {
-  const textoFecha = (
-    (row.fechacarga || "") +
-    " " +
-    (formatearFechaHora(row.fechacarga) || "")
-  ).toLowerCase().replace(/\s+/g, "");
+    if (
+      mesFiltro &&
+      String(Number(getMes(row.fecha))) !== String(Number(mesFiltro))
+    ) {
+      return false;
+    }
 
-  const filtro = fechaCargaFiltro
-    .toLowerCase()
-    .replace(/\s+/g, "");
+    if (
+      anioFiltro &&
+      String(getAnio(row.fecha)).trim() !== String(anioFiltro).trim()
+    ) {
+      return false;
+    }
 
-  if (!textoFecha.includes(filtro)) {
-    return false;
-  }
-}
+    if (cuitFiltro && !(row.cuil_cuit || "").includes(cuitFiltro)) {
+      return false;
+    }
+
+    if (conceptoFiltro && row.concepto !== conceptoFiltro) {
+      return false;
+    }
+
+    if (fechaCargaFiltro) {
+      const textoFecha = formatearFechaHora(row.fechacarga)
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/-/g, "/");
+
+      const filtro = fechaCargaFiltro
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/-/g, "/");
+
+      if (!textoFecha.includes(filtro)) {
+        return false;
+      }
+    }
 
     return true;
+  })
+  .sort((a, b) => {
+    let valorA;
+    let valorB;
+
+    if (ordenCampo === "fecha") {
+      valorA = valorFecha(a.fecha);
+      valorB = valorFecha(b.fecha);
+    }
+
   });
 const formatearFechaHora = (fecha) => {
   const { dia, mes, anio, hora } = parseFechaHora(fecha);
@@ -299,10 +352,34 @@ const formatearFechaHora = (fecha) => {
 
           <TableHead>
             <TableRow>
-              <TableCell><b>Fecha</b></TableCell>
+           <TableCell
+  onClick={() => ordenarPor("fecha")}
+  sx={{ cursor: "pointer", userSelect: "none" }}
+>
+  <b>
+    Fecha {ordenCampo === "fecha" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
+  </b>
+</TableCell>
               <TableCell><b>Fecha Carga</b></TableCell> {/* 🔥 NUEVO */}
-              <TableCell><b>Mes</b></TableCell>
-              <TableCell><b>Año</b></TableCell>
+
+
+<TableCell
+  onClick={() => ordenarPor("mes")}
+  sx={{ cursor: "pointer", userSelect: "none" }}
+>
+  <b>
+    Mes {ordenCampo === "mes" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
+  </b>
+</TableCell>
+
+<TableCell
+  onClick={() => ordenarPor("anio")}
+  sx={{ cursor: "pointer", userSelect: "none" }}
+>
+  <b>
+    Año {ordenCampo === "anio" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
+  </b>
+</TableCell>
               <TableCell><b>Tipo</b></TableCell>
               <TableCell><b>Descripción</b></TableCell>
               <TableCell><b>Razón Social</b></TableCell>
