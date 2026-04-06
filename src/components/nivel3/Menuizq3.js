@@ -142,6 +142,8 @@ export default function MenuIzq2({ children }) {
 
         {menuVisible && (
           <Drawer
+            variant="permanent"
+            anchor="left"
             sx={{
               width: drawerWidth,
               flexShrink: 0,
@@ -151,114 +153,125 @@ export default function MenuIzq2({ children }) {
                 background: "#ffffff",
                 borderRight: `1px solid ${alpha("#0b4f6c", 0.08)}`,
                 boxShadow: "8px 0 28px rgba(10, 59, 79, 0.06)",
+                overflowX: "hidden",
               },
             }}
-            variant="permanent"
-            anchor="left"
           >
             <Navbar logout={{ hanleLogout }} />
-            <Toolbar />
-            <Toolbar />
+
+            {/* solo una compensación, no dos */}
+            <Toolbar sx={{ minHeight: "64px !important" }} />
 
             <Divider sx={{ borderColor: alpha("#0b4f6c", 0.08) }} />
 
-            <List
+            <Box
               sx={{
-                px: 1.2,
-                py: 1,
-                background: "transparent",
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
               }}
             >
-              <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 0.5 }}>
-                <IconButton
-                  onClick={toggleMenu}
+              <List
+                sx={{
+                  px: 1.2,
+                  py: 1,
+                  pt: 0.75,
+                  background: "transparent",
+                }}
+              >
+                <Box
                   sx={{
-                    color: "#1a303e",
-                    borderRadius: "12px",
-                    "&:hover": {
-                      backgroundColor: alpha("#0b4f6c", 0.06),
-                      color: "#0d3a49",
-                    },
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    mb: 0.5,
                   }}
                 >
-                  <CloseIcon />
-                </IconButton>
-              </Box>
-
-              {menuItems.map((item) => {
-                const isActive = location.pathname === item.path;
-
-                return (
-                  <ListItem
-                    button
-                    key={item.text}
-                    onClick={() => handleClick(item.path)}
+                  <IconButton
+                    onClick={toggleMenu}
                     sx={{
-                      my: 0.45,
-                      px: 1.25,
-                      py: 1.05,
-                      borderRadius: 2.2,
-                      transition: "all .18s ease",
-                      border: "1px solid transparent",
-                      cursor: "pointer",
-
-                      backgroundColor: isActive
-                        ? "rgba(20,141,141,0.18)"
-                        : "transparent",
-
-                      borderColor: isActive
-                        ? "rgba(20,141,141,0.45)"
-                        : "transparent",
-
-                      boxShadow: isActive
-                        ? "0 12px 26px rgba(20,141,141,0.18)"
-                        : "none",
-
+                      color: "#1a303e",
+                      borderRadius: "12px",
                       "&:hover": {
-                        backgroundColor: isActive
-                          ? "rgba(20,141,141,0.22)"
-                          : "rgba(20,141,141,0.08)",
-                        borderColor: "rgba(20,141,141,0.28)",
-                        transform: "translateY(-1px)",
+                        backgroundColor: alpha("#0b4f6c", 0.06),
+                        color: "#0d3a49",
                       },
                     }}
                   >
-                    <ListItemIcon
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+
+                {menuItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+
+                  return (
+                    <ListItem
+                      button
+                      key={item.text}
+                      onClick={() => handleClick(item.path)}
                       sx={{
-                        minWidth: 42,
-                        "& svg": {
-                          fontSize: 22,
-                          color: isActive ? "#0d3a49" : "#1a303e",
+                        my: 0.4,
+                        px: 1.25,
+                        py: 1.05,
+                        borderRadius: 2.2,
+                        transition: "all .18s ease",
+                        border: "1px solid transparent",
+                        cursor: "pointer",
+                        backgroundColor: isActive
+                          ? "rgba(20,141,141,0.18)"
+                          : "transparent",
+                        borderColor: isActive
+                          ? "rgba(20,141,141,0.45)"
+                          : "transparent",
+                        boxShadow: isActive
+                          ? "0 12px 26px rgba(20,141,141,0.18)"
+                          : "none",
+                        "&:hover": {
+                          backgroundColor: isActive
+                            ? "rgba(20,141,141,0.22)"
+                            : "rgba(20,141,141,0.08)",
+                          borderColor: "rgba(20,141,141,0.28)",
+                          transform: "translateY(-1px)",
                         },
                       }}
                     >
-                      {item.icon}
-                    </ListItemIcon>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 42,
+                          "& svg": {
+                            fontSize: 22,
+                            color: isActive ? "#0d3a49" : "#1a303e",
+                          },
+                        }}
+                      >
+                        {item.icon}
+                      </ListItemIcon>
 
-                    <ListItemText
-                      primary={item.text}
-                      primaryTypographyProps={{
-                        sx: {
-                          fontFamily:
-                            "system-ui, -apple-system, Segoe UI, Roboto, Arial",
-                          fontWeight: isActive ? 800 : 700,
-                          fontSize: 14.2,
-                          color: isActive ? "#0d3a49" : "#0f2230",
-                          letterSpacing: 0.15,
-                        },
-                      }}
-                    />
-                  </ListItem>
-                );
-              })}
-            </List>
+                      <ListItemText
+                        primary={item.text}
+                        primaryTypographyProps={{
+                          sx: {
+                            fontFamily:
+                              "system-ui, -apple-system, Segoe UI, Roboto, Arial",
+                            fontWeight: isActive ? 800 : 700,
+                            fontSize: 14.2,
+                            color: isActive ? "#0d3a49" : "#0f2230",
+                            letterSpacing: 0.15,
+                          },
+                        }}
+                      />
+                    </ListItem>
+                  );
+                })}
+              </List>
 
-            <Divider
-              sx={{
-                mt: 1,
-                borderColor: alpha("#0b4f6c", 0.08),
-              }}
-            />
+              <Divider
+                sx={{
+                  mt: "auto",
+                  borderColor: alpha("#0b4f6c", 0.08),
+                }}
+              />
+            </Box>
           </Drawer>
         )}
 
@@ -272,7 +285,7 @@ export default function MenuIzq2({ children }) {
             transition: "all 0.3s ease-in-out",
           }}
         >
-          <Toolbar />
+          <Toolbar sx={{ minHeight: "64px !important" }} />
 
           {!menuVisible && (
             <Button
