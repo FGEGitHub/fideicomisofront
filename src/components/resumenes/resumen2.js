@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
 import Tabla from "./tablamovimientos";
+
 export default function DashboardFinanciero() {
 
   const canvasEgresos = useRef(null);
@@ -31,7 +32,7 @@ export default function DashboardFinanciero() {
 
         const concepto = mov.concepto || "Sin categoría";
 
-        // 👉 EGRESOS POR CONCEPTO
+        // 👉 EGRESOS
         if(debito > 0){
           if(!egresosMap[concepto]){
             egresosMap[concepto] = 0;
@@ -39,7 +40,7 @@ export default function DashboardFinanciero() {
           egresosMap[concepto] += debito;
         }
 
-        // 👉 SALDO POR MES
+        // 👉 SALDO
         const saldo = credito - debito;
 
         if(!saldoPorMes[mes]){
@@ -50,15 +51,13 @@ export default function DashboardFinanciero() {
 
       });
 
-      // transformar egresos
       const egresosArray = Object.keys(egresosMap).map(key => ({
         concepto: key,
         monto: egresosMap[key]
       }))
       .sort((a,b)=>b.monto-a.monto)
-      .slice(0,10); // top 10
+      .slice(0,10);
 
-      // transformar saldo
       const saldoArray = [];
       let acumulado = 0;
 
@@ -70,7 +69,6 @@ export default function DashboardFinanciero() {
       setEgresos(egresosArray);
       setSaldoMensual(saldoArray);
 
-      // 👉 dibujar
       setTimeout(()=>{
         animarEgresos(egresosArray);
         animarSaldo(saldoArray);
@@ -81,7 +79,7 @@ export default function DashboardFinanciero() {
     }
   };
 
-  /* ---------------- BARRAS GASTOS ---------------- */
+  /* ---------------- BARRAS ---------------- */
 
   function animarEgresos(data){
 
@@ -126,10 +124,9 @@ export default function DashboardFinanciero() {
     }
 
     frame();
-
   }
 
-  /* ---------------- LINEA SALDO ---------------- */
+  /* ---------------- LINEA SALDO (FULL WIDTH) ---------------- */
 
   function animarSaldo(data){
 
@@ -147,13 +144,17 @@ export default function DashboardFinanciero() {
 
       ctx.beginPath();
 
+      const paddingX = 60;
+      const usableWidth = canvas.width - paddingX * 2;
+
       data.forEach((p,i)=>{
 
-        const x = 70 + i*70;
+        // 👉 DISTRIBUCIÓN DINÁMICA EN TODO EL ANCHO
+        const x = paddingX + (i/(data.length-1 || 1)) * usableWidth;
 
         const y =
           220 -
-          ((p.saldo-min)/(max-min))*160*progreso;
+          ((p.saldo-min)/(max-min || 1))*160*progreso;
 
         if(i===0) ctx.moveTo(x,y);
         else ctx.lineTo(x,y);
@@ -176,7 +177,6 @@ export default function DashboardFinanciero() {
     }
 
     frame();
-
   }
 
   return (
@@ -190,7 +190,7 @@ Dashboard Financiero
 <div style={styles.section}>
 
 <h3 style={styles.subtitulo}>
-Principales Gastos
+Principales egresos
 </h3>
 
 <div style={styles.grid}>
@@ -240,7 +240,9 @@ Evolución Saldo Banco
 </div>
 
 </div>
+
 <Tabla/>
+
 </div>
 
   );
@@ -296,7 +298,8 @@ borderRadius:10
 cardGraficoGrande:{
 background:"#F3F4F6",
 padding:15,
-borderRadius:10
+borderRadius:10,
+width:"100%" // 👈 asegura ancho completo
 },
 
 table:{
@@ -306,4 +309,4 @@ fontSize:13,
 color:"#111827"
 }
 
-}
+};
