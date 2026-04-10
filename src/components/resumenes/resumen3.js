@@ -1,405 +1,745 @@
-import React,{useEffect,useRef,useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
 import Tabla from "./tablamovimientos";
-export default function DashboardFinanciero(){
 
-const flujoRef = useRef(null);
-const balanzaRef = useRef(null);
-const ingresosRef = useRef(null);
-const gastosRef = useRef(null);
-
-// ✅ ESTADOS
-const [kpis,setKpis] = useState({
-ingresos:0,
-gastos:0,
-ganancia:0,
-rentabilidad:0
-});
-
-const [flujoCaja,setFlujoCaja] = useState([]);
-const [balanzaMes,setBalanzaMes] = useState([]);
-const [divisionIngresos,setDivisionIngresos] = useState([]);
-const [distribucionGastos,setDistribucionGastos] = useState([]);
-
-useEffect(()=>{
-traerDatos();
-},[]);
-
-// ✅ TRAER DATOS REALES
-const traerDatos = async () => {
-
-try{
-
-const resp = await servicionivel3.traermovimientos();
-
-let ingresos = 0;
-let gastos = 0;
-
-const ingresosCat = {};
-const gastosCat = {};
-
-resp.forEach(mov=>{
-
-const credito = Number(mov.credito)||0;
-const debito = Number(mov.debito)||0;
-
-const categoria = mov.categoria || "Otros";
-
-ingresos += credito;
-gastos += debito;
-
-// ingresos por categoria
-if(credito > 0){
-if(!ingresosCat[categoria]) ingresosCat[categoria]=0;
-ingresosCat[categoria]+=credito;
-}
-
-// gastos por categoria
-if(debito > 0){
-if(!gastosCat[categoria]) gastosCat[categoria]=0;
-gastosCat[categoria]+=debito;
-}
-
-});
-
-const ganancia = ingresos - gastos;
-
-const rentabilidad = ingresos > 0
-? ((ganancia / ingresos) * 100).toFixed(2)
-: 0;
-
-// KPIs
-setKpis({
-ingresos,
-gastos,
-ganancia,
-rentabilidad
-});
-
-// flujo
-const flujo = [
-{concepto:"Ingresos",valor:ingresos},
-{concepto:"Gastos",valor:gastos}
+const PALETTE = [
+  "#0B4F6C",
+  "#148D8D",
+  "#22C55E",
+  "#F59E0B",
+  "#EF4444",
+  "#6366F1",
+  "#A855F7",
+  "#EC4899",
 ];
 
-setFlujoCaja(flujo);
+export default function DashboardFinanciero() {
+  const flujoRef = useRef(null);
+  const resultadoRef = useRef(null);
+  const ingresosConceptoRef = useRef(null);
+  const gastosCategoriaRef = useRef(null);
 
-// balanza
-const balanza = [
-{concepto:"Resultado",valor:ganancia}
-];
+  const [kpis, setKpis] = useState({
+    ingresos: 0,
+    gastos: 0,
+    ganancia: 0,
+    rentabilidad: 0,
+  });
 
-setBalanzaMes(balanza);
+  const [flujoCaja, setFlujoCaja] = useState([]);
+  const [resultadoGeneral, setResultadoGeneral] = useState([]);
+  const [ingresosPorConcepto, setIngresosPorConcepto] = useState([]);
+  const [gastosPorCategoria, setGastosPorCategoria] = useState([]);
 
-// donut ingresos
-const totalIng = Object.values(ingresosCat).reduce((a,b)=>a+b,0);
+  useEffect(() => {
+    traerDatos();
+  }, []);
 
-setDivisionIngresos(
-Object.keys(ingresosCat).map(k=>({
-tipo:k,
-porcentaje:(ingresosCat[k]/totalIng)*100
-}))
-);
+  useEffect(() => {
+    drawBarChart(flujoRef.current, flujoCaja, {
+      colors: ["#16A34A", "#DC2626"],
+    });
+  }, [flujoCaja]);
 
-// donut gastos
-const totalGas = Object.values(gastosCat).reduce((a,b)=>a+b,0);
+  useEffect(() => {
+    drawSingleResultChart(resultadoRef.current, resultadoGeneral);
+  }, [resultadoGeneral]);
 
-setDistribucionGastos(
-Object.keys(gastosCat).map(k=>({
-tipo:k,
-porcentaje:(gastosCat[k]/totalGas)*100
-}))
-);
+  useEffect(() => {
+    drawDonut(ingresosConceptoRef.current, ingresosPorConcepto);
+  }, [ingresosPorConcepto]);
 
-// dibujar
-setTimeout(()=>{
-drawBarChart(flujo);
-drawBalance(balanza);
-drawDonutIngresos();
-drawDonutGastos();
-},300);
+  useEffect(() => {
+    drawDonut(gastosCategoriaRef.current, gastosPorCategoria);
+  }, [gastosPorCategoria]);
 
-}catch(e){
-console.error(e);
-}
+  const traerDatos = async () => {
+    try {
+      const resp = await servicionivel3.traermovimientos();
+      const lista = Array.isArray(resp) ? resp : [];
+      const movimientos = deduplicarMovimientos(lista);
 
-};
+      let ingresos = 0;
+      let gastos = 0;
 
-/* ---------------- GRAFICOS ---------------- */
+      const ingresosConceptoMap = {};
+      const gastosCategoriaMap = {};
 
-function drawBarChart(data){
+      movimientos.forEach((mov) => {
+        const credito = Number(mov.credito) || 0;
+        const debito = Number(mov.debito) || 0;
 
-const canvas=flujoRef.current;
-const ctx=canvas.getContext("2d");
+        const concepto = (mov.concepto || "SIN CLASIFICAR").trim();
+        const categoria =
+          (mov.categoria_general || mov.categoria || "SIN CLASIFICAR").trim();
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+        ingresos += credito;
+        gastos += debito;
 
-const max=Math.max(...data.map(d=>d.valor));
+        if (credito > 0) {
+          if (!ingresosConceptoMap[concepto]) ingresosConceptoMap[concepto] = 0;
+          ingresosConceptoMap[concepto] += credito;
+        }
 
-data.forEach((d,i)=>{
+        if (debito > 0) {
+          if (!gastosCategoriaMap[categoria]) gastosCategoriaMap[categoria] = 0;
+          gastosCategoriaMap[categoria] += debito;
+        }
+      });
 
-const x=60+i*120;
-const height=(d.valor/max)*160;
+      const ganancia = ingresos - gastos;
+      const rentabilidad =
+        ingresos > 0 ? Number(((ganancia / ingresos) * 100).toFixed(2)) : 0;
 
-ctx.fillStyle = i===0 ? "#16A34A" : "#DC2626";
+      setKpis({
+        ingresos,
+        gastos,
+        ganancia,
+        rentabilidad,
+      });
 
-ctx.fillRect(x,200-height,80,height);
+      setFlujoCaja([
+        { label: "Ingresos", value: ingresos },
+        { label: "Gastos", value: gastos },
+      ]);
 
-ctx.fillStyle="#111827";
-ctx.font="12px Arial";
+      setResultadoGeneral([{ label: "Resultado", value: ganancia }]);
 
-ctx.fillText("$"+Math.round(d.valor).toLocaleString(),x,180-height);
-ctx.fillText(d.concepto,x,220);
+      setIngresosPorConcepto(prepararDonutData(ingresosConceptoMap));
+      setGastosPorCategoria(prepararDonutData(gastosCategoriaMap));
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-});
+  const ingresosConColor = useMemo(
+    () =>
+      ingresosPorConcepto.map((item, index) => ({
+        ...item,
+        color: PALETTE[index % PALETTE.length],
+      })),
+    [ingresosPorConcepto]
+  );
 
-}
+  const gastosConColor = useMemo(
+    () =>
+      gastosPorCategoria.map((item, index) => ({
+        ...item,
+        color: PALETTE[index % PALETTE.length],
+      })),
+    [gastosPorCategoria]
+  );
 
-function drawBalance(data){
+  return (
+    <div style={styles.dashboard}>
+      <div style={styles.hero}>
+        <div>
+          
+          <h2 style={styles.titulo}>PANEL FINANCIERO</h2>
+          <div style={styles.heroSub}>
+            Vista consolidada de ingresos, gastos, resultado y distribución.
+          </div>
+        </div>
+      </div>
 
-const canvas=balanzaRef.current;
-const ctx=canvas.getContext("2d");
+      <div style={styles.kpis}>
+        <KpiCard titulo="Ingresos" valor={kpis.ingresos} color="#16A34A" tipo="money" />
+        <KpiCard titulo="Gastos" valor={kpis.gastos} color="#DC2626" tipo="money" />
+        <KpiCard titulo="Resultado" valor={kpis.ganancia} color="#1E3A8A" tipo="money" />
+        <KpiCard
+          titulo="Rentabilidad"
+          valor={kpis.rentabilidad}
+          color="#7C3AED"
+          tipo="percent"
+        />
+      </div>
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+      <div style={styles.graficos}>
+        <Section
+          titulo="Flujo de Caja"
+          subtitulo="Comparación general entre ingresos y gastos"
+        >
+          <canvas ref={flujoRef} width={320} height={210} style={styles.canvas} />
+        </Section>
 
-const max=Math.max(...data.map(d=>Math.abs(d.valor)));
+        <Section
+          titulo="Resultado General"
+          subtitulo="Diferencia total entre ingresos y gastos"
+        >
+          <canvas ref={resultadoRef} width={320} height={210} style={styles.canvas} />
+        </Section>
 
-data.forEach((d,i)=>{
+        <Section
+          titulo="Ingresos por Concepto"
+          subtitulo="Distribución porcentual según concepto"
+        >
+          <div style={styles.donutWrap}>
+            <canvas
+              ref={ingresosConceptoRef}
+              width={220}
+              height={220}
+              style={styles.donutCanvas}
+            />
+            <LegendList items={ingresosConColor} />
+          </div>
+        </Section>
 
-const x=120;
-const height=(Math.abs(d.valor)/max)*160;
+        <Section
+          titulo="Gastos por Categoría"
+          subtitulo="Distribución porcentual según categoría"
+        >
+          <div style={styles.donutWrap}>
+            <canvas
+              ref={gastosCategoriaRef}
+              width={220}
+              height={220}
+              style={styles.donutCanvas}
+            />
+            <LegendList items={gastosConColor} />
+          </div>
+        </Section>
+      </div>
 
-ctx.fillStyle = d.valor >= 0 ? "#1E3A8A" : "#DC2626";
-
-ctx.fillRect(x,200-height,100,height);
-
-ctx.fillStyle="#111827";
-ctx.fillText("$"+Math.round(d.valor).toLocaleString(),x,180-height);
-ctx.fillText(d.concepto,x,220);
-
-});
-
-}
-
-function drawDonut(canvas,dataArray){
-
-const ctx=canvas.getContext("2d");
-
-const total=dataArray.reduce((a,b)=>a+b.porcentaje,0);
-
-let start=0;
-
-const colors=[
-"#3B82F6",
-"#6366F1",
-"#8B5CF6",
-"#EC4899",
-"#F59E0B",
-"#10B981",
-"#EF4444"
-];
-
-dataArray.forEach((d,i)=>{
-
-const slice=(d.porcentaje/total)*Math.PI*2;
-
-ctx.beginPath();
-ctx.moveTo(150,150);
-ctx.arc(150,150,120,start,start+slice);
-ctx.closePath();
-
-ctx.fillStyle=colors[i % colors.length];
-ctx.fill();
-
-start+=slice;
-
-});
-
-// centro
-ctx.beginPath();
-ctx.arc(150,150,60,0,Math.PI*2);
-ctx.fillStyle="#fff";
-ctx.fill();
-
-}
-
-function drawDonutIngresos(){
-drawDonut(ingresosRef.current,divisionIngresos);
-}
-
-function drawDonutGastos(){
-drawDonut(gastosRef.current,distribucionGastos);
-}
-
-/* ---------------- UI ---------------- */
-
-return(
-
-<div style={styles.dashboard}>
-
-<h2 style={styles.titulo}>
-Dashboard Financiero
-</h2>
-
-<div style={styles.kpis}>
-
-<KpiCard titulo="Ingresos" valor={kpis.ingresos} color="#16A34A"/>
-<KpiCard titulo="Gastos" valor={kpis.gastos} color="#DC2626"/>
-<KpiCard titulo="Resultado" valor={kpis.ganancia} color="#1E3A8A"/>
-<KpiCard titulo="Rentabilidad" valor={kpis.rentabilidad+"%"} color="#7C3AED"/>
-
+      {/* 
+<div style={styles.movimientosCard}>
+  <Tabla />
 </div>
+*/}
+    </div>
+  );
+}
 
-<div style={styles.graficos}>
+/* ---------------- HELPERS ---------------- */
 
-<Section titulo="Flujo de Caja">
-<canvas ref={flujoRef} width={350} height={250}/>
-</Section>
+function deduplicarMovimientos(lista) {
+  const vistos = new Set();
 
-<Section titulo="Resultado del Mes">
-<canvas ref={balanzaRef} width={350} height={250}/>
-</Section>
+  return lista.filter((mov) => {
+    const key = [
+      normalizarFecha(mov.fecha),
+      String(mov.cuil_cuit || "").trim(),
+      Number(mov.debito || 0).toFixed(2),
+      Number(mov.credito || 0).toFixed(2),
+      String(mov.descripcion || "").trim().toLowerCase(),
+      String(mov.nombre_razon || "").trim().toLowerCase(),
+    ].join("|");
 
-<Section titulo="Ingresos por Categoría">
-<canvas ref={ingresosRef} width={300} height={300}/>
-</Section>
+    if (vistos.has(key)) return false;
+    vistos.add(key);
+    return true;
+  });
+}
 
-<Section titulo="Gastos por Categoría">
-<canvas ref={gastosRef} width={300} height={300}/>
-</Section>
+function normalizarFecha(fecha) {
+  if (!fecha) return "";
+  return String(fecha).replace("T", " ").split(".")[0].trim();
+}
 
-</div>
-<Tabla/>
-</div>
+function prepararDonutData(obj) {
+  const entries = Object.entries(obj)
+    .map(([label, amount]) => ({
+      label,
+      amount,
+    }))
+    .sort((a, b) => b.amount - a.amount);
 
-)
+  if (entries.length === 0) return [];
 
+  const limit = 5;
+  const principales = entries.slice(0, limit);
+  const resto = entries.slice(limit);
+
+  if (resto.length > 0) {
+    const totalResto = resto.reduce((acc, item) => acc + item.amount, 0);
+    principales.push({
+      label: "Otros",
+      amount: totalResto,
+    });
+  }
+
+  const total = principales.reduce((acc, item) => acc + item.amount, 0);
+
+  return principales.map((item) => ({
+    ...item,
+    percentage: total > 0 ? (item.amount / total) * 100 : 0,
+  }));
+}
+
+function formatMoney(valor) {
+  return `$ ${Math.round(Number(valor || 0)).toLocaleString("es-AR")}`;
+}
+
+function formatPercent(valor) {
+  return `${Number(valor || 0).toFixed(2)}%`;
+}
+
+/* ---------------- CHARTS ---------------- */
+
+function drawBarChart(canvas, data, options = {}) {
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+
+  ctx.clearRect(0, 0, width, height);
+
+  if (!data || data.length === 0) {
+    drawEmptyState(ctx, width, height);
+    return;
+  }
+
+  const paddingLeft = 42;
+  const paddingBottom = 30;
+  const chartHeight = 130;
+  const baseY = height - paddingBottom;
+  const max = Math.max(...data.map((d) => d.value), 1);
+  const barWidth = 60;
+  const gap = 36;
+
+  drawGrid(ctx, paddingLeft, 20, width - 16, baseY, 4);
+
+  data.forEach((d, i) => {
+    const x = paddingLeft + 18 + i * (barWidth + gap);
+    const barHeight = (d.value / max) * chartHeight;
+    const y = baseY - barHeight;
+    const color = options.colors?.[i] || PALETTE[i % PALETTE.length];
+
+    roundRect(ctx, x, y, barWidth, barHeight, 10, color);
+
+    ctx.fillStyle = "#111827";
+    ctx.font = "600 10px Segoe UI";
+    ctx.fillText(formatMoney(d.value), x, y - 8);
+
+    ctx.fillStyle = "#334155";
+    ctx.font = "600 11px Segoe UI";
+    ctx.fillText(d.label, x + 2, baseY + 18);
+  });
+}
+
+function drawSingleResultChart(canvas, data) {
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+
+  ctx.clearRect(0, 0, width, height);
+
+  if (!data || data.length === 0) {
+    drawEmptyState(ctx, width, height);
+    return;
+  }
+
+  const item = data[0];
+  const value = Number(item.value || 0);
+  const max = Math.max(Math.abs(value), 1);
+
+  const paddingLeft = 105;
+  const paddingBottom = 30;
+  const baseY = height - paddingBottom;
+  const chartHeight = 130;
+  const barHeight = (Math.abs(value) / max) * chartHeight;
+  const y = baseY - barHeight;
+  const color = value >= 0 ? "#1E3A8A" : "#DC2626";
+
+  drawGrid(ctx, 44, 20, width - 16, baseY, 4);
+  roundRect(ctx, paddingLeft, y, 82, barHeight, 10, color);
+
+  ctx.fillStyle = "#111827";
+  ctx.font = "600 10px Segoe UI";
+  ctx.fillText(formatMoney(value), paddingLeft - 6, y - 8);
+
+  ctx.fillStyle = "#334155";
+  ctx.font = "600 11px Segoe UI";
+  ctx.fillText(item.label, paddingLeft + 10, baseY + 18);
+}
+
+function drawDonut(canvas, dataArray) {
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+  const cx = width / 2;
+  const cy = height / 2;
+  const outer = 60;
+  const inner = 34;
+
+  ctx.clearRect(0, 0, width, height);
+
+  if (!dataArray || dataArray.length === 0) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, outer, 0, Math.PI * 2);
+    ctx.fillStyle = "#E5E7EB";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+
+    ctx.fillStyle = "#64748B";
+    ctx.font = "600 12px Segoe UI";
+    ctx.textAlign = "center";
+    ctx.fillText("Sin datos", cx, cy + 4);
+    ctx.textAlign = "start";
+    return;
+  }
+
+  const total = dataArray.reduce((acc, item) => acc + item.amount, 0);
+  let start = -Math.PI / 2;
+
+  dataArray.forEach((item, index) => {
+    const slice = total > 0 ? (item.amount / total) * Math.PI * 2 : 0;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, outer, start, start + slice);
+    ctx.closePath();
+    ctx.fillStyle = PALETTE[index % PALETTE.length];
+    ctx.fill();
+
+    start += slice;
+  });
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fill();
+
+  ctx.fillStyle = "#0F172A";
+  ctx.font = "700 11px Segoe UI";
+  ctx.textAlign = "center";
+  ctx.fillText("100%", cx, cy - 2);
+
+  ctx.fillStyle = "#64748B";
+  ctx.font = "600 9px Segoe UI";
+  ctx.fillText("Distribución", cx, cy + 12);
+  ctx.textAlign = "start";
+}
+
+function drawGrid(ctx, x1, y1, x2, y2, lines = 4) {
+  ctx.strokeStyle = "rgba(148, 163, 184, 0.22)";
+  ctx.lineWidth = 1;
+
+  for (let i = 0; i <= lines; i++) {
+    const y = y1 + ((y2 - y1) / lines) * i;
+    ctx.beginPath();
+    ctx.moveTo(x1, y);
+    ctx.lineTo(x2, y);
+    ctx.stroke();
+  }
+}
+
+function roundRect(ctx, x, y, width, height, radius, fill) {
+  const r = Math.min(radius, width / 2, height / 2);
+
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+
+  ctx.fillStyle = fill;
+  ctx.fill();
+}
+
+function drawEmptyState(ctx, width, height) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "#94A3B8";
+  ctx.font = "600 13px Segoe UI";
+  ctx.textAlign = "center";
+  ctx.fillText("Sin datos para mostrar", width / 2, height / 2);
+  ctx.textAlign = "start";
 }
 
 /* ---------------- COMPONENTES ---------------- */
 
-function KpiCard({titulo,valor,color}){
+function KpiCard({ titulo, valor, color, tipo = "money" }) {
+  const [display, setDisplay] = useState(0);
 
-const [display,setDisplay]=useState(0);
+  useEffect(() => {
+    let current = 0;
+    const target = Number(valor || 0);
+    const increment = target / 35;
 
-useEffect(()=>{
-animate(valor,setDisplay);
-},[valor]);
+    const timer = setInterval(() => {
+      current += increment;
 
-function animate(target,setter){
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
 
-let current=0;
-const inc=target/40;
+      setDisplay(current);
+    }, 20);
 
-const timer=setInterval(()=>{
+    return () => clearInterval(timer);
+  }, [valor]);
 
-current+=inc;
-
-if(current>=target){
-current=target;
-clearInterval(timer);
+  return (
+    <div style={{ ...styles.card, borderTop: `4px solid ${color}` }}>
+      <div style={styles.cardTitle}>{titulo}</div>
+      <div style={styles.cardValue}>
+        {tipo === "percent" ? formatPercent(display) : formatMoney(display)}
+      </div>
+    </div>
+  );
 }
 
-setter(Math.floor(current));
-
-},25);
-
+function Section({ titulo, subtitulo, children }) {
+  return (
+    <div style={styles.section}>
+      <div style={styles.sectionHeader}>
+        <div>
+          <h4 style={styles.sectionTitle}>{titulo}</h4>
+          <div style={styles.sectionSubtitle}>{subtitulo}</div>
+        </div>
+      </div>
+      {children}
+    </div>
+  );
 }
 
-return(
+function LegendList({ items }) {
+  if (!items || items.length === 0) {
+    return <div style={styles.legendEmpty}>Sin datos</div>;
+  }
 
-<div style={{...styles.card,borderTop:`4px solid ${color}`}}>
+  return (
+    <div style={styles.legendList}>
+      {items.map((item, index) => (
+        <div key={`${item.label}-${index}`} style={styles.legendItem}>
+          <div style={styles.legendLeft}>
+            <span
+              style={{
+                ...styles.legendDot,
+                background: item.color || PALETTE[index % PALETTE.length],
+              }}
+            />
+            <span style={styles.legendLabel} title={item.label}>
+              {item.label}
+            </span>
+          </div>
 
-<div style={styles.cardTitle}>{titulo}</div>
-
-<div style={styles.cardValue}>
-{typeof valor==="number"?"$"+display.toLocaleString():valor}
-</div>
-
-</div>
-
-)
-
+          <div style={styles.legendRight}>
+            <span style={styles.legendValue}>{formatPercent(item.percentage)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
-function Section({titulo,children}){
+/* ---------------- ESTILOS ---------------- */
 
-return(
+const styles = {
+  dashboard: {
+    fontFamily: "Segoe UI, Inter, sans-serif",
+    padding: 18,
+    minHeight: "100vh",
+    background: "linear-gradient(180deg, #f5f8fc 0%, #eef4f8 100%)",
+  },
 
-<div style={styles.section}>
+  hero: {
+    marginBottom: 16,
+    padding: "18px 20px",
+    borderRadius: 18,
+    background: "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #148D8D 100%)",
+    color: "#fff",
+    boxShadow: "0 14px 26px rgba(11, 79, 108, 0.14)",
+    border: "1px solid rgba(255,255,255,0.10)",
+  },
 
-<h4 style={styles.sectionTitle}>
-{titulo}
-</h4>
+  heroEyebrow: {
+    fontSize: 11,
+    fontWeight: 800,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    opacity: 0.9,
+    marginBottom: 4,
+  },
 
-{children}
+  titulo: {
+    margin: 0,
+    fontSize: 20,
+    fontWeight: 800,
+    color: "#fff",
+  },
 
-</div>
+  heroSub: {
+    marginTop: 4,
+    fontSize: 13,
+    color: "rgba(255,255,255,0.92)",
+  },
 
-)
+  kpis: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: 14,
+    marginBottom: 18,
+  },
 
-}
+  card: {
+    background: "rgba(255,255,255,0.94)",
+    backdropFilter: "blur(10px)",
+    padding: 14,
+    borderRadius: 16,
+    boxShadow: "0 10px 20px rgba(15, 23, 42, 0.05)",
+    border: "1px solid rgba(11,79,108,0.08)",
+    minHeight: 82,
+  },
 
-/* ---------------- ESTILOS PRO ---------------- */
+  cardTitle: {
+    fontSize: 12,
+    color: "#64748B",
+    fontWeight: 700,
+  },
 
-const styles={
+  cardValue: {
+    fontSize: 18,
+    fontWeight: 800,
+    marginTop: 8,
+    color: "#0F172A",
+    letterSpacing: "-0.02em",
+  },
 
-dashboard:{
-fontFamily:"Inter, Segoe UI",
-padding:30,
-minHeight:"100vh",
-background:"#F9FAFB"
-},
+  graficos: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: 16,
+  },
 
-titulo:{
-marginBottom:25,
-color:"#111827"
-},
+  section: {
+    background: "rgba(255,255,255,0.94)",
+    backdropFilter: "blur(10px)",
+    padding: 16,
+    borderRadius: 18,
+    boxShadow: "0 12px 24px rgba(15, 23, 42, 0.05)",
+    border: "1px solid rgba(11,79,108,0.08)",
+    minHeight: 300,
+    display: "flex",
+    flexDirection: "column",
+  },
 
-kpis:{
-display:"flex",
-gap:20,
-marginBottom:30,
-flexWrap:"wrap"
-},
+  sectionHeader: {
+    marginBottom: 10,
+  },
 
-card:{
-background:"#fff",
-padding:20,
-borderRadius:12,
-width:200,
-boxShadow:"0 10px 25px rgba(0,0,0,0.06)",
-border:"1px solid #E5E7EB"
-},
+  sectionTitle: {
+    margin: 0,
+    color: "#0F172A",
+    fontSize: 15,
+    fontWeight: 800,
+  },
 
-cardTitle:{
-fontSize:13,
-color:"#6B7280"
-},
+  sectionSubtitle: {
+    marginTop: 3,
+    color: "#64748B",
+    fontSize: 11,
+    fontWeight: 600,
+  },
 
-cardValue:{
-fontSize:24,
-fontWeight:"600",
-marginTop:5
-},
+  canvas: {
+    width: "100%",
+    height: 210,
+    borderRadius: 12,
+    background: "linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%)",
+  },
 
-graficos:{
-display:"grid",
-gridTemplateColumns:"repeat(auto-fit, minmax(280px, 1fr))",
-gap:25
-},
+  donutWrap: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gap: 12,
+    alignItems: "center",
+    flex: 1,
+  },
 
-section:{
-background:"#fff",
-padding:20,
-borderRadius:12,
-boxShadow:"0 10px 25px rgba(0,0,0,0.05)",
-border:"1px solid #E5E7EB"
-},
+  donutCanvas: {
+    width: "100%",
+    maxWidth: 220,
+    height: "auto",
+    justifySelf: "center",
+  },
 
-sectionTitle:{
-marginBottom:10,
-color:"#374151"
-}
+  legendList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    maxHeight: 210,
+    overflowY: "auto",
+    paddingRight: 2,
+  },
 
+  legendItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+    padding: "8px 10px",
+    borderRadius: 12,
+    background: "rgba(248, 250, 252, 0.92)",
+    border: "1px solid rgba(148,163,184,0.14)",
+  },
+
+  legendLeft: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    minWidth: 0,
+    flex: 1,
+  },
+
+  legendDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 999,
+    flexShrink: 0,
+  },
+
+  legendLabel: {
+    fontSize: 12,
+    fontWeight: 700,
+    color: "#334155",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+
+  legendRight: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: 1,
+    flexShrink: 0,
+  },
+
+  legendValue: {
+    fontSize: 11,
+    fontWeight: 800,
+    color: "#0F172A",
+  },
+
+  legendEmpty: {
+    fontSize: 13,
+    color: "#64748B",
+    fontWeight: 700,
+    padding: "16px 0",
+  },
+
+  movimientosCard: {
+    marginTop: 18,
+    background: "rgba(255,255,255,0.94)",
+    borderRadius: 18,
+    boxShadow: "0 12px 24px rgba(15, 23, 42, 0.05)",
+    border: "1px solid rgba(11,79,108,0.08)",
+    padding: 14,
+  },
 };

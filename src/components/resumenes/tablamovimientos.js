@@ -2,16 +2,25 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
 import {
-  Dialog, DialogTitle, DialogContent,
-  DialogActions, Button
-} from "@mui/material";
-import {
-  Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper,
-  Box, Typography, TextField, Chip, MenuItem
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Typography,
+  TextField,
+  Chip,
+  MenuItem,
 } from "@mui/material";
 import { Autocomplete } from "@mui/material";
-
 
 const CONCEPTOS = [
   "Cobranzas SC - Fracción IC3",
@@ -59,11 +68,10 @@ const CONCEPTOS = [
   "Servicios de Seguridad",
   "Tasas y Gastos Judiciales",
   "Gastos de Expensas Consorcio PIT",
-  "Seguridad - Empresa de Seguridad"
+  "Seguridad - Empresa de Seguridad",
 ];
 
 export default function MovimientosTabla() {
-
   const [movimientos, setMovimientos] = useState([]);
   const [search, setSearch] = useState("");
   const [tipoFiltro, setTipoFiltro] = useState("");
@@ -71,9 +79,8 @@ export default function MovimientosTabla() {
   const [anioFiltro, setAnioFiltro] = useState("");
   const [cuitFiltro, setCuitFiltro] = useState("");
   const [conceptoFiltro, setConceptoFiltro] = useState("");
-const [ordenCampo, setOrdenCampo] = useState("fecha");
-const [ordenDireccion, setOrdenDireccion] = useState("desc");
-  // 🔥 NUEVO
+  const [ordenCampo, setOrdenCampo] = useState("fecha");
+  const [ordenDireccion, setOrdenDireccion] = useState("desc");
   const [fechaCargaFiltro, setFechaCargaFiltro] = useState("");
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -104,17 +111,16 @@ const [ordenDireccion, setOrdenDireccion] = useState("desc");
     setMovSeleccionado(null);
   };
 
-  // 🔥 PARSER FECHA
   const parseFecha = (fecha) => {
     if (!fecha) return { dia: "-", mes: "-", anio: "-" };
 
     if (fecha.includes("-")) {
-      const [anio, mes, dia] = fecha.split("-");
+      const [anio, mes, dia] = fecha.split(" ")[0].split("-");
       return { dia, mes, anio };
     }
 
     if (fecha.includes("/")) {
-      const [dia, mes, anio] = fecha.split("/");
+      const [dia, mes, anio] = fecha.split(" ")[0].split("/");
       return { dia, mes, anio };
     }
 
@@ -125,54 +131,89 @@ const [ordenDireccion, setOrdenDireccion] = useState("desc");
     const { dia, mes, anio } = parseFecha(fecha);
     return `${dia}/${mes}/${anio}`;
   };
-const ordenarPor = (campo) => {
-  if (ordenCampo === campo) {
-    setOrdenDireccion(prev => (prev === "asc" ? "desc" : "asc"));
-  } else {
-    setOrdenCampo(campo);
-    setOrdenDireccion("asc");
-  }
-};
 
-const valorFecha = (fecha) => {
-  if (!fecha) return 0;
+  const parseFechaHora = (fecha) => {
+    if (!fecha) return { dia: "-", mes: "-", anio: "-", hora: "" };
 
-  const limpia = fecha.replace("T", " ").split(".")[0];
+    const limpia = fecha.replace("T", " ").split(".")[0];
+    const [fechaParte, horaParte] = limpia.split(" ");
 
-  if (limpia.includes("-")) {
-    return new Date(limpia).getTime();
-  }
+    if (fechaParte?.includes("-")) {
+      const [anio, mes, dia] = fechaParte.split("-");
+      return { dia, mes, anio, hora: horaParte || "" };
+    }
 
-  if (limpia.includes("/")) {
-    const [dia, mes, anio] = limpia.split("/");
-    return new Date(`${anio}-${mes}-${dia}`).getTime();
-  }
+    if (fechaParte?.includes("/")) {
+      const [dia, mes, anio] = fechaParte.split("/");
+      return { dia, mes, anio, hora: horaParte || "" };
+    }
 
-  return 0;
-};
+    return { dia: "-", mes: "-", anio: "-", hora: "" };
+  };
+
+  const formatearFechaHora = (fecha) => {
+    const { dia, mes, anio, hora } = parseFechaHora(fecha);
+    const horaCorta = hora ? hora.substring(0, 5) : "";
+    return `${dia}/${mes}/${anio} ${horaCorta}`;
+  };
+
+  const valorFecha = (fecha) => {
+    if (!fecha) return 0;
+
+    const limpia = fecha.replace("T", " ").split(".")[0];
+
+    if (limpia.includes("-")) {
+      return new Date(limpia).getTime();
+    }
+
+    if (limpia.includes("/")) {
+      const [dia, mes, anio] = limpia.split(" ")[0].split("/");
+      return new Date(`${anio}-${mes}-${dia}`).getTime();
+    }
+
+    return 0;
+  };
+
   const getMes = (fecha) => parseFecha(fecha).mes;
   const getAnio = (fecha) => parseFecha(fecha).anio;
 
   const nombreMes = (mes) => {
     const meses = [
-      "Ene","Feb","Mar","Abr","May","Jun",
-      "Jul","Ago","Sep","Oct","Nov","Dic"
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic",
     ];
     return meses[Number(mes) - 1] || "-";
+  };
+
+  const ordenarPor = (campo) => {
+    if (ordenCampo === campo) {
+      setOrdenDireccion((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setOrdenCampo(campo);
+      setOrdenDireccion("asc");
+    }
   };
 
   const guardarConcepto = async () => {
     try {
       await servicionivel3.mofificarmconcepto({
         id: movSeleccionado.id,
-        concepto: nuevoConcepto
+        concepto: nuevoConcepto,
       });
 
-      setMovimientos(prev =>
-        prev.map(m =>
-          m.id === movSeleccionado.id
-            ? { ...m, concepto: nuevoConcepto }
-            : m
+      setMovimientos((prev) =>
+        prev.map((m) =>
+          m.id === movSeleccionado.id ? { ...m, concepto: nuevoConcepto } : m
         )
       );
 
@@ -185,114 +226,131 @@ const valorFecha = (fecha) => {
   const formatearMoneda = (valor) => {
     if (!valor || valor === 0) return "-";
     return `$ ${Number(valor).toLocaleString("es-AR", {
-      minimumFractionDigits: 2
+      minimumFractionDigits: 2,
     })}`;
   };
 
+  const filtered = movimientos
+    .filter((row) => {
+      const texto = `
+        ${row.descripcion || ""}
+        ${row.concepto || ""}
+        ${row.nombre_razon || ""}
+        ${row.fechacarga || ""}
+      `.toLowerCase();
 
-const parseFechaHora = (fecha) => {
-  if (!fecha) return { dia: "-", mes: "-", anio: "-", hora: "" };
+      if (search && !texto.includes(search.toLowerCase())) return false;
+      if (tipoFiltro && row.tipo_operacion !== tipoFiltro) return false;
 
-  // soporta "2026-03-18 12:17:47" y "2026-03-18T12:17:47"
-  const limpia = fecha.replace("T", " ").split(".")[0];
-
-  const [fechaParte, horaParte] = limpia.split(" ");
-
-  if (fechaParte?.includes("-")) {
-    const [anio, mes, dia] = fechaParte.split("-");
-    return { dia, mes, anio, hora: horaParte || "" };
-  }
-
-  return { dia: "-", mes: "-", anio: "-", hora: "" };
-};
-  // 🔍 FILTROS
-const filtered = movimientos
-  .filter((row) => {
-    const texto = `
-      ${row.descripcion || ""}
-      ${row.concepto || ""}
-      ${row.nombre_razon || ""}
-      ${row.fechacarga || ""}
-    `.toLowerCase();
-
-    if (search && !texto.includes(search.toLowerCase())) return false;
-
-    if (tipoFiltro && row.tipo_operacion !== tipoFiltro) return false;
-
-    if (
-      mesFiltro &&
-      String(Number(getMes(row.fecha))) !== String(Number(mesFiltro))
-    ) {
-      return false;
-    }
-
-    if (
-      anioFiltro &&
-      String(getAnio(row.fecha)).trim() !== String(anioFiltro).trim()
-    ) {
-      return false;
-    }
-
-    if (cuitFiltro && !(row.cuil_cuit || "").includes(cuitFiltro)) {
-      return false;
-    }
-
-    if (conceptoFiltro && row.concepto !== conceptoFiltro) {
-      return false;
-    }
-
-    if (fechaCargaFiltro) {
-      const textoFecha = formatearFechaHora(row.fechacarga)
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .replace(/-/g, "/");
-
-      const filtro = fechaCargaFiltro
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .replace(/-/g, "/");
-
-      if (!textoFecha.includes(filtro)) {
+      if (
+        mesFiltro &&
+        String(Number(getMes(row.fecha))) !== String(Number(mesFiltro))
+      ) {
         return false;
       }
-    }
 
-    return true;
-  })
-  .sort((a, b) => {
-    let valorA;
-    let valorB;
+      if (
+        anioFiltro &&
+        String(getAnio(row.fecha)).trim() !== String(anioFiltro).trim()
+      ) {
+        return false;
+      }
 
-    if (ordenCampo === "fecha") {
-      valorA = valorFecha(a.fecha);
-      valorB = valorFecha(b.fecha);
-    }
+      if (cuitFiltro && !(row.cuil_cuit || "").includes(cuitFiltro)) {
+        return false;
+      }
 
-  });
-const formatearFechaHora = (fecha) => {
-  const { dia, mes, anio, hora } = parseFechaHora(fecha);
+      if (conceptoFiltro && row.concepto !== conceptoFiltro) {
+        return false;
+      }
 
-  const horaCorta = hora ? hora.substring(0, 5) : "";
+      if (fechaCargaFiltro) {
+        const textoFecha = formatearFechaHora(row.fechacarga)
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .replace(/-/g, "/");
 
-  return `${dia}/${mes}/${anio} ${horaCorta}`;
-};
+        const filtro = fechaCargaFiltro
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .replace(/-/g, "/");
+
+        if (!textoFecha.includes(filtro)) {
+          return false;
+        }
+      }
+
+      return true;
+    })
+    .sort((a, b) => {
+      let valorA;
+      let valorB;
+
+      if (ordenCampo === "fecha") {
+        valorA = valorFecha(a.fecha);
+        valorB = valorFecha(b.fecha);
+      } else if (ordenCampo === "mes") {
+        valorA = Number(getMes(a.fecha));
+        valorB = Number(getMes(b.fecha));
+      } else if (ordenCampo === "anio") {
+        valorA = Number(getAnio(a.fecha));
+        valorB = Number(getAnio(b.fecha));
+      } else {
+        valorA = "";
+        valorB = "";
+      }
+
+      if (valorA < valorB) return ordenDireccion === "asc" ? -1 : 1;
+      if (valorA > valorB) return ordenDireccion === "asc" ? 1 : -1;
+      return 0;
+    });
+
   return (
-    <Box>
-
-      <Typography variant="h6" fontWeight={700} mb={2}>
-        Movimientos
-      </Typography>
-
-      {/* FILTROS */}
-      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 2 }}>
+    <Box sx={{ width: "100%", minWidth: 0 }}>
+      {/* HEADER CON BUSCADOR AL LADO */}
+      <Box
+        sx={{
+          mb: 2,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 2,
+          flexWrap: "wrap",
+        }}
+      >
+        <Typography
+          variant="h6"
+          fontWeight={800}
+          sx={{ color: "#0F172A", m: 0 }}
+        >
+          Movimientos
+        </Typography>
 
         <TextField
           label="Buscar"
           size="small"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          sx={{
+            minWidth: { xs: "100%", sm: 280, md: 320 },
+            background: "#fff",
+          }}
         />
+      </Box>
 
+      {/* FILTROS */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, minmax(180px, 1fr))",
+            lg: "repeat(6, minmax(150px, 1fr))",
+          },
+          gap: 1.5,
+          mb: 2,
+        }}
+      >
         <TextField
           select
           label="Tipo"
@@ -334,160 +392,225 @@ const formatearFechaHora = (fecha) => {
           placeholder="dd/mm/aaaa"
         />
 
- <Autocomplete
-  size="small"
-  options={CONCEPTOS}
-  value={conceptoFiltro || null}
-  onChange={(e, newValue) => setConceptoFiltro(newValue || "")}
-  sx={{ minWidth: 250 }}
-  renderInput={(params) => (
-    <TextField {...params} label="Concepto" />
-  )}
-/>
+        <Autocomplete
+          size="small"
+          options={CONCEPTOS}
+          value={conceptoFiltro || null}
+          onChange={(e, newValue) => setConceptoFiltro(newValue || "")}
+          renderInput={(params) => <TextField {...params} label="Concepto" />}
+        />
       </Box>
 
-      {/* TABLA */}
-      <TableContainer component={Paper}>
-        <Table size="small">
-
-          <TableHead>
-            <TableRow>
-           <TableCell
-  onClick={() => ordenarPor("fecha")}
-  sx={{ cursor: "pointer", userSelect: "none" }}
->
-  <b>
-    Fecha {ordenCampo === "fecha" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
-  </b>
-</TableCell>
-              <TableCell><b>Fecha Carga</b></TableCell> {/* 🔥 NUEVO */}
-
-
-<TableCell
-  onClick={() => ordenarPor("mes")}
-  sx={{ cursor: "pointer", userSelect: "none" }}
->
-  <b>
-    Mes {ordenCampo === "mes" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
-  </b>
-</TableCell>
-
-<TableCell
-  onClick={() => ordenarPor("anio")}
-  sx={{ cursor: "pointer", userSelect: "none" }}
->
-  <b>
-    Año {ordenCampo === "anio" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
-  </b>
-</TableCell>
-              <TableCell><b>Tipo</b></TableCell>
-              <TableCell><b>Descripción</b></TableCell>
-              <TableCell><b>Razón Social</b></TableCell>
-              <TableCell><b>CUIT/CUIL</b></TableCell>
-              <TableCell align="right"><b>Débito</b></TableCell>
-              <TableCell align="right"><b>Crédito</b></TableCell>
-              <TableCell><b>Concepto</b></TableCell>
-              <TableCell><b>Categoría</b></TableCell>
-                 <TableCell><b>Saldo</b></TableCell>
-      {/*        <TableCell><b>Subcategoría</b></TableCell>
- <TableCell><b>Proyecto</b></TableCell> 
-<TableCell><b>Tipo Gasto</b></TableCell>*/}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {filtered.map((row, index) => (
-              <TableRow key={index} hover>
-
-                <TableCell>{formatearFecha(row.fecha)}</TableCell>
-
-                {/* 🔥 NUEVA COLUMNA */}
-                <TableCell>{formatearFechaHora(row.fechacarga)}</TableCell>
-
-                <TableCell>{nombreMes(getMes(row.fecha))}</TableCell>
-                <TableCell>{getAnio(row.fecha)}</TableCell>
-
-                <TableCell>
-                  <Chip
-                    label={row.tipo_operacion || "N/A"}
-                    size="small"
-                    color={row.tipo_operacion === "INGRESO" ? "success" : "warning"}
-                  />
+      {/* TABLA CON SCROLL HORIZONTAL Y VERTICAL */}
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "100%",
+          overflowX: "auto",
+          overflowY: "hidden",
+          borderRadius: 2,
+          border: "1px solid rgba(148,163,184,0.18)",
+          background: "#fff",
+        }}
+      >
+        <TableContainer
+          component={Paper}
+          sx={{
+            maxHeight: 420,
+            overflowX: "auto",
+            overflowY: "auto",
+            boxShadow: "none",
+            borderRadius: 0,
+            minWidth: 0,
+          }}
+        >
+          <Table
+            size="small"
+            stickyHeader
+            sx={{
+              minWidth: 1500,
+              tableLayout: "auto",
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  onClick={() => ordenarPor("fecha")}
+                  sx={{
+                    cursor: "pointer",
+                    userSelect: "none",
+                    background: "#F8FAFC",
+                    fontWeight: 800,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Fecha {ordenCampo === "fecha" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
                 </TableCell>
 
-                <TableCell>{row.descripcion || "-"}</TableCell>
-                <TableCell>{row.nombre_razon || "-"}</TableCell>
-                <TableCell>{row.cuil_cuit || "-"}</TableCell>
-
-                <TableCell align="right">
-                  {row.debito > 0 ? (
-                    <Typography color="error">{formatearMoneda(row.debito)}</Typography>
-                  ) : "-"}
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Fecha Carga
                 </TableCell>
 
-                <TableCell align="right">
-                  {row.credito > 0 ? (
-                    <Typography color="success.main">{formatearMoneda(row.credito)}</Typography>
-                  ) : "-"}
+                <TableCell
+                  onClick={() => ordenarPor("mes")}
+                  sx={{
+                    cursor: "pointer",
+                    userSelect: "none",
+                    background: "#F8FAFC",
+                    fontWeight: 800,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Mes {ordenCampo === "mes" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
                 </TableCell>
 
-                <TableCell>
-                  <Box display="flex" gap={1}>
-                    {row.concepto || "SIN CLASIFICAR"}
-                    <Chip label="Editar" size="small" onClick={() => abrirDialog(row)} />
-                  </Box>
+                <TableCell
+                  onClick={() => ordenarPor("anio")}
+                  sx={{
+                    cursor: "pointer",
+                    userSelect: "none",
+                    background: "#F8FAFC",
+                    fontWeight: 800,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Año {ordenCampo === "anio" ? (ordenDireccion === "asc" ? "▲" : "▼") : ""}
                 </TableCell>
 
-                <TableCell>
-                  <Chip label={row.categoria_general || "SIN CLASIFICAR"} size="small" />
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Tipo
                 </TableCell>
-                <TableCell>
-  {row.saldo > 0 ? (
-    <Typography sx={{ whiteSpace: "nowrap" }}>
-      {formatearMoneda(row.saldo)}
-    </Typography>
-  ) : "-"}
-</TableCell>
-{/* <TableCell>
-  <Chip label={row.subcategoria || "SIN CLASIFICAR"} size="small" />
-</TableCell> */}
-{/* 
-<TableCell>
-  <Chip label={row.proyecto || "SIN CLASIFICAR"} size="small" />
-</TableCell> */}
-{/* 
-<TableCell>
-  <Chip label={row.tipo_gasto || "SIN CLASIFICAR"} size="small" />
-</TableCell> */}
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Descripción
+                </TableCell>
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Razón Social
+                </TableCell>
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  CUIT/CUIL
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}
+                >
+                  Débito
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}
+                >
+                  Crédito
+                </TableCell>
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Concepto
+                </TableCell>
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Categoría
+                </TableCell>
+                <TableCell sx={{ background: "#F8FAFC", fontWeight: 800, whiteSpace: "nowrap" }}>
+                  Saldo
+                </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
 
-        </Table>
-      </TableContainer>
+            <TableBody>
+              {filtered.map((row, index) => (
+                <TableRow key={index} hover>
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {formatearFecha(row.fecha)}
+                  </TableCell>
 
-      {/* DIALOG */}
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {formatearFechaHora(row.fechacarga)}
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {nombreMes(getMes(row.fecha))}
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {getAnio(row.fecha)}
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    <Chip
+                      label={row.tipo_operacion || "N/A"}
+                      size="small"
+                      color={row.tipo_operacion === "INGRESO" ? "success" : "warning"}
+                    />
+                  </TableCell>
+
+                  <TableCell sx={{ minWidth: 220 }}>
+                    {row.descripcion || "-"}
+                  </TableCell>
+
+                  <TableCell sx={{ minWidth: 170 }}>
+                    {row.nombre_razon || "-"}
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {row.cuil_cuit || "-"}
+                  </TableCell>
+
+                  <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                    {row.debito > 0 ? (
+                      <Typography color="error">{formatearMoneda(row.debito)}</Typography>
+                    ) : "-"}
+                  </TableCell>
+
+                  <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                    {row.credito > 0 ? (
+                      <Typography color="success.main">{formatearMoneda(row.credito)}</Typography>
+                    ) : "-"}
+                  </TableCell>
+
+                  <TableCell sx={{ minWidth: 220 }}>
+                    <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
+                      <span>{row.concepto || "SIN CLASIFICAR"}</span>
+                      <Chip label="Editar" size="small" onClick={() => abrirDialog(row)} />
+                    </Box>
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    <Chip label={row.categoria_general || "SIN CLASIFICAR"} size="small" />
+                  </TableCell>
+
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {row.saldo > 0 ? (
+                      <Typography sx={{ whiteSpace: "nowrap" }}>
+                        {formatearMoneda(row.saldo)}
+                      </Typography>
+                    ) : "-"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+
       <Dialog open={openDialog} onClose={cerrarDialog}>
         <DialogTitle>Editar Concepto</DialogTitle>
 
         <DialogContent>
-    <Autocomplete
-  fullWidth
-  options={CONCEPTOS}
-  value={nuevoConcepto || null}
-  onChange={(e, newValue) => setNuevoConcepto(newValue || "")}
-  renderInput={(params) => (
-    <TextField {...params} label="Seleccionar concepto" />
-  )}
-/>
+          <Autocomplete
+            fullWidth
+            options={CONCEPTOS}
+            value={nuevoConcepto || null}
+            onChange={(e, newValue) => setNuevoConcepto(newValue || "")}
+            renderInput={(params) => (
+              <TextField {...params} label="Seleccionar concepto" />
+            )}
+          />
         </DialogContent>
 
         <DialogActions>
           <Button onClick={cerrarDialog}>Cancelar</Button>
-          <Button onClick={guardarConcepto} variant="contained">Guardar</Button>
+          <Button onClick={guardarConcepto} variant="contained">
+            Guardar
+          </Button>
         </DialogActions>
       </Dialog>
-
     </Box>
   );
 }
