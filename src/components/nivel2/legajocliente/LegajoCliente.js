@@ -1,397 +1,361 @@
-import React, { useEffect, useState, } from "react";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React, { useEffect, useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
-import ButtonGroup from '@mui/material/ButtonGroup';
 import MUIDataTable from "mui-datatables";
-import Container from '@mui/material/Container';
-import servicioCliente from '../../../services/clientes'
-import serviciousuario1 from '../../../services/usuario1'
-import serviciousuarios from '../../../services/usuarios'
+import servicioCliente from "../../../services/clientes";
+import serviciousuario1 from "../../../services/usuario1";
+import serviciousuarios from "../../../services/usuarios";
 import "../../profile.css";
-import Modalveronline from './Modalveronline'
-import Modalveronlinecbu from '../pagarcuota/verpdfcbu'
-import ModalLegajo from './Modalegajo'
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom"
-import Habilitar from './ModalHabiulitar'
-import Deshabilitar from './ModalDeshabilitar'
-import Estadisticas from './Estadisticas'
-import ModalSeguro from './Modalseguroborrar'
+import Modalveronline from "./Modalveronline";
+import Modalveronlinecbu from "../pagarcuota/verpdfcbu";
+import ModalLegajo from "./Modalegajo";
+import { useNavigate, useParams } from "react-router-dom";
+import Habilitar from "./ModalHabiulitar";
+import Deshabilitar from "./ModalDeshabilitar";
+import Estadisticas from "./Estadisticas";
+import ModalSeguro from "./Modalseguroborrar";
 import ModalEditarDescripcion from "./modaleditarc";
 
 const LegajoCliente = (props) => {
   const navigate = useNavigate();
+  let params = useParams();
+  let cuil_cuit = params.cuil_cuit;
 
-  let params = useParams()
-  let cuil_cuit = params.cuil_cuit
-      const [products, setProducts] = useState()
-      const [act, setAct] = useState(false)
-      const [user, setUser] = useState(null)
-      const [cargado, setCargado] = useState(false)
-      const [refreshStats, setRefreshStats] = useState(false); // Estado para manejar las actualizaciones de estadísticas
-      const [openModal, setOpenModal] = useState(false);
-      const [selectedData, setSelectedData] = useState(null);
-      const actualizarEstadisticas = () => {
-        setRefreshStats(prev => !prev); // Cambiar el estado para forzar la actualización
-      };
-      //2 - fcion para mostrar los datos con axios
-      const traer = async () => {
+  const [products, setProducts] = useState();
+  const [user, setUser] = useState(null);
+  const [refreshStats, setRefreshStats] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedData, setSelectedData] = useState(null);
 
-        const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
-      
-          const user = JSON.parse(loggedUserJSON)
-         
-        const notis = await serviciousuarios.traerusuario(user.cuil_cuit)
-       
-        setUser(notis[0])
-        setCargado(true)
-      
-      
-        /* if (notificaciones>0) {
-          document.title= 'Santa Catalina ('+notificaciones+')'
-       
-        }   */
-      }
-      
-      const handleOpenModal = (data) => {
-        setSelectedData(data);
-        setOpenModal(true);
-      };
-      
-      const handleCloseModal = () => {
-        setOpenModal(false);
-        setSelectedData(null);
-      }
-      const getData = async () => {
-        const  data = await servicioCliente.traerLejagos(cuil_cuit)
-       
-          
-              setProducts(data)
-          
-      }
-      
-      const volver =  () => {
-        navigate('/usuario2/detallecliente/'+cuil_cuit)
-             
-              
-          
-      }
-      const volver2 =  () => {
-        navigate('/legales/detallecliente/'+cuil_cuit)
-             
-      }
+  const actualizarEstadisticas = () => {
+    setRefreshStats((prev) => !prev);
+  };
 
-      
-   
-      const volver3 =  () => {
-        navigate('/usuario2/detalleclic3/'+cuil_cuit)
-             
-              
-          
-      }
+  const traer = async () => {
+    const loggedUserJSON = window.localStorage.getItem("loggedNoteAppUser");
+    const user = JSON.parse(loggedUserJSON);
+    const notis = await serviciousuarios.traerusuario(user.cuil_cuit);
+    setUser(notis[0]);
+  };
 
-      useEffect(() => {
-          getData()
-          traer()
-      }, [])
-  
+  const getData = async () => {
+    const data = await servicioCliente.traerLejagos(cuil_cuit);
+    setProducts(data);
+  };
 
-  
-          async function download(index, rowIndex, data) {
-              const filename = (products[0][index].ubicacion)
-            
-             
-             const link = await serviciousuario1.obtenerurl(filename)
-             console.log(link)
-              console.log(link.data)            
-              window.open(link.data)
-        
-              setAct(true)
-  
-          }
-  
-          async function veronline(index, rowIndex, data) {
-            const filename = (products[0][index].ubicacion)
-    
-    
-            const link = await serviciousuario1.obtenerurlonline(filename)
-            console.log(link.data)
-            window.open(link.data)
-            
-           // var nueva_ventana = window.open('', '_blank');
-           // nueva_ventana.document.write('<html><head><title>Imagen de AWS</title></head><body style="text-align:center;"><img src="' + link.data + '" /></body></html>');
-        } 
-     function verFile(index, rowIndex, data) {
-    
-   
-            return (
-                <>
-{["Cbu personal", "Cbu familiar", "Socio/Gerente/Apoderado", "Propio"].includes(products[0][index]?.tipo) ? (
-  <Modalveronlinecbu id={products[0][index].id} />
-) : (
-  <Modalveronline id={products[0][index].id} />
-)}   
-                  {/*   <Button
-                        onClick={() => veronline(index)}
-                    >Ver online</Button> */}
-    
-    
-                </>
-            );
-        }
-    
-       
-  
-  
-  
-  
-      //3 - Definimos las columns
-      const columns = [
-          {
-              name: "tipo",
-              label: "tipo"
-  
-          },
-          {
-              name: "descripcion",
-              label: "descripcion"
-          },
-          {
-            name: "fecha",
-            label: "fecha"
+  useEffect(() => {
+    getData();
+    traer();
+  }, []);
+
+  const handleOpenModal = (data) => {
+    setSelectedData(data);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedData(null);
+  };
+
+  const volver = () => {
+    navigate("/usuario2/detallecliente/" + cuil_cuit);
+  };
+
+  const verFile = (index) => {
+    return (
+      <>
+        {[
+          "Cbu personal",
+          "Cbu familiar",
+          "Socio/Gerente/Apoderado",
+          "Propio",
+        ].includes(products[0][index]?.tipo) ? (
+          <Modalveronlinecbu id={products[0][index].id} />
+        ) : (
+          <Modalveronline id={products[0][index].id} />
+        )}
+      </>
+    );
+  };
+
+  const columns = [
+    { name: "tipo", label: "Tipo" },
+    { name: "descripcion", label: "Descripción" },
+    { name: "fecha", label: "Fecha" },
+    {
+      name: "estado",
+      label: "Estado",
+      options: {
+        customBodyRender: (value) => {
+          const activo = value === "Activo";
+          return (
+            <span
+              style={{
+                padding: "6px 14px",
+                borderRadius: "20px",
+                fontSize: "12px",
+                fontWeight: "bold",
+               
+                color:  "#2e7d32" ,
+              }}
+            >
+              {value}
+            </span>
+          );
         },
-          {
-            name: "estado",
-            label: "estado"
-        },
-        {
-          name: "Editar",
-          options: {
-            customBodyRenderLite: (dataIndex, rowIndex) => {
-              const rowData = products[0][dataIndex]; // Obtener los datos de la fila
-              return (
-                <Button variant="contained" color="primary" onClick={() => handleOpenModal(rowData)}>
-                  Editar
-                </Button>
-              );
-            }
-          }
-        },
-        
-        {
-          name: "ver online",
-          options: {
-              customBodyRenderLite: (dataIndex, rowIndex) =>
-                  verFile(
-                      dataIndex,
-                      rowIndex,
-                      // overbookingData,
-                      // handleEditOpen
-                  )
-          }
-
       },
-         
-          {
-            name: "Borrar",
-            options: {
-                customBodyRenderLite: (dataIndex, rowIndex) =>
-                    CutomButtonsRenderer(
-                        dataIndex,
-                        rowIndex,
-                       // overbookingData,
-                       // handleEditOpen
-                    )
-            }
-        
-        },   
- 
-          
-      ]
+    },
+    {
+      name: "Editar",
+      options: {
+        customBodyRenderLite: (dataIndex) => {
+          const rowData = products[0][dataIndex];
+          return (
+            <Button
+              onClick={() => handleOpenModal(rowData)}
+              style={{
+                background: "#1f7a8c",
+                color: "white",
+                borderRadius: "20px",
+                padding: "6px 16px",
+                textTransform: "none",
+              }}
+            >
+              Editar
+            </Button>
+          );
+        },
+      },
+    },
+    {
+      name: "Ver",
+      options: {
+        customBodyRenderLite: (dataIndex) => verFile(dataIndex),
+      },
+    },
+    {
+      name: "Borrar",
+      options: {
+        customBodyRenderLite: (dataIndex) => {
+          const item = products[0][dataIndex];
+          return (
+            <div style={{ display: "flex", gap: "8px" }}>
+              <ModalSeguro
+                id={item.id}
+                getData={getData}
+              />
+              {item.comprobanteok === "No" && (
+                <span
+                  style={{
+                    background: "#ffebee",
+                    color: "#c62828",
+                    padding: "4px 8px",
+                    borderRadius: "50%",
+                    fontWeight: "bold",
+                  }}
+                >
+                  !
+                </span>
+              )}
+            </div>
+          );
+        },
+      },
+    },
+  ];
 
-     function CutomButtonsRenderer(dataIndex, rowIndex, data, onClick) {
+  const optionss = {
+    selectableRows: false,
+    elevation: 0,
+    rowsPerPage: 5,
+    responsive: "standard",
 
-  const item = products[0][dataIndex];
+    setTableProps: () => ({
+      style: {
+        borderRadius: "16px",
+        overflow: "hidden",
+        border: "1px solid #e5e7eb",
+      },
+    }),
+
+    setRowProps: (row, dataIndex) => ({
+      style: {
+        background: dataIndex % 2 === 0 ? "#fff" : "#f8fafc",
+      },
+    }),
+
+    textLabels: {
+      body: {
+        noMatch: "No hay documentación cargada",
+      },
+    },
+  };
 
   return (
-    <>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        
-        <ModalSeguro
-          id={item.id}
-          getData={async () => {
-            const data = await servicioCliente.traerLejagos(cuil_cuit);
-            setProducts(data);
-          }}
-        />
+    <div style={{ padding: "20px", background: "#f5f7fa" }}>
+      <ModalEditarDescripcion
+        open={openModal}
+        handleClose={handleCloseModal}
+        data={selectedData}
+        getData={getData}
+      />
 
-        {/* 🔴 Mostrar ! solo si no tiene comprobante */}
-        {item.comprobanteok === "No" && (
-          <span style={{ color: "red", fontWeight: "bold" }}>
-            !
-          </span>
-        )}
-
-      </div>
-    </>
-  );
-}
-      const optionss = {
-    
-        setTableProps: () => {
-            return {
-              style: {
-                backgroundColor: "#e3f2fd", // Cambia el color de fondo de la tabla
-              },
-            };
-          },
-          customHeadRender: (columnMeta, handleToggleColumn) => ({
-            TableCell: {
-              style: {
-                backgroundColor: '#1565c0', // Cambia el color de fondo del encabezado
-                color: 'white', // Cambia el color del texto del encabezado
-              },
-            },
-          }),
-        selectableRows: false, // Desactivar la selección de filas
-        stickyHeader: true,
-        selectableRowsHeader: false,
-        selectableRowsOnClick: true,
-        responsive: 'scroll',
-        rowsPerPage: 5,
-        rowsPerPageOptions: [5, 10, 15],
-        downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
-        print: true,
-        filter: true,
-        viewColumns: true,
-        pagination: true,
-
-        textLabels: {
-          body: {
-            noMatch: "No se encontraron registros de legajos aun",
-            toolTip: "Ordenar",
-          },
-          pagination: {
-            next: "Siguiente",
-            previous: "Anterior",
-            rowsPerPage: "Filas por página:",
-            displayRows: "de",
-          },
-          toolbar: {
-            search: "Buscar",
-            downloadCsv: "Descargar CSV",
-            print: "Imprimir",
-            viewColumns: "Ver columnas",
-            filterTable: "Filtrar tabla",
-          },
-          filter: {
-            all: "Todos",
-            title: "FILTROS",
-            reset: "RESETEAR",
-          },
-          viewColumns: {
-            title: "Mostrar columnas",
-            titleAria: "Mostrar/ocultar columnas de la tabla",
-          },
-          selectedRows: {
-            text: "fila(s) seleccionada(s)",
-            delete: "Eliminar",
-            deleteAria: "Eliminar filas seleccionadas",
-          },
-        },
-    
-  };
-      //4 - renderizamos la datatable
-      return (
-          <div>
-          <ModalEditarDescripcion 
-  open={openModal} 
-  handleClose={handleCloseModal} 
-  data={selectedData} 
-  getData={  async () => {
-    const  data = await servicioCliente.traerLejagos(cuil_cuit)
-    
-      
-          setProducts(data)
-      
+      {/* HEADER + KPI */}
+      <div
+  style={{
+    background: "linear-gradient(135deg, #0f4c5c, #1f7a8c)",
+    borderRadius: "16px",
+    padding: "18px 22px",
+    color: "white",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
   }}
-/>
-           {user ?
-            <>
-           {user.nivel ===2 ? <> 
-             {props.cuil_cuit &&  
-            <Estadisticas cuil_cuit={props.cuil_cuit} refresh={refreshStats} />  }
-             {products && <></>}
-  {products[1][0].zona=="IC3" ? <><Button onClick={volver3} > <ArrowBackIcon/> Volver</Button></>:<><Button onClick={volver} > <ArrowBackIcon/> Volver</Button></>}
+>
+  {/* IZQUIERDA */}
+  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+    
+    <div style={{
+      background: "rgba(255,255,255,0.15)",
+      borderRadius: "10px",
+      padding: "10px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
+      📁
+    </div>
 
-          
+    <div>
+      <div style={{ fontWeight: "bold", fontSize: "16px" }}>
+        Legajo del Cliente
+      </div>
+      <div style={{ fontSize: "13px", opacity: 0.8 }}>
+        Gestión y administración de documentación
+      </div>
+    </div>
+  </div>
 
-             
+  {/* DERECHA */}
+  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+    
+    {/* KPI */}
+    <div style={{
+      background: "rgba(255,255,255,0.15)",
+      padding: "6px 14px",
+      borderRadius: "20px",
+      fontSize: "13px"
+    }}>
+      Documentos: {products ? products[0].length : 0}
+    </div>
 
-             </> : <>
-             <Button onClick={volver2} > <ArrowBackIcon/>  Volver</Button>
-             <div    ></div></>}
-           </>
-             :<></>
-             }<ButtonGroup variant="contained" aria-label="outlined primary button group">
-{products ? <>
-  < ModalLegajo
-             razon={products[1][0].razon}
-             tiposExistentes={products[0].map((legajo) => legajo.tipo)} // Asegúrate de que esta línea capture los tipos correctamente
+  </div>
+</div>
 
-                getData = {async () => {
-                  console.log("get")
-                  const  data = await servicioCliente.traerLejagos(cuil_cuit)
-                       
-                        setProducts(data)
-                    
-                }
-                }
-                getData2={actualizarEstadisticas}  
-              />
-</>:<></>}
+      {/* ACCIONES */}
+     <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "20px",
+    flexWrap: "wrap",
+    gap: "10px"
+  }}
+>
+  {/* IZQUIERDA */}
+  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+    
+    <Button
+      onClick={volver}
+      startIcon={<ArrowBackIcon />}
+      style={{
+        borderRadius: "25px",
+        background: "#e0f2f1",
+        color: "#0f4c5c",
+        fontWeight: "bold"
+      }}
+    >
+      Volver
+    </Button>
 
-            
-              {products ? <>
-              {products[1][0].habilitado=="Si" ? <>
-              <Deshabilitar
-             cuil_cuit_user= {props.cuil_cuit_user}
-             getData= {async () => {
-              const  data = await servicioCliente.traerLejagos(cuil_cuit)
-                  
-                    setProducts(data)
-                
-            }} />
-              </>:<>
-              <Habilitar 
-              cuil_cuit_user= {props.cuil_cuit_user} 
-              getData= {async () => {
-                const  data = await servicioCliente.traerLejagos(cuil_cuit)
-            
-                      setProducts(data)
-                  
-              }}/>
-              </>}
-              
-              
-              </>:<></>}
-          
-         
-          </ButtonGroup>
-             <div    >
-             {products ? <>
-           <MUIDataTable
-                  title={"Documentacion del Cliente"}
-                  data={products[0]}
-                  columns={columns}
-                  options={optionss}
-              />
-              </>:<></>}
-  
-                 </div>
-                
-          </div>
-      )
-}
+    {products && (
+      <ModalLegajo
+        razon={products[1][0].razon}
+        tiposExistentes={products[0].map((l) => l.tipo)}
+        getData={getData}
+        getData2={actualizarEstadisticas}
+      />
+    )}
+  </div>
+
+  {/* DERECHA */}
+  {products && (
+    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+      
+      {/* BOTON HABILITAR / DESHABILITAR */}
+      {products[1][0].habilitado === "Si" ? (
+        <Deshabilitar
+          cuil_cuit_user={props.cuil_cuit_user}
+          getData={getData}
+        />
+      ) : (
+        <Habilitar
+          cuil_cuit_user={props.cuil_cuit_user}
+          getData={getData}
+        />
+      )}
+
+      {/* BADGE ESTADO */}
+      <div
+        style={{
+          padding: "6px 14px",
+          borderRadius: "20px",
+          fontSize: "12px",
+          fontWeight: "bold",
+          background:
+            products[1][0].habilitado === "Si"
+              ? "#e6f4ea"
+              : "#fdecea",
+          color:
+            products[1][0].habilitado === "Si"
+              ? "#2e7d32"
+              : "#c62828"
+        }}
+      >
+        {products[1][0].habilitado === "Si"
+          ? "Habilitado"
+          : "Deshabilitado"}
+      </div>
+
+    </div>
+  )}
+</div>
+        
+
+      {/* TABLA */}
+      <div
+        style={{
+          background: "white",
+          borderRadius: "16px",
+          padding: "20px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+        }}
+      >
+        {products && (
+          <MUIDataTable
+            title={""}
+            data={products[0]}
+            columns={columns}
+            options={optionss}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default LegajoCliente;

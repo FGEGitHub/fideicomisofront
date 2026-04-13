@@ -1,262 +1,219 @@
-import * as React from 'react';
-import { Paper, Button, TextField, Dialog, DialogActions, DialogContent, NativeSelect, DialogTitle, Box, CircularProgress ,Backdrop} from '@mui/material';
-import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import * as React from "react";
+import {
+  Paper,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box,
+  CircularProgress,
+  Backdrop,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl
+} from "@mui/material";
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useParams } from "react-router-dom";
-import BackupIcon from '@material-ui/icons/Backup';
-import servicioLegajo from '../../../services/legajos';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import servicioLegajo from "../../../services/legajos";
 
 export default function FormDialog(props) {
   let params = useParams();
   let cuil_cuit = params.cuil_cuit;
+
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState();
-  const [enviarr, setEnviarr] = useState();
-  const [completado, setCompletado] = useState(false);
   const [fileUpload, setFileUpload] = useState(null);
+  const [enviarr, setEnviarr] = useState();
   const [cargando, setCargando] = useState(false);
-  const [loadingPdf, setLoadingPdf] = useState(false)
+  const [loadingPdf, setLoadingPdf] = useState(false);
+
   const [legform, setLegform] = useState({
     cuil_cuit: cuil_cuit,
-    tipo: '',
-    descripcion: ''
+    tipo: "",
+    descripcion: ""
   });
-
-  const selecthandler = e => {
-    setFile(e.target.files[0]);
-    console.log(file);
-  };
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const formData = new FormData();
-      setFileUpload(acceptedFiles);
-      formData.append('file', acceptedFiles[0]);
+      setFileUpload(acceptedFiles[0]);
+      formData.append("file", acceptedFiles[0]);
       setEnviarr(formData);
-    } else {
-      alert('No se aceptó ningún archivo');
     }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    multiple: false,
+    multiple: false
   });
-
-  const acceptedFileItems = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
   const enviar = async () => {
     setLoadingPdf(true);
     setCargando(true);
+
     if (enviarr) {
-      enviarr.append('cuil_cuit', legform.cuil_cuit);
-      enviarr.append('tipo', legform.tipo);
-      enviarr.append('descripcion', legform.descripcion);
-  
+      enviarr.append("cuil_cuit", legform.cuil_cuit);
+      enviarr.append("tipo", legform.tipo);
+      enviarr.append("descripcion", legform.descripcion);
+
       try {
         const data = await servicioLegajo.subirlegajode(enviarr);
         alert(data);
-        props.getData(); 
-        props.getData2();// Notificar al padre que actualice las estadísticas
+        props.getData();
+        props.getData2();
       } catch (error) {
-        console.error('Error subiendo archivo:', error);
+        console.error(error);
       }
     } else {
-      alert('No hay archivo para subir');
+      alert("Subí un archivo primero");
     }
+
     setCargando(false);
-    setLoadingPdf(false); 
+    setLoadingPdf(false);
     setOpen(false);
   };
 
   const handleChange = (e) => {
     setLegform({ ...legform, [e.target.name]: e.target.value });
-    setCompletado(true);
-    console.log(legform);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-
-    setCompletado(false);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   const tiposExistentes = props.tiposExistentes || [];
-  const esTipoExistente = (tipo) => {
-    console.log(tipo)
-    return tiposExistentes.includes(tipo);
-  };
+  const esTipoExistente = (tipo) => tiposExistentes.includes(tipo);
 
   return (
-    <div>
-            <Backdrop open={loadingPdf} style={{ color: "#fff", zIndex: 1301 }}>
-              <div style={{ textAlign: "center" }}>
-                <CircularProgress color="inherit" />
-                <p>Cargando PDF...</p>
-              </div>
-            </Backdrop>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Agregar Legajo
+    <>
+      {/* LOADER */}
+      <Backdrop open={loadingPdf} sx={{ color: "#fff", zIndex: 1301 }}>
+        <Box textAlign="center">
+          <CircularProgress color="inherit" />
+          <p>Subiendo archivo...</p>
+        </Box>
+      </Backdrop>
+
+      {/* BOTON */}
+      <Button
+        variant="contained"
+        onClick={() => setOpen(true)}
+        sx={{
+          borderRadius: "20px",
+          background: "#1f7a8c",
+          textTransform: "none",
+          fontWeight: "bold"
+        }}
+      >
+        + Agregar Legajo
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Completar Legajo {props.razon}</DialogTitle>
+
+      {/* MODAL */}
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ fontWeight: "bold" }}>
+          📄 Nuevo Legajo
+        </DialogTitle>
+
         <DialogContent>
-          <>
-            Seleccionar archivo y el tipo de comprobante
-          </>
 
-          {props.razon == "Persona" ? <>
-            <NativeSelect
-              defaultValue={30}
+          {/* SELECT */}
+          <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Tipo de documento</InputLabel>
+            <Select
+              name="tipo"
+              value={legform.tipo}
               onChange={handleChange}
-              inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
+              label="Tipo de documento"
+              sx={{ borderRadius: "12px" }}
             >
-            <option value={''}>Elegir</option>
-              <option value={'Dni'}style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
-              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'red' }}>1 b DNI dorso</option>
-  <option value={'Constancia CUIL/CUIT'}style={{ color: esTipoExistente('Constancia CUIL/CUIT') ? 'blue' : 'red' }}>2 Constancia CUIL/CUIT (Pers física)</option>
-           
+              <MenuItem value="">Elegir</MenuItem>
 
-              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
-              <option value={'Acreditacion de ingresos'}style={{ color: esTipoExistente('Acreditacion de ingresos') ? 'blue' : 'red' }}>4-1 Certificacion de ingresos</option>
-              <option value={'Recibo de sueldo'}style={{ color: esTipoExistente('Recibo de sueldo') ? 'blue' : 'red' }}>4.a Recibo de sueldo</option>
-  <option value={'Pago Monotributo'}style={{ color: esTipoExistente('Pago Monotributo') ? 'blue' : 'red' }}>4.b- Pago Monotributo</option>
+              {props.tiposExistentes?.map((t, i) => (
+                <MenuItem key={i} value={t} sx={{ color: "#1976d2" }}>
+                  {t}
+                </MenuItem>
+              ))}
 
-          
-              <option value={'Dj CalidadPerso'}style={{ color: esTipoExistente('Dj CalidadPerso') ? 'blue' : 'red' }}>DJ Calidad de Persona (Pers física)</option>
-              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Constancia de Afip') ? 'blue' : 'red' }}> 4.c- Constancia de Afip</option>
-              <option value={'Pago autonomo'}style={{ color: esTipoExistente('Pago autonomo') ? 'blue' : 'red' }}>4.c-Pago de autónomo</option>
-              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('DDJJ IIBB') ? 'blue' : 'red' }}>4.d DDJJ IIBB</option>
-              <option value={'Dj Datospers'}style={{ color: esTipoExistente('Dj Datospers') ? 'blue' : 'red' }}>5- DJ Datos Personales</option>
-              <option value={'Dj OrigenFondos'}style={{ color: esTipoExistente('Dj OrigenFondos') ? 'blue' : 'red' }}>7- DJ Origen de fondos (Pers física)</option>
-              <option value={'Cbu personal'}style={{ color: esTipoExistente('Cbu personal') ? 'blue' : 'red' }}>8-CBU personal</option>
-              <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'red' }}>8- CBU familiar</option>
+              {/* nuevos tipos */}
+              <MenuItem value="Dni" sx={{ color: esTipoExistente("Dni") ? "blue" : "red" }}>DNI</MenuItem>
+              <MenuItem value="Dni dorso" sx={{ color: esTipoExistente("Dni dorso") ? "blue" : "red" }}>DNI Dorso</MenuItem>
+              <MenuItem value="Constancia de Afip">Constancia AFIP</MenuItem>
 
-              <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>91- Constancia RePET</option>
-              <option value={'Anticipo'}style={{ color: esTipoExistente('Anticipo') ? 'blue' : 'red' }}>Anticipo </option>
-              <option value={'Boleto comparaventa'}style={{ color: esTipoExistente('Boleto comparaventa') ? 'blue' : 'red' }}>Boleto comparaventa </option>
+            </Select>
+          </FormControl>
 
-              </NativeSelect>
-          </> : <>
+          {/* DROPZONE */}
+          {legform.tipo && (
+            <Paper
+              {...getRootProps()}
+              sx={{
+                mt: 3,
+                p: 4,
+                textAlign: "center",
+                borderRadius: "16px",
+                border: "2px dashed #1f7a8c",
+                background: "#f8fafc",
+                cursor: "pointer",
+                transition: "0.3s",
+                "&:hover": {
+                  background: "#eef6f8"
+                }
+              }}
+            >
+              <input {...getInputProps()} />
 
+              <CloudUploadIcon sx={{ fontSize: 40, color: "#1f7a8c" }} />
 
-            <NativeSelect
-              defaultValue={30}
+              <p style={{ marginTop: 10 }}>
+                {isDragActive
+                  ? "Soltá el archivo acá"
+                  : "Arrastrá o hacé click para subir"}
+              </p>
+
+              {fileUpload && (
+                <p style={{ color: "green", fontWeight: "bold" }}>
+                  {fileUpload.name}
+                </p>
+              )}
+            </Paper>
+          )}
+
+          {/* DESCRIPCION */}
+          {fileUpload && (
+            <TextField
+              margin="dense"
+              label="Descripción"
+              name="descripcion"
               onChange={handleChange}
-              inputProps={{ name: 'tipo', id: 'uncontrolled-native' }}
-            >
-              <option value={''}>Elegir</option>
-              <option value="Dni" style={{ color: esTipoExistente('Dni') ? 'blue' : 'red' }}>1 a-DNI Frente</option>
-
-            
-              <option value={'Dni dorso'}style={{ color: esTipoExistente('Dni dorso') ? 'blue' : 'red' }}>1 b-DNI dorso</option>
-
-              <option value={'Constancia de Afip'}style={{ color: esTipoExistente('Constancia de Afip') ? 'blue' : 'red' }}> 2 Constancia de Afip</option>
-
-              <option value={'Acreditacion Domicilio'}style={{ color: esTipoExistente('Acreditacion Domicilio') ? 'blue' : 'red' }}>3 Acreditación Domicilio</option>
-
-  
-
-              <option value={'Ultimos balances CPCE'}style={{ color: esTipoExistente('Ultimos balances CPCE') ? 'blue' : 'red' }}>4-1 Últimos Balances certificados en el CPCE</option>
-
-
-              <option value={'DjIva'}style={{ color: esTipoExistente('DjIva') ? 'blue' : 'red' }}>-4.2 DJ IVA</option>
-              <option value={'Pagos Previsionales'}style={{ color: esTipoExistente('Pagos Previsionales') ? 'blue' : 'red' }}>4.3Pagos Previsionales</option>
-              <option value={'Referencias comerciales'}style={{ color: esTipoExistente('Referencias comerciales') ? 'blue' : 'red' }}>4.4 Detalle Referencias comerciales</option>
-              <option value={'DDJJ IIBB'}style={{ color: esTipoExistente('DDJJ IIBB') ? 'blue' : 'red' }}>4.5 DDJJ IIBB</option>
-
-              <option value={'Dj Datospers'}style={{ color: esTipoExistente('Dj Datospers') ? 'blue' : 'red' }}>5- DJ Datos Personales</option>
-
-              <option value={'Dj OrigenFondos'}style={{ color: esTipoExistente('Dj OrigenFondos') ? 'blue' : 'red' }}>7- DJ Origen de fondos (Pers física)</option>
-
-              <option value={'Cbu personal'}style={{ color: esTipoExistente('Cbu personal') ? 'blue' : 'red' }}>8-CBU personal</option>
-              <option value={'Cbu familiar'}style={{ color: esTipoExistente('Cbu familiar') ? 'blue' : 'red' }}>8- CBU familiar</option>
-
-              <option value={'Estatuto Social'}style={{ color: esTipoExistente('Estatuto Social') ? 'blue' : 'red' }}>9-Estatuto Social</option>
-
-          
-              <option value={'Acta del organo decisorio'}style={{ color: esTipoExistente('Acta del organo decisorio') ? 'blue' : 'red' }}>10 Acta de órgano Sucesorio Asignado</option>
-              <option value={'Constancia RePET'}style={{ color: esTipoExistente('Constancia RePET') ? 'blue' : 'red' }}>11- Constancia RePET</option>
-
-              <option value={'Poder General'}style={{ color: esTipoExistente('Poder General') ? 'blue' : 'red' }}>Poder General</option>
-              <option value={'Acta de Entrega'}style={{ color: esTipoExistente('Acta de Entrega') ? 'blue' : 'red' }}>Acta de Entrega </option>
-              <option value={'Anticipo'}style={{ color: esTipoExistente('Anticipo') ? 'blue' : 'red' }}>Anticipo </option>
-              <option value={'Boleto comparaventa'}style={{ color: esTipoExistente('Boleto comparaventa') ? 'blue' : 'red' }}>Boleto comparaventa </option>
-
-    
-           
-       
-      
-  
-            </NativeSelect>
-          </>}
-
-
-          {completado ? (
-            <div>
-              <Box sx={{ m: 1 }}>
-                <Button size="small" variant="contained">
-                  Descargar modelo
-                </Button>
-              </Box>
-              <Paper
-                sx={{
-                  cursor: 'pointer',
-                  background: '#fafafa',
-                  color: '#bdbdbd',
-                  border: '1px dashed #ccc',
-                  '&:hover': { border: '1px solid #ccc' },
-                }}
-              >
-                <div style={{ padding: '16px' }} {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  {isDragActive ? (
-                    <p style={{ color: 'green' }}>Suelta aquí el documento</p>
-                  ) : (
-                    <p>Arrastra hasta aquí el archivo descargado con tus datos personales</p>
-                  )}
-                  <em>(Se aceptan todos los tipos de archivos)</em>
-                </div>
-                <Box sx={{ m: 1, color: 'green', fontSize: '1rem' }}>
-                  Archivos Aceptados <BackupIcon fontSize="small" />
-                  <ul>{acceptedFileItems}</ul>
-                </Box>
-              </Paper>
-
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Descripción"
-                name="descripcion"
-                onChange={handleChange}
-                fullWidth
-                variant="standard"
-              />
-            </div>
-          ) : (
-            <div></div>
+              fullWidth
+              sx={{ mt: 3 }}
+            />
           )}
         </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+        {/* ACCIONES */}
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={() => setOpen(false)}>
+            Cancelar
+          </Button>
+
           {cargando ? (
-            <Box sx={{ display: 'flex' }}>
-              <Button><CircularProgress /></Button>
-            </Box>
+            <CircularProgress size={24} />
           ) : (
-            <Button onClick={enviar}>Guardar</Button>
+            <Button
+              onClick={enviar}
+              variant="contained"
+              sx={{
+                borderRadius: "20px",
+                background: "#1f7a8c",
+                textTransform: "none"
+              }}
+            >
+              Guardar
+            </Button>
           )}
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
