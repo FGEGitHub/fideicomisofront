@@ -7,10 +7,25 @@ export default function SubirExcelMovimientos(){
   const [loading,setLoading] = useState(false);
   const [resultado,setResultado] = useState(null);
 
-  const handleFileChange = (e)=>{
-    setArchivo(e.target.files[0]);
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
 
+  if (!file) return;
+
+  const extensionesValidas = [".xlsx", ".xls"];
+
+  const esValido = extensionesValidas.some(ext =>
+    file.name.toLowerCase().endsWith(ext)
+  );
+
+  if (!esValido) {
+    alert("Solo se permiten archivos Excel (.xlsx, .xls)");
+    e.target.value = ""; // limpia input
+    return;
+  }
+
+  setArchivo(file);
+};
   const handleSubmit = async (e)=>{
     e.preventDefault();
 
