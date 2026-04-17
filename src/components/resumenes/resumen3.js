@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
-import Tabla from "./tablamovimientos";
+
 
 const PALETTE = [
   "#0B4F6C",

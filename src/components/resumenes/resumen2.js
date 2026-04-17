@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import servicionivel3 from "../../services/nivel3";
-import Tabla from "./tablamovimientos";
+
 
 const headerGradient = "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #148D8D 100%)";
 
@@ -292,9 +292,7 @@ export default function DashboardFinanciero() {
           title="Tabla de Movimientos"
           
         >
-          <div style={styles.tablaScrollContainer}>
-            <Tabla />
-          </div>
+      
         </SectionCard>
       </div>
     </div>
