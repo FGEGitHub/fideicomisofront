@@ -6,10 +6,12 @@ export default function DashboardFinanciero() {
 const barRef = useRef(null);
 const ingresosRef = useRef(null);
 const gastosRef = useRef(null);
+
 const COLORS = [
 "#3B82F6","#6366F1","#8B5CF6","#EC4899",
 "#F59E0B","#10B981","#EF4444"
 ];
+
 const [kpis,setKpis] = useState({
   ingresos:0,
   gastos:0,
@@ -19,83 +21,131 @@ const [kpis,setKpis] = useState({
 
 const [ingresosCat,setIngresosCat] = useState([]);
 const [gastosCat,setGastosCat] = useState([]);
+const [movimientos,setMovimientos] = useState([]);
+
+const [filtro,setFiltro] = useState({
+  tipo:"todos", // 🔥 arranca mostrando todo
+  mes:new Date().getMonth()+1,
+  anio:new Date().getFullYear(),
+  desde:"",
+  hasta:""
+});
+
+/* ================= INIT ================= */
 
 useEffect(()=>{
   traerDatos();
 },[]);
 
+useEffect(()=>{
+
+  if(movimientos.length === 0) return;
+
+  const filtrados = filtrarMovimientos();
+  procesarDatos(filtrados);
+
+},[movimientos,filtro]);
+
 /* ================= DATOS ================= */
 
 const traerDatos = async () => {
+  const resp = await servicionivel3.traermovimientos();
+  setMovimientos(resp);
+};
 
-const resp = await servicionivel3.traermovimientos();
+const filtrarMovimientos = () => {
 
-let ingresos = 0;
-let gastos = 0;
+  return movimientos.filter(mov=>{
 
-const ing = {};
-const gas = {};
+    if(!mov.fecha) return false;
 
-resp.forEach(mov=>{
+    if(filtro.tipo === "todos") return true;
 
-  const c = Number(mov.credito)||0;
-  const d = Number(mov.debito)||0;
+    const fecha = new Date(mov.fecha);
 
-  // ✅ USAMOS CONCEPTO
-  const concepto = mov.concepto || "Otros";
+    const mes = fecha.getMonth()+1;
+    const anio = fecha.getFullYear();
 
-  ingresos += c;
-  gastos += d;
+    if(filtro.tipo === "mes"){
+      return mes === Number(filtro.mes) && anio === Number(filtro.anio);
+    }
 
-  if(c>0){
-    if(!ing[concepto]) ing[concepto]=0;
-    ing[concepto]+=c;
-  }
+    if(filtro.tipo === "anio"){
+      return anio === Number(filtro.anio);
+    }
 
-  if(d>0){
-    if(!gas[concepto]) gas[concepto]=0;
-    gas[concepto]+=d;
-  }
+    if(filtro.tipo === "rango"){
+      if(!filtro.desde || !filtro.hasta) return true;
 
-});
+      const fDesde = new Date(filtro.desde);
+      const fHasta = new Date(filtro.hasta);
 
-const resultado = ingresos - gastos;
-const rentabilidad = ingresos>0 ? ((resultado/ingresos)*100).toFixed(2) : 0;
+      return fecha >= fDesde && fecha <= fHasta;
+    }
 
-setKpis({ ingresos, gastos, resultado, rentabilidad });
+    return true;
 
-// 👉 ahora guardamos también el nombre
-const ingresosArray = Object.keys(ing).map(k=>({
-  tipo:k,
-  valor:ing[k]
-}));
-
-const gastosArray = Object.keys(gas).map(k=>({
-  tipo:k,
-  valor:gas[k]
-}));
-
-setIngresosCat(ingresosArray);
-setGastosCat(gastosArray);
-
-setTimeout(()=>{
-  drawBars(ingresos,gastos,resultado);
-  drawDonut(ingresosRef.current, ingresosArray);
-  drawDonut(gastosRef.current, gastosArray);
-},200);
+  });
 
 };
 
-/* ================= BARRAS ================= */
+const procesarDatos = (data) => {
+
+  let ingresos = 0;
+  let gastos = 0;
+
+  const ing = {};
+  const gas = {};
+
+  data.forEach(mov=>{
+
+    const c = Number(mov.credito)||0;
+    const d = Number(mov.debito)||0;
+
+    const concepto = mov.concepto || "Otros";
+
+    ingresos += c;
+    gastos += d;
+
+    if(c>0){
+      if(!ing[concepto]) ing[concepto]=0;
+      ing[concepto]+=c;
+    }
+
+    if(d>0){
+      if(!gas[concepto]) gas[concepto]=0;
+      gas[concepto]+=d;
+    }
+
+  });
+
+  const resultado = ingresos - gastos;
+  const rentabilidad = ingresos>0 ? ((resultado/ingresos)*100).toFixed(2) : 0;
+
+  const ingresosArray = Object.keys(ing).map(k=>({ tipo:k, valor:ing[k] }));
+  const gastosArray = Object.keys(gas).map(k=>({ tipo:k, valor:gas[k] }));
+
+  setKpis({ ingresos, gastos, resultado, rentabilidad });
+  setIngresosCat(ingresosArray);
+  setGastosCat(gastosArray);
+
+  setTimeout(()=>{
+    drawBars(ingresos,gastos,resultado);
+    drawDonut(ingresosRef.current, ingresosArray);
+    drawDonut(gastosRef.current, gastosArray);
+  },200);
+};
+
+/* ================= GRAFICOS ================= */
 
 function drawBars(ingresos,gastos,resultado){
 
 const canvas = barRef.current;
-const ctx = canvas.getContext("2d");
+if(!canvas) return;
 
+const ctx = canvas.getContext("2d");
 ctx.clearRect(0,0,400,260);
 
-// fondo líneas
 ctx.strokeStyle="#E5E7EB";
 
 for(let i=0;i<5;i++){
@@ -108,11 +158,11 @@ for(let i=0;i<5;i++){
 
 const data = [
   {label:"Ingresos", value:ingresos, color:"#22C55E"},
-  {label:"Egresos", value:gastos, color:"#86EFAC"},
-  {label:"Resultado", value:resultado, color:"#4ADE80"}
+  {label:"Egresos", value:gastos, color:"#EF4444"},
+  {label:"Resultado", value:resultado, color:"#3B82F6"}
 ];
 
-const max = Math.max(...data.map(d=>d.value));
+const max = Math.max(...data.map(d=>d.value),1);
 
 data.forEach((d,i)=>{
 
@@ -120,91 +170,137 @@ data.forEach((d,i)=>{
   const h = (d.value/max)*160;
   const y = 220 - h;
 
-  // sombra
-  ctx.fillStyle="#d1d5db";
-  ctx.fillRect(x+5,y+5,50,h);
-
-  // barra
   ctx.fillStyle=d.color;
   ctx.fillRect(x,y,50,h);
 
-  // valor
   ctx.fillStyle="#111";
   ctx.font="bold 12px Arial";
   ctx.textAlign="center";
   ctx.fillText("$"+Math.round(d.value).toLocaleString(),x+25,y-5);
-
-  // label
-  ctx.font="12px Arial";
   ctx.fillText(d.label,x+25,240);
 
 });
 
 }
 
-/* ================= DONUT ================= */
-
 function drawDonut(canvas,data){
 
-const ctx = canvas.getContext("2d");
+if(!canvas) return;
 
+const ctx = canvas.getContext("2d");
 ctx.clearRect(0,0,300,300);
 
 const total = data.reduce((a,b)=>a+b.valor,0);
-
 if(total === 0) return;
 
 let start = 0;
-
-const colors = COLORS;
 
 data.forEach((item,i)=>{
 
   const slice = (item.valor/total)*Math.PI*2;
 
-  // porción
   ctx.beginPath();
   ctx.moveTo(150,150);
   ctx.arc(150,150,120,start,start+slice);
   ctx.closePath();
 
-  ctx.fillStyle = colors[i % colors.length];
+  ctx.fillStyle = COLORS[i % COLORS.length];
   ctx.fill();
-
-  // 👉 texto (solo si el slice es grande)
-  const mid = start + slice/2;
-
-  if(slice > 0.3){ // evita superposición
-    const x = 150 + Math.cos(mid)*90;
-    const y = 150 + Math.sin(mid)*90;
-
-    ctx.fillStyle="#fff";
-    ctx.font="bold 12px Arial";
-    ctx.textAlign="center";
-
-    const porcentaje = ((item.valor/total)*100).toFixed(0);
-
-    ctx.fillText(porcentaje+"%",x,y);
-  }
 
   start+=slice;
 
 });
 
-// agujero
 ctx.beginPath();
 ctx.arc(150,150,70,0,Math.PI*2);
 ctx.fillStyle="#fff";
 ctx.fill();
 
-// 👉 total en el centro
 ctx.fillStyle="#111";
 ctx.font="bold 16px Arial";
 ctx.textAlign="center";
 ctx.fillText("$"+Math.round(total).toLocaleString(),150,155);
 
 }
-function Leyenda({data}){
+
+/* ================= UI ================= */
+
+return(
+<div style={styles.container}>
+
+<h2 style={styles.title}>Panel Financiero</h2>
+
+{/* FILTROS */}
+<div style={styles.filtros}>
+
+<select
+  value={filtro.tipo}
+  onChange={e=>setFiltro({...filtro,tipo:e.target.value})}
+>
+  <option value="todos">Todos</option>
+  <option value="mes">Mes</option>
+  <option value="anio">Año</option>
+  <option value="rango">Rango</option>
+</select>
+
+{filtro.tipo === "mes" && (
+<>
+<input type="number" value={filtro.mes}
+onChange={e=>setFiltro({...filtro,mes:e.target.value})}/>
+<input type="number" value={filtro.anio}
+onChange={e=>setFiltro({...filtro,anio:e.target.value})}/>
+</>
+)}
+
+{filtro.tipo === "anio" && (
+<input type="number" value={filtro.anio}
+onChange={e=>setFiltro({...filtro,anio:e.target.value})}/>
+)}
+
+{filtro.tipo === "rango" && (
+<>
+<input type="date" value={filtro.desde}
+onChange={e=>setFiltro({...filtro,desde:e.target.value})}/>
+<input type="date" value={filtro.hasta}
+onChange={e=>setFiltro({...filtro,hasta:e.target.value})}/>
+</>
+)}
+
+</div>
+
+{/* KPIs */}
+<div style={styles.kpis}>
+<Kpi titulo="Ingresos" valor={kpis.ingresos} color="#22C55E"/>
+<Kpi titulo="Egresos" valor={kpis.gastos} color="#EF4444"/>
+<Kpi titulo="Resultado" valor={kpis.resultado} color="#3B82F6"/>
+<Kpi titulo="Rentabilidad" valor={kpis.rentabilidad+"%"} color="#8B5CF6"/>
+</div>
+
+<div style={styles.grid}>
+
+<div style={styles.card}>
+<h4>Totales</h4>
+<canvas ref={barRef} width={400} height={260}/>
+</div>
+
+<div style={styles.card}>
+<div style={styles.cardTitle}>Ingresos por Categoría</div>
+<canvas ref={ingresosRef} width={300} height={300}/>
+<Leyenda data={ingresosCat} colors={COLORS}/>
+</div>
+
+<div style={styles.card}>
+<div style={styles.cardTitle}>Gastos por Categoría</div>
+<canvas ref={gastosRef} width={300} height={300}/>
+<Leyenda data={gastosCat} colors={COLORS}/>
+</div>
+
+</div>
+
+</div>
+);
+}
+function Leyenda({data, colors}){
 
 const total = data.reduce((a,b)=>a+b.valor,0);
 
@@ -223,7 +319,7 @@ return(
       <div 
         style={{
           ...styles.colorBox,
-          background: COLORS[i % COLORS.length]
+          background: colors[i % colors.length]
         }}
       />
 
@@ -242,57 +338,14 @@ return(
 </div>
 );
 }
-/* ================= UI ================= */
-
-return(
-<div style={styles.container}>
-
-<h2 style={styles.title}>Panel Financiero 2026</h2>
-
-{/* KPIs */}
-<div style={styles.kpis}>
-  <Kpi titulo="Ingresos" valor={kpis.ingresos} color="#22C55E"/>
-  <Kpi titulo="Egresos" valor={kpis.gastos} color="#EF4444"/>
-  <Kpi titulo="Resultado" valor={kpis.resultado} color="#3B82F6"/>
-  <Kpi titulo="Rentabilidad" valor={kpis.rentabilidad+"%"} color="#8B5CF6"/>
-</div>
-
-{/* GRAFICOS */}
-<div style={styles.grid}>
-
-<div style={styles.card}>
-  <h4>Total Ingresos / Egresos / Resultado</h4>
-  <canvas ref={barRef} width={400} height={260}/>
-</div>
-
-<div style={styles.card}>
-  <h4>Ingresos por Categoría</h4>
-  <canvas ref={ingresosRef} width={300} height={300}/>
-  <Leyenda data={ingresosCat}/>
-</div>
-
-<div style={styles.card}>
-  <h4>Gastos por Categoría</h4>
-  <canvas ref={gastosRef} width={300} height={300}/>
-  <Leyenda data={gastosCat}/>
-</div>
-
-</div>
-
-</div>
-);
-
-}
-
-/* ================= KPI ================= */
-
+/* KPI */
 function Kpi({titulo,valor,color}){
 
 const [num,setNum]=useState(0);
 
 useEffect(()=>{
   let i=0;
-  const inc = valor/40;
+  const inc = (typeof valor==="number"?valor:0)/40;
 
   const t = setInterval(()=>{
     i+=inc;
@@ -307,28 +360,39 @@ useEffect(()=>{
 
 return(
 <div style={{...styles.kpi,borderTop:`4px solid ${color}`}}>
-  <div style={{fontSize:12,color:"#6B7280"}}>{titulo}</div>
-  <div style={{fontSize:22,fontWeight:"bold"}}>
-    {typeof valor==="number"?"$"+num.toLocaleString():valor}
-  </div>
+<div>{titulo}</div>
+<div>{typeof valor==="number"?"$"+num.toLocaleString():valor}</div>
 </div>
 );
-
 }
 
-/* ================= ESTILOS ================= */
-
+/* ESTILOS */
 const styles = {
 
 container:{
   padding:30,
-  fontFamily:"Arial",
-  background:"#F9FAFB",
+  fontFamily:"Inter, Arial",
+  background:"linear-gradient(135deg,#eef2ff,#f9fafb)",
   minHeight:"100vh"
 },
 
 title:{
-  marginBottom:20
+  marginBottom:25,
+  fontSize:24,
+  fontWeight:700,
+  color:"#111827"
+},
+
+filtros:{
+  display:"flex",
+  gap:10,
+  marginBottom:25,
+  background:"#fff",
+  padding:12,
+  borderRadius:12,
+  boxShadow:"0 4px 12px rgba(0,0,0,0.05)",
+  alignItems:"center",
+  flexWrap:"wrap"
 },
 
 kpis:{
@@ -340,36 +404,49 @@ kpis:{
 
 kpi:{
   background:"#fff",
-  padding:15,
-  borderRadius:10,
-  width:180,
-  boxShadow:"0 5px 15px rgba(0,0,0,0.05)"
+  padding:18,
+  borderRadius:14,
+  width:200,
+  boxShadow:"0 10px 25px rgba(0,0,0,0.08)",
+  transition:"all .2s ease"
 },
 
 grid:{
   display:"grid",
-  gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",
-  gap:20
+  gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",
+  gap:25
 },
 
 card:{
   background:"#fff",
-  padding:20,
-  borderRadius:12,
-  boxShadow:"0 10px 20px rgba(0,0,0,0.05)"
+  padding:25,
+  borderRadius:16,
+  boxShadow:"0 15px 35px rgba(0,0,0,0.08)",
+  transition:"all .25s ease",
+  position:"relative"
+},
+
+cardTitle:{
+  fontSize:14,
+  fontWeight:600,
+  color:"#374151",
+  marginBottom:10
 },
 leyenda:{
   marginTop:15,
   display:"flex",
   flexDirection:"column",
-  gap:8
+  gap:10
 },
 
 itemLeyenda:{
   display:"flex",
   alignItems:"center",
   gap:10,
-  fontSize:12
+  fontSize:13,
+  padding:"6px 8px",
+  borderRadius:8,
+  transition:"all .2s"
 },
 
 colorBox:{
@@ -380,12 +457,13 @@ colorBox:{
 
 nombre:{
   fontWeight:"600",
-  color:"#111"
+  color:"#111827"
 },
 
 valor:{
   color:"#6B7280",
-  fontSize:11
+  fontSize:12
 }
+
 
 };
