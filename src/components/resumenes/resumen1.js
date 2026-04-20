@@ -461,93 +461,126 @@ export default function PanelFinanciero() {
   }
 
   function calcularResumenGeneral(lista) {
-    let totalIngresos = 0;
-    let totalEgresos = 0;
-    const acumuladoPorPeriodo = {};
+  let totalIngresos = 0;
+  let totalEgresos = 0;
 
-    lista.forEach((mov) => {
-      const periodo = obtenerPeriodo(mov.fecha);
-      if (!periodo) return;
+  const acumuladoPorPeriodo = {};
+  const ingresosPorPeriodo = {};
+  const egresosPorPeriodo = {};
 
-      const credito = Number(mov.credito) || 0;
-      const debito = Number(mov.debito) || 0;
+  lista.forEach((mov) => {
+    const periodo = obtenerPeriodo(mov.fecha);
+    if (!periodo) return;
 
-      totalIngresos += credito;
-      totalEgresos += debito;
+    const credito = Number(mov.credito) || 0;
+    const debito = Number(mov.debito) || 0;
 
-      const saldo = credito - debito;
+    totalIngresos += credito;
+    totalEgresos += debito;
 
-      if (!acumuladoPorPeriodo[periodo]) {
-        acumuladoPorPeriodo[periodo] = 0;
-      }
-
-      acumuladoPorPeriodo[periodo] += saldo;
-    });
-
-    const saldoArray = [["Mes", "Saldo acumulado"]];
-    let acumulado = 0;
-
-    Object.keys(acumuladoPorPeriodo)
-      .sort((a, b) => a.localeCompare(b))
-      .forEach((periodo) => {
-        acumulado += acumuladoPorPeriodo[periodo];
-        saldoArray.push([formatearPeriodoCorto(periodo), acumulado]);
-      });
-
-    return {
-      totalIngresos,
-      totalEgresos,
-      saldoArray,
-    };
-  }
-
-  function calcularResumenPorPeriodo(lista, periodoSeleccionadoActual) {
-    const filtrados = lista
-      .filter((mov) => obtenerPeriodo(mov.fecha) === periodoSeleccionadoActual)
-      .sort((a, b) => valorFecha(a.fecha) - valorFecha(b.fecha));
-
-    let totalIngresos = 0;
-    let totalEgresos = 0;
-    const acumuladoPorFecha = {};
-
-    filtrados.forEach((mov) => {
-      const credito = Number(mov.credito) || 0;
-      const debito = Number(mov.debito) || 0;
-
-      totalIngresos += credito;
-      totalEgresos += debito;
-
-      const parsed = parseFecha(mov.fecha);
-      if (!parsed) return;
-
-      if (!acumuladoPorFecha[parsed.iso]) {
-        acumuladoPorFecha[parsed.iso] = 0;
-      }
-
-      acumuladoPorFecha[parsed.iso] += credito - debito;
-    });
-
-    const saldoArray = [["Fecha", "Saldo acumulado"]];
-    let acumulado = 0;
-
-    Object.keys(acumuladoPorFecha)
-      .sort((a, b) => a.localeCompare(b))
-      .forEach((fechaIso) => {
-        acumulado += acumuladoPorFecha[fechaIso];
-        saldoArray.push([formatearFecha(fechaIso), acumulado]);
-      });
-
-    if (saldoArray.length === 1) {
-      saldoArray.push([formatearPeriodo(periodoSeleccionadoActual), 0]);
+    if (!acumuladoPorPeriodo[periodo]) {
+      acumuladoPorPeriodo[periodo] = 0;
+      ingresosPorPeriodo[periodo] = 0;
+      egresosPorPeriodo[periodo] = 0;
     }
 
-    return {
-      totalIngresos,
-      totalEgresos,
-      saldoArray,
-    };
+    acumuladoPorPeriodo[periodo] += credito - debito;
+    ingresosPorPeriodo[periodo] += credito;
+    egresosPorPeriodo[periodo] += debito;
+  });
+
+  const saldoArray = [["Mes", "Saldo", "Ingresos", "Egresos"]];
+
+  let saldoAcum = 0;
+  let ingAcum = 0;
+  let egAcum = 0;
+
+  Object.keys(acumuladoPorPeriodo)
+    .sort((a, b) => a.localeCompare(b))
+    .forEach((periodo) => {
+      saldoAcum += acumuladoPorPeriodo[periodo];
+      ingAcum += ingresosPorPeriodo[periodo];
+      egAcum += egresosPorPeriodo[periodo];
+
+      saldoArray.push([
+        formatearPeriodoCorto(periodo),
+        saldoAcum,
+        ingAcum,
+        egAcum,
+      ]);
+    });
+
+  return {
+    totalIngresos,
+    totalEgresos,
+    saldoArray,
+  };
+}
+
+  function calcularResumenPorPeriodo(lista, periodoSeleccionadoActual) {
+  const filtrados = lista
+    .filter((mov) => obtenerPeriodo(mov.fecha) === periodoSeleccionadoActual)
+    .sort((a, b) => valorFecha(a.fecha) - valorFecha(b.fecha));
+
+  let totalIngresos = 0;
+  let totalEgresos = 0;
+
+  const acumuladoPorFecha = {};
+  const ingresosPorFecha = {};
+  const egresosPorFecha = {};
+
+  filtrados.forEach((mov) => {
+    const credito = Number(mov.credito) || 0;
+    const debito = Number(mov.debito) || 0;
+
+    totalIngresos += credito;
+    totalEgresos += debito;
+
+    const parsed = parseFecha(mov.fecha);
+    if (!parsed) return;
+
+    if (!acumuladoPorFecha[parsed.iso]) {
+      acumuladoPorFecha[parsed.iso] = 0;
+      ingresosPorFecha[parsed.iso] = 0;
+      egresosPorFecha[parsed.iso] = 0;
+    }
+
+    acumuladoPorFecha[parsed.iso] += credito - debito;
+    ingresosPorFecha[parsed.iso] += credito;
+    egresosPorFecha[parsed.iso] += debito;
+  });
+
+  const saldoArray = [["Fecha", "Saldo", "Ingresos", "Egresos"]];
+
+  let saldoAcum = 0;
+  let ingAcum = 0;
+  let egAcum = 0;
+
+  Object.keys(acumuladoPorFecha)
+    .sort((a, b) => a.localeCompare(b))
+    .forEach((fechaIso) => {
+      saldoAcum += acumuladoPorFecha[fechaIso];
+      ingAcum += ingresosPorFecha[fechaIso];
+      egAcum += egresosPorFecha[fechaIso];
+
+      saldoArray.push([
+        formatearFecha(fechaIso),
+        saldoAcum,
+        ingAcum,
+        egAcum,
+      ]);
+    });
+
+  if (saldoArray.length === 1) {
+    saldoArray.push([formatearPeriodo(periodoSeleccionadoActual), 0, 0, 0]);
   }
 
+  return {
+    totalIngresos,
+    totalEgresos,
+    saldoArray,
+  };
+}
   function limpiarGrafico(id) {
     const nodo = document.getElementById(id);
     if (nodo) nodo.innerHTML = "";
@@ -601,12 +634,12 @@ export default function PanelFinanciero() {
 
       const resultado = ingresos - egresos;
 
-      const dataBar = window.google.visualization.arrayToDataTable([
-        ["Concepto", "Monto"],
-        ["Ingresos", ingresos],
-        ["Egresos", egresos],
-        ["Resultado", resultado],
-      ]);
+ const dataBar = window.google.visualization.arrayToDataTable([
+  ["Concepto", "Monto", { role: "style" }],
+  ["Ingresos", ingresos, "#22C55E"], // verde
+  ["Egresos", egresos, "#EF4444"],   // rojo
+  ["Resultado", resultado, "#0B4F6C"], // azul
+]);
 
       const chartBar = new window.google.visualization.ColumnChart(
         document.getElementById("graficoBarrasGeneral")
@@ -617,7 +650,7 @@ export default function PanelFinanciero() {
         animation: { startup: true, duration: 900 },
         chartArea: { width: "80%", height: "70%" },
         backgroundColor: "transparent",
-        colors: ["#148D8D", "#EF4444", "#0B4F6C"],
+     colors: ["#22C55E", "#EF4444", "#0B4F6C"],
       });
 
       const dataLine = window.google.visualization.arrayToDataTable(saldoArray);
@@ -627,12 +660,19 @@ export default function PanelFinanciero() {
       );
 
       chartLine.draw(dataLine, {
-        legend: "none",
+    
         curveType: "function",
         animation: { startup: true, duration: 900 },
         chartArea: { width: "85%", height: "70%" },
         backgroundColor: "transparent",
-        colors: ["#0B4F6C"],
+       legend: { position: "top" },
+colors: ["#0B4F6C", "#22C55E", "#EF4444"],
+
+series: {
+  0: { lineWidth: 4 }, // saldo
+  1: { lineWidth: 2 }, // ingresos
+  2: { lineWidth: 2 }, // egresos
+},
       });
     } catch (error) {
       console.error("Error al dibujar gráficos generales:", error);
@@ -645,12 +685,12 @@ export default function PanelFinanciero() {
 
       const resultado = ingresos - egresos;
 
-      const dataBar = window.google.visualization.arrayToDataTable([
-        ["Concepto", "Monto"],
-        ["Ingresos", ingresos],
-        ["Egresos", egresos],
-        ["Resultado", resultado],
-      ]);
+  const dataBar = window.google.visualization.arrayToDataTable([
+  ["Concepto", "Monto", { role: "style" }],
+  ["Ingresos", ingresos, "#22C55E"], // verde
+  ["Egresos", egresos, "#EF4444"],   // rojo
+  ["Resultado", resultado, "#0B4F6C"], // azul
+]);
 
       const chartBar = new window.google.visualization.ColumnChart(
         document.getElementById("graficoBarrasMes")
@@ -661,7 +701,7 @@ export default function PanelFinanciero() {
         animation: { startup: true, duration: 900 },
         chartArea: { width: "80%", height: "70%" },
         backgroundColor: "transparent",
-        colors: ["#148D8D", "#EF4444", "#0B4F6C"],
+      colors: ["#22C55E", "#EF4444", "#0B4F6C"],
       });
 
       const dataLine = window.google.visualization.arrayToDataTable(saldoArray);
@@ -676,7 +716,7 @@ export default function PanelFinanciero() {
         animation: { startup: true, duration: 900 },
         chartArea: { width: "85%", height: "70%" },
         backgroundColor: "transparent",
-        colors: ["#0B4F6C"],
+      colors: ["#22C55E", "#EF4444", "#0B4F6C"],
       });
     } catch (error) {
       console.error("Error al dibujar gráficos por mes:", error);

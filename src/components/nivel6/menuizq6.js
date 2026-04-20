@@ -104,7 +104,7 @@ useEffect(() => {
       path: '/nivel6/resumen1'
     },
     {
-      text: 'Resumen 2',
+      text: 'Resumen 2 (Gastos)',
       icon: <NfcIcon style={{ color: "#1a303e" }} />,
       path: '/nivel6/resumen2',
     },
