@@ -7,13 +7,27 @@ const headerGradient = "linear-gradient(90deg, #0a3b4f 0%, #0b4f6c 55%, #148D8D 
 export default function DashboardFinanciero() {
   const canvasEgresos = useRef(null);
   const canvasSaldo = useRef(null);
-
+const [fechaDesde, setFechaDesde] = useState("");
+const [fechaHasta, setFechaHasta] = useState("");
+const [modoVista, setModoVista] = useState("dia"); // "dia" o "mes"
   const [egresos, setEgresos] = useState([]);
   const [saldoMensual, setSaldoMensual] = useState([]);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1366
   );
+useEffect(() => {
+  const hoy = new Date();
 
+  // 🔥 ir al mes anterior
+  const primerDiaMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 1);
+  const ultimoDiaMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+
+  // 🔥 formatear a YYYY-MM-DD (input date)
+  const format = (fecha) => fecha.toISOString().slice(0, 10);
+
+  setFechaDesde(format(primerDiaMesAnterior));
+  setFechaHasta(format(ultimoDiaMesAnterior));
+}, []);
   useEffect(() => {
     traerDatos();
   }, []);
@@ -39,55 +53,91 @@ export default function DashboardFinanciero() {
       limpiarCanvas(canvasSaldo.current);
     }
   }, [saldoMensual, windowWidth]);
+useEffect(() => {
+  traerDatos();
+}, [fechaDesde, fechaHasta, modoVista]);
 
-  const traerDatos = async () => {
-    try {
-      const resp = await servicionivel3.traermovimientos();
+const traerDatos = async () => {
+  try {
+    const resp = await servicionivel3.traermovimientos();
 
-      const egresosMap = {};
-      const saldoPorMes = {};
+    const egresosMap = {};
+    const saldoAgrupado = {};
 
-      resp.forEach((mov) => {
-        const fecha = new Date(mov.fecha);
-        const mes = fecha.toLocaleString("es-AR", { month: "short" });
+    resp.forEach((mov) => {
+      const fecha = new Date(mov.fecha);
 
-        const debito = Number(mov.debito) || 0;
-        const credito = Number(mov.credito) || 0;
-        const concepto = mov.concepto || "Sin categoría";
+      // 🔥 FILTRO POR FECHA
+      if (fechaDesde && fecha < new Date(fechaDesde)) return;
+      if (fechaHasta && fecha > new Date(fechaHasta)) return;
 
-        if (debito > 0) {
-          if (!egresosMap[concepto]) egresosMap[concepto] = 0;
-          egresosMap[concepto] += debito;
-        }
+      // 🔥 AGRUPACIÓN DINÁMICA
+      let clave;
 
-        const saldo = credito - debito;
-        if (!saldoPorMes[mes]) saldoPorMes[mes] = 0;
-        saldoPorMes[mes] += saldo;
+      if (modoVista === "dia") {
+        clave = fecha.toISOString().slice(0, 10); // YYYY-MM-DD
+      } else {
+        clave = fecha.toISOString().slice(0, 7); // YYYY-MM
+      }
+
+      const debito = Number(mov.debito) || 0;
+      const credito = Number(mov.credito) || 0;
+      const concepto = mov.concepto || "Sin categoría";
+
+      // ================= EGRESOS (no se rompe)
+      if (debito > 0) {
+        if (!egresosMap[concepto]) egresosMap[concepto] = 0;
+        egresosMap[concepto] += debito;
+      }
+
+      // ================= SALDO DINÁMICO
+      const saldo = credito - debito;
+
+      if (!saldoAgrupado[clave]) saldoAgrupado[clave] = 0;
+      saldoAgrupado[clave] += saldo;
+    });
+
+    // ================= EGRESOS (igual que antes)
+    const egresosArray = Object.keys(egresosMap)
+      .map((key) => ({
+        concepto: key,
+        monto: egresosMap[key],
+      }))
+      .sort((a, b) => b.monto - a.monto)
+      .slice(0, 10);
+
+    // ================= SALDO ORDENADO + ACUMULADO
+    const saldoArray = [];
+    let acumulado = 0;
+
+    Object.keys(saldoAgrupado)
+      .sort()
+      .forEach((key) => {
+        acumulado += saldoAgrupado[key];
+
+        saldoArray.push({
+          fecha: formatearFecha(key),
+          saldo: acumulado,
+        });
       });
 
-      const egresosArray = Object.keys(egresosMap)
-        .map((key) => ({
-          concepto: key,
-          monto: egresosMap[key],
-        }))
-        .sort((a, b) => b.monto - a.monto)
-        .slice(0, 10);
-
-      const saldoArray = [];
-      let acumulado = 0;
-
-      Object.keys(saldoPorMes).forEach((mes) => {
-        acumulado += saldoPorMes[mes];
-        saldoArray.push({ fecha: mes, saldo: acumulado });
-      });
-
-      setEgresos(egresosArray);
-      setSaldoMensual(saldoArray);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+    setEgresos(egresosArray);
+    setSaldoMensual(saldoArray);
+  } catch (error) {
+    console.error(error);
+  }
+};
+function formatearFecha(fechaStr) {
+  if (fechaStr.length === 10) {
+    // día
+    const [anio, mes, dia] = fechaStr.split("-");
+    return `${dia}/${mes}`;
+  } else {
+    // mes
+    const [anio, mes] = fechaStr.split("-");
+    return `${mes}/${anio}`;
+  }
+}
   function limpiarCanvas(canvas) {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -279,6 +329,15 @@ export default function DashboardFinanciero() {
           subtitle="Comportamiento acumulado del saldo a lo largo de los meses."
         >
           <div style={styles.cardGraficoGrande}>
+            <div style={{ display: "flex", gap: 10, marginBottom: 10, flexWrap: "wrap" }}>
+  <input type="date" value={fechaDesde} onChange={(e) => setFechaDesde(e.target.value)} />
+  <input type="date" value={fechaHasta} onChange={(e) => setFechaHasta(e.target.value)} />
+
+  <select value={modoVista} onChange={(e) => setModoVista(e.target.value)}>
+    <option value="dia">Día</option>
+    <option value="mes">Mes</option>
+  </select>
+</div>
             <canvas
               ref={canvasSaldo}
               width={820}
