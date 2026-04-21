@@ -716,7 +716,7 @@ series: {
         animation: { startup: true, duration: 900 },
         chartArea: { width: "85%", height: "70%" },
         backgroundColor: "transparent",
-      colors: ["#22C55E", "#EF4444", "#0B4F6C"],
+      colors: ["#0B4F6C", "#22C55E", "#EF4444"],
       });
     } catch (error) {
       console.error("Error al dibujar gráficos por mes:", error);
