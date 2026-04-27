@@ -188,15 +188,42 @@ function animarGastos(data) {
     const usableHeight = canvas.height - paddingTop - paddingBottom;
 
     // 🔲 GRID
-    for (let i = 0; i < 4; i++) {
-      const y = paddingTop + (usableHeight / 3) * i;
-      ctx.beginPath();
-      ctx.moveTo(paddingX, y);
-      ctx.lineTo(canvas.width - paddingX, y);
-      ctx.strokeStyle = "#DCE7EB";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
+   // 🔲 GRID + EJE Y + VALORES
+const steps = 4;
+
+ctx.font = "600 10px Segoe UI";
+ctx.fillStyle = "#64748B";
+ctx.textAlign = "right";
+
+for (let i = 0; i < steps; i++) {
+  const ratio = i / (steps - 1);
+  const y = paddingTop + usableHeight * ratio;
+
+  // línea horizontal (grid)
+  ctx.beginPath();
+  ctx.moveTo(paddingX, y);
+  ctx.lineTo(canvas.width - paddingX, y);
+  ctx.strokeStyle = "#DCE7EB";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // valor eje Y
+  const valor = Math.round(max * (1 - ratio));
+
+  ctx.fillText(
+    "$" + valor.toLocaleString("es-AR"),
+    paddingX - 6,
+    y + 3
+  );
+}
+
+// 🔳 eje vertical
+ctx.beginPath();
+ctx.moveTo(paddingX, paddingTop);
+ctx.lineTo(paddingX, canvas.height - paddingBottom);
+ctx.strokeStyle = "#94A3B8";
+ctx.lineWidth = 1.2;
+ctx.stroke();
 
     // =========================
     // 🔴 LINEA (UN SOLO PERIODO)
@@ -351,21 +378,12 @@ function calcularGastosComparativo(resp, desde, hasta) {
     }
   });
 
-  const resultado = [];
-  let acumulado = 0;
-
-  Object.keys(agrupado)
+  return Object.keys(agrupado)
     .sort()
-    .forEach((key) => {
-      acumulado += agrupado[key];
-
-      resultado.push({
-        fecha: formatearFecha(key),
-        monto: acumulado,
-      });
-    });
-
-  return resultado;
+    .map((key) => ({
+      fecha: formatearFecha(key),
+      monto: agrupado[key], // ✅ SIN acumulado
+    }));
 }
   function animarEgresos(data) {
     const canvas = canvasEgresos.current;
