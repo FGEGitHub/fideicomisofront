@@ -18,7 +18,12 @@ export default function DashboardFinanciero() {
   const resultadoRef = useRef(null);
   const ingresosConceptoRef = useRef(null);
   const gastosCategoriaRef = useRef(null);
-
+const [kpisExtra, setKpisExtra] = useState({
+  variacionIngresos: 0,
+  variacionGastos: 0,
+  mejorCategoriaGasto: "",
+  mejorConceptoIngreso: "",
+});
   const [kpis, setKpis] = useState({
     ingresos: 0,
     gastos: 0,
@@ -86,7 +91,42 @@ export default function DashboardFinanciero() {
           gastosCategoriaMap[categoria] += debito;
         }
       });
+// Agrupar por fecha (mes simple)
+const porMes = {};
 
+movimientos.forEach((mov) => {
+  const fecha = new Date(mov.fecha);
+  const key = `${fecha.getFullYear()}-${fecha.getMonth()}`;
+
+  if (!porMes[key]) {
+    porMes[key] = { ingresos: 0, gastos: 0 };
+  }
+
+  porMes[key].ingresos += Number(mov.credito) || 0;
+  porMes[key].gastos += Number(mov.debito) || 0;
+});
+
+const meses = Object.entries(porMes)
+  .sort((a, b) => new Date(a[0]) - new Date(b[0]))
+  .map((item) => item[1]);
+
+let variacionIngresos = 0;
+let variacionGastos = 0;
+
+if (meses.length >= 2) {
+  const actual = meses[meses.length - 1];
+  const anterior = meses[meses.length - 2];
+
+  variacionIngresos =
+    anterior.ingresos > 0
+      ? ((actual.ingresos - anterior.ingresos) / anterior.ingresos) * 100
+      : 0;
+
+  variacionGastos =
+    anterior.gastos > 0
+      ? ((actual.gastos - anterior.gastos) / anterior.gastos) * 100
+      : 0;
+}
       const ganancia = ingresos - gastos;
       const rentabilidad =
         ingresos > 0 ? Number(((ganancia / ingresos) * 100).toFixed(2)) : 0;
@@ -102,6 +142,17 @@ export default function DashboardFinanciero() {
         { label: "Ingresos", value: ingresos },
         { label: "Gastos", value: gastos },
       ]);
+const mejorCategoriaGasto = Object.entries(gastosCategoriaMap)
+  .sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
+
+const mejorConceptoIngreso = Object.entries(ingresosConceptoMap)
+  .sort((a, b) => b[1] - a[1])[0]?.[0] || "N/A";
+setKpisExtra({
+  variacionIngresos: variacionIngresos.toFixed(2),
+  variacionGastos: variacionGastos.toFixed(2),
+  mejorCategoriaGasto,
+  mejorConceptoIngreso,
+});
 
       setResultadoGeneral([{ label: "Resultado", value: ganancia }]);
 
@@ -153,7 +204,35 @@ export default function DashboardFinanciero() {
           tipo="percent"
         />
       </div>
+<div style={styles.kpis}>
+  <KpiCard
+    titulo="Ingresos vs Mes Anterior"
+    valor={kpisExtra.variacionIngresos}
+    color="#16A34A"
+    tipo="percent"
+  />
 
+  <KpiCard
+    titulo="Gastos vs Mes Anterior"
+    valor={kpisExtra.variacionGastos}
+    color="#DC2626"
+    tipo="percent"
+  />
+
+  <KpiCard
+    titulo="Principal Gasto"
+    valor={kpisExtra.mejorCategoriaGasto}
+    color="#F59E0B"
+    tipo="text"
+  />
+
+  <KpiCard
+    titulo="Principal Ingreso"
+    valor={kpisExtra.mejorConceptoIngreso}
+    color="#0B4F6C"
+    tipo="text"
+  />
+</div>
       <div style={styles.graficos}>
         <Section
           titulo="Flujo de Caja"
@@ -270,7 +349,9 @@ function formatMoney(valor) {
 }
 
 function formatPercent(valor) {
-  return `${Number(valor || 0).toFixed(2)}%`;
+  const num = Number(valor || 0);
+  const signo = num > 0 ? "+" : "";
+  return `${signo}${num.toFixed(2)}%`;
 }
 
 /* ---------------- CHARTS ---------------- */
@@ -463,6 +544,7 @@ function drawEmptyState(ctx, width, height) {
 /* ---------------- COMPONENTES ---------------- */
 
 function KpiCard({ titulo, valor, color, tipo = "money" }) {
+  
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
@@ -487,9 +569,13 @@ function KpiCard({ titulo, valor, color, tipo = "money" }) {
   return (
     <div style={{ ...styles.card, borderTop: `4px solid ${color}` }}>
       <div style={styles.cardTitle}>{titulo}</div>
-      <div style={styles.cardValue}>
-        {tipo === "percent" ? formatPercent(display) : formatMoney(display)}
-      </div>
+     <div style={styles.cardValue}>
+  {tipo === "percent"
+    ? formatPercent(display)
+    : tipo === "text"
+    ? valor
+    : formatMoney(display)}
+</div>
     </div>
   );
 }
