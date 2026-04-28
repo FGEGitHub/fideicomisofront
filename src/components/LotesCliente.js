@@ -91,7 +91,7 @@ const LotesCliente = (props) => {
     traer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+const [loteSeleccionado, setLoteSeleccionado] = useState(null);
   const [lotes, setLotes] = useState([""]);
   const [cuotas, setCuotas] = useState([""]);
   const [open, setOpen] = React.useState(false);
@@ -109,14 +109,17 @@ const LotesCliente = (props) => {
   const [cuotaCompensada, setCuotaCompensada] = useState("");
   const toggleDetalles = () => setVerDetalles(!verDetalles);
 
-  const vercuotas = async (index) => {
-    const cuotas = await servicioCuotas.vercuotas(index);
-    setCuotas(cuotas);
-    setIdlote(index);
-    setAct(true);
-    verief(index);
-    setOpen(false);
-  };
+const vercuotas = async (index) => {
+  const cuotas = await servicioCuotas.vercuotas(index);
+  setCuotas(cuotas);
+  setIdlote(index);
+  setAct(true);
+  const lote = lotes.find((l) => l.id == index);
+  setLoteSeleccionado(lote);
+
+  verief(index);
+  setOpen(false);
+};
 
   const abrirCompensar = (id_cuota) => {
     setCuotaOrigen(id_cuota);
@@ -156,6 +159,7 @@ const LotesCliente = (props) => {
 
   const traer = async () => {
     const lotes = await servicioLotes.lotesCliente(props.cuil_cuit);
+    console.log(lotes);
     setLotes(lotes);
   };
 
@@ -485,6 +489,13 @@ const LotesCliente = (props) => {
       ========================== */}
         <Paper elevation={0} sx={sxCard}>
           <Box sx={sxHeader}>
+            {loteSeleccionado && (
+  <Typography sx={{ fontWeight: 800 }}>
+    Valor del lote: ${" "}
+   
+    {new Intl.NumberFormat("de-DE").format(loteSeleccionado.valor_total)}
+  </Typography>
+)}
             <Box>
               <Typography sx={sxTitle}>CUADRO DE CUOTAS</Typography>
               <Typography sx={sxSub}>Seleccioná un lote para ver sus cuotas.</Typography>
