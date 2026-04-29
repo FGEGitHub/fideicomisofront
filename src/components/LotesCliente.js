@@ -45,6 +45,8 @@ import Adelantar from "./nivel2/pagarcuota/adelantarcuotaparque";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 ////// TABLA CUOTAS (azul fijo)
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -318,6 +320,44 @@ const vercuotas = async (index) => {
     );
   }
 
+const exportarExcel = () => {
+  if (!cuotas || cuotas.length === 0) {
+    alert("No hay cuotas para exportar");
+    return;
+  }
+
+  // Transformamos los datos (podés agregar/quitar campos)
+  const data = cuotas.map((c) => ({
+    Fecha: `${String(c.mes).padStart(2, "0")}/${c.anio}`,
+    "Saldo Inicial": c.saldo_inicial,
+    Amortizacion: c.Amortizacion,
+    ICC: c.ICC,
+    "Ajuste ICC": c.Ajuste_ICC,
+    "Cuota con ajuste": c.cuota_con_ajuste,
+    "Saldo Cierre": c.saldo_cierre,
+    Pago: c.pago,
+    "Saldo Real": c.Saldo_real,
+    Diferencia: c.diferencia,
+    Interes: c.interes,
+    "Pago Interes": c.pago_interes,
+    "ID Cuota": c.id,
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Cuotas");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array",
+  });
+
+  const file = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  saveAs(file, `Cuotas_Lote_${idlote}.xlsx`);
+};
   const columns = [
     {
       name: "Fecha",
@@ -500,7 +540,13 @@ const vercuotas = async (index) => {
               <Typography sx={sxTitle}>CUADRO DE CUOTAS</Typography>
               <Typography sx={sxSub}>Seleccioná un lote para ver sus cuotas.</Typography>
             </Box>
-
+<Button
+  variant="contained"
+  sx={sxBtnAccent}
+  onClick={exportarExcel}
+>
+  Descargar Excel
+</Button>
             <Chip
               label={`Registros: ${Array.isArray(cuotas) && cuotas.length > 0 && cuotas[0] !== "" ? cuotas.length : 0
                 }`}
