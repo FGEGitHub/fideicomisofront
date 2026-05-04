@@ -730,7 +730,7 @@ const textoOk =
   value={filtroTexto}
   onChange={(e) => setFiltroTexto(e.target.value)}
   sx={{ minWidth: 260 }}
-/>
+/>  
 
         {/* TABLA */}
         <Paper
