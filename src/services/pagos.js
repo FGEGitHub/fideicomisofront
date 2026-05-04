@@ -227,13 +227,19 @@ const cantidadpendientes= async  () => {
      return data
     } 
   
-  const todoslospagos= async  () => {
-  
-     
-     const {data } = await axios.get(baseUrl+'pagos/todoslospagos',config)
-       
-      return data
-     }
+const todoslospagos = async (datos) => {
+ 
+
+  const { data } = await axios.get(
+    baseUrl + "pagos/todoslospagos",
+    {
+      ...config,
+      params: datos, 
+    }
+  );
+
+  return data;
+};
      const traerpago= async  (id) => {
   
      

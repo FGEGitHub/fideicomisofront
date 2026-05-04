@@ -343,7 +343,7 @@ const Deudores = () => {
                     >
                       <TableCell
                         sx={{ fontWeight: 700, color: "#063a52", cursor: "pointer" }}
-                        onClick={() => navigate(`/usuario2/detalleclic3/${c.cuil_cuit}`)}
+                        onClick={() => navigate(`/usuario2/detallecliente/${c.cuil_cuit}`)}
                       >
                         {c.cuil_cuit}
                       </TableCell>

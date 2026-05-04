@@ -13,6 +13,7 @@ import {
   Chip,
   Stack,
   Divider,
+  TextField
 } from "@mui/material";
 
 import logo from "../../../Assets/marcas.png";
@@ -32,7 +33,13 @@ const PagosInusuales = () => {
   const [filtroMes, setFiltroMes] = useState("");
   const [filtroAnio, setFiltroAnio] = useState("");
   const [filtroZona, setFiltroZona] = useState("PIT");
+const [desdeMes, setDesdeMes] = useState("");
+const [desdeAnio, setDesdeAnio] = useState("");
+const [filtroTexto, setFiltroTexto] = useState("");
+const [hastaMes, setHastaMes] = useState("");
+const [hastaAnio, setHastaAnio] = useState("");
 
+const [tipoFecha, setTipoFecha] = useState("pago"); // "pago" o "cuota"
   // helper
   const esVacio = (v) =>
     v === null || v === undefined || v === "" || v === "-" || v === "Sin determinar";
@@ -45,94 +52,125 @@ const PagosInusuales = () => {
 
   // ✅ Traer pagos y completar fraccion/manzana/lote para IC3 sin tocar backend
   const getPagos = async () => {
-    const resp = await servicioPagos.todoslospagos({});
+  if (!desdeMes || !desdeAnio || !hastaMes || !hastaAnio) {
+    alert("Completá el rango de fechas");
+    return;
+  }
 
-    const lotesResp = await servicioLotes.lista({});
-    const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
+  const resp = await servicioPagos.todoslospagos({
+    desde_mes: desdeMes,
+    desde_anio: desdeAnio,
+    hasta_mes: hastaMes,
+    hasta_anio: hastaAnio,
+    tipo_fecha: tipoFecha,
+  });
 
-    const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
+  const lotesResp = await servicioLotes.lista({});
+  const lotes = Array.isArray(lotesResp) ? lotesResp[0] || [] : [];
 
-    const normNombre = (s) =>
-      String(s ?? "")
-        .toUpperCase()
-        .replace(/\(\s*\d+\s*\)/g, "") // saca (3), (4), etc
-        .replace(/\s+/g, " ")
-        .trim();
+  const normDigits = (v) => String(v ?? "").replace(/[^\d]/g, "");
 
-    // Index IC3 por CUIT, por DNI y por NOMBRE
-    const idxIC3ByCuit = new Map();
-    const idxIC3ByDni = new Map();
-    const idxIC3ByNombre = new Map();
+  const normNombre = (s) =>
+    String(s ?? "")
+      .toUpperCase()
+      .replace(/\(\s*\d+\s*\)/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
 
-    lotes
-      .filter((l) => String(l.zona ?? "").trim().toUpperCase() === "IC3")
-      .forEach((l) => {
-        const c = normDigits(l.cuil_cuit);
-        const nombreLote = normNombre(l.nombre); // viene del join en listadeTodos
+  const idxIC3ByCuit = new Map();
+  const idxIC3ByDni = new Map();
+  const idxIC3ByNombre = new Map();
 
-        if (nombreLote && !idxIC3ByNombre.has(nombreLote)) {
-          idxIC3ByNombre.set(nombreLote, l);
-        }
+  lotes
+    .filter((l) => String(l.zona ?? "").trim().toUpperCase() === "IC3")
+    .forEach((l) => {
+      const c = normDigits(l.cuil_cuit);
+      const nombreLote = normNombre(l.nombre);
 
-        // Si no hay cuil o es "0", no indexamos por cuil/dni
-        if (!c || c === "0") return;
-
-        if (!idxIC3ByCuit.has(c)) idxIC3ByCuit.set(c, l);
-
-        // Si parece CUIT (11), DNI son los 8 del medio
-        if (c.length === 11) {
-          const dni = c.slice(2, 10);
-          if (!idxIC3ByDni.has(dni)) idxIC3ByDni.set(dni, l);
-        }
-
-        // Si el cuil guardado fuera DNI directo
-        if (c.length <= 8) {
-          if (!idxIC3ByDni.has(c)) idxIC3ByDni.set(c, l);
-        }
-      });
-
-    const pagosFix = resp.map((p) => {
-      if (p.origen !== "ic3") return p;
-
-      const yaTieneDatos =
-        !esVacio(p.fraccion) || !esVacio(p.manzana) || !esVacio(p.lote);
-      if (yaTieneDatos) return p;
-
-      const c = normDigits(p.cuil_cuit);
-
-      // 1) por CUIT
-      let loteReal = idxIC3ByCuit.get(c);
-
-      // 2) por DNI
-      if (!loteReal) {
-        const dni = c.length === 11 ? c.slice(2, 10) : c;
-        loteReal = idxIC3ByDni.get(dni);
+      if (nombreLote && !idxIC3ByNombre.has(nombreLote)) {
+        idxIC3ByNombre.set(nombreLote, l);
       }
 
-      // 3) por NOMBRE (fallback)
-      if (!loteReal) {
-        const nombrePago = normNombre(p.nombre);
-        loteReal = idxIC3ByNombre.get(nombrePago);
+      if (!c || c === "0") return;
+
+      if (!idxIC3ByCuit.has(c)) idxIC3ByCuit.set(c, l);
+
+      if (c.length === 11) {
+        const dni = c.slice(2, 10);
+        if (!idxIC3ByDni.has(dni)) idxIC3ByDni.set(dni, l);
       }
 
-      if (!loteReal) return p;
-
-      return {
-        ...p,
-        fraccion: esVacio(p.fraccion) ? loteReal.fraccion : p.fraccion,
-        manzana: esVacio(p.manzana) ? loteReal.manzana : p.manzana,
-        lote: esVacio(p.lote) ? loteReal.lote : p.lote,
-      };
+      if (c.length <= 8) {
+        if (!idxIC3ByDni.has(c)) idxIC3ByDni.set(c, l);
+      }
     });
 
-    setPagos(pagosFix);
-  };
+  const pagosFix = resp.map((p) => {
+    if (p.origen !== "ic3") return p;
 
-  useEffect(() => {
-    getPagos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const yaTieneDatos =
+      !esVacio(p.fraccion) || !esVacio(p.manzana) || !esVacio(p.lote);
+    if (yaTieneDatos) return p;
 
+    const c = normDigits(p.cuil_cuit);
+
+    let loteReal = idxIC3ByCuit.get(c);
+
+    if (!loteReal) {
+      const dni = c.length === 11 ? c.slice(2, 10) : c;
+      loteReal = idxIC3ByDni.get(dni);
+    }
+
+    if (!loteReal) {
+      const nombrePago = normNombre(p.nombre);
+      loteReal = idxIC3ByNombre.get(nombrePago);
+    }
+
+    if (!loteReal) return p;
+
+    return {
+      ...p,
+      fraccion: esVacio(p.fraccion) ? loteReal.fraccion : p.fraccion,
+      manzana: esVacio(p.manzana) ? loteReal.manzana : p.manzana,
+      lote: esVacio(p.lote) ? loteReal.lote : p.lote,
+    };
+  });
+
+  setPagos(pagosFix);
+};
+useEffect(() => {
+  const hoy = new Date();
+
+  const mesActual = hoy.getMonth() + 1;
+  const anioActual = hoy.getFullYear();
+
+  setDesdeMes(1);
+  setDesdeAnio(2026);
+
+  setHastaMes(mesActual);
+  setHastaAnio(anioActual);
+
+  setTipoFecha("cuota");
+
+
+  cargarInicial(1, 2026, mesActual, anioActual);
+}, []);
+useEffect(() => {
+  // NO cargar automático
+}, []);
+
+
+const cargarInicial = async (dMes, dAnio, hMes, hAnio) => {
+  const resp = await servicioPagos.todoslospagos({
+    desde_mes: dMes,
+    desde_anio: dAnio,
+    hasta_mes: hMes,
+    hasta_anio: hAnio,
+    tipo_fecha: "cuota",
+  });
+
+  setPagos(resp);
+};
   // =======================
   // OPCIONES DE FILTROS
   // =======================
@@ -145,18 +183,21 @@ const PagosInusuales = () => {
   // =======================
   // FILTRADO (ZONA POR ORIGEN)
   // =======================
-  const pagosFiltrados = pagos.filter((p) => {
-    const zonaOk =
-      filtroZona === "" ||
-      (filtroZona === "IC3" && p.origen === "ic3") ||
-      (filtroZona === "PIT" && p.origen === "normal");
+const pagosFiltrados = pagos.filter((p) => {
+  const zonaOk =
+    filtroZona === "" ||
+    (filtroZona === "IC3" && p.origen === "ic3") ||
+    (filtroZona === "PIT" && p.origen === "normal");
 
-    return (
-      (filtroMes === "" || Number(p.mes) === Number(filtroMes)) &&
-      (filtroAnio === "" || p.anio === filtroAnio) &&
-      zonaOk
-    );
-  });
+ const texto = filtroTexto.toLowerCase();
+
+const textoOk =
+  !filtroTexto ||
+  p.cuil_cuit?.toString().includes(texto) ||
+  p.nombre?.toLowerCase().includes(texto);
+
+  return zonaOk && textoOk;
+});
 
   // =======================
   // COLUMNAS (BASE)
@@ -524,37 +565,90 @@ const PagosInusuales = () => {
               spacing={1.25}
               sx={{ flexWrap: "wrap" }}
             >
-              <FormControl size="small" sx={{ minWidth: 140 }}>
-                <InputLabel>Mes</InputLabel>
-                <Select
-                  value={filtroMes}
-                  label="Mes"
-                  onChange={(e) => setFiltroMes(e.target.value)}
-                >
-                  <MenuItem value="">Todos</MenuItem>
-                  {meses.map((m) => (
-                    <MenuItem key={m} value={m}>
-                      {m}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
 
-              <FormControl size="small" sx={{ minWidth: 140 }}>
-                <InputLabel>Año</InputLabel>
-                <Select
-                  value={filtroAnio}
-                  label="Año"
-                  onChange={(e) => setFiltroAnio(e.target.value)}
-                >
-                  <MenuItem value="">Todos</MenuItem>
-                  {anios.map((a) => (
-                    <MenuItem key={a} value={a}>
-                      {a}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+
+
+<FormControl size="small" sx={{ minWidth: 160 }}>
+  <InputLabel>Tipo Fecha</InputLabel>
+  <Select
+    value={tipoFecha}
+    label="Tipo Fecha"
+    onChange={(e) => setTipoFecha(e.target.value)}
+  >
+    <MenuItem value="pago">Fecha de Pago</MenuItem>
+    <MenuItem value="cuota">Fecha de Cuota</MenuItem>
+  </Select>
+</FormControl>
+
+<FormControl size="small" sx={{ minWidth: 120 }}>
+  <InputLabel>Desde Mes</InputLabel>
+  <Select
+    value={desdeMes}
+    label="Desde Mes"
+    onChange={(e) => setDesdeMes(e.target.value)}
+  >
+    {[...Array(12)].map((_, i) => (
+      <MenuItem key={i + 1} value={i + 1}>
+        {i + 1}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<FormControl size="small" sx={{ minWidth: 120 }}>
+  <InputLabel>Desde Año</InputLabel>
+  <Select
+    value={desdeAnio}
+    label="Desde Año"
+    onChange={(e) => setDesdeAnio(e.target.value)}
+  >
+    {[2022, 2023, 2024, 2025, 2026].map((a) => (
+      <MenuItem key={a} value={a}>
+        {a}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+
+<FormControl size="small" sx={{ minWidth: 120 }}>
+  <InputLabel>Hasta Mes</InputLabel>
+  <Select
+    value={hastaMes}
+    label="Hasta Mes"
+    onChange={(e) => setHastaMes(e.target.value)}
+  >
+    {[...Array(12)].map((_, i) => (
+      <MenuItem key={i + 1} value={i + 1}>
+        {i + 1}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<FormControl size="small" sx={{ minWidth: 120 }}>
+  <InputLabel>Hasta Año</InputLabel>
+  <Select
+    value={hastaAnio}
+    label="Hasta Año"
+    onChange={(e) => setHastaAnio(e.target.value)}
+  >
+    {[2022, 2023, 2024, 2025, 2026].map((a) => (
+      <MenuItem key={a} value={a}>
+        {a}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+           
+<Button
+  variant="contained"
+  onClick={getPagos}
+>
+  Buscar
+</Button>
+              
 
               <FormControl size="small" sx={{ minWidth: 140 }}>
                 <InputLabel>Zona</InputLabel>
@@ -606,11 +700,14 @@ const PagosInusuales = () => {
 
               <Button
                 variant="outlined"
-                onClick={() => {
-                  setFiltroMes("");
-                  setFiltroAnio("");
-                  setFiltroZona("");
-                }}
+               onClick={() => {
+  setFiltroZona("");
+  setDesdeMes("");
+  setDesdeAnio("");
+  setHastaMes("");
+  setHastaAnio("");
+  setTipoFecha("pago");
+}}
                 sx={{
                   borderColor: alpha("#0b4f6c", 0.35),
                   color: "#0b4f6c",
@@ -625,6 +722,15 @@ const PagosInusuales = () => {
             </Stack>
           </Stack>
         </Paper>
+
+  <InputLabel>Buscar</InputLabel>
+  <TextField
+  size="small"
+  label="Buscar por Nombre o CUIT"
+  value={filtroTexto}
+  onChange={(e) => setFiltroTexto(e.target.value)}
+  sx={{ minWidth: 260 }}
+/>
 
         {/* TABLA */}
         <Paper
