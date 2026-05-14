@@ -602,7 +602,7 @@ const textoOk =
     label="Desde Año"
     onChange={(e) => setDesdeAnio(e.target.value)}
   >
-    {[2022, 2023, 2024, 2025, 2026].map((a) => (
+    {[2020, 2021, 2022, 2023, 2024, 2025, 2026].map((a) => (
       <MenuItem key={a} value={a}>
         {a}
       </MenuItem>
@@ -633,7 +633,7 @@ const textoOk =
     label="Hasta Año"
     onChange={(e) => setHastaAnio(e.target.value)}
   >
-    {[2022, 2023, 2024, 2025, 2026].map((a) => (
+    {[2020, 2021, 2022, 2023, 2024, 2025, 2026].map((a) => (
       <MenuItem key={a} value={a}>
         {a}
       </MenuItem>
