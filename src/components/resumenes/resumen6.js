@@ -16,7 +16,8 @@ export default function DashboardIngresos() {
 
   const [principalesIngresos, setPrincipalesIngresos] = useState([]);
   const [evolucionIngresos, setEvolucionIngresos] = useState([]);
-
+const [datosOriginales, setDatosOriginales] = useState([]);
+const [mesSeleccionado, setMesSeleccionado] = useState("todos");
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined"
       ? window.innerWidth
@@ -91,19 +92,13 @@ const traerDatos = async () => {
     const resp =
       await servicionivel3.traeringresos();
 
-    console.log(resp);
-
-    // =====================================================
-    // PRINCIPALES INGRESOS
-    // =====================================================
+    setDatosOriginales(
+      resp.movimientos || []
+    );
 
     setPrincipalesIngresos(
       resp.principalesIngresos || []
     );
-
-    // =====================================================
-    // EVOLUCION
-    // =====================================================
 
     if (modoVista === "mes") {
 
@@ -157,11 +152,131 @@ const traerDatos = async () => {
     }
 
   }, [evolucionIngresos, windowWidth]);
+useEffect(() => {
 
+  if (!datosOriginales.length) return;
+
+  // =====================================================
+  // TODOS
+  // =====================================================
+
+  if (mesSeleccionado === "todos") {
+
+    const conceptosMap = {};
+
+    datosOriginales.forEach((mov) => {
+
+      const concepto =
+        mov.concepto || "Sin concepto";
+
+      const monto =
+        Number(mov.credito) || 0;
+
+      if (!conceptosMap[concepto]) {
+
+        conceptosMap[concepto] = 0;
+
+      }
+
+      conceptosMap[concepto] += monto;
+
+    });
+
+    const ranking =
+      Object.entries(conceptosMap)
+        .map(([concepto, monto]) => ({
+          concepto,
+          monto
+        }))
+        .sort((a, b) => b.monto - a.monto)
+        .slice(0, 10);
+
+    setPrincipalesIngresos(ranking);
+
+    return;
+
+  }
+
+  // =====================================================
+  // FILTRADO POR MES
+  // =====================================================
+
+  const filtrados =
+    datosOriginales.filter((mov) => {
+
+      const fecha =
+        new Date(mov.fecha);
+
+      const mes =
+        String(fecha.getMonth() + 1)
+          .padStart(2, "0");
+
+      const anio =
+        fecha.getFullYear();
+
+      const key =
+        `${mes}-${anio}`;
+
+      return key === mesSeleccionado;
+
+    });
+
+  const conceptosMap = {};
+
+  filtrados.forEach((mov) => {
+
+    const concepto =
+      mov.concepto || "Sin concepto";
+
+    const monto =
+      Number(mov.credito) || 0;
+
+    if (!conceptosMap[concepto]) {
+
+      conceptosMap[concepto] = 0;
+
+    }
+
+    conceptosMap[concepto] += monto;
+
+  });
+
+  const ranking =
+    Object.entries(conceptosMap)
+      .map(([concepto, monto]) => ({
+        concepto,
+        monto
+      }))
+      .sort((a, b) => b.monto - a.monto)
+      .slice(0, 10);
+
+  setPrincipalesIngresos(ranking);
+
+}, [mesSeleccionado, datosOriginales]);
   // =====================================================
   // HELPERS
   // =====================================================
+const mesesDisponibles = [
+  ...new Set(
 
+    datosOriginales.map((mov) => {
+
+      const fecha =
+        new Date(mov.fecha);
+
+      const mes =
+        String(fecha.getMonth() + 1)
+          .padStart(2, "0");
+
+      const anio =
+        fecha.getFullYear();
+
+      return `${mes}-${anio}`;
+
+    })
+
+  )
+];
   function limpiarCanvas(canvas) {
 
     if (!canvas) return;
@@ -505,7 +620,41 @@ const traerDatos = async () => {
           title="Principales ingresos"
           subtitle="Ranking de conceptos con mayor impacto en los créditos."
         >
+<div
+  style={{
+    display: "flex",
+    justifyContent: "flex-end",
+    marginBottom: 12
+  }}
+>
 
+  <select
+    value={mesSeleccionado}
+    onChange={(e) =>
+      setMesSeleccionado(
+        e.target.value
+      )
+    }
+  >
+
+    <option value="todos">
+      Todos los meses
+    </option>
+
+    {mesesDisponibles.map((mes) => (
+
+      <option
+        key={mes}
+        value={mes}
+      >
+        {mes}
+      </option>
+
+    ))}
+
+  </select>
+
+</div>
           <div
             style={{
               ...styles.grid,
