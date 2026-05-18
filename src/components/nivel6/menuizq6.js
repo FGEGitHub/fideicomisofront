@@ -108,6 +108,11 @@ useEffect(() => {
       icon: <NfcIcon style={{ color: "#1a303e" }} />,
       path: '/nivel6/resumen2',
     },
+          {
+      text: 'Resumen 6 (Ingresos)',
+      icon: <DescriptionIcon style={{ color: "#1a303e" }} />,
+      path: '/nivel6/resumen6'
+    },
 
     {
       text: 'Resumen 3',

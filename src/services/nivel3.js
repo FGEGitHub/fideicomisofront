@@ -168,4 +168,16 @@ const borrarhistorial= async  () => {
        
   }
 
-export default {mofificarmconcepto, traermovimientos, subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};
+
+
+    const traeringresos= async  () => {
+  
+     const {data } =await axios.get(baseUrl+'traeringresos',config)
+ 
+     return data 
+ }  
+
+
+
+
+export default {traeringresos, mofificarmconcepto, traermovimientos, subirexceldemovimientos, enviarmovimiento,enviardatosnuevosalario,traerdatosdetarjetas,traerhistorialvalor,agregariccgral2,agregariccgral,traerUsuarios,asignarclave,traerhistorial,borrarhistorial,nuevoicc,valormetrocuadrado,registronivel3};

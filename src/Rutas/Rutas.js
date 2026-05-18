@@ -121,7 +121,7 @@ import Resumeness2 from '../Paginas/nivel6/resumen2'
 import Resumeness3 from '../Paginas/nivel6/resumen3'
 import Resumeness4 from '../Paginas/nivel6/resumen4'
 import Resumeness5 from '../Paginas/nivel6/resumen5'
-
+import Resumeness6 from '../Paginas/nivel6/resumen6'
 const Rutas = [
 	 <Navbar/> ,
 	 
@@ -210,10 +210,10 @@ const Rutas = [
 	{ path: '/nivel3/cuota/:id', element: <Niv3Cuota /> },
 	{ path: '/nivel3/cuotaic3/:id', element: <Niv3CuotaIc3 /> },
 	{ path: '/nivel3/extracto', element: <Extractp /> },
-{ path: '/nivel3/resumenes', element: <Resumenes /> },
-{ path: '/nivel3/resumenes2', element: <Resumenes2 /> },
-{ path: '/nivel3/resumenes3', element: <Resumenes3 /> },
-{ path: '/nivel3/carga1', element: <Carga1 /> },
+	{ path: '/nivel3/resumenes', element: <Resumenes /> },
+	{ path: '/nivel3/resumenes2', element: <Resumenes2 /> },
+	{ path: '/nivel3/resumenes3', element: <Resumenes3 /> },
+	{ path: '/nivel3/carga1', element: <Carga1 /> },
 
 
 
@@ -223,6 +223,7 @@ const Rutas = [
 { path: '/nivel6/resumen3', element: <Resumeness3 /> },
 { path: '/nivel6/resumen4', element: <Resumeness4 /> },
 { path: '/nivel6/resumen5', element: <Resumeness5 /> },
+{ path: '/nivel6/resumen6', element: <Resumeness6 /> },
 
 { path: '/nivel6/carga', element: <Cargaa1 /> },
 
