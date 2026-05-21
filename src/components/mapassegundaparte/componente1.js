@@ -9,6 +9,7 @@ import L from "leaflet";
 import serviciolotes from "../../services/lotes";
 import { centerOfMass, pointOnFeature, booleanPointInPolygon } from "@turf/turf";
 import TablaReferencias from "./tablaReferencias";
+import TablaReferencias2 from "./TablaReferencias2.js";
 
 const MapaConCapas = () => {
     //  Helper: inyecta properties.id si no existe (para area1..4 y cualquier capa que venga sin id)
@@ -69,11 +70,15 @@ const MapaConCapas = () => {
         area4: false,
         area5: false,
         area6: false,
-
+        invicoresidencial: false,
         ic3: false,
         ic4: false,
         ic42: false,
-
+        restante: false,
+        zonapirayui: false,
+        Mensura30922U: false,
+        mensura31548Unuevo: false,
+        ib5: false,
         rutas1: false,
     });
 
@@ -84,6 +89,39 @@ const MapaConCapas = () => {
         planespecial4: false,
         planespecial5: false,
     });
+
+const zonasConfig = [
+  { key: "ic3", label: "IC3" },
+  { key: "ic4", label: "IC4" },
+  { key: "ic42", label: "IC4.2" },
+  { key: "area5", label: "IB4" },
+  { key: "ib5", label: "IB5" },
+  { key: "area6", label: "IB6" },
+  { key: "invicoresidencial", label: "Invico - Residencial" },
+  { key: "area1", label: "Zona Hípico" },
+  { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
+  { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
+  { key: "mensura31548Unuevo", label: "Mensura 31548-U" },
+  { key: "Mensura30922U", label: "Mensura 30922-U" },
+  { key: "zonapirayui", label: "Zona Pirayui" },
+  { key: "area3", label: "Sin definir" },
+];
+
+const clavesZonas = zonasConfig.map((zona) => zona.key);
+
+const todasLasZonasActivas = clavesZonas.every((key) => !!capasActivas[key]);
+
+const toggleTodasLasZonas = () => {
+  const nuevoEstado = !todasLasZonasActivas;
+
+  setCapasActivas((prev) => ({
+    ...prev,
+    ...clavesZonas.reduce((acc, key) => {
+      acc[key] = nuevoEstado;
+      return acc;
+    }, {}),
+  }));
+};
 
     const opcionesSubclasificacion = [
         "C1-Corredor de densidad 1",
@@ -221,13 +259,14 @@ const MapaConCapas = () => {
     const [subclasificacion, setSubclasificacion] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [verReferencias, setVerReferencias] = useState(true);
-    const [verReferenciasTabla, setVerReferenciasTabla] = useState(true);
+    const [verReferenciasTabla, setVerReferenciasTabla] = useState(false);
+    const [verReferenciasTabla2, setVerReferenciasTabla2] = useState(true);
     const [datosZonaSeleccionada, setDatosZonaSeleccionada] = useState(null);
     const [judicializado, setJudicializado] = useState("");
     const [adrema, setAdrema] = useState("");
     const [privado, setPrivado] = useState("");
     const [superficie, setSuperficie] = useState("");
-    const [nombre, setNombre] = useState("");
+    const [tipoMapa, setTipoMapa] = useState("satelite");
     const [mensura, setMensura] = useState("");
     const [subCapasSur, setSubCapasSur] = useState({
         PIT: false,
@@ -235,7 +274,7 @@ const MapaConCapas = () => {
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
     useEffect(() => {
@@ -348,6 +387,45 @@ const MapaConCapas = () => {
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "ic42");
                 setGeojsonData((prev) => ({ ...prev, ic42: normalizado }));
+            })
+            .catch(console.error);
+        fetch("/mensura31548Unuevo.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "mensura31548Unuevo");
+                setGeojsonData((prev) => ({ ...prev, mensura31548Unuevo: normalizado }));
+            })
+            .catch(console.error);
+
+        fetch("/ib5.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "ib5");
+                setGeojsonData((prev) => ({ ...prev, ib5: normalizado }));
+            })
+            .catch(console.error);
+
+        fetch("/invicoresidencial.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "invicoresidencial");
+                setGeojsonData((prev) => ({ ...prev, invicoresidencial: normalizado }));
+            })
+            .catch(console.error);
+
+
+        fetch("/Mensura30922U.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "Mensura30922U");
+                setGeojsonData((prev) => ({ ...prev, "Mensura30922U": normalizado }));
+            })
+            .catch(console.error);
+        fetch("/zonapirayui.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "zonapirayui");
+                setGeojsonData((prev) => ({ ...prev, "zonapirayui": normalizado }));
             })
             .catch(console.error);
         fetch("/rutas1.geojson")
@@ -463,6 +541,27 @@ const MapaConCapas = () => {
     const onEachFeature = (feature, layer) => {
         layer.on({ click: handleFeatureClick });
     };
+    const MapResizer = () => {
+        const map = useMap();
+
+        useEffect(() => {
+            const handleResize = () => {
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 150);
+            };
+
+            handleResize();
+            window.addEventListener("resize", handleResize);
+
+            return () => {
+                window.removeEventListener("resize", handleResize);
+            };
+        }, [map]);
+
+        return null;
+    };
+
 
     const toggleCapaPrincipal = (nombre) => {
         const nuevoEstado = !capasActivas[nombre];
@@ -634,7 +733,7 @@ const MapaConCapas = () => {
 
         const poligono = buscarPoligonoDB(poligonosGuardados, id, nombreCapa);
 
-        const pesoBorde = ["ic3", "ic4", "ic42"].includes(nombreCapa) ? 3 : 2;
+        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "restante"].includes(nombreCapa) ? 3 : 2;
 
         // SIN datos en base
         if (!poligono) {
@@ -689,7 +788,16 @@ const MapaConCapas = () => {
                 <div className="grupo-capas">
 
                     <div className="grupo-titulo">VISUALIZACIÓN</div>
-
+                    <div className="capa-item">
+                        <button
+                            className="btn-tipo-mapa"
+                            onClick={() =>
+                                setTipoMapa(tipoMapa === "normal" ? "satelite" : "normal")
+                            }
+                        >
+                            {tipoMapa === "normal" ? "Ver Satélite" : "Ver Mapa"}
+                        </button>
+                    </div>
                     <div className="capa-item">
                         <label>
 
@@ -699,8 +807,31 @@ const MapaConCapas = () => {
                                 onChange={() => setVerPublicoPrivado(p => !p)}
                             />
 
-                            <strong>Disponibles / No disponibles</strong>
+                            <strong>Ver Disponibilidad</strong>
 
+                        </label>
+                    </div>
+
+
+
+                    <div className="capa-item">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={verReferenciasTabla2}
+                                onChange={() => setVerReferenciasTabla2((p) => !p)}
+                            />
+                            <strong>Ver referencias de disponibilidad</strong>
+                        </label>
+                    </div>
+                    <div className="capa-item">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={verReferenciasTabla}
+                                onChange={() => setVerReferenciasTabla((p) => !p)}
+                            />
+                            <strong>Ver referencias de zonificación</strong>
                         </label>
                     </div>
 
@@ -712,41 +843,33 @@ const MapaConCapas = () => {
 
                 {/* ZONAS */}
 
-                <div className="grupo-capas">
+               <div className="grupo-capas">
+  <div className="grupo-titulo">ZONAS</div>
 
-                    <div className="grupo-titulo">ZONAS</div>
+  <div className="capa-item capa-item-todas-zonas">
+    <label>
+      <input
+        type="checkbox"
+        checked={todasLasZonasActivas}
+        onChange={toggleTodasLasZonas}
+      />
+      <strong>Todas</strong>
+    </label>
+  </div>
 
-                    {[
-                        { key: "ic3", label: "IC3" },
-                        { key: "ic4", label: "IC4" },
-                        { key: "ic42", label: "IC42" },
-                        { key: "area5", label: "IB4" },
-                        { key: "area6", label: "IB6" },
-                        { key: "area1", label: "Zona Hípico" },
-                        { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
-                        { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
-                        { key: "area3", label: "Sin definir" }
-                    ].map(({ key, label }) => (
-
-                        <div className="capa-item" key={key}>
-
-                            <label>
-
-                                <input
-                                    type="checkbox"
-                                    checked={!!capasActivas[key]}
-                                    onChange={() => toggleCapaPrincipal(key)}
-                                />
-
-                                {label}
-
-                            </label>
-
-                        </div>
-
-                    ))}
-
-                </div>
+  {zonasConfig.map(({ key, label }) => (
+    <div className="capa-item" key={key}>
+      <label>
+        <input
+          type="checkbox"
+          checked={!!capasActivas[key]}
+          onChange={() => toggleCapaPrincipal(key)}
+        />
+        {label}
+      </label>
+    </div>
+  ))}
+</div>
 
 
                 {/* PLAN ESPECIAL */}
@@ -967,300 +1090,381 @@ const MapaConCapas = () => {
                 </div>
 
 
-                <div className="capa-item">
-
-                    <label>
-
-                        <input
-                            type="checkbox"
-                            checked={verReferenciasTabla}
-                            onChange={() => setVerReferenciasTabla(p => !p)}
-                        />
-
-                        Ver referencias en tabla
-
-                    </label>
-
-                </div>
-
             </div>
 
-            {verReferenciasTabla && (
-                <div className="tabla-referencias-flotante">
-                    <TablaReferencias />
+            {(verReferenciasTabla || verReferenciasTabla2) && (
+                <div className="tabla-referencias-flotante tabla-referencias-doble">
+                    {verReferenciasTabla && <TablaReferencias />}
+                    {verReferenciasTabla2 && <TablaReferencias2 />}
                 </div>
             )}
 
-            <MapContainer center={[-27.5298, -58.8044]} zoom={14} style={{ height: "100vh", width: "100%" }}><ZoomWatcher />
+            <div className="mapa-area">
+                <MapContainer
+                    center={[-27.5298, -58.8044]}
+                    zoom={14}
+                    className="mapa-leaflet"
+                >
+                    <ZoomWatcher />
+                    <MapResizer />
+                    <EtiquetasPoligonos
+                        geojsonData={geojsonData}
+                        poligonosGuardados={poligonosGuardados}
+                        capasActivas={capasActivas}
+                        subCapasActivas={subCapasActivas}
+                        subCapasSur={subCapasSur}
+                        mostrarEtiquetas={verReferencias && zoomActual >= 15}
 
-                <EtiquetasPoligonos
-                    geojsonData={geojsonData}
-                    poligonosGuardados={poligonosGuardados}
-                    capasActivas={capasActivas}
-                    subCapasActivas={subCapasActivas}
-                    subCapasSur={subCapasSur}
-                    mostrarEtiquetas={verReferencias && zoomActual >= 15}
-
-                    zoomActual={zoomActual}
-                />
-
-                <InstanciaDelMapa setMapa={setMapa} />
-
-                <TileLayer
-                    attribution='&copy; <a href="https://fdsantacatalina.ciudaddecorrientes.gov.ar/"> Fideicomiso Santa Catalina</a> Sistemas'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-
-
-
-                {/* Manzanas */}
-                {capasActivas.Manzanas && geojsonData.Manzanas && (
-                    <GeoJSON
-                        key="Manzanas"
-                        data={geojsonData.Manzanas}
-                        style={(feature) => {
-                            const id = feature?.properties?.id;
-
-                            // ✅ Excepción especial SIEMPRE primero
-                            if (String(id) === "5347") {
-                                return {
-                                    fillColor: "yellow",
-                                    color: "red",
-                                    weight: 3,
-                                    opacity: 1,
-                                    fillOpacity: 1,
-                                };
-                            }
-
-                            // 🔄 Resto de polígonos usan la función general
-                            return getStylePoligono(feature, "Manzanas");
-                        }}
-                        onEachFeature={onEachFeature}
+                        zoomActual={zoomActual}
                     />
-                )}
 
-                {/* Plan Especial */}
-                {Object.entries(subCapasActivas).map(
-                    ([nombre, activa]) =>
-                        activa &&
-                        geojsonData[nombre] && (
-                            <GeoJSON
-                                key={nombre}
-                                data={geojsonData[nombre]}
-                                style={(feature) => {
-                                    const id = feature.properties?.id;
+                    <InstanciaDelMapa setMapa={setMapa} />
 
-                                    const poligono = poligonosGuardados.find(
-                                        (p) => String(p.id_mapa) === String(id)
-                                    );
+                    <TileLayer
+                        attribution="Map data"
+                        url={
+                            tipoMapa === "normal"
+                                ? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                : "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
 
-                                    let fillColor = "white";
-                                    let fillOpacity = 0.2;
+                        }
+                    />
 
-                                    if (poligono) {
-                                        console.log(poligono.privado)
-                                        // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
-                                        if (verPublicoPrivado) {
-                                            if (poligono.privado == "privado") {
-                                                fillColor = "#d32f2f"; // rojo
-                                            } else if (poligono.privado == "publico") {
-                                                fillColor = "#2e7d32"; // verde
-                                            } else {
-                                                fillColor = "#9e9e9e"; // gris si no tiene dato
+
+
+                    {/* Manzanas */}
+                    {capasActivas.Manzanas && geojsonData.Manzanas && (
+                        <GeoJSON
+                            key="Manzanas"
+                            data={geojsonData.Manzanas}
+                            style={(feature) => {
+                                const id = feature?.properties?.id;
+
+                                // ✅ Excepción especial SIEMPRE primero
+                                if (String(id) === "5347") {
+                                    return {
+                                        fillColor: "yellow",
+                                        color: "red",
+                                        weight: 3,
+                                        opacity: 1,
+                                        fillOpacity: 1,
+                                    };
+                                }
+
+                                // 🔄 Resto de polígonos usan la función general
+                                return getStylePoligono(feature, "Manzanas");
+                            }}
+                            onEachFeature={onEachFeature}
+                        />
+                    )}
+
+                    {/* Plan Especial */}
+                    {Object.entries(subCapasActivas).map(
+                        ([nombre, activa]) =>
+                            activa &&
+                            geojsonData[nombre] && (
+                                <GeoJSON
+                                    key={nombre}
+                                    data={geojsonData[nombre]}
+                                    style={(feature) => {
+                                        const id = feature.properties?.id;
+
+                                        const poligono = poligonosGuardados.find(
+                                            (p) => String(p.id_mapa) === String(id)
+                                        );
+
+                                        let fillColor = "white";
+                                        let fillOpacity = 0.2;
+
+                                        if (poligono) {
+                                            console.log(poligono.privado)
+                                            // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
+                                            if (verPublicoPrivado) {
+                                                if (poligono.privado == "privado") {
+                                                    fillColor = "#d32f2f"; // rojo
+                                                } else if (poligono.privado == "publico") {
+                                                    fillColor = "#2e7d32"; // verde
+                                                } else {
+                                                    fillColor = "#9e9e9e"; // gris si no tiene dato
+                                                }
+
+                                                fillOpacity = 0.85;
                                             }
 
-                                            fillOpacity = 0.85;
+                                            // 🎨 MODO NORMAL (como antes)
+                                            else {
+                                                const sub = poligono.subclasificacion;
+                                                fillColor = coloresPorSubclasificacion[sub] || "gray";
+                                                fillOpacity = 0.8;
+                                            }
                                         }
 
-                                        // 🎨 MODO NORMAL (como antes)
-                                        else {
-                                            const sub = poligono.subclasificacion;
-                                            fillColor = coloresPorSubclasificacion[sub] || "gray";
-                                            fillOpacity = 0.8;
-                                        }
-                                    }
+                                        return {
+                                            fillColor,
+                                            weight: 1,
+                                            opacity: 0.5,
+                                            color: "black",
+                                            fillOpacity,
+                                        };
+                                    }}
+                                    onEachFeature={onEachFeature}
+                                />
+                            )
+                    )}
 
-                                    return {
-                                        fillColor,
-                                        weight: 1,
-                                        opacity: 0.5,
-                                        color: "black",
-                                        fillOpacity,
-                                    };
-                                }}
-                                onEachFeature={onEachFeature}
-                            />
-                        )
-                )}
-
-                {/* Barrios / Calles */}
-                {capasActivas.Barrios && geojsonData.Barrios && (
-                    <GeoJSON
-                        key="Barrios"
-                        data={geojsonData.Barrios}
-                        style={() => ({
-                            fillColor: "none",
-                            weight: 1,
-                            opacity: 1,
-                            color: "black",
-                            fillOpacity: 0.5,
-                        })}
-                        onEachFeature={onEachFeature}
-                    />
-                )}
-
-                {/* Zonificación Sta Catalina */}
-                {capasActivas["Zonificación Sta Catalina"] && geojsonData["Zonificación Sta Catalina"] && (
-                    <GeoJSON
-                        key="Zonificación Sta Catalina"
-                        data={geojsonData["Zonificación Sta Catalina"]}
-                        style={(feature) => {
-                            const id = feature.properties?.id;
-
-                            const poligono = poligonosGuardados.find(
-                                (p) => String(p.id_mapa) === String(id)
-                            );
-
-                            let fillColor = "white";
-                            let fillOpacity = 0.2;
-                            let borderColor = "black";
-                            let borderOpacity = 0.5;
-
-                            if (poligono) {
-                                if (verPublicoPrivado) {
-                                    let colorBase = "#9e9e9e";
-
-                                    if (poligono.privado === "privado") colorBase = "#d32f2f";
-                                    if (poligono.privado === "publico") colorBase = "#2e7d32";
-
-                                    fillColor = colorBase;
-                                    borderColor = colorBase;
-                                    fillOpacity = 0.9;
-                                    borderOpacity = 1;
-                                } else {
-                                    const sub = poligono.subclasificacion;
-                                    fillColor = coloresPorSubclasificacion[sub] || "gray";
-                                    fillOpacity = 0.95;
-                                }
-                            }
-
-                            return {
-                                fillColor,
-                                color: borderColor,
-                                weight: 1,
-                                opacity: borderOpacity,
-                                fillOpacity,
-                            };
-                        }}
-                        onEachFeature={onEachFeature}
-                    />
-                )}
-
-                {/* ZRU Predios La Caja */}
-                {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
-                    <GeoJSON
-                        key="ZRU Predios La Caja"
-                        data={geojsonData["ZRU Predios La Caja"]}
-                        style={(feature) => {
-                            const id = feature.properties?.id;
-                            const existeEnBase = idsDesdeBase.includes(id);
-
-                            return {
-                                fillColor: existeEnBase ? "red" : "blue",
+                    {/* Barrios / Calles */}
+                    {capasActivas.Barrios && geojsonData.Barrios && (
+                        <GeoJSON
+                            key="Barrios"
+                            data={geojsonData.Barrios}
+                            style={() => ({
+                                fillColor: "none",
                                 weight: 1,
                                 opacity: 1,
                                 color: "black",
                                 fillOpacity: 0.5,
-                            };
-                        }}
-                        onEachFeature={onEachFeature}
-                    />
-                )}
+                            })}
+                            onEachFeature={onEachFeature}
+                        />
+                    )}
 
-                {/* Sección Sur (subcapas) */}
-                {Object.entries(subCapasSur).map(
-                    ([nombre, activa]) =>
-                        activa &&
-                        geojsonData[nombre] && (
-                            <GeoJSON
-                                key={nombre}
-                                data={geojsonData[nombre]}
-                                style={(feature) => {
-                                    const id = feature.properties?.id;
+                    {/* Zonificación Sta Catalina */}
+                    {capasActivas["Zonificación Sta Catalina"] && geojsonData["Zonificación Sta Catalina"] && (
+                        <GeoJSON
+                            key="Zonificación Sta Catalina"
+                            data={geojsonData["Zonificación Sta Catalina"]}
+                            style={(feature) => {
+                                const id = feature.properties?.id;
 
-                                    const poligono = poligonosGuardados.find(
-                                        (p) => String(p.id_mapa) === String(id)
-                                    );
+                                const poligono = poligonosGuardados.find(
+                                    (p) => String(p.id_mapa) === String(id)
+                                );
 
-                                    let fillColor = "white";
-                                    let fillOpacity = 0.2;
+                                let fillColor = "#d32f2f"; // 🔴 rojo por defecto
+                                let fillOpacity = 0.9;
+                                let borderColor = "black";
+                                let borderOpacity = 1;
 
-                                    if (poligono) {
+                                if (verPublicoPrivado) {
 
-                                        // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
-                                        if (verPublicoPrivado) {
-
-                                            if (poligono.privado === "No disponible") {
-                                                fillColor = "#d32f2f";
-                                            } else if (poligono.privado === "Disponible") {
-                                                fillColor = "#2e7d32";
-                                            } else {
-                                                fillColor = "#9e9e9e";
-                                            }
-
-                                            fillOpacity = 0.85;
-                                        }
-
-                                        // 🎨 MODO NORMAL (como lo tenías)
-                                        else {
-                                            const sub = poligono.subclasificacion;
-                                            fillColor = coloresPorSubclasificacion[sub] || "gray";
-                                            fillOpacity = 0.8; // ← tu opacidad original
-                                        }
+                                    // 🟢 SOLO SI EXISTE Y ES PUBLICO
+                                    if (poligono && poligono.privado === "publico") {
+                                        fillColor = "#2e7d32";
                                     }
 
-                                    return {
-                                        fillColor,
-                                        weight: 1,
-                                        opacity: 0.5,
-                                        color: "black",
-                                        fillOpacity,
-                                    };
-                                }}
-                                onEachFeature={onEachFeature}
-                            />
-                        )
-                )}
+                                    // 🔴 si no existe o es privado queda rojo
+                                }
+                                else {
+                                    if (poligono) {
+                                        const sub = poligono.subclasificacion;
+                                        fillColor = coloresPorSubclasificacion[sub] || "gray";
+                                        fillOpacity = 0.95;
+                                    }
+                                }
 
+                                return {
+                                    fillColor,
+                                    color: borderColor,
+                                    weight: 1,
+                                    opacity: borderOpacity,
+                                    fillOpacity,
+                                };
+                            }}
+                            onEachFeature={onEachFeature}
+                        />
+                    )}
 
+                    {/* ZRU Predios La Caja */}
+                    {capasActivas["ZRU Predios La Caja"] && geojsonData["ZRU Predios La Caja"] && (
+                        <GeoJSON
+                            key="ZRU Predios La Caja"
+                            data={geojsonData["ZRU Predios La Caja"]}
+                            style={(feature) => {
+                                const id = feature.properties?.id;
+                                const existeEnBase = idsDesdeBase.includes(id);
 
-                {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42"].map(
-                    (nombre) =>
-                        capasActivas[nombre] &&
-                        geojsonData[nombre] && (
-                            <GeoJSON
-                                key={nombre}
-                                data={geojsonData[nombre]}
-                                style={(feature) => {
-                                    if (nombre === "rutas1") {
+                                return {
+                                    fillColor: existeEnBase ? "red" : "blue",
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black",
+                                    fillOpacity: 0.5,
+                                };
+                            }}
+                            onEachFeature={onEachFeature}
+                        />
+                    )}
+
+                    {/* Sección Sur (subcapas) */}
+                    {Object.entries(subCapasSur).map(
+                        ([nombre, activa]) =>
+                            activa &&
+                            geojsonData[nombre] && (
+                                <GeoJSON
+                                    key={nombre}
+                                    data={geojsonData[nombre]}
+                                    style={(feature) => {
+                                        const id = feature.properties?.id;
+
+                                        const poligono = poligonosGuardados.find(
+                                            (p) => String(p.id_mapa) === String(id)
+                                        );
+
+                                        let fillColor = "white";
+                                        let fillOpacity = 0.2;
+
+                                        if (poligono) {
+
+                                            // 🔴🟢 SI EL TOGGLE ESTÁ ACTIVADO
+                                            if (verPublicoPrivado) {
+
+                                                if (poligono.privado === "No disponible") {
+                                                    fillColor = "#d32f2f";
+                                                } else if (poligono.privado === "Disponible") {
+                                                    fillColor = "#2e7d32";
+                                                } else {
+                                                    fillColor = "#9e9e9e";
+                                                }
+
+                                                fillOpacity = 0.85;
+                                            }
+
+                                            // 🎨 MODO NORMAL (como lo tenías)
+                                            else {
+                                                const sub = poligono.subclasificacion;
+                                                fillColor = coloresPorSubclasificacion[sub] || "gray";
+                                                fillOpacity = 0.8; // ← tu opacidad original
+                                            }
+                                        }
+
                                         return {
+                                            fillColor,
+                                            weight: 1,
+                                            opacity: 0.5,
+                                            color: "black",
+                                            fillOpacity,
+                                        };
+                                    }}
+                                    onEachFeature={onEachFeature}
+                                />
+                            )
+                    )}
+
+                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "Mensura30922U", "zonapirayui"].map(
+                        (nombre) => {
+                            if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
+
+                            // 🔴 CASO ESPECIAL rutas
+                            if (nombre === "rutas1") {
+                                return (
+                                    <GeoJSON
+                                        key={nombre}
+                                        data={geojsonData[nombre]}
+                                        style={{
                                             fillColor: "red",
                                             fillOpacity: 0.15,
                                             color: "red",
                                             weight: 2,
                                             opacity: 1,
+                                        }}
+                                        onEachFeature={onEachFeature}
+                                    />
+                                );
+                            }
+
+                            return (
+                                <GeoJSON
+                                    key={nombre}
+                                    data={geojsonData[nombre]}
+                                    style={(feature) => {
+
+                                        // ⚪ si verPublicoPrivado es false todo blanco
+                                        if (!verPublicoPrivado) {
+                                            return {
+                                                fillColor: "white",
+                                                fillOpacity: 1,
+                                                color: "black",
+                                                weight: 1,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        const id = feature?.properties?.id;
+
+                                        const poligono = poligonosGuardados.find(
+                                            (p) => String(p.id_mapa) === String(id)
+                                        );
+
+                                        // 🔴 no existe
+                                        if (!poligono) {
+                                            return {
+                                                fillColor: "#d32f2f",
+                                                fillOpacity: 0.85,
+                                                color: "red",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        // 🔵 reserva municipal
+                                        if (poligono.privado === "reserva municipal") {
+                                            return {
+                                                fillColor: "#f38c26",
+                                                fillOpacity: 0.9,
+                                                color: "#c26a06",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        // ⚫ equipamiento publico
+                                        if (poligono.privado === "equipamiento publico") {
+                                            return {
+                                                fillColor: "#faf63bea",
+                                                fillOpacity: 0.9,
+                                                color: "#beb208",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        // 🔴 privado
+                                        if (poligono.privado === "privado") {
+                                            return {
+                                                fillColor: "#f04e4e",
+                                                fillOpacity: 0.9,
+                                                color: "red",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        // 🟢 publico
+                                        if (poligono.privado === "publico") {
+                                            return {
+                                                fillColor: "#61e268",
+                                                fillOpacity: 0.9,
+                                                color: "green",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        return {
+                                            fillColor: "#9e9e9e",
+                                            fillOpacity: 0.9,
+                                            color: "black",
+                                            weight: 3,
+                                            opacity: 1,
                                         };
-                                    }
-
-                                    return getStyleAreaEspecial(feature, nombre);
-                                }}
-                                onEachFeature={onEachFeature}
-                            />
-                        )
-                )}
-
-
-            </MapContainer>
+                                    }}
+                                    onEachFeature={onEachFeature}
+                                />
+                            );
+                        }
+                    )}
+                </MapContainer>
+            </div>
 
 
             {modalDetalleAbierto && (
@@ -1423,15 +1627,29 @@ const MapaConCapas = () => {
                                 </div>
                                 <div className="sc-field">
                                     <label className="sc-label">Disponible/No disponible</label>
-                                    <select className="sc-select" value={privado} onChange={(e) => setPrivado(e.target.value)}>
+                                    <select
+                                        className="sc-select"
+                                        value={privado}
+                                        onChange={(e) => setPrivado(e.target.value)}
+                                    >
                                         <option value="">Selecciona una opción</option>
 
-                                        <option value={"publico"}>
+                                        <option value="publico">
                                             Disponible
                                         </option>
-                                        <option value={"privado"}>
+
+                                        <option value="privado">
                                             No disponible
                                         </option>
+
+                                        <option value="reserva municipal">
+                                            Reserva municipal
+                                        </option>
+
+                                        <option value="equipamiento publico">
+                                            Equipamiento público
+                                        </option>
+
                                     </select>
                                 </div>
                                 <div className="sc-field">
