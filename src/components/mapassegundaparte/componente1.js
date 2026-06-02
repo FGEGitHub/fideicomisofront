@@ -79,6 +79,7 @@ const MapaConCapas = () => {
         Mensura30922U: false,
         mensura31548Unuevo: false,
         ib5: false,
+        ib2: false,
         rutas1: false,
     });
 
@@ -96,6 +97,7 @@ const zonasConfig = [
   { key: "ic42", label: "IC4.2" },
   { key: "area5", label: "IB4" },
   { key: "ib5", label: "IB5" },
+  { key: "ib2", label: "IB2" },
   { key: "area6", label: "IB6" },
   { key: "invicoresidencial", label: "Invico - Residencial" },
   { key: "area1", label: "Zona Hípico" },
@@ -274,7 +276,7 @@ const toggleTodasLasZonas = () => {
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5","ib2", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
 
@@ -417,7 +419,13 @@ const toggleTodasLasZonas = () => {
                 setGeojsonData((prev) => ({ ...prev, ib5: normalizado }));
             })
             .catch(console.error);
-
+   fetch("/ib2.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "ib2");
+                setGeojsonData((prev) => ({ ...prev, ib2: normalizado }));
+            })
+            .catch(console.error);
         fetch("/invicoresidencial.geojson")
             .then((r) => r.json())
             .then((data) => {
@@ -1380,7 +1388,7 @@ useEffect(() => {
                             )
                     )}
 
-                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "Mensura30922U", "zonapirayui"].map(
+                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "ib2", "Mensura30922U", "zonapirayui"].map(
                         (nombre) => {
                             if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
