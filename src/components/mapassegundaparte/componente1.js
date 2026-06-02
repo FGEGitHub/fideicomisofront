@@ -277,6 +277,19 @@ const toggleTodasLasZonas = () => {
     const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
+
+
+
+    fetch("/juicios-poligonos.geojson")
+    .then((r) => r.json())
+    .then((data) => {
+        const normalizado = normalizarGeojsonConIds(data, "judicializados");
+        setGeojsonData((prev) => ({
+            ...prev,
+            judicializados: normalizado,
+        }));
+    })
+    .catch(console.error);
     useEffect(() => {
         serviciolotes
             .poligonosguardados()
@@ -771,7 +784,14 @@ const toggleTodasLasZonas = () => {
             opacity: 1,
         };
     };
+useEffect(() => {
+    if (!mapa) return;
 
+    if (!mapa.getPane("judicializadosPane")) {
+        const pane = mapa.createPane("judicializadosPane");
+        pane.style.zIndex = 1000;
+    }
+}, [mapa]);
     return (
         <div className="mapa-contenedor">
             <div className="panel-lateral">
@@ -798,6 +818,16 @@ const toggleTodasLasZonas = () => {
                             {tipoMapa === "normal" ? "Ver Satélite" : "Ver Mapa"}
                         </button>
                     </div>
+                    <div className="capa-item">
+    <label>
+        <input
+            type="checkbox"
+            checked={!!capasActivas.judicializados}
+            onChange={() => toggleCapaPrincipal("judicializados")}
+        />
+        Judicializados
+    </label>
+</div>
                     <div className="capa-item">
                         <label>
 
@@ -1463,6 +1493,21 @@ const toggleTodasLasZonas = () => {
                             );
                         }
                     )}
+                   {capasActivas.judicializados &&
+    geojsonData.judicializados && (
+        <GeoJSON
+            key="judicializados"
+            pane="judicializadosPane"
+            data={geojsonData.judicializados}
+            style={{
+                fillOpacity: 0,
+                fillColor: "transparent",
+                color: "#ffff00",
+                weight: 6,
+                opacity: 1,
+            }}
+        />
+)}
                 </MapContainer>
             </div>
 
