@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Ic3 from "./soloic3"
 import PIT from "./soloparque"
+
 import Usuar from "../mapassegundaparte/componente1"
+import MApaterceraparte from "../mapassegundaparte/nuevocomponente"
+
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
@@ -51,6 +54,10 @@ const Lotes = () => {
   <option value={3} style={{ fontSize: "1.2rem" }}>Uso de suelo</option>
   <option value={1} style={{ fontSize: "1.2rem" }}>IC3</option>
   <option value={2} style={{ fontSize: "1.2rem" }}>Parque</option>
+  <option value={4} style={{ fontSize: "1.2rem" }}>Nuevo</option>
+
+  MApaterceraparte
+  
 </NativeSelect>
 { mapa === "1" ? <><Ic3/></>:<>
 
@@ -59,12 +66,20 @@ const Lotes = () => {
 <br/><br/>
 { mapa === "3" ? <><Usuar/></>:<>
 <br/>
+Componetne2
 Sin seleccion
 
 
 
 </>}
 
+{ mapa === "4" ? <><MApaterceraparte/></>:<>
+<br/>
+
+
+
+
+</>}
 
 
 </>}
