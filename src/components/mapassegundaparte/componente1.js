@@ -84,6 +84,7 @@ const MapaConCapas = () => {
         "unidad-ejecutora1": false,
         "unidad-ejecutora2": false,
         "unidad-ejecutora3": false,
+        "unidad-ejecutora1y2": false,
         zona_municipal: false,
         rutas1: false,
     });
@@ -107,6 +108,7 @@ const zonasConfig = [
   { key: "unidad-ejecutora1", label: "Unidad Ejecutora 1" },
   { key: "unidad-ejecutora2", label: "Unidad Ejecutora 2" },
   { key: "unidad-ejecutora3", label: "Unidad Ejecutora 3" },
+    { key: "unidad-ejecutora1y2", label: "Unidad Ejecutora 1 y 2" },
 
   { key: "area6", label: "IB6" },
     { key: "zona_municipal", label: "Zona Municipal" },
@@ -287,7 +289,7 @@ const toggleTodasLasZonas = () => {
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5","ib2","ib3", "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3", "zona_municipal", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5","ib2","ib3", "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3","unidad-ejecutora1y2", "zona_municipal", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
 
@@ -460,6 +462,12 @@ const toggleTodasLasZonas = () => {
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "unidad-ejecutora3");
                 setGeojsonData((prev) => ({ ...prev, "unidad-ejecutora3": normalizado }));
+            })
+                  fetch("/unidad-ejecutora1y2.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "unidad-ejecutora1y2");
+                setGeojsonData((prev) => ({ ...prev, "unidad-ejecutora1y2": normalizado }));
             })
             .catch(console.error);
                fetch("/zona_municipal.geojson")
@@ -1399,7 +1407,7 @@ useEffect(() => {
                             )
                     )}
 
-                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "ib2", "ib3","unidad-ejecutora1","unidad-ejecutora2","unidad-ejecutora3","zona_municipal", "Mensura30922U", "zonapirayui"].map(
+                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "ib2", "ib3","unidad-ejecutora1","unidad-ejecutora2","unidad-ejecutora3","unidad-ejecutora1y2","zona_municipal", "Mensura30922U", "zonapirayui"].map(
                         (nombre) => {
                             if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
