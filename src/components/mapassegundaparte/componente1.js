@@ -126,11 +126,10 @@ const zonasConfig = [
 ];
 const clavesZonas = [
   "ic3", "ic4", "ic42",
-  "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3",
+  "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3", "unidad-ejecutora1y2",
   "ib2", "ib3", "area5", "ib5", "area6",
   "invicoresidencial", "zona_municipal", "area1", "area2", "area3", "area4",
   "mensura31548Unuevo", "Mensura30922U", "zonapirayui",
-
 ];
 const todasLasZonasActivas = clavesZonas.every((key) => !!capasActivas[key]);
 
@@ -659,6 +658,7 @@ const toggleTodasLasZonas = () => {
                 updates["unidad-ejecutora1"] = true;
                 updates["unidad-ejecutora2"] = true;
                 updates["unidad-ejecutora3"] = true;
+                updates["unidad-ejecutora1y2"] = true;
             }
             if (nombre === "ic4") {
                 updates.ic42 = nuevoEstado;
@@ -666,7 +666,13 @@ const toggleTodasLasZonas = () => {
                     updates["unidad-ejecutora1"] = true;
                     updates["unidad-ejecutora2"] = true;
                     updates["unidad-ejecutora3"] = true;
+                    updates["unidad-ejecutora1y2"] = true;
                 }
+            }
+            if (nombre === "unidad-ejecutora1" || nombre === "unidad-ejecutora2") {
+                const ue1 = nombre === "unidad-ejecutora1" ? nuevoEstado : !!prev["unidad-ejecutora1"];
+                const ue2 = nombre === "unidad-ejecutora2" ? nuevoEstado : !!prev["unidad-ejecutora2"];
+                updates["unidad-ejecutora1y2"] = ue1 && ue2;
             }
             if (nombre === "IB" && nuevoEstado) {
                 updates.ib2 = true;
@@ -1595,6 +1601,36 @@ useEffect(() => {
                                     data={geojsonData[nombre]}
                                     style={(feature) => {
 
+                                        if (nombre === "zona_municipal") {
+                                            return {
+                                                fillColor: "#4a7c4e",
+                                                fillOpacity: 0.72,
+                                                color: "#2a4a2e",
+                                                weight: 3,
+                                                opacity: 1,
+                                            };
+                                        }
+
+                                        if (nombre === "unidad-ejecutora1" || nombre === "unidad-ejecutora2") {
+                                            return {
+                                                fillColor: "#5db862",
+                                                fillOpacity: 0.72,
+                                                color: "transparent",
+                                                weight: 0,
+                                                opacity: 0,
+                                            };
+                                        }
+
+                                        if (nombre === "unidad-ejecutora1y2") {
+                                            return {
+                                                fillColor: "transparent",
+                                                fillOpacity: 0,
+                                                color: "red",
+                                                weight: 2,
+                                                opacity: 1,
+                                            };
+                                        }
+
                                         // ⚪ si verPublicoPrivado es false todo gris claro
                                         if (!verPublicoPrivado) {
                                             return {
@@ -1603,16 +1639,6 @@ useEffect(() => {
                                                 color: "transparent",
                                                 weight: 0,
                                                 opacity: 0,
-                                            };
-                                        }
-
-                                        if (nombre === "unidad-ejecutora1" || nombre === "unidad-ejecutora2") {
-                                            return {
-                                                fillColor: "#5db862",
-                                                fillOpacity: 0.72,
-                                                color: "red",
-                                                weight: 2,
-                                                opacity: 1,
                                             };
                                         }
 
