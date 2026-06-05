@@ -71,6 +71,7 @@ const MapaConCapas = () => {
         area5: false,
         area6: false,
         invicoresidencial: false,
+        invico2: false,
         ic3: false,
         ic4: false,
         ic42: false,
@@ -84,7 +85,7 @@ const MapaConCapas = () => {
         "unidad-ejecutora1": false,
         "unidad-ejecutora2": false,
         "unidad-ejecutora3": false,
-        "unidad-ejecutora1y2": false,
+        "unidad-ejecutora2y3": false,
         zona_municipal: false,
         rutas1: false,
         IB: false,
@@ -111,11 +112,12 @@ const zonasConfig = [
   { key: "unidad-ejecutora1", label: "Unidad Ejecutora 1" },
   { key: "unidad-ejecutora2", label: "Unidad Ejecutora 2" },
   { key: "unidad-ejecutora3", label: "Unidad Ejecutora 3" },
-    { key: "unidad-ejecutora1y2", label: "Unidad Ejecutora 1 y 2" },
+    { key: "unidad-ejecutora2y3", label: "Unidad Ejecutora 2 y 3" },
 
   { key: "area6", label: "IB6" },
     { key: "zona_municipal", label: "Zona Municipal" },
   { key: "invicoresidencial", label: "Invico - Residencial" },
+    { key: "invico2", label: "Invico - Otros" },
   { key: "area1", label: "Zona Hípico" },
   { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
   { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
@@ -126,9 +128,9 @@ const zonasConfig = [
 ];
 const clavesZonas = [
   "ic3", "ic4", "ic42",
-  "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3", "unidad-ejecutora1y2",
+  "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3", "unidad-ejecutora2y3",
   "ib2", "ib3", "area5", "ib5", "area6",
-  "invicoresidencial", "zona_municipal", "area1", "area2", "area3", "area4",
+  "invicoresidencial", "invico2", "zona_municipal", "area1", "area2", "area3", "area4",
   "mensura31548Unuevo", "Mensura30922U", "zonapirayui",
 ];
 const todasLasZonasActivas = clavesZonas.every((key) => !!capasActivas[key]);
@@ -300,7 +302,7 @@ const toggleTodasLasZonas = () => {
         "PLC-F": false,
         ZPA: false
     });
-    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5","ib2","ib3", "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3","unidad-ejecutora1y2", "zona_municipal", "invicoresidencial", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
+    const esAreaEspecial = ["area1", "area2", "area3", "area4", "area5", "area6", "ic3", "ic4", "ic42", "mensura31548Unuevo", "ib5","ib2","ib3", "unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3","unidad-ejecutora2y3", "zona_municipal", "invicoresidencial", "invico2", "zonapirayui", "Mensura30922U"].includes(nombreCapaSeleccionada
     );
     // Carga inicial de datos guardados desde backend
 
@@ -474,11 +476,11 @@ const toggleTodasLasZonas = () => {
                 const normalizado = normalizarGeojsonConIds(data, "unidad-ejecutora3");
                 setGeojsonData((prev) => ({ ...prev, "unidad-ejecutora3": normalizado }));
             })
-                  fetch("/unidad-ejecutora1y2.geojson")
+                  fetch("/unidad-ejecutora2y3.geojson")
             .then((r) => r.json())
             .then((data) => {
-                const normalizado = normalizarGeojsonConIds(data, "unidad-ejecutora1y2");
-                setGeojsonData((prev) => ({ ...prev, "unidad-ejecutora1y2": normalizado }));
+                const normalizado = normalizarGeojsonConIds(data, "unidad-ejecutora2y3");
+                setGeojsonData((prev) => ({ ...prev, "unidad-ejecutora2y3": normalizado }));
             })
             .catch(console.error);
                fetch("/zona_municipal.geojson")
@@ -486,6 +488,13 @@ const toggleTodasLasZonas = () => {
             .then((data) => {
                 const normalizado = normalizarGeojsonConIds(data, "zona_municipal");
                 setGeojsonData((prev) => ({ ...prev, zona_municipal: normalizado }));
+            })
+            .catch(console.error);
+                       fetch("/invico2.geojson")
+            .then((r) => r.json())
+            .then((data) => {
+                const normalizado = normalizarGeojsonConIds(data, "invico2");
+                setGeojsonData((prev) => ({ ...prev, invico2: normalizado }));
             })
             .catch(console.error);
 
@@ -676,7 +685,7 @@ const toggleTodasLasZonas = () => {
                 updates["unidad-ejecutora1"] = true;
                 updates["unidad-ejecutora2"] = true;
                 updates["unidad-ejecutora3"] = true;
-                updates["unidad-ejecutora1y2"] = true;
+                updates["unidad-ejecutora2y3"] = true;
             }
             if (nombre === "ic4") {
                 updates.ic42 = nuevoEstado;
@@ -684,13 +693,13 @@ const toggleTodasLasZonas = () => {
                     updates["unidad-ejecutora1"] = true;
                     updates["unidad-ejecutora2"] = true;
                     updates["unidad-ejecutora3"] = true;
-                    updates["unidad-ejecutora1y2"] = true;
+                    updates["unidad-ejecutora2y3"] = true;
                 }
             }
             if (nombre === "unidad-ejecutora1" || nombre === "unidad-ejecutora2") {
                 const ue1 = nombre === "unidad-ejecutora1" ? nuevoEstado : !!prev["unidad-ejecutora1"];
                 const ue2 = nombre === "unidad-ejecutora2" ? nuevoEstado : !!prev["unidad-ejecutora2"];
-                updates["unidad-ejecutora1y2"] = ue1 && ue2;
+                updates["unidad-ejecutora2y3"] = ue1 && ue2;
             }
             if (nombre === "IB" && nuevoEstado) {
                 updates.ib2 = true;
@@ -701,6 +710,7 @@ const toggleTodasLasZonas = () => {
             }
             if (nombre === "otras" && nuevoEstado) {
                 updates.invicoresidencial = true;
+                updates.invico2 = true;
                 updates.zona_municipal = true;
                 updates.area1 = true;
                 updates.area2 = true;
@@ -866,7 +876,7 @@ const toggleTodasLasZonas = () => {
 
         const poligono = buscarPoligonoDB(poligonosGuardados, id, nombreCapa);
 
-        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "restante"].includes(nombreCapa) ? 3 : 2;
+        const pesoBorde = ["ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial","invico2", "restante"].includes(nombreCapa) ? 3 : 2;
 
         // SIN datos en base
         if (!poligono) {
@@ -1105,6 +1115,7 @@ useEffect(() => {
       {[
         { key: "zona_municipal", label: "Zona Municipal" },
         { key: "invicoresidencial", label: "Invico - Residencial" },
+        { key: "invico2", label: "Invico 2 - Otros" },
         { key: "area1", label: "Zona Hípico" },
         { key: "area2", label: "Zona Clubes/Gremio B/Traza" },
         { key: "area4", label: "Zona Clubes/Gremio S/Traza" },
@@ -1578,7 +1589,7 @@ useEffect(() => {
                             )
                     )}
 
-                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "ib5", "ib2", "ib3","unidad-ejecutora1","unidad-ejecutora2","unidad-ejecutora3","unidad-ejecutora1y2","zona_municipal", "Mensura30922U", "zonapirayui"].map(
+                    {["area1", "area2", "area3", "area4", "area5", "area6", "rutas1", "ic3", "ic4", "ic42", "mensura31548Unuevo", "invicoresidencial", "invico2", "ib5", "ib2", "ib3","unidad-ejecutora1","unidad-ejecutora2","unidad-ejecutora3","unidad-ejecutora2y3","zona_municipal", "Mensura30922U", "zonapirayui"].map(
                         (nombre) => {
                             if (!capasActivas[nombre] || !geojsonData[nombre]) return null;
 
@@ -1632,7 +1643,7 @@ useEffect(() => {
                                             return { fillColor: "#5db862", fillOpacity: 0.72, color: "transparent", weight: 0, opacity: 0 };
                                         }
 
-                                        if (nombre === "unidad-ejecutora1y2") {
+                                        if (nombre === "unidad-ejecutora2y3") {
                                             return {
                                                 fillColor: "transparent",
                                                 fillOpacity: 0,
