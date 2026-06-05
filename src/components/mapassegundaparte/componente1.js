@@ -1619,14 +1619,17 @@ useEffect(() => {
                                             };
                                         }
 
-                                        if (nombre === "unidad-ejecutora1" || nombre === "unidad-ejecutora2") {
-                                            return {
-                                                fillColor: "#5db862",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                        if (["unidad-ejecutora1", "unidad-ejecutora2", "unidad-ejecutora3"].includes(nombre)) {
+                                            const id = feature?.properties?.id;
+                                            const poligono = poligonosGuardados.find(p => String(p.id_mapa) === String(id));
+                                            const bordeUE = { color: "rgba(0,0,0,0.55)", weight: 1.5, opacity: 1 };
+                                            if (poligono?.privado === "reserva municipal")
+                                                return { fillColor: "#e08c3a", fillOpacity: 0.72, ...bordeUE };
+                                            if (poligono?.privado === "equipamiento publico")
+                                                return { fillColor: "#d4c83a", fillOpacity: 0.72, ...bordeUE };
+                                            if (poligono?.privado === "privado")
+                                                return { fillColor: "#e05c5c", fillOpacity: 0.72, ...bordeUE };
+                                            return { fillColor: "#5db862", fillOpacity: 0.72, color: "transparent", weight: 0, opacity: 0 };
                                         }
 
                                         if (nombre === "unidad-ejecutora1y2") {
