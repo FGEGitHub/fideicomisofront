@@ -278,6 +278,8 @@ const toggleTodasLasZonas = () => {
     const [nombreCapaSeleccionada, setNombreCapaSeleccionada] = useState("");
     const [centroSeleccionado, setCentroSeleccionado] = useState(null);
     const [poligonosGuardados, setPoligonosGuardados] = useState([]);
+    const poligonosRef = React.useRef([]);
+    useEffect(() => { poligonosRef.current = poligonosGuardados; }, [poligonosGuardados]);
     const idsDesdeBase = (poligonosGuardados || []).map((p) => p.id_mapa);
     const [mapa, setMapa] = useState(null);
     const [subclasificacion, setSubclasificacion] = useState("");
@@ -622,6 +624,22 @@ const toggleTodasLasZonas = () => {
 
     const onEachFeature = (feature, layer) => {
         layer.on({ click: handleFeatureClick });
+    };
+
+    const crearOnEachFeature = (nombreCapa) => (feature, layer) => {
+        layer.on({ click: handleFeatureClick });
+        if (nombreCapa === "Barrios" || nombreCapa === "rutas1") return;
+        layer.bindTooltip(() => {
+            const id =
+                feature?.properties?.id ??
+                feature?.properties?.ID ??
+                feature?.properties?.Id ??
+                feature?.id ??
+                null;
+            if (id == null) return "";
+            const poligono = buscarPoligonoDB(poligonosRef.current, id, nombreCapa);
+            return poligono?.dato1 || "";
+        }, { permanent: false, direction: "top", className: "sc-labelBubble", sticky: true });
     };
     const MapResizer = () => {
         const map = useMap();
@@ -1346,16 +1364,6 @@ useEffect(() => {
                 >
                     <ZoomWatcher />
                     <MapResizer />
-                    <EtiquetasPoligonos
-                        geojsonData={geojsonData}
-                        poligonosGuardados={poligonosGuardados}
-                        capasActivas={capasActivas}
-                        subCapasActivas={subCapasActivas}
-                        subCapasSur={subCapasSur}
-                        mostrarEtiquetas={verReferencias && zoomActual >= 15}
-
-                        zoomActual={zoomActual}
-                    />
 
                     <InstanciaDelMapa setMapa={setMapa} />
 
@@ -1393,7 +1401,7 @@ useEffect(() => {
                                 // 🔄 Resto de polígonos usan la función general
                                 return getStylePoligono(feature, "Manzanas");
                             }}
-                            onEachFeature={onEachFeature}
+                            onEachFeature={crearOnEachFeature("Manzanas")}
                         />
                     )}
 
@@ -1433,7 +1441,7 @@ useEffect(() => {
                                             opacity: 0.5,
                                         };
                                     }}
-                                    onEachFeature={onEachFeature}
+                                    onEachFeature={crearOnEachFeature(nombre)}
                                 />
                             )
                     )}
@@ -1485,7 +1493,7 @@ useEffect(() => {
                                     fillOpacity,
                                 };
                             }}
-                            onEachFeature={onEachFeature}
+                            onEachFeature={crearOnEachFeature("Zonificación Sta Catalina")}
                         />
                     )}
 
@@ -1508,7 +1516,7 @@ useEffect(() => {
                                     opacity: 1,
                                 };
                             }}
-                            onEachFeature={onEachFeature}
+                            onEachFeature={crearOnEachFeature("area1")}
                         />
                     )}
 
@@ -1529,7 +1537,7 @@ useEffect(() => {
                                     fillOpacity: 0.5,
                                 };
                             }}
-                            onEachFeature={onEachFeature}
+                            onEachFeature={crearOnEachFeature("ZRU Predios La Caja")}
                         />
                     )}
 
@@ -1565,7 +1573,7 @@ useEffect(() => {
                                             fillOpacity,
                                         };
                                     }}
-                                    onEachFeature={onEachFeature}
+                                    onEachFeature={crearOnEachFeature(nombre)}
                                 />
                             )
                     )}
@@ -1590,7 +1598,7 @@ useEffect(() => {
                                             weight: 2,
                                             opacity: 1,
                                         }}
-                                        onEachFeature={onEachFeature}
+                                        onEachFeature={crearOnEachFeature(nombre)}
                                     />
                                 );
                             }
@@ -1648,59 +1656,31 @@ useEffect(() => {
                                             (p) => String(p.id_mapa) === String(id)
                                         );
 
+                                        const borde = { color: "rgba(0,0,0,0.55)", weight: 1.5, opacity: 1 };
+
                                         // 🔴 no existe
                                         if (!poligono) {
-                                            return {
-                                                fillColor: "#e05c5c",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                            return { fillColor: "#e05c5c", fillOpacity: 0.72, ...borde };
                                         }
 
                                         // 🔵 reserva municipal
                                         if (poligono.privado === "reserva municipal") {
-                                            return {
-                                                fillColor: "#e08c3a",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                            return { fillColor: "#e08c3a", fillOpacity: 0.72, ...borde };
                                         }
 
                                         // ⚫ equipamiento publico
                                         if (poligono.privado === "equipamiento publico") {
-                                            return {
-                                                fillColor: "#d4c83a",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                            return { fillColor: "#d4c83a", fillOpacity: 0.72, ...borde };
                                         }
 
                                         // 🔴 privado
                                         if (poligono.privado === "privado") {
-                                            return {
-                                                fillColor: "#e05c5c",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                            return { fillColor: "#e05c5c", fillOpacity: 0.72, ...borde };
                                         }
 
                                         // 🟢 publico
                                         if (poligono.privado === "publico") {
-                                            return {
-                                                fillColor: "#5db862",
-                                                fillOpacity: 0.72,
-                                                color: "transparent",
-                                                weight: 0,
-                                                opacity: 0,
-                                            };
+                                            return { fillColor: "#5db862", fillOpacity: 0.72, ...borde };
                                         }
 
                                         return {
@@ -1711,7 +1691,7 @@ useEffect(() => {
                                             opacity: 1,
                                         };
                                     }}
-                                    onEachFeature={onEachFeature}
+                                    onEachFeature={crearOnEachFeature(nombre)}
                                 />
                             );
                         }
